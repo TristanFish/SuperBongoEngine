@@ -1,6 +1,6 @@
 #pragma once
 #include <sdl/SDL.h>
-#include "Components.h"
+#include "ECS.h"
 #include "graphics/TextureManager.h"
 #include "graphics/shader.h"
 #include <glew/glew.h>
@@ -18,11 +18,13 @@ public:
 	SpriteComponent() = default;
 	SpriteComponent(const char* path);
 
+	virtual ~SpriteComponent();
+
 	void setTexture(const char* path);
 
 	void setShaders(const char* vertexPath, const char* fragmentPath);
 
-	 void Init() override;
+	 void Init(GameObject *g) override;
 	 void Update(const float deltaTime) override;
 	 void Render() const override;
 	 void HandleEvents(const SDL_Event& event) override;

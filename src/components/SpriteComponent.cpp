@@ -6,6 +6,14 @@ SpriteComponent::SpriteComponent(const char* path)
 	texture->LoadImage(path);
 }
 
+SpriteComponent::~SpriteComponent()
+{
+	delete texture;
+	glDeleteBuffers(1, &ebo);
+	glDeleteBuffers(1, &vbo);
+	glDeleteVertexArrays(1, &vao);
+}
+
 void SpriteComponent::setTexture(const char* path)
 {
 	texture->LoadImage(path);
@@ -16,8 +24,10 @@ void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPat
 	shader_program = shader.createShader(vertexPath, fragmentPath);
 }
 
-void SpriteComponent::Init()
+void SpriteComponent::Init(GameObject *g)
 {
+	gameobject = g;
+	texture = new TextureManager();
 
 	float vertices[] = {
 		// positions           // colors          // texture coords
@@ -76,16 +86,18 @@ void SpriteComponent::Render() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
+	glUseProgram(shader_program);
+
+
+
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
 	//This says what we are going to draw and how many things we are going to draw
 
-
-
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glUseProgram(shader_program);
 }
 
 void SpriteComponent::HandleEvents(const SDL_Event& event)
