@@ -1,17 +1,17 @@
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H
 
-#include "Components.h"
+#include "components/ECS.h"
 #include "math/Vector.h"
 #include "math/VMATH.h"
-#include "Timer.h"
+#include "core/Timer.h"
 #include "components/Collider.h"
 
 class RigidBodyComponent : public Component
 {
 private:
 	float mass;
-	MATH::Vec3& pos; 
+	MATH::Vec3 pos; 
 	MATH::Vec3 vel;
 	MATH::Vec3 accel;
 	float linearDrag;
@@ -26,11 +26,13 @@ private:
 public:
 	Collider collider;
 
+	RigidBodyComponent();
+
 	// Inherited via Component
-	virtual void Init() override;
-	virtual void Update(const float deltaTime) override;
-	virtual void Render() const override;
-	virtual void HandleEvents(const SDL_Event& event) override;
+	void Init(GameObject *g) override;
+	void Update(const float deltaTime) override;
+	void Render() const override;
+	void HandleEvents(const SDL_Event& event) override;
 
 	void ApplyImpulseForce(const MATH::Vec3& force);
 	void ApplyConstantForce(const MATH::Vec3& force);
@@ -38,6 +40,8 @@ public:
 	void ApplyImpulseTorque(const float torque);
 	void ApplyConstantTorque(const float torque);
 
+	inline void setColliderSize(float s) { collider.size = s; }
+	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetVelocity() { return vel; }

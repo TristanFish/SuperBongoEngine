@@ -1,44 +1,14 @@
 #include "ECS.h"
 #include "components/RigidBodyComponent.h"
 
-GameObject::GameObject(const char* n, const MATH::Vec3& pos): name(n), transform(new Tranform(pos))
+GameObject::GameObject(): name("Default"), transform()
 {
 }
+
 
 GameObject::~GameObject()
 {
-	delete name;
 	name = nullptr;
-	
-	delete transform;
-	transform = nullptr;
-
-}
-
-void GameObject::Update(const float deltaTime)
-{
-	transform->Update(deltaTime);
-	
-}
-
-void GameObject::Render() const
-{
-	
-}
-
-template <typename T>
-bool GameObject::hasComponent(T) const
-{
-	return (dynamic_cast<T>(this));
-}
-
-
-
-
-template <typename T>
-T& GameObject::getComponent(T) const
-{
-	return dynamic_cast<T&>(this);
 }
 
 
@@ -46,22 +16,23 @@ Manager::~Manager()
 {
 	for (GameObject* g : gameObjects)
 	{
-		delete g;
-		g = nullptr;
+		if (g)
+		{
+			delete g;
+			g = nullptr;
+		}
 	}
 
-	for (RigidBodyComponent* r : rigidBodies)
-	{
-		delete r;
-		r = nullptr;
-	}
+	gameObjects.clear();
+
+	rigidBodies.clear();
 }
 
 void Manager::Init()
 {
 	for (GameObject* g : gameObjects)
 	{
-		if (RigidBodyComponent* r = dynamic_cast<RigidBodyComponent*>(g))
+		if (RigidBodyComponent* r = &g->getComponent<RigidBodyComponent>())
 		{
 			rigidBodies.emplace_back(r);
 		}
@@ -112,8 +83,8 @@ GameObject& Manager::FindGameObject(const char* name)
 
 	for (auto g : gameObjects)
 	{
-		g->transform->GetPosition() = MATH::Vec3(rand() % 100, rand() % 100, rand() % 100);
-		g->transform->GetScale() = MATH::Vec3(rand() % 100, rand() % 100, rand() % 100);
+		g->transform.GetPosition() = MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100));
+		g->transform.GetScale() = MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100));
 	}
 
 	return *gameObjects[0];

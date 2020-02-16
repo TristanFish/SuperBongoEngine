@@ -2,9 +2,6 @@
 #define ECS_HEADER
 
 #include <vector>
-//#include <memory>
-#include <bitset>
-#include <array>
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
@@ -13,26 +10,30 @@
 class Component;
 class GameObject;
 class RigidBodyComponent;
-using ComponentID = std::size_t;
 
 
-//Component is an interface, things should be inheriting from it, components are placed into a gameobject
+//Component is an interface, things should be inheriting from it
+//Components are added to a gameobject through inheritance
+//All component functions should be called through the gameobject class that inherits from them
+//Check Player.h to see how to add components
 class Component
 {
 public:
-	GameObject* gameObject;
-	
-	virtual void Init() = 0;
+	GameObject* gameobject;
+
+	//Use Init to set the gameobject pointer to "this"
+	virtual void Init(GameObject *g) = 0;
 	virtual void Update(const float deltaTime) = 0;
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
 
-	virtual ~Component() { gameObject = nullptr; }
+	virtual ~Component() { gameobject = nullptr; }
 };
 
-//This should be inheriting from gameobject, gameobjects are placed into a manager
-//GameObject update, render and handleEvents need to be defined per class that inherits from it.
+//Things should be inheriting from gameobject, gameobjects are placed into a manager
+//Update, render and handleEvents need to be defined per class that inherits from it.
+//Check Player.h to see how to create gameobjects
 class GameObject
 {
 protected:
@@ -40,9 +41,11 @@ protected:
 
 public:
 	const char* name;
-	Transform* transform;
 
-	GameObject(const char* n, const MATH::Vec3& pos);
+	Transform transform;
+
+
+	GameObject();
 
 	virtual ~GameObject();
 
@@ -54,15 +57,27 @@ public:
 	inline void SetActive(bool a) { active = a; }
 
 	template <typename T>
-	bool hasComponent(T) const;
-
-	Component& addComponent(Component& c);
+	bool hasComponent()
+	{
+		if (dynamic_cast<T*>(this))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	template <typename T>
-	T& getComponent(T) const;
+	T& getComponent()
+	{
+		return dynamic_cast<T&>(*this);
+	}
 };
 
 //There'll be one manager per scene it holds an array of gameobjects to update/render etc.
+//see how its used in scene1
 class Manager
 {
 private:

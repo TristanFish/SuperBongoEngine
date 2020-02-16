@@ -4,13 +4,13 @@
 struct Collider
 {
 public:
-	static enum shape
+	enum shape
 	{
 		Circle,
 		Box
 	}; 
 
-	float size;
+	float size = 1.0f;
 	shape colliderShape;
 };
 
