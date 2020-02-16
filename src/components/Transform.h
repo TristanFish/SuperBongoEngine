@@ -4,18 +4,18 @@
 #include "math/Matrix.h"
 #include "math/MMath.h"
 
-class Tranform
+class Transform
 {
 private:
 
-	MATH::Vec3 pos, rotation, scale;
 	MATH::Matrix4 modelMatrix;
 	
 public:
+	MATH::Vec3 pos, rotation, scale;
 
-	Tranform();
+	Transform();
 
-	Tranform(const MATH::Vec3& pos_);
+	Transform(const MATH::Vec3& pos_);
 
 	inline MATH::Vec3& GetPosition() { return pos; }
 

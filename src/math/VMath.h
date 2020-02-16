@@ -46,6 +46,9 @@ namespace MATH {
 		/// Get the distance between two Vec3s 
 		static float distance(const Vec3 &a, const Vec3 &b);
 
+		// Clamp a vector
+		static Vec3 clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV);
+
 		
 
 		/// This is a basic Linear Interpolation function.  It takes v1 and moves it 

@@ -1,9 +1,16 @@
 #include "RigidBodyComponent.h"
 
-void RigidBodyComponent::Init() 
+RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
+										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.0f)
 {
+
+}
+
+void RigidBodyComponent::Init(GameObject *g)
+{
+	gameobject = g;
 	mass = 1.0f;
-	pos = gameObject->transform->GetPosition();
+	pos = gameobject->transform.pos;
 	vel = MATH::Vec3();
 	accel = MATH::Vec3();
 
@@ -15,11 +22,16 @@ void RigidBodyComponent::Init()
 
 void RigidBodyComponent::Update(const float deltaTime)
 {
-	pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
-	vel += accel * deltaTime;
+	pos = gameobject->transform.GetPosition();
 
-	zAngle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
+	vel += accel * deltaTime;
+	pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
+
+	gameobject->transform.setPos(pos);
+
 	angularVel += angularAcc * deltaTime;
+	zAngle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
+
 }
 
 void RigidBodyComponent::Render() const
