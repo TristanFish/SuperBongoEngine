@@ -23,7 +23,7 @@ bool Scene1::OnCreate()
 	//add it to the list of gameobjects
 	objectList.addGameObject(player);
 
-	//This init function separates  rigidbodies for
+	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList.Init();
 
 	return false;
