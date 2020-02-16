@@ -40,7 +40,7 @@ protected:
 
 public:
 	const char* name;
-	Tranform* transform;
+	Transform* transform;
 
 	GameObject(const char* n, const MATH::Vec3& pos);
 
