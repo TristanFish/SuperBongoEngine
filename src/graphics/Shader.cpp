@@ -8,14 +8,6 @@
 
 GLuint Shader::createShader(const char* vertexPath, const char* fragmentPath)
 {
-	GLuint shader_program;
-
-	std::string vertexCode;
-	std::string fragmentCode;
-	std::ifstream vShaderFile;
-	std::ifstream fShaderFile;
-
-
 	// open files
 	vShaderFile.open(vertexPath);
 	fShaderFile.open(fragmentPath);

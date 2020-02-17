@@ -13,6 +13,14 @@ class Shader
 public:
 	GLuint createShader(const char* vertexPath, const char* fragmentPath);
 	void runShader(GLuint shaderID);
+
+private:
+	GLuint shader_program;
+
+	std::string vertexCode;
+	std::string fragmentCode;
+	std::ifstream vShaderFile;
+	std::ifstream fShaderFile;
 };
 #endif // !SHADER_H
 
