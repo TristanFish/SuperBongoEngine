@@ -340,12 +340,6 @@
     <ClInclude Include="src\components\SpriteComponent.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Timer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\TextureManager.h">
       <Filter>src\ECS</Filter>
     </ClInclude>
@@ -361,9 +355,16 @@
     <ClInclude Include="src\components\Transform.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\graphics\Shader.h" />
+    <ClInclude Include="src\core\GameManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Timer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\custom\Player.h" />
+    <ClInclude Include="src\core\Physics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -377,15 +378,6 @@
     </ClCompile>
     <ClCompile Include="src\components\ECS.cpp" />
     <ClCompile Include="src\components\RigidBodyComponent.cpp" />
-    <ClCompile Include="src\Timer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\TextureManager.cpp">
       <Filter>src\ECS</Filter>
     </ClCompile>
@@ -396,9 +388,19 @@
       <Filter>src\scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\components\Transform.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\components\SpriteComponent.cpp" />
+    <ClCompile Include="src\core\GameManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Timer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\custom\Player.cpp" />
+    <ClCompile Include="src\core\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

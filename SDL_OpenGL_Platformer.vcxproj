@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\components\Collider.h" />
-    <ClInclude Include="Physics.h" />
+    <ClInclude Include="src\core\Physics.h" />
     <ClInclude Include="src\components\Components.h" />
     <ClInclude Include="src\components\ECS.h" />
     <ClInclude Include="external\include\glew\eglew.h" />
@@ -113,7 +114,7 @@
     <ClInclude Include="external\include\sdl\SDL_version.h" />
     <ClInclude Include="external\include\sdl\SDL_video.h" />
     <ClInclude Include="external\include\sdl\SDL_vulkan.h" />
-    <ClInclude Include="src\GameManager.h" />
+    <ClInclude Include="src\core\GameManager.h" />
     <ClInclude Include="src\components\RigidBodyComponent.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\graphics\Shader.h" />
@@ -125,15 +126,16 @@
     <ClInclude Include="src\math\Vector.h" />
     <ClInclude Include="src\math\VMath.h" />
     <ClInclude Include="src\graphics\TextureManager.h" />
-    <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\core\Timer.h" />
     <ClInclude Include="src\graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="src\core\Physics.cpp" />
+    <ClCompile Include="src\custom\Player.cpp" />
     <ClCompile Include="src\components\SpriteComponent.cpp" />
-    <ClCompile Include="src\GameManager.cpp" />
+    <ClCompile Include="src\core\GameManager.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
-    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\core\Main.cpp" />
     <ClCompile Include="src\components\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
@@ -142,7 +144,7 @@
     <ClCompile Include="src\math\Vector.cpp" />
     <ClCompile Include="src\math\VMath.cpp" />
     <ClCompile Include="src\graphics\TextureManager.cpp" />
-    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\core\Timer.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
   </ItemGroup>
   <ItemGroup>

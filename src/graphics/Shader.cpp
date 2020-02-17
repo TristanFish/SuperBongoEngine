@@ -31,7 +31,7 @@ GLuint Shader::createShader(const char* vertexPath, const char* fragmentPath)
 	vertexCode = vShaderStream.str();
 	fragmentCode = fShaderStream.str();
 
-	std::cout << fShaderStream.str() << vShaderStream.str() << std::endl;
+	std::cout << vShaderStream.str() << fShaderStream.str() << std::endl;
 
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();

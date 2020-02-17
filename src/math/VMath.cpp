@@ -32,6 +32,43 @@ float VMath::distance(const Vec3 &a, const Vec3 &b){
 	return(mag(r));
 }
 
+Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
+{
+	Vec3 clampedVector = clampedV;
+
+	//Check if any components of the clampedVector are less than the min value,
+	//if they are increase the value to the minimum value
+	if (clampedVector.x < minV.x)
+	{
+		clampedVector.x = minV.x;
+	}
+	if (clampedVector.y < minV.y)
+	{
+		clampedVector.y = minV.y;
+	}
+	if (clampedVector.z < minV.z)
+	{
+		clampedVector.z = minV.z;
+	}
+
+	//Check if any components of the clampedVector are greater than the max value,
+	//if they are decrease the value to the maximum value
+	if (clampedVector.x > maxV.x)
+	{
+		clampedVector.x = maxV.x;
+	}
+	if (clampedVector.y > maxV.y)
+	{
+		clampedVector.y = maxV.y;
+	}
+	if (clampedVector.z > maxV.z)
+	{
+		clampedVector.z = maxV.z;
+	}
+
+	return clampedVector;
+}
+
 Vec3 VMath::lerp(const Vec3 &v1, const Vec3 &v2, float t) {
 	return (v1 + t * (v2 - v1));
 }
