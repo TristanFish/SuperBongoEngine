@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\core\Physics.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\custom\Camera.cpp" />
     <ClCompile Include="src\core\Physics.cpp" />
     <ClCompile Include="src\custom\Player.cpp" />
     <ClCompile Include="src\components\SpriteComponent.cpp" />
