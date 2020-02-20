@@ -20,7 +20,7 @@ private:
 	Matrix4 viewMatrix;
 	Matrix4 orthoProjMatrix;
 	Matrix4 perspecProjMatrix;
-	Matrix4 viewProjectionMatrix;
+	
 	
 };
 #endif 

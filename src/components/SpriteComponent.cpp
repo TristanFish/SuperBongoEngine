@@ -21,7 +21,7 @@ void SpriteComponent::setTexture(const char* path)
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)
 {
-	shader_program = shader.CreateShader(vertexPath, fragmentPath);
+	 shader.CreateShader(vertexPath, fragmentPath);
 }
 
 void SpriteComponent::Init(GameObject *g)
@@ -86,10 +86,8 @@ void SpriteComponent::Render() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	glUseProgram(shader_program);
-
-
-
+	shader.RunShader();
+	   
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 
 	glBindVertexArray(vao);

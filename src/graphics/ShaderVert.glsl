@@ -6,7 +6,8 @@ layout (location = 2) in vec2 aTexCoord;
 
 out vec3 ourColor;
 out vec2 TexCoord;
-uniform mat4 viewProjectionMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
 
 uniform mat4 modelMatrix;
 
@@ -15,5 +16,5 @@ void main()
     ourColor = aColor;
     TexCoord = aTexCoord;
 
-    gl_Position = viewProjectionMatrix * vec4(aPos, 1.0);
+    gl_Position = projectionMatrix * viewMatrix *  vec4(aPos, 1.0);
 }
