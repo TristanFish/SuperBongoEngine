@@ -2,11 +2,7 @@
 
 
 
-
-
-
-
-GLuint Shader::createShader(const char* vertexPath, const char* fragmentPath)
+GLuint Shader::CreateShader(const char* vertexPath, const char* fragmentPath)
 {
 	// open files
 	vShaderFile.open(vertexPath);
@@ -52,7 +48,16 @@ GLuint Shader::createShader(const char* vertexPath, const char* fragmentPath)
 	return shader_program;
 }
 
-void Shader::runShader(GLuint shaderID)
+void Shader::RunShader(GLuint shaderID)
 {
 	glUseProgram(shaderID);
 }
+
+void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix)
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID not found for camera to init" << std::endl; }
+	glUniformMatrix4fv(location, 1, GL_FALSE, viewProjectionSize);
+}
+
+

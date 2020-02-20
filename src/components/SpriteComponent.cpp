@@ -21,7 +21,7 @@ void SpriteComponent::setTexture(const char* path)
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)
 {
-	shader_program = shader.createShader(vertexPath, fragmentPath);
+	shader_program = shader.CreateShader(vertexPath, fragmentPath);
 }
 
 void SpriteComponent::Init(GameObject *g)
