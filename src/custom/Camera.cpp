@@ -4,7 +4,7 @@ using namespace MATH;
 
 Camera::Camera()
 {
-	orthoProjMatrix = (MMath::orthographic(-3.0f, 1.0f, -3.0f, 1.0f, -1.0f, 1.0f));
+	orthoProjMatrix = (MMath::orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
 	viewMatrix.loadIdentity();
 	
 

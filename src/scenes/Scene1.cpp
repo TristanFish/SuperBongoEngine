@@ -5,12 +5,14 @@ Scene1::Scene1()
 {}
 
 Scene1::~Scene1()
-{}
+{
+	OnDestroy();
+}
 
 bool Scene1::OnCreate()
 {
 	Shader shader;
-	camera = new Camera();
+	camera = Camera::getInstance();
 	
 	std::cout << "scene1 loaded" << std::endl;
 
