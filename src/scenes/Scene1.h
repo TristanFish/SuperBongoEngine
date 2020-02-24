@@ -1,6 +1,8 @@
 #ifndef SCENE1_H
 #define SCENE1_H
 #include "Scene.h"
+#include "custom/Camera.h"
+#include "graphics/Shader.h"
 
 class Player;
 
@@ -8,11 +10,13 @@ class Scene1 : public Scene
 {
 private:
 	Player* player;
+	Camera* camera;
+	
+
 
 public:
 	Scene1();
 	~Scene1();
-
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
 	virtual void Update(const float deltaTime) override;

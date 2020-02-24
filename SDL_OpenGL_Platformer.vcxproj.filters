@@ -365,6 +365,7 @@
     </ClInclude>
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\core\Physics.h" />
+    <ClInclude Include="src\custom\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -401,6 +402,7 @@
     </ClCompile>
     <ClCompile Include="src\custom\Player.cpp" />
     <ClCompile Include="src\core\Physics.cpp" />
+    <ClCompile Include="src\custom\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
