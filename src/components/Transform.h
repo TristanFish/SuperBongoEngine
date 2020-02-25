@@ -4,6 +4,8 @@
 #include "math/Matrix.h"
 #include "math/MMath.h"
 
+//Not quite a component but similar enough to be in the same folder path
+//gameobjects have a transform to define their position rotation and scale
 class Transform
 {
 private:

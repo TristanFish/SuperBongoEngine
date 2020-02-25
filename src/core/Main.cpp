@@ -1,4 +1,6 @@
 #include "GameManager.h"
+#define _CRTDBG_MAP_ALLOC  
+#include <crtdbg.h>
 
 int main(int argc, char* argv[])
 {
@@ -9,6 +11,8 @@ int main(int argc, char* argv[])
 
 	delete game;
 	game = nullptr;
+
+	_CrtDumpMemoryLeaks();
 
 	return 0;
 }

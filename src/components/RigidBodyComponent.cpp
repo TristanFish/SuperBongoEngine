@@ -1,4 +1,6 @@
 #include "RigidBodyComponent.h"
+#include "math/VMATH.h"
+#include "core/Timer.h"
 
 RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
 										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.0f)
@@ -9,6 +11,9 @@ RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(M
 void RigidBodyComponent::Init(GameObject *g)
 {
 	gameobject = g;
+
+	setColliderSize(g->transform.GetScale().x);
+
 	mass = 1.0f;
 	pos = gameobject->transform.pos;
 	vel = MATH::Vec3();

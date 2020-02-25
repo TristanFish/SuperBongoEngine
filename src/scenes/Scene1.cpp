@@ -23,7 +23,7 @@ bool Scene1::OnCreate()
 	//add it to the list of gameobjects
 	objectList.addGameObject(player);
 
-	//This init function separates  rigidbodies for
+	//This init function separates rigidbodies for
 	objectList.Init();
 
 	return false;
@@ -33,7 +33,6 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
-	
 
 }
 

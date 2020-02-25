@@ -1,4 +1,5 @@
 #include "SpriteComponent.h"
+#include "graphics/TextureManager.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {

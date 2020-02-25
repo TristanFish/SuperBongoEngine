@@ -41,3 +41,7 @@ void Player::HandleEvents(const SDL_Event& event)
 	RigidBodyComponent::HandleEvents(event);
 	SpriteComponent::HandleEvents(event);
 }
+
+void Player::OnCollisionEnter()
+{
+}

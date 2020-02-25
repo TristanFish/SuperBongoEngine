@@ -9,6 +9,7 @@ GameManager::~GameManager()
 {
 	delete window;
 	window = nullptr;
+	currentScene->OnDestroy();
 	delete currentScene;
 	currentScene = nullptr;
 }

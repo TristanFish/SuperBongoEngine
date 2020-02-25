@@ -365,6 +365,8 @@
     </ClInclude>
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\core\Physics.h" />
+    <ClInclude Include="src\tiles\Tilemap.h" />
+    <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -401,6 +403,8 @@
     </ClCompile>
     <ClCompile Include="src\custom\Player.cpp" />
     <ClCompile Include="src\core\Physics.cpp" />
+    <ClCompile Include="src\tiles\Tilemap.cpp" />
+    <ClCompile Include="src\tiles\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
