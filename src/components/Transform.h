@@ -18,8 +18,8 @@ public:
 	Transform(const MATH::Vec3& pos_);
 
 	inline MATH::Vec3& GetPosition() { return pos; }
-
 	inline MATH::Vec3& GetRotation() { return rotation; }
+
 
 	inline MATH::Vec3& GetScale() { return scale; }
 

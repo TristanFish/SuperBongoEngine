@@ -17,7 +17,7 @@ bool Scene1::OnCreate()
 	std::cout << "scene1 loaded" << std::endl;
 
 	//Setup the player
-	player = new Player("Player1", MATH::Vec3(1.0f, 0.0f, 0.0f));
+	player = new Player("Player1", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	if (player->hasComponent<SpriteComponent>())
 	{
 		
@@ -57,6 +57,7 @@ void Scene1::OnDestroy()
 
 void Scene1::Update(const float deltaTime)
 {
+	player->getComponent<GameObject>().SetScale(Vec3(0.5, 0.5, 0.5));
 	objectList.Update(deltaTime);
 }
 
@@ -70,7 +71,7 @@ void Scene1::Render() const
 
 	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("viewMatrix", camera->getProjectionMatrix());
 	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("projectionMatrix", camera->getViewMatrix());
-	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("modelMatrix", player->GetModelMatrix());
+	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("modelMatrix", player->getComponent<GameObject>().GetModelMatrix());
 
 
 	objectList.Render();
