@@ -23,6 +23,8 @@ public:
 
 	inline MATH::Vec3& GetScale() { return scale; }
 
+	inline MATH::Matrix4& GetModelMatrix() { return modelMatrix; }
+
 	void Update(const float deltaTime);
 
 	void setPos(const MATH::Vec3& pos_);

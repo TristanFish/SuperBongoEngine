@@ -16,5 +16,5 @@ void main()
     ourColor = aColor;
     TexCoord = aTexCoord;
 
-    gl_Position = projectionMatrix * viewMatrix *  vec4(aPos, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix *  vec4(aPos, 1.0);
 }

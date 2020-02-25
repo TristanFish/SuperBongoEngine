@@ -24,6 +24,7 @@ public:
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& event) override;
 
+	inline Matrix4& GetModelMatrix() { return GameObject::transform.GetModelMatrix(); }
 };
 
 #endif

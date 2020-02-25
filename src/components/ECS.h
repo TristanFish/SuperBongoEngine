@@ -55,7 +55,6 @@ public:
 
 	inline bool isActive()const { return active; }
 	inline void SetActive(bool a) { active = a; }
-
 	template <typename T>
 	bool hasComponent()
 	{

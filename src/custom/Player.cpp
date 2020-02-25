@@ -2,6 +2,8 @@
 
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
+
+
 	name = n;
 	transform = Transform(pos);
 
