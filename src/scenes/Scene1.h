@@ -3,11 +3,13 @@
 #include "Scene.h"
 
 class Player;
+class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
 	Player* player;
+	Tilemap* tilemap;
 
 public:
 	Scene1();

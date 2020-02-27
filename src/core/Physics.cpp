@@ -35,10 +35,14 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 
 bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	if ((rb1.pos.x < rb2.pos.x + rb2.collider.size) &&
-		(rb1.pos.x + rb1.collider.size > rb2.pos.x) &&
-		(rb1.pos.y < rb2.pos.y + rb2.collider.size) &&
-		(rb1.pos.y + rb1.collider.size > rb2.pos.y))
+	float rb1Halfx = rb1.collider.size / 2.0f;
+	float rb2Halfx = rb2.collider.size / 2.0f;
+	float rb1Halfy = rb1Halfx;
+	float rb2Halfy = rb2Halfx;
+	if ((rb1.pos.x - rb1Halfx < rb2.pos.x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
+		(rb1.pos.x + rb1Halfx > rb2.pos.x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
+		(rb1.pos.y - rb1Halfy < rb2.pos.y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
+		(rb1.pos.y + rb1Halfy > rb2.pos.y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
 		std::cout << "Box box collision detected" << std::endl;
 		return true;
@@ -152,8 +156,4 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 
 
 	return false;
-}
-
-void Physics::ResolveCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
-{
 }

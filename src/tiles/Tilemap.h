@@ -1,27 +1,30 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
-#define MAXMAPHEIGHT 32
-#define MAXMAPWIDTH 32
-
 #include "tiles/Tile.h"
+
+#define MAXMAPHEIGHT 10
+#define MAXMAPWIDTH 10
 
 class Tilemap
 {
 private:
 
-	enum class TileType
-	{
-		None,
-		Normal,
-		Hazard,
-		Victory
-	};
-
 	int tiles[MAXMAPWIDTH][MAXMAPHEIGHT];
+	std::vector<Tile> tileList;
 
 public:
 
+	Tilemap();
+	Tilemap(const char* filepath);
+	~Tilemap();
+
+	void Update(const float deltaTime);
+	void Render() const;
+	void CheckCollisions(RigidBodyComponent &rb);
+
 };
+
+
 
 #endif

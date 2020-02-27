@@ -483,4 +483,7 @@
       <Filter>external\lib</Filter>
     </Library>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\tiles\Map1.txt" />
+  </ItemGroup>
 </Project>

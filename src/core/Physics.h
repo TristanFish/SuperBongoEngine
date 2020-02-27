@@ -21,8 +21,6 @@ public:
 	
 	static bool DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
 
-	static void ResolveCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
-
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Scene1.h"
 #include "custom/Player.h"
+#include "tiles/Tilemap.h"
 
 Scene1::Scene1()
 {}
@@ -23,7 +24,10 @@ bool Scene1::OnCreate()
 	//add it to the list of gameobjects
 	objectList.addGameObject(player);
 
-	//This init function separates rigidbodies for
+	tilemap = new Tilemap("src/tiles/Map1.txt");
+
+
+	//This init function separates rigidbodies from their gameobjects
 	objectList.Init();
 
 	return false;
@@ -33,7 +37,7 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
-
+	delete tilemap;
 }
 
 void Scene1::Update(const float deltaTime)
@@ -50,6 +54,7 @@ void Scene1::Render() const
 	glEnable(GL_DEPTH_TEST);
 
 	objectList.Render();
+	tilemap->Render();
 
 }
 

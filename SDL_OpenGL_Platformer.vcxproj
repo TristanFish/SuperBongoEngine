@@ -180,6 +180,9 @@
     <Library Include="external\lib\SDL2test.lib" />
     <Library Include="external\lib\SDL2_image.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\tiles\Map1.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
