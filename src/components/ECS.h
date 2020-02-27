@@ -41,7 +41,9 @@ protected:
 
 public:
 	const char* name;
+
 	Transform transform;
+
 
 	GameObject();
 

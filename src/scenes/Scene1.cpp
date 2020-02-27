@@ -6,28 +6,38 @@ Scene1::Scene1()
 {}
 
 Scene1::~Scene1()
-{}
+{
+	OnDestroy();
+}
 
 bool Scene1::OnCreate()
 {
+	Shader shader;
+	camera = Camera::getInstance();
+	
 	std::cout << "scene1 loaded" << std::endl;
 
 	//Setup the player
 	player = new Player("Player1", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	if (player->hasComponent<SpriteComponent>())
 	{
+		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
 		player->getComponent<SpriteComponent>().setTexture("src/test.jpg");
+		player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("viewMatrix", camera->getProjectionMatrix());
+		player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("projectionMatrix", camera->getViewMatrix());
 	}
-	
+	camera->getProjectionMatrix().print();
+	camera->getViewMatrix().print();
+
+
 	//add it to the list of gameobjects
 	objectList.addGameObject(player);
 
 	tilemap = new Tilemap("src/tiles/Map1.txt");
 
-
-	//This init function separates rigidbodies from their gameobjects
+	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList.Init();
 
 	return false;
@@ -38,6 +48,12 @@ bool Scene1::OnCreate()
 void Scene1::OnDestroy()
 {
 	delete tilemap;
+	delete camera;
+	camera = nullptr;
+
+	delete player;
+	player = nullptr;
+
 }
 
 void Scene1::Update(const float deltaTime)
@@ -52,6 +68,9 @@ void Scene1::Render() const
 	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+
+	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("viewMatrix", camera->getProjectionMatrix());
+	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("projectionMatrix", camera->getViewMatrix());
 
 	objectList.Render();
 	tilemap->Render();

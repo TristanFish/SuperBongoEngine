@@ -12,12 +12,11 @@ class SpriteComponent : public Component
 {
 private:
 	TextureManager* texture;
-	Shader shader;
-
 	GLuint vao, vbo, ebo;
-	GLuint shader_program;
-
+	
 public:
+
+	Shader shader;
 	SpriteComponent() = default;
 	SpriteComponent(const char* path);
 
