@@ -25,7 +25,7 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	//distance from closest contact point to the center of the circle
 	MATH::Vec3 distance = closestContactPoint - circle.pos;
 
-	if (MATH::VMath::mag(distance) < circle.collider.size)
+	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
 		std::cout << "Circle box collision detected" << std::endl;
 		return true;
@@ -70,14 +70,12 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
-		rb1.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
-		rb1.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb1.vel = -rb1.vel;
 	}
 
 	if (rb2.collider.isMoveable)
 	{
-		rb2.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
-		rb2.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb2.vel = -rb2.vel;
 	}
 
 	rb1.OnCollisionEnter();
@@ -89,14 +87,14 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
-		rb1.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
-		rb1.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb1.vel = -rb1.vel;
+		
 	}
 
 	if (rb2.collider.isMoveable)
 	{
-		rb2.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
-		rb2.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb2.vel = -rb2.vel;
+		
 	}
 
 	rb1.OnCollisionEnter();

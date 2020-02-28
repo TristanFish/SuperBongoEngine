@@ -12,6 +12,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
 
+	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
 	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -1.0f, 0.0f));
 }
 
@@ -40,9 +41,20 @@ void Player::HandleEvents(const SDL_Event& event)
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
 		if (event.key.keysym.sym == SDLK_SPACE) {
-			std::cout << "Spacebar pressed" << std::endl;
+			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
+												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
 		}
-		else if(event.key.keysym.sym == SDLK_w){}
+		
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			RigidBodyComponent::ApplyImpulseTorque(5.0f);
+			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+		}
 	}
 
 	RigidBodyComponent::HandleEvents(event);

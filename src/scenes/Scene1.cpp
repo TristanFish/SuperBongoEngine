@@ -22,7 +22,7 @@ bool Scene1::OnCreate()
 		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
-		player->getComponent<SpriteComponent>().setTexture("src/Fire.png");
+		player->getComponent<SpriteComponent>().setTexture("src/Guy.png");
 	}
 	Camera::getInstance()->getProjectionMatrix().print();
 	Camera::getInstance()->getViewMatrix().print();
