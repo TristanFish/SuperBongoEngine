@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include <iostream>
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -51,7 +52,14 @@ void GameManager::HandleEvents()
 			isRunning = false;
 			return;
 		}
-
+		else if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.scancode) {
+			case SDL_SCANCODE_ESCAPE:
+				isRunning = false;
+				std::cout << "Closing Game" << std::endl;
+				return;
+			}
+		}
 
 		currentScene->HandleEvents(event);
 	}

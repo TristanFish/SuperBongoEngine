@@ -24,6 +24,7 @@ public:
 	inline MATH::Vec3& GetRotation() { return rotation; }
 	inline MATH::Vec3& GetScale() { return scale; }
 	inline MATH::Matrix4& GetModelMatrix() { return modelMatrix; }
+
 	void setPos(const MATH::Vec3& pos_);
 
 };

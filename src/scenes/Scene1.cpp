@@ -22,7 +22,7 @@ bool Scene1::OnCreate()
 		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
-		player->getComponent<SpriteComponent>().setTexture("src/test.jpg");
+		player->getComponent<SpriteComponent>().setTexture("src/Fire.png");
 	}
 	Camera::getInstance()->getProjectionMatrix().print();
 	Camera::getInstance()->getViewMatrix().print();
@@ -51,6 +51,7 @@ void Scene1::Update(const float deltaTime)
 {
 	//std::cout << 1.0f / deltaTime << std::endl;
 	tilemap->Update(deltaTime);
+
 	objectList.Update(deltaTime);
 	tilemap->CheckCollisions(*player);
 }
@@ -62,7 +63,6 @@ void Scene1::Render() const
 	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-
 
 	objectList.Render();
 	tilemap->Render();

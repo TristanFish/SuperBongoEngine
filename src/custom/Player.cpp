@@ -2,6 +2,8 @@
 
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
+
+
 	name = n;
 	transform = Transform(pos);
 
@@ -35,9 +37,12 @@ void Player::Render() const
 
 void Player::HandleEvents(const SDL_Event& event)
 {
-	if (event.type == SDL_EventType::SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
-		std::cout << "Spacebar pressed" << std::endl;
+		if (event.key.keysym.sym == SDLK_SPACE) {
+			std::cout << "Spacebar pressed" << std::endl;
+		}
+		else if(event.key.keysym.sym == SDLK_w){}
 	}
 
 	RigidBodyComponent::HandleEvents(event);
