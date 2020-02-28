@@ -31,13 +31,34 @@ Tilemap::Tilemap(const char* filepath)
 	}
 	file.close();
 
-
+	LoadMap();
 
 }
 
 Tilemap::~Tilemap()
 {
+	/*for (Tile &t : tileList)
+	{
+		delete t;
+	}*/
 	tileList.clear();
+}
+
+void Tilemap::LoadMap()
+{
+	float paddingx = -5.0f;
+	float paddingy = 1.0f;
+
+	for (int i = 0; i < MAXMAPHEIGHT; i++)
+	{
+		for (int j = 0; j < MAXMAPWIDTH; j++)
+		{
+			if (tiles[i][j] != 0)
+			{
+				tileList.push_back(Tile(MATH::Vec3(j + paddingx, -i + paddingy, 0.0f), static_cast<Tile::TileType>(tiles[i][j])));
+			}
+		}
+	}
 }
 
 void Tilemap::Update(const float deltaTime)
@@ -58,7 +79,7 @@ void Tilemap::Render() const
 
 void Tilemap::CheckCollisions(RigidBodyComponent &rb)
 {
-	for (Tile& t : tileList)
+	for (Tile &t : tileList)
 	{
 		Physics::DetectCollision(t, rb);
 	}

@@ -32,8 +32,8 @@ void GameManager::Run()
 	{
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
-		currentScene->Render();
 		HandleEvents();
+		currentScene->Render();
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}

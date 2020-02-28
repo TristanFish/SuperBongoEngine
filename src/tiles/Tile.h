@@ -11,15 +11,16 @@ private:
 
 public:
 
-	enum class TileType
+	enum TileType
 	{
-		Normal,
+		Normal = 1,
 		Refuel,
 		Hazard,
 		Victory
 	} tileType;
 
 	Tile();
+	Tile(const Tile &t);
 	Tile(const MATH::Vec3& pos, TileType type);
 	~Tile();
 

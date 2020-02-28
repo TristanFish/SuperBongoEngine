@@ -15,5 +15,5 @@ void Transform::Update(const float deltaTime)
 
 void Transform::setPos(const MATH::Vec3& pos_)
 {
-
+	pos = pos_;
 }

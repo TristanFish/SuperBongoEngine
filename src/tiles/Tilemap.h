@@ -19,6 +19,8 @@ public:
 	Tilemap(const char* filepath);
 	~Tilemap();
 
+	void LoadMap();
+
 	void Update(const float deltaTime);
 	void Render() const;
 	void CheckCollisions(RigidBodyComponent &rb);

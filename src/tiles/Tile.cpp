@@ -6,8 +6,13 @@ Tile::Tile(): tileType(TileType::Normal)
 	SpriteComponent::Init(this);
 }
 
+Tile::Tile(const Tile& t) : Tile(t.transform.pos, t.tileType)
+{
+}
+
 Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 {
+	name = "Tile";
 	transform.setPos(pos);
 
 	RigidBodyComponent::Init(this);
@@ -39,6 +44,7 @@ Tile::~Tile()
 
 void Tile::Update(const float deltaTime)
 {
+	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
 }

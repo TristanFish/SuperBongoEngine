@@ -12,7 +12,6 @@ class Scene1 : public Scene
 private:
 	Player* player;
 	Tilemap* tilemap;
-	Camera* camera;
 
 
 public:

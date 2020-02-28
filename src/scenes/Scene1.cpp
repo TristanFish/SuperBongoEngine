@@ -12,8 +12,6 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
-	Shader shader;
-	camera = Camera::getInstance();
 	
 	std::cout << "scene1 loaded" << std::endl;
 
@@ -25,11 +23,9 @@ bool Scene1::OnCreate()
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
 		player->getComponent<SpriteComponent>().setTexture("src/test.jpg");
-		player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("viewMatrix", camera->getProjectionMatrix());
-		player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("projectionMatrix", camera->getViewMatrix());
 	}
-	camera->getProjectionMatrix().print();
-	camera->getViewMatrix().print();
+	Camera::getInstance()->getProjectionMatrix().print();
+	Camera::getInstance()->getViewMatrix().print();
 
 
 	//add it to the list of gameobjects
@@ -48,16 +44,12 @@ bool Scene1::OnCreate()
 void Scene1::OnDestroy()
 {
 	delete tilemap;
-	delete camera;
-	camera = nullptr;
-
-	delete player;
-	player = nullptr;
-
+	Camera::removeInstance();
 }
 
 void Scene1::Update(const float deltaTime)
 {
+	tilemap->Update(deltaTime);
 	objectList.Update(deltaTime);
 }
 
@@ -69,8 +61,6 @@ void Scene1::Render() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("viewMatrix", camera->getProjectionMatrix());
-	player->getComponent<SpriteComponent>().shader.TakeInUniformMat4("projectionMatrix", camera->getViewMatrix());
 
 	objectList.Render();
 	tilemap->Render();
