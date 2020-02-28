@@ -9,6 +9,8 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
+
+	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -1.0f, 0.0f));
 }
 
 Player::~Player()

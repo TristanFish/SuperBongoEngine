@@ -19,7 +19,7 @@ public:
 	Tilemap(const char* filepath);
 	~Tilemap();
 
-	void LoadMap();
+	void CreateTile(int x, int y, Tile::TileType type);
 
 	void Update(const float deltaTime);
 	void Render() const;

@@ -16,7 +16,7 @@ bool Scene1::OnCreate()
 	std::cout << "scene1 loaded" << std::endl;
 
 	//Setup the player
-	player = new Player("Player1", MATH::Vec3(0.0f, 0.0f, 0.0f));
+	player = new Player("Player1", MATH::Vec3(0.0f, 8.0f, 0.0f));
 	if (player->hasComponent<SpriteComponent>())
 	{
 		
@@ -49,8 +49,10 @@ void Scene1::OnDestroy()
 
 void Scene1::Update(const float deltaTime)
 {
+	//std::cout << 1.0f / deltaTime << std::endl;
 	tilemap->Update(deltaTime);
 	objectList.Update(deltaTime);
+	tilemap->CheckCollisions(*player);
 }
 
 

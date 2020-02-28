@@ -18,6 +18,8 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
 
+	RigidBodyComponent::setMoveable(false);
+
 	//Setup different sprites for each tiletype
 	if (tileType == TileType::Normal) 
 	{
@@ -29,7 +31,7 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	}
 	else if (tileType == TileType::Refuel)
 	{
-		SpriteComponent::setTexture("ReSize.png");
+		SpriteComponent::setTexture("src/ReSize.png");
 	}
 	else if (tileType == TileType::Victory)
 	{

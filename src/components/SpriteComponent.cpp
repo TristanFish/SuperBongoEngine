@@ -83,22 +83,26 @@ void SpriteComponent::Update(const float deltaTime)
 
 void SpriteComponent::Render() const
 {
+	//use the current shader
 	shader.RunShader();	
 	
+	//setup uniforms
 	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getViewMatrix());
 	shader.TakeInUniformMat4("modelMatrix", gameobject->transform.GetModelMatrix());
 
+	//bind texture
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	//This says what we are going to draw and how many things we are going to draw
-
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+	//unbind texture and shader
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glUseProgram(0);
 }
 
 void SpriteComponent::HandleEvents(const SDL_Event& event)

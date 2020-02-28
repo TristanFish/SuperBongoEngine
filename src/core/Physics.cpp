@@ -70,12 +70,14 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
-		//do some sort of collision resolution
+		rb1.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb1.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	if (rb2.collider.isMoveable)
 	{
-		//do some sort of collision resolution
+		rb2.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb2.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	rb1.OnCollisionEnter();
@@ -87,12 +89,14 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
-		//do some sort of collision resolution
+		rb1.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb1.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	if (rb2.collider.isMoveable)
 	{
-		//do some sort of collision resolution
+		rb2.vel = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		rb2.accel = MATH::Vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	rb1.OnCollisionEnter();
