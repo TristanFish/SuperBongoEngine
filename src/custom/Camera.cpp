@@ -6,7 +6,7 @@ Camera* Camera::instance;
 
 Camera::Camera()
 {
-	orthoProjMatrix = (MMath::orthographic(-5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 1.0f));
+	orthoProjMatrix = (MMath::orthographic(-5.0f, 5.0f, -5.0f, 5.0f, -1.0f, 1.0f));
 	viewMatrix.loadIdentity();
 }
 

@@ -11,7 +11,7 @@ private:
 
 public:
 
-	enum TileType
+	enum class TileType
 	{
 		Normal = 1,
 		Refuel,
