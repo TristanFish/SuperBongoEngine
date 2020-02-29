@@ -3,7 +3,7 @@
 #include "core/Timer.h"
 
 RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.3f)
+										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f)
 {
 
 }
@@ -34,7 +34,9 @@ void RigidBodyComponent::Update(const float deltaTime)
 
 	gameobject->transform.setPos(pos);
 
+
 	angularVel += angularAcc * deltaTime;
+	angularVel *= angularDrag;
 	zAngle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
 
 	gameobject->SetRotation(MATH::Vec3(0.0f, 0.0f, zAngle));

@@ -47,12 +47,12 @@ void Player::HandleEvents(const SDL_Event& event)
 		
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+			RigidBodyComponent::ApplyImpulseTorque(5.0f);
 			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(5.0f);
+			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
 			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 		}
 	}

@@ -11,7 +11,7 @@ bool Physics::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb
 }
 
 //Found this code from https://learnopengl.com/In-Practice/2D-Game/Collisions/Collision-detection 
-//check it out its got a great visual description. also not sure if it works yet need to test it.
+//check it out its got a great visual description.
 bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
 	//Find the difference between both positions

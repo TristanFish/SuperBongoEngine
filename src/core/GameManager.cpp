@@ -29,6 +29,8 @@ void GameManager::Init()
 void GameManager::Run()
 {
 
+	Timer::UpdateTimer();
+
 	while (isRunning)
 	{
 		Timer::UpdateTimer();
