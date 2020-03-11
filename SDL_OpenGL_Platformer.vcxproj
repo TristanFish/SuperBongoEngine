@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\AnimComponent.h" />
     <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\components\Collider.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\AnimComponent.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
     <ClCompile Include="src\core\Physics.cpp" />
     <ClCompile Include="src\custom\Player.cpp" />

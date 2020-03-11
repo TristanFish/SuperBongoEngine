@@ -368,6 +368,7 @@
     <ClInclude Include="src\tiles\Tilemap.h" />
     <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\custom\Camera.h" />
+    <ClInclude Include="src\components\AnimComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -407,6 +408,7 @@
     <ClCompile Include="src\tiles\Tilemap.cpp" />
     <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
+    <ClCompile Include="src\components\AnimComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
