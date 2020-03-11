@@ -1,4 +1,6 @@
 #include "SpriteComponent.h"
+#include "graphics/TextureManager.h"
+#include "custom/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
@@ -31,10 +33,10 @@ void SpriteComponent::Init(GameObject *g)
 
 	float vertices[] = {
 		// positions           // colors          // texture coords
-		 0.5f,  0.5f, 0.0f,    1.0f, 0.0f, 0.0f,     1.0f, 1.0f,
-		 0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,     1.0f, 0.0f,
-		-0.5f, -0.5f, 0.0f,    0.0f,0.0f,1.0f,       0.0f, 0.0f,
-		-0.5f,  0.5f,  0.0f,   1.0f, 1.0f, 0.0f,     0.0f, 1.0f
+		 0.5f,  0.5f, 0.0f,    1.0f, 0.0f, 0.0f,     1.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,     1.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f,    0.0f,0.0f,1.0f,       0.0f, 1.0f,
+		-0.5f,  0.5f,  0.0f,   1.0f, 1.0f, 0.0f,     0.0f, 0.0f
 	};
 
 	unsigned int indices[] = {
@@ -42,7 +44,6 @@ void SpriteComponent::Init(GameObject *g)
 		1, 2, 3  //second triangle
 	};
 
-	std::cout << "scene1 loaded" << std::endl;
 	//Naming our buffer and array objects
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -82,20 +83,26 @@ void SpriteComponent::Update(const float deltaTime)
 
 void SpriteComponent::Render() const
 {
-	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
+	//use the current shader
+	shader.RunShader();	
+	
+	//setup uniforms
+	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeInUniformMat4("modelMatrix", gameobject->transform.GetModelMatrix());
 
-	shader.RunShader();
-	   
+	//bind texture
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	//This says what we are going to draw and how many things we are going to draw
-
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	//unbind texture and shader
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUseProgram(0);
 }
 
 void SpriteComponent::HandleEvents(const SDL_Event& event)

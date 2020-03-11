@@ -5,13 +5,13 @@
 #include "graphics/Shader.h"
 
 class Player;
+class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
 	Player* player;
-	Camera* camera;
-	
+	Tilemap* tilemap;
 
 
 public:

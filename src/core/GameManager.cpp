@@ -10,6 +10,7 @@ GameManager::~GameManager()
 {
 	delete window;
 	window = nullptr;
+	currentScene->OnDestroy();
 	delete currentScene;
 	currentScene = nullptr;
 }
@@ -28,12 +29,14 @@ void GameManager::Init()
 void GameManager::Run()
 {
 
+	Timer::UpdateTimer();
+
 	while (isRunning)
 	{
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
-		currentScene->Render();
 		HandleEvents();
+		currentScene->Render();
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}

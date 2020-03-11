@@ -3,8 +3,6 @@
 
 #include "components/ECS.h"
 #include "math/Vector.h"
-#include "math/VMATH.h"
-#include "core/Timer.h"
 #include "components/Collider.h"
 
 class RigidBodyComponent : public Component
@@ -42,6 +40,10 @@ public:
 
 	inline void setColliderSize(float s) { collider.size = s; }
 	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
+	inline bool isMoveable() { return collider.isMoveable; }
+	inline void setMoveable(bool b) { collider.isMoveable = b; }
+
+	virtual void OnCollisionEnter() = 0;
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetVelocity() { return vel; }

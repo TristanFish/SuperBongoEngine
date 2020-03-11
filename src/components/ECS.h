@@ -57,7 +57,7 @@ public:
 	inline void SetActive(bool a) { active = a; }
 
 	inline MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); }
-
+	inline void SetPos(MATH::Vec3 pos_) {  transform.setPos(pos_); }
 	inline void SetPos(MATH::Vec3 pos_) {  transform.pos = pos_; }
 	inline void SetScale(MATH::Vec3 scale_) { transform.scale = scale_; }
 	inline void SetRotation(MATH::Vec3 rotation_) { transform.rotation = rotation_; }

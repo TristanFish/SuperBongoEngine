@@ -130,6 +130,8 @@
     <ClInclude Include="src\graphics\TextureManager.h" />
     <ClInclude Include="src\core\Timer.h" />
     <ClInclude Include="src\graphics\Window.h" />
+    <ClInclude Include="src\tiles\Tilemap.h" />
+    <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\AnimComponent.cpp" />
@@ -150,6 +152,8 @@
     <ClCompile Include="src\graphics\TextureManager.cpp" />
     <ClCompile Include="src\core\Timer.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
+    <ClCompile Include="src\tiles\Tilemap.cpp" />
+    <ClCompile Include="src\tiles\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -179,6 +183,9 @@
     <Library Include="external\lib\SDL2main.lib" />
     <Library Include="external\lib\SDL2test.lib" />
     <Library Include="external\lib\SDL2_image.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\tiles\Map1.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
