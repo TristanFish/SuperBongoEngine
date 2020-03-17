@@ -16,13 +16,13 @@ bool Scene1::OnCreate()
 	std::cout << "scene1 loaded" << std::endl;
 
 	//Setup the player
-	player = new Player("Player1", MATH::Vec3(0.0f, 5.0f, 0.0f));
+	player = new Player("Player1", MATH::Vec3(0.0f, 3.0f, 0.0f));
 	if (player->hasComponent<SpriteComponent>())
 	{
 		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
-		player->getComponent<SpriteComponent>().setTexture("src/Guy.png");
+		player->getComponent<SpriteComponent>().setTexture("src/Fire.png");
 	}
 	Camera::getInstance()->getProjectionMatrix().print();
 	Camera::getInstance()->getViewMatrix().print();
