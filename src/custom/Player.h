@@ -19,10 +19,14 @@ public:
 
 
 
-	// Inherited via GameObject
+	//Inherited via GameObject
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& event) override;
+
+
+	//Inherited via RigidBodyComponent
+	virtual void OnCollisionEnter() override;
 
 };
 

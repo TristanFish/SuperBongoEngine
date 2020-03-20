@@ -2,6 +2,8 @@
 
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
+
+
 	name = n;
 	transform = Transform(pos);
 
@@ -9,6 +11,9 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
+
+	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
+	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -1.0f, 0.0f));
 }
 
 Player::~Player()
@@ -33,11 +38,29 @@ void Player::Render() const
 
 void Player::HandleEvents(const SDL_Event& event)
 {
-	if (event.type == SDL_EventType::SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
-		std::cout << "Spacebar pressed" << std::endl;
+		if (event.key.keysym.sym == SDLK_SPACE) {
+			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
+												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
+		}
+		
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			RigidBodyComponent::ApplyImpulseTorque(5.0f);
+			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+		}
 	}
 
 	RigidBodyComponent::HandleEvents(event);
 	SpriteComponent::HandleEvents(event);
+}
+
+void Player::OnCollisionEnter()
+{
 }

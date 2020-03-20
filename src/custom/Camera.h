@@ -11,7 +11,8 @@ class Camera
 public:
 
 	Camera();
-	static Camera* getInstance() { static Camera* camera = new Camera(); return camera;}
+	static Camera* getInstance();
+	inline static void removeInstance() { delete instance; instance = nullptr; }
 	inline Matrix4& getProjectionMatrix() { return orthoProjMatrix; }
 	inline Matrix4& getViewMatrix() { return viewMatrix; }
 	inline void setProjectionMatrix(Matrix4 projection_) { orthoProjMatrix = projection_; }
@@ -19,6 +20,7 @@ public:
 		
 private:
 	
+	static Camera* instance;
 
 	Matrix4 viewMatrix;
 	Matrix4 orthoProjMatrix;

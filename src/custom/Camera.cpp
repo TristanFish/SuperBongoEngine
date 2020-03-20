@@ -2,10 +2,19 @@
 
 using namespace MATH;
 
+Camera* Camera::instance;
+
 Camera::Camera()
 {
-	orthoProjMatrix = (MMath::orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+	orthoProjMatrix = (MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -1.0f, 1.0f));
 	viewMatrix.loadIdentity();
-	
+}
 
+Camera* Camera::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Camera();
+	}
+	return instance;	
 }
