@@ -27,7 +27,6 @@ private:
 public:
 	Collider collider;
 
-
 	RigidBodyComponent();
 
 	// Inherited via Component

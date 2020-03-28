@@ -14,13 +14,14 @@ public:
 	};
 
 	shape colliderShape;
-	bool isMoveable;
+	bool isMoveable, isTrigger;
 	float size;
 
 	Collider()
 	{
 		colliderShape = shape::Box;
 		isMoveable = true;
+		isTrigger = true;
 		size = 1.0f;
 	}
 };

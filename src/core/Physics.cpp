@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "tiles/Tile.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
 
@@ -33,9 +34,14 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
 		std::cout << "Circle box collision detected" << std::endl;
+		circle.IsGrounded = true;
 		return true;
 	}
-
+	if (circle.pos.y > box.pos.y + 3)
+	{
+		circle.IsGrounded = false;
+		return false;
+	}
 	return false;
 }
 
@@ -51,6 +57,7 @@ bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		(rb1.pos.y + rb1Halfy > rb2.pos.y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
 		std::cout << "Box box collision detected" << std::endl;
+		
 		return true;
 	}
 	return false;
@@ -74,12 +81,18 @@ void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& r
 
 void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	if (rb1.collider.isMoveable)
+	if (rb1.collider.isMoveable && !rb2.collider.isTrigger)
 	{
-		rb1.vel.y = 0.0f;
+		if (rb1.IsGrounded)
+		{
+			rb1.accel.y = 0.0f;
+			rb1.vel.y = 0.0f;
+
+		}
 	}
 
-	if (rb2.collider.isMoveable)
+	
+	if (rb2.collider.isMoveable && !rb1.collider.isTrigger)
 	{
 		rb2.vel = -rb2.vel;
 	}
@@ -126,19 +139,16 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	{
 		if (CircleBoxDetect(rb2, rb1))
 		{
-			rb2.IsGrounded = true;
-			rb2.accel.y = 0.0f;
 			CircleBoxResolve(rb2, rb1);
 			return true;
 		}
-		else
+		if (!rb2.IsGrounded)
 		{
-			if (rb2.pos.y > rb1.pos.y + 3)
-			{
-				rb2.IsGrounded = false;
-				rb2.accel.y = -1.0f;
-				std::cout << "Force Applied" << std::endl;
-			}
+			rb2.accel.y = -1.0f;
+			std::cout << "In Sky" << std::endl;
+		}
+		else 
+		{
 			return false;
 		}
 		

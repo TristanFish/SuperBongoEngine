@@ -11,19 +11,18 @@ private:
 
 public:
 
-	enum class TileType
+	 enum class TileType
 	{
 		Normal = 1,
 		Refuel,
 		Hazard,
 		Victory
 	} tileType;
-
+	 
 	Tile();
 	Tile(const Tile &t);
 	Tile(const MATH::Vec3& pos, TileType type);
 	~Tile();
-
 
 	// Inherited via GameObject
 	virtual void Update(const float deltaTime) override;
@@ -32,6 +31,7 @@ public:
 
 	// Inherited via RigidBodyComponent
 	virtual void OnCollisionEnter() override;
+
 };
 
 #endif
