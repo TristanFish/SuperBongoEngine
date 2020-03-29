@@ -33,7 +33,7 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	
 	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
-		std::cout << "Circle box collision detected" << std::endl;
+	//	std::cout << "Circle box collision detected" << std::endl;
 		circle.IsGrounded = true;
 		return true;
 	}
@@ -87,7 +87,6 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		{
 			rb1.accel.y = 0.0f;
 			rb1.vel.y = 0.0f;
-
 		}
 	}
 
@@ -142,13 +141,13 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 			CircleBoxResolve(rb2, rb1);
 			return true;
 		}
-		if (!rb2.IsGrounded)
-		{
-			rb2.accel.y = -1.0f;
-			std::cout << "In Sky" << std::endl;
-		}
 		else 
 		{
+			if (!rb2.IsGrounded)
+			{
+				rb2.accel.y = -1.0f;
+			//	std::cout << "In Sky" << std::endl;
+			}
 			return false;
 		}
 		

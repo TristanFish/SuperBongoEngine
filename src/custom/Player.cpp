@@ -78,6 +78,26 @@ void Player::HandleEvents(const SDL_Event& event)
 		}
 	}
 
+	if (event.type == SDL_EventType::SDL_KEYUP)
+	{
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
+		}
+	}
+
 	RigidBodyComponent::HandleEvents(event);
 	SpriteComponent::HandleEvents(event);
 }
