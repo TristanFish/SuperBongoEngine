@@ -37,11 +37,6 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 		circle.IsGrounded = true;
 		return true;
 	}
-	if (circle.pos.y > box.pos.y + 3)
-	{
-		circle.IsGrounded = false;
-		return false;
-	}
 	return false;
 }
 
@@ -146,7 +141,6 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 			if (!rb2.IsGrounded)
 			{
 				rb2.accel.y = -1.0f;
-			//	std::cout << "In Sky" << std::endl;
 			}
 			return false;
 		}
