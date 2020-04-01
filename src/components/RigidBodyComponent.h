@@ -20,6 +20,9 @@ private:
 	float angularAcc;
 	float angularDrag;
 
+	bool IsGrounded;
+
+
 	friend class Physics;
 public:
 	Collider collider;
@@ -53,10 +56,12 @@ public:
 	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
+	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
 	inline float GetAngVelocity() { return angularVel; }
 	inline float GetAngAccel() { return angularAcc; }
 	inline float GetAngDrag() { return angularDrag; }
+	inline bool GetIsGrounded() { return IsGrounded; }
 	inline void SetRotInertia(const float r) { rotInertia = r; }
 	inline void SetAngVelocity(const float vel) { angularVel = vel; }
 	inline void SetAngAccel(const float acc) { angularAcc = acc; }
