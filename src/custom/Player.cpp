@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "core/Timer.h"
+#include "custom/Camera.h"
 
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
@@ -27,6 +29,7 @@ void Player::Update(const float deltaTime)
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
+	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.2f));
 }
 
 void Player::Render() const
@@ -44,7 +47,14 @@ void Player::HandleEvents(const SDL_Event& event)
 			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
 												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
 		}
-		
+		if (event.key.keysym.sym == SDLK_k)
+		{
+			Timer::SetTimeScale(1.0f);
+		}
+		if (event.key.keysym.sym == SDLK_l)
+		{
+			Timer::SetTimeScale(0.5f);
+		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
 			RigidBodyComponent::ApplyImpulseTorque(5.0f);
