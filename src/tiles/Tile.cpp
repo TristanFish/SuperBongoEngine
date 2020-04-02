@@ -1,6 +1,7 @@
 #include "Tile.h"
+#include "custom/Player.h"
 
-Tile::Tile(): tileType(TileType::Normal)
+Tile::Tile():  tileType(TileType::Normal)
 {
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
@@ -9,6 +10,8 @@ Tile::Tile(): tileType(TileType::Normal)
 Tile::Tile(const Tile& t) : Tile(t.transform.pos, t.tileType)
 {
 }
+
+
 
 Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 {
@@ -19,23 +22,27 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setMoveable(false);
+ 
 
 	//Setup different sprites for each tiletype
 	if (tileType == TileType::Normal) 
 	{
-		SpriteComponent::setTexture("src/placeholderSquare.png");
+		collider.isTrigger = false;
+		SpriteComponent::setTexture("src/Textures/grass.jpg");
 	} 
 	else if (tileType == TileType::Hazard)
 	{
-		SpriteComponent::setTexture("src/test.jpg");
+		collider.isTrigger = true;
+		SpriteComponent::setTexture("src/Textures/Hazard.png");
 	}
 	else if (tileType == TileType::Refuel)
 	{
-		SpriteComponent::setTexture("src/ReSize.png");
+		collider.isTrigger = true;
+		SpriteComponent::setTexture("src/Textures/ReSize.png");
 	}
 	else if (tileType == TileType::Victory)
 	{
-
+		collider.isTrigger = true;
 	}
 	SpriteComponent::setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
 }

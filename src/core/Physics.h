@@ -2,6 +2,7 @@
 #define PHYSICS_H
 
 #include "math/VMath.h"
+#include "MMath.h"
 #include "components/RigidBodyComponent.h"
 
 class Physics
@@ -16,9 +17,8 @@ private:
 	static void CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
 	static void BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
 
-
-public:
 	
+public:
 	static bool DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
 
 };

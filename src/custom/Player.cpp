@@ -43,27 +43,63 @@ void Player::HandleEvents(const SDL_Event& event)
 {
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
-		if (event.key.keysym.sym == SDLK_SPACE) {
+		if (event.key.keysym.sym == SDLK_w) {
 			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
 												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
+			RigidBodyComponent::SetIsGrounded(false);
+
 		}
-		if (event.key.keysym.sym == SDLK_k)
-		{
-			Timer::SetTimeScale(1.0f);
-		}
-		if (event.key.keysym.sym == SDLK_l)
-		{
-			Timer::SetTimeScale(0.5f);
-		}
-		if (event.key.keysym.sym == SDLK_a)
+		if (event.key.keysym.sym == SDLK_q)
 		{
 			RigidBodyComponent::ApplyImpulseTorque(5.0f);
 			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 		}
-		if (event.key.keysym.sym == SDLK_d)
+		if (event.key.keysym.sym == SDLK_e)
 		{
 			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
 			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+		}
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(-2.0, 0.0, 0.0));
+			}
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(2.0, 0.0, 0.0));
+			}
+		}
+		if (event.key.keysym.sym == SDLK_SPACE)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 2.0, 0.0));
+				RigidBodyComponent::SetIsGrounded(false);
+			}
+		}
+	}
+
+	if (event.type == SDL_EventType::SDL_KEYUP)
+	{
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
 		}
 	}
 
