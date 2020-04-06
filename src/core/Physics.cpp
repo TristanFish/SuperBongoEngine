@@ -37,6 +37,12 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 		circle.IsGrounded = true;
 		return true;
 	}
+	 if (circle.pos.x > box.pos.x * 2 || circle.pos.x < box.pos.x * 2)
+	{
+		//	std::cout << "Circle box collision detected" << std::endl;
+		circle.IsGrounded = false;
+		return false;
+	}
 	return false;
 }
 

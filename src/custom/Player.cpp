@@ -49,13 +49,19 @@ void Player::HandleEvents(const SDL_Event& event)
 		
 		if (event.key.keysym.sym == SDLK_q)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(5.0f);
-			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
 		if (event.key.keysym.sym == SDLK_e)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
-			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
