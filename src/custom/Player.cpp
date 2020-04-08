@@ -15,7 +15,8 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
-	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -1.0f, 0.0f));
+	RigidBodyComponent::setColliderSize(2.0f);
+	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -3.0f, 0.0f));
 }
 
 Player::~Player()
@@ -44,11 +45,12 @@ void Player::HandleEvents(const SDL_Event& event)
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
 		if (event.key.keysym.sym == SDLK_w) {
-			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
-												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
+			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
+				* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
 			RigidBodyComponent::SetIsGrounded(false);
 
 		}
+
 		if (event.key.keysym.sym == SDLK_q)
 		{
 			if (!RigidBodyComponent::GetIsGrounded())
@@ -69,6 +71,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				SetScale(Vec3(-2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(-2.0, 0.0, 0.0));
 			}
 		}
@@ -76,6 +79,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				SetScale(Vec3(2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(2.0, 0.0, 0.0));
 			}
 		}

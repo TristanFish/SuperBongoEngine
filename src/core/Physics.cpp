@@ -37,12 +37,6 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 		circle.IsGrounded = true;
 		return true;
 	}
-	 if (circle.pos.x > box.pos.x * 2 || circle.pos.x < box.pos.x * 2)
-	{
-		//	std::cout << "Circle box collision detected" << std::endl;
-		circle.IsGrounded = false;
-		return false;
-	}
 	return false;
 }
 
@@ -113,7 +107,6 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	if (rb2.collider.isMoveable)
 	{
 		rb2.vel = -rb2.vel;
-		
 	}
 
 	rb1.OnCollisionEnter();
@@ -146,7 +139,7 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		{
 			if (!rb2.IsGrounded)
 			{
-				rb2.accel.y = -1.0f;
+				rb2.accel.y = -3.0f;
 			}
 			return false;
 		}

@@ -28,7 +28,8 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	if (tileType == TileType::Normal) 
 	{
 		collider.isTrigger = false;
-		SpriteComponent::setTexture("src/Textures/grass.jpg");
+		transform.scale = Vec3(1.0, 1.0, 0.0);
+		SpriteComponent::setTexture("src/Textures/texture_09.jpg");
 	} 
 	else if (tileType == TileType::Hazard)
 	{
