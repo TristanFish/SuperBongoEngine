@@ -15,7 +15,7 @@ public:
 	GLuint CreateShader(const char* vertexPath, const char* fragmentPath);
 	void RunShader() const;
 	Matrix4 viewProjectionSize;
-	void TakeInUniformMat4(const std::string &name, Matrix4 &matrix);
+	void TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const;
 	
 
 private:

@@ -3,8 +3,6 @@
 
 #include "components/ECS.h"
 #include "math/Vector.h"
-#include "math/VMATH.h"
-#include "core/Timer.h"
 #include "components/Collider.h"
 
 class RigidBodyComponent : public Component
@@ -21,6 +19,9 @@ private:
 	float angularVel;
 	float angularAcc;
 	float angularDrag;
+
+	bool IsGrounded;
+
 
 	friend class Physics;
 public:
@@ -42,6 +43,10 @@ public:
 
 	inline void setColliderSize(float s) { collider.size = s; }
 	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
+	inline bool isMoveable() { return collider.isMoveable; }
+	inline void setMoveable(bool b) { collider.isMoveable = b; }
+
+	virtual void OnCollisionEnter() = 0;
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetVelocity() { return vel; }
@@ -51,10 +56,12 @@ public:
 	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
+	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
 	inline float GetAngVelocity() { return angularVel; }
 	inline float GetAngAccel() { return angularAcc; }
 	inline float GetAngDrag() { return angularDrag; }
+	inline bool GetIsGrounded() { return IsGrounded; }
 	inline void SetRotInertia(const float r) { rotInertia = r; }
 	inline void SetAngVelocity(const float vel) { angularVel = vel; }
 	inline void SetAngAccel(const float acc) { angularAcc = acc; }

@@ -1,9 +1,12 @@
-#pragma once
+#ifndef SPRITECOMPONENT_H
+#define SPRITECOMPONENT_H
+
 #include <sdl/SDL.h>
 #include "ECS.h"
-#include "graphics/TextureManager.h"
 #include "graphics/shader.h"
 #include <glew/glew.h>
+
+class TextureManager;
 
 class SpriteComponent : public Component
 {
@@ -28,3 +31,4 @@ public:
 	 void Render() const override;
 	 void HandleEvents(const SDL_Event& event) override;
 };
+#endif // !1

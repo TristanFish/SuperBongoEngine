@@ -32,9 +32,9 @@ void Manager::Init()
 {
 	for (GameObject* g : gameObjects)
 	{
-		if (RigidBodyComponent* r = &g->getComponent<RigidBodyComponent>())
+		if (g->hasComponent<RigidBodyComponent>())
 		{
-			rigidBodies.emplace_back(r);
+			rigidBodies.emplace_back(&g->getComponent<RigidBodyComponent>());
 		}
 	}
 }

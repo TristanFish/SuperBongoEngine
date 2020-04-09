@@ -1,18 +1,24 @@
 #include "Physics.h"
+#include "tiles/Tile.h"
+#include "math/Vector.h"
+#include "math/VMath.h"
 
+using namespace MATH;
 bool Physics::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (pow(rb1.collider.size + rb2.collider.size, 2) < pow((rb1.pos.x + rb2.pos.x), 2) + pow((rb1.pos.y + rb2.pos.y), 2))
 	{
+		std::cout << "Circle circle collision detected" << std::endl;
 		return true;
 	}
 	return false;
 }
 
 //Found this code from https://learnopengl.com/In-Practice/2D-Game/Collisions/Collision-detection 
-//check it out its got a great visual description. also not sure if it works yet
+//check it out its got a great visual description.
 bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
+
 	//Find the difference between both positions
 	MATH::Vec3 differenceVector = circle.pos - box.pos; 
 	
@@ -24,8 +30,11 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	//distance from closest contact point to the center of the circle
 	MATH::Vec3 distance = closestContactPoint - circle.pos;
 
-	if (MATH::VMath::mag(distance) < circle.collider.size)
+	
+	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
+	//	std::cout << "Circle box collision detected" << std::endl;
+		circle.IsGrounded = true;
 		return true;
 	}
 	return false;
@@ -33,11 +42,17 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 
 bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	if ((rb1.pos.x < rb2.pos.x + rb2.collider.size) &&
-		(rb1.pos.x + rb1.collider.size > rb2.pos.x) &&
-		(rb1.pos.y < rb2.pos.y + rb2.collider.size) &&
-		(rb1.pos.y + rb1.collider.size > rb2.pos.y))
+	float rb1Halfx = rb1.collider.size / 2.0f;
+	float rb2Halfx = rb2.collider.size / 2.0f;
+	float rb1Halfy = rb1Halfx;
+	float rb2Halfy = rb2Halfx;
+	if ((rb1.pos.x - rb1Halfx < rb2.pos.x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
+		(rb1.pos.x + rb1Halfx > rb2.pos.x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
+		(rb1.pos.y - rb1Halfy < rb2.pos.y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
+		(rb1.pos.y + rb1Halfy > rb2.pos.y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
+		std::cout << "Box box collision detected" << std::endl;
+		
 		return true;
 	}
 	return false;
@@ -45,19 +60,64 @@ bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 
 void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
+	if (rb1.collider.isMoveable)
+	{
+		//do some sort of collision resolution
+	}
+
+	if (rb2.collider.isMoveable)
+	{
+		//do some sort of collision resolution
+	}
+
+	rb1.OnCollisionEnter();
+	rb2.OnCollisionEnter();
 }
 
 void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
+	if (rb1.collider.isMoveable && !rb2.collider.isTrigger)
+	{
+		if (rb1.IsGrounded)
+		{
+			rb1.accel.y = 0.0f;
+			rb1.vel.y = 0.0f;
+		}
+	}
+
+	
+	if (rb2.collider.isMoveable && !rb1.collider.isTrigger)
+	{
+		rb2.vel = -rb2.vel;
+	}
+
+	rb1.OnCollisionEnter();
+	rb2.OnCollisionEnter();
+
 }
 
 void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
+	if (rb1.collider.isMoveable)
+	{
+		rb1.vel = -rb1.vel;
+		
+	}
+
+	if (rb2.collider.isMoveable)
+	{
+		rb2.vel = -rb2.vel;
+		
+	}
+
+	rb1.OnCollisionEnter();
+	rb2.OnCollisionEnter();
 }
 
 bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	if (rb1.collider.colliderShape == Collider::Circle && rb2.collider.colliderShape == Collider::Circle)
+
+	if (rb1.collider.colliderShape == Collider::shape::Circle && rb2.collider.colliderShape == Collider::shape::Circle)
 	{
 		if (CircleCircleDetect(rb1, rb2))
 		{
@@ -65,23 +125,28 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 			return true;
 		}
 		else
-		{
+		{	
 			return false;
 		}
 	} else
-	if (rb1.collider.colliderShape == Collider::Box && rb2.collider.colliderShape == Collider::Circle)
+	if (rb1.collider.colliderShape == Collider::shape::Box && rb2.collider.colliderShape == Collider::shape::Circle)
 	{
 		if (CircleBoxDetect(rb2, rb1))
 		{
 			CircleBoxResolve(rb2, rb1);
 			return true;
 		}
-		else
+		else 
 		{
+			if (!rb2.IsGrounded)
+			{
+				rb2.accel.y = -1.0f;
+			}
 			return false;
 		}
+		
 	} 
-	else if (rb1.collider.colliderShape == Collider::Circle && rb2.collider.colliderShape == Collider::Box)
+	else if (rb1.collider.colliderShape == Collider::shape::Circle && rb2.collider.colliderShape == Collider::shape::Box)
 	{
 		if (CircleBoxDetect(rb1, rb2))
 		{
@@ -93,7 +158,7 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 			return false;
 		}
 	} 
-	else if (rb1.collider.colliderShape == Collider::Box && rb2.collider.colliderShape == Collider::Box)
+	else if (rb1.collider.colliderShape == Collider::shape::Box && rb2.collider.colliderShape == Collider::shape::Box)
 	{
 		if (BoxBoxDetect(rb1, rb2))
 		{
@@ -112,8 +177,4 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 
 
 	return false;
-}
-
-void Physics::ResolveCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
-{
 }

@@ -5,13 +5,13 @@
 #include "graphics/Shader.h"
 
 class Player;
+class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
 	Player* player;
-	Camera* camera;
-	
+	Tilemap* tilemap;
 
 
 public:
@@ -22,7 +22,6 @@ public:
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event &event) override;
-
 
 };
 

@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include <iostream>
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -9,6 +10,7 @@ GameManager::~GameManager()
 {
 	delete window;
 	window = nullptr;
+	currentScene->OnDestroy();
 	delete currentScene;
 	currentScene = nullptr;
 }
@@ -27,12 +29,14 @@ void GameManager::Init()
 void GameManager::Run()
 {
 
+	Timer::UpdateTimer();
+
 	while (isRunning)
 	{
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
-		currentScene->Render();
 		HandleEvents();
+		currentScene->Render();
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}
@@ -50,7 +54,14 @@ void GameManager::HandleEvents()
 			isRunning = false;
 			return;
 		}
-
+		else if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.scancode) {
+			case SDL_SCANCODE_ESCAPE:
+				isRunning = false;
+				std::cout << "Closing Game" << std::endl;
+				return;
+			}
+		}
 
 		currentScene->HandleEvents(event);
 	}
