@@ -38,8 +38,9 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	}
 	else if (tileType == TileType::Refuel)
 	{
+		pass = 0;
 		collider.isTrigger = true;
-		SpriteComponent::setTexture("src/Textures/ReSize.png");
+		SpriteComponent::setTexture("src/Textures/texture_02.jpg");
 	}
 	else if (tileType == TileType::Victory)
 	{
@@ -73,9 +74,12 @@ void Tile::OnCollisionEnter()
 	if (tileType == TileType::Normal)
 	{
 		std::cout << "Normal tile touched" << std::endl;
-	} else if (tileType == TileType::Refuel)
+	} else if (tileType == TileType::Refuel && pass == 0)
 	{
+		Player::setJetPower(Player::getJetPower() + 2.0f);
+		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
 		std::cout << "Refuel tile touched" << std::endl;
+		pass = 1;
 	} else if (tileType == TileType::Hazard)
 	{
 		std::cout << "Hazard tile touched" << std::endl;

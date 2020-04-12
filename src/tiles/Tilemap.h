@@ -3,8 +3,8 @@
 
 #include "tiles/Tile.h"
 
-#define MAXMAPHEIGHT 13
-#define MAXMAPWIDTH 13
+#define MAXMAPHEIGHT 16
+#define MAXMAPWIDTH 31
 
 class Tilemap
 {
