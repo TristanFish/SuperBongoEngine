@@ -2,9 +2,10 @@
 #include "core/Timer.h"
 #include "custom/Camera.h"
 
+ float Player::jetPower = 0.0f;
+
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
-
 
 	name = n;
 	transform = Transform(pos);
@@ -15,7 +16,8 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
-	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -1.0f, 0.0f));
+	RigidBodyComponent::setColliderSize(2.0f);
+	RigidBodyComponent::ApplyConstantForce(MATH::Vec3(0.0f, -3.0f, 0.0f));
 }
 
 Player::~Player()
@@ -26,6 +28,7 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
+	std::cout << jetPower << std::endl;
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
@@ -44,40 +47,53 @@ void Player::HandleEvents(const SDL_Event& event)
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
 		if (event.key.keysym.sym == SDLK_w) {
-			RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f)) 
-												* MATH::Vec3(0.0f, 1.0f, 0.0f) * 2.0f);
-			RigidBodyComponent::SetIsGrounded(false);
 
+			if (jetPower > 0.0)
+			{
+				jetPower -= 0.3;
+				RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
+					* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
+				RigidBodyComponent::SetIsGrounded(false);
+			}
 		}
+
 		if (event.key.keysym.sym == SDLK_q)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(5.0f);
-			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
 		if (event.key.keysym.sym == SDLK_e)
 		{
-			RigidBodyComponent::ApplyImpulseTorque(-5.0f);
-			std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(-2.0, 0.0, 0.0));
+				SetScale(Vec3(-2, transform.scale.y, transform.scale.z));
+				RigidBodyComponent::SetVelocity(Vec3(-8.0, 0.0, 0.0));
 			}
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(2.0, 0.0, 0.0));
+				SetScale(Vec3(2, transform.scale.y, transform.scale.z));
+				RigidBodyComponent::SetVelocity(Vec3(8.0, 0.0, 0.0));
 			}
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 2.0, 0.0));
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 3.0, 0.0));
 				RigidBodyComponent::SetIsGrounded(false);
 			}
 		}
@@ -106,6 +122,8 @@ void Player::HandleEvents(const SDL_Event& event)
 	RigidBodyComponent::HandleEvents(event);
 	SpriteComponent::HandleEvents(event);
 }
+
+
 
 void Player::OnCollisionEnter()
 {

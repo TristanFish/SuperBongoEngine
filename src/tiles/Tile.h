@@ -5,9 +5,9 @@
 
 class Tile : public GameObject, public RigidBodyComponent, public SpriteComponent
 {
+
 private:
-
-
+	int pass; //Used for finding how many times the player has gone through the tile(For Refuels) 
 
 public:
 
