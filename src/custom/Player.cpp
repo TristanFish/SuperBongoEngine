@@ -29,7 +29,7 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
-	std::cout << jetPower << std::endl;
+	//std::cout << jetPower << std::endl;
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
