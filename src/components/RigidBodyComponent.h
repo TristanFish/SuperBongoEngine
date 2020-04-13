@@ -10,7 +10,7 @@ class RigidBodyComponent : public Component
 private:
 	float mass;
 	MATH::Vec3 pos; 
-	MATH::Vec3 vel;
+	 MATH::Vec3 vel;
 	MATH::Vec3 accel;
 	float linearDrag;
 
@@ -20,7 +20,7 @@ private:
 	float angularAcc;
 	float angularDrag;
 
-	bool IsGrounded;
+	 bool IsGrounded;
 
 
 	friend class Physics;
@@ -55,15 +55,15 @@ public:
 	inline MATH::Vec3 GetAccel() { return accel; }
 	inline float GetLinDrag() { return linearDrag; }
 	inline void SetMass(const float m) { mass = m; }
-	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
+	 inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
-	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
+	 inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
 	inline float GetAngVelocity() { return angularVel; }
 	inline float GetAngAccel() { return angularAcc; }
 	inline float GetAngDrag() { return angularDrag; }
-	inline bool GetIsGrounded() { return IsGrounded; }
+	 inline bool GetIsGrounded() { return IsGrounded; }
 	inline void SetRotInertia(const float r) { rotInertia = r; }
 	inline void SetAngVelocity(const float vel) { angularVel = vel; }
 	inline void SetAngAccel(const float acc) { angularAcc = acc; }
