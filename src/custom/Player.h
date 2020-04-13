@@ -26,12 +26,10 @@ public:
 
 
 	//Inherited via RigidBodyComponent
-    virtual void OnCollisionEnter();
+    virtual void OnCollisionEnter(RigidBodyComponent& otherBody) override;
 
-
-	static inline float getJetPower() { return jetPower; }
-
-	static inline void setJetPower(float f) { jetPower = f; }
+	inline float getJetPower() { return jetPower; }
+	inline void setJetPower(float f) { jetPower = f; }
 };
 
 #endif

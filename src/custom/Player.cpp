@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "core/Timer.h"
 #include "custom/Camera.h"
+#include "tiles/Tile.h"
 
  float Player::jetPower = 0.0f;
 
@@ -32,7 +33,7 @@ void Player::Update(const float deltaTime)
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
-	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.2f));
+	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.05f));
 }
 
 void Player::Render() const
@@ -125,6 +126,18 @@ void Player::HandleEvents(const SDL_Event& event)
 
 
 
-void Player::OnCollisionEnter()
+void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
+	if (Tile* t = dynamic_cast<Tile*>(&otherBody))
+	{
+		if (t->tileType == Tile::TileType::Normal)
+		{
+			std::cout << "Player has touched a Normal Tile." << std::endl;
+		}
+		if ((t->tileType == Tile::TileType::Refuel) && (t->pass == 0))
+		{
+			jetPower += 2.0f;
+			std::cout << "Player has touched a Refuel Tile." << std::endl;
+		}
+	}
 }

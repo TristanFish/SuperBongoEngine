@@ -75,8 +75,8 @@ void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& r
 		//do some sort of collision resolution
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 }
 
 void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
@@ -96,8 +96,8 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		rb2.vel = -rb2.vel;
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 
 }
 
@@ -114,8 +114,8 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		rb2.vel = -rb2.vel;
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 }
 
 bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
