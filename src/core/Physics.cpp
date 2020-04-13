@@ -139,7 +139,7 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		{
 			if (!rb2.IsGrounded)
 			{
-				rb2.accel.y = -3.0f;
+				rb2.accel.y = -6.0f;
 			}
 			return false;
 		}
