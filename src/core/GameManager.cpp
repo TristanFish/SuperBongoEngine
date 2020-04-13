@@ -60,10 +60,18 @@ void GameManager::HandleEvents()
 				isRunning = false;
 				std::cout << "Closing Game" << std::endl;
 				return;
+			case SDL_SCANCODE_P:
+				ReloadCurrentScene();
+				break;
 			}
 		}
 
 		currentScene->HandleEvents(event);
 	}
 
+}
+
+void GameManager::ReloadCurrentScene()
+{
+	currentScene->Reset();
 }

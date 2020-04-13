@@ -75,3 +75,9 @@ void Scene1::HandleEvents(const SDL_Event& event)
 {
 	objectList.HandleEvents(event);
 }
+
+void Scene1::Reset()
+{
+	OnDestroy();
+	OnCreate();
+}
