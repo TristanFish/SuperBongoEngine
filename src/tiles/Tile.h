@@ -7,9 +7,9 @@ class Tile : public GameObject, public RigidBodyComponent, public SpriteComponen
 {
 
 private:
-	int pass; //Used for finding how many times the player has gone through the tile(For Refuels) 
 
 public:
+	int pass; //Used for finding how many times the player has gone through the tile(For Refuels) 
 
 	 enum class TileType
 	{
@@ -30,7 +30,7 @@ public:
 	virtual void HandleEvents(const SDL_Event& event) override;
 
 	// Inherited via RigidBodyComponent
-	virtual void OnCollisionEnter() override;
+	virtual void OnCollisionEnter(RigidBodyComponent& otherBody) override;
 
 };
 

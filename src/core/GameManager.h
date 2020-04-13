@@ -25,6 +25,8 @@ public:
 	void Run();
 	void HandleEvents();
 
+	void ReloadCurrentScene();
+
 
 };
 

@@ -68,23 +68,21 @@ void Tile::HandleEvents(const SDL_Event& event)
 {
 }
 
-void Tile::OnCollisionEnter()
+void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
 	if (tileType == TileType::Normal)
 	{
-		std::cout << "Normal tile touched" << std::endl;
+
 	}
 	else if (tileType == TileType::Refuel && pass == 0)
 	{
-		Player::setJetPower(Player::getJetPower() + 2.0f);
 		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
-		std::cout << "Refuel tile touched" << std::endl;
 		pass = 1;
 	} else if (tileType == TileType::Hazard)
 	{
-		std::cout << "Hazard tile touched" << std::endl;
+
 	} else if (tileType == TileType::Victory)
 	{
-		std::cout << "Victory tile touched" << std::endl;
+
 	}
 }
