@@ -14,8 +14,6 @@ Camera::Camera()
 void Camera::Update(float deltaTime)
 {
 	viewMatrix = MMath::translate(-position.x * 0.1f, -position.y * 0.1f, -0.5f);
-	
-	viewMatrix.print();
 }
 
 Camera* Camera::getInstance()

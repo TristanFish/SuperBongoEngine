@@ -19,7 +19,7 @@ void GameManager::Init()
 {
 	//timer = Timer();
 	window = new Window();
-	window->OnCreate("GAME", 800,800);
+	window->OnCreate("GAME", 800,600);
 
 	currentScene = new Scene1();
 	currentScene->OnCreate();

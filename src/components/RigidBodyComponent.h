@@ -48,7 +48,7 @@ public:
 	inline bool isMoveable() { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
 
-	virtual void OnCollisionEnter() = 0;
+	virtual void OnCollisionEnter(RigidBodyComponent& otherBody) = 0;
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetVelocity() { return vel; }
