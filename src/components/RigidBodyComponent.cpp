@@ -58,9 +58,13 @@ void RigidBodyComponent::ApplyImpulseForce(const MATH::Vec3& force)
 	vel += (force / mass) * Timer::GetScaledDeltaTime();
 }
 
-void RigidBodyComponent::ApplyConstantForce(const MATH::Vec3& force)
+void RigidBodyComponent::SetConstantForce(const MATH::Vec3& force)
 {
 	accel = force / mass;
+}
+void RigidBodyComponent::ApplyConstantForce(const MATH::Vec3& force)
+{
+	accel += force / mass;
 }
 
 void RigidBodyComponent::ApplyImpulseTorque(const float torque)
