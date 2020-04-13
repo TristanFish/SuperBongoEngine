@@ -37,6 +37,8 @@ public:
 
 	void ApplyImpulseForce(const MATH::Vec3& force);
 	void ApplyConstantForce(const MATH::Vec3& force);
+	void SetConstantForce(const MATH::Vec3& force);
+
 
 	void ApplyImpulseTorque(const float torque);
 	void ApplyConstantTorque(const float torque);

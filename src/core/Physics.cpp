@@ -37,6 +37,11 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 		circle.IsGrounded = true;
 		return true;
 	}
+	if (distance.y > -0.01)
+	{
+		circle.IsGrounded = false;
+		return false;
+	}
 	return false;
 }
 
@@ -80,8 +85,8 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	{
 		if (rb1.IsGrounded)
 		{
-			rb1.accel.y = 0.0f;
-			rb1.vel.y = 0.0f;
+			rb1.accel.y = 0;
+			rb1.vel.y = 0;
 		}
 	}
 
