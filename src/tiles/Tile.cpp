@@ -28,7 +28,7 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	if (tileType == TileType::Normal) 
 	{
 		collider.isTrigger = false;
-		SpriteComponent::setTexture("src/Textures/texture_09.jpg");
+		SpriteComponent::setTexture("src/Textures/Tiles/tile003.jpg");
 	} 
 	else if (tileType == TileType::Hazard)
 	{
@@ -87,5 +87,4 @@ void Tile::OnCollisionEnter()
 	{
 		std::cout << "Victory tile touched" << std::endl;
 	}
-
 }
