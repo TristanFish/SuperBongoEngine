@@ -18,7 +18,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
 	RigidBodyComponent::setColliderSize(2.0f);
-	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -3.0f, 0.0f));
+	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 }
 
 Player::~Player()
@@ -29,7 +29,6 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
-	std::cout << jetPower << std::endl;
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
@@ -94,7 +93,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 3.0, 0.0));
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x / 2, 5.0, 0.0));
 				RigidBodyComponent::SetIsGrounded(false);
 			}
 		}
@@ -138,6 +137,11 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		{
 			jetPower += 2.0f;
 			std::cout << "Player has touched a Refuel Tile." << std::endl;
+		}
+		if (t->tileType == Tile::TileType::Hazard)
+		{
+			SetVelocity(Vec3(GetVelocity().x * -1 , 0.0, 0.0));
+			std::cout << "Player has touched a Hazard Tile." << std::endl;
 		}
 	}
 }
