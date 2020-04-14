@@ -60,10 +60,12 @@ public:
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
 	 inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
+
 	inline float GetAngVelocity() { return angularVel; }
 	inline float GetAngAccel() { return angularAcc; }
 	inline float GetAngDrag() { return angularDrag; }
-	 inline bool GetIsGrounded() { return IsGrounded; }
+	inline bool GetIsGrounded() { return IsGrounded; }
+
 	inline void SetRotInertia(const float r) { rotInertia = r; }
 	inline void SetAngVelocity(const float vel) { angularVel = vel; }
 	inline void SetAngAccel(const float acc) { angularAcc = acc; }

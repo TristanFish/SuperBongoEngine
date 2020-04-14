@@ -34,9 +34,19 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
 	//	std::cout << "Circle box collision detected" << std::endl;
+
+		
 		circle.IsGrounded = true;
 		return true;
 	}
+	
+	if (distance.y > -0.01)
+	{
+		circle.IsGrounded = false;
+		return false;
+	}
+
+
 	return false;
 }
 

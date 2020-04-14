@@ -37,6 +37,11 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 		collider.isTrigger = false;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile002.jpg");
 	}
+	else if (tileType == TileType::UnderGround)
+	{
+		collider.isTrigger = false;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile006.jpg");
+	}
 
 	//Hazard Tiles
 	else if (tileType == TileType::Hazard)
@@ -106,7 +111,7 @@ void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 	}
 	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{
-		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
+		SpriteComponent::setTexture("src/Textures/Tiles/Blank.png");
 		pass = 1;
 	} else if (tileType == TileType::Hazard)
 	{
