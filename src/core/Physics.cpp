@@ -96,6 +96,7 @@ void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& b
 {
 	if (circle.collider.isMoveable && !box.collider.isTrigger)
 	{
+		circle.SetIsGrounded(true);
 		Vec3 BoxNormal = CircleBoxClosestEdge(circle, box);
 		
 		Vec3 reflectVel = VMath::reflect(circle.vel, BoxNormal);
