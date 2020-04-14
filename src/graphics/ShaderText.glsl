@@ -14,7 +14,7 @@ void main()
 	if(texColor.a < 0.1)
 	    discard;
     FragColor = texColor;
-	moreColors = texture(texture1, TexCoord);
+	//moreColors = texture(texture1, TexCoord);
 } 
 
 
