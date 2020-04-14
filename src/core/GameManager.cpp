@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "custom/Camera.h"
 #include <iostream>
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
@@ -13,6 +14,7 @@ GameManager::~GameManager()
 	currentScene->OnDestroy();
 	delete currentScene;
 	currentScene = nullptr;
+	Camera::removeInstance();
 }
 
 void GameManager::Init()
