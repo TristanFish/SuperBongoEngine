@@ -99,7 +99,7 @@ void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
 	if (tileType == TileType::Normal || tileType == TileType::Normal_2)
 	{
-		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
+
 	}
 	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{
