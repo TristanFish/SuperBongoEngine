@@ -6,7 +6,7 @@
 using namespace MATH;
 bool Physics::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	if (pow(rb1.collider.size + rb2.collider.size, 2) < pow((rb1.pos.x + rb2.pos.x), 2) + pow((rb1.pos.y + rb2.pos.y), 2))
+	if (pow(rb1.collider.size + rb2.collider.size, 2) < VMath::dot(*rb1.pos, *rb2.pos))
 	{
 		std::cout << "Circle circle collision detected" << std::endl;
 		return true;
@@ -20,33 +20,21 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 {
 
 	//Find the difference between both positions
-	MATH::Vec3 differenceVector = circle.pos - box.pos; 
+	Vec3 differenceVector = *circle.pos - *box.pos; 
 	
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	MATH::Vec3 clamped = MATH::VMath::clamp(differenceVector, MATH::Vec3(-box.collider.size / 2.0f),
+	Vec3 clamped = MATH::VMath::clamp(differenceVector, MATH::Vec3(-box.collider.size / 2.0f),
 															  MATH::Vec3(box.collider.size / 2.0f)); 
-	MATH::Vec3 closestContactPoint = box.pos + clamped;
+	Vec3 closestContactPoint = *box.pos + clamped;
 
 	//distance from closest contact point to the center of the circle
-	MATH::Vec3 distance = closestContactPoint - circle.pos;
+	Vec3 distance = closestContactPoint - *circle.pos;
 
 	
-	if (MATH::VMath::mag(distance) < circle.collider.size / 2.0f)
+	if (VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
-	//	std::cout << "Circle box collision detected" << std::endl;
-
-		
-		circle.IsGrounded = true;
 		return true;
 	}
-	
-	if (distance.y > -0.01)
-	{
-		circle.IsGrounded = false;
-		return false;
-	}
-
-
 	return false;
 }
 
@@ -56,16 +44,36 @@ bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	float rb2Halfx = rb2.collider.size / 2.0f;
 	float rb1Halfy = rb1Halfx;
 	float rb2Halfy = rb2Halfx;
-	if ((rb1.pos.x - rb1Halfx < rb2.pos.x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
-		(rb1.pos.x + rb1Halfx > rb2.pos.x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
-		(rb1.pos.y - rb1Halfy < rb2.pos.y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
-		(rb1.pos.y + rb1Halfy > rb2.pos.y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
+	if ((rb1.pos->x - rb1Halfx < rb2.pos->x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
+		(rb1.pos->x + rb1Halfx > rb2.pos->x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
+		(rb1.pos->y - rb1Halfy < rb2.pos->y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
+		(rb1.pos->y + rb1Halfy > rb2.pos->y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
 		std::cout << "Box box collision detected" << std::endl;
 		
 		return true;
 	}
 	return false;
+}
+
+//returns the normal o
+MATH::Vec3 Physics::CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyComponent& box)
+{
+	//Find the difference between both positions
+	Vec3 differenceVector = *circle.pos - *box.pos;
+
+	//find the distance to the edge of the box and clamp the difference to find the closest contact point
+	Vec3 clamped = VMath::clamp(differenceVector, Vec3(-box.collider.size / 2.0f), Vec3(box.collider.size / 2.0f));
+
+	Vec3 closestContactPoint = *box.pos + clamped;
+
+	//distance from closest contact point to the center of the circle
+	Vec3 distance = closestContactPoint - *circle.pos;
+
+	Vec3 normal = VMath::orthagonalize(clamped);
+	//normal.z = VMath::mag(distance);
+	 
+	return normal;
 }
 
 void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
@@ -84,25 +92,30 @@ void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& r
 	rb2.OnCollisionEnter(rb1);
 }
 
-void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
-	if (rb1.collider.isMoveable && !rb2.collider.isTrigger)
+	if (circle.collider.isMoveable && !box.collider.isTrigger)
 	{
-		if (rb1.IsGrounded)
+		circle.SetIsGrounded(true);
+		Vec3 BoxNormal = CircleBoxClosestEdge(circle, box);
+		
+		Vec3 reflectVel = VMath::reflect(circle.vel, BoxNormal);
+
+		circle.SetPosition(*circle.pos + (BoxNormal * 0.05f));
+		std::cout << *circle.pos << std::endl;
+		if (VMath::dot(reflectVel, BoxNormal) > -0.1f)
 		{
-			rb1.accel.y = 0;
-			rb1.vel.y = 0;
+			circle.vel += reflectVel * 0.5f;
 		}
 	}
-
 	
-	if (rb2.collider.isMoveable && !rb1.collider.isTrigger)
+	if (box.collider.isMoveable && !circle.collider.isTrigger)
 	{
-		rb2.vel = -rb2.vel;
+
 	}
 
-	rb1.OnCollisionEnter(rb2);
-	rb2.OnCollisionEnter(rb1);
+	circle.OnCollisionEnter(box);
+	box.OnCollisionEnter(circle);
 
 }
 
@@ -126,6 +139,8 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 
+
+
 	if (rb1.collider.colliderShape == Collider::shape::Circle && rb2.collider.colliderShape == Collider::shape::Circle)
 	{
 		if (CircleCircleDetect(rb1, rb2))
@@ -147,10 +162,6 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		}
 		else 
 		{
-			if (!rb2.IsGrounded)
-			{
-				rb2.accel.y = -6.0f;
-			}
 			return false;
 		}
 		
@@ -183,7 +194,5 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	{
 		std::cout << "Collision shape detection went wrong" << std::endl;
 	}
-
-
 	return false;
 }

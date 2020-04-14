@@ -2,14 +2,17 @@
 #define PLAYER_H
 
 #include "components/Components.h"
+#include "scenes/Scene.h"
 
 //Player inherits from gameobject, components are also added via inheritance
 class Player : public GameObject, public SpriteComponent, public RigidBodyComponent
 {
 private:
 
-	static float jetPower;
+	float jetPower;
+
 public:
+	Scene* currentScene;
 
 	Player();
 	//Whenever making a gameobject make sure to give it a name and a position

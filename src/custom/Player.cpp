@@ -3,8 +3,6 @@
 #include "custom/Camera.h"
 #include "tiles/Tile.h"
 
- float Player::jetPower = 0.0f;
-
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
 
