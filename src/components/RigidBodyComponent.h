@@ -9,8 +9,8 @@ class RigidBodyComponent : public Component
 {
 private:
 	float mass;
-	MATH::Vec3 pos; 
-	 MATH::Vec3 vel;
+	MATH::Vec3* pos; 
+	MATH::Vec3 vel;
 	MATH::Vec3 accel;
 	float linearDrag;
 
@@ -28,6 +28,7 @@ public:
 	Collider collider;
 
 	RigidBodyComponent();
+	~RigidBodyComponent();
 
 	// Inherited via Component
 	void Init(GameObject *g) override;
@@ -51,23 +52,25 @@ public:
 	virtual void OnCollisionEnter(RigidBodyComponent& otherBody) = 0;
 	//Getters and setters
 #pragma region getters/setters
+	inline MATH::Vec3 GetPosition() { return *pos; }
+	inline void SetPosition(MATH::Vec3 p) { *pos = p; }
 	inline MATH::Vec3 GetVelocity() { return vel; }
+	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline MATH::Vec3 GetAccel() { return accel; }
-	inline float GetLinDrag() { return linearDrag; }
-	inline void SetMass(const float m) { mass = m; }
-	 inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }
+	inline float GetLinDrag() { return linearDrag; }
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
-	 inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
+	inline void SetMass(const float m) { mass = m; }
+	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
 	inline float GetAngVelocity() { return angularVel; }
-	inline float GetAngAccel() { return angularAcc; }
-	inline float GetAngDrag() { return angularDrag; }
-	 inline bool GetIsGrounded() { return IsGrounded; }
-	inline void SetRotInertia(const float r) { rotInertia = r; }
 	inline void SetAngVelocity(const float vel) { angularVel = vel; }
+	inline float GetAngAccel() { return angularAcc; }
 	inline void SetAngAccel(const float acc) { angularAcc = acc; }
+	inline float GetAngDrag() { return angularDrag; }
 	inline void SetAngDrag(const float drag) { angularDrag = drag; }
+	inline bool GetIsGrounded() { return IsGrounded; }
+	inline void SetRotInertia(const float r) { rotInertia = r; }
 #pragma endregion
 };
 

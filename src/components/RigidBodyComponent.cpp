@@ -9,14 +9,18 @@ RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(M
 
 }
 
+RigidBodyComponent::~RigidBodyComponent()
+{
+	pos = nullptr;
+}
+
 void RigidBodyComponent::Init(GameObject *g)
 {
 	gameobject = g;
-
+	pos = &g->transform.pos;
 	setColliderSize(g->transform.GetScale().x);
 
 	mass = 1.0f;
-	pos = gameobject->transform.pos;
 	vel = MATH::Vec3();
 	accel = MATH::Vec3();
 
@@ -28,12 +32,8 @@ void RigidBodyComponent::Init(GameObject *g)
 
 void RigidBodyComponent::Update(const float deltaTime)
 {
-	pos = gameobject->transform.GetPosition();
-
 	vel += accel * deltaTime;
-	pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
-
-	gameobject->transform.setPos(pos);
+	*pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
 
 
 	angularVel += angularAcc * deltaTime;

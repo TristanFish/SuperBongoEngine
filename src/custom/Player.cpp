@@ -130,7 +130,7 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 	{
 		if (t->tileType == Tile::TileType::Normal)
 		{
-			std::cout << "Player has touched a Normal Tile." << std::endl;
+
 		}
 		if ((t->tileType == Tile::TileType::Refuel) && (t->pass == 0))
 		{

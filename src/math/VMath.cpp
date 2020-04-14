@@ -21,10 +21,10 @@ Vec3 VMath::normalize(const Vec3 &a) {
 
 Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n){
 	Vec3 result;
-	float scalar = 2.0f * dot(v, n);
+	float scalar = 2.0f * dot(-v, n);
 	Vec3 temp = n * scalar;
 	result = temp - v;
-	return result;
+	return temp;
 }
 
 float VMath::distance(const Vec3 &a, const Vec3 &b){
@@ -67,6 +67,41 @@ Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV
 	}
 
 	return clampedVector;
+}
+
+//returns a vector where the largest component of the input vector is now a unit length
+//zeroes out all other components
+Vec3 MATH::VMath::orthagonalize(const Vec3 &v)
+{
+	try
+	{
+		if (abs(v.x) > abs(v.y))
+		{
+			if (abs(v.x) > abs(v.z))
+			{
+				return VMath::normalize(Vec3(v.x, 0.0f, 0.0f));
+			}
+			else
+			{
+				return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
+			}
+		}
+		else
+		{
+			if (abs(v.y) > abs(v.z))
+			{
+				return VMath::normalize(Vec3(0.0f, v.y, 0.0f));
+			}
+			else
+			{
+				return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
+			}
+		}
+	}
+	catch (...)
+	{
+
+	}
 }
 
 Vec3 VMath::lerp(const Vec3 &v1, const Vec3 &v2, float t) {

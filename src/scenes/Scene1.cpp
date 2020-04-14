@@ -56,11 +56,11 @@ void Scene1::Update(const float deltaTime)
 {
 	//std::cout << 1.0f / deltaTime << std::endl;
 	Camera::getInstance()->Update(deltaTime);
+
 	tilemap->Update(deltaTime);
-
 	objectList->Update(deltaTime);
-	tilemap->CheckCollisions(*player);
 
+	tilemap->CheckCollisions(*player);
 }
 
 
