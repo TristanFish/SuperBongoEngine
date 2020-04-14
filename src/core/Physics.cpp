@@ -71,7 +71,7 @@ MATH::Vec3 Physics::CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyCo
 	Vec3 distance = closestContactPoint - *circle.pos;
 
 	Vec3 normal = VMath::orthagonalize(clamped);
-	normal.z = VMath::mag(distance);
+	//normal.z = VMath::mag(distance);
 	 
 	return normal;
 }
@@ -101,7 +101,7 @@ void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& b
 		
 		Vec3 reflectVel = VMath::reflect(circle.vel, BoxNormal);
 
-		circle.SetPosition(*circle.pos + (BoxNormal * 2.0f));
+		circle.SetPosition(*circle.pos + (BoxNormal * 0.05f));
 		std::cout << *circle.pos << std::endl;
 		if (VMath::dot(reflectVel, BoxNormal) > -0.1f)
 		{

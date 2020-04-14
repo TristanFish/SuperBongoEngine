@@ -3,8 +3,6 @@
 #include "custom/Camera.h"
 #include "tiles/Tile.h"
 
- float Player::jetPower = 0.0f;
-
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
 
@@ -30,7 +28,6 @@ void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
 	//std::cout << jetPower << std::endl;
-=======
 	transform.Update(deltaTime);
 	RigidBodyComponent::Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
