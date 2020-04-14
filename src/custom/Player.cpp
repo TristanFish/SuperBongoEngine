@@ -3,8 +3,6 @@
 #include "custom/Camera.h"
 #include "tiles/Tile.h"
 
- float Player::jetPower = 0.0f;
-
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
 
@@ -138,6 +136,11 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		{
 			jetPower += 2.0f;
 			std::cout << "Player has touched a Refuel Tile." << std::endl;
+		}
+		if (t->tileType == Tile::TileType::Hazard)
+		{
+			currentScene->Reset();
+			std::cout << "Player has touched a Hazard Tile." << std::endl;
 		}
 	}
 }
