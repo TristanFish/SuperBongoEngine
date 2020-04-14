@@ -19,7 +19,7 @@ void GameManager::Init()
 {
 	//timer = Timer();
 	window = new Window();
-	window->OnCreate("GAME", 800, 600);
+	window->OnCreate("GAME", 800,800);
 
 	currentScene = new Scene1();
 	currentScene->OnCreate();
@@ -60,10 +60,18 @@ void GameManager::HandleEvents()
 				isRunning = false;
 				std::cout << "Closing Game" << std::endl;
 				return;
+			case SDL_SCANCODE_P:
+				ReloadCurrentScene();
+				break;
 			}
 		}
 
 		currentScene->HandleEvents(event);
 	}
 
+}
+
+void GameManager::ReloadCurrentScene()
+{
+	currentScene->Reset();
 }

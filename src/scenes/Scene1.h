@@ -10,7 +10,7 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
-	Player* player;
+	 Player* player;
 	Tilemap* tilemap;
 
 
@@ -22,6 +22,7 @@ public:
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event &event) override;
+	virtual void Reset() override;
 
 };
 

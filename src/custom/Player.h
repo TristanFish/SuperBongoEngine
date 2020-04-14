@@ -8,8 +8,7 @@ class Player : public GameObject, public SpriteComponent, public RigidBodyCompon
 {
 private:
 
-
-
+	static float jetPower;
 public:
 
 	Player();
@@ -26,8 +25,10 @@ public:
 
 
 	//Inherited via RigidBodyComponent
-	virtual void OnCollisionEnter() override;
+    virtual void OnCollisionEnter(RigidBodyComponent& otherBody) override;
 
+	inline float getJetPower() { return jetPower; }
+	inline void setJetPower(float f) { jetPower = f; }
 };
 
 #endif

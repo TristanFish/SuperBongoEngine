@@ -2,6 +2,7 @@
 #include "math/VMATH.h"
 #include "core/Timer.h"
 
+
 RigidBodyComponent::RigidBodyComponent(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
 										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f)
 {
@@ -58,9 +59,13 @@ void RigidBodyComponent::ApplyImpulseForce(const MATH::Vec3& force)
 	vel += (force / mass) * Timer::GetScaledDeltaTime();
 }
 
-void RigidBodyComponent::ApplyConstantForce(const MATH::Vec3& force)
+void RigidBodyComponent::SetConstantForce(const MATH::Vec3& force)
 {
 	accel = force / mass;
+}
+void RigidBodyComponent::ApplyConstantForce(const MATH::Vec3& force)
+{
+	accel += force / mass;
 }
 
 void RigidBodyComponent::ApplyImpulseTorque(const float torque)

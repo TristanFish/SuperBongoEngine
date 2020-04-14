@@ -70,8 +70,8 @@ void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& r
 		//do some sort of collision resolution
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 }
 
 void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
@@ -80,8 +80,8 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	{
 		if (rb1.IsGrounded)
 		{
-			rb1.accel.y = 0.0f;
-			rb1.vel.y = 0.0f;
+			rb1.accel.y = 0;
+			rb1.vel.y = 0;
 		}
 	}
 
@@ -91,8 +91,8 @@ void Physics::CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		rb2.vel = -rb2.vel;
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 
 }
 
@@ -107,11 +107,10 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	if (rb2.collider.isMoveable)
 	{
 		rb2.vel = -rb2.vel;
-		
 	}
 
-	rb1.OnCollisionEnter();
-	rb2.OnCollisionEnter();
+	rb1.OnCollisionEnter(rb2);
+	rb2.OnCollisionEnter(rb1);
 }
 
 bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
@@ -140,7 +139,7 @@ bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		{
 			if (!rb2.IsGrounded)
 			{
-				rb2.accel.y = -1.0f;
+				rb2.accel.y = -6.0f;
 			}
 			return false;
 		}

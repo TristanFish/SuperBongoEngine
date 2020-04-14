@@ -17,12 +17,13 @@ bool Scene1::OnCreate()
 
 	//Setup the player
 	player = new Player("Player1", MATH::Vec3(0.0f, 6.0f, 0.0f));
+	player->SetScale(Vec3(2.0, 2.0, 0.0));
 	if (player->hasComponent<SpriteComponent>())
 	{
 		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
-		player->getComponent<SpriteComponent>().setTexture("src/Textures/Fire.png");
+		player->getComponent<SpriteComponent>().setTexture("src/Textures/Aleck.png");
 	}
 	Camera::getInstance()->getProjectionMatrix().print();
 	Camera::getInstance()->getViewMatrix().print();
@@ -74,4 +75,10 @@ void Scene1::Render() const
 void Scene1::HandleEvents(const SDL_Event& event)
 {
 	objectList.HandleEvents(event);
+}
+
+void Scene1::Reset()
+{
+	OnDestroy();
+	OnCreate();
 }

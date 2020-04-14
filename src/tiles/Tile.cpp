@@ -25,21 +25,53 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
  
 
 	//Setup different sprites for each tiletype
+
+	//Normal Tiles
 	if (tileType == TileType::Normal) 
 	{
 		collider.isTrigger = false;
-		SpriteComponent::setTexture("src/Textures/grass.jpg");
+		SpriteComponent::setTexture("src/Textures/Tiles/tile003.jpg");
 	} 
+	else if (tileType == TileType::Normal_2)
+	{
+		collider.isTrigger = false;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile002.jpg");
+	}
+
+	//Hazard Tiles
 	else if (tileType == TileType::Hazard)
 	{
 		collider.isTrigger = true;
-		SpriteComponent::setTexture("src/Textures/Hazard.png");
+		collider.size = 0.5f;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile143.png");
 	}
+
+	//Refuel tiles
 	else if (tileType == TileType::Refuel)
 	{
+		pass = 0;
 		collider.isTrigger = true;
-		SpriteComponent::setTexture("src/Textures/ReSize.png");
+		SpriteComponent::setTexture("src/Textures/Tiles/tile013.jpg");
 	}
+	else if (tileType == TileType::Refuel_2)
+	{
+		pass = 0;
+		collider.isTrigger = true;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile013_2.jpg");
+	}
+
+	//Chains
+	else if (tileType == TileType::Chain)
+	{
+		collider.isTrigger = true;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile191.png");
+	}
+	else if (tileType == TileType::Chain_Bot)
+	{
+		collider.isTrigger = true;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile192.png");
+	}
+
 	else if (tileType == TileType::Victory)
 	{
 		collider.isTrigger = true;
@@ -67,19 +99,21 @@ void Tile::HandleEvents(const SDL_Event& event)
 {
 }
 
-void Tile::OnCollisionEnter()
+void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
-	if (tileType == TileType::Normal)
+	if (tileType == TileType::Normal || tileType == TileType::Normal_2)
 	{
-		std::cout << "Normal tile touched" << std::endl;
-	} else if (tileType == TileType::Refuel)
+
+	}
+	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{
-		std::cout << "Refuel tile touched" << std::endl;
+		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
+		pass = 1;
 	} else if (tileType == TileType::Hazard)
 	{
-		std::cout << "Hazard tile touched" << std::endl;
+
 	} else if (tileType == TileType::Victory)
 	{
-		std::cout << "Victory tile touched" << std::endl;
+
 	}
 }
