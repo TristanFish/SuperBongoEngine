@@ -9,7 +9,6 @@ class Player : public GameObject, public SpriteComponent, public RigidBodyCompon
 private:
 
 	static float jetPower;
-
 public:
 
 	Player();

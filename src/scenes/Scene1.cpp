@@ -24,7 +24,7 @@ bool Scene1::OnCreate()
 		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
-		player->getComponent<SpriteComponent>().setTexture("src/Textures/Aleck.png");
+		player->getComponent<SpriteComponent>().setTexture("src/Textures/BallPlayer.png");
 	}
 	Camera::getInstance()->getProjectionMatrix().print();
 	Camera::getInstance()->getViewMatrix().print();

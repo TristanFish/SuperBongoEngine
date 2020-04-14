@@ -14,8 +14,12 @@ public:
 	 enum class TileType
 	{
 		Normal = 1,
+		Normal_2,
 		Refuel,
+		Refuel_2,
 		Hazard,
+		Chain,
+		Chain_Bot,
 		Victory
 	} tileType;
 	 
