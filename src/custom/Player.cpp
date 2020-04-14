@@ -27,8 +27,9 @@ void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
 	//std::cout << jetPower << std::endl;
-	transform.Update(deltaTime);
+	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 	RigidBodyComponent::Update(deltaTime);
+	transform.Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
 	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.05f));
 }
