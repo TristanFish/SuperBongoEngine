@@ -11,9 +11,7 @@ Tile::Tile(const Tile& t) : Tile(t.transform.pos, t.tileType)
 {
 }
 
-
-
-Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
+Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type), pass(0)
 {
 	name = "Tile";
 	transform.setPos(pos);
@@ -48,7 +46,6 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	//Refuel tiles
 	else if (tileType == TileType::Refuel)
 	{
-		pass = 0;
 		collider.isTrigger = true;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile013.jpg");
 	}
@@ -102,7 +99,7 @@ void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
 	if (tileType == TileType::Normal || tileType == TileType::Normal_2)
 	{
-
+		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
 	}
 	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{

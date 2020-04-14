@@ -49,7 +49,7 @@ namespace MATH {
 		// Clamp a vector
 		static Vec3 clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV);
 
-		
+		static Vec3 orthagonalize(const Vec3& v);
 
 		/// This is a basic Linear Interpolation function.  It takes v1 and moves it 
 		/// to v2 in a linear fashion based on the value of t which goes from 
