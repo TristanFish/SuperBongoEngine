@@ -104,6 +104,7 @@ void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 {
 	if (tileType == TileType::Normal || tileType == TileType::Normal_2)
 	{
+
 	}
 	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{
