@@ -17,7 +17,7 @@ bool Scene1::OnCreate()
 	objectList = new Manager();
 
 	//Setup the player
-	player = new Player("Player1", MATH::Vec3(0.0f, 15.0f, 0.0f));
+	player = new Player("Player1", MATH::Vec3(0.0f, 6.0f, 0.0f));
 	player->currentScene = this;
 	player->SetScale(Vec3(2.0, 2.0, 0.0));
 	if (player->hasComponent<SpriteComponent>())

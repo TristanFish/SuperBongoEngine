@@ -8,6 +8,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 
 	name = n;
 	transform = Transform(pos);
+	health = 100.0f;
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
@@ -144,7 +145,8 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		}
 		if (t->tileType == Tile::TileType::Hazard)
 		{
-			SetVelocity(Vec3(GetAccel().x * -1 , 0.0, 0.0));
+			currentScene->Reset();
+			//SetVelocity(Vec3(GetAccel().x * -1 , 0.0, 0.0));
 			std::cout << "Player has touched a Hazard Tile." << std::endl;
 		}
 	}

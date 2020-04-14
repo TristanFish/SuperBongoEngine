@@ -9,7 +9,7 @@ class Player : public GameObject, public SpriteComponent, public RigidBodyCompon
 {
 private:
 
-	float jetPower;
+	float jetPower, health;
 
 public:
 	Scene* currentScene;
@@ -29,6 +29,9 @@ public:
 
 	//Inherited via RigidBodyComponent
     virtual void OnCollisionEnter(RigidBodyComponent& otherBody) override;
+
+	inline float getHealth() { return health; }
+	inline void setHealth(float f) { health = f; }
 
 	inline float getJetPower() { return jetPower; }
 	inline void setJetPower(float f) { jetPower = f; }

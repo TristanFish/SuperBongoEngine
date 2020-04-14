@@ -113,9 +113,8 @@ void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& b
 	{
 
 	}
-
-	circle.OnCollisionEnter(box);
 	box.OnCollisionEnter(circle);
+	circle.OnCollisionEnter(box);
 
 }
 
