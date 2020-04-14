@@ -42,7 +42,6 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 	else if (tileType == TileType::Hazard)
 	{
 		collider.isTrigger = true;
-		collider.size = 0.5f;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile143.png");
 	}
 

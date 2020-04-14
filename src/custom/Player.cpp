@@ -17,7 +17,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
-	RigidBodyComponent::setColliderSize(2.0f);
+	RigidBodyComponent::setColliderSize(1.75f);
 	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 }
 
@@ -61,7 +61,8 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::ApplyImpulseTorque(5.0f);
+				RigidBodyComponent::ApplyImpulseTorque(0);
+				RigidBodyComponent::ApplyImpulseTorque(4.5f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
 		}
@@ -69,7 +70,8 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+				RigidBodyComponent::ApplyImpulseTorque(0);
+				RigidBodyComponent::ApplyImpulseTorque(-4.5f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
 		}
@@ -77,6 +79,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(5);
 				SetScale(Vec3(-2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(-8.0, 0.0, 0.0));
 			}
@@ -85,6 +88,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(-5);
 				SetScale(Vec3(2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(8.0, 0.0, 0.0));
 			}
@@ -105,6 +109,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(0);
 				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
 				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
 			}
@@ -113,6 +118,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(0);
 				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
 				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
 			}
@@ -135,7 +141,7 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		}
 		if ((t->tileType == Tile::TileType::Refuel) && (t->pass == 0))
 		{
-			jetPower += 2.0f;
+			jetPower += 4.0f;
 			std::cout << "Player has touched a Refuel Tile." << std::endl;
 		}
 		if (t->tileType == Tile::TileType::Hazard)
