@@ -1,5 +1,5 @@
 #include "Tilemap.h"
-#include "core/Physics.h"
+#include "core/2D/Physics2D.h"
 #include <istream>
 
 Tilemap::Tilemap() : tiles{}
@@ -93,6 +93,6 @@ void Tilemap::CheckCollisions(RigidBodyComponent &rb)
 {
 	for (Tile &t : tileList)
 	{
-		Physics::DetectCollision(t, rb);
+		Physics2D::DetectCollision(t, rb);
 	}
 }

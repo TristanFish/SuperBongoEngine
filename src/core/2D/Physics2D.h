@@ -1,11 +1,11 @@
-#ifndef PHYSICS_H
-#define PHYSICS_H
+#ifndef PHYSICS2D_H
+#define PHYSICS2D_H
 
 #include "math/VMath.h"
 #include "MMath.h"
-#include "components/RigidBodyComponent.h"
+#include "components/2D/RigidBodyComponent.h"
 
-class Physics
+class Physics2D
 {
 private:
 

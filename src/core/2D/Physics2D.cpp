@@ -1,10 +1,10 @@
-#include "Physics.h"
+#include "Physics2D.h"
 #include "tiles/Tile.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
 
 using namespace MATH;
-bool Physics::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+bool Physics2D::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (pow(rb1.collider.size + rb2.collider.size, 2) < VMath::dot(*rb1.pos, *rb2.pos))
 	{
@@ -16,7 +16,7 @@ bool Physics::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb
 
 //Found this code from https://learnopengl.com/In-Practice/2D-Game/Collisions/Collision-detection 
 //check it out its got a great visual description.
-bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& box)
+bool Physics2D::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
 
 	//Find the difference between both positions
@@ -38,7 +38,7 @@ bool Physics::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& bo
 	return false;
 }
 
-bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+bool Physics2D::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	float rb1Halfx = rb1.collider.size / 2.0f;
 	float rb2Halfx = rb2.collider.size / 2.0f;
@@ -57,7 +57,7 @@ bool Physics::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 }
 
 //returns the normal o
-MATH::Vec3 Physics::CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyComponent& box)
+MATH::Vec3 Physics2D::CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
 	//Find the difference between both positions
 	Vec3 differenceVector = *circle.pos - *box.pos;
@@ -76,7 +76,7 @@ MATH::Vec3 Physics::CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyCo
 	return normal;
 }
 
-void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+void Physics2D::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
@@ -92,7 +92,7 @@ void Physics::CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& r
 	rb2.OnCollisionEnter(rb1);
 }
 
-void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& box)
+void Physics2D::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& box)
 {
 	if (circle.collider.isMoveable && !box.collider.isTrigger)
 	{
@@ -118,7 +118,7 @@ void Physics::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent& b
 
 }
 
-void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+void Physics2D::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 	if (rb1.collider.isMoveable)
 	{
@@ -135,7 +135,7 @@ void Physics::BoxBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 	rb2.OnCollisionEnter(rb1);
 }
 
-bool Physics::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
+bool Physics2D::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
 
 
