@@ -1,5 +1,5 @@
 #include "ECS.h"
-#include "components/RigidBodyComponent.h"
+#include "components/2D/RigidBodyComponent.h"
 
 GameObject::GameObject(): name("Default"), transform()
 {

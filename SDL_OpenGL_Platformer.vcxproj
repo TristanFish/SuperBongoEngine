@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\components\AnimComponent.h" />
+    <ClInclude Include="src\components\3D\RigidBody3D.h" />
+    <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\components\Collider.h" />
-    <ClInclude Include="src\core\Physics.h" />
+    <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\components\Components.h" />
     <ClInclude Include="src\components\ECS.h" />
     <ClInclude Include="external\include\glew\eglew.h" />
@@ -117,12 +118,12 @@
     <ClInclude Include="external\include\sdl\SDL_video.h" />
     <ClInclude Include="external\include\sdl\SDL_vulkan.h" />
     <ClInclude Include="src\core\GameManager.h" />
-    <ClInclude Include="src\components\RigidBodyComponent.h" />
+    <ClInclude Include="src\components\2D\RigidBodyComponent.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\graphics\Shader.h" />
     <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\Scene1.h" />
-    <ClInclude Include="src\components\SpriteComponent.h" />
+    <ClInclude Include="src\components\2D\SpriteComponent.h" />
     <ClInclude Include="src\math\Matrix.h" />
     <ClInclude Include="src\math\MMath.h" />
     <ClInclude Include="src\math\Vector.h" />
@@ -134,15 +135,16 @@
     <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\components\AnimComponent.cpp" />
+    <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
+    <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
-    <ClCompile Include="src\core\Physics.cpp" />
+    <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\custom\Player.cpp" />
-    <ClCompile Include="src\components\SpriteComponent.cpp" />
+    <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
     <ClCompile Include="src\core\GameManager.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
     <ClCompile Include="src\core\Main.cpp" />
-    <ClCompile Include="src\components\RigidBodyComponent.cpp" />
+    <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
     <ClCompile Include="src\components\ECS.cpp" />

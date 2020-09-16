@@ -8,7 +8,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 
 	name = n;
 	transform = Transform(pos);
-
+	health = 100.0f;
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
@@ -50,7 +50,7 @@ void Player::HandleEvents(const SDL_Event& event)
 
 			if (jetPower > 0.0)
 			{
-				jetPower -= 0.3;
+				jetPower -= 0.1;
 				RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
 					* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
 				RigidBodyComponent::SetIsGrounded(false);
@@ -62,7 +62,7 @@ void Player::HandleEvents(const SDL_Event& event)
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
 				RigidBodyComponent::ApplyImpulseTorque(0);
-				RigidBodyComponent::ApplyImpulseTorque(4.5f);
+				RigidBodyComponent::ApplyImpulseTorque(5.0f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
 		}
@@ -71,7 +71,7 @@ void Player::HandleEvents(const SDL_Event& event)
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
 				RigidBodyComponent::ApplyImpulseTorque(0);
-				RigidBodyComponent::ApplyImpulseTorque(-4.5f);
+				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
 		}
@@ -97,7 +97,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x / 2, 5.0, 0.0));
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 5.0, 0.0));
 				RigidBodyComponent::SetIsGrounded(false);
 			}
 		}
@@ -146,7 +146,8 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		}
 		if (t->tileType == Tile::TileType::Hazard)
 		{
-			SetVelocity(Vec3(GetVelocity().x * -1 , 0.0, 0.0));
+			currentScene->Reset();
+			//SetVelocity(Vec3(GetAccel().x * -1 , 0.0, 0.0));
 			std::cout << "Player has touched a Hazard Tile." << std::endl;
 		}
 	}

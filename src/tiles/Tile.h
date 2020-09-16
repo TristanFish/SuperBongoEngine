@@ -20,6 +20,7 @@ public:
 		Hazard,
 		Chain,
 		Chain_Bot,
+		UnderGround,
 		Victory
 	} tileType;
 	 
