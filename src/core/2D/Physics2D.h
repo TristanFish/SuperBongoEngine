@@ -1,17 +1,19 @@
-#ifndef PHYSICS_H
-#define PHYSICS_H
+#ifndef PHYSICS2D_H
+#define PHYSICS2D_H
 
 #include "math/VMath.h"
 #include "MMath.h"
-#include "components/RigidBodyComponent.h"
+#include "components/2D/RigidBodyComponent.h"
 
-class Physics
+class Physics2D
 {
 private:
 
 	static bool CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
-	static bool CircleBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
+	static bool CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& box);
 	static bool BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
+
+	static MATH::Vec3 CircleBoxClosestEdge(RigidBodyComponent& circle, RigidBodyComponent& box);
 
 	static void CircleCircleResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2);
 	static void CircleBoxResolve(RigidBodyComponent& rb1, RigidBodyComponent& rb2);

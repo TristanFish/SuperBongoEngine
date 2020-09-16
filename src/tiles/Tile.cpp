@@ -11,9 +11,7 @@ Tile::Tile(const Tile& t) : Tile(t.transform.pos, t.tileType)
 {
 }
 
-
-
-Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
+Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type), pass(0)
 {
 	name = "Tile";
 	transform.setPos(pos);
@@ -37,19 +35,22 @@ Tile::Tile(const MATH::Vec3& pos, TileType type): tileType(type)
 		collider.isTrigger = false;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile002.jpg");
 	}
+	else if (tileType == TileType::UnderGround)
+	{
+		collider.isTrigger = false;
+		SpriteComponent::setTexture("src/Textures/Tiles/tile006.jpg");
+	}
 
 	//Hazard Tiles
 	else if (tileType == TileType::Hazard)
 	{
 		collider.isTrigger = true;
-		collider.size = 0.5f;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile143.png");
 	}
 
 	//Refuel tiles
 	else if (tileType == TileType::Refuel)
 	{
-		pass = 0;
 		collider.isTrigger = true;
 		SpriteComponent::setTexture("src/Textures/Tiles/tile013.jpg");
 	}
@@ -107,7 +108,7 @@ void Tile::OnCollisionEnter(RigidBodyComponent& otherBody)
 	}
 	else if (tileType == TileType::Refuel || tileType == TileType::Refuel_2 && pass == 0)
 	{
-		SpriteComponent::setTexture("src/Textures/texture_08.jpg");
+		SpriteComponent::setTexture("src/Textures/Tiles/Blank.png");
 		pass = 1;
 	} else if (tileType == TileType::Hazard)
 	{
