@@ -3,21 +3,19 @@
 #include "custom/Camera.h"
 #include "tiles/Tile.h"
 
- float Player::jetPower = 0.0f;
-
 Player::Player(const char* n, const MATH::Vec3& pos)
 {
 
 	name = n;
 	transform = Transform(pos);
-
+	health = 100.0f;
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
-	RigidBodyComponent::setColliderSize(2.0f);
+	RigidBodyComponent::setColliderSize(1.75f);
 	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 }
 
@@ -29,8 +27,10 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
-	transform.Update(deltaTime);
+	//std::cout << jetPower << std::endl;
+	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 	RigidBodyComponent::Update(deltaTime);
+	transform.Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
 	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.05f));
 }
@@ -50,7 +50,7 @@ void Player::HandleEvents(const SDL_Event& event)
 
 			if (jetPower > 0.0)
 			{
-				jetPower -= 0.3;
+				jetPower -= 0.1;
 				RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
 					* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
 				RigidBodyComponent::SetIsGrounded(false);
@@ -61,6 +61,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::ApplyImpulseTorque(0);
 				RigidBodyComponent::ApplyImpulseTorque(5.0f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
@@ -69,6 +70,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (!RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::ApplyImpulseTorque(0);
 				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
 				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
 			}
@@ -77,6 +79,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(5);
 				SetScale(Vec3(-2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(-8.0, 0.0, 0.0));
 			}
@@ -85,6 +88,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(-5);
 				SetScale(Vec3(2, transform.scale.y, transform.scale.z));
 				RigidBodyComponent::SetVelocity(Vec3(8.0, 0.0, 0.0));
 			}
@@ -93,7 +97,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
-				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x / 2, 5.0, 0.0));
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 5.0, 0.0));
 				RigidBodyComponent::SetIsGrounded(false);
 			}
 		}
@@ -105,6 +109,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(0);
 				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
 				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
 			}
@@ -113,6 +118,7 @@ void Player::HandleEvents(const SDL_Event& event)
 		{
 			if (RigidBodyComponent::GetIsGrounded())
 			{
+				RigidBodyComponent::SetAngVelocity(0);
 				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
 				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
 			}
@@ -135,12 +141,13 @@ void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
 		}
 		if ((t->tileType == Tile::TileType::Refuel) && (t->pass == 0))
 		{
-			jetPower += 2.0f;
+			jetPower += 4.0f;
 			std::cout << "Player has touched a Refuel Tile." << std::endl;
 		}
 		if (t->tileType == Tile::TileType::Hazard)
 		{
-			SetVelocity(Vec3(GetVelocity().x * -1 , 0.0, 0.0));
+			currentScene->Reset();
+			//SetVelocity(Vec3(GetAccel().x * -1 , 0.0, 0.0));
 			std::cout << "Player has touched a Hazard Tile." << std::endl;
 		}
 	}

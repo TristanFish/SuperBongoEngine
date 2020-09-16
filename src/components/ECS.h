@@ -99,7 +99,7 @@ public:
 	//Finds THE FIRST gameobject with the given name
 	GameObject& FindGameObject(const char* name);
 	//Adds a gameobject with a name and position
-	GameObject& addGameObject(GameObject* go);
+	GameObject& AddGameObject(GameObject* go);
 };
 
 #endif 

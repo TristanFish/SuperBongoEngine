@@ -9,7 +9,7 @@ class Scene
 {
 public:
 
-	Manager objectList;
+	Manager* objectList;
 
 	Scene() {};
 	~Scene() {};

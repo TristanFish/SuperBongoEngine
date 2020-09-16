@@ -1,5 +1,5 @@
 #include "ECS.h"
-#include "components/RigidBodyComponent.h"
+#include "components/2D/RigidBodyComponent.h"
 
 GameObject::GameObject(): name("Default"), transform()
 {
@@ -91,7 +91,7 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::addGameObject(GameObject* go)
+GameObject& Manager::AddGameObject(GameObject* go)
 {
 	GameObject* g = go;
 
