@@ -32,7 +32,7 @@ bool Scene1::OnCreate()
 
 
 	//add it to the list of gameobjects
-	objectList->addGameObject(player);
+	objectList->AddGameObject(player);
 
 	tilemap = new Tilemap("src/tiles/Map1.txt");
 
