@@ -2,6 +2,7 @@
 #define SCENE1_H
 #include "Scene.h"
 #include "custom/Camera.h"
+#include "custom/TestModel.h"
 #include "graphics/Shader.h"
 
 class Player;
@@ -10,9 +11,8 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
-	 Player* player;
-	Tilemap* tilemap;
-
+	Player* player;
+	TestModel* puffinBall;
 
 public:
 	Scene1();

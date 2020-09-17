@@ -3,7 +3,7 @@
 
 #include "components/ECS.h"
 #include "math/Vector.h"
-#include "components/Collider.h"
+#include "components/2D/Collider.h"
 
 class RigidBodyComponent : public Component
 {
