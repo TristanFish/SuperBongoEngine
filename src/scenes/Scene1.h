@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "custom/Camera.h"
 #include "graphics/Shader.h"
+#include "audio/AudioManager.h"
 
 class Player;
 class Tilemap;
@@ -12,6 +13,7 @@ class Scene1 : public Scene
 private:
 	 Player* player;
 	Tilemap* tilemap;
+	AudioManager* audioManager;
 
 
 public:

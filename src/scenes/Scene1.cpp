@@ -12,7 +12,8 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
-	
+	audioManager->InitAudioManager();
+	audioManager->PlaySound("audio/tumbleweed.wav");
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();
 
@@ -50,6 +51,7 @@ void Scene1::OnDestroy()
 	tilemap = nullptr;
 	delete objectList;
 	objectList = nullptr;
+	audioManager->~AudioManager();
 }
 
 void Scene1::Update(const float deltaTime)

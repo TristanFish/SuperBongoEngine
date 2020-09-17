@@ -370,6 +370,7 @@
     <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
+    <ClInclude Include="src\audio\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -411,6 +412,7 @@
     <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
