@@ -93,8 +93,6 @@ GameObject& Manager::FindGameObject(const char* name)
 //Adds a gameobject with a name and position
 GameObject& Manager::AddGameObject(GameObject* go)
 {
-	GameObject* g = go;
-
-	gameObjects.emplace_back(g);
-	return *g;
+	gameObjects.emplace_back(go);
+	return *go;
 }
