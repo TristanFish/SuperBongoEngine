@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="external\dll\fmodL.dll" />
     <None Include="external\dll\glew32.dll" />
     <None Include="external\dll\libFLAC-8.dll" />
     <None Include="external\dll\libfreetype-6.dll" />
@@ -181,6 +182,7 @@
     <None Include="src\graphics\ShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="external\lib\fmodL_vc.lib" />
     <Library Include="external\lib\glew32.lib" />
     <Library Include="external\lib\glew32s.lib" />
     <Library Include="external\lib\SDL2.lib" />
@@ -260,7 +262,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Conor\Documents\GitHub\Productions-\external\lib;$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories);C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories);C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -275,7 +277,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Conor\Documents\GitHub\Productions-\external\lib;$(Solutiondir)external\include\;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)external\include\;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -291,7 +293,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Conor\Documents\GitHub\Productions-\external\lib;;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -309,7 +311,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Conor\Documents\GitHub\Productions-\external\lib;;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

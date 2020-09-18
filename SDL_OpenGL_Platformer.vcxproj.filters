@@ -470,6 +470,7 @@
     <None Include="src\graphics\ShaderVert.glsl">
       <Filter>src\Shaders</Filter>
     </None>
+    <None Include="external\dll\fmodL.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -490,6 +491,7 @@
     <Library Include="external\lib\SDL2test.lib">
       <Filter>external\lib</Filter>
     </Library>
+    <Library Include="external\lib\fmodL_vc.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
