@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\components\Renderer.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="src\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\components\Renderer.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
@@ -186,6 +188,8 @@
     <None Include="external\dll\SDL2_image.dll" />
     <None Include="external\dll\smpeg2.dll" />
     <None Include="external\dll\zlib1.dll" />
+    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
+    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />

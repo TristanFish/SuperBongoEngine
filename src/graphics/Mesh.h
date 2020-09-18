@@ -13,6 +13,9 @@ public:
 	Shader shader;
 
 	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures);
+	Mesh(const Mesh& m);
+	~Mesh();
+	void DestroyTextures();
 	void Render(const Shader& shader) const;
 
 private:

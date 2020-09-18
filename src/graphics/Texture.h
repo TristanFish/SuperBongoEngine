@@ -14,7 +14,7 @@ public:
 	Texture();
 	~Texture();
 	bool LoadImage(const char* filename);
-	
+	void DestroyTexture();
 	inline GLuint getTextureID() const { return textureID; }
 
 };
