@@ -14,7 +14,7 @@ public:
 	Texture();
 	~Texture();
 	bool LoadImage(const char* filename);
-	//This needs to be done a different way for it to work with our code 
+	
 	inline GLuint getTextureID() const { return textureID; }
 
 };

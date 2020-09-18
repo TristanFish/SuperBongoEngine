@@ -16,24 +16,24 @@ void Mesh::Render(const Shader& shader) const
 
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
-		glActiveTexture(GL_TEXTURE0 + i);
+		//glActiveTexture(GL_TEXTURE0 + i);
 
-		std::string number;
-		std::string name = textures[i].type;
-		if (name == "texture_diffuse")
-		{
-			number = std::to_string(diffN++);
-		}
-		else if (name == "texture_specular")
-		{
-			number = std::to_string(specN++);
-		}
+		//std::string number;
+		//std::string name = textures[i].type;
+		//if (name == "texture_diffuse")
+		//{
+		//	number = std::to_string(diffN++);
+		//}
+		//else if (name == "texture_specular")
+		//{
+		//	number = std::to_string(specN++);
+		//}
 
-		glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].getTextureID());
+		//glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i);
 	}
-	glActiveTexture(GL_TEXTURE0);
+	//glActiveTexture(GL_TEXTURE0);
 
+	glBindTexture(GL_TEXTURE_2D, textures[0].getTextureID());
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);

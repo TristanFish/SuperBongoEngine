@@ -23,7 +23,7 @@ bool Texture::LoadImage(const char* filename)
 	SDL_FreeSurface(textureSurface);
 	textureSurface = nullptr;
 	/// Wrapping and filtering options
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0); /// Unbind the texture
 	return false;
