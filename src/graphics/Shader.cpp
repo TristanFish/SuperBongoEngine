@@ -61,7 +61,7 @@ void Shader::RunShader() const
 void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const
 {
 	GLint location = glGetUniformLocation(shader_program, name.c_str());
-	if (location < 0) { std::cout << "Uniform ID not found for camera to init" << std::endl; }
+	if (location < 0) { std::cout << "Uniform ID: "<< name << " not found" << std::endl; }
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 

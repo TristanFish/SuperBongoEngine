@@ -336,9 +336,6 @@
     <ClInclude Include="src\components\Components.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\TextureManager.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\Window.h">
       <Filter>src\graphics</Filter>
     </ClInclude>
@@ -367,9 +364,17 @@
     <ClInclude Include="src\components\2D\SpriteComponent.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
+    <ClInclude Include="src\components\3D\MeshRenderer.h" />
+    <ClInclude Include="src\components\Renderer.h" />
+    <ClInclude Include="src\components\2D\Collider.h" />
+    <ClInclude Include="src\graphics\Vertex.h" />
+    <ClInclude Include="src\graphics\Mesh.h" />
+    <ClInclude Include="src\graphics\Texture.h">
+      <Filter>src\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -382,9 +387,6 @@
       <Filter>src\math</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ECS.cpp" />
-    <ClCompile Include="src\graphics\TextureManager.cpp">
-      <Filter>src\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\Window.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
@@ -411,6 +413,14 @@
     <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
+    <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
+    <ClCompile Include="src\components\Renderer.cpp" />
+    <ClCompile Include="src\graphics\Vertex.cpp" />
+    <ClCompile Include="src\graphics\Mesh.cpp" />
+    <ClCompile Include="src\graphics\Texture.cpp">
+      <Filter>src\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\custom\TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -462,12 +472,15 @@
       <Filter>external\dll</Filter>
     </None>
     <None Include=".gitignore" />
-    <None Include="src\graphics\ShaderText.glsl">
+    <None Include="external\dll\assimp-vc142-mtd.dll" />
+    <None Include="src\graphics\shaders\ShaderText.glsl">
       <Filter>src\Shaders</Filter>
     </None>
-    <None Include="src\graphics\ShaderVert.glsl">
+    <None Include="src\graphics\shaders\ShaderVert.glsl">
       <Filter>src\Shaders</Filter>
     </None>
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -488,6 +501,7 @@
     <Library Include="external\lib\SDL2test.lib">
       <Filter>external\lib</Filter>
     </Library>
+    <Library Include="external\lib\assimp-vc142-mtd.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />

@@ -5,9 +5,9 @@
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
+#include "components/Renderer.h"
 
 
-class Component;
 class GameObject;
 class RigidBodyComponent;
 
@@ -88,6 +88,7 @@ class Manager
 private:
 	std::vector<GameObject*> gameObjects;
 	std::vector<RigidBodyComponent*> rigidBodies;
+	Renderer renderer;
 public:
 
 	~Manager();
