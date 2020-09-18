@@ -10,23 +10,25 @@ MeshRenderer::MeshRenderer(const char* modelPath)
 {
 	if(LoadModel(modelPath))
 	{
-		std::cout << "Model Loaded" << std::endl;
+		std::cout << "Model " << modelPath << " Loaded" << std::endl;
 	}
 	else
 	{
-		std::cout << "Model Not Loaded" << std::endl;
+		std::cout << "Model " << modelPath << " Not Loaded" << std::endl;
 	}
 }
 
 MeshRenderer::~MeshRenderer()
 {
-	if (shader) { delete shader; }
+	for (unsigned int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].DestroyTextures();
+	}
 }
 
 void MeshRenderer::CreateShader(const char* vert, const char* frag)
 {
-	shader = new Shader();
-	shader->CreateShader(vert, frag);
+	shader.CreateShader(vert, frag);
 }
 
 void MeshRenderer::Init(GameObject* g)
@@ -42,11 +44,11 @@ void MeshRenderer::Render() const
 {
 	for (auto& m : meshes)
 	{
-		shader->RunShader();
-		shader->TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader->TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader->TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
-		m.Render(*shader);
+		shader.RunShader();
+		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+		m.Render(shader);
 	}
 }
 
@@ -65,7 +67,7 @@ bool MeshRenderer::LoadModel(std::string modelPath)
 		return false;
 	}
 
-	directory = modelPath.substr(0, modelPath.find_last_of('/'));
+	directory = modelPath.substr(0, modelPath.find_last_of('/') + 1);
 	ProcessNode(scene->mRootNode, scene);
 	return true;
 }
@@ -146,10 +148,13 @@ std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextu
 
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
-		aiString str;
-		mat->GetTexture(type, i, &str);
+		aiString path;
+		aiString fullPath = aiString(directory);
 		Texture texture;
-		texture.LoadImage("resources/textures/pufflet.bmp");
+		mat->GetTexture(type, i, &path);
+		fullPath.Append(path.C_Str());
+
+		texture.LoadImage(fullPath.C_Str());
 		texture.type = typeName;
 		textures.push_back(texture);
 	}
