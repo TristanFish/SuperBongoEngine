@@ -40,8 +40,8 @@ bool Physics2D::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& 
 
 bool Physics2D::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	float rb1Halfx = rb1.collider.size / 2.0f;
-	float rb2Halfx = rb2.collider.size / 2.0f;
+	float rb1Halfx = rb1.collider.size.x / 2.0f;
+	float rb2Halfx = rb2.collider.size.x / 2.0f;
 	float rb1Halfy = rb1Halfx;
 	float rb2Halfy = rb2Halfx;
 	if ((rb1.pos->x - rb1Halfx < rb2.pos->x + rb2Halfx) && //Check rb1 left edge with rb2 right edge

@@ -15,7 +15,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	SpriteComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
-	RigidBodyComponent::setColliderSize(1.75f);
+	//RigidBodyComponent::setColliderSize(1.75f);
 	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 }
 

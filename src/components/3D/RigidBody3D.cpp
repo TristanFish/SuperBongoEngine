@@ -4,7 +4,7 @@
 
 
 RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-										  zAngle(0.0f), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f)
+										  Angle(MATH::Vec3()), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f)
 {
 
 }
@@ -18,16 +18,16 @@ void RigidBody3D::Init(GameObject *g)
 {
 	gameobject = g;
 	pos = &g->transform.pos;
-	setColliderSize(g->transform.GetScale().x);
+	setColliderSize(g->transform.GetScale());
 
 	mass = 1.0f;
 	vel = MATH::Vec3();
 	accel = MATH::Vec3();
 
 	rotInertia = 1.0f;
-	zAngle = 0.0f;
-	angularVel = 0.0f;
-	angularAcc = 0.0f;
+	Angle = MATH::Vec3();
+	angularVel = MATH::Vec3();
+	angularAcc = MATH::Vec3();
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -38,9 +38,9 @@ void RigidBody3D::Update(const float deltaTime)
 
 	angularVel += angularAcc * deltaTime;
 	angularVel *= angularDrag;
-	zAngle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
+	Angle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
 
-	gameobject->SetRotation(MATH::Vec3(0.0f, 0.0f, zAngle));
+	gameobject->SetRotation(Angle);
 
 }
 
@@ -68,12 +68,12 @@ void RigidBody3D::ApplyConstantForce(const MATH::Vec3& force)
 	accel += force / mass;
 }
 
-void RigidBody3D::ApplyImpulseTorque(const float torque)
+void RigidBody3D::ApplyImpulseTorque(const MATH::Vec3 torque)
 {
-	angularVel += (torque / rotInertia) * Timer::GetScaledDeltaTime();
+	angularVel  += (torque / rotInertia) * Timer::GetScaledDeltaTime();
 }
 
-void RigidBody3D::ApplyConstantTorque(const float torque)
+void RigidBody3D::ApplyConstantTorque(const MATH::Vec3 torque)
 {
 	angularAcc = torque / mass;
 }

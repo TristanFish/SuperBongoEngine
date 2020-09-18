@@ -15,15 +15,15 @@ private:
 	float linearDrag;
 
 	float rotInertia;
-	float zAngle;
-	float angularVel;
-	float angularAcc;
+	MATH::Vec3 Angle;
+	MATH::Vec3 angularVel;
+	MATH::Vec3 angularAcc;
 	float angularDrag;
 
 	 bool IsGrounded;
 
 
-	friend class Physics;
+	friend class Physics3D;
 public:
 	Collider collider;
 
@@ -41,11 +41,13 @@ public:
 	void SetConstantForce(const MATH::Vec3& force);
 
 
-	void ApplyImpulseTorque(const float torque);
-	void ApplyConstantTorque(const float torque);
+	void ApplyImpulseTorque(const MATH::Vec3 torque);
+	void ApplyConstantTorque(const MATH::Vec3 torque);
 
-	inline void setColliderSize(float s) { collider.size = s; }
+	inline void setColliderSize(MATH::Vec3 s) { collider.size = s; }
 	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
+	inline Collider::shape GetColliderShape() { return collider.colliderShape; }
+
 	inline bool isMoveable() { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
 
@@ -63,10 +65,10 @@ public:
 	inline void SetMass(const float m) { mass = m; }
 	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
-	inline float GetAngVelocity() { return angularVel; }
-	inline void SetAngVelocity(const float vel) { angularVel = vel; }
-	inline float GetAngAccel() { return angularAcc; }
-	inline void SetAngAccel(const float acc) { angularAcc = acc; }
+	inline MATH::Vec3 GetAngVelocity() { return angularVel; }
+	inline void SetAngVelocity(const MATH::Vec3 vel) { angularVel = vel; }
+	inline MATH::Vec3 GetAngAccel() { return angularAcc; }
+	inline void SetAngAccel(const MATH::Vec3 acc) { angularAcc = acc; }
 	inline float GetAngDrag() { return angularDrag; }
 	inline void SetAngDrag(const float drag) { angularDrag = drag; }
 	inline bool GetIsGrounded() { return IsGrounded; }
