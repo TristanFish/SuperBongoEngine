@@ -14,15 +14,16 @@ public:
 	};
 
 	shape colliderShape;
-	bool isMoveable, isTrigger;
-	float size;
+	bool isMoveable, isTrigger,isWiremesh;
+	MATH::Vec3 size;
 
 	Collider()
 	{
 		colliderShape = shape::Box;
 		isMoveable = true;
 		isTrigger = true;
-		size = 1.0f;
+		isWiremesh = false;
+		size = MATH::Vec3(1.0f, 1.0f, 1.0f);
 	}
 };
 
