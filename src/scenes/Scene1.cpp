@@ -12,7 +12,7 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
-	audioManager = new (AudioManager);
+	audioManager = new AudioManager();
 	audioManager->InitAudioManager();
 	audioManager->PlaySound("C:/Users/Conor/Documents/GitHub/Productions-/src/sounds/tumbleweed.wav");
 

@@ -21,13 +21,21 @@ public:
 	FMOD::Channel* C1 = nullptr;
 private:
 
-
 	//FMOD runs off a single system pointer below, most of the initialization is behind the scenes in regards to hooking into your sound device/card 
 	FMOD::System* system = nullptr;
 	FMOD::Sound* newSound = nullptr;
 	FMOD::ChannelGroup* G1 = nullptr;
+	FMOD::Reverb3D* reverb = nullptr;
+
+	FMOD_VECTOR pos { 0.0f, 5.0f, 0.0f };
 
 	void CreateChannelGroup();
 	void CreateSound(const char* filename);
+	void Create3DReverbAttributes(FMOD_VECTOR pos);
+	void Create3DReverb();
+
+	float dBToVolume(float dB);
+	float VolumeTodB(float vol);
+	
 };
 #endif

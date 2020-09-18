@@ -11,7 +11,7 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
-	 Player* player;
+	Player* player;
 	Tilemap* tilemap;
 	AudioManager* audioManager;
 
