@@ -19,11 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\Mesh.h" />
+    <ClInclude Include="src\components\Renderer.h" />
+    <ClInclude Include="src\components\3D\MeshRenderer.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\custom\Player.h" />
-    <ClInclude Include="src\components\Collider.h" />
+    <ClInclude Include="src\components\2D\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\components\Components.h" />
     <ClInclude Include="src\components\ECS.h" />
@@ -128,13 +131,18 @@
     <ClInclude Include="src\math\MMath.h" />
     <ClInclude Include="src\math\Vector.h" />
     <ClInclude Include="src\math\VMath.h" />
-    <ClInclude Include="src\graphics\TextureManager.h" />
+    <ClInclude Include="src\graphics\Texture.h" />
     <ClInclude Include="src\core\Timer.h" />
     <ClInclude Include="src\graphics\Window.h" />
     <ClInclude Include="src\tiles\Tilemap.h" />
     <ClInclude Include="src\tiles\Tile.h" />
+    <ClInclude Include="src\graphics\Vertex.h" />
+    <ClInclude Include="src\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\Mesh.cpp" />
+    <ClCompile Include="src\components\Renderer.cpp" />
+    <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
@@ -151,14 +159,17 @@
     <ClCompile Include="src\math\MMath.cpp" />
     <ClCompile Include="src\math\Vector.cpp" />
     <ClCompile Include="src\math\VMath.cpp" />
-    <ClCompile Include="src\graphics\TextureManager.cpp" />
+    <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\core\Timer.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\tiles\Tilemap.cpp" />
     <ClCompile Include="src\tiles\Tile.cpp" />
+    <ClCompile Include="src\graphics\Vertex.cpp" />
+    <ClCompile Include="src\custom\TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="external\dll\assimp-vc142-mtd.dll" />
     <None Include="external\dll\glew32.dll" />
     <None Include="external\dll\libFLAC-8.dll" />
     <None Include="external\dll\libfreetype-6.dll" />
@@ -175,10 +186,13 @@
     <None Include="external\dll\SDL2_image.dll" />
     <None Include="external\dll\smpeg2.dll" />
     <None Include="external\dll\zlib1.dll" />
-    <None Include="src\graphics\ShaderText.glsl" />
-    <None Include="src\graphics\ShaderVert.glsl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\ShaderText.glsl" />
+    <None Include="src\graphics\shaders\ShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="external\lib\assimp-vc142-mtd.lib" />
     <Library Include="external\lib\glew32.lib" />
     <Library Include="external\lib\glew32s.lib" />
     <Library Include="external\lib\SDL2.lib" />
@@ -264,7 +278,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -288,12 +302,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

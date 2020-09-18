@@ -6,14 +6,20 @@ Camera* Camera::instance;
 
 Camera::Camera()
 {
+	position = MATH::Vec3(0.0f, 0.0f, -10.0f);
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-	viewMatrix.loadIdentity();
-	position = Vec3();
+	perspecProjMatrix = MMath::perspective(90.0f, (12.0f / 9.0f), 0.1f, 100.0f);
+	viewMatrix = MMath::lookAt(position, MATH::Vec3(), MATH::Vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Camera::Update(float deltaTime)
 {
-	viewMatrix = MMath::translate(-position.x * 0.1f, -position.y * 0.1f, -0.5f);
+	viewMatrix = MMath::translate(position.x, position.y, position.z);
+}
+
+void Camera::HandleEvents(const SDL_Event& event)
+{
+
 }
 
 Camera* Camera::getInstance()
