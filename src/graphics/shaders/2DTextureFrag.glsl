@@ -7,6 +7,5 @@ uniform sampler2D tex;
 void main()
 {
 	vec4 col = texture(tex, vertUV);
-
 	fragColor = col;
 }

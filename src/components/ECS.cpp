@@ -94,5 +94,6 @@ GameObject& Manager::FindGameObject(const char* name)
 GameObject& Manager::AddGameObject(GameObject* go)
 {
 	gameObjects.emplace_back(go);
+	std::cout << go->name << " added to objectList" << std::endl;
 	return *go;
 }

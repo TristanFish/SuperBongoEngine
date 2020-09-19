@@ -7,6 +7,9 @@ namespace  MATH {
 
 	class MMath {
 	public:
+		static Matrix4 calcRotationMatrix(const Vec3& euler);
+		static Vec3 calcEulerAngles(const Matrix4& rotMatrix);
+
 		static Matrix4 rotate(const float degrees_, const float x_, const float y_, const float z_);
 		static Matrix4 rotate(const float degrees_, const Vec3 &axis_);
 
