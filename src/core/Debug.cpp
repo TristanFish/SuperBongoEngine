@@ -3,7 +3,7 @@
 
 Shader Debug::shader;
 
-void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame)
+void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec3 color)
 {
 }
 
@@ -48,6 +48,6 @@ void Debug::DrawTextureToScreen(GLuint texID, MATH::Vec2 topLeft, MATH::Vec2 top
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame)
+void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, Vec3 color)
 {
 }

@@ -24,8 +24,10 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
+
 	transform.Update(deltaTime);
 	Camera::getInstance()->setPosition(transform.GetPosition());
+	Camera::getInstance()->setRotation(transform.GetRotation());
 }
 
 void Player::Render() const
@@ -38,29 +40,49 @@ void Player::HandleEvents(const SDL_Event& event)
 {
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
+		//Movement controls
 		if (event.key.keysym.sym == SDLK_w) 
 		{
-			transform.pos.z += 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Forward() * 10.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_s)
 		{
-			transform.pos.z -= 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Forward() * 10.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			transform.pos.x -= 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * 10.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			transform.pos.x += 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * 10.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
-			transform.pos.y -= 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Up() * 10.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_LCTRL)
 		{
-			transform.pos.y += 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Up() * 10.0f * Timer::GetDeltaTime();
 		}
+
+		//Rotation controls
+		if (event.key.keysym.sym == SDLK_LEFT)
+		{
+			transform.rotation.y +=  50.0f * Timer::GetDeltaTime();
+		}
+		if (event.key.keysym.sym == SDLK_RIGHT)
+		{
+			transform.rotation.y += -50.0f * Timer::GetDeltaTime();
+		}
+		if (event.key.keysym.sym == SDLK_UP)
+		{
+			transform.rotation.x +=  50.0f * Timer::GetDeltaTime();
+		}
+		if (event.key.keysym.sym == SDLK_DOWN)
+		{
+			transform.rotation.x += -50.0f * Timer::GetDeltaTime();
+		}
+		
 	}
 }

@@ -20,14 +20,11 @@ bool Scene1::OnCreate()
 	texture = Texture();
 	texture.LoadImage("resources/textures/pufflet.bmp");
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 0.0f, -40.0f));
+	player = new Player("Player", MATH::Vec3(0.0f, 0.0f, 30.0f));
 	objectList->AddGameObject(player);
 
-	puffinBall = new TestModel("PuffinBall", MATH::Vec3());
-	objectList->AddGameObject(puffinBall);
-
-	Camera::getInstance()->getProjectionMatrix().print();
-	Camera::getInstance()->getViewMatrix().print();
+	latch = new TestModel("Latch", MATH::Vec3(0.0f, -28.0f, 0.0f));
+	objectList->AddGameObject(latch);
 
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations

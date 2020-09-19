@@ -49,6 +49,7 @@ void MeshRenderer::Render() const
 		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
 		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
 		m.Render(shader);
+		glUseProgram(0);
 	}
 }
 
@@ -92,6 +93,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<GLuint> indices;
 	std::vector<Texture> textures;
 
+	//Load vertices
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
@@ -120,6 +122,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		vertices.push_back(vertex);
 	}
 
+	//Load indices
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
@@ -129,31 +132,45 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 	}
 
+	//Load materials
+	aiColor4D col(0.0f, 0.0f, 0.0f, 0.0f);
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "texture_diffuse");
+		//Get material color
+		material->Get(AI_MATKEY_COLOR_DIFFUSE, col);
+
+		//Get diffuse textures
+		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "diffuseTex");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 		
-		std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_SPECULAR, "texture_specular");
+		//Get Specular textures
+		std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_SPECULAR, "specularTex");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return Mesh(vertices, indices, textures);
+	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+
+	return Mesh(vertices, indices, textures, color);
 }
 
 std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
-
+	
+	//load all textures of a TextureType (specular, diffuse, etc.) from the selected material
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString path;
 		aiString fullPath = aiString(directory);
 		Texture texture;
+
+		//Get the path to the texture associated with the model
 		mat->GetTexture(type, i, &path);
+		//add path to the directory where the model is stored
 		fullPath.Append(path.C_Str());
 
+		//Load texture
 		texture.LoadImage(fullPath.C_Str());
 		texture.type = typeName;
 		textures.push_back(texture);
