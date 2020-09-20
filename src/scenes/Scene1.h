@@ -11,8 +11,9 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
+	Texture texture;
 	Player* player;
-	TestModel* puffinBall;
+	TestModel* latch;
 
 public:
 	Scene1();

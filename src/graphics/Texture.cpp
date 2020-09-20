@@ -17,20 +17,49 @@ bool Texture::LoadImage(const char* filename)
 		std::cout << "texture: " << filename << " didn't load" << std::endl;
 		return false;
 	}
-	int mode = (textureSurface->format->BytesPerPixel == 4) ? GL_RGBA : GL_RGB;
-	glTexImage2D(GL_TEXTURE_2D, 0, mode, textureSurface->w, textureSurface->h, 0, mode, GL_UNSIGNED_BYTE, textureSurface->pixels);
+	int numOfColours = textureSurface->format->BytesPerPixel;
+	int format;
+	if (numOfColours == 4)
+	{
+		if (textureSurface->format->Rmask == 0x000000ff)
+		{
+			format = GL_RGBA;
+		}
+		else
+		{
+			format = GL_BGRA;
+		}
+	}
+	else if (numOfColours == 3)
+	{
+		if (textureSurface->format->Rmask == 0x000000ff)
+		{
+			format = GL_RGB;
+		}
+		else
+		{
+			format = GL_BGR;
+		}
+	}
+
+	glTexImage2D(GL_TEXTURE_2D, 0, numOfColours, textureSurface->w, textureSurface->h, 0, format, GL_UNSIGNED_BYTE, textureSurface->pixels);
 	
 	SDL_FreeSurface(textureSurface);
 	textureSurface = nullptr;
 	/// Wrapping and filtering options
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0); /// Unbind the texture
 	return false;
 }
 
+void Texture::DestroyTexture()
+{
+	glDeleteTextures(1, &textureID);
+}
+
 
 Texture::~Texture()
 {
-	glDeleteTextures(1, &textureID);
+
 }

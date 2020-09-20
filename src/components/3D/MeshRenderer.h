@@ -24,9 +24,11 @@ public:
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
-	Shader* shader;
+	Shader shader;
 
 	bool LoadModel(std::string modelPath);
+
+
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
