@@ -9,8 +9,10 @@ TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("reso
 {
 	this->name = name;
 	transform.setPos(position);
+
 	RigidBody3D::Init(this);
 	RigidBody3D::SetAccel(MATH::Vec3(0.0f, 0.0f, -1.0f));
+	//RigidBody3D::setColliderShape(Collider3D::shape::Sphere);
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 }

@@ -7,44 +7,59 @@ using namespace MATH;
 
 bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	float rb1Halfx = rb1.collider.size.x / 2.0f;
-	float rb2Halfx = rb2.collider.size.x / 2.0f;
-	float rb1Halfy = rb1.collider.size.y / 2.0f;
-	float rb2Halfy = rb2.collider.size.y / 2.0f;
-	float rb1Halfz = rb1.collider.size.z / 2.0f;
-	float rb2Halfz = rb2.collider.size.z / 2.0f;
+	// Getting the min and max vertex of the object
+	MATH::Vec3 p_min_1 = rb1.gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_1 = rb1.gameobject->getComponent<MeshRenderer>().p_max;
+	MATH::Vec3 p_min_2 = rb2.gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_2 = rb2.gameobject->getComponent<MeshRenderer>().p_max;
+	
 
+	
+
+	float rb1Halfx = ((abs(p_min_1.x) + abs(p_max_1.x)) / 2.0f);
+	float rb2Halfx = ((abs(p_min_2.x) + abs(p_max_2.x)) / 2.0f);
+	float rb1Halfy = ((abs(p_min_1.y) + abs(p_max_1.y)) / 2.0f);
+	float rb2Halfy = ((abs(p_min_2.y) + abs(p_max_2.y)) / 2.0f);
+	float rb1Halfz = ((abs(p_min_1.z) + abs(p_max_1.z)) / 2.0f);
+	float rb2Halfz = ((abs(p_min_2.z) + abs(p_max_2.z)) / 2.0f);
 
 	if ((rb1.pos->x - rb1Halfx < rb2.pos->x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
 		(rb1.pos->x + rb1Halfx > rb2.pos->x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
 		(rb1.pos->y - rb1Halfy < rb2.pos->y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
 		(rb1.pos->y + rb1Halfy > rb2.pos->y - rb2Halfy) && 
-		(rb1.pos->z - rb1Halfz < rb2.pos->z + rb2Halfz) && 
-		(rb1.pos->z + rb1Halfz > rb2.pos->z - rb2Halfz))   //Check rb2 top edge with rb2 bottom edge
-	{
-		std::cout << rb1.gameobject->name <<" Collided With " <<rb2.gameobject->name << std::endl;
-		
+		(rb1.pos->z - rb1Halfz < rb2.pos->z + rb2Halfz) &&   //Check rb2 top edge with rb2 bottom edge
+		(rb1.pos->z + rb1Halfz > rb2.pos->z - rb2Halfz))
+	{	
+		std::cout << "Box box collision detected" << std::endl;
+
 		return true;
 	}
+	 
 	return false;
 }
 
 bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 {
+	MATH::Vec3 p_min_1 = sphere.gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_1 = sphere.gameobject->getComponent<MeshRenderer>().p_max;
+
+	MATH::Vec3 p_min_2 = box.gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_2 = box.gameobject->getComponent<MeshRenderer>().p_max;
+
 	//Find the difference between both positions
 	Vec3 differenceVector = *sphere.pos - *box.pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	Vec3 clamped = MATH::VMath::clamp(differenceVector,-box.collider.size,
-		box.collider.size / 2.0f);
+	Vec3 clamped = MATH::VMath::clamp(differenceVector, p_min_2 /2,
+		p_max_2 /2);
 	Vec3 closestContactPoint = *box.pos + clamped;
 
 	//distance from closest contact point to the center of the circle
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
-	distance.print();
-
-	if (VMath::mag(distance) < 2.54 )
+	if (VMath::mag(distance) < (abs(p_max_1.x) + abs(p_min_1.x)) / 2 || 
+		VMath::mag(distance) < (abs(p_max_1.y) + abs(p_min_1.y)) / 2 || 
+		VMath::mag(distance) < (abs(p_max_1.z) + abs(p_min_1.z)) / 2)
 	{
 		std::cout << "Sphere box collision detected" << std::endl;
 		return true;
@@ -81,7 +96,6 @@ void Physics3D::SphereBoxResolve(RigidBody3D& sphere, RigidBody3D& box)
 		Vec3 reflectVel = VMath::reflect(sphere.vel, BoxNormal);
 
 		sphere.SetPosition(*sphere.pos + (BoxNormal * 0.05f));
-		std::cout << *sphere.pos << std::endl;
 		if (VMath::dot(reflectVel, BoxNormal) > -0.1f)
 		{
 			sphere.vel += reflectVel * 0.5f;
@@ -117,7 +131,7 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 		rb1.accel.z = 0.0f;
 	}
 
-	rb1.accel.print();
+	//rb1.accel.print();
 	rb1.OnCollisionEnter(rb2);
 	rb2.OnCollisionEnter(rb1);
 }
