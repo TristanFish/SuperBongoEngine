@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "custom/Camera.h"
 #include "custom/TestModel.h"
+#include "custom/Plane.h"
 #include "graphics/Shader.h"
 
 class Player;
@@ -13,7 +14,8 @@ class Scene1 : public Scene
 private:
 	Texture texture;
 	Player* player;
-	TestModel* latch;
+	TestModel* ball;
+	Plane* plane;
 
 public:
 	Scene1();
