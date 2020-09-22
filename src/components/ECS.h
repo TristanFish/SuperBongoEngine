@@ -9,7 +9,7 @@
 
 
 class GameObject;
-class RigidBodyComponent;
+class RigidBody3D;
 
 
 //Component is an interface, things should be inheriting from it
@@ -87,7 +87,7 @@ class Manager
 {
 private:
 	std::vector<GameObject*> gameObjects;
-	std::vector<RigidBodyComponent*> rigidBodies;
+	std::vector<RigidBody3D*> rigidBodies;
 	Renderer renderer;
 public:
 
@@ -101,6 +101,8 @@ public:
 	GameObject& FindGameObject(const char* name);
 	//Adds a gameobject with a name and position
 	GameObject& AddGameObject(GameObject* go);
+
+	void CheckCollisions();
 };
 
 #endif 

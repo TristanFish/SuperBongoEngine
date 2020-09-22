@@ -1,13 +1,14 @@
-#pragma once
+
 #include "components/ECS.h"
 #include "components/Components.h"
 
-class TestModel : public GameObject, public MeshRenderer, public RigidBody3D
+class Plane : public GameObject, public MeshRenderer, public RigidBody3D
 {
+
 public:
-	TestModel();
-	TestModel(const char* name, MATH::Vec3 position);
-	~TestModel();
+	Plane();
+	Plane(const char* name, MATH::Vec3 position);
+	~Plane();
 
 
 	// Inherited via GameObject
@@ -19,8 +20,5 @@ public:
 
 
 private:
-
-
-
 };
 

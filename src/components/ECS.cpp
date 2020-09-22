@@ -1,5 +1,6 @@
 #include "ECS.h"
-#include "components/2D/RigidBodyComponent.h"
+#include "3D/RigidBody3D.h"
+#include "core/3D/Physics3D.h"
 
 GameObject::GameObject(): name("Default"), transform()
 {
@@ -32,9 +33,9 @@ void Manager::Init()
 {
 	for (GameObject* g : gameObjects)
 	{
-		if (g->hasComponent<RigidBodyComponent>())
+		if (g->hasComponent<RigidBody3D>())
 		{
-			rigidBodies.emplace_back(&g->getComponent<RigidBodyComponent>());
+			rigidBodies.emplace_back(&g->getComponent<RigidBody3D>());
 		}
 	}
 }
@@ -48,6 +49,8 @@ void Manager::Update(const float deltaTime)
 			g->Update(deltaTime);
 		}
 	}
+
+	
 }
 void Manager::Render() const
 {
@@ -96,4 +99,13 @@ GameObject& Manager::AddGameObject(GameObject* go)
 	gameObjects.emplace_back(go);
 	std::cout << go->name << " added to objectList" << std::endl;
 	return *go;
+}
+
+void Manager::CheckCollisions()
+{
+	//std::cout << rigidBodies.size() << std::endl;
+	for (int i = 0; i < rigidBodies.size() - 1; i++)
+	{
+		Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[i+1]);
+	}
 }

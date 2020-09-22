@@ -23,8 +23,10 @@ bool Scene1::OnCreate()
 	player = new Player("Player", MATH::Vec3(0.0f, 0.0f, 30.0f));
 	objectList->AddGameObject(player);
 
-	latch = new TestModel("Latch", MATH::Vec3(0.0f, -28.0f, 0.0f));
-	objectList->AddGameObject(latch);
+	ball = new TestModel("Ball", MATH::Vec3(0.0f, -28.0f, 0.0f));
+	plane = new Plane("Plane", MATH::Vec3(0.0f, -28.0f, -50.0f));
+	objectList->AddGameObject(ball);
+	objectList->AddGameObject(plane);
 
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
@@ -46,7 +48,7 @@ void Scene1::Update(const float deltaTime)
 {
 	//std::cout << 1.0f / deltaTime << std::endl;
 	Camera::getInstance()->Update(deltaTime);
-
+	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
 
 }
