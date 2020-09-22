@@ -38,6 +38,7 @@ void MeshRenderer::Init(GameObject* g)
 
 void MeshRenderer::Update(const float deltaTime)
 {
+	
 }
 
 void MeshRenderer::Render() const
@@ -150,6 +151,27 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+
+
+	p_min.x = vertices[0].position.x;
+	p_min.y = vertices[0].position.y;
+	p_min.z = vertices[0].position.z;
+
+	p_max.x = vertices[0].position.x;
+	p_max.y = vertices[0].position.y;
+	p_max.z = vertices[0].position.z;
+
+	for (int i = 1; i < vertices.size(); i++)
+	{
+		p_min.x = std::min(p_min.x, vertices[i].position.x);
+		p_min.y = std::min(p_min.y, vertices[i].position.y);
+		p_min.z = std::min(p_min.z, vertices[i].position.z);
+
+		p_max.x = std::max(p_max.x, vertices[i].position.x);
+		p_max.y = std::max(p_max.y, vertices[i].position.y);
+		p_max.z = std::max(p_max.z, vertices[i].position.z);
+	}
+
 
 	return Mesh(vertices, indices, textures, color);
 }

@@ -21,6 +21,10 @@ public:
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
+	// Used For Axis Aligned Binding Boxes
+	Vec3 p_min;
+	Vec3 p_max;
+
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
