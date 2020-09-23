@@ -31,7 +31,6 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 		(rb1.pos->z + rb1Halfz > rb2.pos->z - rb2Halfz))
 	{	
 		std::cout << "Box box collision detected" << std::endl;
-
 		return true;
 	}
 	 
@@ -57,7 +56,7 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 	//distance from closest contact point to the center of the circle
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
-	if (VMath::mag(distance) < (abs(p_max_1.x) + abs(p_min_1.x)) / 2 || 
+	if (VMath::mag(distance) < (abs(p_max_1.x) + abs(p_min_1.x)) / 2 ||
 		VMath::mag(distance) < (abs(p_max_1.y) + abs(p_min_1.y)) / 2 || 
 		VMath::mag(distance) < (abs(p_max_1.z) + abs(p_min_1.z)) / 2)
 	{

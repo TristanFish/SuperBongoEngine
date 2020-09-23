@@ -39,7 +39,7 @@ void RigidBody3D::Update(const float deltaTime)
 	angularVel *= angularDrag;
 	Angle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
 
-	gameobject->SetRotation(Angle);
+	//gameobject->SetRotation(Angle);
 	
 }
 

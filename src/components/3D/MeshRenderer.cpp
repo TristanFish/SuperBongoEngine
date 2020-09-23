@@ -31,6 +31,8 @@ void MeshRenderer::CreateShader(const char* vert, const char* frag)
 	shader.CreateShader(vert, frag);
 }
 
+
+
 void MeshRenderer::Init(GameObject* g)
 {
 	gameobject = g;
@@ -38,6 +40,7 @@ void MeshRenderer::Init(GameObject* g)
 
 void MeshRenderer::Update(const float deltaTime)
 {
+	
 	
 }
 
