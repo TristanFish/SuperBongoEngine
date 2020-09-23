@@ -164,7 +164,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	p_max.y = vertices[0].position.y;
 	p_max.z = vertices[0].position.z;
 
-	for (int i = 1; i < vertices.size(); i++)
+	for (unsigned int i = 1; i < vertices.size(); i++)
 	{
 		p_min.x = std::min(p_min.x, vertices[i].position.x);
 		p_min.y = std::min(p_min.y, vertices[i].position.y);

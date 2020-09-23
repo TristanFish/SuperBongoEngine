@@ -104,8 +104,11 @@ GameObject& Manager::AddGameObject(GameObject* go)
 void Manager::CheckCollisions()
 {
 	//std::cout << rigidBodies.size() << std::endl;
-	for (int i = 0; i < rigidBodies.size() - 1; i++)
+	for (unsigned int i = 0; i < rigidBodies.size(); i++)
 	{
-		Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[i+1]);
+		for (unsigned int j = i + 1; j < rigidBodies.size(); j++)
+		{
+			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+		}
 	}
 }

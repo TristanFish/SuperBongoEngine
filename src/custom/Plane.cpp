@@ -12,7 +12,7 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
 	transform.rotation.print();
 	RigidBody3D::Init(this);
-	RigidBody3D::isMoveable() == false;
+	RigidBody3D::setMoveable(false);
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/BaseVert.glsl", "src/graphics/shaders/BaseFrag.glsl");
 	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *transform.scale);

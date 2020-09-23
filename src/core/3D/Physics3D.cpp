@@ -37,24 +37,39 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 	return false;
 }
 
-bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
+bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	MATH::Vec3 p_min_1 = sphere.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_1 = sphere.gameobject->getComponent<MeshRenderer>().p_max;
+	RigidBody3D* sphere = nullptr;
+	RigidBody3D* box = nullptr;
 
-	MATH::Vec3 p_min_2 = box.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_2 = box.gameobject->getComponent<MeshRenderer>().p_max;
+	if (rb1.GetColliderShape() == Collider3D::shape::AABB)
+	{
+		sphere = &rb2;
+		box = &rb1;
+	}
+	else
+	{
+		sphere = &rb1;
+		box = &rb2;
+	}
+
+
+	MATH::Vec3 p_min_1 = sphere->gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_1 = sphere->gameobject->getComponent<MeshRenderer>().p_max;
+
+	MATH::Vec3 p_min_2 = box->gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_2 = box->gameobject->getComponent<MeshRenderer>().p_max;
 
 	//Find the difference between both positions
-	Vec3 differenceVector = *sphere.pos - *box.pos;
+	Vec3 differenceVector = *sphere->pos - *box->pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
 	Vec3 clamped = MATH::VMath::clamp(differenceVector, p_min_2 /2,
 		p_max_2 /2);
-	Vec3 closestContactPoint = *box.pos + clamped;
+	Vec3 closestContactPoint = *box->pos + clamped;
 
 	//distance from closest contact point to the center of the circle
-	Vec3 distance = closestContactPoint - *sphere.pos;
+	Vec3 distance = closestContactPoint - *sphere->pos;
 
 	if (VMath::mag(distance) < (abs(p_max_1.x) + abs(p_min_1.x)) / 2 ||
 		VMath::mag(distance) < (abs(p_max_1.y) + abs(p_min_1.y)) / 2 || 
@@ -80,33 +95,47 @@ MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box
 	//distance from closest contact point to the center of the circle
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
-	Vec3 normal = VMath::orthagonalize(clamped);
+	Vec3 normal = MMath::calcRotationMatrix(box.gameobject->transform.rotation) * VMath::orthagonalize(clamped);
 	//normal.z = VMath::mag(distance);
 
 	return normal;
 }
 
-void Physics3D::SphereBoxResolve(RigidBody3D& sphere, RigidBody3D& box)
+void Physics3D::SphereBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	if (sphere.collider.isMoveable && !box.collider.isTrigger)
+	RigidBody3D* sphere = nullptr;
+	RigidBody3D* box = nullptr;
+
+	if (rb1.GetColliderShape() == Collider3D::shape::AABB)
 	{
-		Vec3 BoxNormal = CircleBoxClosestEdge(sphere, box);
+		box = &rb1;
+		sphere = &rb2;
+	}
+	else
+	{
+		box = &rb2;
+		sphere = &rb1;
+	}
 
-		Vec3 reflectVel = VMath::reflect(sphere.vel, BoxNormal);
+	if (sphere->collider.isMoveable && !box->collider.isTrigger)
+	{
+		Vec3 BoxNormal = CircleBoxClosestEdge(*sphere, *box);
 
-		sphere.SetPosition(*sphere.pos + (BoxNormal * 0.05f));
-		if (VMath::dot(reflectVel, BoxNormal) > -0.1f)
+		Vec3 reflectVel = VMath::reflect(sphere->vel, BoxNormal);
+
+		sphere->SetPosition(*sphere->pos + (BoxNormal * 0.05f));
+		if (VMath::dot(VMath::normalize(reflectVel), BoxNormal) > -0.1f)
 		{
-			sphere.vel += reflectVel * 0.5f;
+			sphere->vel += reflectVel * 0.5f;
 		}
 	}
 
-	if (box.collider.isMoveable && !sphere.collider.isTrigger)
+	if (box->collider.isMoveable && !sphere->collider.isTrigger)
 	{
 
 	}
-	box.OnCollisionEnter(sphere);
-	sphere.OnCollisionEnter(box);
+	box->OnCollisionEnter(*sphere);
+	sphere->OnCollisionEnter(*box);
 }
 
 void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
@@ -137,34 +166,28 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 
 bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	if (rb1.GetColliderShape() == Collider3D::shape::AABB && rb2.GetColliderShape() == Collider3D::shape::AABB)
+	switch (rb1.collider.colliderShape | rb2.collider.colliderShape)
 	{
+	case Collider3D::shape::AABB:
 		if (BoxBoxDetect(rb1, rb2))
 		{
 			BoxBoxResolve(rb1, rb2);
 			return true;
 		}
-		else { return false; }
-	}
-
-	if (rb1.GetColliderShape() == Collider3D::shape::Sphere && rb2.GetColliderShape() == Collider3D::shape::AABB)
-	{
+		return false;
+		break;
+	case Collider3D::shape::Sphere | Collider3D::shape::AABB:
 		if (SphereBoxDetect(rb1, rb2))
 		{
 			SphereBoxResolve(rb1, rb2);
 			return true;
 		}
-		else { return false; }
+		return false;
+		break;
+	default:
+		std::cout << "Something went wrong in DetectCollision" << std::endl;
+		return false;
+		break;
 	}
-	if (rb1.GetColliderShape() == Collider3D::shape::AABB && rb2.GetColliderShape() == Collider3D::shape::Sphere)
-	{
-		if (SphereBoxDetect(rb2, rb1))
-		{
-			SphereBoxResolve(rb2, rb1);
-			return true;
-		}
-		else { return false; }
-	}
-	return false;
 }
 
