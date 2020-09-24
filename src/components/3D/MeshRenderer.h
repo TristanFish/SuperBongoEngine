@@ -21,14 +21,18 @@ public:
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
-	// Used For Axis Aligned Binding Boxes
-	Vec3 p_min;
-	Vec3 p_max;
+	// Getters for Miin/Max Vector's
+	Vec3 GetMinVector() { return p_min; }
+	Vec3 GetMaxVector() { return p_max; }
 
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
 	Shader shader;
+
+	// Used For Axis Aligned Binding Boxes
+	Vec3 p_min;
+	Vec3 p_max;
 
 	bool LoadModel(std::string modelPath);
 

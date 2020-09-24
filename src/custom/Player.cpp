@@ -12,13 +12,13 @@ Player::Player(const char* n, const MATH::Vec3& pos) : MeshRenderer("resources/m
 
 	name = n;
 	transform = Transform(pos);
+	collider.colliderShape = Collider3D::shape::AABB;
 	RigidBody3D::Init(this);
 	RigidBody3D::SetAccel(MATH::Vec3(0.0f, -9.8f, 0.0f));
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 
-	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *collider.size);
-	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *collider.size);
+	
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
 }

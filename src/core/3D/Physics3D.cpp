@@ -7,21 +7,13 @@ using namespace MATH;
 
 bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	// Getting the min and max vertex of the object
-	MATH::Vec3 p_min_1 = rb1.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_1 = rb1.gameobject->getComponent<MeshRenderer>().p_max;
-	MATH::Vec3 p_min_2 = rb2.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_2 = rb2.gameobject->getComponent<MeshRenderer>().p_max;
-	
-
-	
-
-	float rb1Halfx = ((abs(p_min_1.x) + abs(p_max_1.x)) / 2.0f);
-	float rb2Halfx = ((abs(p_min_2.x) + abs(p_max_2.x)) / 2.0f);
-	float rb1Halfy = ((abs(p_min_1.y) + abs(p_max_1.y)) / 2.0f);
-	float rb2Halfy = ((abs(p_min_2.y) + abs(p_max_2.y)) / 2.0f);
-	float rb1Halfz = ((abs(p_min_1.z) + abs(p_max_1.z)) / 2.0f);
-	float rb2Halfz = ((abs(p_min_2.z) + abs(p_max_2.z)) / 2.0f);
+	// TO-DO(Tristan) OPTIMISE THE SHIT OUTTA THIS 
+	float rb1Halfx = ((abs(rb1.collider.minVertices.x) + abs(rb1.collider.maxVertices.x)) / 2.0f);
+	float rb2Halfx = ((abs(rb2.collider.minVertices.x) + abs(rb2.collider.maxVertices.x)) / 2.0f);
+	float rb1Halfy = ((abs(rb1.collider.minVertices.y) + abs(rb1.collider.maxVertices.y)) / 2.0f);
+	float rb2Halfy = ((abs(rb2.collider.minVertices.y) + abs(rb2.collider.maxVertices.y)) / 2.0f);
+	float rb1Halfz = ((abs(rb1.collider.minVertices.z) + abs(rb1.collider.maxVertices.z)) / 2.0f);
+	float rb2Halfz = ((abs(rb2.collider.minVertices.z) + abs(rb2.collider.maxVertices.z)) / 2.0f);
 
 	if ((rb1.pos->x - rb1Halfx < rb2.pos->x + rb2Halfx) && //Check rb1 left edge with rb2 right edge
 		(rb1.pos->x + rb1Halfx > rb2.pos->x - rb2Halfx) && //Check rb1 right edge with rb2 left edge
@@ -39,26 +31,21 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 
 bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 {
-	MATH::Vec3 p_min_1 = sphere.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_1 = sphere.gameobject->getComponent<MeshRenderer>().p_max;
-
-	MATH::Vec3 p_min_2 = box.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_2 = box.gameobject->getComponent<MeshRenderer>().p_max;
-
+	
 	//Find the difference between both positions
 	Vec3 differenceVector = *sphere.pos - *box.pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	Vec3 clamped = MATH::VMath::clamp(differenceVector, p_min_2 /2,
-		p_max_2 /2);
+	Vec3 clamped = MATH::VMath::clamp(differenceVector, box.collider.minVertices /2,
+		box.collider.maxVertices /2);
 	Vec3 closestContactPoint = *box.pos + clamped;
 
 	//distance from closest contact point to the center of the circle
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
-	if (VMath::mag(distance) < (abs(p_max_1.x) + abs(p_min_1.x)) / 2 ||
-		VMath::mag(distance) < (abs(p_max_1.y) + abs(p_min_1.y)) / 2 || 
-		VMath::mag(distance) < (abs(p_max_1.z) + abs(p_min_1.z)) / 2)
+	if (VMath::mag(distance) < (abs(sphere.collider.maxVertices.x) + abs(sphere.collider.minVertices.x)) / 2 ||
+		VMath::mag(distance) < (abs(sphere.collider.maxVertices.y) + abs(sphere.collider.minVertices.y)) / 2 ||
+		VMath::mag(distance) < (abs(sphere.collider.maxVertices.z) + abs(sphere.collider.minVertices.z)) / 2)
 	{
 		std::cout << "Sphere box collision detected" << std::endl;
 		return true;
@@ -67,15 +54,35 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 	return false;
 }
 
+bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
+{
+	Vec3 pNormal = box.gameobject->transform.Up();
+
+
+	box.gameobject->transform.Up();
+	// AABB Centre
+	Vec3 centre = (box.collider.maxVertices + box.collider.minVertices) * 0.5f;
+
+	// Positive extents
+	Vec3 extents = box.collider.maxVertices - centre;
+
+
+	float r = ((extents.x * pNormal.x) + (extents.y * pNormal.y) + (extents.z * pNormal.z));
+
+	float s = VMath::dot(box.gameobject->transform.Up(),centre) - VMath::distance(*plane.pos, *box.pos);
+
+	
+
+	return abs(s) <= r;
+}
+
 MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box)
 {
-	MATH::Vec3 p_min_2 = box.gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_2 = box.gameobject->getComponent<MeshRenderer>().p_max;
 	//Find the difference between both positions
 	Vec3 differenceVector = *sphere.pos - *box.pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	Vec3 clamped = VMath::clamp(differenceVector, p_min_2 / 2, p_max_2 / 2);
+	Vec3 clamped = VMath::clamp(differenceVector, box.collider.minVertices / 2, box.collider.maxVertices / 2);
 
 	Vec3 closestContactPoint = *box.pos + clamped;
 
@@ -137,6 +144,32 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 	rb2.OnCollisionEnter(rb1);
 }
 
+void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
+{
+	std::cout << "Box Plane Collision Detected" << std::endl;
+	if (box.collider.isMoveable)
+	{
+		box.vel.x = 0.0f;
+		box.vel.y = 0.0f;
+		box.vel.z = 0.0f;
+		box.accel.x = 0.0f;
+		box.accel.y = 0.0f;
+		box.accel.z = 0.0f;
+	}
+	if (plane.collider.isMoveable)
+	{
+		plane.vel.x = 0.0f;
+		plane.vel.y = 0.0f;
+		plane.vel.z = 0.0f;
+		plane.accel.x = 0.0f;
+		plane.accel.y = 0.0f;
+		plane.accel.z = 0.0f;
+	}
+
+	box.OnCollisionEnter(box);
+	plane.OnCollisionEnter(box);
+}
+
 bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 {
 	if (rb1.GetColliderShape() == Collider3D::shape::AABB && rb2.GetColliderShape() == Collider3D::shape::AABB)
@@ -163,6 +196,25 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		if (SphereBoxDetect(rb2, rb1))
 		{
 			SphereBoxResolve(rb2, rb1);
+			return true;
+		}
+		else { return false; }
+	}
+
+	if (rb1.GetColliderShape() == Collider3D::shape::AABB && rb2.GetColliderShape() == Collider3D::shape::Plane)
+	{
+		if (BoxPlaneDetect(rb1, rb2))
+		{
+			BoxPlaneResolve(rb1, rb2);
+			return true;
+		}
+		else { return false; }
+	}
+	if (rb1.GetColliderShape() == Collider3D::shape::Plane && rb2.GetColliderShape() == Collider3D::shape::AABB)
+	{
+		if (BoxPlaneDetect(rb2, rb1))
+		{
+			BoxPlaneResolve(rb2, rb1);
 			return true;
 		}
 		else { return false; }
