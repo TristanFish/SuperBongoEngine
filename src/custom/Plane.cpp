@@ -10,13 +10,15 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	transform.setPos(position);
 	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
 	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
-	transform.rotation.print();
+	transform.scale.print();
 	RigidBody3D::Init(this);
 	RigidBody3D::isMoveable() == false;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/BaseVert.glsl", "src/graphics/shaders/BaseFrag.glsl");
-	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *transform.scale);
-	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *transform.scale);
+
+	// Sets the collider up properly when scaled or rotated
+	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *collider.size);
+	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *collider.size);
 }
 
 Plane::~Plane()
@@ -27,7 +29,6 @@ void Plane::Update(const float deltaTime)
 {
 	//transform.rotation.y += deltaTime;
 	transform.Update(deltaTime);
-
 	
 	MeshRenderer::Update(deltaTime);
 	RigidBody3D::Update(deltaTime);

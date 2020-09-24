@@ -69,11 +69,13 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 
 MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box)
 {
+	MATH::Vec3 p_min_2 = box.gameobject->getComponent<MeshRenderer>().p_min;
+	MATH::Vec3 p_max_2 = box.gameobject->getComponent<MeshRenderer>().p_max;
 	//Find the difference between both positions
 	Vec3 differenceVector = *sphere.pos - *box.pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	Vec3 clamped = VMath::clamp(differenceVector, Vec3(-box.collider.size / 2.0f), Vec3(box.collider.size / 2.0f));
+	Vec3 clamped = VMath::clamp(differenceVector, p_min_2 / 2, p_max_2 / 2);
 
 	Vec3 closestContactPoint = *box.pos + clamped;
 
@@ -81,7 +83,7 @@ MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
 	Vec3 normal = VMath::orthagonalize(clamped);
-	//normal.z = VMath::mag(distance);
+	normal.z = VMath::mag(distance);
 
 	return normal;
 }
@@ -122,12 +124,12 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 	}
 	if (rb2.collider.isMoveable)
 	{
-		rb1.vel.x = 0.0f;
-		rb1.vel.y = 0.0f;
-		rb1.vel.z = 0.0f;
-		rb1.accel.x = 0.0f;
-		rb1.accel.y = 0.0f;
-		rb1.accel.z = 0.0f;
+		rb2.vel.x = 0.0f;
+		rb2.vel.y = 0.0f;
+		rb2.vel.z = 0.0f;
+		rb2.accel.x = 0.0f;
+		rb2.accel.y = 0.0f;
+		rb2.accel.z = 0.0f;
 	}
 
 	//rb1.accel.print();
