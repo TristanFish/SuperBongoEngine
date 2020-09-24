@@ -156,6 +156,8 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
 
 
+
+	
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;
 	p_min.z = vertices[0].position.z;
@@ -163,7 +165,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	p_max.x = vertices[0].position.x;
 	p_max.y = vertices[0].position.y;
 	p_max.z = vertices[0].position.z;
-
+	// Loops Through verticies and gives us the min and max verticies and put's them into a vector
 	for (int i = 1; i < vertices.size(); i++)
 	{
 		p_min.x = std::min(p_min.x, vertices[i].position.x);

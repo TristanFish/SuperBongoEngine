@@ -15,7 +15,7 @@ void Transform::Update(const float deltaTime)
 	using namespace MATH;
 	rotationMatrix = MMath::calcRotationMatrix(rotation);
 
-	modelMatrix = MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
+	modelMatrix = (MMath::translate(pos) * rotationMatrix) * MMath::scale(scale);
 }
 
 MATH::Vec3 Transform::Forward() const

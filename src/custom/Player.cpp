@@ -7,11 +7,18 @@ Player::Player()
 {
 }
 
-Player::Player(const char* n, const MATH::Vec3& pos)
+Player::Player(const char* n, const MATH::Vec3& pos) : MeshRenderer("resources/models/Cube.fbx")
 {
 
 	name = n;
 	transform = Transform(pos);
+	RigidBody3D::Init(this);
+	RigidBody3D::SetAccel(MATH::Vec3(0.0f, -9.8f, 0.0f));
+	MeshRenderer::Init(this);
+	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+
+	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *collider.size);
+	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *collider.size);
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
 }
@@ -28,34 +35,36 @@ void Player::Update(const float deltaTime)
 	transform.Update(deltaTime);
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.GetRotation());
+	MeshRenderer::Update(deltaTime);
+	RigidBody3D::Update(deltaTime);
 }
 
 void Player::Render() const
 {
-	//Render your inherited components
-
+	//MeshRenderer::Render();
 }
 
 void Player::HandleEvents(const SDL_Event& event)
 {
+	MeshRenderer::HandleEvents(event);
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
 		//Movement controls
 		if (event.key.keysym.sym == SDLK_w) 
 		{
-			transform.pos += transform.Forward() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Forward() * 20.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_s)
 		{
-			transform.pos += -transform.Forward() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Forward() * 20.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			transform.pos += transform.Right() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * 20.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			transform.pos += -transform.Right() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * 20.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
@@ -69,11 +78,11 @@ void Player::HandleEvents(const SDL_Event& event)
 		//Rotation controls
 		if (event.key.keysym.sym == SDLK_LEFT)
 		{
-			transform.rotation.y +=  50.0f * Timer::GetDeltaTime();
+			transform.rotation.y +=  80.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_RIGHT)
 		{
-			transform.rotation.y += -50.0f * Timer::GetDeltaTime();
+			transform.rotation.y += -80.0f * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_UP)
 		{
@@ -85,4 +94,9 @@ void Player::HandleEvents(const SDL_Event& event)
 		}
 		
 	}
+}
+
+void Player::OnCollisionEnter(RigidBody3D& otherBody)
+{
+
 }
