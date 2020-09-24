@@ -1,6 +1,12 @@
 #include "AudioManager.h"
 
 
+
+AudioManager::AudioManager() : system(nullptr)
+{
+
+}
+
 void AudioManager::MonitorChannel(FMOD::Channel c)
 {
 	bool tb;
@@ -12,7 +18,15 @@ void AudioManager::CreateChannelGroup()
 {
 	//A channel is a string of audio, you can probably guess what a group is
 	system->createChannelGroup("ChannelGroup1",&G1);
+	
 }
+
+void AudioManager::SetListenerPos(MATH::Vec3 pos)
+{
+	this->pos = Vec3ToFMODVec(pos);
+	system->set3DListenerAttributes(0, &this->pos, 0, 0, 0);
+}
+
 
 void AudioManager::Update()
 {
@@ -22,6 +36,7 @@ void AudioManager::Update()
 
 void AudioManager::InitAudioManager()
 {
+
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&system);
 	if (result != FMOD_OK) {
@@ -42,7 +57,9 @@ void AudioManager::CreateSound(const char* filename)
 	FMOD_RESULT r;
 	FMOD_CREATESOUNDEXINFO tempSEI;
 	r = system->createSound(filename, FMOD_3D, nullptr, &newSound);
-	std::cout << r << FMOD_ErrorString(r)<< std::endl;
+	if (r != FMOD_OK) {
+		std::cout << r << FMOD_ErrorString(r) << std::endl;
+	}
 }
 
 void AudioManager::Create3DReverbAttributes(FMOD_VECTOR position)
@@ -53,33 +70,46 @@ void AudioManager::Create3DReverbAttributes(FMOD_VECTOR position)
 	reverb->set3DAttributes(&pos, mindist, maxdist);
 
 	FMOD_VECTOR listenerPos = { -5.0f, 5.0f, -1.0f };
-	system->set3DListenerAttributes(0, &listenerPos, 0, 0, 0);
+	
 }
 
 void AudioManager::Create3DReverb()
 {
+	//FMOD uses properties/attributes of a specific struct to determine how the property sounds, if you look at a preset you'll see-
+	//a series of arbitrary numbers that determine which DSP effects are altered
+
 	FMOD_RESULT r;
 	r = system->createReverb3D(&reverb);
-	FMOD_REVERB_PROPERTIES prop = FMOD_PRESET_FOREST;
+	FMOD_REVERB_PROPERTIES prop = FMOD_PRESET_CAVE;
 	reverb->setProperties(&prop);
-	Create3DReverbAttributes(pos);
+	Create3DReverbAttributes(audioSourcePos);
+	
+	//CreateAndSetPan(-1);
 }
 
-float AudioManager::dBToVolume(float dB)
+void AudioManager::CreateAndSetPan(float pan)
 {
-	return powf(10.0f, 0.05f * dB);
+	currentPan = pan;
+	C1->setPan(pan);
+	C1->set3DLevel(1);
 }
 
-float AudioManager::VolumeTodB(float vol)
+void AudioManager::SetAudioSourcePos(MATH::Vec3 sourcePos)
 {
-	return 20.0f * log10f(vol);
+	audioSourcePos = Vec3ToFMODVec(sourcePos);
+	C1->set3DAttributes(&audioSourcePos, NULL);
+	G1->set3DAttributes(&audioSourcePos, NULL);
 }
 
-void AudioManager::PlaySound(const char* filename)
+
+void AudioManager::CreateAndPlaySound(const char* filename)
 {
 	CreateSound(filename);
 	CreateChannelGroup();
+	SetListenerPos(MATH::Vec3(0.0f,0.0f,0.0f));
+	SetAudioSourcePos(MATH::Vec3(15.0f, 5.0f, 0.0f));
 	Create3DReverb();
+	Update();
 	system->playSound(newSound, nullptr, false, &C1);
 }
 
@@ -93,7 +123,24 @@ AudioManager::~AudioManager()
 	
 }
 
-AudioManager::AudioManager() : system(nullptr)
+///////////////////////////
+// Just utility functions//
+///////////////////////////
+float AudioManager::dBToVolume(float dB)
 {
-	
+	return powf(10.0f, 0.05f * dB);
+}
+
+float AudioManager::VolumeTodB(float vol)
+{
+	return 20.0f * log10f(vol);
+}
+
+FMOD_VECTOR AudioManager::Vec3ToFMODVec(MATH::Vec3 vec)
+{
+	FMOD_VECTOR temp;
+	temp.x = vec.x;
+	temp.y = vec.y;
+	temp.z = vec.z;
+	return temp;
 }
