@@ -28,7 +28,6 @@ bool Scene1::OnCreate()
 	//objectList->AddGameObject(ball);
 	objectList->AddGameObject(plane);
 
-
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
 

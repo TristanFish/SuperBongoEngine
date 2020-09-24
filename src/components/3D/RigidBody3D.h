@@ -2,6 +2,7 @@
 #define RIGIDBODY_H
 
 #include "components/ECS.h"
+#include "components/Components.h"
 #include "math/Vector.h"
 #include "components/3D/Collider3D.h"
 
@@ -28,7 +29,7 @@ public:
 
 	RigidBody3D();
 	~RigidBody3D();
-
+	
 	// Inherited via Component
 	void Init(GameObject *g) override;
 	void Update(const float deltaTime) override;

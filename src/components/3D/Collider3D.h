@@ -10,16 +10,19 @@ public:
 	enum class shape
 	{
 		Sphere,
-		AABB
+		AABB,
+		Plane
 	};
 
 	shape colliderShape;
 	bool isMoveable, isTrigger,isWiremesh;
 	MATH::Vec3 size;
+	MATH::Vec3 minVertices,maxVertices;
 
-	Collider3D()
+	Collider3D(MATH::Vec3 minVert_,MATH::Vec3 maxVert_)
 	{
-		colliderShape = shape::AABB;
+
+		//colliderShape = shape::AABB;
 		isMoveable = true;
 		isTrigger = false;
 		//isWiremesh = false;

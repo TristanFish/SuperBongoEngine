@@ -18,8 +18,7 @@ TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("reso
 	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 
 	// Sets the collider up properly when scaled or rotated
-	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *collider.size);
-	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *collider.size);
+	
 }
 
 TestModel::~TestModel()
