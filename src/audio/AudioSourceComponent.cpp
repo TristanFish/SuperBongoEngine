@@ -2,8 +2,6 @@
 
 void AudioSourceComponent::Init(GameObject* g)
 {
-
-
 	gameobject = g;
 	gameObjectPosition = &g->transform.pos;
 	audioSystemRef = AudioManager::Get().system;
