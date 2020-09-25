@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\audio\SoundAttributes.h" />
+    <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
@@ -136,6 +138,8 @@
     <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\SoundAttributes.cpp" />
+    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
@@ -192,6 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="src\sounds\tumbleweed.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

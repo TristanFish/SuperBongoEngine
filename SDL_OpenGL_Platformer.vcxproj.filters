@@ -371,6 +371,8 @@
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
+    <ClInclude Include="src\audio\AudioSourceComponent.h" />
+    <ClInclude Include="src\audio\SoundAttributes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -413,6 +415,8 @@
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\audio\SoundAttributes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -495,5 +499,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="src\sounds\tumbleweed.wav" />
   </ItemGroup>
 </Project>
