@@ -14,7 +14,7 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	RigidBody3D::Init(this);
 	RigidBody3D::setMoveable(false);
 	MeshRenderer::Init(this);
-	MeshRenderer::CreateShader("src/graphics/shaders/BaseVert.glsl", "src/graphics/shaders/BaseFrag.glsl");
+	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 	MeshRenderer::p_max = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_max) * *transform.scale);
 	MeshRenderer::p_min = ((MMath::calcRotationMatrix(transform.rotation) * MeshRenderer::p_min) * *transform.scale);
 }
@@ -28,7 +28,6 @@ void Plane::Update(const float deltaTime)
 	//transform.rotation.y += deltaTime;
 	transform.Update(deltaTime);
 
-	
 	MeshRenderer::Update(deltaTime);
 	RigidBody3D::Update(deltaTime);
 }

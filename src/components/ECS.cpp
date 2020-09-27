@@ -1,6 +1,10 @@
 #include "ECS.h"
 #include "3D/RigidBody3D.h"
 #include "core/3D/Physics3D.h"
+#include "Renderer.h"
+#include "3D/MeshRenderer.h"
+#include "3D/LightComponent.h"
+
 
 GameObject::GameObject(): name("Default"), transform()
 {
@@ -31,11 +35,23 @@ Manager::~Manager()
 
 void Manager::Init()
 {
+	renderer.Init();
+
 	for (GameObject* g : gameObjects)
 	{
 		if (g->hasComponent<RigidBody3D>())
 		{
 			rigidBodies.emplace_back(&g->getComponent<RigidBody3D>());
+		}
+
+		if (g->hasComponent<MeshRenderer>())
+		{
+			renderer.AddMeshRenderer(&g->getComponent<MeshRenderer>());
+		}
+
+		if (g->hasComponent<LightComponent>())
+		{
+			renderer.AddLight(&g->getComponent<LightComponent>());
 		}
 	}
 }
@@ -54,13 +70,7 @@ void Manager::Update(const float deltaTime)
 }
 void Manager::Render() const
 {
-	for (auto g : gameObjects)
-	{
-		if (g->isActive())
-		{
-			g->Render();
-		}
-	}
+	renderer.Render();
 }
 
 void Manager::HandleEvents(const SDL_Event& event)

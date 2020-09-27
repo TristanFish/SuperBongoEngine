@@ -7,7 +7,7 @@ struct Collider3D
 {
 public:
 
-	enum class shape : int
+	enum class shape : char
 	{
 		Sphere	 = 0b0001,
 		AABB	 = 0b0010
@@ -17,7 +17,7 @@ public:
 
 	friend inline constexpr Collider3D::shape operator | (Collider3D::shape x, Collider3D::shape y)
 	{
-		return static_cast<Collider3D::shape>(static_cast<int>(x) | static_cast<int>(y));
+		return static_cast<Collider3D::shape>(static_cast<char>(x) | static_cast<char>(y));
 	}
 
 	shape colliderShape;

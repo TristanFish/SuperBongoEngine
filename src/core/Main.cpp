@@ -4,6 +4,7 @@
 
 int main(int argc, char* argv[])
 {
+	
 	GameManager* game = new GameManager();
 
 	game->Init();

@@ -378,6 +378,9 @@
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\core\Globals.h" />
+    <ClInclude Include="src\components\3D\LightComponent.h" />
+    <ClInclude Include="src\custom\LightObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -426,6 +429,9 @@
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
+    <ClCompile Include="src\core\Globals.cpp" />
+    <ClCompile Include="src\components\3D\LightComponent.cpp" />
+    <ClCompile Include="src\custom\LightObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -490,6 +496,8 @@
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\BaseFrag.glsl" />
+    <None Include="src\graphics\shaders\SuperShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\SuperShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

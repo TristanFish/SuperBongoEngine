@@ -17,8 +17,6 @@ bool Scene1::OnCreate()
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();
 
-	texture = Texture();
-	texture.LoadImage("resources/textures/pufflet.bmp");
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 10.0f, 30.0f));
 	objectList->AddGameObject(player);
@@ -28,7 +26,8 @@ bool Scene1::OnCreate()
 	objectList->AddGameObject(ball);
 	objectList->AddGameObject(plane);
 
-
+	light = new LightObject("Light1", MATH::Vec3(0.0f, 30.0f, 0.0f));
+	objectList->AddGameObject(light);
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
 
@@ -41,7 +40,6 @@ void Scene1::OnDestroy()
 {
 	delete objectList;
 	objectList = nullptr;
-	texture.DestroyTexture();
 }
 
 void Scene1::Update(const float deltaTime)
@@ -51,6 +49,7 @@ void Scene1::Update(const float deltaTime)
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
 
+	light->Render();
 }
 
 
@@ -62,7 +61,6 @@ void Scene1::Render() const
 	glEnable(GL_DEPTH_TEST);
 
 	objectList->Render();
-	Debug::DrawTextureToScreen(1, MATH::Vec2(-1.0f, -0.5f), MATH::Vec2(-0.5f, -0.5f), MATH::Vec2(-0.5f, -1.0f), MATH::Vec2(-1.0f, -1.0f));
 }
 
 void Scene1::HandleEvents(const SDL_Event& event)

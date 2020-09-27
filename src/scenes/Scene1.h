@@ -5,17 +5,18 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
+#include "custom/LightObject.h"
 
 class Player;
-class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
-	Texture texture;
+
 	Player* player;
 	TestModel* ball;
 	Plane* plane;
+	LightObject* light;
 
 public:
 	Scene1();

@@ -8,6 +8,7 @@ MeshRenderer::MeshRenderer()
 
 MeshRenderer::MeshRenderer(const char* modelPath)
 {
+	renderFlags = RenderProperties::LIGHTING;
 	if(LoadModel(modelPath))
 	{
 		std::cout << "Model " << modelPath << " Loaded" << std::endl;
@@ -46,20 +47,37 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
+	shader.RunShader();
+	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+
 	for (auto& m : meshes)
 	{
-		shader.RunShader();
-		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
 		m.Render(shader);
-		glUseProgram(0);
 	}
+	
+	glUseProgram(0);
 }
 
-void MeshRenderer::HandleEvents(const SDL_Event& event)
+void MeshRenderer::Render(const Shader& shader) const
 {
+	Matrix4 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+
+	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeInUniformMat4("normalMatrix", normMat);
+	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+
+	for (auto& m : meshes)
+	{
+		m.Render(shader);
+	}
+
+	glUseProgram(0);
 }
+
+void MeshRenderer::HandleEvents(const SDL_Event& event) { }
 
 bool MeshRenderer::LoadModel(std::string modelPath)
 {
@@ -143,7 +161,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		//Get material color
 		material->Get(AI_MATKEY_COLOR_DIFFUSE, col);
-
+		
 		//Get diffuse textures
 		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "diffuseTex");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());

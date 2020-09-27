@@ -1,5 +1,6 @@
 #include "Mesh.h"
 
+
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures, MATH::Vec4 color)
 {
 	this->vertices = vertices;
@@ -42,7 +43,6 @@ void Mesh::Render(const Shader& shader) const
 
 
 	//For every texture on the mesh bind it to the shader
-	//This loop will probably start to get slow as we add more objects
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		//setting up a naming scheme for textures inside of shaders, check DefaultFrag.glsl
@@ -65,16 +65,25 @@ void Mesh::Render(const Shader& shader) const
 	}
 	glActiveTexture(GL_TEXTURE0);
 	
-	if (diffN == 1)
+	if (diffN <= 1)
 	{
 		//if there are no diffuse textures, add the color of the material to the shader
 		glUniform4fv(glGetUniformLocation(shader.GetID(), "meshColor"), 1, color);
 	}
-
+	else
+	{
+		glUniform4fv(glGetUniformLocation(shader.GetID(), "meshColor"), 1, Vec4());
+	}
 
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+
+	for (unsigned int i = 0; i < textures.size(); i++)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 void Mesh::InitMesh()

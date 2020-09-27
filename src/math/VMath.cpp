@@ -73,35 +73,30 @@ Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV
 //zeroes out all other components
 Vec3 MATH::VMath::orthagonalize(const Vec3 &v)
 {
-	try
+	
+	if (abs(v.x) > abs(v.y))
 	{
-		if (abs(v.x) > abs(v.y))
+		if (abs(v.x) > abs(v.z))
 		{
-			if (abs(v.x) > abs(v.z))
-			{
-				return VMath::normalize(Vec3(v.x, 0.0f, 0.0f));
-			}
-			else
-			{
-				return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
-			}
+			return VMath::normalize(Vec3(v.x, 0.0f, 0.0f));
 		}
 		else
 		{
-			if (abs(v.y) > abs(v.z))
-			{
-				return VMath::normalize(Vec3(0.0f, v.y, 0.0f));
-			}
-			else
-			{
-				return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
-			}
+			return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
 		}
 	}
-	catch (...)
+	else
 	{
-
+		if (abs(v.y) > abs(v.z))
+		{
+			return VMath::normalize(Vec3(0.0f, v.y, 0.0f));
+		}
+		else
+		{
+			return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
+		}
 	}
+	
 }
 
 Vec3 VMath::lerp(const Vec3 &v1, const Vec3 &v2, float t) {
