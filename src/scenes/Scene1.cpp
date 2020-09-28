@@ -23,9 +23,9 @@ bool Scene1::OnCreate()
 	player = new Player("Player", MATH::Vec3(0.0f, 50.0f, 0.0f));
 	objectList->AddGameObject(player);
 
-	//ball = new TestModel("Ball", MATH::Vec3(0.0f, 80.0f, 30.0f));
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f));
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	//objectList->AddGameObject(ball);
+	objectList->AddGameObject(grass);
 	objectList->AddGameObject(plane);
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations

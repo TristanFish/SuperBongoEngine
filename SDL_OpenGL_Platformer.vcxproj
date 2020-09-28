@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\core\Debug.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="src\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
@@ -197,6 +199,8 @@
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
   </ItemGroup>
