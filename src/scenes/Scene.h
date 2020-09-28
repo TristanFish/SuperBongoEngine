@@ -4,9 +4,6 @@
 #include "sdl/SDL.h"
 #include "components/ECS.h"
 #include "glew/glew.h"
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
 
 class Scene
 {

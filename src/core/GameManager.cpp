@@ -48,7 +48,9 @@ void GameManager::Run()
 		ImGui::Text("Window");
 		ImGui::End();
 
+		ImGui::Render();
 		currentScene->Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}
