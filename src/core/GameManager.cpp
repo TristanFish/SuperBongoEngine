@@ -38,6 +38,16 @@ void GameManager::Run()
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
+
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL2_NewFrame(window->GetWindow());
+		ImGui::NewFrame();
+
+		ImGui::Begin("Test");
+		ImGui::Text("Window");
+		ImGui::End();
+
 		currentScene->Render();
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));

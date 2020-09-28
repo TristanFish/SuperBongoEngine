@@ -26,6 +26,7 @@ namespace  MATH {
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
 	#endif	
 
+
 	struct Vec2 {
 		float  x, y;
 
@@ -172,10 +173,9 @@ namespace  MATH {
 		inline operator float* () {
 			return static_cast<float*>(&x);
 		}
-
-		friend std::ostream& operator<< (std::ostream& out, const Vec3& v);
-
 	};
+
+	std::ostream& operator<< (std::ostream& out, const Vec3& v);
 
 		/// Vec4 definitions
 		/// I am intentionally creating a Vec4 from a Vec3 so I can pass a Vec4 into a Subroutine that wants a Vec3
