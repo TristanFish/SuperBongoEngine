@@ -17,8 +17,9 @@ public:
 	Mesh(const Mesh& m);
 	~Mesh();
 	void DestroyTextures();
-	void Render(const Shader& shader) const;
-
+	void RenderRegular(const Shader& shader) const;
+	void RenderInstanced(const Shader& shader, std::vector<Mesh> meshes ,const unsigned int amount) const;
+	GLuint GetVAO() const { return vao; }
 private:
 	GLuint vao;
 	GLuint vbo;

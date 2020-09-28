@@ -2,13 +2,13 @@
 #include "MeshRenderer.h"
 #include "custom/Camera.h"
 
-MeshRenderer::MeshRenderer()
+MeshRenderer::MeshRenderer() : instanceID(0)
 {
 }
 
 MeshRenderer::MeshRenderer(const char* modelPath)
 {
-	if(LoadModel(modelPath))
+	if(LoadModel(modelPath)) 
 	{
 		std::cout << "Model " << modelPath << " Loaded" << std::endl;
 	}
@@ -46,20 +46,34 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-	for (auto& m : meshes)
+	if(instanceID == 0)
+		for (auto& m : meshes)
+		{
+			shader.RunShader();
+			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+			shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+			m.RenderRegular(shader);
+			glUseProgram(0);
+		}
+	if (instanceID == 1)
 	{
-		shader.RunShader();
-		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
-		m.Render(shader);
-		glUseProgram(0);
+		for (auto& m : meshes)
+		{
+			shader.RunShader();
+			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+			m.RenderInstanced(shader, meshes, instanceAmount);
+			glUseProgram(0);
+		}
 	}
 }
 
 void MeshRenderer::HandleEvents(const SDL_Event& event)
 {
 }
+
+
 
 bool MeshRenderer::LoadModel(std::string modelPath)
 {
@@ -107,6 +121,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		vec.y = mesh->mVertices[i].y;
 		vec.z = mesh->mVertices[i].z;
 		vertex.position = vec;
+		
 		vec.x = mesh->mNormals[i].x;
 		vec.y = mesh->mNormals[i].y;
 		vec.z = mesh->mNormals[i].z;
@@ -155,7 +170,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
 
-
+	meshes.size();
 
 	
 	p_min.x = vertices[0].position.x;

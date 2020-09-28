@@ -378,6 +378,7 @@
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\custom\Grass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -426,6 +427,7 @@
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
+    <ClCompile Include="src\custom\Grass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -490,6 +492,8 @@
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\BaseFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

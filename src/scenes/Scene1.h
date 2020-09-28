@@ -5,6 +5,7 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
+#include "custom/Grass.h"
 
 class Player;
 class Tilemap;
@@ -14,7 +15,7 @@ class Scene1 : public Scene
 private:
 	Texture texture;
 	Player* player;
-	TestModel* ball;
+	Grass* grass;
 	Plane* plane;
 
 public:
