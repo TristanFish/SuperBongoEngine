@@ -56,10 +56,9 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 
 bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 {
-	Vec3 pNormal = box.gameobject->transform.Up();
+	Vec3 pNormal = plane.gameobject->transform.Up();
 
 
-	box.gameobject->transform.Up();
 	// AABB Centre
 	Vec3 centre = (box.collider.maxVertices + box.collider.minVertices) * 0.5f;
 
@@ -69,7 +68,7 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 
 	float r = ((extents.x * pNormal.x) + (extents.y * pNormal.y) + (extents.z * pNormal.z));
 
-	float s = VMath::dot(box.gameobject->transform.Up(),centre) - VMath::distance(*plane.pos, *box.pos);
+	float s = VMath::dot(pNormal,centre) - VMath::distance(*plane.pos, *box.pos);
 
 	
 

@@ -63,11 +63,15 @@ void Grass::CalculateModelMatrices()
 		modelMatrices[i] = model;
 	}
 
+	// THE BELOW CODE IS REQUIRED FOR INSTANCING 
+	// Bind's the instance buffer and send's the model matricies to the shader
 	unsigned int instanceBuffer;
 	glGenBuffers(1, &instanceBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 	glBufferData(GL_ARRAY_BUFFER, amount * sizeof(MATH::Matrix4), &modelMatrices[0], GL_STATIC_DRAW);
 
+
+	// Loops through all the meshes, bind's to a new buffer and set's their attributes.
 	for (unsigned int i = 0; i < MeshRenderer::GetMeshes().size(); i++)
 	{
 		unsigned int VAO = MeshRenderer::GetMeshes()[i].GetVAO();

@@ -78,6 +78,7 @@ void Mesh::RenderRegular(const Shader& shader) const
 	glBindVertexArray(0);
 }
 
+// Used for instance rendering 
 void Mesh::RenderInstanced(const Shader& shader, std::vector<Mesh> meshes,const unsigned int amount) const
 {
 	unsigned int diffN = 1;
