@@ -12,9 +12,8 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
-	audioManager = new AudioManager();
-	audioManager->InitAudioManager();
-	audioManager->CreateAndPlaySound("C:/Users/Conor/Documents/GitHub/Productions-/src/sounds/tumbleweed.wav");
+	audioManager = AudioManager::Get();
+	audioManager->CreateAndPlaySound("src/sounds/tumbleweed.wav");
 
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();

@@ -24,8 +24,5 @@ private:
 	MATH::Vec3* gameObjectPosition;
 	FMOD::System* audioSystemRef;
 
-	std::vector <FMOD::Sound> sounds;
-	std::vector <const char*> soundPaths;
-
 };
 #endif;

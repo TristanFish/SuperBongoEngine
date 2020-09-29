@@ -13,6 +13,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	//this allows the components to access the transform of of your gameobject
 	RigidBodyComponent::Init(this);
 	SpriteComponent::Init(this);
+	AudioListenerComponent::Init(this);
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
 	RigidBodyComponent::setColliderSize(1.75f);
@@ -32,6 +33,7 @@ void Player::Update(const float deltaTime)
 	RigidBodyComponent::Update(deltaTime);
 	transform.Update(deltaTime);
 	SpriteComponent::Update(deltaTime);
+	AudioListenerComponent::Update(deltaTime);
 	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.05f));
 }
 

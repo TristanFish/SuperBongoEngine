@@ -4,7 +4,7 @@
 
 AudioManager::AudioManager() : system(nullptr)
 {
-
+	InitAudioManager();
 }
 
 void AudioManager::MonitorChannel(FMOD::Channel c)
@@ -16,7 +16,7 @@ void AudioManager::MonitorChannel(FMOD::Channel c)
 
 void AudioManager::AddAudioSource(AudioSourceComponent& newComponent)
 {
-	audioSources.emplace_back(newComponent);
+	//audioSources.emplace_back(newComponent);
 }
 
 void AudioManager::CreateChannelGroup()
@@ -51,23 +51,24 @@ void AudioManager::InitAudioManager()
 		exit(-1);
 	}
 
-
-
 	//This actually initializes FMOD, first parameter is just a common amount of channels on a modern device.
 	result = system->init(512, FMOD_INIT_3D_RIGHTHANDED, 0);
 	if (result != FMOD_OK) {
 		std::cout << "FMOD did not init properly" << result << "\n" << FMOD_ErrorString(result) << std::endl;
 		exit(-1);
 	}
+
+	LoadSoundMap();
 }
 
-void AudioManager::CreateSound(const char* filename)
+void AudioManager::CreateSounds()
 {
 	FMOD_RESULT r;
-	r = system->createSound(filename, FMOD_3D, nullptr, &newSound);
+	r = system->createSound(sounds.find("leafcrunch"), FMOD_3D, nullptr, &newSound);
 	if (r != FMOD_OK) {
 		std::cout << r << FMOD_ErrorString(r) << std::endl;
 	}
+
 }
 
 void AudioManager::Create3DReverbAttributes(FMOD_VECTOR position)
@@ -94,9 +95,6 @@ void AudioManager::Create3DReverb()
 
 void AudioManager::CreateAndSetPan(float pan)
 {
-	currentPan = pan;
-	C1->setPan(pan);
-	C1->set3DLevel(1);
 }
 
 void AudioManager::SetAudioSourcePos(MATH::Vec3 sourcePos)
@@ -117,10 +115,17 @@ void AudioManager::SetAudioSourcePos(MATH::Vec3 sourcePos)
 	
 }
 
+void AudioManager::LoadSoundMap()
+{
+	sounds.insert("leafcrunch", "src/sounds/tumbleweed.wav");
+	
+	std::cout << sounds.size << " " << "Elements loaded into map" << std::endl;
+}
+
 
 void AudioManager::CreateAndPlaySound(const char* filename)
 {
-	CreateSound(filename);
+	CreateSounds();
 	CreateChannelGroup();
 	system->playSound(newSound, nullptr, false, &C1);
 	SetListenerPos(MATH::Vec3(-5.0f,0.0f, 5.0f));
@@ -131,7 +136,7 @@ void AudioManager::CreateAndPlaySound(const char* filename)
 
 AudioManager::~AudioManager()
 {
-	audioSources.clear();
+	//audioSources.clear();
 	system->release();
 	system = nullptr;
 	newSound = nullptr;

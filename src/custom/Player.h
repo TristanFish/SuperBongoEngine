@@ -5,7 +5,7 @@
 #include "scenes/Scene.h"
 
 //Player inherits from gameobject, components are also added via inheritance
-class Player : public GameObject, public SpriteComponent, public RigidBodyComponent
+class Player : public GameObject, public SpriteComponent, public RigidBodyComponent, public AudioListenerComponent
 {
 private:
 

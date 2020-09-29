@@ -3,3 +3,5 @@
 #include "2D/SpriteComponent.h"
 #include "2D/RigidBodyComponent.h"
 #include "Transform.h"
+#include "audio/AudioListenerComponent.h"
+#include "audio/AudioSourceComponent.h"

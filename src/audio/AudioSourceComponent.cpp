@@ -4,7 +4,7 @@ void AudioSourceComponent::Init(GameObject* g)
 {
 	gameobject = g;
 	gameObjectPosition = &g->transform.pos;
-	audioSystemRef = AudioManager::Get().system;
+	audioSystemRef = AudioManager::Get()->system;
 	soundAtts.C1->setChannelGroup(soundAtts.G1);
 	SetAudioPosition();
 }
@@ -14,9 +14,10 @@ void AudioSourceComponent::Update(const float deltaTime)
 	SetAudioPosition();
 }
 
-void AudioSourceComponent::LoadSounds()
-{
-	
+void AudioSourceComponent::Render(){}
+void AudioSourceComponent::HandleEvents(const SDL_Event& event){}
+
+void AudioSourceComponent::LoadSounds(){
 }
 
 void AudioSourceComponent::SetAudioPosition()

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="src\tiles\Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
