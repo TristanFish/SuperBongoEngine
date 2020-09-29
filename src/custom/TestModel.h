@@ -2,7 +2,7 @@
 #include "components/ECS.h"
 #include "components/Components.h"
 
-class TestModel : public GameObject, public MeshRenderer, public RigidBody3D
+class TestModel : public GameObject, public MeshRenderer
 {
 public:
 	TestModel();
@@ -15,7 +15,6 @@ public:
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
 
 private:

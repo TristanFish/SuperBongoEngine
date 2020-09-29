@@ -10,9 +10,9 @@ Grass::Grass(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	this->name = name;
 	transform.setPos(position);
 	MeshRenderer::Init(this);
-	MeshRenderer::CreateShader("src/graphics/shaders/InstanceVert.glsl", "src/graphics/shaders/InstanceFrag.glsl");
+	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
 	MeshRenderer::SetInstanceID(1);
-	amount = 100;
+	amount = 750;
 	MeshRenderer::SetInstanceAmount(amount);
 	CalculateModelMatrices();
 }
@@ -43,8 +43,8 @@ void Grass::CalculateModelMatrices()
 {
 	MATH::Matrix4* modelMatrices;
 	modelMatrices = new MATH::Matrix4[amount];
-	float radius = 10.0;
-    float offset = 20.0f;
+	float radius = 1.0;
+    float offset = 50.0f;
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		MATH::Matrix4 model = MATH::Matrix4(1.0f);
@@ -63,11 +63,15 @@ void Grass::CalculateModelMatrices()
 		modelMatrices[i] = model;
 	}
 
+	// THE BELOW CODE IS REQUIRED FOR INSTANCING 
+	// Bind's the instance buffer and send's the model matricies to the shader
 	unsigned int instanceBuffer;
 	glGenBuffers(1, &instanceBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 	glBufferData(GL_ARRAY_BUFFER, amount * sizeof(MATH::Matrix4), &modelMatrices[0], GL_STATIC_DRAW);
 
+
+	// Loops through all the meshes, bind's to a new buffer and set's their attributes.
 	for (unsigned int i = 0; i < MeshRenderer::GetMeshes().size(); i++)
 	{
 		unsigned int VAO = MeshRenderer::GetMeshes()[i].GetVAO();

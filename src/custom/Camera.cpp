@@ -8,7 +8,7 @@ Camera::Camera()
 {
 
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-	perspecProjMatrix = MMath::perspective(90.0f, 1.0f, 0.1f, 200.0f);
+	perspecProjMatrix = MMath::perspective(50.0f, 1.0f, 0.1f, 200.0f);
 
 }
 

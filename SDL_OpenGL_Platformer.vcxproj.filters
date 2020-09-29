@@ -494,6 +494,10 @@
     <None Include="src\graphics\shaders\BaseFrag.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
     <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\GrassFrag.glsl" />
+    <None Include="src\graphics\shaders\GrassVert.glsl" />
+    <None Include="src\graphics\shaders\FogFrag.glsl" />
+    <None Include="src\graphics\shaders\FogVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
