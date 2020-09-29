@@ -199,6 +199,10 @@
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\FogFrag.glsl" />
+    <None Include="src\graphics\shaders\FogVert.glsl" />
+    <None Include="src\graphics\shaders\GrassFrag.glsl" />
+    <None Include="src\graphics\shaders\GrassVert.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
     <None Include="src\graphics\shaders\InstanceVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />

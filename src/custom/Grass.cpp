@@ -10,9 +10,9 @@ Grass::Grass(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	this->name = name;
 	transform.setPos(position);
 	MeshRenderer::Init(this);
-	MeshRenderer::CreateShader("src/graphics/shaders/InstanceVert.glsl", "src/graphics/shaders/InstanceFrag.glsl");
+	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
 	MeshRenderer::SetInstanceID(1);
-	amount = 100;
+	amount = 750;
 	MeshRenderer::SetInstanceAmount(amount);
 	CalculateModelMatrices();
 }
@@ -43,8 +43,8 @@ void Grass::CalculateModelMatrices()
 {
 	MATH::Matrix4* modelMatrices;
 	modelMatrices = new MATH::Matrix4[amount];
-	float radius = 10.0;
-    float offset = 20.0f;
+	float radius = 1.0;
+    float offset = 50.0f;
 	for (unsigned int i = 0; i < amount; i++)
 	{
 		MATH::Matrix4 model = MATH::Matrix4(1.0f);

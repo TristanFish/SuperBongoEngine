@@ -17,6 +17,7 @@ Player::Player(const char* n, const MATH::Vec3& pos) : MeshRenderer("resources/m
 	RigidBody3D::SetAccel(MATH::Vec3(0.0f, -9.8f, 0.0f));
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+	WalkSpeed = 30.0f;
 
 	
 	//Always initialize the components that you've inherited with your current gameobject
@@ -46,35 +47,60 @@ void Player::Render() const
 
 void Player::HandleEvents(const SDL_Event& event)
 {
+
 	MeshRenderer::HandleEvents(event);
+	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
+
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
-		//Movement controls
+		//Multi Key Movement controls (From SDL2)
+		if (keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_A])
+		{
+			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+		}
+		if (keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_D])
+		{
+			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+		}
+		if (keyboard_state_array[SDL_SCANCODE_S] && keyboard_state_array[SDL_SCANCODE_A])
+		{
+			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+		}
+		if (keyboard_state_array[SDL_SCANCODE_S] && keyboard_state_array[SDL_SCANCODE_A])
+		{
+			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+		}
+		
+		//Single Key Movement controls
 		if (event.key.keysym.sym == SDLK_w) 
 		{
-			transform.pos += transform.Forward() * 20.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_s)
 		{
-			transform.pos += -transform.Forward() * 20.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			transform.pos += transform.Right() * 20.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			transform.pos += -transform.Right() * 20.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
-			transform.pos += transform.Up() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Up() * WalkSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_LCTRL)
 		{
-			transform.pos += -transform.Up() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Up() * WalkSpeed * Timer::GetDeltaTime();
 		}
-
+		
 		//Rotation controls
 		if (event.key.keysym.sym == SDLK_LEFT)
 		{

@@ -56,23 +56,39 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box)
 
 bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 {
-	Vec3 pNormal = plane.gameobject->transform.Up();
+	
+	Vec3 extents = (box.collider.maxVertices - box.collider.minVertices) / 2.0f;
+
+	Vec3 centre = box.collider.minVertices + extents;
+
+	Vec3 pNormal = plane.gameobject->transform.Up() / 2;
 
 
-	// AABB Centre
-	Vec3 centre = (box.collider.maxVertices + box.collider.minVertices) * 0.5f;
-
-	// Positive extents
-	Vec3 extents = box.collider.maxVertices - centre;
-
-
-	float r = ((extents.x * pNormal.x) + (extents.y * pNormal.y) + (extents.z * pNormal.z));
-
-	float s = VMath::dot(pNormal,centre) - VMath::distance(*plane.pos, *box.pos);
+	float r = abs(pNormal.x * extents.x) + abs(pNormal.y * extents.y) + abs(pNormal.z * extents.z);
 
 	
+	float dot = VMath::dot(pNormal, centre) - VMath::distance(box.GetPosition(), plane.GetPosition());
+	
+	
 
-	return abs(s) <= r;
+
+	if(dot >= r)
+	{
+		return false;
+	}
+	if (dot <= -r)
+	{
+		return false;
+	}
+	std::cout << "Box Plane Collision Detected" << std::endl;
+	return true;
+}
+
+bool Physics3D::SpherePlaneDetect(RigidBody3D& sphere, RigidBody3D& plane)
+{
+
+	//Vec3 closestPoint 
+	return false;
 }
 
 MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box)
@@ -167,6 +183,10 @@ void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
 
 	box.OnCollisionEnter(box);
 	plane.OnCollisionEnter(box);
+}
+
+void Physics3D::SpherePlaneResolve(RigidBody3D& sphere, RigidBody3D& plane)
+{
 }
 
 bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
