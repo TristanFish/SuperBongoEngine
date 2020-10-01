@@ -9,11 +9,15 @@
 
 class AudioListenerComponent : public Component
 {
+	//This class could probably be a singleton like the audio manager but in case we ever want to have any split screen support we wont do that
+	//That being said there should still only be 1 listener at a time for now similar to Unity
 private:
 	FMOD::System* audioSystemRef;
+
 	FMOD_VECTOR* FMODlistenerPos;
 	FMOD_VECTOR* FMODForward;
 	FMOD_VECTOR FMODUp;
+
 	MATH::Vec3* listenerPos;
 
 public:

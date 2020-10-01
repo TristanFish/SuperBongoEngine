@@ -10,11 +10,9 @@
 //struct for FMOD tools to be accessed through, each audio source should have one.
 struct SoundAttributes
 {
-	FMOD::Channel* C1 = nullptr;
-	FMOD::ChannelGroup* G1 = nullptr;
-	FMOD::Reverb3D* reverb = nullptr;
-	//Load this up with whatever sounds you want the object to play
-	std::vector <FMOD::Sound> sounds;
+	FMOD::Channel* C1;
+	FMOD::ChannelGroup* G1;
+	FMOD::Reverb3D* reverb;
 	
 };
 #endif

@@ -17,7 +17,7 @@ class AudioSourceComponent;
 class AudioManager
 {
 public:
-	//Creating a new instance of this class will nor work. The get function belows initializes the class.
+	//Creating a new instance of this class will not work. The get function belows initializes the class.
 	//Call other functions found in Audio Manager but calling AudioManager::Get()."whatever function"
 
 	static AudioManager* Get() { static AudioManager s_AudioManager;  
@@ -26,28 +26,30 @@ public:
 	void Update();
 	void CreateAndPlaySound(const char* filename);
 	void MonitorChannel(FMOD::Channel c);
+	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
-	FMOD::ChannelGroup* G1 = nullptr;
+	FMOD::Sound* RetrieveSoundObject(const char* soundName);
+	FMOD::System* system = nullptr;
 
 	//FMOD runs off a single system pointer below, most of the initialization is behind the scenes in regards to hooking into your sound device/card 
-	FMOD::System* system = nullptr;
 		
 	~AudioManager();
 
 private:
 
-	std::map <std::string, std::string> sounds;
-	//std::vector <AudioSourceComponent> audioSources;
-
+//Sound bank
+	#pragma region sounds
 	FMOD::Sound* newSound = nullptr;
+	FMOD::Sound* leafCrunch = nullptr;
+#pragma endregion 
+		
+	FMOD::ChannelGroup* G1 = nullptr;
 	FMOD::Channel* C1 = nullptr;
 	FMOD::Reverb3D* reverb = nullptr;
-
-	FMOD_VECTOR pos {};
-	FMOD_VECTOR audioSourcePos{};
-	FMOD_VECTOR forward{0.0f, 0.0f, 1.0f};
-	FMOD_VECTOR up{0.0f ,1.0f, 0.0f};
-
+	
+	std::vector <const char*> soundPaths;
+	std::vector <FMOD::Sound*> sounds;
+	std::map <const char*, FMOD::Sound*> soundPairs;
 	
 	AudioManager();
 	AudioManager(const AudioManager&) = delete;
@@ -56,24 +58,24 @@ private:
 	void AddAudioSource(AudioSourceComponent& newComponent);
 
 	void InitAudioManager();
-	void CreateChannelGroup();
-	void SetListenerPos(MATH::Vec3 pos);
 	void CreateSounds();
 	void Create3DReverbAttributes(FMOD_VECTOR pos);
 	void Create3DReverb();
 	void CreateAndSetPan(float pan);
-	void SetAudioSourcePos(MATH::Vec3 sourcepos);
+	//void SetAudioSourcePos(MATH::Vec3& sourcepos);
 
-	//Please keep all sounds keys in all lower case so we don't have to debug dumb stuff
-	//Add any sounds you want in this function, just follow suit.
-	void LoadSoundMap();
+	//This is where we load sounds, provide a new buffer and file path for every sound
+	void LoadSounds();
+
+	
+	
 
 };
 #endif
 
 
-
 //TODO
+//Load sounds into vector and have create sound iterate through all sounds
 //Set up better way to handle loading sounds (store strings in a map of file paths and load everything into sound objects proably) 
 //Set audio distance units to our engine's
 //Store all audio sources in audio source vector

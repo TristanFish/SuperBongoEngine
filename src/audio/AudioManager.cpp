@@ -14,36 +14,36 @@ void AudioManager::MonitorChannel(FMOD::Channel c)
 	std::cout  << tb << std::endl;
 }
 
+FMOD::Sound* AudioManager::RetrieveSoundObject(const char* soundName)
+{
+	auto key = soundPairs.at(soundName);
+	if (key != NULL) {
+		return key;
+	}
+}
+
 void AudioManager::AddAudioSource(AudioSourceComponent& newComponent)
 {
 	//audioSources.emplace_back(newComponent);
 }
 
-void AudioManager::CreateChannelGroup()
+void AudioManager::CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup)
 {
-	//A channel is a string of audio, you can probably guess what a group is
-	
-	system->createChannelGroup("ChannelGroup1",&G1);
-	G1->setMode(FMOD_3D);
-	
-}
-
-void AudioManager::SetListenerPos(MATH::Vec3 pos)
-{
-	this->pos = AudioUtility::Vec3ToFMODVec(pos);
-	system->set3DListenerAttributes(0, &this->pos, 0, &forward, &up);
+	//A channel is a the road between files being a digital and being played on speakers, you can probably guess what a group is
+	system->createChannelGroup(groupName, &channelGroup);
+	channelGroup->setMode(FMOD_3D);
 }
 
 
 void AudioManager::Update()
 {
 	system->update();
-	system->set3DListenerAttributes(0, &this->pos, 0, &forward, &up);
+	
 }
 
 void AudioManager::InitAudioManager()
 {
-
+	//This is how ya boot FMOD system instances
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&system);
 	if (result != FMOD_OK) {
@@ -57,16 +57,20 @@ void AudioManager::InitAudioManager()
 		std::cout << "FMOD did not init properly" << result << "\n" << FMOD_ErrorString(result) << std::endl;
 		exit(-1);
 	}
-
-	LoadSoundMap();
+	//Always have to load before we create
+	LoadSounds();
+	CreateSounds();
 }
 
+//Pass in a pointer to the new FMOD::Sound you've have created. 
 void AudioManager::CreateSounds()
 {
-	FMOD_RESULT r;
-	r = system->createSound(sounds.find("leafcrunch"), FMOD_3D, nullptr, &newSound);
-	if (r != FMOD_OK) {
-		std::cout << r << FMOD_ErrorString(r) << std::endl;
+	for (int i = 0; i < soundPaths.size(); i++) {
+		FMOD_RESULT r;
+		r = system->createSound(soundPaths[i], FMOD_3D, nullptr, &sounds[i]);
+		if (r != FMOD_OK) {
+			std::cout << r << FMOD_ErrorString(r) << std::endl;
+		}
 	}
 
 }
@@ -88,7 +92,6 @@ void AudioManager::Create3DReverb()
 	r = system->createReverb3D(&reverb);
 	FMOD_REVERB_PROPERTIES prop = FMOD_PRESET_CAVE;
 	reverb->setProperties(&prop);
-	Create3DReverbAttributes(audioSourcePos);
 	
 	//CreateAndSetPan(-1);
 }
@@ -97,39 +100,45 @@ void AudioManager::CreateAndSetPan(float pan)
 {
 }
 
-void AudioManager::SetAudioSourcePos(MATH::Vec3 sourcePos)
+void AudioManager::LoadSounds()
 {
 
-	C1->setChannelGroup(G1);
-	FMOD_RESULT r;
-	audioSourcePos = AudioUtility::Vec3ToFMODVec(sourcePos);
-	r = C1->set3DAttributes(&audioSourcePos, NULL);
-	
-	if (r != FMOD_OK) {
-		std::cout << r << FMOD_ErrorString(r) << std::endl;
-	}
-	r = G1->set3DAttributes(&audioSourcePos, NULL);
-	if (r != FMOD_OK) {
-		std::cout << r << FMOD_ErrorString(r) << std::endl;
-	}
-	
+
+	//Please keep all sounds keys in all lower case so we don't have to debug dumb stuff
+	//Add any sounds you want in this function, just follow suit.
+	// add new sounds in pairs, ya this should probably be a map but it was breaking, just do these three things everytime you want to make a new sound
+	soundPaths.emplace_back("src/sounds/tumbleweed.wav");
+	//Sound object goes here
+	sounds.emplace_back(leafCrunch);
+	// Now use the key value in this map to find the sound you want to give to an audio source
+	soundPairs.insert(std::pair <const char*, FMOD::Sound*> ("leafcrunch", sounds[0]) );
+	///////////////////////////////////////////////////////////////////////////////////
+
 }
 
-void AudioManager::LoadSoundMap()
-{
-	sounds.insert("leafcrunch", "src/sounds/tumbleweed.wav");
-	
-	std::cout << sounds.size << " " << "Elements loaded into map" << std::endl;
-}
+//void AudioManager::SetAudioSourcePos(MATH::Vec3& sourcePos)
+//{
+//
+//	C1->setChannelGroup(G1);
+//	FMOD_RESULT r;
+//	audioSourcePos = AudioUtility::Vec3ToFMODVec(sourcePos);
+//	r = C1->set3DAttributes(&audioSourcePos, NULL);
+//	
+//	if (r != FMOD_OK) {
+//		std::cout << r << FMOD_ErrorString(r) << std::endl;
+//	}
+//	r = G1->set3DAttributes(&audioSourcePos, NULL);
+//	if (r != FMOD_OK) {
+//		std::cout << r << FMOD_ErrorString(r) << std::endl;
+//	}
+//	
+//}
+
 
 
 void AudioManager::CreateAndPlaySound(const char* filename)
 {
-	CreateSounds();
-	CreateChannelGroup();
 	system->playSound(newSound, nullptr, false, &C1);
-	SetListenerPos(MATH::Vec3(-5.0f,0.0f, 5.0f));
-	SetAudioSourcePos(MATH::Vec3(0.0f, 0.0f, 0.0f));
 	Create3DReverb();
 	Update();
 }
@@ -145,34 +154,4 @@ AudioManager::~AudioManager()
 	
 }
 
-///////////////////////////
-// Just utility functions//
-///////////////////////////
-float AudioUtility::dBToVolume(float dB)
-{
-	return powf(10.0f, 0.05f * dB);
-}
 
-float AudioUtility::VolumeTodB(float vol)
-{
-	return 20.0f * log10f(vol);
-}
-
-FMOD_VECTOR AudioUtility::Vec3ToFMODVec(MATH::Vec3 vec)
-{
-	FMOD_VECTOR temp;
-	temp.x = vec.x;
-	temp.y = vec.y;
-	temp.z = vec.z;
-	return temp;
-}
-
-FMOD_VECTOR& AudioUtility::Vec3ToFMODVecR(MATH::Vec3& vec)
-{
-	FMOD_VECTOR temp;
-	temp.x = vec.x;
-	temp.y = vec.y;
-	temp.z = vec.z;
-	return temp;
-	
-}

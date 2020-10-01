@@ -13,7 +13,7 @@ Scene1::~Scene1()
 bool Scene1::OnCreate()
 {
 	audioManager = AudioManager::Get();
-	audioManager->CreateAndPlaySound("src/sounds/tumbleweed.wav");
+	
 
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();
@@ -24,7 +24,6 @@ bool Scene1::OnCreate()
 	player->SetScale(Vec3(2.0, 2.0, 0.0));
 	if (player->hasComponent<SpriteComponent>())
 	{
-		
 		//Give it a shader and a sprite
 		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
 		player->getComponent<SpriteComponent>().setTexture("src/Textures/BallPlayer.png");
@@ -52,7 +51,6 @@ void Scene1::OnDestroy()
 	tilemap = nullptr;
 	delete objectList;
 	objectList = nullptr;
-	audioManager->~AudioManager();
 }
 
 void Scene1::Update(const float deltaTime)
