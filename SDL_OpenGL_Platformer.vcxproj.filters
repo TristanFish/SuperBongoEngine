@@ -379,6 +379,14 @@
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="external\include\imgui\imconfig.h" />
+    <ClInclude Include="external\include\imgui\imgui.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="external\include\imgui\imgui_internal.h" />
+    <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\include\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -428,6 +436,12 @@
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="external\include\imgui\imgui.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
