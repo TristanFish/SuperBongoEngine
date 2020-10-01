@@ -20,9 +20,9 @@ bool Scene1::OnCreate()
 	texture = Texture();
 	texture.LoadImage("resources/textures/pufflet.bmp");
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 50.0f, 0.0f));
+	player = new Player("Player", MATH::Vec3(10.0f, 50.0f, 0.0f));
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f));
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f),500);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	objectList->AddGameObject(player);
@@ -47,6 +47,7 @@ void Scene1::OnDestroy()
 
 void Scene1::Update(const float deltaTime)
 {
+
 	//std::cout << 1.0f / deltaTime << std::endl;
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
@@ -70,6 +71,10 @@ void Scene1::Render() const
 
 void Scene1::HandleEvents(const SDL_Event& event)
 {
+	if (event.key.keysym.sym == SDLK_k)
+	{
+		objectList->AddGameObject(new TestModel("Test", MATH::Vec3(0.0f, 20.0f, 0.0f)));
+	}
 	objectList->HandleEvents(event);
 }
 

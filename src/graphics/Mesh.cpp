@@ -115,13 +115,11 @@ void Mesh::RenderInstanced(const Shader& shader, std::vector<Mesh> meshes,const 
 		glUniform4fv(glGetUniformLocation(shader.GetID(), "meshColor"), 1, color);
 	}
 
-	for (int i = 0; i < meshes.size(); i++)
-	{
-		glBindVertexArray(meshes[i].GetVAO());
-		glDrawElementsInstanced(GL_TRIANGLES, meshes[i].indices.size(), GL_UNSIGNED_INT, 0, amount);
-		glBindVertexArray(0);
-	}
 	
+		glBindVertexArray(meshes[0].GetVAO());
+		glDrawElementsInstanced(GL_TRIANGLES, meshes[0].indices.size(), GL_UNSIGNED_INT, 0, amount);
+		glBindVertexArray(0);
+
 }
 
 void Mesh::InitMesh()

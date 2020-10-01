@@ -31,10 +31,11 @@ public:
 	void SetInstanceID(const int id)  { instanceID = id; }
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
+	Shader shader;
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
-	Shader shader;
+	 
 
 	int instanceID;
 	unsigned int instanceAmount;

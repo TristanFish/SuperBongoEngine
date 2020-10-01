@@ -4,12 +4,23 @@ out vec4 fragColor;
 in vec3 vertNormal;
 in vec2 vertUV;
 in vec3 Position;
+
+
+struct FogData
+{
+     vec3 color;
+	 float maxDist;
+	 float minDist;
+};
+
 uniform vec4 meshColor;
 uniform sampler2D diffuseTex1;
 
-
+uniform FogData Fog;
+//uniform FogData Fog;
 vec4 Phong()
 	{
+	
 	const vec4 ks = vec4(0.0, 0.0, 0.0,1.0);
 
     const vec4 kd = vec4(0.0, 0.0, 0.0,1.0); /// const means it cannot be changed just like C++
@@ -35,15 +46,12 @@ vec4 Phong()
 
 void main()
 {
-   vec4 fogColor = vec4(0.0,0.3,0.0,0.8);
-   float MaxDist = 100.0;
-   float MinDist = 10.0;
-
+    vec4 newcolor = vec4(Fog.color,0.6);
    float dist = length(Position.xyz);
-   float fogFactor = (MaxDist - dist) / (MaxDist - MinDist);
+   float fogFactor = (Fog.maxDist - dist) / (Fog.maxDist - Fog.minDist);
 
 
-   vec4 color = mix(fogColor,vec4(0.0,0.4,0.0,0.0),fogFactor);
+   vec4 color = mix(newcolor ,vec4(0.0 ,0.4 ,0.0 ,0.0),fogFactor);
 
 	fragColor =  color;
 }

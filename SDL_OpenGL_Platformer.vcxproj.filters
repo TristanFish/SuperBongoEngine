@@ -379,6 +379,7 @@
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="src\custom\Instancer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -428,6 +429,7 @@
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\custom\Instancer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

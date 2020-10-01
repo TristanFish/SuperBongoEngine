@@ -12,9 +12,7 @@ TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("reso
 	//RigidBody3D::setColliderShape(Collider3D::shape::Sphere);
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/FogVert.glsl", "src/graphics/shaders/FogFrag.glsl");
-
-	// Sets the collider up properly when scaled or rotated
-	
+		
 }
 
 TestModel::~TestModel()
@@ -31,6 +29,7 @@ void TestModel::Update(const float deltaTime)
 void TestModel::Render() const
 {
 	MeshRenderer::Render();
+
 }
 
 void TestModel::HandleEvents(const SDL_Event& event)

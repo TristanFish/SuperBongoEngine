@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Plane.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="src\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />

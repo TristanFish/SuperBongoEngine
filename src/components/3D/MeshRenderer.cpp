@@ -46,16 +46,22 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-	if(instanceID == 0)
+	if (instanceID == 0)
+	{
+		shader.RunShader();
+		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+		MeshRenderer::shader.TakeInUniformVec3("Fog.color", Vec3(0.0,0.4,0.0));
+		MeshRenderer::shader.TakeInUniformFloat("Fog.maxDist", 100.0);
+		MeshRenderer::shader.TakeInUniformFloat("Fog.minDist", 10.0);
 		for (auto& m : meshes)
 		{
-			shader.RunShader();
-			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-			shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
 			m.RenderRegular(shader);
-			glUseProgram(0);
 		}
+		glUseProgram(0);
+	}
+		
 	if (instanceID == 1)
 	{
 		for (auto& m : meshes)
@@ -78,7 +84,7 @@ void MeshRenderer::HandleEvents(const SDL_Event& event)
 bool MeshRenderer::LoadModel(std::string modelPath)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_OptimizeMeshes);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{

@@ -65,4 +65,18 @@ void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 
+void Shader::TakeInUniformVec3(const std::string& name, const Vec3& value) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found" << std::endl; }
+	glUniform3fv(location, 1, value);
+}
+
+void Shader::TakeInUniformFloat(const std::string& name, const float& value) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found" << std::endl; }
+	glUniform1f(location, value);
+}
+
 

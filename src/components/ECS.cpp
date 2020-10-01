@@ -31,13 +31,7 @@ Manager::~Manager()
 
 void Manager::Init()
 {
-	for (GameObject* g : gameObjects)
-	{
-		if (g->hasComponent<RigidBody3D>())
-		{
-			rigidBodies.emplace_back(&g->getComponent<RigidBody3D>());
-		}
-	}
+	
 }
 
 void Manager::Update(const float deltaTime)
@@ -97,6 +91,11 @@ GameObject& Manager::FindGameObject(const char* name)
 GameObject& Manager::AddGameObject(GameObject* go)
 {
 	gameObjects.emplace_back(go);
+	if (go->hasComponent<RigidBody3D>())
+	{
+		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
+	}
+
 	std::cout << go->name << " added to objectList" << std::endl;
 	return *go;
 }

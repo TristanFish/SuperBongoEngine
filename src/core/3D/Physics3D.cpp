@@ -58,19 +58,20 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 {
 	
 	Vec3 extents = (box.collider.maxVertices - box.collider.minVertices) / 2.0f;
-
+	extents += box.GetPosition() * -1;
 	Vec3 centre = box.collider.minVertices + extents;
 
-	Vec3 pNormal = plane.gameobject->transform.Up() / 2;
+	Vec3 pNormal =  plane.gameobject->transform.Up() / 2;
 
-
-	float r = abs(pNormal.x * extents.x) + abs(pNormal.y * extents.y) + abs(pNormal.z * extents.z);
+	float r = (pNormal.x * extents.x) + (pNormal.y * extents.y) + (pNormal.z * extents.z);
 
 	
 	float dot = VMath::dot(pNormal, centre) - VMath::distance(box.GetPosition(), plane.GetPosition());
 	
-	
 
+	std::cout << dot << std::endl;
+
+	std::cout << r << std::endl;
 
 	if(dot >= r)
 	{
@@ -80,7 +81,7 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 	{
 		return false;
 	}
-	std::cout << "Box Plane Collision Detected" << std::endl;
+	std::cout << "Box Plane Collision Detected" << 1 << std::endl;
 	return true;
 }
 
