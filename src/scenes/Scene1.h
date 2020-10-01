@@ -16,6 +16,7 @@ private:
 	Texture texture;
 	Player* player;
 	Grass* grass;
+	TestModel* fog;
 	Plane* plane;
 
 public:
