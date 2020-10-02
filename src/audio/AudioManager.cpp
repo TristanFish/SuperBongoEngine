@@ -14,12 +14,14 @@ void AudioManager::MonitorChannel(FMOD::Channel c)
 	std::cout  << tb << std::endl;
 }
 
-FMOD::Sound* AudioManager::RetrieveSoundObject(const char* soundName)
+FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
 {
-	auto key = soundPairs.at(soundName);
-	if (key != NULL) {
-		return key;
+	//auto itr = soundPairs.find(soundName);
+	auto itr = soundPairs.begin();
+	if (itr != soundPairs.end()) {
+		return itr->second;
 	}
+	else { std::cout << "Map Key:" << " " << soundName << " " << "Not found no sound object returned" << std::endl; }
 }
 
 void AudioManager::AddAudioSource(AudioSourceComponent& newComponent)
@@ -67,10 +69,12 @@ void AudioManager::CreateSounds()
 {
 	for (int i = 0; i < soundPaths.size(); i++) {
 		FMOD_RESULT r;
-		r = system->createSound(soundPaths[i], FMOD_3D, nullptr, &sounds[i]);
+		r = system->createSound(soundPaths[i].c_str(), FMOD_3D, nullptr, &sounds[i]);
 		if (r != FMOD_OK) {
 			std::cout << r << FMOD_ErrorString(r) << std::endl;
 		}
+		soundPairs[soundPaths[i]] = sounds[i];
+		//soundPairs.insert(std::pair <const char*, FMOD::Sound*>(soundPaths[i], sounds[i]));
 	}
 
 }
@@ -103,16 +107,12 @@ void AudioManager::CreateAndSetPan(float pan)
 void AudioManager::LoadSounds()
 {
 
-
 	//Please keep all sounds keys in all lower case so we don't have to debug dumb stuff
 	//Add any sounds you want in this function, just follow suit.
-	// add new sounds in pairs, ya this should probably be a map but it was breaking, just do these three things everytime you want to make a new sound
+	//A map of any 2 objects you place here is inserted into inside CreateSound
 	soundPaths.emplace_back("src/sounds/tumbleweed.wav");
 	//Sound object goes here
 	sounds.emplace_back(leafCrunch);
-	// Now use the key value in this map to find the sound you want to give to an audio source
-	soundPairs.insert(std::pair <const char*, FMOD::Sound*> ("leafcrunch", sounds[0]) );
-	///////////////////////////////////////////////////////////////////////////////////
 
 }
 

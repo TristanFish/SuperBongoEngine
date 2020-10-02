@@ -17,7 +17,7 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	AudioListenerComponent::Init(this);
 
 	AudioSourceComponent::Init(this);
-	AudioSourceComponent::LoadSound("leafcrunch", AudioSourceComponent::GetFreshSoundBuffer());
+	
 
 	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
 	RigidBodyComponent::setColliderSize(1.75f);
@@ -61,7 +61,7 @@ void Player::HandleEvents(const SDL_Event& event)
 				RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
 					* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
 				RigidBodyComponent::SetIsGrounded(false);
-				AudioSourceComponent::PlaySound(AudioSourceComponent::GetSound(0));
+				
 			}
 		}
 
@@ -107,6 +107,7 @@ void Player::HandleEvents(const SDL_Event& event)
 			{
 				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 5.0, 0.0));
 				RigidBodyComponent::SetIsGrounded(false);
+				AudioSourceComponent::PlaySound(AudioSourceComponent::GetSound("leafcrunch"), &AudioManager::Get()->C1);
 			}
 		}
 	}

@@ -3,8 +3,9 @@
 void AudioSourceComponent::Init(GameObject* g)
 {
 	soundAtts.C1 = nullptr;
+	soundAtts.G1 = nullptr;
+	soundAtts.reverb = nullptr;
 	gameobject = nullptr;
-	sound1 = nullptr;
 	audioSystemRef = nullptr;
 
 	gameobject = g;
@@ -14,7 +15,7 @@ void AudioSourceComponent::Init(GameObject* g)
 	FMODGamePos =  AudioUtility::Vec3ToFMODVec(gameObjectPosition);
 
 	AudioManager::Get()->CreateChannelGroup("Channel Group 1", soundAtts.G1);
-	LoadSoundVector();
+	
 }
 
 void AudioSourceComponent::Update(const float deltaTime)
@@ -23,43 +24,36 @@ void AudioSourceComponent::Update(const float deltaTime)
 }
 
 
-void AudioSourceComponent::PlaySound(FMOD::Sound* sound)
+void AudioSourceComponent::PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef)
 {
-	audioSystemRef->playSound(sound, soundAtts.G1, true, &soundAtts.C1);
+	//True is passed in so the sound does not play immediatley, we need to set the channels audio position.
+	std::cout << "sound played" << std::endl;
+	auto r = AudioManager::Get()->system->playSound(sound, NULL, true, channelRef);
+	std::cout << r << std::endl;
 	SetAudioPosition();
-	soundAtts.C1->setChannelGroup(soundAtts.G1);
-	soundAtts.C1->setPaused(false);
+	(*channelRef)->setPaused(false);
 }
 
-FMOD::Sound* AudioSourceComponent::GetFreshSoundBuffer()
-{
-	//Return the first sound buffer that is not full
-	for (int i = 0; i < sounds.size(); i++) {
-		if (sounds[i] != nullptr) {
-			return sounds[i];
-		}
-	}
-	std::cout << "no free sound buffers available check to make sure you havent filled the sounds vector" << std::endl;
-	return nullptr;
-}
 
-FMOD::Sound* AudioSourceComponent::LoadSound(const char* soundName, FMOD::Sound* soundBuffer)
+FMOD::Sound* AudioSourceComponent::LoadSound(std::string soundName)
 {
-	soundBuffer = AudioManager::Get()->RetrieveSoundObject(soundName);
-	if (soundBuffer == nullptr) {
-		std::cout << "Sound buffer not loaded. Make sure buffer is valid and available." << std::endl;
+	FMOD::Sound* sound = AudioManager::Get()->RetrieveSoundObject(soundName);
+	if (sound == nullptr) {
+		std::cout << "Sound not found make sure you're using a valid sound name." << std::endl;
 		return NULL;
 	}
-	return soundBuffer;
+	return sound;
 }
 
-FMOD::Sound* AudioSourceComponent::GetSound(int soundNumber)
+FMOD::Sound* AudioSourceComponent::GetSound(std::string soundNameFromMap)
 {
-	auto temp = sounds[soundNumber];
-	if (temp == nullptr) {
-		std::cout << "invalid sound element" << std::endl;
+	auto sound = LoadSound(soundNameFromMap);
+	
+	if (sound == nullptr) {
+	
+		std::cout << "invalid sound element, buffer returned null or invalid name" << std::endl;
 	}
-	return temp;
+	return sound;
 }
 
 
@@ -68,19 +62,12 @@ void AudioSourceComponent::SetAudioPosition()
 {
 	FMOD_RESULT r;
 	//Gotta convert to FMODVECTOR, its no problem as long as the vector is always a vec3
-	r = soundAtts.C1->set3DAttributes(&FMODGamePos, NULL);
+	r = AudioManager::Get()->C1->set3DAttributes(&FMODGamePos, NULL);
 	if (r != FMOD_OK) {
 		std::cout << r << FMOD_ErrorString(r) << "-------"<< "Audio Component did not set 3D attributes, game object position unavailable"<< std::endl;
 	}
 }
 
-void AudioSourceComponent::LoadSoundVector()
-{
-	//You'll have to manually enter sound objects in here if you want more, for now each audiosource can have 3 sounds
-	sounds.emplace_back(sound1);
-	sounds.emplace_back(sound2);
-	sounds.emplace_back(sound3);
-}
 
 void AudioSourceComponent::Render(){}
 void AudioSourceComponent::HandleEvents(const SDL_Event& event){}
@@ -88,7 +75,9 @@ void AudioSourceComponent::HandleEvents(const SDL_Event& event){}
 AudioSourceComponent::~AudioSourceComponent()
 {
 	gameobject = nullptr; 
-	sound1 = nullptr;
 	audioSystemRef = nullptr;
+	soundAtts.C1 = nullptr;
+	soundAtts.G1 = nullptr;
+	soundAtts.reverb = nullptr;
 }
 

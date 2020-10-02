@@ -28,10 +28,11 @@ public:
 	void MonitorChannel(FMOD::Channel c);
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
-	FMOD::Sound* RetrieveSoundObject(const char* soundName);
+	FMOD::Sound* RetrieveSoundObject(std::string soundName);
 	FMOD::System* system = nullptr;
+	FMOD::ChannelGroup* G1 = nullptr;
+	FMOD::Channel* C1 = nullptr;
 
-	//FMOD runs off a single system pointer below, most of the initialization is behind the scenes in regards to hooking into your sound device/card 
 		
 	~AudioManager();
 
@@ -43,13 +44,11 @@ private:
 	FMOD::Sound* leafCrunch = nullptr;
 #pragma endregion 
 		
-	FMOD::ChannelGroup* G1 = nullptr;
-	FMOD::Channel* C1 = nullptr;
 	FMOD::Reverb3D* reverb = nullptr;
 	
-	std::vector <const char*> soundPaths;
+	std::vector <std::string> soundPaths;
 	std::vector <FMOD::Sound*> sounds;
-	std::map <const char*, FMOD::Sound*> soundPairs;
+	std::map <std::string, FMOD::Sound*> soundPairs;
 	
 	AudioManager();
 	AudioManager(const AudioManager&) = delete;

@@ -14,22 +14,17 @@ class AudioSourceComponent : public Component
 	void Render();
 	void HandleEvents(const SDL_Event& event);
 
-	void PlaySound(FMOD::Sound* sound);
-	FMOD::Sound* GetFreshSoundBuffer();
-	FMOD::Sound* LoadSound(const char* soundName, FMOD::Sound* soundBuffer);
-	FMOD::Sound* GetSound(int soundNumber);
+	void PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef);
+
+	FMOD::Sound* LoadSound(std::string soundName);
+	FMOD::Sound* GetSound(std::string soundNameFromMap);
 	
 	~AudioSourceComponent();
 	
 private:
 
 	void SetAudioPosition();
-	void LoadSoundVector();
-
-	std::vector <FMOD::Sound*> sounds;
-	FMOD::Sound* sound1;
-	FMOD::Sound* sound2;
-	FMOD::Sound* sound3;
+	
 	SoundAttributes soundAtts;
 	
 	FMOD::System* audioSystemRef;
