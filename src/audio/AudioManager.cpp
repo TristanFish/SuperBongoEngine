@@ -17,7 +17,7 @@ void AudioManager::MonitorChannel(FMOD::Channel c)
 FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
 {
 	//auto itr = soundPairs.find(soundName);
-	auto itr = soundPairs.begin();
+	auto itr = soundPairs.find(soundName);
 	if (itr != soundPairs.end()) {
 		return itr->second;
 	}
@@ -73,7 +73,7 @@ void AudioManager::CreateSounds()
 		if (r != FMOD_OK) {
 			std::cout << r << FMOD_ErrorString(r) << std::endl;
 		}
-		soundPairs[soundPaths[i]] = sounds[i];
+		soundPairs[soundNames[i]] = sounds[i];
 		//soundPairs.insert(std::pair <const char*, FMOD::Sound*>(soundPaths[i], sounds[i]));
 	}
 
@@ -113,6 +113,8 @@ void AudioManager::LoadSounds()
 	soundPaths.emplace_back("src/sounds/tumbleweed.wav");
 	//Sound object goes here
 	sounds.emplace_back(leafCrunch);
+	//String object that has name you intend to search through
+	soundNames.emplace_back(leafCrunchString);
 
 }
 

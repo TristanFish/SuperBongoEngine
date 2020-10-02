@@ -20,8 +20,10 @@ public:
 	//Creating a new instance of this class will not work. The get function belows initializes the class.
 	//Call other functions found in Audio Manager but calling AudioManager::Get()."whatever function"
 
-	static AudioManager* Get() { static AudioManager s_AudioManager;  
-											 return &s_AudioManager; }
+	static AudioManager* Get() {
+		static AudioManager s_AudioManager;
+		return &s_AudioManager;
+	}
 
 	void Update();
 	void CreateAndPlaySound(const char* filename);
@@ -33,20 +35,22 @@ public:
 	FMOD::ChannelGroup* G1 = nullptr;
 	FMOD::Channel* C1 = nullptr;
 
-		
+
 	~AudioManager();
 
 private:
 
-//Sound bank
-	#pragma region sounds
+	//Sound bank
+#pragma region sounds
 	FMOD::Sound* newSound = nullptr;
 	FMOD::Sound* leafCrunch = nullptr;
+	std::string leafCrunchString { "leafcrunch" };
 #pragma endregion 
 		
 	FMOD::Reverb3D* reverb = nullptr;
 	
 	std::vector <std::string> soundPaths;
+	std::vector <std::string> soundNames;
 	std::vector <FMOD::Sound*> sounds;
 	std::map <std::string, FMOD::Sound*> soundPairs;
 	
