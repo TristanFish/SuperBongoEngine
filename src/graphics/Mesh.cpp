@@ -30,7 +30,7 @@ Mesh::~Mesh()
 
 void Mesh::DestroyTextures()
 {
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (size_t i = 0; i < textures.size(); i++)
 	{
 		textures[i].DestroyTexture();
 	}
@@ -38,12 +38,12 @@ void Mesh::DestroyTextures()
 
 void Mesh::Render(const Shader& shader) const
 {
-	unsigned int diffN = 1;
-	unsigned int specN = 1;
+	size_t diffN = 1;
+	size_t specN = 1;
 
 
 	//For every texture on the mesh bind it to the shader
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (size_t i = 0; i < textures.size(); i++)
 	{
 		//setting up a naming scheme for textures inside of shaders, check DefaultFrag.glsl
 		//texture names should be "typeTexNumber" e.g.(diffuseTex1)
@@ -79,7 +79,7 @@ void Mesh::Render(const Shader& shader) const
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (size_t i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, 0);

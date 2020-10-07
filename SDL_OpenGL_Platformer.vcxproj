@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\ModelManager.h" />
     <ClInclude Include="src\components\3D\LightComponent.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\core\Globals.h" />
@@ -144,8 +145,10 @@
     <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\custom\TestModel.h" />
+    <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\ModelManager.cpp" />
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\custom\LightObject.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -205,8 +209,8 @@
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
-    <None Include="src\graphics\shaders\SuperShaderFrag.glsl" />
-    <None Include="src\graphics\shaders\SuperShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

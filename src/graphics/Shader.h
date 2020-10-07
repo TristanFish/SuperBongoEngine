@@ -18,9 +18,10 @@ public:
 	void RunShader() const;
 	
 	void TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const;
+	void TakeInUniformMat3(const std::string &name, Matrix3 &matrix) const;
 	void TakeInUniformVec3(const std::string &name, Vec3& v) const;
 	void TakeInUniformVec4(const std::string &name, Vec3& v) const;
-	void TakeInUniformfloat(const std::string &name, float v) const;
+	void TakeInUniformFloat(const std::string &name, float v) const;
 	void TakeInUniformInt(const std::string &name, int v) const;
 
 

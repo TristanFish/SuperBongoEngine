@@ -21,7 +21,7 @@ MeshRenderer::MeshRenderer(const char* modelPath)
 
 MeshRenderer::~MeshRenderer()
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < meshes.size(); i++)
 	{
 		meshes[i].DestroyTextures();
 	}
@@ -62,11 +62,11 @@ void MeshRenderer::Render() const
 
 void MeshRenderer::Render(const Shader& shader) const
 {
-	Matrix4 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 
 	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeInUniformMat4("normalMatrix", normMat);
+	shader.TakeInUniformMat3("normalMatrix", normMat);
 	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
 
 	for (auto& m : meshes)
@@ -74,12 +74,12 @@ void MeshRenderer::Render(const Shader& shader) const
 		m.Render(shader);
 	}
 
-	glUseProgram(0);
+
 }
 
 void MeshRenderer::HandleEvents(const SDL_Event& event) { }
 
-bool MeshRenderer::LoadModel(std::string modelPath)
+bool MeshRenderer::LoadModel(const std::string& modelPath)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
@@ -97,13 +97,13 @@ bool MeshRenderer::LoadModel(std::string modelPath)
 
 void MeshRenderer::ProcessNode(aiNode* node, const aiScene* scene)
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	for (size_t i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshes.push_back(processMesh(mesh, scene));
 	}
 
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	for (size_t i = 0; i < node->mNumChildren; i++)
 	{
 		ProcessNode(node->mChildren[i], scene);
 	}
@@ -116,7 +116,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<Texture> textures;
 
 	//Load vertices
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	for (size_t i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
 		
@@ -145,10 +145,10 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	//Load indices
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	for (size_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
+		for (size_t j = 0; j < face.mNumIndices; j++)
 		{
 			indices.push_back(face.mIndices[j]);
 		}
@@ -182,7 +182,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	p_max.y = vertices[0].position.y;
 	p_max.z = vertices[0].position.z;
 
-	for (unsigned int i = 1; i < vertices.size(); i++)
+	for (size_t i = 1; i < vertices.size(); i++)
 	{
 		p_min.x = std::min(p_min.x, vertices[i].position.x);
 		p_min.y = std::min(p_min.y, vertices[i].position.y);
@@ -197,12 +197,12 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	return Mesh(vertices, indices, textures, color);
 }
 
-std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName)
 {
 	std::vector<Texture> textures;
 	
 	//load all textures of a TextureType (specular, diffuse, etc.) from the selected material
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+	for (size_t i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString path;
 		aiString fullPath = aiString(directory);

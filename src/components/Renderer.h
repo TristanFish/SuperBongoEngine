@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include "graphics/Shader.h"
+#include "core/Debug.h"
 
 class MeshRenderer;
 class LightComponent;
@@ -16,8 +17,21 @@ public:
 	void AddMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
 	void Render() const;
+	void DestroyTextures();
 private:
 	Shader shader;
+	GLuint gBuffer;
+	GLuint depthRenderBuffer;
+	GLuint stencilTexture;
+	GLuint posTexture;
+	GLuint normTexture;
+	GLuint albedoTexture;
+
+	Debug pos;
+	Debug norm;
+	Debug albedo;
+
+	mutable GLuint currentGTexture;
 
 	//Attaches the most important lights to this object's shader
 	void AttachLights(const MeshRenderer& mr) const;

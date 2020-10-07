@@ -1,5 +1,6 @@
 #pragma once
 #include "components/ECS.h"
+#include "core/Debug.h"
 
 enum class LightType
 {
@@ -24,5 +25,7 @@ public:
 	void HandleEvents(const SDL_Event& event) override;
 
 private:
+
+	Debug lightCube;
 };
 

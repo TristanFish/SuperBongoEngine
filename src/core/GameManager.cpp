@@ -2,6 +2,9 @@
 #include "custom/Camera.h"
 #include <iostream>
 #include "Globals.h"
+#include "core/ModelManager.h"
+#include "core/TextureManager.h"
+
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -23,6 +26,9 @@ void GameManager::Init()
 	//timer = Timer();
 	window = new Window();
 	window->OnCreate("GAME", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+
+	TextureManager::LoadAllTextures();
+	ModelManager::LoadAllModels();
 
 	currentScene = new Scene1();
 	currentScene->OnCreate();

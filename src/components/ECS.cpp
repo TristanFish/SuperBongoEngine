@@ -28,6 +28,8 @@ Manager::~Manager()
 		}
 	}
 
+	renderer.DestroyTextures();
+
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -70,6 +72,9 @@ void Manager::Update(const float deltaTime)
 }
 void Manager::Render() const
 {
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 	renderer.Render();
 }
 
@@ -114,9 +119,9 @@ GameObject& Manager::AddGameObject(GameObject* go)
 void Manager::CheckCollisions()
 {
 	//std::cout << rigidBodies.size() << std::endl;
-	for (unsigned int i = 0; i < rigidBodies.size(); i++)
+	for (size_t i = 0; i < rigidBodies.size(); i++)
 	{
-		for (unsigned int j = i + 1; j < rigidBodies.size(); j++)
+		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
 			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}

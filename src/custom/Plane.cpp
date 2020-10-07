@@ -9,7 +9,7 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 	this->name = name;
 	transform.setPos(position);
 	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
-	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
+	transform.rotation = Vec3(-90.0f, 0.0f, 0.0f);
 	transform.rotation.print();
 	RigidBody3D::Init(this);
 	RigidBody3D::setMoveable(false);

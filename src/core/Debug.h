@@ -8,12 +8,18 @@ public:
 	static Shader TexShader;
 	static Shader ObjShader;
 
-	static void DrawSphere(Vec3 position, float radius, bool wireFrame, Vec3 color = Vec3(1.0f, 1.0f, 1.0f));
+	mutable GLuint textureVAO = 0;
+	mutable GLuint textureVBO;
+
+	mutable GLuint cubeVAO = 0;
+	mutable GLuint cubeVBO;
+
+	void DrawSphere(Vec3 position, float radius, bool wireFrame, Vec3 color = Vec3(1.0f, 1.0f, 1.0f)) const;
 	//Draws a texture onto the screen, give positions as values between -1 and 1
 	//at the moment only works for one texture at a time
-	static void DrawTextureToScreen(GLuint texID, Vec2 topLeft, Vec2 topRight, Vec2 botRight, Vec2 botLeft);
+	void DrawTextureToScreen(GLuint texID, float left = -1.0f, float right = -0.5f, float bot = -1.0f, float top = -0.5f) const;
 
 	//Draws a cube to the screen
-	static void DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color = Vec4(1.0f, 1.0f, 1.0f, 0.0f));
+	void DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color = Vec4(1.0f, 1.0f, 1.0f, 0.0f)) const;
 };
 
