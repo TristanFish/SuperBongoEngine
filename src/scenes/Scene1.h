@@ -8,7 +8,6 @@
 #include "custom/Grass.h"
 #include "imgui.h"
 #include <stdio.h>
-#include <typeinfo>
 
 
 class Player;
@@ -22,7 +21,6 @@ private:
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
-	const char* CheckAtributeValue(int i);
 
 public:
 	Scene1();

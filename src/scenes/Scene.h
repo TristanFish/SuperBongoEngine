@@ -25,8 +25,12 @@ public:
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 	virtual void Reset() = 0;
-	virtual void SaveMapData() = 0;
-	virtual void LoadMapData() = 0;
+	virtual void SaveMapData();
+	virtual void LoadMapData();
+
+
+	const char* CheckAtributeValue(int i);
+	
 };
 
 #endif
