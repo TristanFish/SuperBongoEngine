@@ -27,7 +27,6 @@ namespace  MATH {
 	#endif	
 
 
-	std::ostream& operator<< (std::ostream& out, const Vec3& v);
 
 	struct Vec2 {
 		float  x, y;
@@ -177,8 +176,8 @@ namespace  MATH {
 		}
 
 	};
-
 	std::ostream& operator<< (std::ostream& out, const Vec3& v);
+
 
 		/// Vec4 definitions
 		/// I am intentionally creating a Vec4 from a Vec3 so I can pass a Vec4 into a Subroutine that wants a Vec3

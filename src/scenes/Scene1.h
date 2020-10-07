@@ -6,6 +6,10 @@
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
+#include "imgui.h"
+#include <stdio.h>
+#include <typeinfo>
+
 
 class Player;
 class Tilemap;
@@ -18,6 +22,7 @@ private:
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
+	const char* CheckAtributeValue(int i);
 
 public:
 	Scene1();
@@ -28,7 +33,8 @@ public:
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event &event) override;
 	virtual void Reset() override;
-
+	virtual void SaveMapData() override;
+	virtual void LoadMapData() override;
 };
 
 #endif

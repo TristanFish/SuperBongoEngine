@@ -88,8 +88,9 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go)
+GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 {
+	go->objectID = objID;
 	gameObjects.emplace_back(go);
 	if (go->hasComponent<RigidBody3D>())
 	{

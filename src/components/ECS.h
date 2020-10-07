@@ -42,6 +42,10 @@ protected:
 public:
 	const char* name;
 
+	// Object ID is used so we know what object is being spawned 
+	// all objects that inherit from grass will have the same ID ext
+	int objectID;
+
 	Transform transform;
 
 
@@ -100,7 +104,11 @@ public:
 	//Finds THE FIRST gameobject with the given name
 	GameObject& FindGameObject(const char* name);
 	//Adds a gameobject with a name and position
-	GameObject& AddGameObject(GameObject* go);
+	GameObject& AddGameObject(GameObject* go, unsigned int objID);
+
+	const int GetNumObjects() { return gameObjects.size(); }  
+
+	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
 
 	void CheckCollisions();
 };

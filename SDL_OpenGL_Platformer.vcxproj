@@ -27,8 +27,10 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
@@ -158,7 +160,9 @@
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
