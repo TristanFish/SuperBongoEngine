@@ -10,9 +10,8 @@ public:
 	enum class shape : char
 	{
 		Sphere	 = 0b0001,
-		AABB	 = 0b0010
-
-
+		AABB	 = 0b0010,
+        Plane    = 0b0100 
 	};
 
 	friend inline constexpr Collider3D::shape operator | (Collider3D::shape x, Collider3D::shape y)
@@ -23,10 +22,12 @@ public:
 	shape colliderShape;
 	bool isMoveable, isTrigger,isWiremesh;
 	MATH::Vec3 size;
+	MATH::Vec3 minVertices,maxVertices;
 
-	Collider3D()
+	Collider3D(MATH::Vec3 minVert_,MATH::Vec3 maxVert_)
 	{
-		colliderShape = shape::AABB;
+
+		//colliderShape = shape::AABB;
 		isMoveable = true;
 		isTrigger = false;
 		//isWiremesh = false;

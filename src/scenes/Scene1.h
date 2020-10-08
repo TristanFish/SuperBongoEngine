@@ -5,6 +5,7 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
+#include "custom/Grass.h"
 #include "custom/LightObject.h"
 
 class Player;
@@ -14,7 +15,8 @@ class Scene1 : public Scene
 private:
 
 	Player* player;
-	TestModel* ball;
+	Grass* grass;
+	TestModel* fog;
 	Plane* plane;
 	LightObject* light;
 

@@ -378,6 +378,7 @@
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\core\Globals.h" />
     <ClInclude Include="src\components\3D\LightComponent.h" />
     <ClInclude Include="src\custom\LightObject.h" />
@@ -431,6 +432,7 @@
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
+    <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
     <ClCompile Include="src\custom\LightObject.cpp" />
@@ -500,6 +502,12 @@
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\BaseFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\GrassFrag.glsl" />
+    <None Include="src\graphics\shaders\GrassVert.glsl" />
+    <None Include="src\graphics\shaders\FogFrag.glsl" />
+    <None Include="src\graphics\shaders\FogVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />

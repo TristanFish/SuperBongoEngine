@@ -41,19 +41,31 @@ public:
 	void Render() const override;
 	void Render(const Shader& shader) const;
 	void HandleEvents(const SDL_Event& event) override;
+	
+	// Getters for Miin/Max Vector's
+	 Vec3 GetMinVector() const  { return p_min; }
+	 Vec3 GetMaxVector() const { return p_max; }
+
+	 // Getter for meshes
+	std::vector<Mesh> GetMeshes() const { return meshes; };
+
+	void SetInstanceID(const int id)  { instanceID = id; }
+	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
 	RenderProperties renderFlags;
 
-	// Used For Axis Aligned Binding Boxes
-	Vec3 p_min;
-	Vec3 p_max;
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
 	Shader shader;
 
-	bool LoadModel(const std::string& modelPath);
+	int instanceID;
+	unsigned int instanceAmount;
+	// Used For Axis Aligned Binding Boxes
+	Vec3 p_min;
+	Vec3 p_max;
 
+	bool LoadModel(const std::string& modelPath);
 
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);

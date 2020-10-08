@@ -18,16 +18,19 @@ bool Scene1::OnCreate()
 	objectList = new Manager();
 
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 10.0f, 30.0f));
-	objectList->AddGameObject(player);
+	player = new Player("Player", MATH::Vec3(0.0f, 50.0f, 0.0f));
 
-	ball = new TestModel("Ball", MATH::Vec3(0.0f, 80.0f, 15.0f));
-	plane = new Plane("Plane", MATH::Vec3(0.0f, -5.0f, 0.0f));
-	objectList->AddGameObject(ball);
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f));
+	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
+	fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	objectList->AddGameObject(player);
+	objectList->AddGameObject(grass);
 	objectList->AddGameObject(plane);
+	objectList->AddGameObject(fog);
 
 	light = new LightObject("Light1", MATH::Vec3(0.0f, 30.0f, 0.0f));
 	objectList->AddGameObject(light);
+
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
 
@@ -56,6 +59,12 @@ void Scene1::Update(const float deltaTime)
 
 void Scene1::Render() const
 {
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	objectList->Render();
 }

@@ -2,7 +2,7 @@
 #include "MeshRenderer.h"
 #include "custom/Camera.h"
 
-MeshRenderer::MeshRenderer()
+MeshRenderer::MeshRenderer() : instanceID(0)
 {
 }
 
@@ -47,19 +47,34 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
-	shader.RunShader();
-	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
-	shader.TakeInUniformMat3("normalMatrix", normMat);
-
-	for (auto& m : meshes)
+	if(instanceID == 0)
+    {
+        Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+        
+        shader.RunShader();
+		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+        shader.TakeInUniformMat3("normalMatrix", normMat);
+        
+		for (auto& m : meshes)
+		{
+			m.RenderRegular(shader);
+		}
+        glUseProgram(0);
+    }
+	if (instanceID == 1)
 	{
-		m.Render(shader);
-	}
-	
-	glUseProgram(0);
+		for (auto& m : meshes)
+		{
+			shader.RunShader();
+			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+			m.RenderInstanced(shader, meshes, instanceAmount);
+			glUseProgram(0);
+		}
+    }
+
 }
 
 void MeshRenderer::Render(const Shader& shader) const
@@ -127,6 +142,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		vec.y = mesh->mVertices[i].y;
 		vec.z = mesh->mVertices[i].z;
 		vertex.position = vec;
+		
 		vec.x = mesh->mNormals[i].x;
 		vec.y = mesh->mNormals[i].y;
 		vec.z = mesh->mNormals[i].z;
@@ -175,7 +191,9 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
 
+	meshes.size();
 
+	
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;
 	p_min.z = vertices[0].position.z;
@@ -184,6 +202,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	p_max.y = vertices[0].position.y;
 	p_max.z = vertices[0].position.z;
 
+	// Loops Through verticies and gives us the min and max verticies and put's them into a vector
 	for (size_t i = 1; i < vertices.size(); i++)
 	{
 		p_min.x = std::min(p_min.x, vertices[i].position.x);

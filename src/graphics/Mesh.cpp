@@ -8,7 +8,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vecto
 	this->textures = textures;
 	this->color = color;
 
-	InitMesh();
+    InitMesh();
+	
 }
 
 Mesh::Mesh(const Mesh& m)
@@ -25,7 +26,7 @@ Mesh::Mesh(const Mesh& m)
 
 Mesh::~Mesh()
 {
-
+	
 }
 
 void Mesh::DestroyTextures()
@@ -36,7 +37,7 @@ void Mesh::DestroyTextures()
 	}
 }
 
-void Mesh::Render(const Shader& shader) const
+void Mesh::RenderRegular(const Shader& shader) const
 {
 	size_t diffN = 1;
 	size_t specN = 1;
@@ -86,6 +87,52 @@ void Mesh::Render(const Shader& shader) const
 	}
 }
 
+// Used for instance rendering 
+void Mesh::RenderInstanced(const Shader& shader, std::vector<Mesh> meshes,const unsigned int amount) const
+{
+	unsigned int diffN = 1;
+	unsigned int specN = 1;
+
+
+	//For every texture on the mesh bind it to the shader
+	//This loop will probably start to get slow as we add more objects
+	for (unsigned int i = 0; i < textures.size(); i++)
+	{
+		//setting up a naming scheme for textures inside of shaders, check DefaultFrag.glsl
+		//texture names should be "typeTexNumber" e.g.(diffuseTex1)
+		glActiveTexture(GL_TEXTURE0 + i);
+
+		std::string number;
+		std::string name = textures[i].type;
+		if (name == "diffuseTex")
+		{
+			number = std::to_string(diffN++);
+		}
+		else if (name == "specularTex")
+		{
+			number = std::to_string(specN++);
+		}
+
+		glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i);
+		glBindTexture(GL_TEXTURE_2D, textures[i].getTextureID());
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	if (diffN == 1)
+	{
+		//if there are no diffuse textures, add the color of the material to the shader
+		glUniform4fv(glGetUniformLocation(shader.GetID(), "meshColor"), 1, color);
+	}
+
+	for (int i = 0; i < meshes.size(); i++)
+	{
+		glBindVertexArray(meshes[i].GetVAO());
+		glDrawElementsInstanced(GL_TRIANGLES, meshes[i].indices.size(), GL_UNSIGNED_INT, 0, amount);
+		glBindVertexArray(0);
+	}
+	
+}
+
 void Mesh::InitMesh()
 {
 	glGenVertexArrays(1, &vao);
@@ -111,3 +158,5 @@ void Mesh::InitMesh()
 
 	glBindVertexArray(0);
 }
+
+
