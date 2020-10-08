@@ -88,7 +88,7 @@ void Mesh::RenderRegular(const Shader& shader) const
 }
 
 // Used for instance rendering 
-void Mesh::RenderInstanced(const Shader& shader, std::vector<Mesh> meshes,const unsigned int amount) const
+void Mesh::RenderInstanced(const Shader& shader, const std::vector<Mesh>& meshes,const unsigned int amount) const
 {
 	unsigned int diffN = 1;
 	unsigned int specN = 1;
@@ -124,7 +124,7 @@ void Mesh::RenderInstanced(const Shader& shader, std::vector<Mesh> meshes,const 
 		glUniform4fv(glGetUniformLocation(shader.GetID(), "meshColor"), 1, color);
 	}
 
-	for (int i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < meshes.size(); i++)
 	{
 		glBindVertexArray(meshes[i].GetVAO());
 		glDrawElementsInstanced(GL_TRIANGLES, meshes[i].indices.size(), GL_UNSIGNED_INT, 0, amount);

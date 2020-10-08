@@ -33,9 +33,9 @@ void RigidBody3D::Init(GameObject *g)
 	angularAcc = MATH::Vec3();
 
 	collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
-	collider.maxVertices == VMath::cross(collider.maxVertices, collider.size);
+	//collider.maxVertices == VMath::cross(collider.maxVertices, collider.size);
 	collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
-	collider.minVertices == VMath::cross(collider.minVertices, collider.size);
+	//collider.minVertices == VMath::cross(collider.minVertices, collider.size);
 }
 
 void RigidBody3D::Update(const float deltaTime)

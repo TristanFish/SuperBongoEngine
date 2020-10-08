@@ -45,26 +45,26 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 	}
 
 
-	MATH::Vec3 p_min_1 = sphere->gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_1 = sphere->gameobject->getComponent<MeshRenderer>().p_max;
+	MATH::Vec3 p_min_1 = sphere->collider.minVertices;
+	MATH::Vec3 p_max_1 = sphere->collider.maxVertices;
 
-	MATH::Vec3 p_min_2 = box->gameobject->getComponent<MeshRenderer>().p_min;
-	MATH::Vec3 p_max_2 = box->gameobject->getComponent<MeshRenderer>().p_max;
+	MATH::Vec3 p_min_2 = box->collider.minVertices;;
+	MATH::Vec3 p_max_2 = box->collider.maxVertices;
 
 	//Find the difference between both positions
 	Vec3 differenceVector = *sphere->pos - *box->pos;
 
 	//find the distance to the edge of the box and clamp the difference to find the closest contact point
-	Vec3 clamped = MATH::VMath::clamp(differenceVector, *box->collider.minVertices /2,
-		*box->collider.maxVertices /2);
+	Vec3 clamped = MATH::VMath::clamp(differenceVector, box->collider.minVertices /2,
+		box->collider.maxVertices /2);
 	Vec3 closestContactPoint = *box->pos + clamped;
 
 	//distance from closest contact point to the center of the circle
 	Vec3 distance = closestContactPoint - *sphere->pos;
 
-	if (VMath::mag(distance) < (abs(sphere.collider.maxVertices.x) + abs(sphere.collider.minVertices.x)) / 2 ||
-		VMath::mag(distance) < (abs(sphere.collider.maxVertices.y) + abs(sphere.collider.minVertices.y)) / 2 ||
-		VMath::mag(distance) < (abs(sphere.collider.maxVertices.z) + abs(sphere.collider.minVertices.z)) / 2)
+	if (VMath::mag(distance) < (abs(sphere->collider.maxVertices.x) + abs(sphere->collider.minVertices.x)) / 2 ||
+		VMath::mag(distance) < (abs(sphere->collider.maxVertices.y) + abs(sphere->collider.minVertices.y)) / 2 ||
+		VMath::mag(distance) < (abs(sphere->collider.maxVertices.z) + abs(sphere->collider.minVertices.z)) / 2)
 	{
 		return true;
 	}
@@ -84,10 +84,7 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 
 	float r = abs(pNormal.x * extents.x) + abs(pNormal.y * extents.y) + abs(pNormal.z * extents.z);
 
-	
-	float dot = VMath::dot(pNormal, centre) - VMath::distance(box.GetPosition(), plane.GetPosition());
-	
-	
+	float dot = VMath::dot(pNormal, centre) - VMath::distance(box.GetPosition(), plane.GetPosition());	
 
 
 	if(dot >= r)
@@ -243,7 +240,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		return false;
 		break;
 	default:
-		std::cout << "Something went wrong in DetectCollision" << std::endl;
+		//std::cout << "Something went wrong in DetectCollision" << std::endl;
 		break;
 	}
 

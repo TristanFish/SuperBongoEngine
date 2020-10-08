@@ -27,7 +27,7 @@ namespace MATH {
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
 	#endif	
 
-	std::ostream& operator<< (std::ostream& out, const Vec3& v);
+
 
 	struct Vec2 {
 		float  x, y;

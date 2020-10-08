@@ -367,7 +367,6 @@
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
-    <ClInclude Include="src\components\Renderer.h" />
     <ClInclude Include="src\components\2D\Collider.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
@@ -384,6 +383,7 @@
     <ClInclude Include="src\custom\LightObject.h" />
     <ClInclude Include="src\core\ModelManager.h" />
     <ClInclude Include="src\core\TextureManager.h" />
+    <ClInclude Include="src\core\3D\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -423,7 +423,6 @@
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
-    <ClCompile Include="src\components\Renderer.cpp" />
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\Texture.cpp">
@@ -438,6 +437,7 @@
     <ClCompile Include="src\custom\LightObject.cpp" />
     <ClCompile Include="src\core\ModelManager.cpp" />
     <ClCompile Include="src\core\TextureManager.cpp" />
+    <ClCompile Include="src\core\3D\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

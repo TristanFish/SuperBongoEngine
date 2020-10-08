@@ -5,14 +5,15 @@ Grass::Grass()
 
 }
 
-Grass::Grass(const char* name, MATH::Vec3 position) : MeshRenderer("resources/models/LowPolyGrass.obj")
+Grass::Grass(const char* name, MATH::Vec3 position) : MeshRenderer("resources/models/Grass.fbx")
 {
 	this->name = name;
 	transform.setPos(position);
+	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
 	MeshRenderer::SetInstanceID(1);
-	amount = 750;
+	amount = 2;
 	MeshRenderer::SetInstanceAmount(amount);
 	CalculateModelMatrices();
 }
@@ -30,8 +31,6 @@ void Grass::Update(const float deltaTime)
 void Grass::Render() const
 {
 	MeshRenderer::Render();
-
-	
 }
 
 void Grass::HandleEvents(const SDL_Event& event)

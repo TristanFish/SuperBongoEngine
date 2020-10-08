@@ -65,14 +65,11 @@ void MeshRenderer::Render() const
     }
 	if (instanceID == 1)
 	{
-		for (auto& m : meshes)
-		{
-			shader.RunShader();
-			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-			m.RenderInstanced(shader, meshes, instanceAmount);
-			glUseProgram(0);
-		}
+		shader.RunShader();
+		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+		meshes[0].RenderInstanced(shader, meshes, instanceAmount);
+		glUseProgram(0);
     }
 
 }
@@ -88,7 +85,7 @@ void MeshRenderer::Render(const Shader& shader) const
 
 	for (auto& m : meshes)
 	{
-		m.Render(shader);
+		m.RenderRegular(shader);
 	}
 
 
@@ -99,7 +96,7 @@ void MeshRenderer::HandleEvents(const SDL_Event& event) { }
 bool MeshRenderer::LoadModel(const std::string& modelPath)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_OptimizeMeshes);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -190,9 +187,6 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
-
-	meshes.size();
-
 	
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;

@@ -1,6 +1,6 @@
 #include "Renderer.h"
-#include "3D/MeshRenderer.h"
-#include "3D/LightComponent.h"
+#include "components/3D/MeshRenderer.h"
+#include "components/3D/LightComponent.h"
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
@@ -123,6 +123,8 @@ void Renderer::Render() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
