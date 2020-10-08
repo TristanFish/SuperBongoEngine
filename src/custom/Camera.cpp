@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "math/VMath.h"
+#include "core/Globals.h"
 using namespace MATH;
 
 Camera* Camera::instance;
@@ -8,7 +9,7 @@ Camera::Camera()
 {
 
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-	perspecProjMatrix = MMath::perspective(50.0f, 1.0f, 0.1f, 200.0f);
+	perspecProjMatrix = MMath::perspective(60.0f, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), 0.1f, 150.0f);
 
 }
 

@@ -8,8 +8,11 @@
 class Player : public GameObject, public MeshRenderer, public RigidBody3D
 {
 private:
-	float WalkSpeed;
+
 	float RunSpeed;
+	float moveSpeed;
+	float turnSpeed;
+
 public:
 
 	Player();

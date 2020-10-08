@@ -22,6 +22,8 @@ Player::Player(const char* n, const MATH::Vec3& pos) : MeshRenderer("resources/m
 	
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
+	moveSpeed = 20.0f;
+	turnSpeed = 70.0f;
 }
 
 Player::~Player()
@@ -50,75 +52,54 @@ void Player::HandleEvents(const SDL_Event& event)
 
 	MeshRenderer::HandleEvents(event);
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
-
+    MATH::Vec3 moveDir;
+    
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
 		//Multi Key Movement controls (From SDL2)
-		if (keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_A])
+		if (keyboard_state_array[SDL_SCANCODE_W])
 		{
-			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+            moveDir += transform.Forward();
 		}
-		if (keyboard_state_array[SDL_SCANCODE_W] && keyboard_state_array[SDL_SCANCODE_D])
+		if (keyboard_state_array[SDL_SCANCODE_D])
 		{
-			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+            moveDir += transform.Right();
 		}
-		if (keyboard_state_array[SDL_SCANCODE_S] && keyboard_state_array[SDL_SCANCODE_A])
+		if (keyboard_state_array[SDL_SCANCODE_S])
 		{
-			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+            moveDir += -transform.Forward();
 		}
-		if (keyboard_state_array[SDL_SCANCODE_S] && keyboard_state_array[SDL_SCANCODE_A])
+		if (keyboard_state_array[SDL_SCANCODE_A])
 		{
-			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
+            moveDir += -transform.Right();
 		}
+        if (keyboard_state_array[SDL_SCANCODE_SPACE])
+		{
+            moveDir += transform.Up();
+		}
+        if (keyboard_state_array[SDL_SCANCODE_CTRL])
+		{
+            moveDir += -transform.Up();
+		}
+        transform.position += moveDir * moveSpeed * Timer::GetDeltaTime()'
+    }
 		
-		//Single Key Movement controls
-		if (event.key.keysym.sym == SDLK_w) 
-		{
-			transform.pos += transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_s)
-		{
-			transform.pos += -transform.Forward() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_d)
-		{
-			transform.pos += transform.Right() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_a)
-		{
-			transform.pos += -transform.Right() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_SPACE)
-		{
-			transform.pos += transform.Up() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_LCTRL)
-		{
-			transform.pos += -transform.Up() * WalkSpeed * Timer::GetDeltaTime();
-		}
-		
-		//Rotation controls
-		if (event.key.keysym.sym == SDLK_LEFT)
-		{
-			transform.rotation.y +=  80.0f * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_RIGHT)
-		{
-			transform.rotation.y += -80.0f * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_UP)
-		{
-			transform.rotation.x +=  50.0f * Timer::GetDeltaTime();
-		}
-		if (event.key.keysym.sym == SDLK_DOWN)
-		{
-			transform.rotation.x += -50.0f * Timer::GetDeltaTime();
-		}
-		
+	//Rotation controls
+	if (event.key.keysym.sym == SDLK_LEFT)
+	{
+		transform.rotation += Vec3(0.0f, turnSpeed, 0.0f) * Timer::GetDeltaTime();
+	}
+	if (event.key.keysym.sym == SDLK_RIGHT)
+	{
+		transform.rotation += Vec3(0.0f, -turnSpeed, 0.0f) * Timer::GetDeltaTime();
+	}
+	if (event.key.keysym.sym == SDLK_UP)
+	{
+		transform.rotation += Vec3(turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
+	}
+	if (event.key.keysym.sym == SDLK_DOWN)
+	{
+		transform.rotation += Vec3(-turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
 	}
 }
 

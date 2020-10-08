@@ -7,10 +7,8 @@
 #include "sdl/SDL.h"
 #include "components/Renderer.h"
 
-
 class GameObject;
 class RigidBody3D;
-
 
 //Component is an interface, things should be inheriting from it
 //Components are added to a gameobject through inheritance
@@ -88,6 +86,7 @@ class Manager
 private:
 	std::vector<GameObject*> gameObjects;
 	std::vector<RigidBody3D*> rigidBodies;
+
 	Renderer renderer;
 public:
 
