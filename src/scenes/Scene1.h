@@ -6,18 +6,19 @@
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
+#include "custom/LightObject.h"
 
 class Player;
-class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
-	Texture texture;
+
 	Player* player;
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
+	LightObject* light;
 
 public:
 	Scene1();

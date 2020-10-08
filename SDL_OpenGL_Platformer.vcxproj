@@ -20,11 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="src\core\ModelManager.h" />
+    <ClInclude Include="src\components\3D\LightComponent.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\core\Globals.h" />
+    <ClInclude Include="src\custom\LightObject.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
-    <ClInclude Include="src\components\Renderer.h" />
+    <ClInclude Include="src\core\3D\Renderer.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
@@ -142,13 +146,18 @@
     <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\custom\TestModel.h" />
+    <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\core\ModelManager.cpp" />
+    <ClCompile Include="src\components\3D\LightComponent.cpp" />
+    <ClCompile Include="src\core\Globals.cpp" />
+    <ClCompile Include="src\custom\LightObject.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
-    <ClCompile Include="src\components\Renderer.cpp" />
+    <ClCompile Include="src\core\3D\Renderer.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
@@ -173,6 +182,7 @@
     <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -205,8 +215,12 @@
     <None Include="src\graphics\shaders\GrassVert.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
     <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

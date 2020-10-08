@@ -2,13 +2,14 @@
 #define VECTOR_H
 #include <cmath>
 #include <iostream>
-#include <string> /// Used for passing exceptions 
+
+		/// Used for passing exceptions 
 		///
 		/// Vec3 definitions followed by Vec4 
 		/// There are notes at the bottom of this file you might want to read
 		///
 
-namespace  MATH {
+namespace MATH {
 
 /// This is used in normalizing vectors. Dividing by zero is a well known
 /// problem but dividing by nearly zero is also a problem. 1.0x10-7 is very
@@ -26,7 +27,7 @@ namespace  MATH {
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
 	#endif	
 
-	std::ostream& operator<< (std::ostream& out, const Vec3& v);
+
 
 	struct Vec2 {
 		float  x, y;
@@ -175,9 +176,8 @@ namespace  MATH {
 			return static_cast<float*>(&x);
 		}
 
-		
-
 	};
+	std::ostream& operator<< (std::ostream& out, const Vec3& v);
 
 		/// Vec4 definitions
 		/// I am intentionally creating a Vec4 from a Vec3 so I can pass a Vec4 into a Subroutine that wants a Vec3
