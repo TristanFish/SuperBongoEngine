@@ -22,7 +22,7 @@ bool Scene1::OnCreate()
 	objectList->AddGameObject(player);
 
 	ball = new TestModel("Ball", MATH::Vec3(0.0f, 80.0f, 15.0f));
-	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
+	plane = new Plane("Plane", MATH::Vec3(0.0f, -5.0f, 0.0f));
 	objectList->AddGameObject(ball);
 	objectList->AddGameObject(plane);
 

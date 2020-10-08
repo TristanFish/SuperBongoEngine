@@ -207,6 +207,8 @@
     <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />

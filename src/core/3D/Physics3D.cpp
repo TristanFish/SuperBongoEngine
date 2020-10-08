@@ -30,7 +30,6 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 		(rb1.pos->z - rb1Halfz < rb2.pos->z + rb2Halfz) &&   //Check rb2 top edge with rb2 bottom edge
 		(rb1.pos->z + rb1Halfz > rb2.pos->z - rb2Halfz))
 	{	
-		std::cout << "Box box collision detected" << std::endl;
 		return true;
 	}
 	 
@@ -75,7 +74,6 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 		VMath::mag(distance) < (abs(p_max_1.y) + abs(p_min_1.y)) / 2 || 
 		VMath::mag(distance) < (abs(p_max_1.z) + abs(p_min_1.z)) / 2)
 	{
-		std::cout << "Sphere box collision detected" << std::endl;
 		return true;
 	}
 	

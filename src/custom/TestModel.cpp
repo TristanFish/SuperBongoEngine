@@ -5,7 +5,7 @@ TestModel::TestModel()
 
 }
 
-TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("resources/models/Latch.obj")
+TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("resources/models/PuffinBall.fbx")
 {
 	this->name = name;
 	transform.setPos(position);

@@ -502,6 +502,8 @@
     <None Include="src\graphics\shaders\BaseFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

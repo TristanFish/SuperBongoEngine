@@ -19,19 +19,36 @@ public:
 	void Render() const;
 	void DestroyTextures();
 private:
-	Shader shader;
+	Shader gBufferShader;
+	Shader resultShader;
+
 	GLuint gBuffer;
 	GLuint depthRenderBuffer;
+
+	GLuint depthTexture;
 	GLuint stencilTexture;
 	GLuint posTexture;
 	GLuint normTexture;
 	GLuint albedoTexture;
 
+	GLuint vao;
+	GLuint vbo;
+
 	Debug pos;
 	Debug norm;
 	Debug albedo;
+	Debug depth;
+	Debug stencil;
 
-	mutable GLuint currentGTexture;
+	void* stencilPixels;
+
+	//GLuint currentGTexture;
+
+	void BindGBufferTextures() const;
+	void UnbindGBufferTextures() const;
+
+	void RenderGBufferResult() const;
+
 
 	//Attaches the most important lights to this object's shader
 	void AttachLights(const MeshRenderer& mr) const;

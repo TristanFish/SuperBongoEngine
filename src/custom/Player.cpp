@@ -14,6 +14,8 @@ Player::Player(const char* n, const MATH::Vec3& pos)
 	transform = Transform(pos);
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
+	moveSpeed = 20.0f;
+	turnSpeed = 70.0f;
 }
 
 Player::~Player()
@@ -43,45 +45,45 @@ void Player::HandleEvents(const SDL_Event& event)
 		//Movement controls
 		if (event.key.keysym.sym == SDLK_w) 
 		{
-			transform.pos += transform.Forward() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Forward() * moveSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_s)
 		{
-			transform.pos += -transform.Forward() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Forward() * moveSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_d)
 		{
-			transform.pos += transform.Right() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Right() * moveSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_a)
 		{
-			transform.pos += -transform.Right() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Right() * moveSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_SPACE)
 		{
-			transform.pos += transform.Up() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += transform.Up() * moveSpeed * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_LCTRL)
 		{
-			transform.pos += -transform.Up() * 10.0f * Timer::GetDeltaTime();
+			transform.pos += -transform.Up() * moveSpeed * Timer::GetDeltaTime();
 		}
 
 		//Rotation controls
 		if (event.key.keysym.sym == SDLK_LEFT)
 		{
-			transform.rotation.y +=  50.0f * Timer::GetDeltaTime();
+			transform.rotation += Vec3(0.0f, turnSpeed, 0.0f) * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_RIGHT)
 		{
-			transform.rotation.y += -50.0f * Timer::GetDeltaTime();
+			transform.rotation += Vec3(0.0f, -turnSpeed, 0.0f) * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_UP)
 		{
-			transform.rotation.x +=  50.0f * Timer::GetDeltaTime();
+			transform.rotation += Vec3(turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
 		}
 		if (event.key.keysym.sym == SDLK_DOWN)
 		{
-			transform.rotation.x += -50.0f * Timer::GetDeltaTime();
+			transform.rotation += Vec3(-turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
 		}
 		
 	}

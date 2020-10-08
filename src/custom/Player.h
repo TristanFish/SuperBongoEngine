@@ -8,6 +8,9 @@
 class Player : public GameObject
 {
 private:
+	float moveSpeed;
+	float turnSpeed;
+
 
 public:
 

@@ -47,10 +47,12 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
+	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 	shader.RunShader();
 	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
 	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+	shader.TakeInUniformMat3("normalMatrix", normMat);
 
 	for (auto& m : meshes)
 	{
