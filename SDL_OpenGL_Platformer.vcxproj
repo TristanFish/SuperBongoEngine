@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-     <ClInclude Include="external\include\imgui\imconfig.h" />
+    <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
@@ -188,6 +188,7 @@
     <ClCompile Include="src\core\Main.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
+    <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
     <ClCompile Include="src\components\ECS.cpp" />
     <ClCompile Include="src\math\MMath.cpp" />

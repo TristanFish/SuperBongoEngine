@@ -20,12 +20,14 @@ public:
 	Player(const char* n, const MATH::Vec3& trans);
 	virtual ~Player();
 
-
+	
 
 	//Inherited via GameObject
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& event) override;
+
+	//virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 };
 
 #endif

@@ -7,20 +7,19 @@ Player::Player()
 {
 }
 
-Player::Player(const char* n, const MATH::Vec3& pos) 
+Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f)
 {
 
 	name = n;
 	transform = Transform(pos);
 	//collider.colliderShape = Collider3D::shape::AABB;
-	//RigidBody3D::Init(this);
-	//RigidBody3D::SetAccel(MATH::Vec3(0.0f, -9.8f, 0.0f));
 
+	
+	//RigidBody3D::Init(this);
+	//MeshRenderer::Init(this);
 	
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
-	moveSpeed = 20.0f;
-	turnSpeed = 70.0f;
 }
 
 Player::~Player()
@@ -36,14 +35,18 @@ void Player::Update(const float deltaTime)
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.GetRotation());
 	//RigidBody3D::Update(deltaTime);
+	//MeshRenderer::Update(deltaTime);
 }
 
 void Player::Render() const
 {
+	//MeshRenderer::Render();
 }
 
 void Player::HandleEvents(const SDL_Event& event)
 {
+	//MeshRenderer::HandleEvents(event);
+
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
     MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
     
@@ -95,3 +98,5 @@ void Player::HandleEvents(const SDL_Event& event)
 		transform.rotation += Vec3(-turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
 	}
 }
+
+

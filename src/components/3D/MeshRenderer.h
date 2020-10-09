@@ -54,7 +54,7 @@ public:
 
 	RenderProperties renderFlags;
 
-
+	Shader shader;
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
