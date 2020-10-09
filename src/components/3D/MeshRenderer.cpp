@@ -57,12 +57,14 @@ void MeshRenderer::Render() const
 		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
         shader.TakeInUniformMat3("normalMatrix", normMat);
         
+
 		for (auto& m : meshes)
 		{
 			m.RenderRegular(shader);
 		}
         glUseProgram(0);
     }
+
 	if (instanceID == 1)
 	{
 		shader.RunShader();

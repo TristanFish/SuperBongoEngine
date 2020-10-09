@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,6 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+     <ClInclude Include="external\include\imgui\imconfig.h" />
+    <ClInclude Include="external\include\imgui\imgui.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="external\include\imgui\imgui_internal.h" />
+    <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\tinyxml2.h" />
+    <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\core\ModelManager.h" />
     <ClInclude Include="src\components\3D\LightComponent.h" />
@@ -149,6 +159,14 @@
     <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="external\include\imgui\imgui.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\tinyxml2.cpp" />
+    <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\core\ModelManager.cpp" />
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
@@ -205,8 +223,6 @@
     <None Include="external\dll\zlib1.dll" />
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
-    <None Include="src\graphics\shaders\BaseFrag.glsl" />
-    <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
     <None Include="src\graphics\shaders\FogFrag.glsl" />

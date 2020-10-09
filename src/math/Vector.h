@@ -351,4 +351,3 @@ namespace MATH {
 		the you have not yet given a complete definition of (whateverClass.h). To do this all you need is the statement:  
 		"class VMath;"  This warns the compiler that I will be using VMath in Vector; HOWEVER, in this case, it won't work because
 		I'm using the vector.h as a totally inlined set of functions - sometimes you're just screwed 
-		***/

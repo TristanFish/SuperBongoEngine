@@ -55,6 +55,7 @@ void Manager::Init()
 			renderer.AddLight(&g->getComponent<LightComponent>());
 		}
 	}
+
 }
 
 void Manager::Update(const float deltaTime)
@@ -116,9 +117,15 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go)
+GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 {
+	go->objectID = objID;
 	gameObjects.emplace_back(go);
+	if (go->hasComponent<RigidBody3D>())
+	{
+		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
+	}
+
 	std::cout << go->name << " added to objectList" << std::endl;
 	return *go;
 }

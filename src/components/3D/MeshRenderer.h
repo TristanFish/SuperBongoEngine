@@ -54,10 +54,11 @@ public:
 
 	RenderProperties renderFlags;
 
+
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
-	Shader shader;
+	 
 
 	int instanceID;
 	unsigned int instanceAmount;

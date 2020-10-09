@@ -98,6 +98,5 @@ void Shader::TakeInUniformInt(const std::string& name, int i) const
 	GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
 	glUniform1i(location, i);
-}
 
 

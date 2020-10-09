@@ -2,11 +2,12 @@
 
 #include "components/ECS.h"
 #include "components/Components.h"
-class Grass : public GameObject, public MeshRenderer
+#include "custom/Instancer.h"
+class Grass : public GameObject, public MeshRenderer, Instancer
 {
 public:
 	Grass();
-	Grass(const char* name, MATH::Vec3 position);
+	Grass(const char* name, MATH::Vec3 position, unsigned int amount_);
 	~Grass();
 
 	void Update(const float deltaTime) override;
@@ -14,10 +15,5 @@ public:
 	void HandleEvents(const SDL_Event& event) override;
 
 private:
-	unsigned int amount;
-	MATH::Matrix4* modelMatricies;
-
-
-	void CalculateModelMatrices();
 };
 
