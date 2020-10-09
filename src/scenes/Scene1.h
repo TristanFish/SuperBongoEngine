@@ -7,8 +7,7 @@
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
-#include "imgui.h"
-#include <stdio.h>
+#include "imgui/imgui.h"
 
 
 class Player;
