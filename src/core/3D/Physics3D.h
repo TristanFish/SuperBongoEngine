@@ -26,5 +26,4 @@ public:
 	static bool DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2);
 
 };
-
 #endif

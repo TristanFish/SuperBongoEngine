@@ -5,11 +5,14 @@
 #include "scenes/Scene.h"
 
 //Player inherits from gameobject, components are also added via inheritance
-class Player : public GameObject, public MeshRenderer, public RigidBody3D
+class Player : public GameObject
 {
 private:
-	float WalkSpeed;
+
 	float RunSpeed;
+	float moveSpeed;
+	float turnSpeed;
+
 public:
 
 	Player();
@@ -23,8 +26,6 @@ public:
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& event) override;
-
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 };
 
 #endif

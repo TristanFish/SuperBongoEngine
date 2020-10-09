@@ -1,5 +1,6 @@
 #ifndef SCENE1_H
 #define SCENE1_H
+
 #include "Scene.h"
 #include "custom/Camera.h"
 #include "custom/TestModel.h"
@@ -34,5 +35,4 @@ public:
 	virtual void SaveMapData() override;
 	virtual void LoadMapData() override;
 };
-
 #endif

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="external\include\imgui\imconfig.h" />
+     <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
@@ -28,13 +28,17 @@
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
-    <ClInclude Include="src\custom\Grass.h" />
-    <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Instancer.h" />
+    <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="src\core\ModelManager.h" />
+    <ClInclude Include="src\components\3D\LightComponent.h" />
+    <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\core\Globals.h" />
+    <ClInclude Include="src\custom\LightObject.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
-    <ClInclude Include="src\components\Renderer.h" />
+    <ClInclude Include="src\core\3D\Renderer.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
@@ -152,6 +156,7 @@
     <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\custom\TestModel.h" />
+    <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -161,12 +166,16 @@
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\core\tinyxml2.cpp" />
-    <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\custom\Instancer.cpp" />
+    <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\core\ModelManager.cpp" />
+    <ClCompile Include="src\components\3D\LightComponent.cpp" />
+    <ClCompile Include="src\core\Globals.cpp" />
+    <ClCompile Include="src\custom\LightObject.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
-    <ClCompile Include="src\components\Renderer.cpp" />
+    <ClCompile Include="src\core\3D\Renderer.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
@@ -179,7 +188,6 @@
     <ClCompile Include="src\core\Main.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
-    <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
     <ClCompile Include="src\components\ECS.cpp" />
     <ClCompile Include="src\math\MMath.cpp" />
@@ -192,6 +200,7 @@
     <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -214,8 +223,6 @@
     <None Include="external\dll\zlib1.dll" />
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
-    <None Include="src\graphics\shaders\BaseFrag.glsl" />
-    <None Include="src\graphics\shaders\BaseVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
     <None Include="src\graphics\shaders\FogFrag.glsl" />
@@ -224,8 +231,12 @@
     <None Include="src\graphics\shaders\GrassVert.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
     <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
     <None Include="src\graphics\shaders\ShaderText.glsl" />
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
@@ -243,7 +254,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
     <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -308,7 +319,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\imgui;$(SolutionDir)external\include\sdl;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

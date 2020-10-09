@@ -1,5 +1,5 @@
 #version 450
-out vec4 fragColor;
+layout (location = 2) out vec4 fragColor;
 
 in vec3 vertNormal;
 in vec2 vertUV;

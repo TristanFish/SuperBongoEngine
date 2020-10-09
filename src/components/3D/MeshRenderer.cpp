@@ -8,7 +8,8 @@ MeshRenderer::MeshRenderer() : instanceID(0)
 
 MeshRenderer::MeshRenderer(const char* modelPath)
 {
-	if(LoadModel(modelPath)) 
+	renderFlags = RenderProperties::LIGHTING;
+	if(LoadModel(modelPath))
 	{
 		std::cout << "Model " << modelPath << " Loaded" << std::endl;
 	}
@@ -20,7 +21,7 @@ MeshRenderer::MeshRenderer(const char* modelPath)
 
 MeshRenderer::~MeshRenderer()
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	for (size_t i = 0; i < meshes.size(); i++)
 	{
 		meshes[i].DestroyTextures();
 	}
@@ -46,42 +47,55 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-	if (instanceID == 0)
-	{
-		shader.RunShader();
+	if(instanceID == 0)
+    {
+        Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+        
+        shader.RunShader();
 		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
 		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
-		MeshRenderer::shader.TakeInUniformVec3("Fog.color", Vec3(0.0,0.4,0.0));
-		MeshRenderer::shader.TakeInUniformFloat("Fog.maxDist", 100.0);
-		MeshRenderer::shader.TakeInUniformFloat("Fog.minDist", 10.0);
+        shader.TakeInUniformMat3("normalMatrix", normMat);
+        
+
 		for (auto& m : meshes)
 		{
 			m.RenderRegular(shader);
 		}
-		glUseProgram(0);
-	}
-		
+        glUseProgram(0);
+    }
+
 	if (instanceID == 1)
 	{
-		for (auto& m : meshes)
-		{
-			shader.RunShader();
-			shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-			shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-			m.RenderInstanced(shader, meshes, instanceAmount);
-			glUseProgram(0);
-		}
-	}
+		shader.RunShader();
+		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+		meshes[0].RenderInstanced(shader, meshes, instanceAmount);
+		glUseProgram(0);
+    }
+
 }
 
-void MeshRenderer::HandleEvents(const SDL_Event& event)
+void MeshRenderer::Render(const Shader& shader) const
 {
+	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+
+	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeInUniformMat3("normalMatrix", normMat);
+	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+
+	for (auto& m : meshes)
+	{
+		m.RenderRegular(shader);
+	}
+
+
 }
 
+void MeshRenderer::HandleEvents(const SDL_Event& event) { }
 
-
-bool MeshRenderer::LoadModel(std::string modelPath)
+bool MeshRenderer::LoadModel(const std::string& modelPath)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_OptimizeMeshes);
@@ -99,13 +113,13 @@ bool MeshRenderer::LoadModel(std::string modelPath)
 
 void MeshRenderer::ProcessNode(aiNode* node, const aiScene* scene)
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	for (size_t i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshes.push_back(processMesh(mesh, scene));
 	}
 
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	for (size_t i = 0; i < node->mNumChildren; i++)
 	{
 		ProcessNode(node->mChildren[i], scene);
 	}
@@ -118,7 +132,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<Texture> textures;
 
 	//Load vertices
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	for (size_t i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
 		
@@ -148,10 +162,10 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	//Load indices
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	for (size_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
+		for (size_t j = 0; j < face.mNumIndices; j++)
 		{
 			indices.push_back(face.mIndices[j]);
 		}
@@ -164,7 +178,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		//Get material color
 		material->Get(AI_MATKEY_COLOR_DIFFUSE, col);
-
+		
 		//Get diffuse textures
 		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "diffuseTex");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -175,9 +189,6 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
-
-	meshes.size();
-
 	
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;
@@ -186,8 +197,9 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	p_max.x = vertices[0].position.x;
 	p_max.y = vertices[0].position.y;
 	p_max.z = vertices[0].position.z;
+
 	// Loops Through verticies and gives us the min and max verticies and put's them into a vector
-	for (int i = 1; i < vertices.size(); i++)
+	for (size_t i = 1; i < vertices.size(); i++)
 	{
 		p_min.x = std::min(p_min.x, vertices[i].position.x);
 		p_min.y = std::min(p_min.y, vertices[i].position.y);
@@ -202,12 +214,12 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	return Mesh(vertices, indices, textures, color);
 }
 
-std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName)
 {
 	std::vector<Texture> textures;
 	
 	//load all textures of a TextureType (specular, diffuse, etc.) from the selected material
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+	for (size_t i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString path;
 		aiString fullPath = aiString(directory);

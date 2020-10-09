@@ -8,19 +8,19 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/mo
 {
 	this->name = name;
 	transform.setPos(position);
-	transform.scale.print();
-	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
+
 	collider.colliderShape = Collider3D::shape::Plane;
 
-	RigidBody3D::Init(this);
-	RigidBody3D::isMoveable() == false;
-	MeshRenderer::Init(this);
-	MeshRenderer::CreateShader("src/graphics/shaders/BaseVert.glsl", "src/graphics/shaders/BaseFrag.glsl");
-	
+	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
+	transform.rotation = Vec3(-90.0f, 0.0f, 0.0f);
+	transform.rotation.print();
 
-	
-	// Sets the collider up properly when scaled or rotated
-	
+	RigidBody3D::Init(this);
+	RigidBody3D::setMoveable(false);
+	MeshRenderer::Init(this);
+
+	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+
 }
 
 Plane::~Plane()

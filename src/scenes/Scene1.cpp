@@ -1,3 +1,4 @@
+
 #include "Scene1.h"
 #include "custom/Player.h"
 #include "tiles/Tilemap.h"
@@ -105,5 +106,3 @@ void Scene1::LoadMapData()
 
 		
 }
-
-
