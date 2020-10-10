@@ -1,24 +1,26 @@
 #ifndef SCENE1_H
 #define SCENE1_H
+
 #include "Scene.h"
 #include "custom/Camera.h"
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
-#include "custom/LightObject.h"
+#include "imgui/imgui.h"
+
 
 class Player;
+class Tilemap;
 
 class Scene1 : public Scene
 {
 private:
-
+	Texture texture;
 	Player* player;
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
-	LightObject* light;
 
 public:
 	Scene1();
@@ -29,7 +31,7 @@ public:
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event &event) override;
 	virtual void Reset() override;
-
+	virtual void SaveMapData() override;
+	virtual void LoadMapData() override;
 };
-
 #endif

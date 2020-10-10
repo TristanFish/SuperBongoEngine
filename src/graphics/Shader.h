@@ -25,6 +25,7 @@ public:
 	void TakeInUniformInt(const std::string &name, int v) const;
 
 
+
 	inline GLuint GetID() const { return shader_program; }
 	inline void SetID(GLuint id) { shader_program = id; }
 

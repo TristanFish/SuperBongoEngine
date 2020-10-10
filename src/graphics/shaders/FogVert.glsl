@@ -7,9 +7,12 @@ layout (location = 2) in vec2 inUV;
 out vec3 vertNormal;
 out vec2 vertUV;
 out vec3 Position;
+
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+
+
 void main()
 {
    Position = (modelMatrix * viewMatrix * vec4(inPosition,1.0)).xyz;

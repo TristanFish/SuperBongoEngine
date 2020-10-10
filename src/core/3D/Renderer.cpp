@@ -170,7 +170,7 @@ void Renderer::Render() const
 
 	//pos.DrawTextureToScreen(posTexture, -1.0f, 0.0f, 0.0f, -1.0f);
 	//norm.DrawTextureToScreen(normTexture, -1.0f, 0.0f, 1.0f, 0.0f);
-	//albedo.DrawTextureToScreen(albedoTexture, 0.0f, 1.0f, 0.0f, -1.0f);
+	albedo.DrawTextureToScreen(albedoTexture, 0.0f, 1.0f, 0.0f, -1.0f);
 	//depth.DrawTextureToScreen(depthTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 }

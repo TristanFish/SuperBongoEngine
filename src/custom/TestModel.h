@@ -1,8 +1,8 @@
 #pragma once
 #include "components/ECS.h"
 #include "components/Components.h"
-
-class TestModel : public GameObject, public MeshRenderer
+#include "custom/Instancer.h"
+class TestModel : public GameObject, public MeshRenderer 
 {
 public:
 	TestModel();
@@ -14,12 +14,12 @@ public:
 	void Update(const float deltaTime) override;
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
-
+	 
 
 
 private:
 
-
+	
 
 };
 
