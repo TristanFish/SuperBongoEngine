@@ -78,9 +78,8 @@ private:
 
 
 //TODO
-//Load sounds into vector and have create sound iterate through all sounds
-//Set up better way to handle loading sounds (store strings in a map of file paths and load everything into sound objects proably) 
 //Set audio distance units to our engine's
 //Store all audio sources in audio source vector
 //Create event hooks for audio sources to play
-//Group all audio sources
+//Make function for getting available channel
+//Allocate available memory on audio engine start up
