@@ -406,7 +406,6 @@
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
-<<<<<<< HEAD
     <ClInclude Include="external\include\fmod\fmod.h" />
     <ClInclude Include="external\include\fmod\fmod.hpp" />
     <ClInclude Include="external\include\fmod\fmod_codec.h" />
@@ -503,8 +502,6 @@
 >>>>>>> parent of e1c1ffa... Merging
 =======
 >>>>>>> parent of e1c1ffa... Merging
-=======
->>>>>>> parent of 387fa8f... ugh why cant this be simple
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -662,7 +659,6 @@
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
-<<<<<<< HEAD
     <None Include="external\include\assimp\color4.inl" />
     <None Include="external\include\assimp\material.inl" />
     <None Include="external\include\assimp\matrix3x3.inl" />
@@ -676,8 +672,6 @@
 =======
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <None Include="external\dll\fmodL.dll" />
-=======
->>>>>>> parent of 387fa8f... ugh why cant this be simple
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -700,12 +694,9 @@
     </Library>
 <<<<<<< HEAD
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
-<<<<<<< HEAD
 =======
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <Library Include="external\lib\fmodL_vc.lib" />
-=======
->>>>>>> parent of 387fa8f... ugh why cant this be simple
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
