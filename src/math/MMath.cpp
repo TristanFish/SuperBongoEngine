@@ -5,7 +5,38 @@ using namespace MATH;
 
 ///Tested Feb 2 2013 SSF
 
- Matrix4 MMath::rotate(float degrees_, float x_, float y_, float z_){
+Matrix4 MATH::MMath::calcRotationMatrix(const Vec3& euler)
+{
+	return	MMath::rotate(euler.x * DEGREES_TO_RADIANS, Vec3(1.0f, 0.0f, 0.0f)) *
+			MMath::rotate(euler.y * DEGREES_TO_RADIANS, Vec3(0.0f, 1.0f, 0.0f)) *
+		    MMath::rotate(euler.z * DEGREES_TO_RADIANS, Vec3(0.0f, 0.0f, 1.0f));
+}
+
+Vec3 MATH::MMath::calcEulerAngles(const Matrix4& rotMatrix)
+{
+	float sy = sqrt(rotMatrix[0] * rotMatrix[0] + rotMatrix[1] * rotMatrix[1]);
+
+	bool singular = sy < 1e-6;
+
+	Vec3 euler;
+
+	if (!singular)
+	{
+		euler.x = atan2(rotMatrix[6], rotMatrix[10]);
+		euler.y = atan2(-rotMatrix[2], sy);
+		euler.z = atan2(rotMatrix[0], rotMatrix[1]);
+	}
+	else
+	{
+		euler.x = atan2(-rotMatrix[5], rotMatrix[9]);
+		euler.y = atan2(-rotMatrix[3], sy);
+		euler.z = 0;
+	}
+
+	return euler * DEGREES_TO_RADIANS;
+}
+
+Matrix4 MMath::rotate(float degrees_, float x_, float y_, float z_){
 	float cosang, sinang, cosm;
 	Vec3 rotAxis(x_,y_,z_);
 	rotAxis = VMath::normalize(rotAxis);

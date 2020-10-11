@@ -3,7 +3,7 @@
 
 #include "components/ECS.h"
 #include "math/Vector.h"
-#include "components/Collider.h"
+#include "components/2D/Collider.h"
 
 class RigidBodyComponent : public Component
 {
@@ -44,8 +44,9 @@ public:
 	void ApplyImpulseTorque(const float torque);
 	void ApplyConstantTorque(const float torque);
 
-	inline void setColliderSize(float s) { collider.size = s; }
+	inline void setColliderSize(MATH::Vec3 s) { collider.size = s; }
 	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
+	inline Collider::shape GetColliderShape() { return collider.colliderShape; }
 	inline bool isMoveable() { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
 

@@ -5,12 +5,10 @@
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
+#include "core/3D/Renderer.h"
 
-
-class Component;
 class GameObject;
-class RigidBodyComponent;
-
+class RigidBody3D;
 
 //Component is an interface, things should be inheriting from it
 //Components are added to a gameobject through inheritance
@@ -41,6 +39,10 @@ protected:
 
 public:
 	const char* name;
+
+	// Object ID is used so we know what object is being spawned 
+	// all objects that inherit from grass will have the same ID ext
+	int objectID;
 
 	Transform transform;
 
@@ -87,7 +89,9 @@ class Manager
 {
 private:
 	std::vector<GameObject*> gameObjects;
-	std::vector<RigidBodyComponent*> rigidBodies;
+	std::vector<RigidBody3D*> rigidBodies;
+
+	Renderer renderer;
 public:
 
 	~Manager();
@@ -99,7 +103,13 @@ public:
 	//Finds THE FIRST gameobject with the given name
 	GameObject& FindGameObject(const char* name);
 	//Adds a gameobject with a name and position
-	GameObject& AddGameObject(GameObject* go);
+	GameObject& AddGameObject(GameObject* go, unsigned int objID);
+
+	const int GetNumObjects() { return gameObjects.size(); }  
+
+	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
+
+	void CheckCollisions();
 };
 
 #endif 

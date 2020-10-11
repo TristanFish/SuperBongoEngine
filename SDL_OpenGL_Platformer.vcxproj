@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,16 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\audio\AudioUtility.h" />
-    <ClInclude Include="src\audio\AudioListenerComponent.h" />
-    <ClInclude Include="src\audio\SoundAttributes.h" />
-    <ClInclude Include="src\audio\AudioSourceComponent.h" />
-    <ClInclude Include="src\audio\AudioManager.h" />
+    <ClInclude Include="external\include\imgui\imconfig.h" />
+    <ClInclude Include="external\include\imgui\imgui.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="external\include\imgui\imgui_internal.h" />
+    <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\tinyxml2.h" />
+    <ClInclude Include="src\custom\Instancer.h" />
+    <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="src\core\ModelManager.h" />
+    <ClInclude Include="src\components\3D\LightComponent.h" />
+    <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\core\Globals.h" />
+    <ClInclude Include="src\custom\LightObject.h" />
+    <ClInclude Include="src\custom\Plane.h" />
+    <ClInclude Include="src\core\Debug.h" />
+    <ClInclude Include="src\graphics\Mesh.h" />
+    <ClInclude Include="src\core\3D\Renderer.h" />
+    <ClInclude Include="src\components\3D\MeshRenderer.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\custom\Player.h" />
-    <ClInclude Include="src\components\Collider.h" />
+    <ClInclude Include="src\components\2D\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\components\Components.h" />
     <ClInclude Include="src\components\ECS.h" />
@@ -133,18 +149,34 @@
     <ClInclude Include="src\math\MMath.h" />
     <ClInclude Include="src\math\Vector.h" />
     <ClInclude Include="src\math\VMath.h" />
-    <ClInclude Include="src\graphics\TextureManager.h" />
+    <ClInclude Include="src\graphics\Texture.h" />
     <ClInclude Include="src\core\Timer.h" />
     <ClInclude Include="src\graphics\Window.h" />
     <ClInclude Include="src\tiles\Tilemap.h" />
     <ClInclude Include="src\tiles\Tile.h" />
+    <ClInclude Include="src\graphics\Vertex.h" />
+    <ClInclude Include="src\custom\TestModel.h" />
+    <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\audio\AudioUtility.cpp" />
-    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
-    <ClCompile Include="src\audio\SoundAttributes.cpp" />
-    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
-    <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="external\include\imgui\imgui.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\tinyxml2.cpp" />
+    <ClCompile Include="src\custom\Instancer.cpp" />
+    <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\core\ModelManager.cpp" />
+    <ClCompile Include="src\components\3D\LightComponent.cpp" />
+    <ClCompile Include="src\core\Globals.cpp" />
+    <ClCompile Include="src\custom\LightObject.cpp" />
+    <ClCompile Include="src\custom\Plane.cpp" />
+    <ClCompile Include="src\core\Debug.cpp" />
+    <ClCompile Include="src\graphics\Mesh.cpp" />
+    <ClCompile Include="src\core\3D\Renderer.cpp" />
+    <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
@@ -156,20 +188,24 @@
     <ClCompile Include="src\core\Main.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
+    <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
     <ClCompile Include="src\components\ECS.cpp" />
     <ClCompile Include="src\math\MMath.cpp" />
     <ClCompile Include="src\math\Vector.cpp" />
     <ClCompile Include="src\math\VMath.cpp" />
-    <ClCompile Include="src\graphics\TextureManager.cpp" />
+    <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\core\Timer.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\tiles\Tilemap.cpp" />
     <ClCompile Include="src\tiles\Tile.cpp" />
+    <ClCompile Include="src\graphics\Vertex.cpp" />
+    <ClCompile Include="src\custom\TestModel.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="external\dll\fmodL.dll" />
+    <None Include="external\dll\assimp-vc142-mtd.dll" />
     <None Include="external\dll\glew32.dll" />
     <None Include="external\dll\libFLAC-8.dll" />
     <None Include="external\dll\libfreetype-6.dll" />
@@ -186,11 +222,25 @@
     <None Include="external\dll\SDL2_image.dll" />
     <None Include="external\dll\smpeg2.dll" />
     <None Include="external\dll\zlib1.dll" />
-    <None Include="src\graphics\ShaderText.glsl" />
-    <None Include="src\graphics\ShaderVert.glsl" />
+    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
+    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\FogFrag.glsl" />
+    <None Include="src\graphics\shaders\FogVert.glsl" />
+    <None Include="src\graphics\shaders\GrassFrag.glsl" />
+    <None Include="src\graphics\shaders\GrassVert.glsl" />
+    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
+    <None Include="src\graphics\shaders\ShaderText.glsl" />
+    <None Include="src\graphics\shaders\ShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="external\lib\fmodL_vc.lib" />
+    <Library Include="external\lib\assimp-vc142-mtd.lib" />
     <Library Include="external\lib\glew32.lib" />
     <Library Include="external\lib\glew32s.lib" />
     <Library Include="external\lib\SDL2.lib" />
@@ -201,14 +251,11 @@
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Media Include="src\sounds\tumbleweed.wav" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
     <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -273,13 +320,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories);C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\sdl;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories);C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -288,12 +335,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solutiondir)external\include\;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)external\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -304,14 +350,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)src\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -322,14 +369,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>;C:\Users\Conor\Documents\GitHub\Productions-\external\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

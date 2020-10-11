@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="external">
@@ -336,9 +336,6 @@
     <ClInclude Include="src\components\Components.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\TextureManager.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\Window.h">
       <Filter>src\graphics</Filter>
     </ClInclude>
@@ -367,14 +364,36 @@
     <ClInclude Include="src\components\2D\SpriteComponent.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
-    <ClInclude Include="src\audio\AudioManager.h" />
-    <ClInclude Include="src\audio\AudioSourceComponent.h" />
-    <ClInclude Include="src\audio\SoundAttributes.h" />
-    <ClInclude Include="src\audio\AudioListenerComponent.h" />
-    <ClInclude Include="src\audio\AudioUtility.h" />
+    <ClInclude Include="src\components\3D\MeshRenderer.h" />
+    <ClInclude Include="src\components\2D\Collider.h" />
+    <ClInclude Include="src\graphics\Vertex.h" />
+    <ClInclude Include="src\graphics\Mesh.h" />
+    <ClInclude Include="src\graphics\Texture.h">
+      <Filter>src\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\custom\TestModel.h" />
+    <ClInclude Include="src\core\Debug.h" />
+    <ClInclude Include="src\custom\Plane.h" />
+    <ClInclude Include="src\components\3D\Collider3D.h" />
+    <ClInclude Include="src\custom\Grass.h" />
+    <ClInclude Include="src\core\Globals.h" />
+    <ClInclude Include="src\components\3D\LightComponent.h" />
+    <ClInclude Include="src\custom\LightObject.h" />
+    <ClInclude Include="src\core\ModelManager.h" />
+    <ClInclude Include="src\core\TextureManager.h" />
+    <ClInclude Include="src\core\3D\Renderer.h" />
+    <ClInclude Include="external\include\imgui\imconfig.h" />
+    <ClInclude Include="external\include\imgui\imgui.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="external\include\imgui\imgui_internal.h" />
+    <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\custom\Instancer.h" />
+    <ClInclude Include="src\core\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -387,9 +406,6 @@
       <Filter>src\math</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ECS.cpp" />
-    <ClCompile Include="src\graphics\TextureManager.cpp">
-      <Filter>src\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\Window.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
@@ -416,11 +432,31 @@
     <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
-    <ClCompile Include="src\audio\AudioManager.cpp" />
-    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
-    <ClCompile Include="src\audio\SoundAttributes.cpp" />
-    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
-    <ClCompile Include="src\audio\AudioUtility.cpp" />
+    <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
+    <ClCompile Include="src\graphics\Vertex.cpp" />
+    <ClCompile Include="src\graphics\Mesh.cpp" />
+    <ClCompile Include="src\graphics\Texture.cpp">
+      <Filter>src\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\custom\TestModel.cpp" />
+    <ClCompile Include="src\core\Debug.cpp" />
+    <ClCompile Include="src\custom\Plane.cpp" />
+    <ClCompile Include="src\custom\Grass.cpp" />
+    <ClCompile Include="src\core\Globals.cpp" />
+    <ClCompile Include="src\components\3D\LightComponent.cpp" />
+    <ClCompile Include="src\custom\LightObject.cpp" />
+    <ClCompile Include="src\core\ModelManager.cpp" />
+    <ClCompile Include="src\core\TextureManager.cpp" />
+    <ClCompile Include="src\core\3D\Renderer.cpp" />
+    <ClCompile Include="external\include\imgui\imgui.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\custom\Instancer.cpp" />
+    <ClCompile Include="src\core\tinyxml2.cpp" />
+    <ClCompile Include="src\scenes\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -472,13 +508,27 @@
       <Filter>external\dll</Filter>
     </None>
     <None Include=".gitignore" />
-    <None Include="src\graphics\ShaderText.glsl">
+    <None Include="external\dll\assimp-vc142-mtd.dll" />
+    <None Include="src\graphics\shaders\ShaderText.glsl">
       <Filter>src\Shaders</Filter>
     </None>
-    <None Include="src\graphics\ShaderVert.glsl">
+    <None Include="src\graphics\shaders\ShaderVert.glsl">
       <Filter>src\Shaders</Filter>
     </None>
-    <None Include="external\dll\fmodL.dll" />
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
+    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
+    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
+    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
+    <None Include="src\graphics\shaders\InstanceVert.glsl" />
+    <None Include="src\graphics\shaders\GrassFrag.glsl" />
+    <None Include="src\graphics\shaders\GrassVert.glsl" />
+    <None Include="src\graphics\shaders\FogFrag.glsl" />
+    <None Include="src\graphics\shaders\FogVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
+    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -499,12 +549,9 @@
     <Library Include="external\lib\SDL2test.lib">
       <Filter>external\lib</Filter>
     </Library>
-    <Library Include="external\lib\fmodL_vc.lib" />
+    <Library Include="external\lib\assimp-vc142-mtd.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="src\sounds\tumbleweed.wav" />
   </ItemGroup>
 </Project>
