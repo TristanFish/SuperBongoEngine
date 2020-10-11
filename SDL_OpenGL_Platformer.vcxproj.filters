@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="external">
@@ -336,9 +336,6 @@
     <ClInclude Include="src\components\Components.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\TextureManager.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\Window.h">
       <Filter>src\graphics</Filter>
     </ClInclude>
@@ -367,10 +364,8 @@
     <ClInclude Include="src\components\2D\SpriteComponent.h">
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\core\2D\Physics2D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
-<<<<<<< HEAD
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
     <ClInclude Include="src\components\2D\Collider.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
@@ -489,13 +484,6 @@
     <ClInclude Include="external\include\assimp\Vertex.h" />
     <ClInclude Include="external\include\assimp\XMLTools.h" />
     <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
-=======
-    <ClInclude Include="src\audio\AudioManager.h" />
-    <ClInclude Include="src\audio\AudioSourceComponent.h" />
-    <ClInclude Include="src\audio\SoundAttributes.h" />
-    <ClInclude Include="src\audio\AudioListenerComponent.h" />
-    <ClInclude Include="src\audio\AudioUtility.h" />
->>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -508,9 +496,6 @@
       <Filter>src\math</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ECS.cpp" />
-    <ClCompile Include="src\graphics\TextureManager.cpp">
-      <Filter>src\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics\Window.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
@@ -537,7 +522,6 @@
     <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
@@ -568,13 +552,6 @@
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
-=======
-    <ClCompile Include="src\audio\AudioManager.cpp" />
-    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
-    <ClCompile Include="src\audio\SoundAttributes.cpp" />
-    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
-    <ClCompile Include="src\audio\AudioUtility.cpp" />
->>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -626,13 +603,13 @@
       <Filter>external\dll</Filter>
     </None>
     <None Include=".gitignore" />
-    <None Include="src\graphics\ShaderText.glsl">
+    <None Include="external\dll\assimp-vc142-mtd.dll" />
+    <None Include="src\graphics\shaders\ShaderText.glsl">
       <Filter>src\Shaders</Filter>
     </None>
-    <None Include="src\graphics\ShaderVert.glsl">
+    <None Include="src\graphics\shaders\ShaderVert.glsl">
       <Filter>src\Shaders</Filter>
     </None>
-<<<<<<< HEAD
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
@@ -657,8 +634,6 @@
     <None Include="external\include\assimp\vector3.inl" />
     <None Include="external\include\assimp\config.h.in" />
     <None Include="external\include\assimp\.editorconfig" />
-=======
->>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <None Include="external\dll\fmodL.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -680,16 +655,10 @@
     <Library Include="external\lib\SDL2test.lib">
       <Filter>external\lib</Filter>
     </Library>
-<<<<<<< HEAD
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
-=======
->>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <Library Include="external\lib\fmodL_vc.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="src\sounds\tumbleweed.wav" />
   </ItemGroup>
 </Project>

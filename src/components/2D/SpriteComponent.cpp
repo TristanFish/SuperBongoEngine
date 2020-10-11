@@ -1,10 +1,10 @@
 #include "SpriteComponent.h"
-#include "graphics/TextureManager.h"
+#include "graphics/Texture.h"
 #include "custom/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
-	texture = new TextureManager();
+	texture = new Texture();
 	texture->LoadImage(path);
 }
 
@@ -29,7 +29,7 @@ void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPat
 void SpriteComponent::Init(GameObject *g)
 {
 	gameobject = g;
-	texture = new TextureManager();
+	texture = new Texture();
 
 	float vertices[] = {
 		// positions           // colors          // texture coords

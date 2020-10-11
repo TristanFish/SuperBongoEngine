@@ -61,8 +61,42 @@ void Shader::RunShader() const
 void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const
 {
 	GLint location = glGetUniformLocation(shader_program, name.c_str());
-	if (location < 0) { std::cout << "Uniform ID not found for camera to init" << std::endl; }
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 
+void Shader::TakeInUniformMat3(const std::string& name, Matrix3& matrix) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
+	glUniformMatrix3fv(location, 1, GL_FALSE, matrix);
+}
 
+void Shader::TakeInUniformVec3(const std::string& name, Vec3& v) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
+	glUniform3f(location, v.x, v.y, v.z);
+}
+
+void Shader::TakeInUniformVec4(const std::string& name, Vec3& v) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
+	glUniform4fv(location, 1, v);
+}
+
+void Shader::TakeInUniformFloat(const std::string& name, float f) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
+	glUniform1f(location, f);
+}
+
+void Shader::TakeInUniformInt(const std::string& name, int i) const
+{
+	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	if (location < 0) { std::cout << "Uniform ID: " << name << " not found or unused" << std::endl; return; }
+	glUniform1i(location, i);
+
+}

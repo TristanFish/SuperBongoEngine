@@ -2,8 +2,9 @@
 #define RIGIDBODY_H
 
 #include "components/ECS.h"
+#include "components/Components.h"
 #include "math/Vector.h"
-#include "components/Collider.h"
+#include "components/3D/Collider3D.h"
 
 class RigidBody3D : public Component
 {
@@ -15,21 +16,20 @@ private:
 	float linearDrag;
 
 	float rotInertia;
-	float zAngle;
-	float angularVel;
-	float angularAcc;
+	MATH::Vec3 Angle;
+	MATH::Vec3 angularVel;
+	MATH::Vec3 angularAcc;
 	float angularDrag;
 
-	 bool IsGrounded;
 
 
-	friend class Physics;
+	friend class Physics3D;
 public:
-	Collider collider;
+	Collider3D collider;
 
 	RigidBody3D();
 	~RigidBody3D();
-
+	
 	// Inherited via Component
 	void Init(GameObject *g) override;
 	void Update(const float deltaTime) override;
@@ -41,15 +41,17 @@ public:
 	void SetConstantForce(const MATH::Vec3& force);
 
 
-	void ApplyImpulseTorque(const float torque);
-	void ApplyConstantTorque(const float torque);
+	void ApplyImpulseTorque(const MATH::Vec3 torque);
+	void ApplyConstantTorque(const MATH::Vec3 torque);
 
-	inline void setColliderSize(float s) { collider.size = s; }
-	inline void setColliderShape(Collider::shape newShape) { collider.colliderShape = newShape; }
+	inline void setColliderSize(MATH::Vec3 s) { collider.size = s; }
+	inline void setColliderShape(Collider3D::shape newShape) { collider.colliderShape = newShape; }
+	inline Collider3D::shape GetColliderShape() { return collider.colliderShape; }
+
 	inline bool isMoveable() { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
 
-	virtual void OnCollisionEnter(RigidBodyComponent& otherBody) = 0;
+	virtual void OnCollisionEnter(RigidBody3D& otherBody) = 0;
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetPosition() { return *pos; }
@@ -61,15 +63,13 @@ public:
 	inline float GetLinDrag() { return linearDrag; }
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
 	inline void SetMass(const float m) { mass = m; }
-	inline void SetIsGrounded(const bool grounded) { IsGrounded = grounded; }
 
-	inline float GetAngVelocity() { return angularVel; }
-	inline void SetAngVelocity(const float vel) { angularVel = vel; }
-	inline float GetAngAccel() { return angularAcc; }
-	inline void SetAngAccel(const float acc) { angularAcc = acc; }
+	inline MATH::Vec3 GetAngVelocity() { return angularVel; }
+	inline void SetAngVelocity(const MATH::Vec3 vel) { angularVel = vel; }
+	inline MATH::Vec3 GetAngAccel() { return angularAcc; }
+	inline void SetAngAccel(const MATH::Vec3 acc) { angularAcc = acc; }
 	inline float GetAngDrag() { return angularDrag; }
 	inline void SetAngDrag(const float drag) { angularDrag = drag; }
-	inline bool GetIsGrounded() { return IsGrounded; }
 	inline void SetRotInertia(const float r) { rotInertia = r; }
 #pragma endregion
 };
