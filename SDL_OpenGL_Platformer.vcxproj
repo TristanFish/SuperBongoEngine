@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="external\include\assimp\aabb.h" />
     <ClInclude Include="external\include\assimp\ai_assert.h" />
     <ClInclude Include="external\include\assimp\anim.h" />
@@ -105,6 +106,8 @@
     <ClInclude Include="external\include\fmod\fmod_dsp_effects.h" />
     <ClInclude Include="external\include\fmod\fmod_errors.h" />
     <ClInclude Include="external\include\fmod\fmod_output.h" />
+=======
+>>>>>>> parent of 387fa8f... ugh why cant this be simple
     <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
@@ -301,9 +304,12 @@
     <None Include=".gitignore" />
 <<<<<<< HEAD
     <None Include="external\dll\assimp-vc142-mtd.dll" />
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <None Include="external\dll\fmodL.dll" />
+=======
+>>>>>>> parent of 387fa8f... ugh why cant this be simple
     <None Include="external\dll\glew32.dll" />
     <None Include="external\dll\libFLAC-8.dll" />
     <None Include="external\dll\libfreetype-6.dll" />
@@ -321,6 +327,7 @@
     <None Include="external\dll\smpeg2.dll" />
     <None Include="external\dll\zlib1.dll" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <None Include="external\include\assimp\.editorconfig" />
     <None Include="external\include\assimp\color4.inl" />
     <None Include="external\include\assimp\config.h.in" />
@@ -331,6 +338,8 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
+=======
+>>>>>>> parent of 387fa8f... ugh why cant this be simple
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
@@ -350,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
+<<<<<<< HEAD
 =======
     <None Include="src\graphics\ShaderText.glsl" />
     <None Include="src\graphics\ShaderVert.glsl" />
@@ -357,6 +367,8 @@
   <ItemGroup>
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
     <Library Include="external\lib\fmodL_vc.lib" />
+=======
+>>>>>>> parent of 387fa8f... ugh why cant this be simple
     <Library Include="external\lib\glew32.lib" />
     <Library Include="external\lib\glew32s.lib" />
     <Library Include="external\lib\SDL2.lib" />
@@ -375,10 +387,14 @@
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
     <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
 =======
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
+=======
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+>>>>>>> parent of 387fa8f... ugh why cant this be simple
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
