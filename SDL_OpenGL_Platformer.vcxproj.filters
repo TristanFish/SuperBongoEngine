@@ -400,7 +400,6 @@
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
 <<<<<<< HEAD
-<<<<<<< HEAD
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
@@ -500,8 +499,6 @@
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
 =======
 >>>>>>> parent of e1c1ffa... Merging
-=======
->>>>>>> parent of e1c1ffa... Merging
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -570,7 +567,6 @@
     <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
 <<<<<<< HEAD
-<<<<<<< HEAD
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
@@ -583,8 +579,6 @@
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
 >>>>>>> parent of 0f1b762... Merge branch 'master' into Conor
-=======
->>>>>>> parent of e1c1ffa... Merging
 =======
 >>>>>>> parent of e1c1ffa... Merging
   </ItemGroup>
