@@ -394,6 +394,11 @@
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
+    <ClInclude Include="src\audio\AudioListenerComponent.h" />
+    <ClInclude Include="src\audio\AudioManager.h" />
+    <ClInclude Include="src\audio\AudioSourceComponent.h" />
+    <ClInclude Include="src\audio\AudioUtility.h" />
+    <ClInclude Include="src\audio\SoundAttributes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -457,6 +462,11 @@
     <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
+    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\audio\AudioUtility.cpp" />
+    <ClCompile Include="src\audio\SoundAttributes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
