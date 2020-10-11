@@ -136,7 +136,7 @@
 #define SDL_TRUE 1
 typedef int SDL_bool;
 #else
-typedef enum class booly
+typedef enum
 {
     SDL_FALSE = 0,
     SDL_TRUE = 1

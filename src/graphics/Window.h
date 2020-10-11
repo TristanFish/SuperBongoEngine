@@ -4,9 +4,6 @@
 #include <glew/glew.h>
 #include <sdl/SDL.h>
 #include <iostream>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl3.h"
 
 class Window
 {

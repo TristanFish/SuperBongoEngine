@@ -18,7 +18,7 @@ void RigidBodyComponent::Init(GameObject *g)
 {
 	gameobject = g;
 	pos = &g->transform.pos;
-	setColliderSize(g->transform.GetScale());
+	setColliderSize(g->transform.GetScale().x);
 
 	mass = 1.0f;
 	vel = MATH::Vec3();

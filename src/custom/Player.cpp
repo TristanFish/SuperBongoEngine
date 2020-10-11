@@ -3,23 +3,25 @@
 #include "custom/Camera.h"
 #include "tiles/Tile.h"
 
-Player::Player()
-{
-}
-
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f)
+Player::Player(const char* n, const MATH::Vec3& pos)
 {
 
 	name = n;
 	transform = Transform(pos);
-	//collider.colliderShape = Collider3D::shape::AABB;
-
-	
-	//RigidBody3D::Init(this);
-	//MeshRenderer::Init(this);
-	
+	health = 100.0f;
 	//Always initialize the components that you've inherited with your current gameobject
 	//this allows the components to access the transform of of your gameobject
+	RigidBodyComponent::Init(this);
+	SpriteComponent::Init(this);
+
+	AudioListenerComponent::Init(this);
+
+	AudioSourceComponent::Init(this);
+	
+
+	RigidBodyComponent::setColliderShape(Collider::shape::Circle);
+	RigidBodyComponent::setColliderSize(1.75f);
+	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
 }
 
 Player::~Player()
@@ -30,73 +32,132 @@ Player::~Player()
 void Player::Update(const float deltaTime)
 {
 	//Always update your inherited components and transform
-
+	//std::cout << jetPower << std::endl;
+	RigidBodyComponent::SetConstantForce(MATH::Vec3(0.0f, -6.0f, 0.0f));
+	RigidBodyComponent::Update(deltaTime);
 	transform.Update(deltaTime);
-	Camera::getInstance()->setPosition(transform.GetPosition());
-	Camera::getInstance()->setRotation(transform.GetRotation());
-	//RigidBody3D::Update(deltaTime);
-	//MeshRenderer::Update(deltaTime);
+	SpriteComponent::Update(deltaTime);
+	AudioListenerComponent::Update(deltaTime);
+	AudioSourceComponent::Update(deltaTime);
+	Camera::getInstance()->setPosition(VMath::lerp(Camera::getInstance()->getPosition(), transform.GetPosition(), 0.05f));
 }
 
 void Player::Render() const
 {
-	//MeshRenderer::Render();
+	//Render your inherited components
+	RigidBodyComponent::Render();
+	SpriteComponent::Render();
 }
 
 void Player::HandleEvents(const SDL_Event& event)
 {
-	//MeshRenderer::HandleEvents(event);
-
-	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
-    MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
-    
 	if (event.type == SDL_EventType::SDL_KEYDOWN)
 	{
-		//Multi Key Movement controls (From SDL2)
-		if (keyboard_state_array[SDL_SCANCODE_W])
-		{
-            moveDir += transform.Forward();
+		if (event.key.keysym.sym == SDLK_w) {
+
+			if (jetPower > 0.0)
+			{
+				jetPower -= 0.1;
+				RigidBodyComponent::ApplyImpulseForce(MATH::MMath::rotate(transform.GetRotation().z, MATH::Vec3(0.0f, 0.0f, 1.0f))
+					* MATH::Vec3(0.0f, 5.0f, 0.0f) * 2.0f);
+				RigidBodyComponent::SetIsGrounded(false);
+				
+			}
 		}
-		if (keyboard_state_array[SDL_SCANCODE_D])
+
+		if (event.key.keysym.sym == SDLK_q)
 		{
-            moveDir += transform.Right();
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(0);
+				RigidBodyComponent::ApplyImpulseTorque(5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
-		if (keyboard_state_array[SDL_SCANCODE_S])
+		if (event.key.keysym.sym == SDLK_e)
 		{
-            moveDir += -transform.Forward();
+			if (!RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::ApplyImpulseTorque(0);
+				RigidBodyComponent::ApplyImpulseTorque(-5.0f);
+				std::cout << RigidBodyComponent::GetAngVelocity() << std::endl;
+			}
 		}
-		if (keyboard_state_array[SDL_SCANCODE_A])
+		if (event.key.keysym.sym == SDLK_a)
 		{
-            moveDir += -transform.Right();
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetAngVelocity(5);
+				SetScale(Vec3(-2, transform.scale.y, transform.scale.z));
+				RigidBodyComponent::SetVelocity(Vec3(-8.0, 0.0, 0.0));
+			}
 		}
-        if (keyboard_state_array[SDL_SCANCODE_SPACE])
+		if (event.key.keysym.sym == SDLK_d)
 		{
-            moveDir += transform.Up();
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetAngVelocity(-5);
+				SetScale(Vec3(2, transform.scale.y, transform.scale.z));
+				RigidBodyComponent::SetVelocity(Vec3(8.0, 0.0, 0.0));
+			}
 		}
-        if (keyboard_state_array[SDL_SCANCODE_LCTRL])
+		if (event.key.keysym.sym == SDLK_SPACE)
 		{
-            moveDir += -transform.Up();
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetVelocity(Vec3(RigidBodyComponent::GetVelocity().x, 5.0, 0.0));
+				RigidBodyComponent::SetIsGrounded(false);
+				AudioSourceComponent::PlaySound(AudioSourceComponent::GetSound("leafcrunch"), &AudioManager::Get()->C1);
+			}
 		}
-		transform.pos += moveDir * moveSpeed * Timer::GetDeltaTime();
-    }
-		
-	//Rotation controls
-	if (event.key.keysym.sym == SDLK_LEFT)
-	{
-		transform.rotation += Vec3(0.0f, turnSpeed, 0.0f) * Timer::GetDeltaTime();
 	}
-	if (event.key.keysym.sym == SDLK_RIGHT)
+
+	if (event.type == SDL_EventType::SDL_KEYUP)
 	{
-		transform.rotation += Vec3(0.0f, -turnSpeed, 0.0f) * Timer::GetDeltaTime();
+		if (event.key.keysym.sym == SDLK_a)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetAngVelocity(0);
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
+		}
+		if (event.key.keysym.sym == SDLK_d)
+		{
+			if (RigidBodyComponent::GetIsGrounded())
+			{
+				RigidBodyComponent::SetAngVelocity(0);
+				RigidBodyComponent::SetVelocity(Vec3(0.0, 0.0, 0.0));
+				RigidBodyComponent::SetAccel(Vec3(0.0, 0.0, 0.0));
+			}
+		}
 	}
-	if (event.key.keysym.sym == SDLK_UP)
-	{
-		transform.rotation += Vec3(turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
-	}
-	if (event.key.keysym.sym == SDLK_DOWN)
-	{
-		transform.rotation += Vec3(-turnSpeed, 0.0f, 0.0f) * Timer::GetDeltaTime();
-	}
+
+	RigidBodyComponent::HandleEvents(event);
+	SpriteComponent::HandleEvents(event);
 }
 
 
+
+void Player::OnCollisionEnter(RigidBodyComponent& otherBody)
+{
+	if (Tile* t = dynamic_cast<Tile*>(&otherBody))
+	{
+		if (t->tileType == Tile::TileType::Normal)
+		{
+			std::cout << "Player has touched a Normal Tile." << std::endl;
+		}
+		if ((t->tileType == Tile::TileType::Refuel) && (t->pass == 0))
+		{
+			jetPower += 4.0f;
+			std::cout << "Player has touched a Refuel Tile." << std::endl;
+		}
+		if (t->tileType == Tile::TileType::Hazard)
+		{
+			currentScene->Reset();
+			//SetVelocity(Vec3(GetAccel().x * -1 , 0.0, 0.0));
+			std::cout << "Player has touched a Hazard Tile." << std::endl;
+		}
+	}
+}
