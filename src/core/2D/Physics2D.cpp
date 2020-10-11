@@ -6,11 +6,11 @@
 using namespace MATH;
 bool Physics2D::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	/*if (pow(rb1.collider.size + rb2.collider.size, 2) < VMath::dot(*rb1.pos, *rb2.pos))
+	if (pow(rb1.collider.size + rb2.collider.size, 2) < VMath::dot(*rb1.pos, *rb2.pos))
 	{
 		std::cout << "Circle circle collision detected" << std::endl;
 		return true;
-	}*/
+	}
 	return false;
 }
 
@@ -31,17 +31,17 @@ bool Physics2D::CircleBoxDetect(RigidBodyComponent& circle, RigidBodyComponent& 
 	Vec3 distance = closestContactPoint - *circle.pos;
 
 	
-	/*if (VMath::mag(distance) < circle.collider.size / 2.0f)
+	if (VMath::mag(distance) < circle.collider.size / 2.0f)
 	{
 		return true;
-	}*/
+	}
 	return false;
 }
 
 bool Physics2D::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 {
-	float rb1Halfx = rb1.collider.size.x / 2.0f;
-	float rb2Halfx = rb2.collider.size.x / 2.0f;
+	float rb1Halfx = rb1.collider.size / 2.0f;
+	float rb2Halfx = rb2.collider.size / 2.0f;
 	float rb1Halfy = rb1Halfx;
 	float rb2Halfy = rb2Halfx;
 	if ((rb1.pos->x - rb1Halfx < rb2.pos->x + rb2Halfx) && //Check rb1 left edge with rb2 right edge

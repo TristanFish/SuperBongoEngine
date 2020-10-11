@@ -34,8 +34,6 @@
 #include "SDL_rwops.h"
 
 #include "begin_code.h"
-
-
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
 extern "C" {
@@ -75,7 +73,7 @@ typedef struct SDL_Rect
 SDL_FORCE_INLINE SDL_bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
 {
     return ( (p->x >= r->x) && (p->x < (r->x + r->w)) &&
-             (p->y >= r->y) && (p->y < (r->y + r->h)) ) ? SDL_bool::SDL_TRUE : SDL_bool::SDL_FALSE;
+             (p->y >= r->y) && (p->y < (r->y + r->h)) ) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**
@@ -83,7 +81,7 @@ SDL_FORCE_INLINE SDL_bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
  */
 SDL_FORCE_INLINE SDL_bool SDL_RectEmpty(const SDL_Rect *r)
 {
-    return ((!r) || (r->w <= 0) || (r->h <= 0)) ? SDL_bool::SDL_TRUE : SDL_bool::SDL_FALSE;
+    return ((!r) || (r->w <= 0) || (r->h <= 0)) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**
@@ -92,7 +90,7 @@ SDL_FORCE_INLINE SDL_bool SDL_RectEmpty(const SDL_Rect *r)
 SDL_FORCE_INLINE SDL_bool SDL_RectEquals(const SDL_Rect *a, const SDL_Rect *b)
 {
     return (a && b && (a->x == b->x) && (a->y == b->y) &&
-            (a->w == b->w) && (a->h == b->h)) ? SDL_bool::SDL_TRUE : SDL_bool::SDL_FALSE;
+            (a->w == b->w) && (a->h == b->h)) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**
@@ -142,7 +140,6 @@ extern DECLSPEC SDL_bool SDLCALL SDL_IntersectRectAndLine(const SDL_Rect *
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus
 }
-
 #endif
 #include "close_code.h"
 

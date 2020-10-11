@@ -6,12 +6,12 @@
 #include "graphics/shader.h"
 #include <glew/glew.h>
 
-class Texture;
+class TextureManager;
 
 class SpriteComponent : public Component
 {
 private:
-	Texture* texture;
+	TextureManager* texture;
 	GLuint vao, vbo, ebo;
 	
 public:

@@ -7,7 +7,6 @@
 #include "scenes/Scene.h"
 #include "scenes/Scene1.h"
 
-
 class GameManager
 {
 
@@ -28,7 +27,7 @@ public:
 
 	void ReloadCurrentScene();
 
-};
 
+};
 
 #endif

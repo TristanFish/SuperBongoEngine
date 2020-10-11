@@ -1,10 +1,6 @@
-
 #include "Scene1.h"
 #include "custom/Player.h"
 #include "tiles/Tilemap.h"
-#include "core/Debug.h"
-
-
 
 Scene1::Scene1()
 {}
@@ -16,28 +12,34 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
+	audioManager = AudioManager::Get();
 	
+
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();
 
-	texture = Texture();
-	texture.LoadImage("resources/textures/pufflet.bmp");
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 50.0f, 0.0f));
+	player = new Player("Player1", MATH::Vec3(0.0f, 6.0f, 0.0f));
+	player->currentScene = this;
+	player->SetScale(Vec3(2.0, 2.0, 0.0));
+	if (player->hasComponent<SpriteComponent>())
+	{
+		//Give it a shader and a sprite
+		player->getComponent<SpriteComponent>().setShaders("src/graphics/ShaderVert.glsl", "src/graphics/ShaderText.glsl");
+		player->getComponent<SpriteComponent>().setTexture("src/Textures/BallPlayer.png");
+	}
+	Camera::getInstance()->getProjectionMatrix().print();
+	Camera::getInstance()->getViewMatrix().print();
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
-	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
-	objectList->AddGameObject(player,1);
-	objectList->AddGameObject(grass, 2);
-	objectList->AddGameObject(plane, 3);
-	objectList->AddGameObject(fog, 4);
+
+	//add it to the list of gameobjects
+	objectList->AddGameObject(player);
+
+	tilemap = new Tilemap("src/tiles/Map1.txt");
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
 
-	//SaveMapData();
-	//LoadMapData();
 	return false;
 }
 
@@ -45,36 +47,39 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
+	delete tilemap;
+	tilemap = nullptr;
 	delete objectList;
 	objectList = nullptr;
-	texture.DestroyTexture();
 }
 
 void Scene1::Update(const float deltaTime)
 {
-	std::cout << player->transform.pos << std::endl;
-
 	//std::cout << 1.0f / deltaTime << std::endl;
 	Camera::getInstance()->Update(deltaTime);
-	objectList->CheckCollisions();
-	objectList->Update(deltaTime);
 
+	tilemap->Update(deltaTime);
+	objectList->Update(deltaTime);
+	audioManager->Update();
+	
+	tilemap->CheckCollisions(*player);
 }
 
 
 
 void Scene1::Render() const
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+
 	objectList->Render();
-	//Debug::DrawTextureToScreen(1, MATH::Vec2(-1.0f, -0.5f), MATH::Vec2(-0.5f, -0.5f), MATH::Vec2(-0.5f, -1.0f), MATH::Vec2(-1.0f, -1.0f));
-	
+	tilemap->Render();
+
 }
 
 void Scene1::HandleEvents(const SDL_Event& event)
 {
-	
-
-
 	objectList->HandleEvents(event);
 }
 
@@ -82,16 +87,4 @@ void Scene1::Reset()
 {
 	OnDestroy();
 	OnCreate();
-}
-
-void Scene1::SaveMapData()
-{
-	SaveMapData();
-}
-
-void Scene1::LoadMapData()
-{
-	LoadMapData();
-
-		
 }

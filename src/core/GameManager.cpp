@@ -1,10 +1,6 @@
 #include "GameManager.h"
 #include "custom/Camera.h"
 #include <iostream>
-#include "Globals.h"
-#include "core/ModelManager.h"
-#include "core/TextureManager.h"
-
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -25,10 +21,7 @@ void GameManager::Init()
 {
 	//timer = Timer();
 	window = new Window();
-	window->OnCreate("GAME", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
-
-	TextureManager::LoadAllTextures();
-	ModelManager::LoadAllModels();
+	window->OnCreate("GAME", 600,600);
 
 	currentScene = new Scene1();
 	currentScene->OnCreate();
@@ -45,19 +38,7 @@ void GameManager::Run()
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
-
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame(window->GetWindow());
-		ImGui::NewFrame();
-
-		ImGui::Begin("Test");
-		ImGui::Text("Window");
-		ImGui::End();
-
-		ImGui::Render();
 		currentScene->Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}

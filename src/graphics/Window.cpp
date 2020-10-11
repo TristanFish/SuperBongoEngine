@@ -1,6 +1,5 @@
 #include "Window.h"
 
-
 Window::Window() : window(nullptr)
 {
 }
@@ -43,29 +42,10 @@ void Window::OnCreate(const char* name, int w, int h)
 		std::cout << "Glew didnt init in Window" << std::endl;
 	}
 	glViewport(0, 0, width, height);
-
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
-	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(window, context);
-	ImGui_ImplOpenGL3_Init("#version 130");
 }
 
 void Window::OnDestroy()
 {
-	// ImGuiCleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	window = nullptr;
