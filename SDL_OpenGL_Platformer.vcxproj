@@ -35,6 +35,7 @@
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\core\Globals.h" />
     <ClInclude Include="src\custom\LightObject.h" />
+    <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\custom\LightObject.cpp" />
+    <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />

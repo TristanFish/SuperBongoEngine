@@ -5,6 +5,7 @@
 #include "components/ECS.h"
 #include "glew/glew.h"
 #include "core/tinyxml2.h"
+#include "VMath.h"
 #include <stdio.h>
 using namespace tinyxml2;
 

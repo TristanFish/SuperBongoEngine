@@ -10,6 +10,7 @@
 #include "imgui/imgui.h"
 
 
+class MouseRay;
 class Player;
 class Tilemap;
 
@@ -21,7 +22,8 @@ private:
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
-
+	MouseRay* mouseRay;
+	Debug debug;
 public:
 	Scene1();
 	~Scene1();
@@ -31,7 +33,11 @@ public:
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event &event) override;
 	virtual void Reset() override;
+
+	// Inherits from Scene
 	virtual void SaveMapData() override;
 	virtual void LoadMapData() override;
+	
+	bool CheckIntersection(MouseRay *ray, const Vec3& origin);
 };
 #endif
