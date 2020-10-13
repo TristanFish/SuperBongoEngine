@@ -27,6 +27,7 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Grass.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
