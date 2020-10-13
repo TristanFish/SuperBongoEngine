@@ -6,6 +6,8 @@ Instancer::Instancer() : modelMatrices(nullptr)
 }
 Instancer::~Instancer()
 {
+	delete modelMatrices;
+	glDeleteBuffers(1, &instanceBuffer);
 }
 void Instancer::Init(const unsigned int& amount_, GameObject* g)
 {
@@ -34,22 +36,22 @@ void Instancer::CalculateModelMatrices(const Transform& transform, const unsigne
 
 		NextPos = transform.pos + MATH::Vec3(x, 0.0f, z);
 		
-		model = MMath::translate(NextPos) * MMath::scale(MATH::Vec3(2.0f));
+		model = MMath::translate(NextPos) * MMath::calcRotationMatrix(transform.rotation + Vec3(0.0f, angle, 0.0f)) * MMath::scale(transform.scale);
 		modelMatrices[i] = model;
 	}
 }
 
-void Instancer::BindBuffers(const MeshRenderer& renderer, const unsigned int instanceAmount) const
+void Instancer::BindBuffers(const MeshRenderer& renderer, const unsigned int instanceAmount)
 {
 	// THE BELOW CODE IS REQUIRED FOR INSTANCING 
-	// Bind's the instance buffer and send's the model matricies to the shader
-	unsigned int instanceBuffer;
+	// Binds the instance buffer and send's the model matricies to the shader
+
 	glGenBuffers(1, &instanceBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 	glBufferData(GL_ARRAY_BUFFER, instanceAmount * sizeof(MATH::Matrix4), &modelMatrices[0], GL_STATIC_DRAW);
 
 
-	// Loops through all the meshes, bind's to a new vertex array and set's their attributes.
+	// Loops through all the meshes, binds to a new vertex array and sets their attributes.
 	for (unsigned int i = 0; i < renderer.GetMeshes().size(); i++)
 	{
 		

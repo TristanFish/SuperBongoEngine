@@ -27,7 +27,7 @@ Manager::~Manager()
 		}
 	}
 
-	renderer.DestroyTextures();
+	renderer.DestroyRenderer();
 
 	gameObjects.clear();
 

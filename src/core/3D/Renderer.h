@@ -17,7 +17,7 @@ public:
 	void AddMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
 	void Render() const;
-	void DestroyTextures();
+	void DestroyRenderer();
 private:
 	Shader gBufferShader;
 	Shader resultShader;
@@ -39,8 +39,6 @@ private:
 	Debug albedo;
 	Debug depth;
 	Debug stencil;
-
-	void* stencilPixels;
 
 	//GLuint currentGTexture;
 

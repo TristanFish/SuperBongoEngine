@@ -1,14 +1,12 @@
 #include "Mesh.h"
 
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures, MATH::Vec4 color)
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices, const std::vector<Texture>& textures, MATH::Vec4 color)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
 	this->color = color;
-
-    InitMesh();
 	
 }
 
@@ -29,12 +27,11 @@ Mesh::~Mesh()
 	
 }
 
-void Mesh::DestroyTextures()
+void Mesh::DeleteMesh()
 {
-	for (size_t i = 0; i < textures.size(); i++)
-	{
-		textures[i].DestroyTexture();
-	}
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ebo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 void Mesh::RenderRegular(const Shader& shader) const
@@ -129,6 +126,19 @@ void Mesh::RenderInstanced(const Shader& shader, const std::vector<Mesh>& meshes
 		glDrawElementsInstanced(GL_TRIANGLES, meshes[0].indices.size(), GL_UNSIGNED_INT, 0, amount);
 		glBindVertexArray(0);
 
+}
+
+Mesh& Mesh::operator=(const Mesh& m)
+{
+	vertices = m.vertices;
+	indices = m.indices;
+	textures = m.textures;
+	color = m.color;
+	shader.SetID(m.shader.GetID());
+	vao = m.vao;
+	vbo = m.vbo;
+	ebo = m.ebo;
+	return *this;
 }
 
 void Mesh::InitMesh()

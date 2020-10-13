@@ -165,6 +165,8 @@ void Renderer::Render() const
 	//Rebind the default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+
+
 	//Uses the gBufferResolve shader to render the result of the gBuffer
 	RenderGBufferResult();
 
@@ -175,7 +177,7 @@ void Renderer::Render() const
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 }
 
-void Renderer::DestroyTextures()
+void Renderer::DestroyRenderer()
 {
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 	glDeleteTextures(1, &depthTexture);
@@ -184,7 +186,8 @@ void Renderer::DestroyTextures()
 	glDeleteTextures(1, &normTexture);
 	glDeleteTextures(1, &albedoTexture);
 	glDeleteFramebuffers(1, &gBuffer);
-
+	glDeleteBuffers(1, &vbo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 //Binds all the gBuffer textures

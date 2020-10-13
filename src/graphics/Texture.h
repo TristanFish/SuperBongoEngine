@@ -10,10 +10,14 @@ class Texture
 
 public:
 	std::string type;
+	std::string path;
+	bool isLoaded;
 
 	Texture();
+	Texture(const std::string& path, const std::string& type = "noType");
 	~Texture();
-	bool LoadImage(const char* filename);
+	bool LoadImage();
+	void SetType(const std::string& typeName);
 	void DestroyTexture();
 	inline GLuint getTextureID() const { return textureID; }
 

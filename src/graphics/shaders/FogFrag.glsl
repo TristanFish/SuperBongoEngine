@@ -17,9 +17,9 @@ uniform vec4 meshColor;
 uniform sampler2D diffuseTex1;
 
 uniform FogData Fog;
-//uniform FogData Fog;
+
 vec4 Phong()
-	{
+{
 	
 	const vec4 ks = vec4(0.0, 0.0, 0.0,1.0);
 
@@ -41,7 +41,7 @@ vec4 Phong()
 	}
 	
 	return  ka + (diff * kd) + (spec * ks);	
-	}
+}
 
 
 void main()

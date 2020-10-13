@@ -2,6 +2,7 @@
 #define INSTANCER_H
 #include "components/ECS.h"
 #include "components/Components.h"
+
 class Instancer
 {
 	
@@ -12,8 +13,9 @@ public:
 	
 	virtual void CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount);
 private:
+	GLuint instanceBuffer;
 	MATH::Matrix4* modelMatrices;
-	void BindBuffers(const MeshRenderer& renderer, const unsigned int instanceAmount)const;
+	void BindBuffers(const MeshRenderer& renderer, const unsigned int instanceAmount);
 
 };
 
