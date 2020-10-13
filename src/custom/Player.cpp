@@ -50,35 +50,33 @@ void Player::HandleEvents(const SDL_Event& event)
 	const Uint8* keyboard_state_array = SDL_GetKeyboardState(NULL);
     MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
     
-	if (event.type == SDL_EventType::SDL_KEYDOWN)
+	//Multi Key Movement controls (From SDL2)
+	if (keyboard_state_array[SDL_SCANCODE_W])
 	{
-		//Multi Key Movement controls (From SDL2)
-		if (keyboard_state_array[SDL_SCANCODE_W])
-		{
-            moveDir += transform.Forward();
-		}
-		if (keyboard_state_array[SDL_SCANCODE_D])
-		{
-            moveDir += transform.Right();
-		}
-		if (keyboard_state_array[SDL_SCANCODE_S])
-		{
-            moveDir += -transform.Forward();
-		}
-		if (keyboard_state_array[SDL_SCANCODE_A])
-		{
-            moveDir += -transform.Right();
-		}
-        if (keyboard_state_array[SDL_SCANCODE_SPACE])
-		{
-            moveDir += transform.Up();
-		}
-        if (keyboard_state_array[SDL_SCANCODE_LCTRL])
-		{
-            moveDir += -transform.Up();
-		}
-		transform.pos += moveDir * moveSpeed * Timer::GetDeltaTime();
-    }
+        moveDir += transform.Forward();
+	}
+	if (keyboard_state_array[SDL_SCANCODE_D])
+	{
+        moveDir += transform.Right();
+	}
+	if (keyboard_state_array[SDL_SCANCODE_S])
+	{
+        moveDir += -transform.Forward();
+	}
+	if (keyboard_state_array[SDL_SCANCODE_A])
+	{
+        moveDir += -transform.Right();
+	}
+    if (keyboard_state_array[SDL_SCANCODE_SPACE])
+	{
+        moveDir += transform.Up();
+	}
+    if (keyboard_state_array[SDL_SCANCODE_LCTRL])
+	{
+        moveDir += -transform.Up();
+	}
+	transform.pos += moveDir * moveSpeed * Timer::GetDeltaTime();
+    
 		
 	//Rotation controls
 	if (event.key.keysym.sym == SDLK_LEFT)

@@ -17,7 +17,6 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
-	Texture texture;
 	Player* player;
 	Grass* grass;
 	TestModel* fog;

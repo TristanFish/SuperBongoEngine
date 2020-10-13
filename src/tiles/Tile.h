@@ -1,7 +1,9 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "components/Components.h"
+#include "components/2D/SpriteComponent.h"
+#include "components/2D/RigidbodyComponent.h"
+
 
 class Tile : public GameObject, public RigidBodyComponent, public SpriteComponent
 {

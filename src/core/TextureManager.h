@@ -6,7 +6,9 @@
 class TextureManager
 {
 public:
-	static Texture GetTexture(const std::string& name);
+	static Texture& GetTexture(const std::string& name);
+	static void DeleteAllTextures();
+
 private:
 	static void LoadAllTextures();
 

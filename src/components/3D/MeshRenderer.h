@@ -1,10 +1,8 @@
 #pragma once
-#include "graphics/Mesh.h"
+#include "graphics/Model.h"
 #include "graphics/Shader.h"
 #include "components/ECS.h"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+
 
 
 enum class RenderProperties : char
@@ -42,33 +40,28 @@ public:
 	void Render(const Shader& shader) const;
 	void HandleEvents(const SDL_Event& event) override;
 	
-	// Getters for Miin/Max Vector's
-	 Vec3 GetMinVector() const  { return p_min; }
-	 Vec3 GetMaxVector() const { return p_max; }
+	//IMPORTANT//
+	//This function is used to attach any uniforms that are specific to the object being rendered
+	//create a definition for this function where you set shader uniforms if
+	//you're using the OVERRIDE_RENDERER renderflag for this object
+	virtual void AttachUniforms() const {};
+
+	// Getters for Min/Max Vector's
+	 Vec3 GetMinVector() const  { return model->p_min; }
+	 Vec3 GetMaxVector() const { return model->p_max; }
 
 	 // Getter for meshes
-	std::vector<Mesh> GetMeshes() const { return meshes; };
+	const std::vector<Mesh>& GetMeshes() const { return model->meshes; };
 
 	void SetInstanceID(const int id)  { instanceID = id; }
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
 	RenderProperties renderFlags;
-
 	Shader shader;
-private:
-	std::vector<Mesh> meshes;
-	std::string directory;
-	 
+	Model* model;
 
+private:
 	int instanceID;
 	unsigned int instanceAmount;
 	// Used For Axis Aligned Binding Boxes
-	Vec3 p_min;
-	Vec3 p_max;
-
-	bool LoadModel(const std::string& modelPath);
-
-	void ProcessNode(aiNode* node, const aiScene* scene);
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
 };

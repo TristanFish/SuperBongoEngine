@@ -6,10 +6,11 @@ Grass::Grass()
 }
 
 
-Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : MeshRenderer("resources/models/LowPolyGrass.obj")
+Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : MeshRenderer("LowPolyGrass.obj")
 {
 	this->name = name;
 	transform.setPos(position);
+	transform.setRot(Vec3(0.0f, 0.0f, -90.0f));
 	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
@@ -38,5 +39,4 @@ void Grass::HandleEvents(const SDL_Event& event)
 {
 	MeshRenderer::HandleEvents(event);
 }
-
 

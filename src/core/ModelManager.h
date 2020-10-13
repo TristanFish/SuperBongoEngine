@@ -1,16 +1,16 @@
 #pragma once
 #include <unordered_map>
-#include "components/3D/MeshRenderer.h"
-
+#include "graphics/Model.h"
 
 class ModelManager
 {
 public:
-	static std::vector<Mesh>  GetModel(const std::string& name);
+	static Model&  GetModel(const std::string& name);
+	static void DestroyAllModels();
 private:
-	static void LoadAllModels();
+	static std::unordered_map<std::string, Model> models;
 
-	static std::unordered_map<std::string, std::vector<Mesh>> models;
+	static void LoadAllModels();
 
 	friend class GameManager;
 };
