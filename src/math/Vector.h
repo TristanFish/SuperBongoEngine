@@ -43,6 +43,17 @@ namespace MATH {
 			x = _x;
 			y = _y;
 		}
+
+		inline const Vec2 operator / (const Vec2& v) const {
+			return Vec2(x / v.x, y / v.y);
+		}
+
+		inline const Vec2  operator * (const float s) const {
+			return Vec2(s * x, s * y);
+		}
+		inline const Vec2  operator - (const float s) const {
+			return Vec2(s - x, s - y);
+		}
 	};
 
 	struct Vec3 {

@@ -394,6 +394,7 @@
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
+    <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
   </ItemGroup>
   <ItemGroup>
@@ -458,6 +459,7 @@
     <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
+    <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
