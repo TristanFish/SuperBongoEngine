@@ -396,6 +396,15 @@
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
+    <ClInclude Include="src\audio\AudioListenerComponent.h" />
+    <ClInclude Include="src\audio\AudioManager.h" />
+    <ClInclude Include="src\audio\AudioSourceComponent.h" />
+    <ClInclude Include="src\audio\AudioUtility.h" />
+    <ClInclude Include="src\audio\SoundAttributes.h" />
+    <ClInclude Include="AnimComponent.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\components\Collider.h" />
+    <ClInclude Include="src\graphics\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -461,6 +470,13 @@
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
+    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\audio\AudioUtility.cpp" />
+    <ClCompile Include="src\audio\SoundAttributes.cpp" />
+    <ClCompile Include="AnimComponent.cpp" />
+    <ClCompile Include="src\graphics\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -533,6 +549,10 @@
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
+    <None Include="external\dll\fmodL.dll" />
+    <None Include="imgui.ini" />
+    <None Include="LICENSE" />
+    <None Include="SDL_OpenGL_Platformer.aps" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -554,8 +574,12 @@
       <Filter>external\lib</Filter>
     </Library>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
+    <Library Include="external\lib\fmodL_vc.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SDL_OpenGL_Platformer.rc" />
   </ItemGroup>
 </Project>
