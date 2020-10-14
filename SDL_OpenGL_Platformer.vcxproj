@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-
-
     <ClInclude Include="external\include\assimp\aabb.h" />
     <ClInclude Include="external\include\assimp\ai_assert.h" />
     <ClInclude Include="external\include\assimp\anim.h" />
@@ -106,7 +104,6 @@
     <ClInclude Include="external\include\fmod\fmod_dsp_effects.h" />
     <ClInclude Include="external\include\fmod\fmod_errors.h" />
     <ClInclude Include="external\include\fmod\fmod_output.h" />
-
     <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
@@ -115,12 +112,10 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
-
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
-
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Grass.h" />
@@ -134,11 +129,9 @@
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\core\3D\Renderer.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
-
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
-
     <ClInclude Include="src\components\Collider.h" />
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
@@ -155,10 +148,8 @@
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\core\3D\Renderer.h" />
     <ClInclude Include="src\components\3D\MeshRenderer.h" />
-
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
-
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\core\3D\Physics3D.h" />
     <ClInclude Include="src\custom\Camera.h" />
@@ -333,10 +324,8 @@
     <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-
     <None Include=".gitignore" />
     <None Include="external\dll\assimp-vc142-mtd.dll" />
-
     <ClCompile Include="external\include\imgui\imgui.cpp" />
     <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
@@ -355,13 +344,11 @@
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\core\3D\Renderer.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
-
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
-
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
@@ -386,9 +373,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-
     <None Include="external\dll\assimp-vc142-mtd.dll" />
-
     <None Include="external\dll\fmodL.dll" />
     <None Include="external\dll\glew32.dll" />
     <None Include="external\dll\libFLAC-8.dll" />
@@ -406,11 +391,9 @@
     <None Include="external\dll\SDL2_image.dll" />
     <None Include="external\dll\smpeg2.dll" />
     <None Include="external\dll\zlib1.dll" />
-
     <None Include="imgui.ini" />
     <None Include="LICENSE" />
     <None Include="SDL_OpenGL_Platformer.aps" />
-
     <None Include="external\include\assimp\.editorconfig" />
     <None Include="external\include\assimp\color4.inl" />
     <None Include="external\include\assimp\config.h.in" />
@@ -421,7 +404,6 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
-
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
@@ -441,12 +423,10 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
-
     <None Include="src\graphics\ShaderText.glsl" />
     <None Include="src\graphics\ShaderVert.glsl" />
   </ItemGroup>
   <ItemGroup>
-
     <Library Include="external\lib\fmodL_vc.lib" />
     <Library Include="external\lib\glew32.lib" />
     <Library Include="external\lib\glew32s.lib" />
@@ -459,24 +439,15 @@
     <Text Include="src\tiles\Map1.txt" />
   </ItemGroup>
   <ItemGroup>
-
     <ResourceCompile Include="SDL_OpenGL_Platformer.rc" />
-
     <Media Include="src\sounds\tumbleweed.wav" />
-
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
     <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
-
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-
-
-
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-
-  </PropertyGroup>
+      </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
