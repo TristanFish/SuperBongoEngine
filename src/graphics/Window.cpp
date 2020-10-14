@@ -11,7 +11,7 @@ Window::~Window()
 
 void Window::OnCreate(const char* name, int w, int h)
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING /*| SDL_INIT_TIMER | SDL_INIT_EVENTS*/) < 0)
 	{
 		std::cout << "SDL_INIT_EVERYTHING went wrong in Window" << std::endl;
 	}

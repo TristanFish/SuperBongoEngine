@@ -1,5 +1,9 @@
 #include "ECS.h"
-#include "components/2D/RigidBodyComponent.h"
+#include "3D/RigidBody3D.h"
+#include "core/3D/Physics3D.h"
+#include "3D/MeshRenderer.h"
+#include "3D/LightComponent.h"
+
 
 GameObject::GameObject(): name("Default"), transform()
 {
@@ -23,6 +27,8 @@ Manager::~Manager()
 		}
 	}
 
+	renderer.DestroyRenderer();
+
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -30,13 +36,26 @@ Manager::~Manager()
 
 void Manager::Init()
 {
+	renderer.Init();
+
 	for (GameObject* g : gameObjects)
 	{
-		if (g->hasComponent<RigidBodyComponent>())
+		if (g->hasComponent<RigidBody3D>())
 		{
-			rigidBodies.emplace_back(&g->getComponent<RigidBodyComponent>());
+			rigidBodies.emplace_back(&g->getComponent<RigidBody3D>());
+		}
+
+		if (g->hasComponent<MeshRenderer>())
+		{
+			renderer.AddMeshRenderer(&g->getComponent<MeshRenderer>());
+		}
+
+		if (g->hasComponent<LightComponent>())
+		{
+			renderer.AddLight(&g->getComponent<LightComponent>());
 		}
 	}
+
 }
 
 void Manager::Update(const float deltaTime)
@@ -48,16 +67,23 @@ void Manager::Update(const float deltaTime)
 			g->Update(deltaTime);
 		}
 	}
+
+	
 }
 void Manager::Render() const
 {
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+
 	for (auto g : gameObjects)
 	{
-		if (g->isActive())
+		if (!g->hasComponent<MeshRenderer>())
 		{
 			g->Render();
 		}
 	}
+	renderer.Render();
 }
 
 void Manager::HandleEvents(const SDL_Event& event)
@@ -91,10 +117,27 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go)
+GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 {
-	GameObject* g = go;
+	go->objectID = objID;
+	gameObjects.emplace_back(go);
+	if (go->hasComponent<RigidBody3D>())
+	{
+		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
+	}
 
-	gameObjects.emplace_back(g);
-	return *g;
+	std::cout << go->name << " added to objectList" << std::endl;
+	return *go;
+}
+
+void Manager::CheckCollisions()
+{
+	//std::cout << rigidBodies.size() << std::endl;
+	for (size_t i = 0; i < rigidBodies.size(); i++)
+	{
+		for (size_t j = i + 1; j < rigidBodies.size(); j++)
+		{
+			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+		}
+	}
 }

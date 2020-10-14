@@ -1,11 +1,11 @@
 #include "SpriteComponent.h"
-#include "graphics/TextureManager.h"
+#include "graphics/Texture.h"
 #include "custom/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
-	texture = new TextureManager();
-	texture->LoadImage(path);
+	texture = new Texture(path);
+	texture->LoadImage();
 }
 
 SpriteComponent::~SpriteComponent()
@@ -18,7 +18,7 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::setTexture(const char* path)
 {
-	texture->LoadImage(path);
+	std::cerr << "Set texture not implemented" << std::endl;
 }
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)
@@ -29,7 +29,7 @@ void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPat
 void SpriteComponent::Init(GameObject *g)
 {
 	gameobject = g;
-	texture = new TextureManager();
+	texture = new Texture();
 
 	float vertices[] = {
 		// positions           // colors          // texture coords

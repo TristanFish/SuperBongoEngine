@@ -2,16 +2,23 @@
 #include "sdl/SDL.h"
 #include "sdl/SDL_image.h"
 #include <glew/glew.h>
+#include <string>
 
-class TextureManager
+class Texture
 {
 	GLuint textureID;
 
 public:
-	TextureManager();
-	~TextureManager();
-	bool LoadImage(const char* filename);
-	//This needs to be done a differant way for it to work with our code 
+	std::string type;
+	std::string path;
+	bool isLoaded;
+
+	Texture();
+	Texture(const std::string& path, const std::string& type = "noType");
+	~Texture();
+	bool LoadImage();
+	void SetType(const std::string& typeName);
+	void DestroyTexture();
 	inline GLuint getTextureID() const { return textureID; }
 
 };
