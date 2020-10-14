@@ -22,14 +22,14 @@ bool Scene1::OnCreate()
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 5.0f, 90.0f));
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 100);
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 500);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
-	objectList->AddGameObject(fog, 4);
+	//objectList->AddGameObject(fog, 4);
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
@@ -54,12 +54,12 @@ void Scene1::Update(const float deltaTime)
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
 
-	if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition()))
-	{
-		std::cout << "Hit Something" << std::endl;
-	}
+	//if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition()))
+	//{
+	//	std::cout << "Hit Something" << std::endl;
+	//}
 
-	mouseRay->Update(deltaTime);
+	//mouseRay->Update(deltaTime);
 }
 
 

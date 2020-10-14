@@ -36,7 +36,7 @@ void Instancer::CalculateModelMatrices(const Transform& transform, const unsigne
 
 		NextPos = transform.pos + MATH::Vec3(x, 0.0f, z);
 		
-		model = MMath::translate(NextPos) * MMath::calcRotationMatrix(transform.rotation + Vec3(0.0f, angle, 0.0f)) * MMath::scale(transform.scale);
+		model = MMath::translate(NextPos) * MMath::calcRotationMatrix(transform.rotation) * MMath::scale(transform.scale);
 		modelMatrices[i] = model;
 	}
 }
