@@ -26,8 +26,7 @@ public:
 	}
 
 	void Update();
-	void CreateAndPlaySound(const char* filename);
-	void MonitorChannel(FMOD::Channel c);
+	void MonitorChannel(FMOD::Channel c) const;
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
 	FMOD::Sound* RetrieveSoundObject(std::string soundName);
@@ -40,9 +39,8 @@ public:
 
 private:
 
-	//Sound bank
+	//Sound bank, make your pairs in here and then go to the load sounds function
 #pragma region sounds
-	FMOD::Sound* newSound = nullptr;
 	FMOD::Sound* leafCrunch = nullptr;
 	std::string leafCrunchString { "leafcrunch" };
 #pragma endregion 
