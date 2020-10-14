@@ -1,0 +1,32 @@
+#ifndef AUDIOLISTENERCOMPONENT_H
+#define AUDIOLISTENERCOMPONENT_H
+
+#include "components/ECS.h"
+#include "audio/AudioManager.h"
+#include <fmod/fmod.h>
+#include <fmod/fmod.hpp>
+
+
+class AudioListenerComponent : public Component
+{
+	//This class could probably be a singleton like the audio manager but in case we ever want to have any split screen support we wont do that
+	//That being said there should still only be 1 listener at a time for now similar to Unity
+private:
+	FMOD::System* audioSystemRef;
+
+	FMOD_VECTOR* FMODlistenerPos;
+	FMOD_VECTOR* FMODForward;
+	FMOD_VECTOR FMODUp;
+
+	MATH::Vec3* listenerPos;
+
+public:
+
+	void Init(GameObject* g);
+	void Update(const float deltaTime);
+	void Render();
+	void HandleEvents(const SDL_Event& event);
+
+	void SetListenerPosition();
+};
+#endif;

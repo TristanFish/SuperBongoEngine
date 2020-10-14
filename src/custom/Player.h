@@ -7,12 +7,6 @@
 //Player inherits from gameobject, components are also added via inheritance
 class Player : public GameObject
 {
-private:
-
-	float RunSpeed;
-	float moveSpeed;
-	float turnSpeed;
-
 public:
 
 	Player();
@@ -28,6 +22,11 @@ public:
 	virtual void HandleEvents(const SDL_Event& event) override;
 
 	//virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
+private:
+
+	float RunSpeed;
+	float moveSpeed;
+	float turnSpeed;
 };
 
 #endif

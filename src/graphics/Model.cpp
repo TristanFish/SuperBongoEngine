@@ -102,14 +102,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 	}
 
+	//THIS WHOLE MATERIAL LOADING SYSTEM NEEDS TO BE REWORKED AT SOME POINT IN THE FUTURE
+	aiColor4D col(1.0f, 1.0f, 1.0f, 1.0f);
 	//Load materials
-	aiColor4D col(0.0f, 0.0f, 0.0f, 0.0f);
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		//Get material color
-		material->Get(AI_MATKEY_COLOR_DIFFUSE, col);
 
+		material->Get(AI_MATKEY_COLOR_DIFFUSE, col);
 		//Get diffuse textures
 		std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, "diffuseTex");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -117,6 +117,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		//Get Specular textures
 		std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType::aiTextureType_SPECULAR, "specularTex");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+	}
+
+	//VERY BOOTLEG WAY OF GETTING VERTEX COLORS
+	//THIS NEEDS TO BE CHANGED LATER
+	if (mesh->mColors[0] != nullptr)
+	{
+		col = *mesh->mColors[0];
 	}
 
 	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
@@ -156,7 +163,7 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 
 		//Get the path to the texture associated with the model
 		mat->GetTexture(type, i, &path);
-
+		
 		std::string texturePath(path.C_Str());
 
 		texturePath = texturePath.substr(texturePath.find_last_of('\\') + 1, texturePath.length());

@@ -19,7 +19,7 @@ void MouseRay::HandleEvents(const SDL_Event& event)
 	localMousePos.x = event.button.x;
 	localMousePos.y = event.button.y;
 
-	currentRay.print();
+	//currentRay.print();
 }
 
 MATH::Vec2 MouseRay::GetDeviceCoords(int x_, int y_)

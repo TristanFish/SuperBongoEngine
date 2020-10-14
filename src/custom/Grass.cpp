@@ -6,11 +6,12 @@ Grass::Grass()
 }
 
 
-Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : MeshRenderer("LowPolyGrass.obj")
+Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : MeshRenderer("GrassBunch1.fbx")
 {
 	this->name = name;
 	transform.setPos(position);
-	transform.setRot(Vec3(0.0f, 0.0f, -90.0f));
+	transform.setRot(Vec3(-90.0f, 0.0f, 0.0f));
+	transform.scale = Vec3(5.0f);
 	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");

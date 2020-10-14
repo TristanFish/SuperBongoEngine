@@ -1,5 +1,8 @@
 #version 450
-layout (location = 2) out vec4 fragColor;
+layout (location = 0) out vec3 gPosition;
+layout (location = 1) out vec3 gNormal;
+layout (location = 2) out vec4 gAlbedo;
+layout (location = 3) out vec4 gDepth;
 
 in vec3 vertNormal;
 in vec2 vertUV;
@@ -46,12 +49,13 @@ vec4 Phong()
 
 void main()
 {
-    vec4 newcolor = vec4(Fog.color,0.6);
-   float dist = length(Position.xyz);
-   float fogFactor = (Fog.maxDist - dist) / (Fog.maxDist - Fog.minDist);
+	vec4 newcolor = vec4(Fog.color,0.6);
+	float dist = length(Position.xyz);
+	float fogFactor = (Fog.maxDist - dist) / (Fog.maxDist - Fog.minDist);
 
 
-   vec4 color = mix(newcolor ,vec4(0.0 ,0.4 ,0.0 ,0.0),fogFactor);
+    vec4 color = mix(newcolor ,vec4(0.0 ,0.4 ,0.0 ,0.0),fogFactor);
 
-	fragColor =  color;
+	gNormal = vertNormal;
+	gAlbedo =  color;
 }

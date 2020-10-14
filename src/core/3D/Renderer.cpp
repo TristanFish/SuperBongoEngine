@@ -74,7 +74,6 @@ void Renderer::Init()
 	{
 		std::cout << "Framebuffer not complete!" << std::endl;
 	}
-
 	//currentGTexture = albedoTexture;
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
@@ -123,8 +122,8 @@ void Renderer::Render() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
@@ -168,12 +167,12 @@ void Renderer::Render() const
 
 
 	//Uses the gBufferResolve shader to render the result of the gBuffer
-	RenderGBufferResult();
+	//RenderGBufferResult();
 
-	//pos.DrawTextureToScreen(posTexture, -1.0f, 0.0f, 0.0f, -1.0f);
-	//norm.DrawTextureToScreen(normTexture, -1.0f, 0.0f, 1.0f, 0.0f);
+	pos.DrawTextureToScreen(posTexture, -1.0f, 0.0f, 0.0f, -1.0f);
+	norm.DrawTextureToScreen(normTexture, -1.0f, 0.0f, 1.0f, 0.0f);
 	albedo.DrawTextureToScreen(albedoTexture, 0.0f, 1.0f, 0.0f, -1.0f);
-	//depth.DrawTextureToScreen(depthTexture, 0.0f, 1.0f, 1.0f, 0.0f);
+	depth.DrawTextureToScreen(depthTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 }
 
