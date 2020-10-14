@@ -7,7 +7,7 @@ AudioManager::AudioManager() : system(nullptr)
 	InitAudioManager();
 }
 
-void AudioManager::MonitorChannel(FMOD::Channel c) const
+void AudioManager::MonitorChannel(FMOD::Channel c)
 {
 	bool tb;
 	c.isPlaying(&tb);
@@ -118,12 +118,39 @@ void AudioManager::LoadSounds()
 
 }
 
+//void AudioManager::SetAudioSourcePos(MATH::Vec3& sourcePos)
+//{
+//
+//	C1->setChannelGroup(G1);
+//	FMOD_RESULT r;
+//	audioSourcePos = AudioUtility::Vec3ToFMODVec(sourcePos);
+//	r = C1->set3DAttributes(&audioSourcePos, NULL);
+//	
+//	if (r != FMOD_OK) {
+//		std::cout << r << FMOD_ErrorString(r) << std::endl;
+//	}
+//	r = G1->set3DAttributes(&audioSourcePos, NULL);
+//	if (r != FMOD_OK) {
+//		std::cout << r << FMOD_ErrorString(r) << std::endl;
+//	}
+//	
+//}
+
+
+
+void AudioManager::CreateAndPlaySound(const char* filename)
+{
+	system->playSound(newSound, nullptr, false, &C1);
+	Create3DReverb();
+	Update();
+}
 
 AudioManager::~AudioManager()
 {
-	sounds.clear();
+	//audioSources.clear();
 	system->release();
 	system = nullptr;
+	newSound = nullptr;
 	G1 = nullptr;
 	C1 = nullptr;
 	
