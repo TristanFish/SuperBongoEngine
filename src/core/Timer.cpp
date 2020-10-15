@@ -6,7 +6,6 @@ float Timer::timeScale = 1.0f;
 
 Timer::Timer()
 {
-	std::cout << "Timer constructor accessed" << std::endl;
 }
 
 Timer::~Timer()

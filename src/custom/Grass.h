@@ -15,5 +15,6 @@ public:
 	void HandleEvents(const SDL_Event& event) override;
 
 private:
+
 };
 

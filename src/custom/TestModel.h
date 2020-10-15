@@ -9,6 +9,7 @@ public:
 	TestModel(const char* name, MATH::Vec3 position);
 	~TestModel();
 
+	virtual void AttachUniforms() const override;
 
 	// Inherited via GameObject
 	void Update(const float deltaTime) override;

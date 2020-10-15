@@ -12,15 +12,14 @@ using namespace MATH;
 class Shader
 {
 public:
-	Matrix4 viewProjectionSize;
 
 	GLuint CreateShader(const char* vertexPath, const char* fragmentPath);
 	void RunShader() const;
 	
 	void TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const;
 	void TakeInUniformMat3(const std::string &name, Matrix3 &matrix) const;
-	void TakeInUniformVec3(const std::string &name, Vec3& v) const;
-	void TakeInUniformVec4(const std::string &name, Vec3& v) const;
+	void TakeInUniformVec3(const std::string &name, Vec3 v) const;
+	void TakeInUniformVec4(const std::string &name, Vec4 v) const;
 	void TakeInUniformFloat(const std::string &name, float v) const;
 	void TakeInUniformInt(const std::string &name, int v) const;
 

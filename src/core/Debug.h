@@ -13,6 +13,8 @@ public:
 
 	mutable GLuint cubeVAO = 0;
 	mutable GLuint cubeVBO;
+	
+	~Debug();
 
 	void DrawSphere(Vec3 position, float radius, bool wireFrame, Vec3 color = Vec3(1.0f, 1.0f, 1.0f)) const;
 	//Draws a texture onto the screen, give positions as values between -1 and 1
@@ -21,5 +23,6 @@ public:
 
 	//Draws a cube to the screen
 	void DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color = Vec4(1.0f, 1.0f, 1.0f, 0.0f)) const;
+
 };
 

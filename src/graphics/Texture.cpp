@@ -4,17 +4,28 @@
 Texture::Texture()
 {
 	textureID = 0;
+	path = "NO PATH SUPPLIED";
 }
 
-
-
-bool Texture::LoadImage(const char* filename)
+Texture::Texture(const std::string& path, const std::string& type)
 {
+	textureID = 0;
+	this->path = path;
+	this->type = type;
+	isLoaded = false;
+}
+
+bool Texture::LoadImage()
+{
+	if (isLoaded)
+	{
+		return true;
+	}
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	SDL_Surface* textureSurface = IMG_Load(filename);
+	SDL_Surface* textureSurface = IMG_Load(path.c_str());
 	if (textureSurface == nullptr) {
-		std::cout << "texture: " << filename << " didn't load" << std::endl;
+		std::cout << "texture: " << path << " didn't load" << std::endl;
 		return false;
 	}
 	int numOfColours = textureSurface->format->BytesPerPixel;
@@ -50,14 +61,19 @@ bool Texture::LoadImage(const char* filename)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, 0); /// Unbind the texture
-	return false;
+	isLoaded = true;
+	return true;
+}
+
+void Texture::SetType(const std::string& typeName)
+{
+	type = typeName;
 }
 
 void Texture::DestroyTexture()
 {
 	glDeleteTextures(1, &textureID);
 }
-
 
 Texture::~Texture()
 {

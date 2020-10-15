@@ -4,6 +4,21 @@
 Shader Debug::TexShader;
 Shader Debug::ObjShader;
 
+Debug::~Debug()
+{
+	if (cubeVAO != 0)
+	{
+		glDeleteBuffers(1, &cubeVBO);
+		glDeleteVertexArrays(1, &cubeVAO);
+	}
+
+	if (textureVAO != 0)
+	{
+		glDeleteBuffers(1, &textureVBO);
+		glDeleteVertexArrays(1, &textureVAO);
+	}
+}
+
 void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec3 color) const
 {
 
