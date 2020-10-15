@@ -4,8 +4,8 @@
 
 SpriteComponent::SpriteComponent(const char* path)
 {
-	texture = new Texture();
-	texture->LoadImage(path);
+	texture = new Texture(path);
+	texture->LoadImage();
 }
 
 SpriteComponent::~SpriteComponent()
@@ -18,7 +18,7 @@ SpriteComponent::~SpriteComponent()
 
 void SpriteComponent::setTexture(const char* path)
 {
-	texture->LoadImage(path);
+	std::cerr << "Set texture not implemented" << std::endl;
 }
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)

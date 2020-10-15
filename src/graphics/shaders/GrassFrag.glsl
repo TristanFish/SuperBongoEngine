@@ -10,10 +10,10 @@ uniform sampler2D diffuseTex1;
 
 
 vec4 toonShade()
-	{
+{
 	const int levels = 2;
-	 float intensity;
-	 vec3 _color;
+	float intensity;
+	vec3 _color;
 	const float scalefactor = 1.0 / levels;
 	const vec3 ks = vec3(0.0, 0.8, 0.4);
 	const vec3 kd = vec3(0.0, 1.0, 0.3); /// const means it cannot be changed just like C++
@@ -37,16 +37,14 @@ vec4 toonShade()
 
     vec3 product = (ambient + ks * Diffuse) * _color;
 	return vec4(product,1.0);
-	}
+}
 
 
-	vec4 Phong()
-	{
-	const vec4 ks = vec4(0.0, 0.4, 0.0, 0.0);
-
-    const vec4 kd = vec4(0.0, 0.4, 0.0, 0.0); /// const means it cannot be changed just like C++
-
-	const vec4 ka =  vec4(0.0,0.4,0.0,0.0);
+vec4 Phong()
+{
+	const vec4 ks = vec4(0.0, 0.4, 0.0, 1.0);
+    const vec4 kd = vec4(0.0, 0.4, 0.0, 1.0); /// const means it cannot be changed just like C++
+	const vec4 ka = vec4(0.0, 0.4, 0.0, 1.0);
 	
 	float diff = max(dot(vertNormal, vec3(1.0,1.0,1.0)), 0.0);
 	/// Reflection is based incedent which means a vector from the light source
@@ -62,11 +60,11 @@ vec4 toonShade()
 	}
 	
 	return  ka + (diff * kd) + (spec * ks);	
-	}
+}
 
 void main()
 {
-   vec3 product = vec3(mix(toonShade() * Phong() , meshColor,0.7));
+    vec3 product = vec3(mix(toonShade() * Phong() , meshColor,0.7));
 
 	fragColor =  vec4(product,1.0);
 }

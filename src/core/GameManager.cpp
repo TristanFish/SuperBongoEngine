@@ -25,7 +25,7 @@ void GameManager::Init()
 {
 	//timer = Timer();
 	window = new Window();
-	window->OnCreate("GAME", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
 
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
@@ -64,6 +64,9 @@ void GameManager::Run()
 		SDL_Delay(Timer::SleepTime(fps));
 	}
 
+	TextureManager::DeleteAllTextures();
+	ModelManager::DestroyAllModels();
+	SDL_Quit();
 }
 
 void GameManager::HandleEvents()

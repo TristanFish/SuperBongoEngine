@@ -4,7 +4,7 @@ Plane::Plane()
 {
 }
 
-Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("resources/models/Plane.fbx")
+Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("Plane.fbx")
 {
 	this->name = name;
 	transform.setPos(position);
