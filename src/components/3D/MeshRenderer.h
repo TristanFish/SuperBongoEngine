@@ -48,6 +48,7 @@ public:
 
 	 // Getter for meshes
 	std::vector<Mesh> GetMeshes() const { return meshes; };
+	MATH::Vec4 GetMeshColor() const { return meshColor; }
 
 	void SetInstanceID(const int id)  { instanceID = id; }
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
@@ -60,6 +61,9 @@ private:
 	std::string directory;
 	 
 
+	MATH::Vec4 meshColor;
+
+	// Used for instancing 
 	int instanceID;
 	unsigned int instanceAmount;
 	// Used For Axis Aligned Binding Boxes

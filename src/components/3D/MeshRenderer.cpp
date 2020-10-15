@@ -188,7 +188,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+	meshColor = Vec4(col.r, col.g, col.b, col.a);
 	
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;
@@ -211,7 +211,7 @@ Mesh MeshRenderer::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 
-	return Mesh(vertices, indices, textures, color);
+	return Mesh(vertices, indices, textures, meshColor);
 }
 
 std::vector<Texture> MeshRenderer::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName)

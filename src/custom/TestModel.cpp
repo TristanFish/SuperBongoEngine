@@ -10,6 +10,8 @@ TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("reso
 	this->name = name;
 	transform.setPos(position);
 	//RigidBody3D::setColliderShape(Collider3D::shape::Sphere);
+
+
 	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/FogVert.glsl", "src/graphics/shaders/FogFrag.glsl");
@@ -37,5 +39,7 @@ void TestModel::HandleEvents(const SDL_Event& event)
 {
 	MeshRenderer::HandleEvents(event);
 }
+
+
 
 

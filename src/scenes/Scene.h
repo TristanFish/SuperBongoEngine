@@ -11,8 +11,10 @@ using namespace tinyxml2;
 
 class Scene
 {
-public:
+protected:
+	
 
+public:
 	Manager* objectList;
 
 	// Used for saving and loading xml document information 

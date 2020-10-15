@@ -39,6 +39,7 @@ void GameManager::Run()
 {
 
 	Timer::UpdateTimer();
+	
 
 	while (isRunning)
 	{
@@ -49,14 +50,15 @@ void GameManager::Run()
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
+		
+		static Vec3 test = Vec3(1.0f);
 		ImGui::NewFrame();
+		ImGui::InputFloat3("Position", test, 2);
+		
+		
 
-		ImGui::Begin("Test");
-		ImGui::Text("Window");
-		ImGui::End();
-
-		ImGui::Render();
 		currentScene->Render();
+		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));

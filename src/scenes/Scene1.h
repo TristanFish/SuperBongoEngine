@@ -24,6 +24,12 @@ private:
 	Plane* plane;
 	MouseRay* mouseRay;
 	Debug debug;
+
+private:
+	GameObject* selectedObject;
+	Vec4* selectedMeshColor;
+
+	 
 public:
 	Scene1();
 	~Scene1();
@@ -38,6 +44,7 @@ public:
 	virtual void SaveMapData() override;
 	virtual void LoadMapData() override;
 	
+
 	bool CheckIntersection(MouseRay *ray, const Vec3& origin);
 };
 #endif

@@ -5,7 +5,8 @@
 #include "core/Debug.h"
 #include <gl/GLU.h>
 #include "custom/MouseRay.h"
-
+#include "core/TextureManager.h"
+#include "imgui/imgui_impl_opengl3.h"
 Scene1::Scene1()
 {}
 
@@ -27,14 +28,15 @@ bool Scene1::OnCreate()
 
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	fog = new TestModel("Fog", MATH::Vec3(0.0f, 30.0f, 0.0f));
 	mouseRay = new MouseRay();
+	selectedMeshColor = new Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
 	objectList->AddGameObject(fog, 4);
 
-	//This init function separates any gameobjects that have rigidbodies for their physics calculations
+	//This init function separates any game objects that have rigid bodies for their physics calculations
 	objectList->Init();
 
 	//SaveMapData();
@@ -48,6 +50,14 @@ void Scene1::OnDestroy()
 {
 	delete objectList;
 	objectList = nullptr;
+
+	delete mouseRay;
+	mouseRay = nullptr;
+
+	
+
+	pElement = nullptr;
+
 	texture.DestroyTexture();
 }
 
@@ -59,12 +69,6 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
-
-	if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition()))
-	{
-		std::cout << "Hit Something" << std::endl;
-	}
-
 	mouseRay->Update(deltaTime);
 }
 
@@ -72,7 +76,27 @@ void Scene1::Update(const float deltaTime)
 
 void Scene1::Render() const
 {
+	
 	objectList->Render();
+	
+	if (objectList->Is_Object_Menu_Active)
+	{
+		static Vec3* Pos_[4];
+		// Gets the mesh's properties and then displays them with ImGui
+		ImGui::Begin("Properties", &objectList->Is_Object_Menu_Active);
+		ImGui::InputText("Mesh Name", (char*)selectedObject->name, IM_ARRAYSIZE(selectedObject->name));
+		ImGui::InputFloat3("Position", Vec3(0.0f, 0.0f, 0.0f), 2);
+		//ImGui::InputFloat3("Rotation", Rot_);
+		//ImGui::InputFloat3("Scale", Scale_);
+
+		//selectedObject->SetPos(Pos_);
+		//selectedObject->SetRotation(Rot_);
+		//selectedObject->SetScale(Scale_);
+		ImGui::ColorEdit4("Mesh Color", (float *)&selectedMeshColor);
+		ImGui::End();
+	}
+	
+
 }
 
 void Scene1::HandleEvents(const SDL_Event& event)
@@ -80,6 +104,15 @@ void Scene1::HandleEvents(const SDL_Event& event)
 	
 	mouseRay->HandleEvents(event);
 	objectList->HandleEvents(event);
+
+	if (event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition()))
+		{
+			std::cout << "Mouse Hit -" << selectedObject->name << std::endl;
+			objectList->Is_Object_Menu_Active = true;
+		}
+	}
 }
 
 void Scene1::Reset()
@@ -102,45 +135,45 @@ void Scene1::LoadMapData()
 
 bool Scene1::CheckIntersection(MouseRay* ray, const Vec3& origin)
 {
-	Vec3 boxmin = fog->getComponent<MeshRenderer>().GetMinVector();
-	Vec3 boxmax = fog->getComponent<MeshRenderer>().GetMaxVector();
+	
+	for (auto obj : objectList->GetGameObjects())
+	{
+		
+		if (obj->objectID == 3)
+		{
+			Vec3 bounds[2];
+			bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
+			bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
+			selectedObject = obj;
+			selectedMeshColor = &obj->getComponent<MeshRenderer>().GetMeshColor();
 
-	//Check x
-	float tmin = (boxmin.x - origin.x) / ray->GetCurrentRay().x;
-	float tmax = (boxmax.x - origin.x) / ray->GetCurrentRay().x;
+			float tmin, tmax, tymin, tymax, tzmin, tzmax;
 
-	if (tmin > tmax) std::swap(tmin, tmax);
+			tmin = (bounds[ray->sign[0]].x - origin.x) * ray->GetInvCurrentRay().x;
+			tmax = (bounds[1 - ray->sign[0]].x - origin.x) * ray->GetInvCurrentRay().x;
+			tymin = (bounds[ray->sign[1]].y - origin.y) * ray->GetInvCurrentRay().y;
+			tymax = (bounds[1 - ray->sign[1]].y - origin.y) * ray->GetInvCurrentRay().y;
 
-	// Check y
-	float tymin = (boxmin.y - origin.y) / ray->GetCurrentRay().y;
-	float tymax = (boxmax.y - origin.y) / ray->GetCurrentRay().y;
+			if ((tmin > tymax) || (tymin > tmax))
+				return false;
+			if (tymin > tmin)
+				tmin = tymin;
+			if (tymax < tmax)
+				tmax = tymax;
 
-	if (tymin > tymax) std::swap(tymin, tymax);
+			tzmin = (bounds[ray->sign[2]].z - origin.z) * ray->GetInvCurrentRay().z;
+			tzmax = (bounds[1 - ray->sign[2]].z - origin.z) * ray->GetInvCurrentRay().z;
 
-	if ((tmin > tymax) || (tymin > tmax))
-		return false;
+			if ((tmin > tzmax) || (tzmin > tmax))
+				return false;
+			if (tzmin > tmin)
+				tmin = tzmin;
+			if (tzmax < tmax)
+				tmax = tzmax;
 
-	if (tymin > tmin)
-		tmin = tymin;
-
-	if (tymax < tmax)
-		tmax = tymax;
-
-	float tzmin = (boxmin.z - origin.z) / ray->GetCurrentRay().z;
-	float tzmax = (boxmin.z - origin.z) / ray->GetCurrentRay().z;
-
-	if (tzmin > tzmax) std::swap(tzmin, tzmax);
-
-	if ((tmin > tzmax) || (tzmin > tmax))
-		return false;
-
-	if (tzmin > tmin)
-		tmin = tzmin;
-
-	if (tzmax < tmax)
-		tmax = tzmax;
-
-	return true;
+			return true;
+		}
+	}
 }
 
 

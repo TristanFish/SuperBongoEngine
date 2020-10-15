@@ -2,6 +2,7 @@
 #include "core/Globals.h"
 MouseRay::MouseRay()
 {
+	
 }
 
 MouseRay::~MouseRay()
@@ -12,6 +13,11 @@ MouseRay::~MouseRay()
 void MouseRay::Update(const float deltatime)
 {
 	currentRay = CalaculateMouseRay();
+	invRay = GetInvCurrentRay();
+
+	sign[0] = (invRay.x < 0);
+	sign[1] = (invRay.y < 0);
+	sign[2] = (invRay.z < 0);
 }
 
 void MouseRay::HandleEvents(const SDL_Event& event)
@@ -19,7 +25,7 @@ void MouseRay::HandleEvents(const SDL_Event& event)
 	localMousePos.x = event.button.x;
 	localMousePos.y = event.button.y;
 
-	currentRay.print();
+	
 }
 
 MATH::Vec2 MouseRay::GetDeviceCoords(int x_, int y_)
