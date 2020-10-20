@@ -27,6 +27,7 @@ void GameManager::Init()
 	window = new Window();
 	window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
 
+
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 
@@ -37,8 +38,9 @@ void GameManager::Init()
 
 void GameManager::Run()
 {
-
+	
 	Timer::UpdateTimer();
+	
 
 	while (isRunning)
 	{
@@ -49,14 +51,11 @@ void GameManager::Run()
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
-		ImGui::NewFrame();
 
-		ImGui::Begin("Test");
-		ImGui::Text("Window");
-		ImGui::End();
 
-		ImGui::Render();
+
 		currentScene->Render();
+		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));

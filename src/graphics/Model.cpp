@@ -119,7 +119,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+	 color = Vec4(col.r, col.g, col.b, col.a);
 
 	p_min.x = vertices[0].position.x;
 	p_min.y = vertices[0].position.y;

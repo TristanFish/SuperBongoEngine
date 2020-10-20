@@ -9,7 +9,6 @@
 
 class GameObject;
 class RigidBody3D;
-
 //Component is an interface, things should be inheriting from it
 //Components are added to a gameobject through inheritance
 //All component functions should be called through the gameobject class that inherits from them
@@ -59,10 +58,11 @@ public:
 	inline void SetActive(bool a) { active = a; }
 
 	inline MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); }
+
 	inline void SetPos(MATH::Vec3 pos_) {  transform.setPos(pos_); }
 	inline void SetScale(MATH::Vec3 scale_) { transform.scale = scale_; }
 	inline void SetRotation(MATH::Vec3 rotation_) { transform.rotation = rotation_; }
-
+	inline void SetName(const char* name_) { name = name_; }
 	template <typename T>
 	bool hasComponent()
 	{
@@ -110,6 +110,9 @@ public:
 	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
 
 	void CheckCollisions();
+
+	// This bool is how we control if the object menu is active or not
+	bool Is_Object_Menu_Active = false;
 };
 
 #endif 

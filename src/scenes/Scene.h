@@ -11,8 +11,10 @@ using namespace tinyxml2;
 
 class Scene
 {
-public:
+protected:
+	
 
+public:
 	Manager* objectList;
 
 	// Used for saving and loading xml document information 
@@ -26,11 +28,11 @@ public:
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 	virtual void Reset() = 0;
-	virtual void SaveMapData();
+	virtual void SaveMapData() const;
 	virtual void LoadMapData();
 
 
-	const char* CheckAtributeValue(int i);
+	const char* CheckAtributeValue(int i) const;
 	
 };
 
