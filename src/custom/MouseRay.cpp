@@ -10,15 +10,7 @@ MouseRay::~MouseRay()
 }
 
 
-void MouseRay::Update(const float deltatime)
-{
-	currentRay = CalaculateMouseRay();
-	invRay = GetInvCurrentRay();
 
-	sign[0] = (invRay.x < 0);
-	sign[1] = (invRay.y < 0);
-	sign[2] = (invRay.z < 0);
-}
 
 void MouseRay::HandleEvents(const SDL_Event& event)
 {
@@ -59,7 +51,7 @@ MATH::Vec3 MouseRay::GetWorldCoords(MATH::Vec4 eyeCoords)
 	return mouseRay;
 }
 
-MATH::Vec3 MouseRay::CalaculateMouseRay()
+void MouseRay::CalaculateMouseRay()
 {
 	MATH::Vec2 mousePos = localMousePos;
 
@@ -70,5 +62,11 @@ MATH::Vec3 MouseRay::CalaculateMouseRay()
 
 	MATH::Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
-	return worldRay;
+	currentRay = worldRay;
+
+	invDir = MATH::Vec3(1.0 / currentRay.x, 1.0 / currentRay.y, 1.0 / currentRay.z);
+
+	sign[0] = (invDir.x < 0);
+	sign[1] = (invDir.y < 0);
+	sign[2] = (invDir.z < 0);
 }

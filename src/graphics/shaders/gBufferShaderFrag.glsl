@@ -21,6 +21,7 @@ in vec3 vertNormal;
 in vec2 vertUV;
 
 uniform vec4 meshColor = vec4(0.0, 0.0, 0.0, 0.0);
+uniform vec4 meshColorTint = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D diffuseTex1;
 
 float near = 0.1;
@@ -47,5 +48,5 @@ void main()
 
 	gAlbedo += (tempDiff * vec4(lights[0].lDiff, 1.0)) + (tempSpec * vec4(lights[0].lSpec, 1.0));	
 
-	gAlbedo += texture(diffuseTex1, vertUV) + meshColor + vec4(lights[0].lAmb, 0.0);
+	gAlbedo += (texture(diffuseTex1, vertUV) + meshColor) * meshColorTint + vec4(lights[0].lAmb, 0.0) ;
 }

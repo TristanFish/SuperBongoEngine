@@ -2,9 +2,9 @@
 #include "custom/TestModel.h"
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
-const char* Scene::CheckAtributeValue(int i)
+ const char* Scene::CheckAtributeValue(int i) const
 {
-	const char* value = new const char();
+	 const char* value = new char();
 
 	if (i == 0) { value = "X"; }
 	if (i == 1) { value = "Y"; }
@@ -13,7 +13,7 @@ const char* Scene::CheckAtributeValue(int i)
 	return value;
 }
 
-void Scene::SaveMapData()
+void Scene::SaveMapData() const
 {
 	XMLDocument MapData;
 	XMLNode* pRoot = MapData.NewElement("Root");
@@ -62,13 +62,15 @@ void Scene::SaveMapData()
 	// Once all the gameobjects are looped through it ends the xml file
 	pRoot->InsertEndChild(gListElement);
 
-	// Save's the file and checks for succesful save
+	// Save's the file and checks for successful save
 	XMLError eResult = MapData.SaveFile("MapData.xml");
 	if (eResult != XML_SUCCESS)
 	{
 		std::cout << "Unable to save XML document" << std::endl;
 	}
 }
+
+
 
 void Scene::LoadMapData()
 {
@@ -85,7 +87,7 @@ void Scene::LoadMapData()
 
 	int loop = 0;
 	XMLElement* pGameObjects = pRoot->FirstChildElement("GameObjects");
-	if (pGameObjects == nullptr) { std::cout << "Gameobjects not accesed properly" << std::endl; }
+	if (pGameObjects == nullptr) { std::cout << "Gameobjects not accessed properly" << std::endl; }
 	int objCount = 0;
 
 	eResult = pGameObjects->QueryIntAttribute("Count", &objCount);
@@ -107,7 +109,7 @@ void Scene::LoadMapData()
 		pIDElement = pNameElement->FirstChildElement("Object");
 		eResult = pIDElement->QueryIntAttribute("ID", &outID);
 
-		// If the save file has more gamobject 's then we have spawned it will spawn 
+		// If the save file has more gamobjects then we have spawned it will spawn 
 		// in what is needed depending on the objects IDs
 		/*If the current loop is less then or equal to the object count then continue updating values
 		  else we want to create a new gameobject*/
@@ -162,3 +164,4 @@ void Scene::LoadMapData()
 		tempObject->SetScale(outScale);
 	}
 }
+

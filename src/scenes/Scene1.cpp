@@ -3,10 +3,9 @@
 #include "custom/Player.h"
 #include "tiles/Tilemap.h"
 #include "core/Debug.h"
-#include <gl/GLU.h>
 #include "custom/MouseRay.h"
 #include "core/TextureManager.h"
-#include "imgui/imgui_impl_opengl3.h"
+
 Scene1::Scene1()
 {}
 
@@ -21,25 +20,23 @@ bool Scene1::OnCreate()
 	std::cout << "scene1 loaded" << std::endl;
 	objectList = new Manager();
 
-	texture = Texture();
-	texture.LoadImage("resources/textures/pufflet.bmp");
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 50.0f, 0.0f));
+	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	fog = new TestModel("Fog", MATH::Vec3(0.0f, 30.0f, 0.0f));
+	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 50.0f, 0.0f));
 	mouseRay = new MouseRay();
-	selectedMeshColor = new Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
-	objectList->AddGameObject(fog, 4);
+	//objectList->AddGameObject(fog, 4);
 
 	//This init function separates any game objects that have rigid bodies for their physics calculations
 	objectList->Init();
-
-	//SaveMapData();
+	
+	
+	//Scene::SaveMapData();
 	//LoadMapData();
 	return false;
 }
@@ -58,7 +55,6 @@ void Scene1::OnDestroy()
 
 	pElement = nullptr;
 
-	texture.DestroyTexture();
 }
 
 void Scene1::Update(const float deltaTime)
@@ -69,33 +65,70 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
-	mouseRay->Update(deltaTime);
 }
 
 
 
 void Scene1::Render() const
 {
-	
+	ImGui::NewFrame();
 	objectList->Render();
-	
+	ImGui::SetItemDefaultFocus();
+
+	// Displays a gameobject information
 	if (objectList->Is_Object_Menu_Active)
 	{
-		static Vec3* Pos_[4];
 		// Gets the mesh's properties and then displays them with ImGui
 		ImGui::Begin("Properties", &objectList->Is_Object_Menu_Active);
-		ImGui::InputText("Mesh Name", (char*)selectedObject->name, IM_ARRAYSIZE(selectedObject->name));
-		ImGui::InputFloat3("Position", Vec3(0.0f, 0.0f, 0.0f), 2);
-		//ImGui::InputFloat3("Rotation", Rot_);
-		//ImGui::InputFloat3("Scale", Scale_);
+		
+		char* TempName = new char(); 
+		TempName = (char*)selectedObject->name;
+		if(ImGui::InputText("Mesh Name", TempName, size_t(20)))
+		{	selectedObject->name = TempName;    }
+		
+		// Change the standard transform components 
+		ImGui::DragFloat3("Position", selectedObject->transform.GetPosition());
+		ImGui::DragFloat3("Rotation", selectedObject->transform.GetRotation());
+		ImGui::DragFloat3("Scale", selectedObject->transform.GetScale(),-1,1);
 
-		//selectedObject->SetPos(Pos_);
-		//selectedObject->SetRotation(Rot_);
-		//selectedObject->SetScale(Scale_);
-		ImGui::ColorEdit4("Mesh Color", (float *)&selectedMeshColor);
+		// Create a new color that is a copy of the meshes color
+		static Vec4 Color_ = selectedObject->getComponent<MeshRenderer>().meshColorTint;
+		ImGui::ColorEdit4("Mesh Color", (float *)&Color_);
+		
+		//
+		selectedObject->getComponent<MeshRenderer>().meshColorTint = Color_;
+		if (ImGui::Button("Save"))
+		{
+			SaveMapData();
+		}
+
 		ImGui::End();
 	}
 	
+	// Let's the use add game objects
+
+	bool enabled = true;
+	
+
+	static int objID = 2;
+	ImGui::Begin("Add Game Object", &enabled);
+	ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
+	
+	// Change the standard transform components 
+
+	 static char* name_ = new char();
+	static Vec3 Pos_ = Vec3(0.0f);
+	static Vec3 Rot_ = Vec3(0.0f);
+	static Vec3 Scale_ = Vec3(1.0f);
+	ImGui::InputText("Mesh Name", name_, size_t(20));
+	ImGui::DragFloat3("Position", Pos_);
+	ImGui::DragFloat3("Rotation", Rot_);
+	ImGui::DragFloat3("Scale", Scale_, -1, 1);
+	if (ImGui::Button("Create Object"))
+	{
+		CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
+	}
+	ImGui::End();
 
 }
 
@@ -107,10 +140,18 @@ void Scene1::HandleEvents(const SDL_Event& event)
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition()))
+		mouseRay->CalaculateMouseRay();
+
+		for (int i = 0; i < objectList->GetNumObjects(); i++)
 		{
-			std::cout << "Mouse Hit -" << selectedObject->name << std::endl;
-			objectList->Is_Object_Menu_Active = true;
+			if (objectList->GetGameObjects()[i]->hasComponent<MeshRenderer>())
+			{
+				if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition(), objectList->GetGameObjects()[i]))
+				{
+					std::cout << "Mouse Hit - " << selectedObject->name << std::endl;
+					objectList->Is_Object_Menu_Active = true;
+				}
+			}
 		}
 	}
 }
@@ -121,92 +162,69 @@ void Scene1::Reset()
 	OnCreate();
 }
 
-void Scene1::SaveMapData()
+void Scene1::SaveMapData() const 
 {
-	SaveMapData();
+	Scene::SaveMapData();
 }
 
 void Scene1::LoadMapData()
-{
-	LoadMapData();
-
-		
+{	
+	Scene::LoadMapData();
 }
 
-bool Scene1::CheckIntersection(MouseRay* ray, const Vec3& origin)
+bool Scene1::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
 {
+	Vec3 bounds[2];
+	bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
 	
-	for (auto obj : objectList->GetGameObjects())
-	{
-		
-		if (obj->objectID == 3)
-		{
-			Vec3 bounds[2];
-			bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
-			bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
-			selectedObject = obj;
-			selectedMeshColor = &obj->getComponent<MeshRenderer>().GetMeshColor();
 
-			float tmin, tmax, tymin, tymax, tzmin, tzmax;
+	bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
+	selectedObject = obj;
+			
+	float tx1 = (bounds[0].x - origin.x) * ray->invDir.x;
+	float tx2 = (bounds[1].x - origin.x) * ray->invDir.x;
 
-			tmin = (bounds[ray->sign[0]].x - origin.x) * ray->GetInvCurrentRay().x;
-			tmax = (bounds[1 - ray->sign[0]].x - origin.x) * ray->GetInvCurrentRay().x;
-			tymin = (bounds[ray->sign[1]].y - origin.y) * ray->GetInvCurrentRay().y;
-			tymax = (bounds[1 - ray->sign[1]].y - origin.y) * ray->GetInvCurrentRay().y;
+	float tmin = std::min(tx1, tx2);
+	float tmax = std::max(tx1, tx2);
 
-			if ((tmin > tymax) || (tymin > tmax))
-				return false;
-			if (tymin > tmin)
-				tmin = tymin;
-			if (tymax < tmax)
-				tmax = tymax;
+	float ty1 = (bounds[0].y - origin.y) * ray->invDir.y;
+	float ty2 = (bounds[1].y - origin.y) * ray->invDir.y;
 
-			tzmin = (bounds[ray->sign[2]].z - origin.z) * ray->GetInvCurrentRay().z;
-			tzmax = (bounds[1 - ray->sign[2]].z - origin.z) * ray->GetInvCurrentRay().z;
+	tmin = std::max(tmin, std::min(ty1, ty2));
+	tmax = std::min(tmax, std::max(ty1, ty2));
 
-			if ((tmin > tzmax) || (tzmin > tmax))
-				return false;
-			if (tzmin > tmin)
-				tmin = tzmin;
-			if (tzmax < tmax)
-				tmax = tzmax;
+	float tz1 = (bounds[0].z - origin.z) * ray->invDir.z;
+	float tz2 = (bounds[1].z - origin.z) * ray->invDir.z;
 
-			return true;
-		}
-	}
+	tmin = std::max(tmin, std::min(tz1, tz2));
+	tmax = std::min(tmax, std::max(tz1, tz2));
+
+
+	return tmax >= tmin;
 }
 
-
-
-
-	// Other Method
-	/*
-	Matrix4 MultiMatrix;
-	for (int i = 0; i < objectList->GetNumObjects(); i++)
+void Scene1::CreateObjWithID(Vec3 pos_, Vec3 rot_, Vec3 scale_, const char* name_, const int& ID) const
+{
+	switch (ID)
 	{
-		MultiMatrix = Camera::getInstance()->getProjectionMatrix() * Camera::getInstance()->getViewMatrix() 
-			* objectList->GetGameObjects()[i]->GetModelMatrix();
+	case 3:
+		Plane * newPlane_;
+		newPlane_ = new Plane(name_, pos_);
+		newPlane_->SetRotation(rot_);
+		newPlane_->SetScale(scale_);
+		objectList->AddGameObject(newPlane_, ID);
+		break;
+	case 4:
+		TestModel * newTestModel;
+		newTestModel = new TestModel(name_, pos_);
+		newTestModel->SetRotation(rot_);
+		newTestModel->SetScale(scale_);
+		objectList->AddGameObject(newTestModel, ID);
+		break;
+	default:
+		break;
 	}
 
-	Matrix4 inverseMulti = MMath::inverse(MultiMatrix);
+}
 
-	Vec4 Position = Vec4(x_, y_, -1.0, 1.0);
-
-	Position = inverseMulti * Position;
-
-	Position.w = 1.0 / Position.w;
-
-	Position.x *= Position.w;
-	Position.y *= Position.w;
-	Position.z *= Position.w;
-
-
-
-	if (VMath::distance(Position,fog->transform.pos) < 20.0f)
-	{
-		std::cout << "Mouse Clicked object" << std::endl;
-	}
-	Position.print();*/
-
-	
 

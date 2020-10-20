@@ -126,6 +126,11 @@ GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
 	}
 
+	if (go->hasComponent<MeshRenderer>())
+	{
+		renderer.AddMeshRenderer(&go->getComponent<MeshRenderer>());
+	}
+
 	std::cout << go->name << " added to objectList" << std::endl;
 	return *go;
 }

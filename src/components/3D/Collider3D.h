@@ -27,7 +27,7 @@ public:
 	Collider3D(MATH::Vec3 minVert_,MATH::Vec3 maxVert_)
 	{
 
-		//colliderShape = shape::AABB;
+		colliderShape = shape::AABB;
 		isMoveable = true;
 		isTrigger = false;
 		//isWiremesh = false;

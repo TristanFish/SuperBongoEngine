@@ -11,7 +11,8 @@ TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("Cube
 	transform.setPos(position);
 	//RigidBody3D::setColliderShape(Collider3D::shape::Sphere);
 
-
+	RigidBody3D::Init(this);
+	//RigidBody3D::ApplyConstantForce(Vec3(0.0, -1.0, 0.0));
 	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/FogVert.glsl", "src/graphics/shaders/FogFrag.glsl");
@@ -34,6 +35,7 @@ void TestModel::Update(const float deltaTime)
 	//transform.rotation.y += deltaTime;
 	transform.Update(deltaTime);
 	MeshRenderer::Update(deltaTime);
+	RigidBody3D::Update(deltaTime);
 }
 
 void TestModel::Render() const
@@ -45,6 +47,11 @@ void TestModel::Render() const
 void TestModel::HandleEvents(const SDL_Event& event)
 {
 	MeshRenderer::HandleEvents(event);
+}
+
+void TestModel::OnCollisionEnter(RigidBody3D& otherBody)
+{
+	std::cout << "Hit " << otherBody.gameobject->name << std::endl;
 }
 
 

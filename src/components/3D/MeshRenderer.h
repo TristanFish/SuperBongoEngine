@@ -50,6 +50,7 @@ public:
 	 Vec3 GetMinVector() const  { return model->p_min; }
 	 Vec3 GetMaxVector() const { return model->p_max; }
 
+	 Vec4 meshColorTint = Vec4(1.0);
 	 // Getter for meshes
 	const std::vector<Mesh>& GetMeshes() const { return model->meshes; };
 

@@ -9,14 +9,11 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("Plane.fbx")
 	this->name = name;
 	transform.setPos(position);
 
-	collider.colliderShape = Collider3D::shape::Plane;
-
 	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
-	transform.rotation = Vec3(-90.0f, 0.0f, 0.0f);
+	transform.rotation = Vec3(0.0f, 0.0f, 0.0f);
 	transform.rotation.print();
 
 	RigidBody3D::Init(this);
-	RigidBody3D::setMoveable(false);
 	MeshRenderer::Init(this);
 
 	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
@@ -48,5 +45,4 @@ void Plane::HandleEvents(const SDL_Event& event)
 void Plane::OnCollisionEnter(RigidBody3D& otherBody)
 {
 	
-	//std::cout << "Hit " << otherBody.gameobject->name << std::endl;
 }
