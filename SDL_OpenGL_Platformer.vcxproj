@@ -249,6 +249,7 @@
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\custom\TestModel.h" />
     <ClInclude Include="src\core\TextureManager.h" />
+    <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -301,6 +302,7 @@
     <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\TextureManager.cpp" />
+    <ClCompile Include="src\custom\Water.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -13,8 +13,8 @@ enum class RenderProperties : char
 	RECIEVES_SHADOWS	= 0b00000100,
 	BLOOM				= 0b00001000,
 	PHYSICS_MOVEMENT	= 0b00010000,
-	OVERRIDE_RENDERER	= 0b00100000
-
+	OVERRIDE_RENDERER	= 0b00100000,
+	WATER               = 0b01000000
 };
 
 inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)

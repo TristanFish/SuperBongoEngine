@@ -58,6 +58,8 @@ private:
 	void RenderBloom(const MeshRenderer& mr) const;
 	//Does physics movement
 	void RenderPhysics(const MeshRenderer& mr) const;
+	//Does water stuff
+	void RenderWaterEffects(const MeshRenderer& mr) const;
 		/*NONE			
 		LIGHTING		
 		CREATES_SHADOWS	

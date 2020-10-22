@@ -157,6 +157,10 @@ void Renderer::Render() const
 		{
 			RenderPhysics(*meshRenderers[i]);
 		}
+		if (meshRenderers[i]->renderFlags & RenderProperties::WATER)
+		{
+			RenderWaterEffects(*meshRenderers[i]);
+		}
 		meshRenderers[i]->Render(gBufferShader);
 		glUseProgram(0);
 	}
@@ -270,5 +274,9 @@ void Renderer::RenderBloom(const MeshRenderer& mr) const
 }
 
 void Renderer::RenderPhysics(const MeshRenderer& mr) const
+{
+}
+
+void Renderer::RenderWaterEffects(const MeshRenderer& mr) const
 {
 }

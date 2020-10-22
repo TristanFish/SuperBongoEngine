@@ -486,6 +486,7 @@
     <ClInclude Include="external\include\assimp\Vertex.h" />
     <ClInclude Include="external\include\assimp\XMLTools.h" />
     <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -556,6 +557,7 @@
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
+    <ClCompile Include="src\custom\Water.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
