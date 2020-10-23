@@ -348,6 +348,8 @@
     <None Include="src\graphics\shaders\ShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
+    <None Include="src\graphics\shaders\WaterFrag.glsl" />
+    <None Include="src\graphics\shaders\WaterVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

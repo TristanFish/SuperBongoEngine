@@ -639,6 +639,8 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
+    <None Include="src\graphics\shaders\WaterFrag.glsl" />
+    <None Include="src\graphics\shaders\WaterVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

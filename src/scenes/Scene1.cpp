@@ -24,14 +24,13 @@ bool Scene1::OnCreate()
 
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 500);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	waterPlane = new Plane("Water", MATH::Vec3(10.0f, 0.0f, 0.0f));
-	waterPlane->SetRotation(MATH::Vec3(180.0f, 0.0f, 0.0f));
+
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
-	objectList->AddGameObject(waterPlane, 4);
+	
 
 	//objectList->AddGameObject(fog, 4);
 

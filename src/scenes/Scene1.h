@@ -21,7 +21,7 @@ private:
 	Grass* grass;
 	TestModel* fog;
 	Plane* plane;
-	Plane* waterPlane;
+
 	MouseRay* mouseRay;
 	Debug debug;
 public:
