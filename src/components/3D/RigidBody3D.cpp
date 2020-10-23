@@ -4,7 +4,7 @@
 
 
 RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-										  Angle(MATH::Vec3()), angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f), 
+										   angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f), 
 										  collider(MATH::Vec3(),MATH::Vec3())
 {
 	
@@ -28,14 +28,11 @@ void RigidBody3D::Init(GameObject *g)
 	accel = MATH::Vec3();
 
 	rotInertia = 1.0f;
-	Angle = MATH::Vec3();
 	angularVel = MATH::Vec3();
 	angularAcc = MATH::Vec3();
 
 	collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
-	//collider.maxVertices == VMath::cross(collider.maxVertices, collider.size);
 	collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
-	//collider.minVertices == VMath::cross(collider.minVertices, collider.size);
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -45,9 +42,6 @@ void RigidBody3D::Update(const float deltaTime)
 
 	angularVel += angularAcc * deltaTime;
 	angularVel *= angularDrag;
-	Angle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
-
-	//gameobject->SetRotation(Angle);
 	
 }
 

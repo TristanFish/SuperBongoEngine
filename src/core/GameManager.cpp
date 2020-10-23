@@ -53,7 +53,6 @@ void GameManager::Run()
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
 
 
-
 		currentScene->Render();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -69,9 +68,9 @@ void GameManager::Run()
 void GameManager::HandleEvents()
 {
 	SDL_Event event;
-
 	while(SDL_PollEvent(&event))
 	{
+		ImGui_ImplSDL2_ProcessEvent(&event);
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
 			isRunning = false;

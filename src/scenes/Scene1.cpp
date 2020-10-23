@@ -6,6 +6,7 @@
 #include "custom/MouseRay.h"
 #include "core/TextureManager.h"
 
+
 Scene1::Scene1()
 {}
 
@@ -71,9 +72,9 @@ void Scene1::Update(const float deltaTime)
 
 void Scene1::Render() const
 {
+	
 	ImGui::NewFrame();
 	objectList->Render();
-	ImGui::SetItemDefaultFocus();
 
 	// Displays a gameobject information
 	if (objectList->Is_Object_Menu_Active)
@@ -81,22 +82,21 @@ void Scene1::Render() const
 		// Gets the mesh's properties and then displays them with ImGui
 		ImGui::Begin("Properties", &objectList->Is_Object_Menu_Active);
 		
-		char* TempName = new char(); 
+		 char* TempName = new char(); 
 		TempName = (char*)selectedObject->name;
 		if(ImGui::InputText("Mesh Name", TempName, size_t(20)))
-		{	selectedObject->name = TempName;    }
-		
+		{
+			selectedObject->SetName(TempName);
+		}
+
 		// Change the standard transform components 
 		ImGui::DragFloat3("Position", selectedObject->transform.GetPosition());
 		ImGui::DragFloat3("Rotation", selectedObject->transform.GetRotation());
-		ImGui::DragFloat3("Scale", selectedObject->transform.GetScale(),-1,1);
+		ImGui::DragFloat3("Scale", selectedObject->transform.GetScale(),0.0f,10.0f);
 
 		// Create a new color that is a copy of the meshes color
-		static Vec4 Color_ = selectedObject->getComponent<MeshRenderer>().meshColorTint;
-		ImGui::ColorEdit4("Mesh Color", (float *)&Color_);
-		
+		ImGui::ColorEdit4("Mesh Color", (float *)&selectedObject->getComponent<MeshRenderer>().meshColorTint);
 		//
-		selectedObject->getComponent<MeshRenderer>().meshColorTint = Color_;
 		if (ImGui::Button("Save"))
 		{
 			SaveMapData();
@@ -120,13 +120,20 @@ void Scene1::Render() const
 	static Vec3 Pos_ = Vec3(0.0f);
 	static Vec3 Rot_ = Vec3(0.0f);
 	static Vec3 Scale_ = Vec3(1.0f);
-	ImGui::InputText("Mesh Name", name_, size_t(20));
+	if (ImGui::InputText("Mesh Name", name_, size_t(20)))
+	{
+
+	}
 	ImGui::DragFloat3("Position", Pos_);
 	ImGui::DragFloat3("Rotation", Rot_);
 	ImGui::DragFloat3("Scale", Scale_, -1, 1);
 	if (ImGui::Button("Create Object"))
 	{
 		CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
+		name_ = new char();
+		Pos_ = Vec3(0.0f);
+		Rot_ = Vec3(0.0f);
+		Scale_ = Vec3(1.0f);
 	}
 	ImGui::End();
 
@@ -138,18 +145,18 @@ void Scene1::HandleEvents(const SDL_Event& event)
 	mouseRay->HandleEvents(event);
 	objectList->HandleEvents(event);
 
-	if (event.type == SDL_MOUSEBUTTONDOWN)
+	if (event.type == SDL_MOUSEBUTTONDOWN && !objectList->Is_Object_Menu_Active)
 	{
 		mouseRay->CalaculateMouseRay();
-
-		for (int i = 0; i < objectList->GetNumObjects(); i++)
+		for (auto obj : objectList->GetGameObjects())
 		{
-			if (objectList->GetGameObjects()[i]->hasComponent<MeshRenderer>())
+			if (obj->hasComponent<MeshRenderer>())
 			{
-				if (CheckIntersection(mouseRay, Camera::getInstance()->getPosition(), objectList->GetGameObjects()[i]))
+				if (CheckIntersection(mouseRay, mouseRay->GetCurrentRay()->Origin, obj))
 				{
 					std::cout << "Mouse Hit - " << selectedObject->name << std::endl;
 					objectList->Is_Object_Menu_Active = true;
+					return;
 				}
 			}
 		}
@@ -181,20 +188,20 @@ bool Scene1::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* ob
 	bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
 	selectedObject = obj;
 			
-	float tx1 = (bounds[0].x - origin.x) * ray->invDir.x;
-	float tx2 = (bounds[1].x - origin.x) * ray->invDir.x;
+	float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
+	float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
 
 	float tmin = std::min(tx1, tx2);
 	float tmax = std::max(tx1, tx2);
 
-	float ty1 = (bounds[0].y - origin.y) * ray->invDir.y;
-	float ty2 = (bounds[1].y - origin.y) * ray->invDir.y;
+	float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
+	float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
 
 	tmin = std::max(tmin, std::min(ty1, ty2));
 	tmax = std::min(tmax, std::max(ty1, ty2));
 
-	float tz1 = (bounds[0].z - origin.z) * ray->invDir.z;
-	float tz2 = (bounds[1].z - origin.z) * ray->invDir.z;
+	float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
+	float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
 
 	tmin = std::max(tmin, std::min(tz1, tz2));
 	tmax = std::min(tmax, std::max(tz1, tz2));

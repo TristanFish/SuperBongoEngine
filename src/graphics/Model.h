@@ -22,11 +22,15 @@ public:
 	const Vec3 GetColor() { return Vec3(meshes[0].color); }
 	void SetColor(const Vec3 color_) { meshes[0].color = Vec4(color_.x,color_.y,color_.z, meshes[0].color.w); }
 
+	void CalculateMaxMins();
+
 	void LoadModel();
 	void DestroyModel();
 	
 private:
 	Vec4 color;
+
+	std::vector<Vertex> vertices;
 
 	 void ProcessNode(aiNode* node, const aiScene* scene);
 	 Mesh processMesh(aiMesh* mesh, const aiScene* scene);

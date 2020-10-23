@@ -49,8 +49,8 @@ void Window::OnCreate(const char* name, int w, int h)
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.WantCaptureKeyboard = true;
-	// Setup Dear ImGui style
+	
+															  // Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
 

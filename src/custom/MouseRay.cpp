@@ -7,6 +7,8 @@ MouseRay::MouseRay()
 
 MouseRay::~MouseRay()
 {
+	delete ray;
+	ray = nullptr;
 }
 
 
@@ -16,8 +18,6 @@ void MouseRay::HandleEvents(const SDL_Event& event)
 {
 	localMousePos.x = event.button.x;
 	localMousePos.y = event.button.y;
-
-	
 }
 
 MATH::Vec2 MouseRay::GetDeviceCoords(int x_, int y_)
@@ -53,6 +53,8 @@ MATH::Vec3 MouseRay::GetWorldCoords(MATH::Vec4 eyeCoords)
 
 void MouseRay::CalaculateMouseRay()
 {
+	ray->Origin = Camera::getInstance()->getPosition();
+
 	MATH::Vec2 mousePos = localMousePos;
 
 	MATH::Vec2 normCoords = GetDeviceCoords(mousePos.x, mousePos.y);
@@ -62,11 +64,8 @@ void MouseRay::CalaculateMouseRay()
 
 	MATH::Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
-	currentRay = worldRay;
+	ray->Direction = worldRay;
 
-	invDir = MATH::Vec3(1.0 / currentRay.x, 1.0 / currentRay.y, 1.0 / currentRay.z);
+	invDir = MATH::Vec3(1.0f / ray->Direction.x, 1.0f / ray->Direction.y, 1.0f / ray->Direction.z);
 
-	sign[0] = (invDir.x < 0);
-	sign[1] = (invDir.y < 0);
-	sign[2] = (invDir.z < 0);
 }

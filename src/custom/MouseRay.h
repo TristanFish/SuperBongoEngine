@@ -1,45 +1,63 @@
 #ifndef MOUSERAY_H
 #define MOUSERAY_H
 
-#include "VMath.h"
-#include "Vector.h"
+#include "math/Ray.h"
 #include "MMath.h"
 #include "Camera.h"
+
+//! MouseRay class
+/*! This class is used for taking in our mouse position on screen and converting it 
+into world coordinates */
 class MouseRay
 {
 private:
-	// Current Ray/Direction of the ray
-	MATH::Vec3 currentRay;
 
-	// Current position of the mouse on screen
+	//! Vector3 Current Ray
+	/*! Is the direction on the current ray */
+	Ray* ray = new Ray();
+
+	//! Vector2 Local Mouse Position
+	/*! Where the mouse is in local/screen coordinates */
 	MATH::Vec2 localMousePos;
 
-	MATH::Vec3 invRay;
-
-	// Converts the local Mouse Position to normal Coordinates 
+	//! Vec2 Function GetDeviceCoords
+	/*! Converts the local Mouse Position to normal Coordinates */
 	MATH::Vec2 GetDeviceCoords(int x_, int y_);
 
-	// Converts clipping Coordinates to eye Coordinates
+	//! Vec4 Function GetEyeCoords
+	/*! Converts clipping Coordinates to eye Coordinates */
 	MATH::Vec4 GetEyeCoords(MATH::Vec4 clipCoords);
 
-	// Converts eye Coordinates to world Coordinates
+	//! Vec3 Function GetWorldCoords
+	/*! Converts eye Coordinates to world Coordinates */
 	MATH::Vec3 GetWorldCoords(MATH::Vec4 eyeCoords);
 
 
 public:
+
+	//! MouseRay Constructor
 	MouseRay();
+
+	//! MouseRay Destructor
 	~MouseRay();
 
-
-	int sign[3];
+	//! Vector3 Inverse Ray
+	/*! Is the inverse of the currentRay */
 	MATH::Vec3 invDir;
-	// Does the final calculation and then set's the currentRay
-	void CalaculateMouseRay();
-	const MATH::Vec3 GetCurrentRay() { return currentRay; }
-	//const MATH::Vec3 GetInvCurrentRay() { return MATH::Vec3(1.0 / currentRay.x, 1.0 / currentRay.y, 1.0 / currentRay.z); }
 
-	void HandleEvents(const SDL_Event& event);
 	
+
+	//! Calculate Mouse Ray Function
+	/*! Does the final calculation and then updates the currentRay */
+	void CalaculateMouseRay();
+
+	//! Get Current Ray Getter
+	/*! Returns the current ray */
+	const Ray* GetCurrentRay() { return ray; }
+
+	//! Handle Events Function
+	/*! Used for getting the mouse position in local/screen space */
+	void HandleEvents(const SDL_Event& event);
 };
 
 #endif
