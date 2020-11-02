@@ -23,7 +23,7 @@ bool Scene1::OnCreate()
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 700);
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
@@ -57,7 +57,7 @@ void Scene1::OnDestroy()
 
 void Scene1::Update(const float deltaTime)
 {
-	std::cout << player->transform.pos << std::endl;
+	//std::cout << player->transform.pos << std::endl;
 
 	//std::cout << 1.0f / deltaTime << std::endl;
 	Camera::getInstance()->Update(deltaTime);
