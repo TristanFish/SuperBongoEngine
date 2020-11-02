@@ -22,14 +22,14 @@ void Renderer::Init()
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 
-	//Positions texture
-	glGenTextures(1, &posTexture);
-	glBindTexture(GL_TEXTURE_2D, posTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+	//Colour texture
+	glGenTextures(1, &albedoTexture);
+	glBindTexture(GL_TEXTURE_2D, albedoTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, posTexture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, albedoTexture, 0);
 
 	//Normal texture
 	glGenTextures(1, &normTexture);
@@ -40,14 +40,14 @@ void Renderer::Init()
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, normTexture, 0);
 
-	//Colour texture
-	glGenTextures(1, &albedoTexture);
-	glBindTexture(GL_TEXTURE_2D, albedoTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	//Positions texture
+	glGenTextures(1, &posTexture);
+	glBindTexture(GL_TEXTURE_2D, posTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, albedoTexture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, posTexture, 0);
 
 	//Dpeth texture (not used for depth calculations, just used for a visualization)
 	glGenTextures(1, &depthTexture);
@@ -60,7 +60,7 @@ void Renderer::Init()
 
 	//Stencil texture not functional yet, going to be used to mark whether lighting/shadows are applied to objects
 	glBindTexture(GL_TEXTURE_2D, stencilTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8I, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8UI, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
@@ -74,7 +74,6 @@ void Renderer::Init()
 	{
 		std::cout << "Framebuffer not complete!" << std::endl;
 	}
-
 	//currentGTexture = albedoTexture;
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
@@ -117,14 +116,9 @@ void Renderer::AddLight(LightComponent* light)
 
 void Renderer::Render() const
 {
-	//Bind the gbuffer
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
@@ -140,7 +134,6 @@ void Renderer::Render() const
 
 		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
 		{
-			//AttachLights(*meshRenderers[i]);
 		}
 		if (meshRenderers[i]->renderFlags & RenderProperties::CREATES_SHADOWS)
 		{
@@ -161,20 +154,25 @@ void Renderer::Render() const
 		meshRenderers[i]->Render(gBufferShader);
 		glUseProgram(0);
 	}
+	pos.DrawCube(Vec3(0), Vec3(15), true, MATH::Vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	//Rebind the default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glEnable(GL_DEPTH_TEST);
+
+	pos.DrawTextureToScreen(posTexture, -1.0f, -0.5f, 0.0f, -0.5f);
+	norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
+	albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
+	depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
+	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
+
+	RenderGBufferResult();
 
 
 
 	//Uses the gBufferResolve shader to render the result of the gBuffer
-	RenderGBufferResult();
 
-	//pos.DrawTextureToScreen(posTexture, -1.0f, 0.0f, 0.0f, -1.0f);
-	//norm.DrawTextureToScreen(normTexture, -1.0f, 0.0f, 1.0f, 0.0f);
-	albedo.DrawTextureToScreen(albedoTexture, 0.0f, 1.0f, 0.0f, -1.0f);
-	//depth.DrawTextureToScreen(depthTexture, 0.0f, 1.0f, 1.0f, 0.0f);
-	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
+
 }
 
 void Renderer::DestroyRenderer()
@@ -194,16 +192,16 @@ void Renderer::DestroyRenderer()
 void Renderer::BindGBufferTextures() const
 {
 	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(glGetUniformLocation(resultShader.GetID(), "posTexture"), 0);
-	glBindTexture(GL_TEXTURE_2D, posTexture);
+	glUniform1i(glGetUniformLocation(resultShader.GetID(), "albedoTexture"), 0);
+	glBindTexture(GL_TEXTURE_2D, albedoTexture);
 
 	glActiveTexture(GL_TEXTURE1);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "normTexture"), 1);
 	glBindTexture(GL_TEXTURE_2D, normTexture);
 
 	glActiveTexture(GL_TEXTURE2);
-	glUniform1i(glGetUniformLocation(resultShader.GetID(), "albedoTexture"), 2);
-	glBindTexture(GL_TEXTURE_2D, albedoTexture);
+	glUniform1i(glGetUniformLocation(resultShader.GetID(), "posTexture"), 2);
+	glBindTexture(GL_TEXTURE_2D, posTexture);
 
 	glActiveTexture(GL_TEXTURE3);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "depthTexture"), 3);
@@ -237,6 +235,8 @@ void Renderer::RenderGBufferResult() const
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+
+
 
 	UnbindGBufferTextures();
 

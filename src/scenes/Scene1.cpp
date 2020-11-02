@@ -17,24 +17,25 @@ Scene1::~Scene1()
 bool Scene1::OnCreate()
 {
 	
-	std::cout << "scene1 loaded" << std::endl;
+	std::cout << "=================\n" << "scene1 load start" << std::endl << "=================\n";
 	objectList = new Manager();
 
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
+	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 700);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 50.0f, 0.0f));
+	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
+
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
 	//objectList->AddGameObject(fog, 4);
+	objectList->AddGameObject(light, 5);
 
-	//This init function separates any game objects that have rigid bodies for their physics calculations
 	objectList->Init();
-	
 	
 	//Scene::SaveMapData();
 	//LoadMapData();
@@ -45,6 +46,7 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
+	delete mouseRay;
 	delete objectList;
 	objectList = nullptr;
 
@@ -65,6 +67,7 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
+
 }
 
 

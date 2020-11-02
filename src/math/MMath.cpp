@@ -3,8 +3,6 @@
 using namespace MATH;
 
 
-///Tested Feb 2 2013 SSF
-
 Matrix4 MATH::MMath::calcRotationMatrix(const Vec3& euler)
 {
 	return	MMath::rotate(euler.x * DEGREES_TO_RADIANS, Vec3(1.0f, 0.0f, 0.0f)) *
@@ -12,28 +10,51 @@ Matrix4 MATH::MMath::calcRotationMatrix(const Vec3& euler)
 		    MMath::rotate(euler.z * DEGREES_TO_RADIANS, Vec3(0.0f, 0.0f, 1.0f));
 }
 
-Vec3 MATH::MMath::calcEulerAngles(const Matrix4& rotMatrix)
+Vec3 MATH::MMath::calcEulerAngles(const Matrix4& rot)
 {
-	float sy = sqrt(rotMatrix[0] * rotMatrix[0] + rotMatrix[1] * rotMatrix[1]);
-
-	bool singular = sy < 1e-6;
-
 	Vec3 euler;
 
-	if (!singular)
+	Matrix4 rotMatrix = rot * DEGREES_TO_RADIANS;
+	float botLeft = fabs(rotMatrix[2]);
+
+	if (botLeft < 1.0f - VERY_SMALL || botLeft > 1.0f + VERY_SMALL)
 	{
-		euler.x = atan2(rotMatrix[6], rotMatrix[10]);
-		euler.y = atan2(-rotMatrix[2], sy);
-		euler.z = atan2(rotMatrix[0], rotMatrix[1]);
+		euler.y = -asin(rotMatrix[2]);
+
+		float cos1 = cos(euler.y);
+
+#define PI_THRESH 0.01
+
+		euler.x = atan2(rotMatrix[6] / cos1, rotMatrix[10] / cos1);
+		if (fabs(euler.x) < M_PI + PI_THRESH && fabs(euler.x > M_PI - PI_THRESH))
+		{
+			euler.x = 0.0f;
+		}
+
+		euler.z = atan2(rotMatrix[1] / cos1, rotMatrix[0] / cos1);
+		if (fabs(euler.z) < M_PI + PI_THRESH && fabs(euler.z > M_PI - PI_THRESH))
+		{
+			euler.z = 0.0f;
+		}
+#
 	}
 	else
 	{
-		euler.x = atan2(-rotMatrix[5], rotMatrix[9]);
-		euler.y = atan2(-rotMatrix[3], sy);
 		euler.z = 0;
-	}
 
-	return euler * DEGREES_TO_RADIANS;
+		if (rotMatrix[2] < 0)
+		{
+			euler.y = M_PI * 0.5f;
+			euler.x = euler.z + atan2(rotMatrix[1], rotMatrix[2]);
+		}
+		else
+		{
+			euler.y = -M_PI * 0.5f;
+			euler.x = -euler.z + atan2(-rotMatrix[1], -rotMatrix[2]);
+		}
+	}
+	float rad2deg = 180.0f / 3.1415926f;
+	return euler;// * rad2deg;
 }
 
 Matrix4 MMath::rotate(float degrees_, float x_, float y_, float z_){

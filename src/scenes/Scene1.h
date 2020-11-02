@@ -8,6 +8,7 @@
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
 #include "imgui/imgui.h"
+#include "custom/LightObject.h"
 
 /**< Forward declaring classes that we will use  */
 class MouseRay;
@@ -42,6 +43,9 @@ private:
 	//! Debug Pointer
 	/*! Used for all of our debug functions */
 	Debug debug;
+
+	LightObject* light;
+
 private:
 	//! GameObject Pointer
 	/*! Stores our object that was most recently selected using our mouseRay */

@@ -37,25 +37,6 @@ Manager::~Manager()
 void Manager::Init()
 {
 	renderer.Init();
-
-	for (GameObject* g : gameObjects)
-	{
-		if (g->hasComponent<RigidBody3D>())
-		{
-			rigidBodies.emplace_back(&g->getComponent<RigidBody3D>());
-		}
-
-		if (g->hasComponent<MeshRenderer>())
-		{
-			renderer.AddMeshRenderer(&g->getComponent<MeshRenderer>());
-		}
-
-		if (g->hasComponent<LightComponent>())
-		{
-			renderer.AddLight(&g->getComponent<LightComponent>());
-		}
-	}
-
 }
 
 void Manager::Update(const float deltaTime)
@@ -72,17 +53,24 @@ void Manager::Update(const float deltaTime)
 }
 void Manager::Render() const
 {
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	//Clear the default framebuffer
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	//Bind the gbuffer and clear it
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, renderer.gBuffer);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
+
+#ifdef _DEBUG
 	for (auto g : gameObjects)
 	{
-		if (!g->hasComponent<MeshRenderer>())
-		{
-			g->Render();
-		}
+		g->DrawDebugGeometry();
 	}
+#endif // DEBUG
+
 	renderer.Render();
 }
 
@@ -125,10 +113,13 @@ GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 	{
 		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
 	}
-
 	if (go->hasComponent<MeshRenderer>())
 	{
 		renderer.AddMeshRenderer(&go->getComponent<MeshRenderer>());
+	}
+	if (go->hasComponent<LightComponent>())
+	{
+		renderer.AddLight(&go->getComponent<LightComponent>());
 	}
 
 	std::cout << go->name << " added to objectList" << std::endl;
