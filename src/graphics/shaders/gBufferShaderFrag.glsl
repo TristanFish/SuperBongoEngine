@@ -29,5 +29,5 @@ void main()
 	gStencil = 1;
 
 
-	gAlbedo += (texture(diffuseTex1, vertUV) + meshColor) * meshColorTint + vec4(lights[0].lAmb, 0.0) ;
+	gAlbedo += (texture(diffuseTex1, vertUV) + meshColor) * meshColorTint;
 }

@@ -46,17 +46,13 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
-	delete mouseRay;
 	delete objectList;
 	objectList = nullptr;
 
 	delete mouseRay;
 	mouseRay = nullptr;
 
-	
-
 	pElement = nullptr;
-
 }
 
 void Scene1::Update(const float deltaTime)
