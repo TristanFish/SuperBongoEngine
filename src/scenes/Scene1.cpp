@@ -2,7 +2,6 @@
 #include "Scene1.h"
 #include "custom/Player.h"
 #include "core/Debug.h"
-#include <gl/GLU.h>
 #include "custom/MouseRay.h"
 
 Scene1::Scene1()
@@ -16,7 +15,7 @@ Scene1::~Scene1()
 bool Scene1::OnCreate()
 {
 	
-	std::cout << "scene1 loaded" << std::endl;
+	std::cout << "=================\n" << "scene1 load start" << std::endl << "=================\n";
 	objectList = new Manager();
 
 	//Setup the player
@@ -25,16 +24,18 @@ bool Scene1::OnCreate()
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 4.0f, 0.0f), 500);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
 	//objectList->AddGameObject(fog, 4);
+	objectList->AddGameObject(light, 5);
 
 	//This init function separates any gameobjects that have rigidbodies for their physics calculations
 	objectList->Init();
 
-	//SaveMapData();
+	SaveMapData();
 	//LoadMapData();
 	return false;
 }
@@ -43,6 +44,7 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
+	delete mouseRay;
 	delete objectList;
 	objectList = nullptr;
 }
@@ -83,12 +85,12 @@ void Scene1::Reset()
 
 void Scene1::SaveMapData()
 {
-	SaveMapData();
+	Scene::SaveMapData();
 }
 
 void Scene1::LoadMapData()
 {
-	LoadMapData();	
+	Scene::LoadMapData();	
 }
 
 bool Scene1::CheckIntersection(MouseRay* ray, const Vec3& origin)

@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "core/ModelManager.h"
 #include "core/TextureManager.h"
-
+#include "core/InputManager.h"
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -39,6 +39,9 @@ void GameManager::Run()
 {
 
 	Timer::UpdateTimer();
+	//ImGui_ImplOpenGL3_NewFrame();
+	//ImGui_ImplSDL2_NewFrame(window->GetWindow());
+
 
 	while (isRunning)
 	{
@@ -46,24 +49,22 @@ void GameManager::Run()
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
 
+		//ImGui::NewFrame();
+		//ImGui::Begin("Test");
+		//ImGui::Text("Window");
+		//ImGui::End();
+		//ImGui::Render();
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame(window->GetWindow());
-		ImGui::NewFrame();
 
-		ImGui::Begin("Test");
-		ImGui::Text("Window");
-		ImGui::End();
-
-		ImGui::Render();
 		currentScene->Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
 	}
 
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
+	InputManager::RemoveInstance();
 	SDL_Quit();
 }
 
@@ -73,6 +74,8 @@ void GameManager::HandleEvents()
 
 	while(SDL_PollEvent(&event))
 	{
+		InputManager::GetInstance()->PollEvents(event);
+
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
 			isRunning = false;

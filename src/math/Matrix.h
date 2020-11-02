@@ -110,12 +110,43 @@ namespace  MATH {
 		}
 
 		/// Multiply a Vec4 by this matrix and return the resulting vector
-		inline  Vec4 operator* (const Vec4& v) const {
+		inline Vec4 operator* (const Vec4& v) const {
 			float x = v.x * m[0] + v.y * m[4] + v.z * m[8] + v.w * m[12];
 			float y = v.x * m[1] + v.y * m[5] + v.z * m[9] + v.w * m[13];
 			float z = v.x * m[2] + v.y * m[6] + v.z * m[10] + v.w * m[14];
 			float w = v.x * m[3] + v.y * m[7] + v.z * m[11] + v.w * m[15];
 			return Vec4(x, y, z, w);
+		}
+
+		inline const Matrix4 operator* (const float f) const
+		{
+			Matrix4 mat;
+
+			mat[0] = m[0] * f;
+			mat[1] = m[1] * f;
+			mat[2] = m[2] * f;
+			mat[3] = m[3] * f;
+			mat[4] = m[4] * f;
+			mat[5] = m[5] * f;
+			mat[6] = m[6] * f;
+			mat[7] = m[7] * f;
+			mat[8] = m[8] * f;
+			mat[9] = m[9] * f;
+			mat[10] = m[10] * f;
+			mat[11] = m[11] * f;
+			mat[12] = m[12] * f;
+			mat[13] = m[13] * f;
+			mat[14] = m[14] * f;
+			mat[15] = m[15] * f;
+
+			return mat;
+		}
+
+		inline const Matrix4 operator/ (const float f) const
+		{
+			Matrix4 mat = *this * (1.0f / f);
+
+			return mat;
 		}
 
 		/// Now I can use the structure itself as an array.

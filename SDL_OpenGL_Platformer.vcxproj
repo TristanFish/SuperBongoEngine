@@ -112,6 +112,7 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\InputManager.h" />
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="src\components\2D\RigidBodyComponent.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\graphics\Shader.h" />
+    <ClInclude Include="src\math\Quaternion.h" />
     <ClInclude Include="src\scenes\Scene.h" />
     <ClInclude Include="src\scenes\Scene1.h" />
     <ClInclude Include="src\components\2D\SpriteComponent.h" />
@@ -257,6 +259,7 @@
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\InputManager.cpp" />
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
@@ -287,6 +290,7 @@
     <ClCompile Include="src\core\Main.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\Transform.cpp" />
+    <ClCompile Include="src\math\Quaternion.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\scenes\Scene1.cpp" />
     <ClCompile Include="src\components\ECS.cpp" />
@@ -298,7 +302,6 @@
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\tiles\Tilemap.cpp" />
     <ClCompile Include="src\tiles\Tile.cpp" />
-    <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\TextureManager.cpp" />
   </ItemGroup>
@@ -342,8 +345,6 @@
     <None Include="src\graphics\shaders\InstanceVert.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
-    <None Include="src\graphics\shaders\ShaderText.glsl" />
-    <None Include="src\graphics\shaders\ShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
   </ItemGroup>
@@ -482,6 +483,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(Solutiondir)external\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

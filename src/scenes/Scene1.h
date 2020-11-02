@@ -8,6 +8,7 @@
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
 #include "imgui/imgui.h"
+#include "custom/LightObject.h"
 
 
 class MouseRay;
@@ -22,7 +23,8 @@ private:
 	TestModel* fog;
 	Plane* plane;
 	MouseRay* mouseRay;
-	Debug debug;
+	LightObject* light;
+
 public:
 	Scene1();
 	~Scene1();
