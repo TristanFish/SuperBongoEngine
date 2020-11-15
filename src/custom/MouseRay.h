@@ -14,6 +14,7 @@ private:
 	// Current position of the mouse on screen
 	MATH::Vec2 localMousePos;
 
+	MATH::Vec3 invRay;
 
 	// Converts the local Mouse Position to normal Coordinates 
 	MATH::Vec2 GetDeviceCoords(int x_, int y_);
@@ -24,23 +25,21 @@ private:
 	// Converts eye Coordinates to world Coordinates
 	MATH::Vec3 GetWorldCoords(MATH::Vec4 eyeCoords);
 
-	// Does the final calculation and then set's the currentRay
-	MATH::Vec3 CalaculateMouseRay();
 
 public:
 	MouseRay();
 	~MouseRay();
 
-	
 
+	int sign[3];
+	MATH::Vec3 invDir;
+	// Does the final calculation and then set's the currentRay
+	void CalaculateMouseRay();
 	const MATH::Vec3 GetCurrentRay() { return currentRay; }
+	//const MATH::Vec3 GetInvCurrentRay() { return MATH::Vec3(1.0 / currentRay.x, 1.0 / currentRay.y, 1.0 / currentRay.z); }
 
-	void Update(const float deltatime);
 	void HandleEvents(const SDL_Event& event);
 	
-
-
-
 };
 
 #endif

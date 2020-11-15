@@ -1,5 +1,8 @@
 #version 450
-out vec4 fragColor;
+layout (location = 0) out vec4 gAlbedo;
+layout (location = 1) out vec3 gNormal;
+layout (location = 2) out vec3 gPosition;
+layout (location = 3) out vec4 gDepth;
 
 in vec3 vertNormal;
 in vec2 vertUV;
@@ -9,5 +12,7 @@ uniform sampler2D diffuseTex1;
 
 void main()
 {
-	fragColor = texture(diffuseTex1, vertUV) + meshColor;
+	gAlbedo = texture(diffuseTex1, vertUV) + meshColor;
+	gNormal = vertNormal;
+	gDepth = vec4(vec3(gl_FragCoord.z), 1.0);
 }

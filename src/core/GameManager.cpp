@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "core/ModelManager.h"
 #include "core/TextureManager.h"
-
+#include "core/InputManager.h"
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -27,6 +27,7 @@ void GameManager::Init()
 	window = new Window();
 	window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
 
+
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 
@@ -37,7 +38,7 @@ void GameManager::Init()
 
 void GameManager::Run()
 {
-
+	
 	Timer::UpdateTimer();
 
 	while (isRunning)
@@ -46,17 +47,11 @@ void GameManager::Run()
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
 
-
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
-		ImGui::NewFrame();
 
-		ImGui::Begin("Test");
-		ImGui::Text("Window");
-		ImGui::End();
-
-		ImGui::Render();
 		currentScene->Render();
+		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 		SDL_Delay(Timer::SleepTime(fps));
@@ -64,6 +59,7 @@ void GameManager::Run()
 
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
+	InputManager::RemoveInstance();
 	SDL_Quit();
 }
 
@@ -73,6 +69,8 @@ void GameManager::HandleEvents()
 
 	while(SDL_PollEvent(&event))
 	{
+		InputManager::GetInstance()->PollEvents(event);
+
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
 			isRunning = false;

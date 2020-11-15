@@ -486,7 +486,8 @@
     <ClInclude Include="external\include\assimp\Vertex.h" />
     <ClInclude Include="external\include\assimp\XMLTools.h" />
     <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
-    <ClInclude Include="src\custom\Water.h" />
+    <ClInclude Include="src\core\InputManager.h" />
+    <ClInclude Include="src\math\Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -526,7 +527,6 @@
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
-    <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\Texture.cpp">
       <Filter>src\ECS</Filter>
@@ -557,7 +557,8 @@
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
-    <ClCompile Include="src\custom\Water.cpp" />
+    <ClCompile Include="src\core\InputManager.cpp" />
+    <ClCompile Include="src\math\Quaternion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -610,14 +611,6 @@
     </None>
     <None Include=".gitignore" />
     <None Include="external\dll\assimp-vc142-mtd.dll" />
-    <None Include="src\graphics\shaders\ShaderText.glsl">
-      <Filter>src\Shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\ShaderVert.glsl">
-      <Filter>src\Shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
@@ -639,8 +632,8 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
-    <None Include="src\graphics\shaders\WaterFrag.glsl" />
-    <None Include="src\graphics\shaders\WaterVert.glsl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

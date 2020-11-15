@@ -9,7 +9,7 @@ std::unordered_map<std::string, Model> ModelManager::models;
 void ModelManager::LoadAllModels()
 {
 	using namespace std::filesystem;
-	std::cout << "Loading all models" << std::endl;
+	std::cout << "=================\n" << "Loading all models" << std::endl << "=================\n";
 	for (auto& folder : std::filesystem::recursive_directory_iterator("resources/models"))
 	{
 		if (folder.path().filename().extension() == ".mtl")
@@ -25,7 +25,6 @@ Model& ModelManager::GetModel(const std::string& name)
 {
 	if (models.find(name) == models.end())
 	{
-		#undef NDEBUG
 		std::cerr << "No model found with the name: " << name << std::endl;
 		assert(false && "Closing program");
 	}

@@ -23,10 +23,15 @@ void LightObject::Update(const float deltaTime)
 
 void LightObject::Render() const
 {
-	LightComponent::Render();
+
 }
 
 void LightObject::HandleEvents(const SDL_Event& event)
 {
 	LightComponent::HandleEvents(event);
+}
+
+void LightObject::DrawDebugGeometry()
+{
+	light.DrawCube(transform.pos, Vec3(2.0f), false, Vec4(1.0f, 1.0f, 0.0f, 1.0f));
 }

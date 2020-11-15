@@ -61,7 +61,7 @@ void MeshRenderer::Render() const
 void MeshRenderer::Render(const Shader& shader) const
 {
 	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
-
+	shader.TakeInUniformVec4("meshColorTint", meshColorTint);
 	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
 	shader.TakeInUniformMat3("normalMatrix", normMat);

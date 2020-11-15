@@ -27,6 +27,13 @@ private:
 	float RunSpeed;
 	float moveSpeed;
 	float turnSpeed;
+
+	bool mouseDown;
+	Vec3 mouseStart;
+	Vec3 mouseEnd;
+	Matrix4 lookMatrix;
+
+	void OnMouseMove(int x, int y);
 };
 
 #endif

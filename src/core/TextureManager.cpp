@@ -8,11 +8,11 @@ std::unordered_map<std::string, Texture> TextureManager::textures;
 void TextureManager::LoadAllTextures()
 {
 	using namespace std::filesystem;
-	std::cout << "Loading all textures" << std::endl;
+	std::cout << "=================\n" << "Loading all textures" << std::endl << "=================\n";
 	for (auto& folder : std::filesystem::recursive_directory_iterator("resources/textures"))
 	{
 		textures[folder.path().filename().string()] = Texture(relative(folder.path()).string());
-		std::cout << folder.path().filename().string() << std::endl;
+		std::cout  << folder.path().filename().string() << std::endl;
 	}
 }
 

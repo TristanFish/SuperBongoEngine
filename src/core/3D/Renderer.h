@@ -12,6 +12,7 @@ class Renderer
 public:
 	std::vector<MeshRenderer*> meshRenderers;
 	std::vector<LightComponent*> lights;
+	GLuint gBuffer;
 
 	void Init();
 	void AddMeshRenderer(MeshRenderer* mr);
@@ -22,7 +23,6 @@ private:
 	Shader gBufferShader;
 	Shader resultShader;
 
-	GLuint gBuffer;
 	GLuint depthRenderBuffer;
 
 	GLuint depthTexture;
