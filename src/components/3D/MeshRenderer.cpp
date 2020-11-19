@@ -50,7 +50,7 @@ void MeshRenderer::Render() const
 		shader.RunShader();
 		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		//shader.TakeInUniformMat3("normalMatrix", normMat);
+		shader.TakeInUniformMat3("normalMatrix", normMat);
 		AttachUniforms();
 		model->meshes[0].RenderInstanced(shader, model->meshes, instanceAmount);
 		glUseProgram(0);

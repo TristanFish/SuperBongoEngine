@@ -66,9 +66,13 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 		VMath::mag(distance) < (abs(sphere->collider.maxVertices.y) + abs(sphere->collider.minVertices.y)) / 2 ||
 		VMath::mag(distance) < (abs(sphere->collider.maxVertices.z) + abs(sphere->collider.minVertices.z)) / 2)
 	{
+		sphere = nullptr;
+		box = nullptr;
 		return true;
 	}
 	
+	sphere = nullptr;
+	box = nullptr;
 	return false;
 }
 

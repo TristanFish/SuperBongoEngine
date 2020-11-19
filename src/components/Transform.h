@@ -10,9 +10,9 @@ class Transform
 private:
 
 	MATH::Matrix4 modelMatrix;
-	MATH::Matrix4 rotationMatrix;
 	
 public:
+	MATH::Matrix4 rotationMatrix;
 	MATH::Vec3 pos, rotation, scale;
 
 	Transform();

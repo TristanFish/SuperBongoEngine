@@ -24,7 +24,6 @@ public:
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
-
 	virtual ~Component() { gameobject = nullptr; }
 };
 
@@ -54,6 +53,7 @@ public:
 	virtual void Update(const float deltaTime) = 0;
 	virtual void Render() const = 0;
 	virtual void HandleEvents(const SDL_Event& event) = 0;
+	virtual void DrawDebugGeometry() {};
 
 	inline bool isActive()const { return active; }
 	inline void SetActive(bool a) { active = a; }

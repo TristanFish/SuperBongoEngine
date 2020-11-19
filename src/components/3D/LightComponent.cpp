@@ -16,7 +16,6 @@ void LightComponent::Update(const float deltaTime)
 
 void LightComponent::Render() const
 {
-	//lightCube.DrawCube(gameobject->transform.GetPosition(), Vec3(5.0f, 5.0f, 5.0f), false, Vec3(1.0f, 0.0f, 0.0f));
 }
 
 void LightComponent::HandleEvents(const SDL_Event& event)

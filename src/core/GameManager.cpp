@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "core/ModelManager.h"
 #include "core/TextureManager.h"
-
+#include "core/InputManager.h"
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -40,14 +40,12 @@ void GameManager::Run()
 {
 	
 	Timer::UpdateTimer();
-	
 
 	while (isRunning)
 	{
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
-
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
@@ -62,6 +60,7 @@ void GameManager::Run()
 
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
+	InputManager::RemoveInstance();
 	SDL_Quit();
 }
 
@@ -71,6 +70,8 @@ void GameManager::HandleEvents()
 	while(SDL_PollEvent(&event))
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
+		InputManager::GetInstance()->PollEvents(event);
+
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
 			isRunning = false;

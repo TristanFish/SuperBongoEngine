@@ -122,9 +122,9 @@ void Mesh::RenderInstanced(const Shader& shader, const std::vector<Mesh>& meshes
 	}
 
 	
-		glBindVertexArray(meshes[0].GetVAO());
-		glDrawElementsInstanced(GL_TRIANGLES, meshes[0].indices.size(), GL_UNSIGNED_INT, 0, amount);
-		glBindVertexArray(0);
+	glBindVertexArray(meshes[0].GetVAO());
+	glDrawElementsInstanced(GL_TRIANGLES, meshes[0].indices.size(), GL_UNSIGNED_INT, 0, amount);
+	glBindVertexArray(0);
 
 }
 

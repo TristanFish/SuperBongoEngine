@@ -7,6 +7,8 @@
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
 #include "custom/Grass.h"
+#include "imgui/imgui.h"
+#include "custom/LightObject.h"
 
 /**< Forward declaring classes that we will use  */
 class Player;
@@ -17,6 +19,9 @@ class Tilemap;
 class Scene1 : public Scene
 {
 private:
+
+	LightObject* light;
+
 	//! Player Pointer
 	/*! Used for movement and interacting with the world  */
 	Player* player; 
@@ -36,6 +41,9 @@ private:
 	//! Debug Pointer
 	/*! Used for all of our debug functions */
 	Debug debug;
+
+
+
 
 public:
 	//! Scene 1 Constructor

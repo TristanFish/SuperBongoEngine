@@ -3,9 +3,7 @@
 #include "graphics/Shader.h"
 #include "components/ECS.h"
 
-
-
-enum class RenderProperties : char
+enum class RenderProperties : unsigned char
 {
 	NONE				= 0b00000000,
 	LIGHTING			= 0b00000001,
@@ -13,7 +11,9 @@ enum class RenderProperties : char
 	RECIEVES_SHADOWS	= 0b00000100,
 	BLOOM				= 0b00001000,
 	PHYSICS_MOVEMENT	= 0b00010000,
-	OVERRIDE_RENDERER	= 0b00100000
+	TRANSPARENT			= 0b00100000,
+	WATER				= 0b01000000,
+	OVERRIDE_RENDERER	= 0b10000000
 
 };
 
@@ -22,10 +22,11 @@ inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)
 	return (static_cast<char>(rp1) & static_cast<char>(rp2));
 }
 
-
 class MeshRenderer : public Component
 {
 public:
+	RenderProperties renderFlags;
+	Shader shader;
 
 	MeshRenderer();
 	MeshRenderer(const char* modelPath);
@@ -59,11 +60,9 @@ public:
 	void SetInstanceID(const int id)  { instanceID = id; }
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
-	RenderProperties renderFlags;
-	Shader shader;
-	Model* model;
 
 private:
+	Model* model;
 	int instanceID;
 
 	unsigned int instanceAmount;

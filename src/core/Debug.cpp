@@ -19,7 +19,7 @@ Debug::~Debug()
 	}
 }
 
-void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec3 color) const
+void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec4 color) const
 {
 
 }
@@ -37,10 +37,10 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	{
 		float quadVertices[] =
 		{	//positions							//uvs
-			left,  top, 0.0f,		0.0f, 0.0f,
-			left,  bot, 0.0f,		0.0f, 1.0f,
-			right, top, 0.0f,		1.0f, 0.0f,
-			right, bot, 0.0f,		1.0f, 1.0f,
+			left,  top, -0.9f,		0.0f, 0.0f,
+			left,  bot, -0.9f,		0.0f, 1.0f,
+			right, top, -0.9f,		1.0f, 0.0f,
+			right, bot, -0.9f,		1.0f, 1.0f,
 		};
 
 		glGenVertexArrays(1, &textureVAO);
@@ -59,6 +59,7 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 		glBindVertexArray(0);
 	}
 	TexShader.RunShader();
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texID);
 
 	glBindVertexArray(textureVAO);
@@ -66,15 +67,17 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	glBindVertexArray(0);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glUseProgram(0);
 }
 
 void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 {
-	if (TexShader.GetID() == 0)
+	if (ObjShader.GetID() == 0)
 	{
-		TexShader.CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+		ObjShader.CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 	}
-	if (textureVAO == 0)
+	if (cubeVAO == 0)
 	{
 		float cubeVertices[] =
 		{	//positions										
@@ -129,7 +132,7 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0); 
 		
 		glBindVertexArray(0);
 	}
@@ -138,11 +141,11 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 	model.loadIdentity();
 	model = model * MMath::translate(position) * MMath::scale(size);
 
-	TexShader.RunShader();
-	TexShader.TakeInUniformMat4("modelMatrix", model);
-	TexShader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-	TexShader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getProjectionMatrix());
-	TexShader.TakeInUniformVec4("meshColor", color);
+	ObjShader.RunShader();
+	ObjShader.TakeInUniformMat4("modelMatrix", model);
+	ObjShader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+	ObjShader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	ObjShader.TakeInUniformVec4("meshColor", color);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -157,4 +160,10 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 	}
 	glBindVertexArray(0);
 
+	glUseProgram(0);
+
+}
+
+void Debug::DrawLine(Vec3 start, Vec3 end, Vec4 color)
+{
 }

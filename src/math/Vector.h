@@ -201,7 +201,7 @@ namespace MATH {
 		float  w;
 
 		/// Here's a set of constructors
-		inline Vec4( float s = float(0.0) ){ x=s; y=s; z=s; w=s;}
+		inline explicit Vec4( float s = float(0.0) ){ x=s; y=s; z=s; w=s;}
 		inline Vec4( float _x, float _y, float _z, float _w){ x=_x; y=_y; z=_z; w=_w;} 
 		inline Vec4( const Vec4& v ) { 
 			x = v.x;  

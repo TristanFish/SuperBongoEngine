@@ -2,9 +2,9 @@
 #define RIGIDBODY_H
 
 #include "components/ECS.h"
-#include "components/Components.h"
 #include "math/Vector.h"
 #include "components/3D/Collider3D.h"
+#include "components/3D/MeshRenderer.h"
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
@@ -77,7 +77,6 @@ public:
 	void ApplyConstantForce(const MATH::Vec3& force);
 	void SetConstantForce(const MATH::Vec3& force);
 
-
 	void ApplyImpulseTorque(const MATH::Vec3 torque);
 	void ApplyConstantTorque(const MATH::Vec3 torque);
 
@@ -88,7 +87,7 @@ public:
 	inline bool isMoveable() { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
 
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) = 0;
+	virtual void OnCollisionEnter(RigidBody3D& otherBody) {};
 	//Getters and setters
 #pragma region getters/setters
 	inline MATH::Vec3 GetPosition() { return *pos; }

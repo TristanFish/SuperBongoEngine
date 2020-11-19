@@ -398,6 +398,99 @@
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\math\Ray.h" />
     <ClInclude Include="src\graphics\CustomUI.h" />
+
+    <ClInclude Include="src\audio\AudioListenerComponent.h" />
+    <ClInclude Include="src\audio\AudioManager.h" />
+    <ClInclude Include="src\audio\AudioSourceComponent.h" />
+    <ClInclude Include="src\audio\AudioUtility.h" />
+    <ClInclude Include="src\audio\SoundAttributes.h" />
+    <ClInclude Include="external\include\fmod\fmod.h" />
+    <ClInclude Include="external\include\fmod\fmod.hpp" />
+    <ClInclude Include="external\include\fmod\fmod_codec.h" />
+    <ClInclude Include="external\include\fmod\fmod_common.h" />
+    <ClInclude Include="external\include\fmod\fmod_dsp.h" />
+    <ClInclude Include="external\include\fmod\fmod_dsp_effects.h" />
+    <ClInclude Include="external\include\fmod\fmod_errors.h" />
+    <ClInclude Include="external\include\fmod\fmod_output.h" />
+    <ClInclude Include="external\include\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="external\include\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="external\include\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="external\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="external\include\assimp\aabb.h" />
+    <ClInclude Include="external\include\assimp\ai_assert.h" />
+    <ClInclude Include="external\include\assimp\anim.h" />
+    <ClInclude Include="external\include\assimp\BaseImporter.h" />
+    <ClInclude Include="external\include\assimp\Bitmap.h" />
+    <ClInclude Include="external\include\assimp\BlobIOSystem.h" />
+    <ClInclude Include="external\include\assimp\ByteSwapper.h" />
+    <ClInclude Include="external\include\assimp\camera.h" />
+    <ClInclude Include="external\include\assimp\cexport.h" />
+    <ClInclude Include="external\include\assimp\cfileio.h" />
+    <ClInclude Include="external\include\assimp\cimport.h" />
+    <ClInclude Include="external\include\assimp\color4.h" />
+    <ClInclude Include="external\include\assimp\config.h" />
+    <ClInclude Include="external\include\assimp\CreateAnimMesh.h" />
+    <ClInclude Include="external\include\assimp\DefaultIOStream.h" />
+    <ClInclude Include="external\include\assimp\DefaultIOSystem.h" />
+    <ClInclude Include="external\include\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="external\include\assimp\Defines.h" />
+    <ClInclude Include="external\include\assimp\defs.h" />
+    <ClInclude Include="external\include\assimp\Exceptional.h" />
+    <ClInclude Include="external\include\assimp\Exporter.hpp" />
+    <ClInclude Include="external\include\assimp\fast_atof.h" />
+    <ClInclude Include="external\include\assimp\GenericProperty.h" />
+    <ClInclude Include="external\include\assimp\Hash.h" />
+    <ClInclude Include="external\include\assimp\Importer.hpp" />
+    <ClInclude Include="external\include\assimp\importerdesc.h" />
+    <ClInclude Include="external\include\assimp\IOStream.hpp" />
+    <ClInclude Include="external\include\assimp\IOStreamBuffer.h" />
+    <ClInclude Include="external\include\assimp\IOSystem.hpp" />
+    <ClInclude Include="external\include\assimp\irrXMLWrapper.h" />
+    <ClInclude Include="external\include\assimp\light.h" />
+    <ClInclude Include="external\include\assimp\LineSplitter.h" />
+    <ClInclude Include="external\include\assimp\LogAux.h" />
+    <ClInclude Include="external\include\assimp\Logger.hpp" />
+    <ClInclude Include="external\include\assimp\LogStream.hpp" />
+    <ClInclude Include="external\include\assimp\Macros.h" />
+    <ClInclude Include="external\include\assimp\material.h" />
+    <ClInclude Include="external\include\assimp\MathFunctions.h" />
+    <ClInclude Include="external\include\assimp\matrix3x3.h" />
+    <ClInclude Include="external\include\assimp\matrix4x4.h" />
+    <ClInclude Include="external\include\assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="external\include\assimp\mesh.h" />
+    <ClInclude Include="external\include\assimp\metadata.h" />
+    <ClInclude Include="external\include\assimp\NullLogger.hpp" />
+    <ClInclude Include="external\include\assimp\ParsingUtils.h" />
+    <ClInclude Include="external\include\assimp\pbrmaterial.h" />
+    <ClInclude Include="external\include\assimp\postprocess.h" />
+    <ClInclude Include="external\include\assimp\Profiler.h" />
+    <ClInclude Include="external\include\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="external\include\assimp\qnan.h" />
+    <ClInclude Include="external\include\assimp\quaternion.h" />
+    <ClInclude Include="external\include\assimp\RemoveComments.h" />
+    <ClInclude Include="external\include\assimp\scene.h" />
+    <ClInclude Include="external\include\assimp\SceneCombiner.h" />
+    <ClInclude Include="external\include\assimp\SGSpatialSort.h" />
+    <ClInclude Include="external\include\assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="external\include\assimp\SmoothingGroups.h" />
+    <ClInclude Include="external\include\assimp\SpatialSort.h" />
+    <ClInclude Include="external\include\assimp\StandardShapes.h" />
+    <ClInclude Include="external\include\assimp\StreamReader.h" />
+    <ClInclude Include="external\include\assimp\StreamWriter.h" />
+    <ClInclude Include="external\include\assimp\StringComparison.h" />
+    <ClInclude Include="external\include\assimp\StringUtils.h" />
+    <ClInclude Include="external\include\assimp\Subdivision.h" />
+    <ClInclude Include="external\include\assimp\texture.h" />
+    <ClInclude Include="external\include\assimp\TinyFormatter.h" />
+    <ClInclude Include="external\include\assimp\types.h" />
+    <ClInclude Include="external\include\assimp\vector2.h" />
+    <ClInclude Include="external\include\assimp\vector3.h" />
+    <ClInclude Include="external\include\assimp\version.h" />
+    <ClInclude Include="external\include\assimp\Vertex.h" />
+    <ClInclude Include="external\include\assimp\XMLTools.h" />
+    <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="src\core\InputManager.h" />
+    <ClInclude Include="src\math\Quaternion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -437,7 +530,6 @@
     <ClCompile Include="src\core\2D\Physics2D.cpp" />
     <ClCompile Include="src\core\3D\Physics3D.cpp" />
     <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
-    <ClCompile Include="src\graphics\Vertex.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\Texture.cpp">
       <Filter>src\ECS</Filter>
@@ -465,6 +557,14 @@
     <ClCompile Include="src\graphics\Model.cpp" />
     <ClCompile Include="src\math\Ray.cpp" />
     <ClCompile Include="src\graphics\CustomUI.cpp" />
+
+    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\audio\AudioUtility.cpp" />
+    <ClCompile Include="src\audio\SoundAttributes.cpp" />
+    <ClCompile Include="src\core\InputManager.cpp" />
+    <ClCompile Include="src\math\Quaternion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -517,14 +617,6 @@
     </None>
     <None Include=".gitignore" />
     <None Include="external\dll\assimp-vc142-mtd.dll" />
-    <None Include="src\graphics\shaders\ShaderText.glsl">
-      <Filter>src\Shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\ShaderVert.glsl">
-      <Filter>src\Shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
     <None Include="src\graphics\shaders\2DTextureVert.glsl" />
     <None Include="src\graphics\shaders\InstanceFrag.glsl" />
@@ -537,6 +629,17 @@
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
+    <None Include="external\dll\fmodL.dll" />
+    <None Include="external\include\assimp\color4.inl" />
+    <None Include="external\include\assimp\material.inl" />
+    <None Include="external\include\assimp\matrix3x3.inl" />
+    <None Include="external\include\assimp\matrix4x4.inl" />
+    <None Include="external\include\assimp\quaternion.inl" />
+    <None Include="external\include\assimp\SmoothingGroups.inl" />
+    <None Include="external\include\assimp\vector2.inl" />
+    <None Include="external\include\assimp\vector3.inl" />
+    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
+    <None Include="src\graphics\shaders\DefaultVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -558,6 +661,7 @@
       <Filter>external\lib</Filter>
     </Library>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
+    <Library Include="external\lib\fmodL_vc.lib" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\tiles\Map1.txt" />
