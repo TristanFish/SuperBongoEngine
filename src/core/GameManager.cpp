@@ -97,3 +97,4 @@ void GameManager::ReloadCurrentScene()
 {
 	currentScene->Reset();
 }
+

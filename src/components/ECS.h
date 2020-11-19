@@ -39,12 +39,13 @@ protected:
 public:
 	const char* name;
 
+	bool isMenuActive = false;
+
 	// Object ID is used so we know what object is being spawned 
 	// all objects that inherit from grass will have the same ID ext
 	int objectID;
 
 	Transform transform;
-
 
 	GameObject();
 
@@ -105,14 +106,11 @@ public:
 	//Adds a gameobject with a name and position
 	GameObject& AddGameObject(GameObject* go, unsigned int objID);
 
-	const int GetNumObjects() { return gameObjects.size(); }  
+	const int GetNumObjects() { return gameObjects.size(); }
 
 	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
 
 	void CheckCollisions();
-
-	// This bool is how we control if the object menu is active or not
-	bool Is_Object_Menu_Active = false;
 };
 
 #endif 

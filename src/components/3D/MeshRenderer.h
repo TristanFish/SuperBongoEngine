@@ -51,6 +51,8 @@ public:
 	 Vec3 GetMaxVector() const { return model->p_max; }
 
 	 Vec4 meshColorTint = Vec4(1.0);
+	 void SetColorTint(const Vec4 tint_) { meshColorTint = tint_; }
+
 	 // Getter for meshes
 	const std::vector<Mesh>& GetMeshes() const { return model->meshes; };
 
@@ -63,6 +65,8 @@ public:
 
 private:
 	int instanceID;
+
 	unsigned int instanceAmount;
+
 	// Used For Axis Aligned Binding Boxes
 };

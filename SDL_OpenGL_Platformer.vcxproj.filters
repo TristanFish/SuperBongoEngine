@@ -397,6 +397,7 @@
     <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\math\Ray.h" />
+    <ClInclude Include="src\graphics\CustomUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -463,6 +464,7 @@
     <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
     <ClCompile Include="src\math\Ray.cpp" />
+    <ClCompile Include="src\graphics\CustomUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

@@ -1,5 +1,8 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
+#include "custom/Plane.h"
+#include "custom/MouseRay.h"
+#include <math.h>
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
  const char* Scene::CheckAtributeValue(int i) const
@@ -9,11 +12,135 @@
 	if (i == 0) { value = "X"; }
 	if (i == 1) { value = "Y"; }
 	if (i == 2) { value = "Z"; }
-
+	if (i == 3) { value = "W"; }
 	return value;
 }
 
-void Scene::SaveMapData() const
+ void Scene::CreateObjWithID(Vec3 pos_, Vec3 rot_, Vec3 scale_, const char* name_, const int& ID) const
+ {
+	 switch (ID)
+	 {
+	 case 3:
+		 Plane * newPlane_;
+		 newPlane_ = new Plane(name_, pos_);
+		 newPlane_->SetRotation(rot_);
+		 newPlane_->SetScale(scale_);
+		 objectList->AddGameObject(newPlane_, ID);
+		 break;
+	 case 4:
+		 TestModel * newTestModel;
+		 newTestModel = new TestModel(name_, pos_);
+		 newTestModel->SetRotation(rot_);
+		 newTestModel->SetScale(scale_);
+		 objectList->AddGameObject(newTestModel, ID);
+		 break;
+	 default:
+		 break;
+	 }
+
+ }
+
+ bool Scene::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
+ {
+	 Vec3 bounds[2];
+	 bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
+
+
+	 bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
+
+	 
+			
+	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
+	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
+
+	 float tmin = std::min(tx1, tx2);
+	 float tmax = std::max(tx1, tx2);
+
+	 float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
+	 float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
+
+	 tmin = std::max(tmin, std::min(ty1, ty2));
+	 tmax = std::min(tmax, std::max(ty1, ty2));
+
+	 float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
+	 float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
+
+	 tmin = std::max(tmin, std::min(tz1, tz2));
+	 tmax = std::min(tmax, std::max(tz1, tz2));
+
+
+	 return tmax >= tmin;
+ }
+
+ 
+
+
+ void Scene::Render() const
+ {
+	 ImGui::NewFrame();
+	 // Let's the use add game objects
+
+	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 {
+		 propertiesPannels[i]->Render();
+	 }
+
+	 // Displays panel that allows user to add gameobjects at runtime
+	 bool enabled = true;
+	 static int objID = 2;
+	 ImGui::Begin("Add Game Object", &enabled);
+	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
+
+	 // Blank variables that can be changed 
+	 static char* name_ = new char();
+	 static Vec3 Pos_ = Vec3(0.0f);
+	 static Vec3 Rot_ = Vec3(0.0f);
+	 static Vec3 Scale_ = Vec3(1.0f);
+
+
+	 if (ImGui::InputText("Mesh Name", name_, size_t(20)))
+	 {
+
+	 }
+	 ImGui::DragFloat3("Position", Pos_);
+	 ImGui::DragFloat3("Rotation", Rot_);
+	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
+	 if (ImGui::Button("Create Object"))
+	 {
+		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
+		 name_ = new char();
+		 Pos_ = Vec3(0.0f);
+		 Rot_ = Vec3(0.0f);
+		 Scale_ = Vec3(1.0f);
+	 }
+	 ImGui::End();
+
+ }
+
+ void Scene::HandleEvents(const SDL_Event& event)
+ {
+	 mouseRay->HandleEvents(event);
+	 if (event.type == SDL_MOUSEBUTTONDOWN)
+	 {
+		 mouseRay->CalaculateMouseRay();
+		 for (auto obj : objectList->GetGameObjects())
+		 {
+			 if (obj->hasComponent<MeshRenderer>())
+			 {
+				if (CheckIntersection(mouseRay, mouseRay->GetCurrentRay()->Origin, obj))
+				{
+					std::cout << "Mouse Hit - " << obj->name << std::endl;
+					if(!obj->isMenuActive)
+						propertiesPannels.push_back(new CustomUI::PropertiesPanel(obj));
+					obj->isMenuActive = true;
+					return;
+				}
+			 }
+		 }
+	 }
+ }
+
+ void Scene::SaveMapData() const
 {
 	XMLDocument MapData;
 	XMLNode* pRoot = MapData.NewElement("Root");
@@ -41,6 +168,7 @@ void Scene::SaveMapData() const
 		XMLElement* pPosElement = MapData.NewElement("Position");
 		XMLElement* pRotElement = MapData.NewElement("Rotation");
 		XMLElement* pScaleElement = MapData.NewElement("Scale");
+		XMLElement* pColorElement = MapData.NewElement("Color");
 
 		pIDElement->SetAttribute("ID", obj->objectID);
 		pNameElement->InsertEndChild(pIDElement);
@@ -57,6 +185,17 @@ void Scene::SaveMapData() const
 			pScaleElement->SetAttribute(CheckAtributeValue(i), obj->transform.scale[i]);
 			pNameElement->InsertEndChild(pScaleElement);
 		}
+
+		if (obj->hasComponent<MeshRenderer>())
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				float nextValue = ceil(obj->getComponent<MeshRenderer>().meshColorTint[i] * 255);
+
+				pColorElement->SetAttribute(CheckAtributeValue(i), nextValue);
+				pNameElement->InsertEndChild(pColorElement);
+			}
+		}
 	}
 
 	// Once all the gameobjects are looped through it ends the xml file
@@ -69,8 +208,6 @@ void Scene::SaveMapData() const
 		std::cout << "Unable to save XML document" << std::endl;
 	}
 }
-
-
 
 void Scene::LoadMapData()
 {
@@ -86,11 +223,11 @@ void Scene::LoadMapData()
 	XMLNode* pRoot = MapData.FirstChild();
 
 	int loop = 0;
-	XMLElement* pGameObjects = pRoot->FirstChildElement("GameObjects");
+	XMLElement* pGameObjects;
+	pGameObjects = pRoot->FirstChildElement("GameObjects");
 	if (pGameObjects == nullptr) { std::cout << "Gameobjects not accessed properly" << std::endl; }
 	int objCount = 0;
 
-	eResult = pGameObjects->QueryIntAttribute("Count", &objCount);
 
 
 
@@ -130,10 +267,14 @@ void Scene::LoadMapData()
 				objectList->AddGameObject(tempObject, 4);
 				std::cout << "New Object" << std::endl;
 			}
+			if (outID == 3)
+			{
+				// Add's a new gamobject to the scene
+				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
+				objectList->AddGameObject(tempObject, 4);
+				std::cout << "New Object" << std::endl;
+			}
 		}
-
-
-
 
 
 		// Find's child elements of the name
@@ -152,12 +293,29 @@ void Scene::LoadMapData()
 			eResult = pScaleElement->QueryFloatAttribute(CheckAtributeValue(i), &outScale[i]);
 		}
 
+
+		// Used for loading in Mesh Colors
+		if (tempObject->hasComponent<MeshRenderer>())
+		{
+			MATH::Vec4 outColor;
+
+			XMLElement* pColorElement = pNameElement->FirstChildElement("Color");
+
+			for (int i = 0; i < 4; i++)
+			{
+				eResult = pColorElement->QueryFloatAttribute(CheckAtributeValue(i), &outColor[i]);
+			}
+
+			outColor /= 255.0f;
+
+			tempObject->getComponent<MeshRenderer>().SetColorTint(outColor);
+		}
+
+
 		if (eResult != XML_SUCCESS)
 		{
 			std::cout << "Unable to set new values for " << tempObject->name << std::endl;
 		}
-
-
 
 		tempObject->SetPos(outPos);
 		tempObject->SetRotation(outRot);

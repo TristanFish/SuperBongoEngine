@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\CustomUI.h" />
     <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\CustomUI.cpp" />
     <ClCompile Include="external\include\imgui\imgui.cpp" />
     <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
