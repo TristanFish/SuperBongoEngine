@@ -6,28 +6,65 @@
 #include "components/3D/Collider3D.h"
 #include "components/3D/MeshRenderer.h"
 
+//! RigidBody3D Class
+/*! Is a component and handles almost all of the needed math for the physics of our engine */
 class RigidBody3D : public Component
 {
 private:
+
+	//! Float Mass
+	/*! Is the mass of our object */
 	float mass;
-	MATH::Vec3* pos; 
+
+	//! Vector3 Pointer Position
+	/*! Is the position of our object in world space */
+	MATH::Vec3* pos;
+
+	//! Vector3 Velocity
+	/*! Is the velocity of our object  */
 	MATH::Vec3 vel;
+
+	//! Vector3 Acceleration
+	/*! Is the acceleration of our object  */
 	MATH::Vec3 accel;
+
+	//! Float Linear Drag
+	/*! Is the linear drag of our object  */
 	float linearDrag;
 
+	//! Float Rotational Inertia 
+	/*! Is the rotational inertia of our object  */
 	float rotInertia;
-	MATH::Vec3 Angle;
+
+	
+
+	//! Vector3 Angular Velocity 
+	/*! Is the angular velocity draw of our object  */
 	MATH::Vec3 angularVel;
+
+	//! Vector3 Angular Acceleration 
+	/*! Is the angular acceleration draw of our object  */
 	MATH::Vec3 angularAcc;
+
+	//! Float Angular Drag 
+	/*! Is the angular drag draw of our object  */
 	float angularDrag;
 
 
 
+	//! Friend class Physics3D
+	/*! Allows us to access all the variables from Physics3D */
 	friend class Physics3D;
 public:
+
+	//! Collider3D Collider
+	/*! Every RigidBody3D has a collider that allows it to collide with objects */
 	Collider3D collider;
 
+	//! RigidBody3D Constructor
 	RigidBody3D();
+
+	//! RigidBody3D Destructor
 	~RigidBody3D();
 	
 	// Inherited via Component

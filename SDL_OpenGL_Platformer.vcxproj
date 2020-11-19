@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\CustomUI.h" />
+
     <ClInclude Include="external\include\assimp\aabb.h" />
     <ClInclude Include="external\include\assimp\ai_assert.h" />
     <ClInclude Include="external\include\assimp\anim.h" />
@@ -112,12 +114,14 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\math\Ray.h" />
     <ClInclude Include="src\core\InputManager.h" />
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
+
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\Instancer.h" />
@@ -253,12 +257,14 @@
     <ClInclude Include="src\core\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\CustomUI.cpp" />
     <ClCompile Include="external\include\imgui\imgui.cpp" />
     <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\math\Ray.cpp" />
     <ClCompile Include="src\core\InputManager.cpp" />
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
