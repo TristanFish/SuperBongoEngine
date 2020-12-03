@@ -396,6 +396,9 @@
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
+    <ClInclude Include="src\math\Ray.h" />
+    <ClInclude Include="src\graphics\CustomUI.h" />
+
     <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
@@ -552,6 +555,9 @@
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
+    <ClCompile Include="src\math\Ray.cpp" />
+    <ClCompile Include="src\graphics\CustomUI.cpp" />
+
     <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
     <ClCompile Include="src\audio\AudioSourceComponent.cpp" />

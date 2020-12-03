@@ -1,16 +1,19 @@
 <Root>
-    <GameObjects Count="4">
+    <GameObjects Count="3">
         <Name Equals="Player">
             <Object ID="1"/>
+
             <Position X="0" Y="5" Z="90"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Name>
         <Name Equals="Grass">
             <Object ID="2"/>
-            <Position X="0" Y="4" Z="0"/>
-            <Rotation X="-90" Y="0" Z="0"/>
-            <Scale X="5" Y="5" Z="5"/>
+            <Position X="0" Y="1" Z="0"/>
+            <Rotation X="0" Y="0" Z="-90"/>
+            <Scale X="1" Y="1" Z="1"/>
+            <Color X="255" Y="255" Z="255" W="255"/>
+
         </Name>
         <Name Equals="Plane">
             <Object ID="3"/>
@@ -23,6 +26,7 @@
             <Position X="0" Y="20" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
+            <Color X="255" Y="0" Z="196" W="255"/>
         </Name>
     </GameObjects>
 </Root>
