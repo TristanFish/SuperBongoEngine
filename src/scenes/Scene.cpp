@@ -40,6 +40,17 @@
 
  }
 
+ void Scene::CheckExistingPanel(GameObject* obj)
+ {
+	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 {
+		 if (propertiesPannels[i]->selectedObj->name == obj->name)
+		 {
+			 propertiesPannels.erase(propertiesPannels.begin() + i);
+		 }
+	 }
+ }
+
  bool Scene::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
  {
 	 Vec3 bounds[2];
@@ -75,6 +86,11 @@
  
 
 
+ void Scene::Update(const float deltaTime)
+ {
+	 performancePanel.Update(deltaTime);
+ }
+
  void Scene::Render() const
  {
 	 ImGui::NewFrame();
@@ -84,6 +100,8 @@
 	 {
 		 propertiesPannels[i]->Render();
 	 }
+
+	 performancePanel.Render();
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
@@ -130,8 +148,11 @@
 				if (CheckIntersection(mouseRay, mouseRay->GetCurrentRay()->Origin, obj))
 				{
 					std::cout << "Mouse Hit - " << obj->name << std::endl;
-					if(!obj->isMenuActive)
+					if (!obj->isMenuActive)
+					{
+						CheckExistingPanel(obj);
 						propertiesPannels.push_back(new CustomUI::PropertiesPanel(obj));
+					}
 					obj->isMenuActive = true;
 					return;
 				}
@@ -142,7 +163,7 @@
 
  void Scene::SaveMapData() const
 {
-	XMLDocument MapData;
+	XMLDoc MapData;
 	XMLNode* pRoot = MapData.NewElement("Root");
 	MapData.InsertFirstChild(pRoot);
 
@@ -211,7 +232,7 @@
 
 void Scene::LoadMapData()
 {
-	XMLDocument MapData;
+	XMLDoc MapData;
 	XMLError eResult = MapData.LoadFile("MapData.xml");
 
 	if (eResult != XML_SUCCESS)
