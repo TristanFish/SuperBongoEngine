@@ -115,7 +115,7 @@ static const int TINYXML2_MAX_ELEMENT_DEPTH = 100;
 
 namespace tinyxml2
 {
-class XMLDocument;
+class XMLDoc;
 class XMLElement;
 class XMLAttribute;
 class XMLComment;
@@ -483,11 +483,11 @@ public:
     virtual ~XMLVisitor() {}
 
     /// Visit a document.
-    virtual bool VisitEnter( const XMLDocument& /*doc*/ )			{
+    virtual bool VisitEnter( const XMLDoc& /*doc*/ )			{
         return true;
     }
     /// Visit a document.
-    virtual bool VisitExit( const XMLDocument& /*doc*/ )			{
+    virtual bool VisitExit( const XMLDoc& /*doc*/ )			{
         return true;
     }
 
@@ -672,17 +672,17 @@ private:
 */
 class TINYXML2_LIB XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
     friend class XMLElement;
 public:
 
     /// Get the XMLDocument that owns this XMLNode.
-    const XMLDocument* GetDocument() const	{
+    const XMLDoc* GetDocument() const	{
         TIXMLASSERT( _document );
         return _document;
     }
     /// Get the XMLDocument that owns this XMLNode.
-    XMLDocument* GetDocument()				{
+    XMLDoc* GetDocument()				{
         TIXMLASSERT( _document );
         return _document;
     }
@@ -700,7 +700,7 @@ public:
         return 0;
     }
     /// Safely cast to a Document, or null.
-    virtual XMLDocument*	ToDocument()	{
+    virtual XMLDoc*	ToDocument()	{
         return 0;
     }
     /// Safely cast to a Declaration, or null.
@@ -721,7 +721,7 @@ public:
     virtual const XMLComment*		ToComment() const		{
         return 0;
     }
-    virtual const XMLDocument*		ToDocument() const		{
+    virtual const XMLDoc*		ToDocument() const		{
         return 0;
     }
     virtual const XMLDeclaration*	ToDeclaration() const	{
@@ -881,7 +881,7 @@ public:
 
     	Note: if called on a XMLDocument, this will return null.
     */
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const = 0;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const = 0;
 
 	/**
 		Make a copy of this node and all its children.
@@ -896,7 +896,7 @@ public:
 		top level XMLNodes. You probably want to use
         XMLDocument::DeepCopy()
 	*/
-	XMLNode* DeepClone( XMLDocument* target ) const;
+	XMLNode* DeepClone( XMLDoc* target ) const;
 
     /**
     	Test if 2 nodes are the same, but don't test children.
@@ -945,12 +945,12 @@ public:
 	void* GetUserData() const			{ return _userData; }
 
 protected:
-    explicit XMLNode( XMLDocument* );
+    explicit XMLNode( XMLDoc* );
     virtual ~XMLNode();
 
     virtual char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr);
 
-    XMLDocument*	_document;
+    XMLDoc*	_document;
     XMLNode*		_parent;
     mutable StrPair	_value;
     int             _parseLineNum;
@@ -989,7 +989,7 @@ private:
 */
 class TINYXML2_LIB XMLText : public XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
 public:
     virtual bool Accept( XMLVisitor* visitor ) const;
 
@@ -1009,11 +1009,11 @@ public:
         return _isCData;
     }
 
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const;
     virtual bool ShallowEqual( const XMLNode* compare ) const;
 
 protected:
-    explicit XMLText( XMLDocument* doc )	: XMLNode( doc ), _isCData( false )	{}
+    explicit XMLText( XMLDoc* doc )	: XMLNode( doc ), _isCData( false )	{}
     virtual ~XMLText()												{}
 
     char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr );
@@ -1029,7 +1029,7 @@ private:
 /** An XML Comment. */
 class TINYXML2_LIB XMLComment : public XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
 public:
     virtual XMLComment*	ToComment()					{
         return this;
@@ -1040,11 +1040,11 @@ public:
 
     virtual bool Accept( XMLVisitor* visitor ) const;
 
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const;
     virtual bool ShallowEqual( const XMLNode* compare ) const;
 
 protected:
-    explicit XMLComment( XMLDocument* doc );
+    explicit XMLComment( XMLDoc* doc );
     virtual ~XMLComment();
 
     char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr);
@@ -1068,7 +1068,7 @@ private:
 */
 class TINYXML2_LIB XMLDeclaration : public XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
 public:
     virtual XMLDeclaration*	ToDeclaration()					{
         return this;
@@ -1079,11 +1079,11 @@ public:
 
     virtual bool Accept( XMLVisitor* visitor ) const;
 
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const;
     virtual bool ShallowEqual( const XMLNode* compare ) const;
 
 protected:
-    explicit XMLDeclaration( XMLDocument* doc );
+    explicit XMLDeclaration( XMLDoc* doc );
     virtual ~XMLDeclaration();
 
     char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr );
@@ -1103,7 +1103,7 @@ private:
 */
 class TINYXML2_LIB XMLUnknown : public XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
 public:
     virtual XMLUnknown*	ToUnknown()					{
         return this;
@@ -1114,11 +1114,11 @@ public:
 
     virtual bool Accept( XMLVisitor* visitor ) const;
 
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const;
     virtual bool ShallowEqual( const XMLNode* compare ) const;
 
 protected:
-    explicit XMLUnknown( XMLDocument* doc );
+    explicit XMLUnknown( XMLDoc* doc );
     virtual ~XMLUnknown();
 
     char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr );
@@ -1262,7 +1262,7 @@ private:
 */
 class TINYXML2_LIB XMLElement : public XMLNode
 {
-    friend class XMLDocument;
+    friend class XMLDoc;
 public:
     /// Get the name of an element (which is the Value() of the node.)
     const char* Name() const		{
@@ -1675,14 +1675,14 @@ public:
     ElementClosingType ClosingType() const {
         return _closingType;
     }
-    virtual XMLNode* ShallowClone( XMLDocument* document ) const;
+    virtual XMLNode* ShallowClone( XMLDoc* document ) const;
     virtual bool ShallowEqual( const XMLNode* compare ) const;
 
 protected:
     char* ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr );
 
 private:
-    XMLElement( XMLDocument* doc );
+    XMLElement( XMLDoc* doc );
     virtual ~XMLElement();
     XMLElement( const XMLElement& );	// not supported
     void operator=( const XMLElement& );	// not supported
@@ -1712,7 +1712,7 @@ enum Whitespace {
 	All Nodes are connected and allocated to a Document.
 	If the Document is deleted, all its Nodes are also deleted.
 */
-class TINYXML2_LIB XMLDocument : public XMLNode
+class TINYXML2_LIB XMLDoc : public XMLNode
 {
     friend class XMLElement;
     // Gives access to SetError and Push/PopDepth, but over-access for everything else.
@@ -1724,14 +1724,14 @@ class TINYXML2_LIB XMLDocument : public XMLNode
     friend class XMLUnknown;
 public:
     /// constructor
-    XMLDocument( bool processEntities = true, Whitespace whitespaceMode = PRESERVE_WHITESPACE );
-    ~XMLDocument();
+    XMLDoc( bool processEntities = true, Whitespace whitespaceMode = PRESERVE_WHITESPACE );
+    ~XMLDoc();
 
-    virtual XMLDocument* ToDocument()				{
+    virtual XMLDoc* ToDocument()				{
         TIXMLASSERT( this == _document );
         return this;
     }
-    virtual const XMLDocument* ToDocument() const	{
+    virtual const XMLDoc* ToDocument() const	{
         TIXMLASSERT( this == _document );
         return this;
     }
@@ -1912,7 +1912,7 @@ public:
 
 		NOTE: that the 'target' must be non-null.
 	*/
-	void DeepCopy(XMLDocument* target) const;
+	void DeepCopy(XMLDoc* target) const;
 
 	// internal
     char* Identify( char* p, XMLNode** node );
@@ -1920,7 +1920,7 @@ public:
 	// internal
 	void MarkInUse(const XMLNode* const);
 
-    virtual XMLNode* ShallowClone( XMLDocument* /*document*/ ) const	{
+    virtual XMLNode* ShallowClone( XMLDoc* /*document*/ ) const	{
         return 0;
     }
     virtual bool ShallowEqual( const XMLNode* /*compare*/ ) const	{
@@ -1928,8 +1928,8 @@ public:
     }
 
 private:
-    XMLDocument( const XMLDocument& );	// not supported
-    void operator=( const XMLDocument& );	// not supported
+    XMLDoc( const XMLDoc& );	// not supported
+    void operator=( const XMLDoc& );	// not supported
 
     bool			_writeBOM;
     bool			_processEntities;
@@ -1964,7 +1964,7 @@ private:
 	// the stack. Track stack depth, and error out if needed.
 	class DepthTracker {
 	public:
-		explicit DepthTracker(XMLDocument * document) {
+		explicit DepthTracker(XMLDoc * document) {
 			this->_document = document;
 			document->PushDepth();
 		}
@@ -1972,7 +1972,7 @@ private:
 			_document->PopDepth();
 		}
 	private:
-		XMLDocument * _document;
+		XMLDoc * _document;
 	};
 	void PushDepth();
 	void PopDepth();
@@ -1982,7 +1982,7 @@ private:
 };
 
 template<class NodeType, int PoolElementSize>
-inline NodeType* XMLDocument::CreateUnlinkedNode( MemPoolT<PoolElementSize>& pool )
+inline NodeType* XMLDoc::CreateUnlinkedNode( MemPoolT<PoolElementSize>& pool )
 {
     TIXMLASSERT( sizeof( NodeType ) == PoolElementSize );
     TIXMLASSERT( sizeof( NodeType ) == pool.ItemSize() );
@@ -2286,8 +2286,8 @@ public:
     void PushDeclaration( const char* value );
     void PushUnknown( const char* value );
 
-    virtual bool VisitEnter( const XMLDocument& /*doc*/ );
-    virtual bool VisitExit( const XMLDocument& /*doc*/ )			{
+    virtual bool VisitEnter( const XMLDoc& /*doc*/ );
+    virtual bool VisitExit( const XMLDoc& /*doc*/ )			{
         return true;
     }
 

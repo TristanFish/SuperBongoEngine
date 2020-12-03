@@ -5,6 +5,7 @@
 #include "core/ModelManager.h"
 #include "core/TextureManager.h"
 #include "core/InputManager.h"
+#include "graphics/CustomUI.h"
 
 GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
 							fps(60), isRunning(false)
@@ -55,7 +56,11 @@ void GameManager::Run()
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
-		SDL_Delay(Timer::SleepTime(fps));
+
+		if (PerformanceMonitor::LimitFPS)
+		{
+			SDL_Delay(Timer::SleepTime(PerformanceMonitor::FPSLimit));
+		}
 	}
 
 	TextureManager::DeleteAllTextures();

@@ -2,7 +2,6 @@
     <GameObjects Count="3">
         <Name Equals="Player">
             <Object ID="1"/>
-
             <Position X="0" Y="5" Z="90"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
@@ -20,6 +19,7 @@
             <Position X="0" Y="0" Z="0"/>
             <Rotation X="-90" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
+          <Color X="255" Y="255" Z="255" W="255"/>
         </Name>
         <Name Equals="Light">
             <Object ID="5"/>

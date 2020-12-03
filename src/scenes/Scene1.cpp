@@ -58,9 +58,7 @@ void Scene1::OnDestroy()
 
 void Scene1::Update(const float deltaTime)
 {
-	//std::cout << player->transform.pos << std::endl;
-
-	//std::cout << 1.0f / deltaTime << std::endl;
+	Scene::Update(deltaTime);
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
