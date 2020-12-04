@@ -4,10 +4,12 @@
 
 class Water : public GameObject, public MeshRenderer
 {
-private:
-	
+public:
+
 	Water(const char* name, MATH::Vec3 pos);
 	~Water();
+private:
+	
 
 	void Update(const float deltaTime) override;
 	void Render() const override;

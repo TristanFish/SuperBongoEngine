@@ -21,7 +21,7 @@ FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
 	if (itr != soundPairs.end()) {
 		return itr->second;
 	}
-	else { std::cout << "Map Key:" << " " << soundName << " " << "Not found no sound object returned" << std::endl; }
+	else { std::cout << "Map Key:" << " " << soundName << " " << "Not found, no sound object returned" << std::endl; }
 }
 
 void AudioManager::AddAudioSource(AudioSourceComponent& newComponent)

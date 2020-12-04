@@ -6,6 +6,7 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "graphics/Shader.h"
+#include "custom/Water.h"
 #include "custom/Grass.h"
 #include "imgui/imgui.h"
 #include "custom/LightObject.h"
@@ -37,6 +38,8 @@ private:
 	//! Plane Pointer
 	/*! Is a gameobject that we can spawn into the world  */
 	Plane* plane;
+
+	Water* water;
 
 	//! Debug Pointer
 	/*! Used for all of our debug functions */

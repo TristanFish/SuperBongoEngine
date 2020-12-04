@@ -1,6 +1,6 @@
 #include "Water.h"
 
-Water::Water(const char* name, MATH::Vec3 pos): MeshRenderer("Plane.fbx") {
+Water::Water(const char* name, MATH::Vec3 pos): MeshRenderer("WaterPlane.fbx") {
 	this->name = name;
 	this->transform.pos = pos;
 	transform.setRot(Vec3(-90.0f, 0.0f, 0.0f));
@@ -8,13 +8,13 @@ Water::Water(const char* name, MATH::Vec3 pos): MeshRenderer("Plane.fbx") {
 	MeshRenderer::renderFlags = RenderProperties::WATER;
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/WaterVert.glsl", "src/graphics/shaders/WaterFrag.glsl");
-	MeshRenderer::SetInstanceID(2);
+	MeshRenderer::SetInstanceID(8);
 
 }
 
 Water::~Water()
 {
-	delete(this);
+
 }
 
 void Water::Update(const float deltaTime)
