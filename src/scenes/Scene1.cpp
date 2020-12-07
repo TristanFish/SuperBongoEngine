@@ -37,6 +37,8 @@ bool Scene1::OnCreate()
 	objectList->AddGameObject(light, 5);
 
 	objectList->Init();
+
+	PerformanceMonitor::InitMonitor();
 	
 	//Scene::SaveMapData();
 	Scene::LoadMapData();
