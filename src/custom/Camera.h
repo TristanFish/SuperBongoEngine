@@ -19,6 +19,7 @@ public:
 	inline static void removeInstance() { delete instance; instance = nullptr; }
 	inline MATH::Matrix4& getProjectionMatrix() { return perspecProjMatrix; }
 	inline MATH::Matrix4& getViewMatrix() { return viewMatrix; }
+	inline MATH::Matrix4& getRotationMatrix() { return rotationMatrix; }
 	inline MATH::Matrix4& getInvNDC() { return invNDC; }
 	inline void setProjectionMatrix(MATH::Matrix4 projection_) { perspecProjMatrix = projection_; }
 	inline void setViewMatrix(MATH::Matrix4 view_) { viewMatrix = view_; }

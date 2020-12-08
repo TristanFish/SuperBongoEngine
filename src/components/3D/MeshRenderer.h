@@ -15,6 +15,7 @@ enum class RenderProperties : unsigned char
 	WATER				= 0b01000000,
 	OVERRIDE_RENDERER	= 0b10000000
 
+
 };
 
 inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)

@@ -4,8 +4,13 @@
 #include "graphics/Shader.h"
 #include "core/Debug.h"
 
+
+
+
+class SkyBox;
 class MeshRenderer;
 class LightComponent;
+
 
 class Renderer
 {
@@ -19,11 +24,12 @@ public:
 	void AddLight(LightComponent* light);
 	void Render() const;
 	void DestroyRenderer();
+	
 private:
 	Shader gBufferShader;
 	Shader resultShader;
-
 	GLuint depthRenderBuffer;
+	SkyBox* skyBox;
 
 	GLuint depthTexture;
 	GLuint stencilTexture;

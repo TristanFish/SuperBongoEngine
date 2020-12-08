@@ -1,6 +1,6 @@
 #include "Water.h"
 
-Water::Water(const char* name, MATH::Vec3 pos): MeshRenderer("WaterPlane.fbx") {
+Water::Water(const char* name, MATH::Vec3 pos): MeshRenderer("Plane.fbx") {
 	this->name = name;
 	this->transform.pos = pos;
 	transform.setRot(Vec3(-90.0f, 0.0f, 0.0f));

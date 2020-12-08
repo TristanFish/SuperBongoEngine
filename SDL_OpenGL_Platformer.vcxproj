@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\custom\SkyBox.h" />
     <ClInclude Include="src\graphics\CustomUI.h" />
-
     <ClInclude Include="external\include\assimp\aabb.h" />
     <ClInclude Include="external\include\assimp\ai_assert.h" />
     <ClInclude Include="external\include\assimp\anim.h" />
@@ -121,7 +121,6 @@
     <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
-
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\Instancer.h" />
@@ -258,6 +257,7 @@
     <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\custom\SkyBox.cpp" />
     <ClCompile Include="src\graphics\CustomUI.cpp" />
     <ClCompile Include="external\include\imgui\imgui.cpp" />
     <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
@@ -355,6 +355,8 @@
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
+    <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
+    <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
     <None Include="src\graphics\shaders\WaterFrag.glsl" />
     <None Include="src\graphics\shaders\WaterVert.glsl" />
   </ItemGroup>

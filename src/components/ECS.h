@@ -2,10 +2,10 @@
 #define ECS_HEADER
 
 #include <vector>
+#include "core/3D/Renderer.h"
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
-#include "core/3D/Renderer.h"
 
 class GameObject;
 class RigidBody3D;

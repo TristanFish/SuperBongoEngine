@@ -10,6 +10,7 @@
 #include "custom/Grass.h"
 #include "imgui/imgui.h"
 #include "custom/LightObject.h"
+#include "custom/SkyBox.h"
 
 /**< Forward declaring classes that we will use  */
 class Player;

@@ -4,14 +4,16 @@
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
-
+#include "custom/SkyBox.h"
 
 void Renderer::Init()
 {
+	skyBox = new SkyBox();
+	
 	//Set up renderer shaders
 	gBufferShader.CreateShader("src/graphics/shaders/gBufferShaderVert.glsl", "src/graphics/shaders/gBufferShaderFrag.glsl");
 	resultShader.CreateShader("src/graphics/shaders/gBufferResolveVert.glsl", "src/graphics/shaders/gBufferResolveFrag.glsl");
-
+	
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
@@ -102,6 +104,7 @@ void Renderer::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	glBindVertexArray(0);
+
 }
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
@@ -116,13 +119,16 @@ void Renderer::AddLight(LightComponent* light)
 
 void Renderer::Render() const
 {
-
+	//Skybox here
+	skyBox->Render();
+	
+	
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
+
 		//Check meshrenderers for specific flags and do certain functions based on those flags
 		if (meshRenderers[i]->renderFlags & RenderProperties::OVERRIDE_RENDERER)
 		{
@@ -160,6 +166,9 @@ void Renderer::Render() const
 	}
 	pos.DrawCube(Vec3(0), Vec3(15), true, MATH::Vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
+	
+	
+	
 	//Rebind the default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glEnable(GL_DEPTH_TEST);
@@ -169,10 +178,7 @@ void Renderer::Render() const
 	albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
 	depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
-
 	RenderGBufferResult();
-
-
 
 	//Uses the gBufferResolve shader to render the result of the gBuffer
 
@@ -181,6 +187,8 @@ void Renderer::Render() const
 
 void Renderer::DestroyRenderer()
 {
+	delete(skyBox);
+	skyBox = nullptr;
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 	glDeleteTextures(1, &depthTexture);
 	glDeleteTextures(1, &stencilTexture);
