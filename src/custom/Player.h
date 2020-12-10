@@ -24,9 +24,9 @@ public:
 	//virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 private:
 
-	float RunSpeed;
-	float moveSpeed;
-	float turnSpeed;
+	const float RunSpeed;
+	const float moveSpeed;
+	const float turnSpeed;
 
 	bool mouseDown;
 	Vec3 mouseStart;

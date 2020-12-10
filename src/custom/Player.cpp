@@ -4,11 +4,11 @@
 #include "core/InputManager.h"
 #include "math/Quaternion.h"
 
-Player::Player()
+Player::Player() : moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
 {
 }
 
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f)
+Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
 {
 
 	name = n;

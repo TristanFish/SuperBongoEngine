@@ -6,21 +6,31 @@
 #include "core/Timer.h"
 
 
-
+//! CustomUI namespace
+/*!  This namespace holds all of our custom IMGUI functionalities */
 namespace CustomUI
 {
-	
+	//! Properties panel Class
+	/*!  This class creates & controls the Properties Panel UI for each gameobject */
 	class PropertiesPanel
 	{
 	public:
+
+		//! Properties panel Constructor
+		/*!  Initializes the variables that are needed for this class */
 		PropertiesPanel(GameObject* obj);
 
+		//! Properties panel Destructor
+		/*! Destroys all pointer's that this class uses */
 		~PropertiesPanel();
 
+		//! Render Function
+		/*! Renders the IMGUI UI on screen */
 		void Render();
-		GameObject* selectedObj;
-	private:
 
+		//! GameObject Pointer
+		/*! Is a pointer to the selected object this panel uses */
+		GameObject* selectedObj;
 
 	};
 
