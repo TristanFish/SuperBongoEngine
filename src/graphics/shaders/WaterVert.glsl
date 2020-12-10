@@ -5,6 +5,8 @@ layout (location = 2) in vec2 inUV;
 
 out vec3 vertNormal;
 out vec2 vertUV;
+out vec3 Normal;
+out vec3 inPos;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -13,8 +15,7 @@ uniform mat4 modelMatrix;
 void main()
 {
 
-	vertNormal = inNormal;
-	vertUV = inUV;
-
-	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(inPosition, 1.0);
+	Normal = mat3(transpose(inverse(modelMatrix))) * inNormal;
+	inPos = vec3(modelMatrix * vec4(inPosition, 1.0));
+	gl_Position = projectionMatrix * viewMatrix * vec4(inPos, 1.0);
 }

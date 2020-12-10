@@ -58,7 +58,7 @@ public:
 	inline bool isActive()const { return active; }
 	inline void SetActive(bool a) { active = a; }
 
-	inline MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); }
+	inline MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); } 
 
 	inline void SetPos(MATH::Vec3 pos_) {  transform.setPos(pos_); }
 	inline void SetScale(MATH::Vec3 scale_) { transform.scale = scale_; }

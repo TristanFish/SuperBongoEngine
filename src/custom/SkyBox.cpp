@@ -1,9 +1,10 @@
 #include "SkyBox.h"
 #include "core/ModelManager.h"
+
 SkyBox::SkyBox()
 {
 #pragma region MyRegion
-		float skyboxVertices[] = {
+	float skyboxVertices[] = {
 		// positions          
 		-1.0f,  1.0f, -1.0f,
 		-1.0f, -1.0f, -1.0f,
@@ -65,6 +66,17 @@ SkyBox::SkyBox()
 	shader->RunShader();
 	
 }
+
+ GLuint SkyBox::GetSkyBoxTexture() const
+{
+	return skyboxTextureID;
+
+}
+ unsigned int SkyBox::GetVAO() const
+ {
+	 return skyboxVAO;
+ }
+
 SkyBox::~SkyBox()
 {
 	glDeleteTextures(1, &skyboxTextureID);
@@ -133,13 +145,15 @@ void SkyBox::Update(const float deltaTime)
 
 void SkyBox::Render() const
 {
-	
+	Matrix3 view = Camera::getInstance()->getViewMatrix();
+	viewConvert = Mat3ToMat4(view);
 	
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
 	shader->RunShader();
-	shader->TakeInUniformMat4("viewMatrix", Camera::getInstance()->getRotationMatrix());
+	shader->TakeInUniformMat4("viewMatrix", viewConvert);
 	shader->TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindVertexArray(skyboxVAO);
@@ -155,3 +169,15 @@ void SkyBox::Render() const
 void SkyBox::HandleEvents(const SDL_Event& event)
 {
 }
+
+Matrix4 SkyBox::Mat3ToMat4(Matrix3 _m) const
+{
+	Matrix4 m;
+	m[0] = _m[0];   m[4] = _m[3];   m[8] = _m[6];   m[12] = 0;
+	m[1] = _m[1];   m[5] = _m[4];   m[9] = _m[7];   m[13] = 0;
+	m[2] = _m[2];   m[6] = _m[5];   m[10] = _m[8];   m[14] = 0;
+	m[3] = 0;		m[7] = 0;		m[11] = 0;		 m[15] = 1;
+
+	return m;
+}
+

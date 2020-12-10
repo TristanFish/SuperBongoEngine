@@ -77,6 +77,7 @@ void Renderer::Init()
 		std::cout << "Framebuffer not complete!" << std::endl;
 	}
 	//currentGTexture = albedoTexture;
+	//Set frame buffer back to default
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 
@@ -187,8 +188,8 @@ void Renderer::Render() const
 
 void Renderer::DestroyRenderer()
 {
-	delete(skyBox);
 	skyBox = nullptr;
+	delete(skyBox);
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 	glDeleteTextures(1, &depthTexture);
 	glDeleteTextures(1, &stencilTexture);
@@ -199,6 +200,12 @@ void Renderer::DestroyRenderer()
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
 }
+
+SkyBox* Renderer::GetSkyBox()
+{
+	 return skyBox; 
+}
+
 
 //Binds all the gBuffer textures
 void Renderer::BindGBufferTextures() const
@@ -247,8 +254,6 @@ void Renderer::RenderGBufferResult() const
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-
-
 
 	UnbindGBufferTextures();
 

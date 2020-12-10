@@ -24,12 +24,12 @@ public:
 	void AddLight(LightComponent* light);
 	void Render() const;
 	void DestroyRenderer();
+	static SkyBox* GetSkyBox();
 	
 private:
 	Shader gBufferShader;
 	Shader resultShader;
 	GLuint depthRenderBuffer;
-	SkyBox* skyBox;
 
 	GLuint depthTexture;
 	GLuint stencilTexture;
@@ -46,6 +46,7 @@ private:
 	Debug depth;
 	Debug stencil;
 
+	static inline SkyBox* skyBox;
 	//GLuint currentGTexture;
 
 	void BindGBufferTextures() const;

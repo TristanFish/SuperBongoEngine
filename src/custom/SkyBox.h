@@ -9,23 +9,27 @@
 class SkyBox :  public GameObject
 {
     unsigned int skyboxVAO, skyboxVBO;
+	GLuint skyboxTextureID;
 	Shader* shader;
+	mutable Matrix4 viewConvert;
 
 	bool LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz);
 
 	//void AttachUniforms() const override;
 	//void Init(GameObject* g) override;
 	//! Update Function (Inherited from Gameobject)
-	void Update(const float deltaTime) override;
 
 	//! Render Function (Inherited from Gameobject)
 
 	//! Handle Events Function (Inherited from Gameobject)
 	void HandleEvents(const SDL_Event& event) override;
-
+	Matrix4 Mat3ToMat4(Matrix3 _m) const;
 public:
 
-	GLuint skyboxTextureID;
+	void Update(const float deltaTime) override;
+	GLuint GetSkyBoxTexture() const;
+	unsigned int GetVAO() const;
+
 	SkyBox();
 	~SkyBox();
 
