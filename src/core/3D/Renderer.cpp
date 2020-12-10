@@ -139,15 +139,15 @@ void Renderer::Render() const
 		{
 			RenderShadowTexture(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RECIEVES_SHADOWS)
 		{
 			RenderShade(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
+		if (meshRenderers[i]->renderFlags & RenderProperties::BLOOM)
 		{
 			RenderBloom(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
+		if (meshRenderers[i]->renderFlags & RenderProperties::PHYSICS_MOVEMENT)
 		{
 			RenderPhysics(*meshRenderers[i]);
 		}
