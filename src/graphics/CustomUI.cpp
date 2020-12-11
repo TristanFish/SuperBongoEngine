@@ -21,13 +21,9 @@ void CustomUI::PropertiesPanel::Render()
 
 		ImGui::Begin(selectedObj->name, &selectedObj->isMenuActive);
 	
-
-		char* TempName = new char();
-		TempName = (char*)selectedObj->name;
-		if (ImGui::InputText("Mesh Name", TempName, size_t(20)))
-		{
-			selectedObj->SetName(TempName);
-		}
+		char* tempName =  const_cast<char*>(selectedObj->name);
+		
+		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
 		// Change the standard transform components 
 		ImGui::DragFloat3("Position", selectedObj->transform.GetPosition());
@@ -45,6 +41,8 @@ void CustomUI::PropertiesPanel::Render()
 		}
 
 		ImGui::End();
+		tempName = nullptr;
+		delete tempName;
 	}
 
 }
@@ -60,7 +58,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 	if (fpsUpdateSpeed <= 0.0f)
 	{
 		if (fpsValues.size() == 100)
-			fpsValues.clear();
+			fpsValues.erase(fpsValues.begin());
 
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;

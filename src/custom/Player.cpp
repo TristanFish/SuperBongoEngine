@@ -4,24 +4,17 @@
 #include "core/InputManager.h"
 #include "math/Quaternion.h"
 
-Player::Player()
+Player::Player() : moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
 {
 }
 
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f)
+Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
 {
 
 	name = n;
 	transform = Transform(pos);
 	transform.rotation.y = -90.0f;
-	//collider.colliderShape = Collider3D::shape::AABB;
-
 	
-	//RigidBody3D::Init(this);
-	//MeshRenderer::Init(this);
-	
-	//Always initialize the components that you've inherited with your current gameobject
-	//this allows the components to access the transform of of your gameobject
 }
 
 Player::~Player()

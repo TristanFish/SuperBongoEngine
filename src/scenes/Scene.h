@@ -4,7 +4,7 @@
 #include "sdl/SDL.h"
 #include "components/ECS.h"
 #include "glew/glew.h"
-#include "core/tinyxml2.h"
+#include "External/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
 #include "VMath.h"
@@ -13,6 +13,9 @@ using namespace tinyxml2;
 
 class MouseRay;
 
+
+//! Scene Class
+/*! Standard scene class that all scenes will inherit from  */
 class Scene
 {
 protected:
