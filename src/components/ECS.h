@@ -36,7 +36,7 @@ public:
 	virtual void Render() const = 0;
 
 	//!Virtual HandleEvents Function
-	/*!Handles and events needed for the component*/
+	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
 	//!Virtual Destructor 

@@ -40,9 +40,6 @@ namespace CustomUI
 	class PerformancePanel
 	{
 	private:
-
-		
-
 		//! FPS Update Speed float
 		/*! Controls how fast we want to add a new float into the fpsValues Vector */
 		 float fpsUpdateSpeed = 0.5f;
