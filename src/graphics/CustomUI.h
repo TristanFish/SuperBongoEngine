@@ -6,26 +6,37 @@
 #include "core/Timer.h"
 
 
+//! CustomUI namespace
+/*!  This namespace holds all of our custom IMGUI functionalities */
 namespace CustomUI
 {
-
+	//! Properties panel Class
+	/*!  This class creates & controls the Properties Panel UI for each gameobject */
 	class PropertiesPanel
 	{
 	public:
+
+		//! Properties panel Constructor
+		/*!  Initializes the variables that are needed for this class */
 		PropertiesPanel(GameObject* obj);
 
+		//! Properties panel Destructor
+		/*! Destroys all pointer's that this class uses */
 		~PropertiesPanel();
 
+		//! Render Function
+		/*! Renders the IMGUI UI on screen */
 		void Render();
-		GameObject* selectedObj;
-	private:
 
+		//! GameObject Pointer
+		/*! Is a pointer to the selected object this panel uses */
+		GameObject* selectedObj;
 
 	};
 
 
 	//! Performance panel Class
-	/*!  This class controls creates & controls the performance Panel UI */
+	/*!  This class creates & controls the performance Panel UI */
 	class PerformancePanel
 	{
 	private:
@@ -57,13 +68,48 @@ namespace CustomUI
 
 }
 
- class PerformanceMonitor
+
+//! Performance Monitor Class
+/*!  This class calculates all the performance variables */
+class PerformanceMonitor
 {
 public:
+	
+	//! Initialize Monitor Function
+	/*!  This function initializes the non-static member's of the Performance Monitor Class  */
+	static void InitMonitor();
+
+	//! Debug Frames Per Second Function
+	/*!  Debugs the FPS to the console  */
 	static void DebugFPS();
+
+	//! Get Frames Per Second Function
+	/*!  Returns Current FPS  */
 	static float GetFPS();
 
+	//! Get Memory Usage Function
+	/*!  Returns the current amount of physical ram used by the application  */
+	static int GetMemoryUsage();
+
+	//! Get CPU Usage Function
+	/*!  Returns percent of CPU usage the application is using  */
+	static double GetCPUUsage();
+
+
+	//! Frames Per Second Integer
+	/*!  This variable stores the user inputed FPS limit  */
 	static int FPSLimit;
+
+	//! Limit Frames Per Second boolean
+	/*!  This variable toggles if the FPSLimit variable is used  */
 	static bool LimitFPS;
+
+	//! Render Loop Time Float
+	/*!  This variable contains how faster our application is rendering in milliseconds */
+	static float RenderLoopTime;
+
+	//! Update Loop Time Float
+	/*!  This variable contains how faster our application is updating in milliseconds */
+	static float UpdateLoopTime;
 };
  

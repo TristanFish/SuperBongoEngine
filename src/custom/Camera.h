@@ -4,6 +4,9 @@
 #include <sdl/SDL.h>
 #include "MMath.h"
 
+
+//!Camera Class
+/*! Controls how the players camera acts */
 class Camera
 {
 

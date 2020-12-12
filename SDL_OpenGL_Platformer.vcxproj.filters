@@ -393,7 +393,6 @@
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\custom\Instancer.h" />
-    <ClInclude Include="src\core\tinyxml2.h" />
     <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\math\Ray.h" />
@@ -490,8 +489,7 @@
     <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
     <ClInclude Include="src\core\InputManager.h" />
     <ClInclude Include="src\math\Quaternion.h" />
-    <ClInclude Include="src\custom\Water.h" />
-    <ClInclude Include="src\custom\SkyBox.h" />
+    <ClInclude Include="src\External\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -552,7 +550,6 @@
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\custom\Instancer.cpp" />
-    <ClCompile Include="src\core\tinyxml2.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
@@ -565,8 +562,7 @@
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\core\InputManager.cpp" />
     <ClCompile Include="src\math\Quaternion.cpp" />
-    <ClCompile Include="src\custom\Water.cpp" />
-    <ClCompile Include="src\custom\SkyBox.cpp" />
+    <ClCompile Include="src\External\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -642,12 +638,6 @@
     <None Include="external\include\assimp\vector3.inl" />
     <None Include="src\graphics\shaders\DefaultFrag.glsl" />
     <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\WaterFrag.glsl" />
-    <None Include="src\graphics\shaders\WaterVert.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
-    <None Include="src\graphics\shaders\RefractFrag.glsl" />
-    <None Include="src\graphics\shaders\RefractVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

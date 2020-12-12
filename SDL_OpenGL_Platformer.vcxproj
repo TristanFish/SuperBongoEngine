@@ -122,7 +122,7 @@
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
     <ClInclude Include="src\graphics\Model.h" />
-    <ClInclude Include="src\core\tinyxml2.h" />
+    <ClInclude Include="src\External\tinyxml2.h" />
     <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\core\ModelManager.h" />
@@ -273,7 +273,7 @@
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
-    <ClCompile Include="src\core\tinyxml2.cpp" />
+    <ClCompile Include="src\External\tinyxml2.cpp" />
     <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\core\ModelManager.cpp" />

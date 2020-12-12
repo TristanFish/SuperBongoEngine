@@ -44,10 +44,16 @@ void GameManager::Run()
 
 	while (isRunning)
 	{
+		Uint32 timeBeforeUpdate = SDL_GetTicks();
 		Timer::UpdateTimer();
 		currentScene->Update(Timer::GetScaledDeltaTime());
 		HandleEvents();
+		Uint32 timeAfterUpdate = SDL_GetTicks();
 
+		PerformanceMonitor::UpdateLoopTime = (timeAfterUpdate - timeBeforeUpdate);
+
+
+		Uint32 timebeforeRender = SDL_GetTicks();
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame(window->GetWindow());
 
@@ -57,10 +63,15 @@ void GameManager::Run()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(window->GetWindow());
 
+		Uint32 timeafterRender = SDL_GetTicks();
+
+		PerformanceMonitor::RenderLoopTime = (timeafterRender - timebeforeRender);
+
 		if (PerformanceMonitor::LimitFPS)
 		{
 			SDL_Delay(Timer::SleepTime(PerformanceMonitor::FPSLimit));
 		}
+
 	}
 
 	TextureManager::DeleteAllTextures();

@@ -23,8 +23,7 @@ bool Scene1::OnCreate()
 
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
-	water = new Water("Water Plane", MATH::Vec3(100.0f, 0.0f, 50.0f), Renderer::GetSkyBox());
-	water->transform.setRot(MATH::Vec3(0.0f, 0.0f, 0.0f));
+
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
@@ -36,10 +35,11 @@ bool Scene1::OnCreate()
 	objectList->AddGameObject(plane, 3);
 	//objectList->AddGameObject(fog, 4);
 	objectList->AddGameObject(light, 5);
-	objectList->AddGameObject(water, 7);
 
 	objectList->Init();
 
+	PerformanceMonitor::InitMonitor();
+	
 	//Scene::SaveMapData();
 	Scene::LoadMapData();
 	return false;
@@ -54,7 +54,7 @@ void Scene1::OnDestroy()
 
 	delete mouseRay;
 	mouseRay = nullptr;
-	
+
 	pElement = nullptr;
 }
 
@@ -72,10 +72,8 @@ void Scene1::Update(const float deltaTime)
 void Scene1::Render() const
 {
 	
-	water->GetSkyBoxInfo();
-	objectList->Render();
-	//water->Render();
 	Scene::Render();
+	objectList->Render();
 }
 
 void Scene1::HandleEvents(const SDL_Event& event)

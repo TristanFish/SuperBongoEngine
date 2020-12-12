@@ -1,4 +1,6 @@
 #include "CustomUI.h"
+#include "windows.h"
+#include "psapi.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -19,13 +21,9 @@ void CustomUI::PropertiesPanel::Render()
 
 		ImGui::Begin(selectedObj->name, &selectedObj->isMenuActive);
 	
-
-		char* TempName = new char();
-		TempName = (char*)selectedObj->name;
-		if (ImGui::InputText("Mesh Name", TempName, size_t(20)))
-		{
-			selectedObj->SetName(TempName);
-		}
+		char* tempName =  const_cast<char*>(selectedObj->name);
+		
+		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
 		// Change the standard transform components 
 		ImGui::DragFloat3("Position", selectedObj->transform.GetPosition());
@@ -43,9 +41,13 @@ void CustomUI::PropertiesPanel::Render()
 		}
 
 		ImGui::End();
+		tempName = nullptr;
+		delete tempName;
 	}
 
 }
+
+
 
 
 
@@ -56,7 +58,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 	if (fpsUpdateSpeed <= 0.0f)
 	{
 		if (fpsValues.size() == 100)
-			fpsValues.clear();
+			fpsValues.erase(fpsValues.begin());
 
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;
@@ -67,7 +69,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 
 void CustomUI::PerformancePanel::Render() const
 {
-	ImGui::Begin("Performance");
+	ImGui::Begin("Performance Monitor");
 
 	ImGui::PlotLines("FPS", fpsValues.data(), fpsValues.size()); 	ImGui::SameLine();
 	ImGui::Text("%i", lastestFPS);
@@ -76,12 +78,46 @@ void CustomUI::PerformancePanel::Render() const
 	ImGui::Checkbox("Limit FPS", &PerformanceMonitor::LimitFPS); ImGui::SameLine();
 	ImGui::InputInt("", &PerformanceMonitor::FPSLimit);
 
+	ImGui::Text("Render Loop Time %f ms", PerformanceMonitor::RenderLoopTime);
+	ImGui::Text("Update Loop Time %f ms", PerformanceMonitor::UpdateLoopTime);
+	ImGui::Text("Physical Memory Usage %i MB", PerformanceMonitor::GetMemoryUsage());
+	ImGui::Text("CPU Usage %f %%", PerformanceMonitor::GetCPUUsage());
+
+
 	ImGui::End();
 }
 
-int PerformanceMonitor::FPSLimit = 60;
+ 
 
+int PerformanceMonitor::FPSLimit = 60;
+float PerformanceMonitor::RenderLoopTime = 0.0f;
+float PerformanceMonitor::UpdateLoopTime = 0.0f;
 bool PerformanceMonitor::LimitFPS = false;
+
+ 
+// Varibables that are used to collect CPU data
+ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+int numProcessors;
+HANDLE self;
+
+void PerformanceMonitor::InitMonitor()
+{
+
+	// This code block is used to find the CPU usage
+	SYSTEM_INFO sysInfo;
+	FILETIME ftime, fsys, fuser;
+
+	GetSystemInfo(&sysInfo);
+	numProcessors = sysInfo.dwNumberOfProcessors;
+
+	GetSystemTimeAsFileTime(&ftime);
+	memcpy(&lastCPU, &ftime, sizeof(FILETIME));
+
+	self = GetCurrentProcess();
+	GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
+	memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
+	memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
+}
 
 void PerformanceMonitor::DebugFPS()
 {
@@ -91,5 +127,42 @@ void PerformanceMonitor::DebugFPS()
 float PerformanceMonitor::GetFPS()
 {
 	return 1 / Timer::GetDeltaTime();
+}
+
+int PerformanceMonitor::GetMemoryUsage()
+{
+
+	PROCESS_MEMORY_COUNTERS_EX pmc;
+	bool GetMem = GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+
+
+	int physicalMemUsed_Bytes = pmc.WorkingSetSize;
+
+	int physicalMemUsed_MB = physicalMemUsed_Bytes / 1000000;
+
+	return physicalMemUsed_MB;
+}
+
+double PerformanceMonitor::GetCPUUsage()
+{
+	 FILETIME ftime, fsys, fuser;
+	 ULARGE_INTEGER now, sys, user;
+	 double percent;
+
+	 GetSystemTimeAsFileTime(&ftime);
+	 memcpy(&now, &ftime, sizeof(FILETIME));
+
+	 GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
+	 memcpy(&sys, &fsys, sizeof(FILETIME));
+	 memcpy(&user, &fuser, sizeof(FILETIME));
+	 percent = (sys.QuadPart - lastSysCPU.QuadPart) +
+		 (user.QuadPart - lastUserCPU.QuadPart);
+	 percent /= (now.QuadPart - lastCPU.QuadPart);
+	 percent /= numProcessors;
+	 lastCPU = now;
+	 lastUserCPU = user;
+	 lastSysCPU = sys;
+
+	 return percent * 100;
 }
 
