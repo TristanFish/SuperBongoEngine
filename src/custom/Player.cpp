@@ -14,6 +14,7 @@ Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSp
 	name = n;
 	transform = Transform(pos);
 	transform.rotation.y = -90.0f;
+	AudioListenerComponent::Init(this);
 	
 }
 
@@ -60,6 +61,7 @@ void Player::Update(const float deltaTime)
 	//transform.Update(deltaTime);
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.rotationMatrix);
+	AudioListenerComponent::Update(deltaTime);
 	//RigidBody3D::Update(deltaTime);
 	//MeshRenderer::Update(deltaTime);
 }

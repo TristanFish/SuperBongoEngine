@@ -42,7 +42,9 @@ private:
 
 	//Sound bank
 #pragma region sounds
-	FMOD::Sound* newSound = nullptr;
+	FMOD::Sound* birdChirp = nullptr;
+	std::string birdChirpString{ "birdchirp" };
+
 	FMOD::Sound* leafCrunch = nullptr;
 	std::string leafCrunchString { "leafcrunch" };
 #pragma endregion 

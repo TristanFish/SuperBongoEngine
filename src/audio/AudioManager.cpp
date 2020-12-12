@@ -116,6 +116,10 @@ void AudioManager::LoadSounds()
 	//String object that has name you intend to search through
 	soundNames.emplace_back(leafCrunchString);
 
+	soundPaths.emplace_back("src/sounds/canary.wav");
+	sounds.emplace_back(birdChirp);
+	soundNames.emplace_back(birdChirpString);
+
 }
 
 //void AudioManager::SetAudioSourcePos(MATH::Vec3& sourcePos)
@@ -138,19 +142,11 @@ void AudioManager::LoadSounds()
 
 
 
-void AudioManager::CreateAndPlaySound(const char* filename)
-{
-	system->playSound(newSound, nullptr, false, &C1);
-	Create3DReverb();
-	Update();
-}
-
 AudioManager::~AudioManager()
 {
 	//audioSources.clear();
 	system->release();
 	system = nullptr;
-	newSound = nullptr;
 	G1 = nullptr;
 	C1 = nullptr;
 	

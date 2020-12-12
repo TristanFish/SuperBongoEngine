@@ -6,7 +6,7 @@
 
 //! Player Class
 /*! This class controls how the user interact with the objects in the scene */
-class Player : public GameObject
+class Player : public GameObject, public AudioListenerComponent
 {
 public:
 

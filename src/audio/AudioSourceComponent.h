@@ -28,6 +28,7 @@ private:
 	SoundAttributes soundAtts;
 	
 	FMOD::System* audioSystemRef;
+
 	FMOD_VECTOR FMODGamePos;
 	MATH::Vec3 gameObjectPosition;
 };

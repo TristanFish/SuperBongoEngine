@@ -14,7 +14,6 @@ public:
 	
 	
 	const void GetSkyBoxInfo();
-	void CreateQuad();
 	void Render() const override;
 	Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox);
 	~Water();
