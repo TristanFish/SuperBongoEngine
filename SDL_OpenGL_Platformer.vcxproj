@@ -355,6 +355,8 @@
     <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
     <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
+    <None Include="src\graphics\shaders\RefractFrag.glsl" />
+    <None Include="src\graphics\shaders\RefractVert.glsl" />
     <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
     <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
     <None Include="src\graphics\shaders\WaterFrag.glsl" />

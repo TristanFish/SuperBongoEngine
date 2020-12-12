@@ -646,6 +646,8 @@
     <None Include="src\graphics\shaders\WaterVert.glsl" />
     <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
     <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
+    <None Include="src\graphics\shaders\RefractFrag.glsl" />
+    <None Include="src\graphics\shaders\RefractVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">

@@ -188,8 +188,8 @@ void Renderer::Render() const
 
 void Renderer::DestroyRenderer()
 {
-	skyBox = nullptr;
 	delete(skyBox);
+	skyBox = nullptr;
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 	glDeleteTextures(1, &depthTexture);
 	glDeleteTextures(1, &stencilTexture);
