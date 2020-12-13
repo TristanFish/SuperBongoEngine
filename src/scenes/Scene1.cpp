@@ -28,13 +28,14 @@ bool Scene1::OnCreate()
 	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
-
+	bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
 	//objectList->AddGameObject(fog, 4);
 	objectList->AddGameObject(light, 5);
+	objectList->AddGameObject(bird, 7);
 
 	objectList->Init();
 

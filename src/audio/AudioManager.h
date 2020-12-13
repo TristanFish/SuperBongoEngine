@@ -27,7 +27,7 @@ public:
 
 	void Update();
 	void CreateAndPlaySound(const char* filename);
-	void MonitorChannel(FMOD::Channel c);
+	bool MonitorChannel( FMOD::Channel& c) const;
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
 	FMOD::Sound* RetrieveSoundObject(std::string soundName);
@@ -47,20 +47,19 @@ private:
 
 	FMOD::Sound* leafCrunch = nullptr;
 	std::string leafCrunchString { "leafcrunch" };
-#pragma endregion 
-		
-	FMOD::Reverb3D* reverb = nullptr;
-	
+
 	std::vector <std::string> soundPaths;
 	std::vector <std::string> soundNames;
 	std::vector <FMOD::Sound*> sounds;
 	std::map <std::string, FMOD::Sound*> soundPairs;
+#pragma endregion 
+		
+	FMOD::Reverb3D* reverb = nullptr;
+	
 	
 	AudioManager();
 	AudioManager(const AudioManager&) = delete;
 
-	//Just to keep track of all of our audio sources
-	void AddAudioSource(AudioSourceComponent& newComponent);
 
 	void InitAudioManager();
 	void CreateSounds();

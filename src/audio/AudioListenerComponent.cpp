@@ -15,14 +15,17 @@ void AudioListenerComponent::Init(GameObject* g)
 void AudioListenerComponent::Update(const float deltaTime)
 {
 	SetListenerPosition();
+	AudioManager::Get()->Update();
 }
 
 
 void AudioListenerComponent::SetListenerPosition()
 {
+	FMOD_VECTOR forwardVec{0.0f, 0.0f ,1.0f};
 	FMODlistenerPos = (FMOD_VECTOR*)listenerPos;
 	//Should probably pass in the camera members but this is fine for now.
-	audioSystemRef->set3DListenerAttributes(0, FMODlistenerPos, 0, FMODForward, &FMODUp);
+	audioSystemRef->set3DListenerAttributes(0, FMODlistenerPos, 0, &forwardVec, &FMODUp);
+	
 }
 
 //Nothing to render

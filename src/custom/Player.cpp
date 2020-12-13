@@ -61,6 +61,7 @@ void Player::Update(const float deltaTime)
 	//transform.Update(deltaTime);
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.rotationMatrix);
+	//Dont really need to update this but once models are moving their sound posititions will have to follow
 	AudioListenerComponent::Update(deltaTime);
 	//RigidBody3D::Update(deltaTime);
 	//MeshRenderer::Update(deltaTime);

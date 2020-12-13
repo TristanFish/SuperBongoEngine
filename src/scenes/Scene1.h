@@ -11,6 +11,7 @@
 #include "imgui/imgui.h"
 #include "custom/LightObject.h"
 #include "custom/SkyBox.h"
+#include "custom/Bird.h"
 
 /**< Forward declaring classes that we will use  */
 class Player;
@@ -41,6 +42,7 @@ private:
 	Plane* plane;
 
 	Water* water;
+	Bird* bird;
 
 	//! Debug Pointer
 	/*! Used for all of our debug functions */

@@ -13,7 +13,6 @@ void AudioSourceComponent::Init(GameObject* g)
 
 	audioSystemRef = AudioManager::Get()->system;
 	FMODGamePos =  AudioUtility::Vec3ToFMODVec(gameObjectPosition);
-
 	AudioManager::Get()->CreateChannelGroup("Channel Group 1", soundAtts.G1);
 	
 }
@@ -28,6 +27,7 @@ void AudioSourceComponent::PlaySound(FMOD::Sound* sound, FMOD::Channel** channel
 {
 	//True is passed in so the sound does not play immediatley, we need to set the channels audio position.
 	std::cout << "sound played" << std::endl;
+	
 	auto r = AudioManager::Get()->system->playSound(sound, NULL, true, channelRef);
 	std::cout << r << std::endl;
 	SetAudioPosition();

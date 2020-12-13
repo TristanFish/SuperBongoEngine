@@ -492,7 +492,7 @@
     <ClInclude Include="src\External\tinyxml2.h" />
     <ClInclude Include="src\custom\SkyBox.h" />
     <ClInclude Include="src\custom\Water.h" />
-    <ClInclude Include="Bird.h" />
+    <ClInclude Include="src\custom\Bird.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -568,7 +568,7 @@
     <ClCompile Include="src\External\tinyxml2.cpp" />
     <ClCompile Include="src\custom\SkyBox.cpp" />
     <ClCompile Include="src\custom\Water.cpp" />
-    <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="src\custom\Bird.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

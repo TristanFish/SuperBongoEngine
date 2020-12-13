@@ -7,11 +7,16 @@ AudioManager::AudioManager() : system(nullptr)
 	InitAudioManager();
 }
 
-void AudioManager::MonitorChannel(FMOD::Channel c)
+bool AudioManager::MonitorChannel( FMOD::Channel& c) const
 {
 	bool tb;
 	c.isPlaying(&tb);
-	std::cout  << tb << std::endl;
+	//std::cout  << tb << std::endl;
+	if (tb != 1) {
+		std::cout << "Sound has finished playing" << std::endl;
+		return true;
+	}
+	else return false;
 }
 
 FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
@@ -24,14 +29,10 @@ FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
 	else { std::cout << "Map Key:" << " " << soundName << " " << "Not found, no sound object returned" << std::endl; }
 }
 
-void AudioManager::AddAudioSource(AudioSourceComponent& newComponent)
-{
-	//audioSources.emplace_back(newComponent);
-}
 
 void AudioManager::CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup)
 {
-	//A channel is a the road between files being a digital and being played on speakers, you can probably guess what a group is
+	//A channel is a the road between files being digital and being played on speakers, you can probably guess what a group is
 	system->createChannelGroup(groupName, &channelGroup);
 	channelGroup->setMode(FMOD_3D);
 }
@@ -64,7 +65,7 @@ void AudioManager::InitAudioManager()
 	CreateSounds();
 }
 
-//Pass in a pointer to the new FMOD::Sound you've have created. 
+
 void AudioManager::CreateSounds()
 {
 	for (int i = 0; i < soundPaths.size(); i++) {
@@ -74,7 +75,7 @@ void AudioManager::CreateSounds()
 			std::cout << r << FMOD_ErrorString(r) << std::endl;
 		}
 		soundPairs[soundNames[i]] = sounds[i];
-		//soundPairs.insert(std::pair <const char*, FMOD::Sound*>(soundPaths[i], sounds[i]));
+		
 	}
 
 }

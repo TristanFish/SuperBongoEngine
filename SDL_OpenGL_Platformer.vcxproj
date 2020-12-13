@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bird.h" />
+    <ClInclude Include="src\custom\Bird.h" />
     <ClInclude Include="src\custom\SkyBox.h" />
     <ClInclude Include="src\graphics\CustomUI.h" />
     <ClInclude Include="external\include\assimp\aabb.h" />
@@ -258,7 +258,7 @@
     <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="src\custom\Bird.cpp" />
     <ClCompile Include="src\custom\SkyBox.cpp" />
     <ClCompile Include="src\graphics\CustomUI.cpp" />
     <ClCompile Include="external\include\imgui\imgui.cpp" />
