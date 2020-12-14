@@ -27,6 +27,7 @@ public:
 	void Render();
 	void HandleEvents(const SDL_Event& event);
 
+	/*! Sets the listener position to the posiiton of the game object inheriting the listener component */
 	void SetListenerPosition();
 };
 #endif;

@@ -19,9 +19,9 @@ Bird::~Bird()
 
 void Bird::Update(const float deltaTime)
 {
-	bool isDonePlaying = false;
-	isDonePlaying = AudioManager::Get()->MonitorChannel(*AudioManager::Get()->C1);
-	if (isDonePlaying) { AudioSourceComponent::PlaySound(birdSound, &AudioManager::Get()->C1); }
+	//bool isDonePlaying = false;
+	//isDonePlaying = AudioManager::Get()->MonitorChannel(*AudioManager::Get()->C1);
+	//if (isDonePlaying) { AudioSourceComponent::PlaySound(birdSound, &AudioManager::Get()->C1); }
 	transform.Update(deltaTime);
 	MeshRenderer::Update(deltaTime);
 }

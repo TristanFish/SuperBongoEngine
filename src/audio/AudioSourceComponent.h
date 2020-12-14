@@ -14,15 +14,18 @@ class AudioSourceComponent : public Component
 	void Render();
 	void HandleEvents(const SDL_Event& event);
 
+	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */
 	void PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef);
 
+	
 	FMOD::Sound* LoadSound(std::string soundName);
+	/*! Returns a sound object to be stored on specific objects, faster than searching */
 	FMOD::Sound* GetSound(std::string soundNameFromMap);
 	
 	~AudioSourceComponent();
 	
 private:
-
+	/*! Gets the audio source's position in world space and converts to an FMOD Vector */
 	void SetAudioPosition();
 	
 	SoundAttributes soundAtts;

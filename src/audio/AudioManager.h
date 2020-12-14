@@ -26,8 +26,11 @@ public:
 	}
 
 	void Update();
-	void CreateAndPlaySound(const char* filename);
+
+	/*! Monitors a channel to see if its currently playing audio */
 	bool MonitorChannel( FMOD::Channel& c) const;
+
+	/*! Creates a channel group for single channels to be combines into */
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
 	FMOD::Sound* RetrieveSoundObject(std::string soundName);
@@ -60,15 +63,17 @@ private:
 	AudioManager();
 	AudioManager(const AudioManager&) = delete;
 
-
+	/*! initializes the FMOD system  */
 	void InitAudioManager();
+
+	/*! Creates sound pointers for all sound objects and their appropriate sound paths */
 	void CreateSounds();
 	void Create3DReverbAttributes(FMOD_VECTOR pos);
 	void Create3DReverb();
 	void CreateAndSetPan(float pan);
 	//void SetAudioSourcePos(MATH::Vec3& sourcepos);
 
-	//This is where we load sounds, provide a new buffer and file path for every sound
+	/*! Takes all sounds and paths and submits combines into a map */
 	void LoadSounds();
 
 	
