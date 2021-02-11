@@ -8,7 +8,7 @@ bool Physics2D::CircleCircleDetect(RigidBodyComponent& rb1, RigidBodyComponent& 
 {
 	/*if (pow(rb1.collider.size + rb2.collider.size, 2) < VMath::dot(*rb1.pos, *rb2.pos))
 	{
-		std::cout << "Circle circle collision detected" << std::endl;
+		
 		return true;
 	}*/
 	return false;
@@ -49,7 +49,12 @@ bool Physics2D::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		(rb1.pos->y - rb1Halfy < rb2.pos->y + rb2Halfy) && //ChecK rb1 bottom edge with rb2 top edge
 		(rb1.pos->y + rb1Halfy > rb2.pos->y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
-		std::cout << "Box box collision detected" << std::endl;
+		std::string inf = "Box Box collision between ";
+		inf.append(rb1.gameobject->name);
+		inf.append(" and ");
+		inf.append(rb2.gameobject->name);
+
+		EngineLogger::Info(inf, "Physics2D.cpp", __LINE__);
 		
 		return true;
 	}
@@ -102,7 +107,6 @@ void Physics2D::CircleBoxResolve(RigidBodyComponent& circle, RigidBodyComponent&
 		Vec3 reflectVel = VMath::reflect(circle.vel, BoxNormal);
 
 		circle.SetPosition(*circle.pos + (BoxNormal * 0.05f));
-		std::cout << *circle.pos << std::endl;
 		if (VMath::dot(reflectVel, BoxNormal) > -0.1f)
 		{
 			circle.vel += reflectVel * 0.5f;
@@ -191,7 +195,7 @@ bool Physics2D::DetectCollision(RigidBodyComponent& rb1, RigidBodyComponent& rb2
 	}
 	else
 	{
-		std::cout << "Collision shape detection went wrong" << std::endl;
+		EngineLogger::Error("Collision shape detection went wrong", "Physics2D.cpp", __LINE__);
 	}
 	return false;
 }

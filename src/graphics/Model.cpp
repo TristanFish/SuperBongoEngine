@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "core/TextureManager.h"
+#include "core/Logger.h"
 
 Model::Model()
 {
@@ -42,7 +43,7 @@ void Model::LoadModel()
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		std::cout << "ASSIMP error: " << importer.GetErrorString() << std::endl;
+		EngineLogger::Error("ASSIMP error: " + std::string(importer.GetErrorString()), "Model.cpp", __LINE__);
 		return;
 	}
 

@@ -2,17 +2,18 @@
 #include <filesystem>
 #include <iostream>
 #include <cassert>
+#include "core/Logger.h"
 
 std::unordered_map<std::string, Texture> TextureManager::textures;
 
 void TextureManager::LoadAllTextures()
 {
 	using namespace std::filesystem;
-	std::cout << "=================\n" << "Loading all textures" << std::endl << "=================\n";
+	EngineLogger::Info("=================Loading all textures=================", "TextureManager.cpp", __LINE__);
 	for (auto& folder : std::filesystem::recursive_directory_iterator("resources/textures"))
 	{
 		textures[folder.path().filename().string()] = Texture(relative(folder.path()).string());
-		std::cout  << folder.path().filename().string() << std::endl;
+		EngineLogger::Info(folder.path().filename().string(), "TextureManager.cpp", __LINE__);
 	}
 }
 
@@ -20,7 +21,7 @@ Texture& TextureManager::GetTexture(const std::string& name)
 {
 	if (textures.find(name) == textures.end())
 	{
-		std::cerr << "A texture named " << name << " was not found" << std::endl;
+		EngineLogger::Error("No texture found with the name: " + name, "ModelManager.cpp", __LINE__);
 		assert(false && "Closing program");
 	}
 

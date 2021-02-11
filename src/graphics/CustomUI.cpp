@@ -1,6 +1,7 @@
 #include "CustomUI.h"
 #include "windows.h"
 #include "psapi.h"
+#include "core/Logger.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -121,7 +122,7 @@ void PerformanceMonitor::InitMonitor()
 
 void PerformanceMonitor::DebugFPS()
 {
-	std::cout << "FPS: " << 1/Timer::GetDeltaTime()  << std::endl;
+	EngineLogger::Trace("FPS: " + std::to_string(1 / Timer::GetDeltaTime()), "CustomUI.cpp", __LINE__);
 }
 
 float PerformanceMonitor::GetFPS()

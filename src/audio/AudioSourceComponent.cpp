@@ -1,5 +1,6 @@
 #include "AudioSourceComponent.h"
 
+
 void AudioSourceComponent::Init(GameObject* g)
 {
 	soundAtts.C1 = nullptr;
@@ -26,10 +27,9 @@ void AudioSourceComponent::Update(const float deltaTime)
 void AudioSourceComponent::PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef)
 {
 	//True is passed in so the sound does not play immediatley, we need to set the channels audio position.
-	std::cout << "sound played" << std::endl;
+	EngineLogger::Info("Sound Played", "AudioSourceComponent.cpp", __LINE__);
 	
 	auto r = AudioManager::Get()->system->playSound(sound, NULL, true, channelRef);
-	std::cout << r << std::endl;
 	SetAudioPosition();
 	(*channelRef)->setPaused(false);
 }
@@ -39,7 +39,7 @@ FMOD::Sound* AudioSourceComponent::LoadSound(std::string soundName)
 {
 	FMOD::Sound* sound = AudioManager::Get()->RetrieveSoundObject(soundName);
 	if (sound == nullptr) {
-		std::cout << "Sound not found make sure you're using a valid sound name." << std::endl;
+		EngineLogger::Warning(soundName + " sound not found make sure you're using a valid sound name.", "AudioSourceComponent.cpp", __LINE__);
 		return NULL;
 	}
 	return sound;
@@ -50,8 +50,7 @@ FMOD::Sound* AudioSourceComponent::GetSound(std::string soundNameFromMap)
 	auto sound = LoadSound(soundNameFromMap);
 	
 	if (sound == nullptr) {
-	
-		std::cout << "invalid sound element, buffer returned null or invalid name" << std::endl;
+		EngineLogger::Warning("invalid sound element, buffer returned null or invalid name", "AudioSourceComponent.cpp", __LINE__);
 	}
 	return sound;
 }
@@ -64,7 +63,7 @@ void AudioSourceComponent::SetAudioPosition()
 	//Gotta convert to FMODVECTOR, its no problem as long as the vector is always a vec3
 	r = AudioManager::Get()->C1->set3DAttributes(&FMODGamePos, NULL);
 	if (r != FMOD_OK) {
-		std::cout << r << FMOD_ErrorString(r) << "-------"<< "Audio Component did not set 3D attributes, game object position unavailable"<< std::endl;
+		EngineLogger::Warning("Audio Component did not set 3D attributes, game object position unavailable", "AudioSourceComponent.cpp", __LINE__);
 	}
 }
 

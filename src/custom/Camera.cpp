@@ -25,7 +25,6 @@ void Camera::Update(float deltaTime)
 
 	viewMatrix = MMath::inverse(MMath::translate(position) * rotationMatrix);
 
-	//std::cout << "Camera position/rotation: " << position << " " << rotation << std::endl;
 }
 
 void Camera::HandleEvents(const SDL_Event& event)

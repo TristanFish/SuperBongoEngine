@@ -51,7 +51,10 @@ SkyBox::SkyBox()
 #pragma endregion
 
 	bool result = LoadSkyBox("resources/skybox/right.jpg", "resources/skybox/left.jpg", "resources/skybox/top.jpg", "resources/skybox/bottom.jpg", "resources/skybox/front.jpg", "resources/skybox/back.jpg");
-	if (!result) { std::cout << "sky box failed to load textures" << std::endl; }
+	if (!result) 
+	{ 
+		EngineLogger::Error("Skybox failed to load textures", "SkyBox.cpp", __LINE__);
+	}
 	
 	glGenVertexArrays(1, &skyboxVAO);
 	glGenBuffers(1, &skyboxVBO);

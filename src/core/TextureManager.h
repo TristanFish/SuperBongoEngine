@@ -14,7 +14,7 @@ private:
 
 	static std::unordered_map<std::string, Texture> textures;
 	
-	friend class GameManager;
+	friend class CoreEngine;
 };
 
 

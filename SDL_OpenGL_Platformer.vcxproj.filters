@@ -349,9 +349,6 @@
       <Filter>src\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\Shader.h" />
-    <ClInclude Include="src\core\GameManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Timer.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -493,6 +490,13 @@
     <ClInclude Include="src\custom\SkyBox.h" />
     <ClInclude Include="src\custom\Water.h" />
     <ClInclude Include="src\custom\Bird.h" />
+    <ClInclude Include="src\core\Logger.h" />
+    <ClInclude Include="src\core\CoreEngine.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\GameInterface.h" />
+    <ClInclude Include="src\Games\Game1.h" />
+    <ClInclude Include="src\scenes\Scene2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -513,9 +517,6 @@
     </ClCompile>
     <ClCompile Include="src\components\Transform.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
-    <ClCompile Include="src\core\GameManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -569,6 +570,13 @@
     <ClCompile Include="src\custom\SkyBox.cpp" />
     <ClCompile Include="src\custom\Water.cpp" />
     <ClCompile Include="src\custom\Bird.cpp" />
+    <ClCompile Include="src\core\Logger.cpp" />
+    <ClCompile Include="src\core\CoreEngine.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\GameInterface.cpp" />
+    <ClCompile Include="src\Games\Game1.cpp" />
+    <ClCompile Include="src\scenes\Scene2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

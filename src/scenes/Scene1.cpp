@@ -5,6 +5,7 @@
 #include "custom/MouseRay.h"
 #include "core/Debug.h"
 #include "core/TextureManager.h"
+#include "core/Logger.h"
 
 
 Scene1::Scene1()
@@ -17,8 +18,7 @@ Scene1::~Scene1()
 
 bool Scene1::OnCreate()
 {
-	
-	std::cout << "=================\n" << "scene1 load start" << std::endl << "=================\n";
+	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 	objectList = new Manager();
 
 	//Setup the player
@@ -29,7 +29,7 @@ bool Scene1::OnCreate()
 	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
 	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
 	bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));
-	mouseRay = new MouseRay();
+	mouseRay = MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
 	objectList->AddGameObject(plane, 3);
@@ -43,7 +43,7 @@ bool Scene1::OnCreate()
 	
 	//Scene::SaveMapData();
 	Scene::LoadMapData();
-	return false;
+	return true;
 }
 
 
@@ -52,9 +52,6 @@ void Scene1::OnDestroy()
 {
 	delete objectList;
 	objectList = nullptr;
-
-	delete mouseRay;
-	mouseRay = nullptr;
 
 	pElement = nullptr;
 }

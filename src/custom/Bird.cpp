@@ -1,5 +1,5 @@
 #include "Bird.h"
-Bird::Bird(const char* name, MATH::Vec3 position): MeshRenderer("Bird.obj") {
+Bird::Bird(const char* name, MATH::Vec3 position): MeshRenderer("Grass.fbx") {
 	this->name = name;
 	this->transform.pos = position;
 	MeshRenderer::Init(this);

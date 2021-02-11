@@ -6,6 +6,7 @@
 #include "components/Transform.h"
 #include "sdl/SDL.h"
 #include "core/3D/Renderer.h"
+#include "core/Logger.h"
 
 class GameObject;
 class RigidBody3D;

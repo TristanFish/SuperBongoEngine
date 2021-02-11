@@ -42,7 +42,7 @@ public:
 
 	//! OnCreate Function 
 	/*! Initialized all the needed variables */
-	void OnCreate(const char* name, int w, int h);
+	bool OnCreate(const char* name, int w, int h);
 
 	//! OnDestroy Function 
 	/*! Calls the windows destroy functions and deletes any needed pointers */

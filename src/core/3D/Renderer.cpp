@@ -74,7 +74,7 @@ void Renderer::Init()
 	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cout << "Framebuffer not complete!" << std::endl;
+		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
 	}
 	//currentGTexture = albedoTexture;
 	//Set frame buffer back to default

@@ -14,7 +14,7 @@ private:
 
 	//! Vector3 Current Ray
 	/*! Is the direction on the current ray */
-	Ray* ray = new Ray();
+	Ray ray;
 
 	//! Vector2 Local Mouse Position
 	/*! Where the mouse is in local/screen coordinates */
@@ -53,7 +53,7 @@ public:
 
 	//! Get Current Ray Getter
 	/*! Returns the current ray */
-	const Ray* GetCurrentRay() { return ray; }
+	const Ray GetCurrentRay() { return ray; }
 
 	//! Handle Events Function
 	/*! Used for getting the mouse position in local/screen space */

@@ -9,9 +9,9 @@
 #include "graphics/CustomUI.h"
 #include "VMath.h"
 #include <stdio.h>
-using namespace tinyxml2;
+#include "custom/MouseRay.h"
 
-class MouseRay;
+using namespace tinyxml2;
 
 
 //! Scene Class
@@ -21,7 +21,7 @@ class Scene
 protected:
 	//! MouseRay Pointer
 	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
-	MouseRay* mouseRay;
+	MouseRay mouseRay;
 
 	//! PerformancePanel Class Instance
 	/*! Renders and Updates all the Performance variables we are wanting using IMGUI  */
@@ -46,7 +46,7 @@ protected:
 
 	//! Check Intersection function
 	/*! Checks if the MouseRay has intersected with a object */
-	bool CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj);
+	bool CheckIntersection(MouseRay ray, const Vec3& origin, GameObject* obj);
 
 public:
 	Manager* objectList;

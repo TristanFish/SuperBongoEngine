@@ -51,7 +51,7 @@ void TestModel::HandleEvents(const SDL_Event& event)
 
 void TestModel::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << "Hit " << otherBody.gameobject->name << std::endl;
+
 }
 
 

@@ -103,7 +103,9 @@ void Water::initReflectionFB()
 	CreateDepthBufferAttachment();
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+	{
+		EngineLogger::Error("Framebuffer is not complete", "Water.cpp", __LINE__);
+	}
 	UnbindCurrentFB();
 
 }
@@ -115,7 +117,9 @@ void Water::initRefractionFB()
 	CreateDepthTextureAttachment();
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+	{
+		EngineLogger::Error("Framebuffer is not complete", "Water.cpp", __LINE__);
+	}
 	UnbindCurrentFB();
 }
 

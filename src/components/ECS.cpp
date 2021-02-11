@@ -4,7 +4,6 @@
 #include "3D/MeshRenderer.h"
 #include "3D/LightComponent.h"
 
-
 GameObject::GameObject(): name("Default"), transform()
 {
 }
@@ -122,13 +121,15 @@ GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 		renderer.AddLight(&go->getComponent<LightComponent>());
 	}
 
-	std::cout << go->name << " added to objectList" << std::endl;
+	std::string inf = go->name;
+	inf.append(" added to objectList");
+
+	EngineLogger::Info(inf, "ECS.cpp", __LINE__);
 	return *go;
 }
 
 void Manager::CheckCollisions()
 {
-	//std::cout << rigidBodies.size() << std::endl;
 	for (size_t i = 0; i < rigidBodies.size(); i++)
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)

@@ -3,13 +3,15 @@
 #include <filesystem>
 #include <iostream>
 #include <cassert>
+#include "core/Logger.h"
 
 std::unordered_map<std::string, Model> ModelManager::models;
 
 void ModelManager::LoadAllModels()
 {
 	using namespace std::filesystem;
-	std::cout << "=================\n" << "Loading all models" << std::endl << "=================\n";
+	EngineLogger::Info("=================Loading all models=================", "ModelManager.cpp", __LINE__);
+
 	for (auto& folder : std::filesystem::recursive_directory_iterator("resources/models"))
 	{
 		if (folder.path().filename().extension() == ".mtl")
@@ -17,7 +19,8 @@ void ModelManager::LoadAllModels()
 			continue;
 		}
 		models[folder.path().filename().string()] = Model(relative(folder.path()).string());
-		std::cout << folder.path().filename().string() << std::endl;
+
+		EngineLogger::Info(folder.path().filename().string(), "ModelManager.cpp", __LINE__);
 	}
 }
 
@@ -25,7 +28,7 @@ Model& ModelManager::GetModel(const std::string& name)
 {
 	if (models.find(name) == models.end())
 	{
-		std::cerr << "No model found with the name: " << name << std::endl;
+		EngineLogger::Error("No model found with the name: " + name, "ModelManager.cpp", __LINE__);
 		assert(false && "Closing program");
 	}
 

@@ -51,7 +51,7 @@
 	 }
  }
 
- bool Scene::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
+ bool Scene::CheckIntersection(MouseRay ray, const Vec3& origin, GameObject* obj)
  {
 	 Vec3 bounds[2];
 	 bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
@@ -61,20 +61,20 @@
 
 	 
 			
-	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
-	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
-
-	 float tmin = std::min(tx1, tx2);
-	 float tmax = std::max(tx1, tx2);
-
-	 float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
-	 float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
-
-	 tmin = std::max(tmin, std::min(ty1, ty2));
-	 tmax = std::min(tmax, std::max(ty1, ty2));
-
-	 float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
-	 float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
+	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+																		
+	 float tmin = std::min(tx1, tx2);									
+	 float tmax = std::max(tx1, tx2);									
+																		
+	 float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	 float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+																		 
+	 tmin = std::max(tmin, std::min(ty1, ty2));							 
+	 tmax = std::min(tmax, std::max(ty1, ty2));							 
+																		 
+	 float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	 float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
 
 	 tmin = std::max(tmin, std::min(tz1, tz2));
 	 tmax = std::min(tmax, std::max(tz1, tz2));
@@ -137,17 +137,17 @@
 
  void Scene::HandleEvents(const SDL_Event& event)
  {
-	 mouseRay->HandleEvents(event);
+	 mouseRay.HandleEvents(event);
 	 if (event.type == SDL_MOUSEBUTTONDOWN)
 	 {
-		 mouseRay->CalaculateMouseRay();
+		 mouseRay.CalaculateMouseRay();
 		 for (auto obj : objectList->GetGameObjects())
 		 {
 			 if (obj->hasComponent<MeshRenderer>())
 			 {
-				if (CheckIntersection(mouseRay, mouseRay->GetCurrentRay()->Origin, obj))
+				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
 				{
-					std::cout << "Mouse Hit - " << obj->name << std::endl;
+					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
 					if (!obj->isMenuActive)
 					{
 						CheckExistingPanel(obj);
@@ -226,7 +226,7 @@
 	XMLError eResult = MapData.SaveFile("MapData.xml");
 	if (eResult != XML_SUCCESS)
 	{
-		std::cout << "Unable to save XML document" << std::endl;
+		EngineLogger::Error("Unable to save XML document", "Scene.cpp", __LINE__);
 	}
 }
 
@@ -237,7 +237,7 @@ void Scene::LoadMapData()
 
 	if (eResult != XML_SUCCESS)
 	{
-		std::cout << "Couldn't load the Map File" << std::endl;
+		EngineLogger::Error("Couldn't load the Map File", "Scene.cpp", __LINE__);
 	}
 
 	// Get's the root node
@@ -246,7 +246,7 @@ void Scene::LoadMapData()
 	int loop = 0;
 	XMLElement* pGameObjects;
 	pGameObjects = pRoot->FirstChildElement("GameObjects");
-	if (pGameObjects == nullptr) { std::cout << "Gameobjects not accessed properly" << std::endl; }
+	if (pGameObjects == nullptr) { EngineLogger::Error("GameObjects not accessed properly", "Scene.cpp", __LINE__); }
 	int objCount = 0;
 
 
@@ -278,7 +278,7 @@ void Scene::LoadMapData()
 
 		if (loop > objectList->GetGameObjects().size())
 		{
-			std::cout << outID << std::endl;
+
 			const char* objectName;
 			eResult = pNameElement->QueryStringAttribute("Equals", &objectName);
 			if (outID == 4)
@@ -286,14 +286,14 @@ void Scene::LoadMapData()
 				// Add's a new gamobject to the scene
 				tempObject = new TestModel(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject, 4);
-				std::cout << "New Object" << std::endl;
+
 			}
 			if (outID == 3)
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject, 4);
-				std::cout << "New Object" << std::endl;
+
 			}
 		}
 
@@ -335,7 +335,7 @@ void Scene::LoadMapData()
 
 		if (eResult != XML_SUCCESS)
 		{
-			std::cout << "Unable to set new values for " << tempObject->name << std::endl;
+			EngineLogger::Error("Unable to set new values for " + std::string(tempObject->name), "Scene.cpp", __LINE__);
 		}
 
 		tempObject->SetPos(outPos);

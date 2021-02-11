@@ -90,9 +90,6 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 	float dot = VMath::dot(pNormal, centre) - VMath::distance(box.GetPosition(), plane.GetPosition());	
 
 
-	std::cout << dot << std::endl;
-
-	std::cout << r << std::endl;
 
 	if(dot >= r)
 	{
@@ -102,7 +99,13 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 	{
 		return false;
 	}
-	std::cout << "Box Plane Collision Detected" << 1 << std::endl;
+
+	std::string inf = "Box Pane collision between ";
+	inf.append(box.gameobject->name);
+	inf.append(" and ");
+	inf.append(plane.gameobject->name);
+
+	EngineLogger::Info(inf, "Physics3D.cpp", __LINE__);
 	return true;
 }
 
@@ -198,7 +201,6 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 
 void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
 {
-	std::cout << "Box Plane Collision Detected" << std::endl;
 	if (box.collider.isMoveable)
 	{
 		box.vel.x = 0.0f;
@@ -247,7 +249,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		return false;
 		break;
 	default:
-		//std::cout << "Something went wrong in DetectCollision" << std::endl;
+		EngineLogger::Error("Something went wrong in DetectCollision", "Physics3D.cpp", __LINE__);
 		break;
 	}
 

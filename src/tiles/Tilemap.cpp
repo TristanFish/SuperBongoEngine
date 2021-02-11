@@ -28,7 +28,7 @@ Tilemap::Tilemap(const char* filepath)
 
 	if (!file)
 	{
-		std::cout << "Tilemap file not found" << std::endl;
+		
 	}
 
 	//loop through textfile
