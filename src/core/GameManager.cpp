@@ -1,5 +1,5 @@
 #include "GameManager.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 #include <iostream>
 #include "Globals.h"
 #include "core/ModelManager.h"
@@ -7,7 +7,9 @@
 #include "core/InputManager.h"
 #include "graphics/CustomUI.h"
 
-GameManager::GameManager(): window(nullptr), currentScene(nullptr), 
+Scene* GameManager::currentScene = nullptr;
+
+GameManager::GameManager(): window(nullptr), 
 							fps(60), isRunning(false)
 {
 }

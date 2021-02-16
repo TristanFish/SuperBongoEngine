@@ -11,7 +11,7 @@ class GameManager
 
 private:
 	Window* window;
-	Scene* currentScene;
+	static Scene* currentScene;
 	Timer timer;
 	unsigned int fps;
 	bool isRunning;
@@ -19,6 +19,8 @@ public:
 
 	GameManager();
 	~GameManager();
+
+	static Scene* GetCurrentScene () { return currentScene; }
 
 	void Init();
 	void Run();

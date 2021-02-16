@@ -358,7 +358,6 @@
     <ClInclude Include="src\custom\Player.h" />
     <ClInclude Include="src\tiles\Tilemap.h" />
     <ClInclude Include="src\tiles\Tile.h" />
-    <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\components\2D\RigidBodyComponent.h" />
     <ClInclude Include="src\components\2D\SpriteComponent.h">
@@ -375,7 +374,6 @@
     </ClInclude>
     <ClInclude Include="src\custom\TestModel.h" />
     <ClInclude Include="src\core\Debug.h" />
-    <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\core\Globals.h" />
@@ -392,7 +390,6 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\custom\Instancer.h" />
     <ClInclude Include="src\custom\MouseRay.h" />
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\math\Ray.h" />
@@ -490,9 +487,15 @@
     <ClInclude Include="src\core\InputManager.h" />
     <ClInclude Include="src\math\Quaternion.h" />
     <ClInclude Include="src\External\tinyxml2.h" />
-    <ClInclude Include="src\custom\SkyBox.h" />
-    <ClInclude Include="src\custom\Water.h" />
     <ClInclude Include="src\custom\Bird.h" />
+    <ClInclude Include="src\custom\Primitives\Plane.h" />
+    <ClInclude Include="src\custom\Rendering\Water.h" />
+    <ClInclude Include="src\custom\Rendering\SkyBox.h" />
+    <ClInclude Include="src\custom\Rendering\Instancer.h" />
+    <ClInclude Include="src\custom\Rendering\Camera.h" />
+    <ClInclude Include="src\custom\Primitives\Sphere.h" />
+    <ClInclude Include="src\custom\Primitives\Box.h" />
+    <ClInclude Include="src\custom\Primitives\Primitives.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -525,7 +528,6 @@
     <ClCompile Include="src\custom\Player.cpp" />
     <ClCompile Include="src\tiles\Tilemap.cpp" />
     <ClCompile Include="src\tiles\Tile.cpp" />
-    <ClCompile Include="src\custom\Camera.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
@@ -538,7 +540,6 @@
     </ClCompile>
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
-    <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
@@ -552,7 +553,6 @@
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\custom\Instancer.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
     <ClCompile Include="src\custom\MouseRay.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
@@ -566,9 +566,14 @@
     <ClCompile Include="src\core\InputManager.cpp" />
     <ClCompile Include="src\math\Quaternion.cpp" />
     <ClCompile Include="src\External\tinyxml2.cpp" />
-    <ClCompile Include="src\custom\SkyBox.cpp" />
-    <ClCompile Include="src\custom\Water.cpp" />
     <ClCompile Include="src\custom\Bird.cpp" />
+    <ClCompile Include="src\custom\Primitives\Plane.cpp" />
+    <ClCompile Include="src\custom\Rendering\Water.cpp" />
+    <ClCompile Include="src\custom\Rendering\SkyBox.cpp" />
+    <ClCompile Include="src\custom\Rendering\Instancer.cpp" />
+    <ClCompile Include="src\custom\Rendering\Camera.cpp" />
+    <ClCompile Include="src\custom\Primitives\Sphere.cpp" />
+    <ClCompile Include="src\custom\Primitives\Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

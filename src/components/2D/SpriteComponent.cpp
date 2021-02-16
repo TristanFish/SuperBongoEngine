@@ -1,6 +1,6 @@
 #include "SpriteComponent.h"
 #include "graphics/Texture.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {

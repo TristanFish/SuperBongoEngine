@@ -7,6 +7,7 @@
 #include "External/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
+#include "custom/Primitives/Primitives.h"
 #include "VMath.h"
 #include <stdio.h>
 using namespace tinyxml2;
@@ -33,7 +34,7 @@ protected:
 
 	//! Const Char* Pointer
 	/*! Stores our objects that can be spawned */
-	const char* objClasses[2] = { "Plane", "Test Object" };
+	const char* objClasses[3] = { "Plane", "Sphere","Box" };
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */

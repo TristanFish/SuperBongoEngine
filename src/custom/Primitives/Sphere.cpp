@@ -1,17 +1,15 @@
-#include "Plane.h"
+#include "Sphere.h"
 
-Plane::Plane()
+Sphere::Sphere()
 {
 }
 
-Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("Plane.fbx")
+Sphere::Sphere(const char* name, MATH::Vec3 position) : MeshRenderer("Sphere.fbx")
 {
 	this->name = name;
 	transform.setPos(position);
 
-	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
-	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
-	transform.rotation.print();
+	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
 	RigidBody3D::Init(this);
 	MeshRenderer::Init(this);
@@ -20,11 +18,11 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("Plane.fbx")
 
 }
 
-Plane::~Plane()
+Sphere::~Sphere()
 {
 }
 
-void Plane::Update(const float deltaTime)
+void Sphere::Update(const float deltaTime)
 {
 	//transform.rotation.y += deltaTime;
 	transform.Update(deltaTime);
@@ -32,17 +30,17 @@ void Plane::Update(const float deltaTime)
 	RigidBody3D::Update(deltaTime);
 }
 
-void Plane::Render() const
+void Sphere::Render() const
 {
 	MeshRenderer::Render();
 }
 
-void Plane::HandleEvents(const SDL_Event& event)
+void Sphere::HandleEvents(const SDL_Event& event)
 {
 	MeshRenderer::HandleEvents(event);
 }
 
-void Plane::OnCollisionEnter(RigidBody3D& otherBody)
+void Sphere::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	
+	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
 }

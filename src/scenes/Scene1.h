@@ -2,15 +2,14 @@
 #define SCENE1_H
 
 #include "Scene.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 #include "custom/TestModel.h"
-#include "custom/Plane.h"
 #include "graphics/Shader.h"
-#include "custom/Water.h"
+#include "custom/Rendering/Water.h"
 #include "custom/Grass.h"
 #include "imgui/imgui.h"
 #include "custom/LightObject.h"
-#include "custom/SkyBox.h"
+#include "custom/Rendering/SkyBox.h"
 #include "custom/Bird.h"
 
 /**< Forward declaring classes that we will use  */
@@ -39,10 +38,8 @@ private:
 
 	//! Plane Pointer
 	/*! Is a gameobject that we can spawn into the world  */
-	Plane* plane;
+	Box* box;
 
-	Water* water;
-	Bird* bird;
 
 	//! Debug Pointer
 	/*! Used for all of our debug functions */

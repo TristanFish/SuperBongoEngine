@@ -1,5 +1,6 @@
 #include "CustomUI.h"
 #include "windows.h"
+#include "core/GameManager.h"
 #include "psapi.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
@@ -37,7 +38,7 @@ void CustomUI::PropertiesPanel::Render()
 		// MAKE SAVE MAP DATA A STATIC FUNCTION
 		if (ImGui::Button("Save"))
 		{
-		
+			GameManager::GetCurrentScene()->SaveMapData();
 		}
 
 		ImGui::End();

@@ -4,7 +4,7 @@
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
-#include "custom/SkyBox.h"
+#include "custom/Rendering/SkyBox.h"
 
 void Renderer::Init()
 {

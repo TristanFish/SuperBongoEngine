@@ -21,7 +21,7 @@ void RigidBody3D::Init(GameObject *g)
 	pos = &g->transform.pos;
 	collider.minVertices = gameobject->getComponent<MeshRenderer>().GetMinVector();
 	collider.maxVertices = gameobject->getComponent<MeshRenderer>().GetMaxVector();
-	setColliderSize(g->transform.GetScale());
+	SetColliderSize(g->transform.GetScale());
 
 	mass = 1.0f;
 	vel = MATH::Vec3();
@@ -33,6 +33,8 @@ void RigidBody3D::Init(GameObject *g)
 
 	collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
 	collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
+
+
 }
 
 void RigidBody3D::Update(const float deltaTime)

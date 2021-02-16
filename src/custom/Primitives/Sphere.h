@@ -1,14 +1,17 @@
+#ifndef SPHERE_H
+#define SPHERE_H
+
 
 #include "components/ECS.h"
 #include "components/Components.h"
 
-class Plane : public GameObject, public MeshRenderer, public RigidBody3D
+class Sphere : public GameObject, public MeshRenderer, public RigidBody3D
 {
 
 public:
-	Plane();
-	Plane(const char* name, MATH::Vec3 position);
-	~Plane();
+	Sphere();
+	Sphere(const char* name, MATH::Vec3 position);
+	~Sphere();
 
 
 	// Inherited via GameObject
@@ -21,4 +24,6 @@ public:
 
 private:
 };
+
+#endif
 

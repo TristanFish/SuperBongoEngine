@@ -1,8 +1,8 @@
 <Root>
-    <GameObjects Count="3">
+    <GameObjects Count="4">
         <Name Equals="Player">
             <Object ID="1"/>
-            <Position X="0" Y="5" Z="90"/>
+            <Position X="0" Y="41.279972" Z="104.40005"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Name>
@@ -12,21 +12,19 @@
             <Rotation X="0" Y="0" Z="-90"/>
             <Scale X="1" Y="1" Z="1"/>
             <Color X="255" Y="255" Z="255" W="255"/>
-
         </Name>
-        <Name Equals="Plane">
+        <Name Equals="Box">
             <Object ID="3"/>
             <Position X="0" Y="0" Z="0"/>
             <Rotation X="-90" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-          <Color X="255" Y="255" Z="255" W="255"/>
+            <Color X="163" Y="16" Z="16" W="255"/>
         </Name>
         <Name Equals="Light">
             <Object ID="5"/>
             <Position X="0" Y="20" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-            <Color X="255" Y="0" Z="196" W="255"/>
         </Name>
     </GameObjects>
 </Root>

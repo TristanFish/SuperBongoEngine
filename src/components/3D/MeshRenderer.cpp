@@ -1,6 +1,6 @@
 #include <assimp/Importer.hpp>
 #include "MeshRenderer.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 #include "core/ModelManager.h"
 
 MeshRenderer::MeshRenderer() : instanceID(0) { }

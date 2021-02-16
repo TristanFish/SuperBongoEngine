@@ -1,6 +1,6 @@
 #include "Debug.h"
 #include <glew/glew.h>
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 Shader Debug::TexShader;
 Shader Debug::ObjShader;
 

@@ -2,7 +2,7 @@
 
 #include "components/Components.h"
 #include "glew/glew.h"
-#include "custom/SkyBox.h"
+#include "custom/Rendering/SkyBox.h"
 #include "core/Globals.h"
 #include "core/Debug.h"
 

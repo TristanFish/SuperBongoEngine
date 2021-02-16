@@ -1,7 +1,6 @@
 
 #include "Scene1.h"
 #include "custom/Player.h"
-#include "tiles/Tilemap.h"
 #include "custom/MouseRay.h"
 #include "core/Debug.h"
 #include "core/TextureManager.h"
@@ -25,17 +24,13 @@ bool Scene1::OnCreate()
 	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
-	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
+	box = new Box("Box", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
-	bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));
 	mouseRay = new MouseRay();
 	objectList->AddGameObject(player,1);
 	objectList->AddGameObject(grass, 2);
-	objectList->AddGameObject(plane, 3);
-	//objectList->AddGameObject(fog, 4);
+	objectList->AddGameObject(box, 3);
 	objectList->AddGameObject(light, 5);
-	objectList->AddGameObject(bird, 7);
 
 	objectList->Init();
 

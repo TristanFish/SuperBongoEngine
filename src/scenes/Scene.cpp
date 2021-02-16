@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
-#include "custom/Plane.h"
+#include "custom/Primitives/Plane.h"
 #include "custom/MouseRay.h"
 #include <math.h>
 // Returns X,Y,Z Depending on the int it is given
@@ -28,12 +28,19 @@
 		 objectList->AddGameObject(newPlane_, ID);
 		 break;
 	 case 4:
-		 TestModel * newTestModel;
-		 newTestModel = new TestModel(name_, pos_);
-		 newTestModel->SetRotation(rot_);
-		 newTestModel->SetScale(scale_);
-		 objectList->AddGameObject(newTestModel, ID);
+		 Box * newBox_;
+		 newBox_ = new Box(name_, pos_);
+		 newBox_->SetRotation(rot_);
+		 newBox_->SetScale(scale_);
+		 objectList->AddGameObject(newBox_, ID);
 		 break;
+
+	 case 5:
+		 Sphere * newSphere_;
+		 newSphere_ = new Sphere(name_, pos_);
+		 newSphere_->SetRotation(rot_);
+		 newSphere_->SetScale(scale_);
+		 objectList->AddGameObject(newSphere_, ID);
 	 default:
 		 break;
 	 }
@@ -105,9 +112,9 @@
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
-	 static int objID = 2;
+	 static int objID = 0;
 	 ImGui::Begin("Add Game Object", &enabled);
-	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
+	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 3);
 
 	 // Blank variables that can be changed 
 	 static char* name_ = new char();
