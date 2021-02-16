@@ -44,5 +44,6 @@ void Plane::HandleEvents(const SDL_Event& event)
 
 void Plane::OnCollisionEnter(RigidBody3D& otherBody)
 {
+	
 	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
 }

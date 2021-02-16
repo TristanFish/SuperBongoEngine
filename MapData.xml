@@ -18,7 +18,6 @@
             <Position X="0" Y="0" Z="0"/>
             <Rotation X="-90" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
-            <Color X="163" Y="16" Z="16" W="255"/>
         </Name>
         <Name Equals="Light">
             <Object ID="5"/>
