@@ -16,4 +16,6 @@ public:
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& event) override;
 	virtual void DrawDebugGeometry() override;
+
+	Type getType() const override;
 };

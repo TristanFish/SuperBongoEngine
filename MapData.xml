@@ -2,25 +2,26 @@
     <GameObjects Count="4">
         <Name Equals="Player">
             <Object ID="1"/>
-            <Position X="0" Y="41.279972" Z="104.40005"/>
+            <Position X="-18.4" Y="35.439995" Z="142.82018"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Name>
         <Name Equals="Grass">
             <Object ID="2"/>
             <Position X="0" Y="1" Z="0"/>
-            <Rotation X="0" Y="0" Z="-90"/>
-            <Scale X="1" Y="1" Z="1"/>
+            <Rotation X="-90" Y="0" Z="0"/>
+            <Scale X="5" Y="5" Z="5"/>
             <Color X="255" Y="255" Z="255" W="255"/>
         </Name>
         <Name Equals="Box">
             <Object ID="3"/>
             <Position X="0" Y="0" Z="0"/>
-            <Rotation X="-90" Y="0" Z="0"/>
+            <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
+            <Color X="30" Y="200" Z="210" W="255"/>
         </Name>
         <Name Equals="Light">
-            <Object ID="5"/>
+            <Object ID="4"/>
             <Position X="0" Y="20" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>

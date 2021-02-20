@@ -1,7 +1,6 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
 #include "custom/Primitives/Plane.h"
-#include "custom/MouseRay.h"
 #include <math.h>
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
@@ -20,27 +19,27 @@
  {
 	 switch (ID)
 	 {
-	 case 3:
+	 case 0:
 		 Plane * newPlane_;
 		 newPlane_ = new Plane(name_, pos_);
 		 newPlane_->SetRotation(rot_);
 		 newPlane_->SetScale(scale_);
-		 objectList->AddGameObject(newPlane_, ID);
+		 objectList->AddGameObject(newPlane_);
 		 break;
-	 case 4:
+	 case 1:
 		 Box * newBox_;
 		 newBox_ = new Box(name_, pos_);
 		 newBox_->SetRotation(rot_);
 		 newBox_->SetScale(scale_);
-		 objectList->AddGameObject(newBox_, ID);
+		 objectList->AddGameObject(newBox_);
 		 break;
 
-	 case 5:
+	 case 2:
 		 Sphere * newSphere_;
 		 newSphere_ = new Sphere(name_, pos_);
 		 newSphere_->SetRotation(rot_);
 		 newSphere_->SetScale(scale_);
-		 objectList->AddGameObject(newSphere_, ID);
+		 objectList->AddGameObject(newSphere_);
 	 default:
 		 break;
 	 }
@@ -58,7 +57,7 @@
 	 }
  }
 
- bool Scene::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
+ bool Scene::CheckIntersection(std::unique_ptr<MouseRay>& ray, const Vec3& origin, GameObject* obj)
  {
 	 Vec3 bounds[2];
 	 bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
@@ -132,7 +131,7 @@
 	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
 	 if (ImGui::Button("Create Object"))
 	 {
-		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
+		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID);
 		 name_ = new char();
 		 Pos_ = Vec3(0.0f);
 		 Rot_ = Vec3(0.0f);
@@ -292,14 +291,14 @@ void Scene::LoadMapData()
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new TestModel(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
+				objectList->AddGameObject(tempObject);
 				std::cout << "New Object" << std::endl;
 			}
 			if (outID == 3)
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
+				objectList->AddGameObject(tempObject);
 				std::cout << "New Object" << std::endl;
 			}
 		}

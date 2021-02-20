@@ -41,3 +41,8 @@ void Grass::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
+GameObject::Type Grass::getType() const
+{
+	return Type::Grass;
+}
+

@@ -40,6 +40,11 @@ void Box::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
+GameObject::Type Box::getType() const
+{
+	return Type::Box;
+}
+
 void Box::OnCollisionEnter(RigidBody3D& otherBody)
 {
 	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;

@@ -7,6 +7,7 @@
 #include "sdl/SDL.h"
 #include "core/3D/Renderer.h"
 
+
 class GameObject;
 class RigidBody3D;
 
@@ -56,7 +57,12 @@ protected:
 	/*! Control's if the gameobject is active or not*/
 	bool active = true;
 
+
 public:
+
+	// Enum Class Type
+	/*!Holds enumerations to all the classes that can be instantiated in our engine*/
+	enum class Type {None, Box, Plane, Sphere, Light, Grass};
 
 	//!Name Char*
 	/*! Hold's the name of this gameobject*/
@@ -90,6 +96,11 @@ public:
 	//!Virtual Render Function
 	/*!Renders the Gameobject on screen*/
 	virtual void Render() const = 0;
+
+	// Virtual getType function
+	/*!Returns the type of class that the owning class is*/
+	virtual Type getType() const { return Type::None; }
+
 
 	//!Virtual HandleEvents Function
 	/*!Handles and Keyboard/Mouse events*/
@@ -127,6 +138,8 @@ public:
 	/*!Set's the Name of this a gameobject*/
 	inline void SetName(const char* name_) { name = name_; }
 
+
+
 	//!Template hasComponent boolean
 	/*!Checks if this gameobject has the specified component*/
 	template <typename T>
@@ -149,6 +162,7 @@ public:
 	{
 		return dynamic_cast<T&>(*this);
 	}
+
 };
 
 //! Manager Class
@@ -170,6 +184,14 @@ private:
 	//! Renderer 
 	/*! Handles the rendering of all the gameobjects*/
 	Renderer renderer;
+
+	//! CheckOwningClass Function 
+	/*!Check's the owning class and then returns that classes ID*/
+	int CheckOwningClass(GameObject* gameobject_);
+
+	//! nextID Integer 
+	/*!Holds the ID that the next object will be set to if one doesn't already exist*/
+	int nextID = 0;
 public:
 
 	//! Manager Destructor
@@ -195,15 +217,15 @@ public:
 
 	//! AddGameObject Function
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
-	GameObject& AddGameObject(GameObject* go, unsigned int objID);
+	GameObject& AddGameObject(GameObject* go);
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
-	const int GetNumObjects() { return gameObjects.size(); }
+	 int GetNumObjects() const { return gameObjects.size(); } 
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
+	 std::vector<GameObject*> const GetGameObjects() { return gameObjects; }
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/

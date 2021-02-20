@@ -40,6 +40,11 @@ void Sphere::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
+GameObject::Type Sphere::getType() const
+{
+	return Type::Sphere;
+}
+
 void Sphere::OnCollisionEnter(RigidBody3D& otherBody)
 {
 	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;

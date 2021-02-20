@@ -7,7 +7,7 @@
 //! Grass class
 /*! This class is a gameobject that has a MeshRenderer and a Instancer 
  An Instancer allows this object to render multiple instances of its desired object*/
-class Grass : public GameObject, public MeshRenderer, Instancer
+class Grass : public GameObject, public MeshRenderer, public Instancer
 {
 public:
 
@@ -31,6 +31,9 @@ public:
 
 	//! Handle Events Function (Inherited from Gameobject)
 	void HandleEvents(const SDL_Event& event) override;
+
+	Type getType() const override;
+
 
 private:
 

@@ -19,6 +19,7 @@ public:
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
+	Type getType() const override;
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
 

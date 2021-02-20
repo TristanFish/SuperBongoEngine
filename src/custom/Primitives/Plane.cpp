@@ -42,6 +42,11 @@ void Plane::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
+GameObject::Type Plane::getType() const
+{
+	return Type::Plane;
+}
+
 void Plane::OnCollisionEnter(RigidBody3D& otherBody)
 {
 	

@@ -26,11 +26,11 @@ bool Scene1::OnCreate()
 	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	box = new Box("Box", MATH::Vec3(0.0f, 0.0f, 0.0f));
 	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
-	mouseRay = new MouseRay();
-	objectList->AddGameObject(player,1);
-	objectList->AddGameObject(grass, 2);
-	objectList->AddGameObject(box, 3);
-	objectList->AddGameObject(light, 5);
+	mouseRay = std::make_unique<MouseRay>();
+	objectList->AddGameObject(player);
+	objectList->AddGameObject(grass);
+	objectList->AddGameObject(box);
+	objectList->AddGameObject(light);
 
 	objectList->Init();
 
@@ -47,9 +47,6 @@ void Scene1::OnDestroy()
 {
 	delete objectList;
 	objectList = nullptr;
-
-	delete mouseRay;
-	mouseRay = nullptr;
 
 	pElement = nullptr;
 }

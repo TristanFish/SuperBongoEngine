@@ -3,7 +3,7 @@
 #include "core/3D/Physics3D.h"
 #include "3D/MeshRenderer.h"
 #include "3D/LightComponent.h"
-
+#include "custom/Primitives/Primitives.h"
 
 GameObject::GameObject(): name("Default"), transform()
 {
@@ -16,7 +16,20 @@ GameObject::~GameObject()
 }
 
 
-Manager::~Manager()
+int Manager::CheckOwningClass(GameObject* gameobject_) 
+{
+	for (auto obj: gameObjects)
+	{
+		if (obj->getType() == gameobject_->getType())
+		{
+			return obj->objectID;
+		}
+	}
+
+	return ++nextID;
+}
+
+Manager::~Manager() 
 {
 	for (GameObject* g : gameObjects)
 	{
@@ -34,7 +47,7 @@ Manager::~Manager()
 	rigidBodies.clear();
 }
 
-void Manager::Init()
+void Manager::Init() 
 {
 	renderer.Init();
 }
@@ -105,10 +118,13 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
+GameObject& Manager::AddGameObject(GameObject* go)
 {
-	go->objectID = objID;
+	
+	go->objectID = CheckOwningClass(go);
 	gameObjects.emplace_back(go);
+
+	std::cout << go->objectID << std::endl;
 	if (go->hasComponent<RigidBody3D>())
 	{
 		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());

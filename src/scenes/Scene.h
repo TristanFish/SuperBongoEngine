@@ -9,10 +9,10 @@
 #include "graphics/CustomUI.h"
 #include "custom/Primitives/Primitives.h"
 #include "VMath.h"
+#include "custom/MouseRay.h"
+#include <memory>
 #include <stdio.h>
 using namespace tinyxml2;
-
-class MouseRay;
 
 
 //! Scene Class
@@ -22,7 +22,7 @@ class Scene
 protected:
 	//! MouseRay Pointer
 	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
-	MouseRay* mouseRay;
+	std::unique_ptr<MouseRay> mouseRay;
 
 	//! PerformancePanel Class Instance
 	/*! Renders and Updates all the Performance variables we are wanting using IMGUI  */
@@ -34,7 +34,7 @@ protected:
 
 	//! Const Char* Pointer
 	/*! Stores our objects that can be spawned */
-	const char* objClasses[3] = { "Plane", "Sphere","Box" };
+	const char* objClasses[3] = { "Plane", "Box","Sphere" };
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
@@ -47,7 +47,7 @@ protected:
 
 	//! Check Intersection function
 	/*! Checks if the MouseRay has intersected with a object */
-	bool CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj);
+	bool CheckIntersection(std::unique_ptr<MouseRay>& ray, const Vec3& origin, GameObject* obj);
 
 public:
 	Manager* objectList;
