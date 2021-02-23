@@ -51,18 +51,25 @@ Update, render and handleEvents need to be defined per class that inherits from 
 Check Player.h to see how to create gameobjects*/
 class GameObject
 {
+
+
 protected:
 
 	//! Active boolean
 	/*! Control's if the gameobject is active or not*/
 	bool active = true;
 
+	// Enum Class Type
+	/*!Holds enumerations to all the classes that can be instantiated in our engine*/
+	enum class Type { None, Box, Plane, Sphere, Light, Grass };
+
+
+
+	Type typeID = Type::None;
 
 public:
 
-	// Enum Class Type
-	/*!Holds enumerations to all the classes that can be instantiated in our engine*/
-	enum class Type {None, Box, Plane, Sphere, Light, Grass};
+	
 
 	//!Name Char*
 	/*! Hold's the name of this gameobject*/
@@ -71,11 +78,6 @@ public:
 	//!IsMenuActive boolean
 	/*! Controls if it's properties panel is active*/
 	bool isMenuActive = false;
-
-	//!Object ID Integer
-	/*! Object ID is used so we know what object is being spawned 
-	 all objects that inherit from grass will have the same ID ext*/
-	int objectID;
 
 	//!Transform
 	/*! Control's all of the gameobjects positions/rotations/translations*/
@@ -97,9 +99,12 @@ public:
 	/*!Renders the Gameobject on screen*/
 	virtual void Render() const = 0;
 
-	// Virtual getType function
+	//GetType function
 	/*!Returns the type of class that the owning class is*/
-	virtual Type getType() const { return Type::None; }
+	inline Type getType() const { return typeID; }
+
+
+	inline void SetType(Type typeID_) { typeID = typeID_; }
 
 
 	//!Virtual HandleEvents Function
@@ -137,7 +142,6 @@ public:
 	//!inline SetName Setter
 	/*!Set's the Name of this a gameobject*/
 	inline void SetName(const char* name_) { name = name_; }
-
 
 
 	//!Template hasComponent boolean
@@ -184,14 +188,6 @@ private:
 	//! Renderer 
 	/*! Handles the rendering of all the gameobjects*/
 	Renderer renderer;
-
-	//! CheckOwningClass Function 
-	/*!Check's the owning class and then returns that classes ID*/
-	int CheckOwningClass(GameObject* gameobject_);
-
-	//! nextID Integer 
-	/*!Holds the ID that the next object will be set to if one doesn't already exist*/
-	int nextID = 0;
 public:
 
 	//! Manager Destructor

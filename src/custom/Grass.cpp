@@ -13,6 +13,10 @@ Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : Mesh
 	transform.setRot(Vec3(-90.0f, 0.0f, 0.0f));
 	transform.scale = Vec3(5.0f);
 	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
+
+	typeID = Type::Grass;
+
+
 	MeshRenderer::Init(this);
 	MeshRenderer::CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
 	MeshRenderer::SetInstanceID(1);
@@ -41,8 +45,4 @@ void Grass::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
-GameObject::Type Grass::getType() const
-{
-	return Type::Grass;
-}
 

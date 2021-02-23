@@ -65,7 +65,6 @@
 
 	 bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
 
-	 
 			
 	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
 	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
@@ -197,7 +196,7 @@
 		XMLElement* pScaleElement = MapData.NewElement("Scale");
 		XMLElement* pColorElement = MapData.NewElement("Color");
 
-		pIDElement->SetAttribute("ID", obj->objectID);
+		pIDElement->SetAttribute("ID",  static_cast<int>(obj->getType()));
 		pNameElement->InsertEndChild(pIDElement);
 
 		// Loops through a vector for each
@@ -282,24 +281,30 @@ void Scene::LoadMapData()
 			tempObject = objectList->GetGameObjects()[loop - 1];
 		}
 
+		// ID LOADING NEEDS TO BE FIXED
 		if (loop > objectList->GetGameObjects().size())
 		{
 			std::cout << outID << std::endl;
 			const char* objectName;
 			eResult = pNameElement->QueryStringAttribute("Equals", &objectName);
-			if (outID == 4)
+
+			switch (outID)
 			{
-				// Add's a new gamobject to the scene
-				tempObject = new TestModel(objectName, Vec3(0.0f, 0.0f, 0.0f));
+			case 1:
+				tempObject = new Box(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject);
-				std::cout << "New Object" << std::endl;
-			}
-			if (outID == 3)
-			{
-				// Add's a new gamobject to the scene
+				break;
+			case 2:
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject);
-				std::cout << "New Object" << std::endl;
+				break;
+			case 3:
+				tempObject = new Sphere(objectName, Vec3(0.0f, 0.0f, 0.0f));
+				objectList->AddGameObject(tempObject);
+				break;
+
+			default:
+				break;
 			}
 		}
 

@@ -18,7 +18,7 @@ bool Scene1::OnCreate()
 {
 	
 	std::cout << "=================\n" << "scene1 load start" << std::endl << "=================\n";
-	objectList = new Manager();
+	objectList = std::make_unique<Manager>();
 
 	//Setup the player
 	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
@@ -36,8 +36,8 @@ bool Scene1::OnCreate()
 
 	PerformanceMonitor::InitMonitor();
 	
-	//Scene::SaveMapData();
-	Scene::LoadMapData();
+	//SaveMapData();
+	LoadMapData();
 	return false;
 }
 
@@ -45,8 +45,6 @@ bool Scene1::OnCreate()
 
 void Scene1::OnDestroy()
 {
-	delete objectList;
-	objectList = nullptr;
 
 	pElement = nullptr;
 }

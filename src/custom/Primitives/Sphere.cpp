@@ -11,6 +11,9 @@ Sphere::Sphere(const char* name, MATH::Vec3 position) : MeshRenderer("Sphere.fbx
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
+	typeID = Type::Sphere;
+
+
 	RigidBody3D::Init(this);
 	MeshRenderer::Init(this);
 
@@ -38,11 +41,6 @@ void Sphere::Render() const
 void Sphere::HandleEvents(const SDL_Event& event)
 {
 	MeshRenderer::HandleEvents(event);
-}
-
-GameObject::Type Sphere::getType() const
-{
-	return Type::Sphere;
 }
 
 void Sphere::OnCollisionEnter(RigidBody3D& otherBody)

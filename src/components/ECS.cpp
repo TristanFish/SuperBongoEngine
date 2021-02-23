@@ -16,18 +16,7 @@ GameObject::~GameObject()
 }
 
 
-int Manager::CheckOwningClass(GameObject* gameobject_) 
-{
-	for (auto obj: gameObjects)
-	{
-		if (obj->getType() == gameobject_->getType())
-		{
-			return obj->objectID;
-		}
-	}
 
-	return ++nextID;
-}
 
 Manager::~Manager() 
 {
@@ -120,11 +109,8 @@ GameObject& Manager::FindGameObject(const char* name)
 //Adds a gameobject with a name and position
 GameObject& Manager::AddGameObject(GameObject* go)
 {
-	
-	go->objectID = CheckOwningClass(go);
-	gameObjects.emplace_back(go);
+		gameObjects.emplace_back(go);
 
-	std::cout << go->objectID << std::endl;
 	if (go->hasComponent<RigidBody3D>())
 	{
 		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());

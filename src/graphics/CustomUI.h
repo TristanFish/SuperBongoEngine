@@ -56,6 +56,9 @@ namespace CustomUI
 	   /*! Is used to update the FPS text depending on the "fpsUpdateSpeed" variable */
 		int lastestFPS;
 	public:
+		PerformancePanel();
+		~PerformancePanel();
+
 
 		//! Update Function
 	   /*! Updates the needed variables in this class */
@@ -64,6 +67,18 @@ namespace CustomUI
 		//! Render Function
 	   /*! Renders the needed IMGUI info */
 		void Render() const;
+	};
+
+	class HierarchyPanel
+	{
+	public:
+		HierarchyPanel(std::vector<GameObject*> gameobjects_);
+		~HierarchyPanel();
+
+
+	private:
+		std::vector<GameObject*> gameobjects;
+
 	};
 
 }

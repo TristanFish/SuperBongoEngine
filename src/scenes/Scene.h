@@ -50,10 +50,11 @@ protected:
 	bool CheckIntersection(std::unique_ptr<MouseRay>& ray, const Vec3& origin, GameObject* obj);
 
 public:
-	Manager* objectList;
+	std::unique_ptr<Manager> objectList;
 
-	// Used for saving and loading xml document information 
+	// Used for saving and loading xml document information
 	XMLElement* pElement;
+
 	Scene() {};
 	~Scene() {};
 

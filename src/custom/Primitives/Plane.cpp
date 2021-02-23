@@ -13,6 +13,8 @@ Plane::Plane(const char* name, MATH::Vec3 position) : MeshRenderer("Plane.fbx")
 	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
 	transform.rotation.print();
 
+	typeID = Type::Plane;
+
 	RigidBody3D::Init(this);
 	MeshRenderer::Init(this);
 
@@ -42,10 +44,7 @@ void Plane::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
-GameObject::Type Plane::getType() const
-{
-	return Type::Plane;
-}
+
 
 void Plane::OnCollisionEnter(RigidBody3D& otherBody)
 {

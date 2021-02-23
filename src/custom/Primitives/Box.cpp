@@ -11,6 +11,8 @@ Box::Box(const char* name, MATH::Vec3 position) : MeshRenderer("Cube.fbx")
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
+	typeID = Type::Box;
+
 	RigidBody3D::Init(this);
 	MeshRenderer::Init(this);
 
@@ -40,12 +42,7 @@ void Box::HandleEvents(const SDL_Event& event)
 	MeshRenderer::HandleEvents(event);
 }
 
-GameObject::Type Box::getType() const
-{
-	return Type::Box;
-}
-
 void Box::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	//std::cout << this->name << " Collided With: " << otherBody.gameobject->name << std::endl;
 }

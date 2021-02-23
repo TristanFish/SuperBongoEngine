@@ -50,7 +50,15 @@ void CustomUI::PropertiesPanel::Render()
 
 
 
+CustomUI::PerformancePanel::PerformancePanel() : lastestFPS(0)
+{
 
+}
+
+CustomUI::PerformancePanel::~PerformancePanel()
+{
+
+}
 
 void CustomUI::PerformancePanel::Update(const float deltatime)
 {
@@ -88,6 +96,25 @@ void CustomUI::PerformancePanel::Render() const
 	ImGui::End();
 }
 
+
+
+CustomUI::HierarchyPanel::HierarchyPanel(std::vector<GameObject*> gameobjects_)
+{
+	gameobjects = gameobjects_;
+}
+
+CustomUI::HierarchyPanel::~HierarchyPanel()
+{
+	if (gameobjects.size() > 0)
+	{
+		for (auto obj : gameobjects)
+		{
+			delete obj;
+			obj = nullptr;
+		}
+		gameobjects.clear();
+	}
+}
  
 
 int PerformanceMonitor::FPSLimit = 60;
@@ -166,4 +193,5 @@ double PerformanceMonitor::GetCPUUsage()
 
 	 return percent * 100;
 }
+
 

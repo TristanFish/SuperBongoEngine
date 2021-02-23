@@ -32,7 +32,6 @@ public:
 	//! Handle Events Function (Inherited from Gameobject)
 	void HandleEvents(const SDL_Event& event) override;
 
-	Type getType() const override;
 
 
 private:
