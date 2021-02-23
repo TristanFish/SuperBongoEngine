@@ -24,14 +24,14 @@ void Timer::UpdateTimer()
 unsigned int Timer::SleepTime(const unsigned int fps)
 {
 
-	unsigned int milliSecsPerFrame = MILLI_TO_SEC / fps;
+	const unsigned int milliSecsPerFrame = MILLI_TO_SEC / fps;
 
 	if (milliSecsPerFrame == 0)
 	{
 		return 0;
 	}
 
-	unsigned int sleepTime = milliSecsPerFrame - (SDL_GetTicks() - currentTicks);
+	const unsigned int sleepTime = milliSecsPerFrame - (SDL_GetTicks() - currentTicks);
 
 	if (sleepTime > milliSecsPerFrame)
 	{
@@ -42,12 +42,12 @@ unsigned int Timer::SleepTime(const unsigned int fps)
 
 }
 
-float Timer::GetCurrentTickMilli() const
+float Timer::GetCurrentTickMilli()
 {
 	return static_cast<float>(currentTicks);
 }
 
-float Timer::GetCurrentTickSec() const
+float Timer::GetCurrentTickSec()
 {
 	return static_cast<float>(currentTicks) / MILLI_TO_SEC;
 }

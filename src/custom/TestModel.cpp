@@ -25,9 +25,9 @@ TestModel::~TestModel()
 void TestModel::AttachUniforms() const
 {
 	
-	shader.TakeInUniformFloat("Fog.maxDist", 50.0f);
-	shader.TakeInUniformFloat("Fog.minDist", 10.0f);
-	shader.TakeInUniformVec3("Fog.color", Vec3(1.0f, 1.0f, 0.0f));
+	shader.TakeUniform("Fog.maxDist", 50.0f);
+	shader.TakeUniform("Fog.minDist", 10.0f);
+	shader.TakeUniform("Fog.color", Vec3(1.0f, 1.0f, 0.0f));
 }
 
 void TestModel::Update(const float deltaTime)

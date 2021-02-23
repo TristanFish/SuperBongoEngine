@@ -154,8 +154,8 @@ void SkyBox::Render() const
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
 	shader->RunShader();
-	shader->TakeInUniformMat4("viewMatrix", viewConvert);
-	shader->TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader->TakeUniform("viewMatrix", viewConvert);
+	shader->TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

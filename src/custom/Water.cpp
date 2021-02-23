@@ -146,8 +146,8 @@ void Water::Render() const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
 	//glActiveTexture(GL_TEXTURE1);
 	//glBindTexture(GL_TEXTURE_2D, reflectTex->getTextureID());
-	MeshRenderer::shader.TakeInUniformMat4("cube", Camera::getInstance()->getViewMatrix());
-	MeshRenderer::shader.TakeInUniformVec3("cameraPos", Camera::getInstance()->getPosition());
+	MeshRenderer::shader.TakeUniform("cube", Camera::getInstance()->getViewMatrix());
+	MeshRenderer::shader.TakeUniform("cameraPos", Camera::getInstance()->getPosition());
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//glDrawBuffer(reflectionDepthBuffer);
 	//texture.DrawTextureToScreen(refractionTexture, 1.0f, 0.5f, 0.0f, 0.5f);

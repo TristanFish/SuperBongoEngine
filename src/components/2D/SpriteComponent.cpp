@@ -87,9 +87,9 @@ void SpriteComponent::Render() const
 	shader.RunShader();	
 	
 	//setup uniforms
-	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeInUniformMat4("modelMatrix", gameobject->transform.GetModelMatrix());
+	shader.TakeUniform("viewMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeUniform("modelMatrix", gameobject->transform.GetModelMatrix());
 
 	//bind texture
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());

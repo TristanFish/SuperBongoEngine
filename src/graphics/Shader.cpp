@@ -57,9 +57,9 @@ void Shader::RunShader() const
 	glUseProgram(shader_program);
 }
 
-void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const
+void Shader::TakeUniform(const std::string &name, const Matrix4 &matrix) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) 
 	{
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__);
@@ -68,9 +68,9 @@ void Shader::TakeInUniformMat4(const std::string &name, Matrix4 &matrix) const
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 
-void Shader::TakeInUniformMat3(const std::string& name, Matrix3& matrix) const
+void Shader::TakeUniform(const std::string& name, const Matrix3& matrix) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) { 
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__);
 		return; 
@@ -78,9 +78,9 @@ void Shader::TakeInUniformMat3(const std::string& name, Matrix3& matrix) const
 	glUniformMatrix3fv(location, 1, GL_FALSE, matrix);
 }
 
-void Shader::TakeInUniformVec3(const std::string& name, Vec3 v) const
+void Shader::TakeUniform(const std::string& name, const Vec3& v) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) 
 	{ 
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__);
@@ -89,9 +89,9 @@ void Shader::TakeInUniformVec3(const std::string& name, Vec3 v) const
 	glUniform3f(location, v.x, v.y, v.z);
 }
 
-void Shader::TakeInUniformVec4(const std::string& name, Vec4 v) const
+void Shader::TakeUniform(const std::string& name, const Vec4& v) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0)
 	{ 
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__); 
@@ -100,9 +100,9 @@ void Shader::TakeInUniformVec4(const std::string& name, Vec4 v) const
 	glUniform4fv(location, 1, v);
 }
 
-void Shader::TakeInUniformFloat(const std::string& name, float f) const
+void Shader::TakeUniform(const std::string& name, const float f) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) 
 	{
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__); 
@@ -111,9 +111,9 @@ void Shader::TakeInUniformFloat(const std::string& name, float f) const
 	glUniform1f(location, f);
 }
 
-void Shader::TakeInUniformInt(const std::string& name, int i) const
+void Shader::TakeUniform(const std::string& name, const int i) const
 {
-	GLint location = glGetUniformLocation(shader_program, name.c_str());
+	const GLint location = glGetUniformLocation(shader_program, name.c_str());
 	if (location < 0) 
 	{ 
 		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__); 

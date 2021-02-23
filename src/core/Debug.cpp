@@ -142,10 +142,10 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 	model = model * MMath::translate(position) * MMath::scale(size);
 
 	ObjShader.RunShader();
-	ObjShader.TakeInUniformMat4("modelMatrix", model);
-	ObjShader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-	ObjShader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	ObjShader.TakeInUniformVec4("meshColor", color);
+	ObjShader.TakeUniform("modelMatrix", model);
+	ObjShader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+	ObjShader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	ObjShader.TakeUniform("meshColor", color);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 

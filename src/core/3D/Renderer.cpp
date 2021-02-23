@@ -266,11 +266,11 @@ void Renderer::AttachLights(const MeshRenderer& mr) const
 	{
 		std::string lightNum = "uLights[" + std::to_string(i);
 		
-		gBufferShader.TakeInUniformVec3(lightNum + "].lPos", lights[i]->gameobject->transform.GetPosition());
-		gBufferShader.TakeInUniformVec3(lightNum + "].lAmb", lights[i]->ambColor);
-		gBufferShader.TakeInUniformVec3(lightNum + "].lDiff", lights[i]->diffColor);
-		gBufferShader.TakeInUniformVec3(lightNum + "].lSpec", lights[i]->specColor);
-		gBufferShader.TakeInUniformFloat(lightNum + "].lIntens", lights[i]->intensity);
+		gBufferShader.TakeUniform(lightNum + "].lPos", lights[i]->gameobject->transform.GetPosition());
+		gBufferShader.TakeUniform(lightNum + "].lAmb", lights[i]->ambColor);
+		gBufferShader.TakeUniform(lightNum + "].lDiff", lights[i]->diffColor);
+		gBufferShader.TakeUniform(lightNum + "].lSpec", lights[i]->specColor);
+		gBufferShader.TakeUniform(lightNum + "].lIntens", lights[i]->intensity);
 		//shader.TakeInUniformInt("activeLights", lights.size());
 	}
 }

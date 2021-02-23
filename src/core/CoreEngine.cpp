@@ -152,7 +152,11 @@ void CoreEngine::HandleEvents()
 
 void CoreEngine::OnDestroy()
 {
-	if (gameInterface) delete gameInterface;
+	if (gameInterface)
+	{
+		delete gameInterface;
+		gameInterface = nullptr;
+	}
 	if (window) delete window;
 
 	Camera::removeInstance();

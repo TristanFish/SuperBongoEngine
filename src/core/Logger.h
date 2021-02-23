@@ -24,6 +24,7 @@ public:
 	EngineLogger(EngineLogger&&) = delete;
 	EngineLogger& operator=(const EngineLogger&) = delete;
 	EngineLogger& operator=(EngineLogger&&) = delete;
+	~EngineLogger() = delete;
 
 	static void OnCreate(const std::string& name_ = "EngineLog");
 	static void SetSeverity(MessageType type_);

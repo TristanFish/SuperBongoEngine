@@ -6,13 +6,10 @@ std::string EngineLogger::outputName = "";
 void EngineLogger::OnCreate(const std::string& name_)
 {
 	outputName = name_ + ".txt";
-	std::ofstream out;
+	std::fstream out;
 
-	out.open(outputName.c_str(), std::ios::out | std::ios::in);
-	if (out.fail())
-	{
-		out.close();
-	}
+	out.open(outputName.c_str(), std::ios::out);
+	out.close();
 	currentSev = MessageType::TYPE_INFO;
 }
 

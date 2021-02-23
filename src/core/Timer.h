@@ -24,14 +24,14 @@ public:
 	Timer& operator=(Timer&&) = delete;
 	~Timer() = delete;
 
-	inline static void SetTimeScale(float ts) { timeScale = ts; EngineLogger::Info("Time scale changed to: " + std::to_string(timeScale), "Timer.h", __LINE__); }
+	inline static void SetTimeScale(const float ts) { timeScale = ts; EngineLogger::Info("Time scale changed to: " + std::to_string(timeScale), "Timer.h", __LINE__); }
 	static float GetDeltaTime();
 	static float GetScaledDeltaTime();
 	static void UpdateTimer();
 	static unsigned int SleepTime(const unsigned int fps);
 
-	float GetCurrentTickMilli() const;
-	float GetCurrentTickSec() const;
+	static float GetCurrentTickMilli();
+	static float GetCurrentTickSec();
 
 };
 
