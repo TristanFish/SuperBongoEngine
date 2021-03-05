@@ -1,7 +1,5 @@
 #pragma once
 #include <vector>
-#include <unordered_map>
-#include "graphics/Shader.h"
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
 

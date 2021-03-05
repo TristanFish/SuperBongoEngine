@@ -4,6 +4,8 @@
 #include "core/InputManager.h"
 #include "math/Quaternion.h"
 
+using namespace MATH;
+
 Player::Player() : moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
 {
 }

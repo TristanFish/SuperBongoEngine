@@ -1,7 +1,8 @@
 #include "RigidBody3D.h"
-#include "math/VMATH.h"
 #include "core/Timer.h"
 
+
+using namespace MATH;
 
 RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
 										   angularVel(0.0f), angularAcc(0.0f), angularDrag(0.95f), 

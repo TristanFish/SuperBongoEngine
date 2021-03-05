@@ -8,7 +8,10 @@
 
 class ShaderProgram
 {
+	friend class ShaderManager;
+	
 	GLuint programID;
+	GLuint LinkShaders(const std::vector<GLint>& shaders);
 
 public:
 
@@ -18,7 +21,6 @@ public:
 	void DeleteProgram();
 
 	
-	GLuint LinkShaders(const std::vector<GLint>& shaders);
 	void RunShader() const;
 	
 	void TakeUniform(const std::string &name, const MATH::Matrix4 &matrix) const;

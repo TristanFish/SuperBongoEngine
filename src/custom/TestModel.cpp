@@ -1,5 +1,7 @@
 #include "TestModel.h"
 
+using namespace MATH;
+
 TestModel::TestModel()
 {
 

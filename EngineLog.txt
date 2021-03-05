@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 64
+[INFO]: Logger Created in: CoreEngine.cpp on line: 72
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
 [INFO]: Fire.png in: TextureManager.cpp on line: 16

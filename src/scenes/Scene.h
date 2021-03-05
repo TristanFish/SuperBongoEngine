@@ -3,12 +3,9 @@
 
 #include "sdl/SDL.h"
 #include "components/ECS.h"
-#include "glew/glew.h"
 #include "External/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
-#include "VMath.h"
-#include <stdio.h>
 #include "custom/MouseRay.h"
 
 using namespace tinyxml2;
@@ -37,7 +34,7 @@ protected:
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
-	void CreateObjWithID(Vec3 pos_, Vec3 rot_, Vec3 scale_, const char* name_, const int& ID) const;
+	void CreateObjWithID(MATH::Vec3 pos_, MATH::Vec3 rot_, MATH::Vec3 scale_, const char* name_, const int& ID) const;
 
 	//! Check Existing Panel Function
 	/*! Check's if the clicked object is already in the vector of propertiesPannels: 
@@ -46,7 +43,7 @@ protected:
 
 	//! Check Intersection function
 	/*! Checks if the MouseRay has intersected with a object */
-	bool CheckIntersection(MouseRay ray, const Vec3& origin, GameObject* obj);
+	bool CheckIntersection(MouseRay ray, const MATH::Vec3& origin, GameObject* obj);
 
 public:
 	Manager* objectList;

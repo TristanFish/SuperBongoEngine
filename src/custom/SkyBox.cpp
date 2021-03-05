@@ -2,6 +2,8 @@
 #include "core/ModelManager.h"
 #include "core/ShaderManager.h"
 
+using namespace MATH;
+
 SkyBox::SkyBox()
 {
 #pragma region MyRegion

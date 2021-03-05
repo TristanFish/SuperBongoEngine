@@ -2,7 +2,7 @@
 #define TILE_H
 
 #include "components/2D/SpriteComponent.h"
-#include "components/2D/RigidbodyComponent.h"
+#include "components/2D/RigidBodyComponent.h"
 
 
 class Tile : public GameObject, public RigidBodyComponent, public SpriteComponent

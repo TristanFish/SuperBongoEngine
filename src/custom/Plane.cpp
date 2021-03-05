@@ -1,5 +1,7 @@
 #include "Plane.h"
 
+using namespace MATH;
+
 Plane::Plane()
 {
 }

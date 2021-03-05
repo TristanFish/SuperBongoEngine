@@ -1,5 +1,4 @@
 #include "Tile.h"
-#include "custom/Player.h"
 
 Tile::Tile():  tileType(TileType::Normal)
 {

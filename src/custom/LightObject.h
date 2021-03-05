@@ -9,7 +9,7 @@ public:
 	Debug light;
 
 	LightObject();
-	LightObject(const char* name, Vec3 position);
+	LightObject(const char* name, MATH::Vec3 position);
 	~LightObject();
 	// Inherited via GameObject
 	virtual void Update(const float deltaTime) override;

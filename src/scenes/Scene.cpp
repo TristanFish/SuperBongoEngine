@@ -2,7 +2,10 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "custom/MouseRay.h"
-#include <math.h>
+
+
+using namespace MATH;
+
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
  const char* Scene::CheckAtributeValue(int i) const

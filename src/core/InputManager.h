@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "sdl/SDL.h"
 #include <unordered_map>
 
@@ -34,7 +36,8 @@ private:
 
 	//! Instance of the InputManager
 	/*! A instance of the InputManager class */
-	static InputManager* instance;
+	//static InputManager* instance;
+	static std::unique_ptr<InputManager> instance;
 
 	//! Keys unordered_map
 	/*! Stores all the keys that can be pressed */

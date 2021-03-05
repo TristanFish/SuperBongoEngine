@@ -1,10 +1,11 @@
 #include "Grass.h"
 
+using namespace MATH;
+
 Grass::Grass()
 {
 
 }
-
 
 Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_) : MeshRenderer("GrassBunch1.fbx")
 {

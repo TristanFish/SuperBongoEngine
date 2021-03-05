@@ -7,6 +7,8 @@
 #include "custom/SkyBox.h"
 #include "core/ShaderManager.h"
 
+using namespace MATH;
+
 void Renderer::Init()
 {
 	skyBox = new SkyBox();

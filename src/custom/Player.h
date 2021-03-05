@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "components/Components.h"
-#include "scenes/Scene.h"
 
 //! Player Class
 /*! This class controls how the user interact with the objects in the scene */
@@ -56,15 +55,15 @@ private:
 
 	//!mouseStart Vector3
 	/*! Used for detecting trackball player rotation */
-	Vec3 mouseStart;
+	MATH::Vec3 mouseStart;
 
 	//!mouseEnd Vector3
 	/*! Used for detecting trackball player rotation  */
-	Vec3 mouseEnd;
+	MATH::Vec3 mouseEnd;
 
 	//!lookMatrix Matrix4
 	/*! Used for detecting trackball player rotation  */
-	Matrix4 lookMatrix;
+	MATH::Matrix4 lookMatrix;
 
 
 	//!OnMouseMove

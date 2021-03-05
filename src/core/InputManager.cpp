@@ -1,23 +1,19 @@
 #include "InputManager.h"
 
-InputManager* InputManager::instance;
+std::unique_ptr<InputManager> InputManager::instance = nullptr;
 
 InputManager* InputManager::GetInstance()
 {
-	if (instance == nullptr)
+	if (instance.get() == nullptr)
 	{
-		instance = new InputManager();
+		instance.reset(new InputManager);
 	}
-	return instance;
+	return instance.get();
 }
 
 void InputManager::RemoveInstance()
 {
 	instance->keys.clear();
-	if (instance)
-	{
-		delete instance;
-	}
 }
 
 void InputManager::PollEvents(SDL_Event& event)

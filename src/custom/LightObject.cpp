@@ -1,5 +1,7 @@
 #include "LightObject.h"
 
+using namespace MATH;
+
 LightObject::LightObject()
 {
 }

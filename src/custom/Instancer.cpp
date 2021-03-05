@@ -1,6 +1,8 @@
 #include "Instancer.h"
 #include "math/MMath.h"
 
+using namespace MATH;
+
 Instancer::Instancer() : modelMatrices(nullptr)
 {
 }

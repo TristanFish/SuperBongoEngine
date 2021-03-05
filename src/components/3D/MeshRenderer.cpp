@@ -1,10 +1,11 @@
-#include <assimp/Importer.hpp>
 #include "MeshRenderer.h"
 #include "custom/Camera.h"
 #include "core/ModelManager.h"
 #include "core/ShaderManager.h"
 
-MeshRenderer::MeshRenderer() : instanceID(0) { }
+using namespace MATH;
+
+MeshRenderer::MeshRenderer() : meshColorTint(Vec4(1.0)), instanceID(0) { }
 
 MeshRenderer::MeshRenderer(const char* name)
 {

@@ -81,19 +81,19 @@ public:
 
 	//!GetMinVector Getter
 	/*!Returns the meshes minimum bounding vector*/
-	 Vec3 GetMinVector() const  { return model->p_min; }
+	MATH::Vec3 GetMinVector() const  { return model->p_min; }
 
 	 //!GetMaxVector Getter
 	 /*!Returns the meshes maximum bounding vector*/
-	 Vec3 GetMaxVector() const { return model->p_max; }
+	MATH::Vec3 GetMaxVector() const { return model->p_max; }
 
 	 //!MeshColorTint Vec4
 	 /*!Stores the color of the mesh*/
-	 Vec4 meshColorTint = Vec4(1.0);
+	MATH::Vec4 meshColorTint;
 
 	 //!SetColorTint Setter
 	 /*!Set's the color of a mesh*/
-	 void SetColorTint(const Vec4 tint_) { meshColorTint = tint_; }
+	 void SetColorTint(const MATH::Vec4 tint_) { meshColorTint = tint_; }
 
 	 //!GetMeshes Getter
 	 /*!Returns the vector of meshes*/

@@ -1,5 +1,6 @@
 #include "LightComponent.h"
-#include "core/Debug.h"
+
+using namespace MATH;
 
 void LightComponent::Init(GameObject* g)
 {

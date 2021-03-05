@@ -1,6 +1,8 @@
 #include "Mesh.h"
 #include "core/ShaderManager.h"
 
+using namespace MATH;
+
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices, const std::vector<Texture>& textures, MATH::Vec4 color)
 {
 	this->vertices = vertices;
