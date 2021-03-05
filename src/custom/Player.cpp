@@ -116,23 +116,22 @@ void Player::HandleEvents(const SDL_Event& event)
 	//MeshRenderer::HandleEvents(event);
 #pragma region Rotation Controls
 	//Rotation controls
-	if (InputManager::GetInstance()->GetKey(SDLK_LALT))
+	
+	if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
 	{
-		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-		{
-			mouseDown = true;
-			mouseStart = GetMouseVector(event.button.x, event.button.y);
-		}
-		else if (event.type == SDL_EventType::SDL_MOUSEBUTTONUP)
-		{
-			mouseDown = false;
-		}
-		if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
-			SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-		{
-			OnMouseMove(event.button.x, event.button.y);
-		}
+		mouseDown = true;
+		mouseStart = GetMouseVector(event.button.x, event.button.y);
 	}
+	else if (event.type == SDL_EventType::SDL_MOUSEBUTTONUP)
+	{
+		mouseDown = false;
+	}
+	if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
+		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	{
+		OnMouseMove(event.button.x, event.button.y);
+	}
+	
 #pragma endregion
 }
 

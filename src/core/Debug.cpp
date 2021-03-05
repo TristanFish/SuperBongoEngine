@@ -1,8 +1,10 @@
 #include "Debug.h"
 #include <glew/glew.h>
 #include "custom/Camera.h"
-Shader Debug::TexShader;
-Shader Debug::ObjShader;
+#include "core/ShaderManager.h"
+
+ShaderProgram Debug::TexShader;
+ShaderProgram Debug::ObjShader;
 
 Debug::~Debug()
 {
@@ -19,7 +21,7 @@ Debug::~Debug()
 	}
 }
 
-void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec4 color) const
+void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, MATH::Vec4 color) const
 {
 
 }
@@ -31,7 +33,7 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	
 	if (TexShader.GetID() == 0)
 	{
-		TexShader.CreateShader("src/graphics/shaders/2DTextureVert.glsl", "src/graphics/shaders/2DTextureFrag.glsl");
+		TexShader = ShaderManager::GetShaders("src/graphics/shaders/2DTextureVert.glsl", "src/graphics/shaders/2DTextureFrag.glsl");
 	}
 	if (textureVAO == 0)
 	{
@@ -71,11 +73,11 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	glUseProgram(0);
 }
 
-void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
+void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, MATH::Vec4 color) const
 {
 	if (ObjShader.GetID() == 0)
 	{
-		ObjShader.CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+		ObjShader = ShaderManager::GetShaders("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 	}
 	if (cubeVAO == 0)
 	{
@@ -137,9 +139,9 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 		glBindVertexArray(0);
 	}
 
-	Matrix4 model;
+	MATH::Matrix4 model;
 	model.loadIdentity();
-	model = model * MMath::translate(position) * MMath::scale(size);
+	model = model * MATH::MMath::translate(position) * MATH::MMath::scale(size);
 
 	ObjShader.RunShader();
 	ObjShader.TakeUniform("modelMatrix", model);
@@ -164,6 +166,6 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 
 }
 
-void Debug::DrawLine(Vec3 start, Vec3 end, Vec4 color)
+void Debug::DrawLine(MATH::Vec3 start, MATH::Vec3 end, MATH::Vec4 color)
 {
 }

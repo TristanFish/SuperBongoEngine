@@ -5,14 +5,15 @@
 #include "core/Debug.h"
 #include <sdl/SDL.h>
 #include "custom/SkyBox.h"
+#include "core/ShaderManager.h"
 
 void Renderer::Init()
 {
 	skyBox = new SkyBox();
-	
+
 	//Set up renderer shaders
-	gBufferShader.CreateShader("src/graphics/shaders/gBufferShaderVert.glsl", "src/graphics/shaders/gBufferShaderFrag.glsl");
-	resultShader.CreateShader("src/graphics/shaders/gBufferResolveVert.glsl", "src/graphics/shaders/gBufferResolveFrag.glsl");
+	gBufferShader = ShaderManager::GetShaders("src/graphics/shaders/gBufferShaderVert.glsl", "src/graphics/shaders/gBufferShaderFrag.glsl");
+	resultShader = ShaderManager::GetShaders("src/graphics/shaders/gBufferResolveVert.glsl", "src/graphics/shaders/gBufferResolveFrag.glsl");
 	
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);

@@ -1,6 +1,7 @@
 #include "SpriteComponent.h"
 #include "graphics/Texture.h"
 #include "custom/Camera.h"
+#include "core/ShaderManager.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
@@ -23,7 +24,7 @@ void SpriteComponent::setTexture(const char* path)
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)
 {
-	 shader.CreateShader(vertexPath, fragmentPath);
+	shader = ShaderManager::GetShaders(vertexPath, fragmentPath);
 }
 
 void SpriteComponent::Init(GameObject *g)

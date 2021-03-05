@@ -1,6 +1,6 @@
 #pragma once
 #include "graphics/Model.h"
-#include "graphics/Shader.h"
+#include "graphics/ShaderProgram.h"
 #include "components/ECS.h"
 
 enum class RenderProperties : unsigned char
@@ -35,7 +35,7 @@ public:
 
 	//!Shader
 	/*!This is the corresponding shader used in this MeshRenderer*/
-	Shader shader;
+	 ShaderProgram shader;
 
 	//!MeshRenderer Constructor
 	/*!Empty Function*/
@@ -66,7 +66,7 @@ public:
 
 	//!Render override Function
 	/*!Render the mesh & run the shader that the function is given*/
-	void Render(const Shader& shader) const;
+	void Render(const ShaderProgram& shader) const;
 
 	//!HandleEvents override Function
 	/*!Handles any events needed for the MeshRenderer*/

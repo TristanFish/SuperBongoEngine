@@ -10,7 +10,7 @@ class SkyBox :  public GameObject
 {
     unsigned int skyboxVAO, skyboxVBO;
 	GLuint skyboxTextureID;
-	Shader* shader;
+	ShaderProgram shader;
 	mutable Matrix4 viewConvert;
 
 	bool LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz);

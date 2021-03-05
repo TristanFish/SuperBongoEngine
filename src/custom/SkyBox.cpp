@@ -1,5 +1,6 @@
 #include "SkyBox.h"
 #include "core/ModelManager.h"
+#include "core/ShaderManager.h"
 
 SkyBox::SkyBox()
 {
@@ -64,9 +65,8 @@ SkyBox::SkyBox()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-	shader = new Shader();
-	shader->CreateShader("src/graphics/shaders/SkyBoxVert.glsl", "src/graphics/shaders/SkyBoxFrag.glsl");
-	shader->RunShader();
+	shader = ShaderManager::GetShaders("src/graphics/shaders/SkyBoxVert.glsl", "src/graphics/shaders/SkyBoxFrag.glsl");
+	shader.RunShader();
 	
 }
 
@@ -153,9 +153,9 @@ void SkyBox::Render() const
 	
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
-	shader->RunShader();
-	shader->TakeUniform("viewMatrix", viewConvert);
-	shader->TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.RunShader();
+	shader.TakeUniform("viewMatrix", viewConvert);
+	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

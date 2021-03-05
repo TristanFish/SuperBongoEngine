@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "core/TextureManager.h"
 #include "core/Logger.h"
+#include <assimp/postprocess.h>
 
 Model::Model()
 {
@@ -149,7 +150,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		col = *mesh->mColors[0];
 	}
 
-	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+	MATH::Vec4 color = MATH::Vec4(col.r, col.g, col.b, col.a);
 
 	 CalculateMaxMins();
 

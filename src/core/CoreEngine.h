@@ -1,13 +1,10 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
-#include "graphics/Window.h"
-#include "Timer.h"
-#include "sdl/SDL.h"
-#include "scenes/Scene.h"
-#include <Windows.h>
-#include "scenes/Scene1.h"
-#include "core/Logger.h"
-#include "core/GameInterface.h"
+#include <memory>
+
+
+class Window;
+class GameInterface;
 
 class CoreEngine
 {

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\ShaderProgram.h" />
+    <ClInclude Include="src\core\ShaderManager.h" />
     <ClInclude Include="src\scenes\Scene2.h" />
     <ClInclude Include="src\Games\Game1.h" />
     <ClInclude Include="src\core\GameInterface.h" />
@@ -262,6 +264,8 @@
     <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\ShaderProgram.cpp" />
+    <ClCompile Include="src\core\ShaderManager.cpp" />
     <ClCompile Include="src\scenes\Scene2.cpp" />
     <ClCompile Include="src\Games\Game1.cpp" />
     <ClCompile Include="src\core\GameInterface.cpp" />

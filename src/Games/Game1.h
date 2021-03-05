@@ -1,11 +1,10 @@
 #ifndef GAME1_H
 #define GAME1_H
 
-#include "core/CoreEngine.h"
-#include "scenes/Scene1.h"
-#include "scenes/Scene2.h"
+#include "scenes/Scene.h"
+#include "core/GameInterface.h"
 
-class Game1 : public GameInterface
+class Game1 final : public GameInterface
 {
 private:
 	int currentSceneNum;

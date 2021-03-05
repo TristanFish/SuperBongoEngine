@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "graphics/Shader.h"
 #include "core/Debug.h"
+#include "graphics/ShaderProgram.h"
 
 
 
@@ -27,8 +28,8 @@ public:
 	static SkyBox* GetSkyBox();
 	
 private:
-	Shader gBufferShader;
-	Shader resultShader;
+	ShaderProgram gBufferShader;
+	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
 
 	GLuint depthTexture;

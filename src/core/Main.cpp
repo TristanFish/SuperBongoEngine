@@ -1,7 +1,8 @@
-#include "core/CoreEngine.h"
 #define _CRTDBG_MAP_ALLOC  
 #include <crtdbg.h>
+#include "core/CoreEngine.h"
 #include "Games/Game1.h"
+#include "core/GameInterface.h"
 
 int main(int argc, char* argv[])
 {	

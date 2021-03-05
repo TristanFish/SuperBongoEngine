@@ -3,7 +3,7 @@
 
 #include <sdl/SDL.h>
 #include "components/ECS.h"
-#include "graphics/shader.h"
+#include "graphics/ShaderProgram.h"
 #include <glew/glew.h>
 
 class Texture;
@@ -16,7 +16,7 @@ private:
 	
 public:
 
-	Shader shader;
+	ShaderProgram shader;
 	SpriteComponent() = default;
 	SpriteComponent(const char* path);
 

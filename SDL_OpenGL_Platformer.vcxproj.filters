@@ -497,6 +497,8 @@
     <ClInclude Include="src\core\GameInterface.h" />
     <ClInclude Include="src\Games\Game1.h" />
     <ClInclude Include="src\scenes\Scene2.h" />
+    <ClInclude Include="src\core\ShaderManager.h" />
+    <ClInclude Include="src\graphics\ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -577,6 +579,8 @@
     <ClCompile Include="src\core\GameInterface.cpp" />
     <ClCompile Include="src\Games\Game1.cpp" />
     <ClCompile Include="src\scenes\Scene2.cpp" />
+    <ClCompile Include="src\core\ShaderManager.cpp" />
+    <ClCompile Include="src\graphics\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

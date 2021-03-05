@@ -2,6 +2,7 @@
 #include "MeshRenderer.h"
 #include "custom/Camera.h"
 #include "core/ModelManager.h"
+#include "core/ShaderManager.h"
 
 MeshRenderer::MeshRenderer() : instanceID(0) { }
 
@@ -15,7 +16,7 @@ MeshRenderer::~MeshRenderer() { }
 
 void MeshRenderer::CreateShader(const char* vert, const char* frag)
 {
-	shader.CreateShader(vert, frag);
+	shader = ShaderManager::GetShaders(vert, frag);
 }
 
 void MeshRenderer::Init(GameObject* g)
@@ -58,7 +59,7 @@ void MeshRenderer::Render() const
 
 }
 
-void MeshRenderer::Render(const Shader& shader) const
+void MeshRenderer::Render(const ShaderProgram& shader) const
 {
 	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 	shader.TakeUniform("meshColorTint", meshColorTint);

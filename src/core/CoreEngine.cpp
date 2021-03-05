@@ -1,11 +1,21 @@
 #include "CoreEngine.h"
 #include "custom/Camera.h"
-#include <iostream>
 #include "Globals.h"
+#include "ShaderManager.h"
 #include "core/ModelManager.h"
 #include "core/TextureManager.h"
 #include "core/InputManager.h"
 #include "graphics/CustomUI.h"
+#include "graphics/Window.h"
+#include "Timer.h"
+#include "sdl/SDL.h"
+#include "scenes/Scene.h"
+#include <Windows.h>
+#include "core/Logger.h"
+#include "scenes/Scene1.h"
+#include "core/GameInterface.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_impl_sdl.h"
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -157,13 +167,18 @@ void CoreEngine::OnDestroy()
 		delete gameInterface;
 		gameInterface = nullptr;
 	}
-	if (window) delete window;
+	if (window)
+	{
+		delete window;
+		window = nullptr;
+	};
 
 	Camera::removeInstance();
 
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();
+	ShaderManager::DestroyAllShaders();
 	SDL_Quit();
 }
 

@@ -38,8 +38,14 @@ Texture& TextureManager::GetTexture(const std::string& name)
 
 void TextureManager::DeleteAllTextures()
 {
+	if(textures.empty())
+	{
+		return;
+	}
+	
 	for (auto& pair : textures)
 	{
+		
 		if (pair.second.isLoaded)
 		{
 			pair.second.DestroyTexture();

@@ -1,5 +1,7 @@
 #include "Game1.h"
-
+#include "core/CoreEngine.h"
+#include "scenes/Scene1.h"
+#include "scenes/Scene2.h"
 
 Game1::Game1() : GameInterface(), currentSceneNum(0), currentScene(nullptr)
 {
