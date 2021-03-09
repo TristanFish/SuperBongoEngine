@@ -12,7 +12,7 @@ void ModelManager::LoadAllModels()
 	using namespace std::filesystem;
 	EngineLogger::Info("=================Loading all models=================", "ModelManager.cpp", __LINE__);
 
-	for (auto& folder : std::filesystem::recursive_directory_iterator("resources/models"))
+	for (const auto& folder : std::filesystem::recursive_directory_iterator("resources/models"))
 	{
 		if (folder.path().filename().extension() == ".mtl")
 		{

@@ -123,9 +123,9 @@
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\math\Ray.h" />
     <ClInclude Include="src\core\InputManager.h" />
-    <ClInclude Include="src\audio\AudioListenerComponent.h" />
+    <ClInclude Include="src\components\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
-    <ClInclude Include="src\audio\AudioSourceComponent.h" />
+    <ClInclude Include="src\components\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
     <ClInclude Include="src\graphics\Model.h" />
@@ -256,8 +256,6 @@
     <ClInclude Include="src\graphics\Texture.h" />
     <ClInclude Include="src\core\Timer.h" />
     <ClInclude Include="src\graphics\Window.h" />
-    <ClInclude Include="src\tiles\Tilemap.h" />
-    <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\graphics\Vertex.h" />
     <ClInclude Include="src\custom\TestModel.h" />
     <ClInclude Include="src\core\TextureManager.h" />
@@ -281,9 +279,9 @@
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\math\Ray.cpp" />
     <ClCompile Include="src\core\InputManager.cpp" />
-    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
+    <ClCompile Include="src\components\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
-    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\components\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
@@ -321,8 +319,6 @@
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\core\Timer.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
-    <ClCompile Include="src\tiles\Tilemap.cpp" />
-    <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\TextureManager.cpp" />
     <ClCompile Include="src\custom\Water.cpp" />
@@ -386,9 +382,6 @@
     <Library Include="external\lib\SDL2test.lib" />
     <Library Include="external\lib\SDL2_image.lib" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\tiles\Map1.txt" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
@@ -401,6 +394,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -408,6 +402,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

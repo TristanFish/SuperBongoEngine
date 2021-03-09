@@ -1,9 +1,9 @@
-#pragma once
-#include "math/Vector.h"
-#include "imgui/imgui.h"
+#ifndef CUSTOMUI_H
+#define CUSTOMUI_H
+
 #include "components/ECS.h"
 #include "components/3D/MeshRenderer.h"
-#include "core/Timer.h"
+
 
 
 //! CustomUI namespace
@@ -54,7 +54,7 @@ namespace CustomUI
 
 		//! Latest FPS float
 	   /*! Is used to update the FPS text depending on the "fpsUpdateSpeed" variable */
-		int lastestFPS;
+		int lastestFPS = 0;
 	public:
 
 		//! Update Function
@@ -113,3 +113,4 @@ public:
 	static float UpdateLoopTime;
 };
  
+#endif

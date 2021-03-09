@@ -43,14 +43,9 @@ void RigidBodyComponent::Update(const float deltaTime)
 
 }
 
-void RigidBodyComponent::Render() const
+const char* RigidBodyComponent::ComponentName() const
 {
-	//RigidBody doesn't do any rendering
-}
-
-void RigidBodyComponent::HandleEvents(const SDL_Event& event)
-{
-	//RigidBody doesn't do any event listening
+	return "RigidBodyComponent";
 }
 
 void RigidBodyComponent::ApplyImpulseForce(const MATH::Vec3& force)

@@ -28,8 +28,7 @@ void AudioListenerComponent::SetListenerPosition()
 	
 }
 
-//Nothing to render
-void AudioListenerComponent::Render(){}
-
-//Nothing to handle for now, maybe an audio event system later
-void AudioListenerComponent::HandleEvents(const SDL_Event& event){}
+const char* AudioListenerComponent::ComponentName() const
+{
+	return "AudioListenerComponent";
+}

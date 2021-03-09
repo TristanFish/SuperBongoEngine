@@ -11,14 +11,7 @@ void LightComponent::Init(GameObject* g)
 	specColor = Vec3(0,0,1);
 }
 
-void LightComponent::Update(const float deltaTime)
+const char* LightComponent::ComponentName() const
 {
-}
-
-void LightComponent::Render() const
-{
-}
-
-void LightComponent::HandleEvents(const SDL_Event& event)
-{
+	return "LightComponent";
 }

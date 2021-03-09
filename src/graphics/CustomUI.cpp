@@ -2,6 +2,8 @@
 #include "windows.h"
 #include "psapi.h"
 #include "core/Logger.h"
+#include "core/Timer.h"
+#include "imgui/imgui.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -27,12 +29,12 @@ void CustomUI::PropertiesPanel::Render()
 		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
 		// Change the standard transform components 
-		ImGui::DragFloat3("Position", selectedObj->transform.GetPosition());
-		ImGui::DragFloat3("Rotation", selectedObj->transform.GetRotation());
-		ImGui::DragFloat3("Scale", selectedObj->transform.GetScale(), 0.0f, 10.0f);
+		ImGui::DragFloat3("Position", selectedObj->transform.pos);
+		ImGui::DragFloat3("Rotation", selectedObj->transform.rotation);
+		ImGui::DragFloat3("Scale", selectedObj->transform.scale, 0.0f, 10.0f);
 
 		// Create a new color that is a copy of the meshes color
-		ImGui::ColorEdit4("Mesh Color", (float*)selectedObj->getComponent<MeshRenderer>().meshColorTint);
+		ImGui::ColorEdit4("Mesh Color", selectedObj->GetComponent<MeshRenderer>()->meshColorTint);
 		
 		
 		// MAKE SAVE MAP DATA A STATIC FUNCTION
@@ -148,7 +150,7 @@ double PerformanceMonitor::GetCPUUsage()
 {
 	 FILETIME ftime, fsys, fuser;
 	 ULARGE_INTEGER now, sys, user;
-	 double percent;
+
 
 	 GetSystemTimeAsFileTime(&ftime);
 	 memcpy(&now, &ftime, sizeof(FILETIME));
@@ -156,14 +158,13 @@ double PerformanceMonitor::GetCPUUsage()
 	 GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
 	 memcpy(&sys, &fsys, sizeof(FILETIME));
 	 memcpy(&user, &fuser, sizeof(FILETIME));
-	 percent = (sys.QuadPart - lastSysCPU.QuadPart) +
-		 (user.QuadPart - lastUserCPU.QuadPart);
-	 percent /= (now.QuadPart - lastCPU.QuadPart);
-	 percent /= numProcessors;
+	 double percent = static_cast<double>((sys.QuadPart - lastSysCPU.QuadPart) + (user.QuadPart - lastUserCPU.QuadPart));
+	 percent /= static_cast<double>((now.QuadPart - lastCPU.QuadPart));
+	 percent /= static_cast<double>(numProcessors);
 	 lastCPU = now;
 	 lastUserCPU = user;
 	 lastSysCPU = sys;
 
-	 return percent * 100;
+	 return percent * 100.0;
 }
 

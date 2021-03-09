@@ -148,6 +148,11 @@ void SkyBox::Update(const float deltaTime)
 	
 }
 
+const char* SkyBox::GetClassIDName() const
+{
+	return "SkyBox";
+}
+
 void SkyBox::Render() const
 {
 	Matrix3 view = Camera::getInstance()->getViewMatrix();
@@ -169,10 +174,6 @@ void SkyBox::Render() const
 	//glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	
-}
-
-void SkyBox::HandleEvents(const SDL_Event& event)
-{
 }
 
 Matrix4 SkyBox::Mat3ToMat4(Matrix3 _m) const

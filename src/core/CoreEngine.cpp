@@ -103,26 +103,26 @@ void CoreEngine::Run()
 
 	while (isRunning)
 	{
-		Uint32 timeBeforeUpdate = SDL_GetTicks();
+		const Uint32 timeBeforeUpdate = SDL_GetTicks();
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
-		Uint32 timeAfterUpdate = SDL_GetTicks();
+		const Uint32 timeAfterUpdate = SDL_GetTicks();
 
-		PerformanceMonitor::UpdateLoopTime = (timeAfterUpdate - timeBeforeUpdate);
+		PerformanceMonitor::UpdateLoopTime = static_cast<float>(timeAfterUpdate - timeBeforeUpdate);
 
 
-		Uint32 timebeforeRender = SDL_GetTicks();
+		const Uint32 timebeforeRender = SDL_GetTicks();
 		Render();
-		Uint32 timeafterRender = SDL_GetTicks();
+		const Uint32 timeafterRender = SDL_GetTicks();
 
-		PerformanceMonitor::RenderLoopTime = (timeafterRender - timebeforeRender);
+		PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
 
 	}
 
 	OnDestroy();
 }
 
-bool CoreEngine::GetIsRunning()
+bool CoreEngine::GetIsRunning() const
 {
 	return isRunning;
 }

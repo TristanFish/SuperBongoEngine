@@ -106,7 +106,7 @@ void SpriteComponent::Render() const
 	glUseProgram(0);
 }
 
-void SpriteComponent::HandleEvents(const SDL_Event& event)
+const char* SpriteComponent::ComponentName() const
 {
-
+	return "SpriteComponent";
 }

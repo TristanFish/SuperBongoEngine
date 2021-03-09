@@ -67,9 +67,10 @@ void AudioSourceComponent::SetAudioPosition()
 	}
 }
 
-
-void AudioSourceComponent::Render(){}
-void AudioSourceComponent::HandleEvents(const SDL_Event& event){}
+const char* AudioSourceComponent::ComponentName() const
+{
+	return "AudioSourceComponent";
+}
 
 AudioSourceComponent::~AudioSourceComponent()
 {

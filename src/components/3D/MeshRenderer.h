@@ -1,4 +1,7 @@
-#pragma once
+#ifndef MESHRENDERER_H
+#define MESHRENDERER_H
+
+#include <functional>
 #include "graphics/Model.h"
 #include "graphics/ShaderProgram.h"
 #include "components/ECS.h"
@@ -37,17 +40,10 @@ public:
 	/*!This is the corresponding shader used in this MeshRenderer*/
 	 ShaderProgram shader;
 
-	//!MeshRenderer Constructor
-	/*!Empty Function*/
 	MeshRenderer();
-	//!Alternate MeshRenderer Constructor
-	/*!Initializes the render flags in model this MeshRenderer is using*/
-	MeshRenderer(const char* modelPath);
+	virtual ~MeshRenderer() = default;
 
-	//!Virtual MeshRenderer Destructor
-	/*!Destroys any pointers/vectors the MeshRenderer class uses*/
-	virtual ~MeshRenderer();
-
+	bool LoadModel(const char* name);
 	//!Create Shader Function
 	/*!Creates a shader when given vertex & fragment file paths*/
 	void CreateShader(const char* vert, const char* frag);
@@ -70,14 +66,33 @@ public:
 
 	//!HandleEvents override Function
 	/*!Handles any events needed for the MeshRenderer*/
-	void HandleEvents(const SDL_Event& event) override;
-	
+	void HandleEvents(const SDL_Event& event) override {}
+
+	const char* ComponentName() const override;
+
+private:
+
 	//!AttachUniforms function
-	/*!Enables the components to know what gameobject they are attached too
+	/*!Enables the components to know what gameobject they are attached to
 	This function is used to attach any uniforms that are specific to the object being rendered
 	create a definition for this function where you set shader uniforms if
 	you're using the OVERRIDE_RENDERER renderflag for this object*/
-	virtual void AttachUniforms() const {};
+	void AttachUniforms() const
+	{
+		if(uaCallback != nullptr)
+		{
+			uaCallback();
+		}
+	}
+public:
+	
+	typedef std::function<void ()> UniformAttachCallback;
+	UniformAttachCallback uaCallback;
+
+	void AddUniformFunction(void(*func)())
+	{
+		uaCallback = func;
+	}
 
 	//!GetMinVector Getter
 	/*!Returns the meshes minimum bounding vector*/
@@ -123,3 +138,5 @@ private:
 	unsigned int instanceAmount;
 
 };
+
+#endif

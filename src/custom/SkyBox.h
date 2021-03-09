@@ -22,18 +22,20 @@ class SkyBox :  public GameObject
 	//! Render Function (Inherited from Gameobject)
 
 	//! Handle Events Function (Inherited from Gameobject)
-	void HandleEvents(const SDL_Event& event) override;
+	void HandleEvents(const SDL_Event& event) override {}
     MATH::Matrix4 Mat3ToMat4(MATH::Matrix3 _m) const;
 public:
 
 	void Update(const float deltaTime) override;
+	const char* GetClassIDName() const override;
+	
 	GLuint GetSkyBoxTexture() const;
 	unsigned int GetVAO() const;
 
 	SkyBox();
 	~SkyBox();
 
-	void Render() const override;
+	void Render() const;
 
 };
 #endif

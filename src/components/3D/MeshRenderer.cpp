@@ -5,15 +5,18 @@
 
 using namespace MATH;
 
-MeshRenderer::MeshRenderer() : meshColorTint(Vec4(1.0)), instanceID(0) { }
+MeshRenderer::MeshRenderer() : renderFlags(RenderProperties::LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
-MeshRenderer::MeshRenderer(const char* name)
+bool MeshRenderer::LoadModel(const char* name)
 {
-	renderFlags = RenderProperties::LIGHTING;
 	model = &ModelManager::GetModel(name);
-}
 
-MeshRenderer::~MeshRenderer() { }
+	if(model)
+	{
+		return true;
+	}
+	return false;
+}
 
 void MeshRenderer::CreateShader(const char* vert, const char* frag)
 {
@@ -29,7 +32,7 @@ void MeshRenderer::Update(const float deltaTime) { }
 
 void MeshRenderer::Render() const
 {
-    Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 
 	if(instanceID == 0)
     {
@@ -62,7 +65,7 @@ void MeshRenderer::Render() const
 
 void MeshRenderer::Render(const ShaderProgram& shader) const
 {
-	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 	shader.TakeUniform("meshColorTint", meshColorTint);
 	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
@@ -76,6 +79,9 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 
 }
 
-void MeshRenderer::HandleEvents(const SDL_Event& event) { }
+const char* MeshRenderer::ComponentName() const
+{
+	return "MeshRenderer";
+}
 
 

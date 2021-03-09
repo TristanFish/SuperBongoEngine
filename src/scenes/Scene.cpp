@@ -45,7 +45,7 @@ using namespace MATH;
 
  void Scene::CheckExistingPanel(GameObject* obj)
  {
-	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPannels.size(); i++)
 	 {
 		 if (propertiesPannels[i]->selectedObj->name == obj->name)
 		 {
@@ -54,30 +54,30 @@ using namespace MATH;
 	 }
  }
 
- bool Scene::CheckIntersection(MouseRay ray, const Vec3& origin, GameObject* obj)
+ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObject* obj) const
  {
 	 Vec3 bounds[2];
-	 bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
+	 bounds[0] = obj->GetComponent<MeshRenderer>()->GetMinVector();
 
 
-	 bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
+	 bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
 
 	 
 			
-	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
-	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	 const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	 const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
 																		
 	 float tmin = std::min(tx1, tx2);									
 	 float tmax = std::max(tx1, tx2);									
 																		
-	 float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
-	 float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	 const float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	 const float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
 																		 
 	 tmin = std::max(tmin, std::min(ty1, ty2));							 
 	 tmax = std::min(tmax, std::max(ty1, ty2));							 
 																		 
-	 float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
-	 float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	 const float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	 const float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
 
 	 tmin = std::max(tmin, std::min(tz1, tz2));
 	 tmax = std::min(tmax, std::max(tz1, tz2));
@@ -99,7 +99,7 @@ using namespace MATH;
 	 ImGui::NewFrame();
 	 // Let's the use add game objects
 
-	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPannels.size(); i++)
 	 {
 		 propertiesPannels[i]->Render();
 	 }
@@ -146,7 +146,7 @@ using namespace MATH;
 		 mouseRay.CalaculateMouseRay();
 		 for (auto obj : objectList->GetGameObjects())
 		 {
-			 if (obj->hasComponent<MeshRenderer>())
+			 if (obj->HasComponent<MeshRenderer>())
 			 {
 				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
 				{
@@ -210,11 +210,11 @@ using namespace MATH;
 			pNameElement->InsertEndChild(pScaleElement);
 		}
 
-		if (obj->hasComponent<MeshRenderer>())
+		if (obj->HasComponent<MeshRenderer>())
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				float nextValue = ceil(obj->getComponent<MeshRenderer>().meshColorTint[i] * 255);
+				float nextValue = ceil(obj->GetComponent<MeshRenderer>()->meshColorTint[i] * 255);
 
 				pColorElement->SetAttribute(CheckAtributeValue(i), nextValue);
 				pNameElement->InsertEndChild(pColorElement);
@@ -246,7 +246,7 @@ void Scene::LoadMapData()
 	// Get's the root node
 	XMLNode* pRoot = MapData.FirstChild();
 
-	int loop = 0;
+	size_t loop = 0;
 	XMLElement* pGameObjects;
 	pGameObjects = pRoot->FirstChildElement("GameObjects");
 	if (pGameObjects == nullptr) { EngineLogger::Error("GameObjects not accessed properly", "Scene.cpp", __LINE__); }
@@ -319,7 +319,7 @@ void Scene::LoadMapData()
 
 
 		// Used for loading in Mesh Colors
-		if (tempObject->hasComponent<MeshRenderer>())
+		if (tempObject->HasComponent<MeshRenderer>())
 		{
 			MATH::Vec4 outColor;
 
@@ -332,7 +332,7 @@ void Scene::LoadMapData()
 
 			outColor /= 255.0f;
 
-			tempObject->getComponent<MeshRenderer>().SetColorTint(outColor);
+			tempObject->GetComponent<MeshRenderer>()->SetColorTint(outColor);
 		}
 
 

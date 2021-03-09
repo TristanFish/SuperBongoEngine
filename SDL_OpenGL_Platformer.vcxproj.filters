@@ -353,8 +353,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\custom\Player.h" />
-    <ClInclude Include="src\tiles\Tilemap.h" />
-    <ClInclude Include="src\tiles\Tile.h" />
     <ClInclude Include="src\custom\Camera.h" />
     <ClInclude Include="src\components\3D\RigidBody3D.h" />
     <ClInclude Include="src\components\2D\RigidBodyComponent.h" />
@@ -394,9 +392,7 @@
     <ClInclude Include="src\graphics\Model.h" />
     <ClInclude Include="src\math\Ray.h" />
     <ClInclude Include="src\graphics\CustomUI.h" />
-    <ClInclude Include="src\audio\AudioListenerComponent.h" />
     <ClInclude Include="src\audio\AudioManager.h" />
-    <ClInclude Include="src\audio\AudioSourceComponent.h" />
     <ClInclude Include="src\audio\AudioUtility.h" />
     <ClInclude Include="src\audio\SoundAttributes.h" />
     <ClInclude Include="external\include\fmod\fmod.h" />
@@ -499,6 +495,8 @@
     <ClInclude Include="src\scenes\Scene2.h" />
     <ClInclude Include="src\core\ShaderManager.h" />
     <ClInclude Include="src\graphics\ShaderProgram.h" />
+    <ClInclude Include="src\components\AudioListenerComponent.h" />
+    <ClInclude Include="src\components\AudioSourceComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -526,8 +524,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\custom\Player.cpp" />
-    <ClCompile Include="src\tiles\Tilemap.cpp" />
-    <ClCompile Include="src\tiles\Tile.cpp" />
     <ClCompile Include="src\custom\Camera.cpp" />
     <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
@@ -561,9 +557,7 @@
     <ClCompile Include="src\graphics\Model.cpp" />
     <ClCompile Include="src\math\Ray.cpp" />
     <ClCompile Include="src\graphics\CustomUI.cpp" />
-    <ClCompile Include="src\audio\AudioListenerComponent.cpp" />
     <ClCompile Include="src\audio\AudioManager.cpp" />
-    <ClCompile Include="src\audio\AudioSourceComponent.cpp" />
     <ClCompile Include="src\audio\AudioUtility.cpp" />
     <ClCompile Include="src\audio\SoundAttributes.cpp" />
     <ClCompile Include="src\core\InputManager.cpp" />
@@ -581,6 +575,8 @@
     <ClCompile Include="src\scenes\Scene2.cpp" />
     <ClCompile Include="src\core\ShaderManager.cpp" />
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
+    <ClCompile Include="src\components\AudioListenerComponent.cpp" />
+    <ClCompile Include="src\components\AudioSourceComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
@@ -684,8 +680,5 @@
     </Library>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
     <Library Include="external\lib\fmodL_vc.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\tiles\Map1.txt" />
   </ItemGroup>
 </Project>

@@ -3,12 +3,11 @@
 
 #include "components/Components.h"
 
-class Bird : public GameObject, public AudioSourceComponent, public MeshRenderer
+class Bird : public GameObject
 {
 public:
 
 	Bird(const char* name, MATH::Vec3 position);
-	Bird();
 	//! Base Grass Constructor
 private:
 
@@ -19,16 +18,15 @@ private:
 	the number of instances we want to render*/
 
 	//! Base Grass Destructor
-	~Bird();
+	~Bird() = default;
 
 	//! Update Function (Inherited from Gameobject)
-	void Update(const float deltaTime) override;
-
-	//! Render Function (Inherited from Gameobject)
-	void Render() const override;
+	void Update(const float deltaTime) override {}
 
 	//! Handle Events Function (Inherited from Gameobject)
-	void HandleEvents(const SDL_Event& event) override;
+	void HandleEvents(const SDL_Event& event) override {}
+
+	const char* GetClassIDName() const override;
 
 };
 

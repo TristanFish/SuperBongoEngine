@@ -6,24 +6,16 @@
 
 using namespace MATH;
 
-Player::Player() : moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
-{
-}
 
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
+Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
 {
-
+	AddComponent<AudioListenerComponent>();
+	
 	name = n;
 	transform = Transform(pos);
 	transform.rotation.y = -90.0f;
-	AudioListenerComponent::Init(this);
-	
 }
 
-Player::~Player()
-{
-	
-}
 
 void Player::Update(const float deltaTime)
 {
@@ -60,23 +52,23 @@ void Player::Update(const float deltaTime)
 	transform.pos += moveDir * moveSpeed * deltaTime;
 #pragma endregion
 
+	
 	//transform.Update(deltaTime);
+	for (Component* comp : componentList)
+	{
+		if(comp->active)
+		{
+			comp->Update(deltaTime);
+		}
+	}
+	
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.rotationMatrix);
-	//Dont really need to update this but once models are moving their sound posititions will have to follow
-	AudioListenerComponent::Update(deltaTime);
-	//RigidBody3D::Update(deltaTime);
-	//MeshRenderer::Update(deltaTime);
-}
-
-void Player::Render() const
-{
-	//MeshRenderer::Render();
 }
 
 Vec3 GetMouseVector(int x, int y)
 {
-	Vec3 mousePosition = Vec3(static_cast<float>(x), static_cast<float>(y), 0.0f);
+	const Vec3 mousePosition = Vec3(static_cast<float>(x), static_cast<float>(y), 0.0f);
 	Vec3 v = Camera::getInstance()->getInvNDC() * mousePosition;
 
 	return v;
@@ -135,6 +127,11 @@ void Player::HandleEvents(const SDL_Event& event)
 	}
 	
 #pragma endregion
+}
+
+const char* Player::GetClassIDName() const
+{
+	return "Player";
 }
 
 

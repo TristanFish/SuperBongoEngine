@@ -20,9 +20,10 @@ public:
 	
 	// Inherited via Component
 	void Init(GameObject* g) override;
-	void Update(const float deltaTime) override;
-	void Render() const override;
-	void HandleEvents(const SDL_Event& event) override;
+	void Update(const float deltaTime) override {}
+	void Render() const override {}
+	void HandleEvents(const SDL_Event& event) override {}
+	const char* ComponentName() const override;
 
 private:
 

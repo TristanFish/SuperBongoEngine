@@ -1,15 +1,19 @@
 #include "Water.h"
 #include "core/Timer.h"
 
-Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox):MeshRenderer("Plane.fbx"){
+Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
+
+	mr = AddComponent<MeshRenderer>();
+	mr->LoadModel("Plane.fbx");
+	mr->renderFlags = RenderProperties::OVERRIDE_RENDERER;
+	mr->CreateShader("src/graphics/shaders/WaterVert.glsl", "src/graphics/shaders/WaterFrag.glsl");
+	mr->SetInstanceID(0);
+
 	this->name = name;
 	this->transform.pos = pos;
 	//reflectTex = new Texture("resources/textures/water_dudv.png");
 	//reflectTex->LoadImage();
-	MeshRenderer::Init(this);
-	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
-	MeshRenderer::CreateShader("src/graphics/shaders/WaterVert.glsl", "src/graphics/shaders/WaterFrag.glsl");
-	MeshRenderer::SetInstanceID(0);
+
 	//initRefractionFB();
 	//initReflectionFB();
 	
@@ -28,7 +32,7 @@ Water::~Water()
 }
 
 //Pass the skybox in scene from renderer
-const void Water::GetSkyBoxInfo()
+void Water::GetSkyBoxInfo()
 {
 	if (skyBox == nullptr) { skyBox = Renderer::GetSkyBox(); }
 	skyboxID = skyBox->GetSkyBoxTexture();
@@ -141,19 +145,16 @@ void Water::Render() const
 	
 	//BindReflectionFrameBuffer();
 	//BindRefractionFrameBuffer();
-	MeshRenderer::shader.RunShader();
+	mr->shader.RunShader();
 	glBindVertexArray(skyBoxVAO);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
 	//glActiveTexture(GL_TEXTURE1);
 	//glBindTexture(GL_TEXTURE_2D, reflectTex->getTextureID());
-	MeshRenderer::shader.TakeUniform("cube", Camera::getInstance()->getViewMatrix());
-	MeshRenderer::shader.TakeUniform("cameraPos", Camera::getInstance()->getPosition());
+	mr->shader.TakeUniform("cube", Camera::getInstance()->getViewMatrix());
+	mr->shader.TakeUniform("cameraPos", Camera::getInstance()->getPosition());
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//glDrawBuffer(reflectionDepthBuffer);
 	//texture.DrawTextureToScreen(refractionTexture, 1.0f, 0.5f, 0.0f, 0.5f);
-	MeshRenderer::Render();
+	mr->Render();
 	//UnbindCurrentFB();
-}
-void Water::HandleEvents(const SDL_Event& event)
-{
 }

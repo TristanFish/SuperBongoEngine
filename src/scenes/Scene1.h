@@ -24,33 +24,14 @@ class Scene1 : public Scene
 private:
 
 	LightObject* light;
-
-	//! Player Pointer
-	/*! Used for movement and interacting with the world  */
 	Player* player; 
-	
-	//! Grass Pointer
-	/*! Is a gameobject that we can spawn into the world  */
 	Grass* grass;
-
-	//! TestModel Pointer
-	/*! Is a gameobject that we can spawn into the world  */
 	TestModel* fog;
-
-	//! Plane Pointer
-	/*! Is a gameobject that we can spawn into the world  */
 	Plane* plane;
-
 	Water* water;
 	Bird* bird;
 
-	//! Debug Pointer
-	/*! Used for all of our debug functions */
 	Debug debug;
-
-
-
-
 public:
 	//! Scene 1 Constructor
 	Scene1();

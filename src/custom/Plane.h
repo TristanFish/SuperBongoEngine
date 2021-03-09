@@ -2,22 +2,17 @@
 #include "components/ECS.h"
 #include "components/Components.h"
 
-class Plane : public GameObject, public MeshRenderer, public RigidBody3D
+class Plane : public GameObject
 {
 
 public:
-	Plane();
 	Plane(const char* name, MATH::Vec3 position);
-	~Plane();
+	~Plane() override = default;
+	
+	void operator()(RigidBody3D& otherBody) override;
+	void OnCollisionEnter(RigidBody3D& otherBody);
 
-
-	// Inherited via GameObject
-	void Update(const float deltaTime) override;
-	void Render() const override;
-	void HandleEvents(const SDL_Event& event) override;
-
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
-
+	const char* GetClassIDName() const override;
 
 private:
 };

@@ -43,7 +43,7 @@ protected:
 
 	//! Check Intersection function
 	/*! Checks if the MouseRay has intersected with a object */
-	bool CheckIntersection(MouseRay ray, const MATH::Vec3& origin, GameObject* obj);
+	bool CheckIntersection(const MouseRay& ray, const MATH::Vec3& origin, GameObject* obj) const;
 
 public:
 	Manager* objectList;

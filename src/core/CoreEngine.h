@@ -32,7 +32,7 @@ public:
 
 	bool Init();
 	void Run();
-	bool GetIsRunning();
+	bool GetIsRunning() const;
 
 	void SetGameInterface(GameInterface* gameInterface_);
 

@@ -22,10 +22,4 @@
 [INFO]: Plane.fbx in: ModelManager.cpp on line: 23
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 23
 [INFO]: Scene 2 Created in: Scene2.cpp on line: 14
-[INFO]: Scene 1 Created in: Scene1.cpp on line: 21
-[INFO]: Sound Played in: AudioSourceComponent.cpp on line: 30
-[INFO]: Player added to objectList in: ECS.cpp on line: 127
-[INFO]: Grass added to objectList in: ECS.cpp on line: 127
-[INFO]: Plane added to objectList in: ECS.cpp on line: 127
-[INFO]: Light added to objectList in: ECS.cpp on line: 127
-[INFO]: bird added to objectList in: ECS.cpp on line: 127
+[INFO]: Closing Game in: CoreEngine.cpp on line: 147
