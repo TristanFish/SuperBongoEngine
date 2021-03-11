@@ -15,11 +15,9 @@
 [INFO]: texture_09.jpg in: TextureManager.cpp on line: 16
 [INFO]: texture_10.jpg in: TextureManager.cpp on line: 16
 [INFO]: water_dudv.png in: TextureManager.cpp on line: 16
-[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 13
-[INFO]: Cube.fbx in: ModelManager.cpp on line: 23
-[INFO]: Grass.fbx in: ModelManager.cpp on line: 23
-[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 23
-[INFO]: Plane.fbx in: ModelManager.cpp on line: 23
-[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 23
-[INFO]: Scene 2 Created in: Scene2.cpp on line: 14
-[INFO]: Closing Game in: CoreEngine.cpp on line: 147
+[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 12
+[INFO]: Cube.fbx in: ModelManager.cpp on line: 22
+[INFO]: Grass.fbx in: ModelManager.cpp on line: 22
+[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 22
+[INFO]: Plane.fbx in: ModelManager.cpp on line: 22
+[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22

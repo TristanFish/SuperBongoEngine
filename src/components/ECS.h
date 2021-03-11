@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <type_traits>
+#include <memory>
+
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
@@ -55,11 +57,13 @@ Check Player.h to see how to create gameobjects*/
 class GameObject
 {
 protected:
-
+	friend class Manager;
 	//! Active boolean
 	/*! Control's if the gameobject is active or not*/
 	bool active = true;
 
+	GameObject* parent;
+	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
 public:
@@ -206,6 +210,14 @@ public:
 			}
 		}
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);
+	}
+
+	template <typename T>
+	T* AddChild(GameObject* go)
+	{
+		children.emplace_back(go);
+		go->parent = this;
+		return dynamic_cast<T*>(go);
 	}
 };
 

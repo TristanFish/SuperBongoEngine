@@ -7,7 +7,7 @@ using namespace MATH;
 Plane::Plane(const char* name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Plane.fbx");
-	GetComponent<MeshRenderer>()->CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 
 	

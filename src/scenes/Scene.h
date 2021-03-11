@@ -23,6 +23,7 @@ protected:
 	//! PerformancePanel Class Instance
 	/*! Renders and Updates all the Performance variables we are wanting using IMGUI  */
 	CustomUI::PerformancePanel performancePanel;
+	char* name_;
 
 	//! GameObject Pointer
 	/*! Stores our object that was most recently selected using our mouseRay */
@@ -50,8 +51,8 @@ public:
 
 	// Used for saving and loading xml document information 
 	XMLElement* pElement;
-	Scene() {};
-	~Scene() {};
+	Scene();
+	virtual ~Scene();
 
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;
@@ -63,7 +64,7 @@ public:
 	virtual void LoadMapData();
 
 
-	const char* CheckAtributeValue(int i) const;
+	std::string CheckAtributeValue(int i) const;
 	
 };
 

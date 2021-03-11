@@ -5,6 +5,8 @@
 std::unordered_map<const char*, Shader> ShaderManager::shaders;
 std::unordered_map<ShaderGroup, ShaderProgram> ShaderManager::programs = std::unordered_map<ShaderGroup, ShaderProgram>();
 
+const std::string ShaderManager::shaderPath = "resources/shaders/";
+
 
 ShaderGroup::ShaderGroup()
 {
@@ -51,7 +53,7 @@ const ShaderProgram& ShaderManager::GetShaders(const char* vert, const char* fra
 		shadersToLink.vert = shaders[vert].GetID();
 	} else
 	{
-		const Shader vertex(vert);
+		const Shader vertex((shaderPath + vert).c_str());
 		shaders[vert] = vertex;
 		shadersToLink.vert = shaders[vert].GetID();
 	}
@@ -61,7 +63,7 @@ const ShaderProgram& ShaderManager::GetShaders(const char* vert, const char* fra
 		shadersToLink.frag = shaders[frag].GetID();
 	} else
 	{
-		const Shader fragment(frag);
+		const Shader fragment((shaderPath + frag).c_str());
 		shaders[frag] = fragment;
 		shadersToLink.frag = shaders[frag].GetID();
 	}

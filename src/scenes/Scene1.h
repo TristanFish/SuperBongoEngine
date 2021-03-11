@@ -34,42 +34,39 @@ private:
 	Debug debug;
 public:
 	//! Scene 1 Constructor
-	Scene1();
-	//! Scene 1 Destructor 
-	~Scene1();
+	Scene1() = default;
+
 
 	//! Virtual overridden OnCreate Function
 	/*! Gets called at the beginning of the loop */
-	virtual bool OnCreate() override;
+	bool OnCreate() override;
 
 	//! Virtual overridden OnDestroy Function
 	/*! Gets called at the end of the loop */
-	virtual void OnDestroy() override;
+	void OnDestroy() override {}
 
 	//! Virtual overridden Update Function
 	/*! Updates all of the gameobjects throughout the loop */
-	virtual void Update(const float deltaTime) override;
+	void Update(const float deltaTime) override;
 
 	//! Virtual overridden Render Function
 	/*! Renders all of the gameobjects throughout the loop */
-	virtual void Render() const override;
+	void Render() const override;
 
 	//! Virtual overridden HandleEvents Function
 	/*! Checks for keyboard/mouse events throughout the loop */
-	virtual void HandleEvents(const SDL_Event &event) override;
+	void HandleEvents(const SDL_Event &event) override;
 
 	//! Virtual overridden Reset Function
 	/*! When called resets the scene back to its original state */
-	virtual void Reset() override;
+	void Reset() override;
 
 	//! Virtual overridden SaveMapData Function
 	/*! Saves objects and object transforms in the scene */
-	virtual void SaveMapData() const override;
+	void SaveMapData() const override;
 
 	//! Virtual overridden LoadMapData Function
 	/*! Loads objects and object transforms in the scene */
-	virtual void LoadMapData() override;
-	
-	
+	void LoadMapData() override;
 };
 #endif

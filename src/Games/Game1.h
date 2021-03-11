@@ -15,14 +15,14 @@ private:
 public:
 
 	Game1();
-	virtual ~Game1();
+	~Game1() override;
 
 	// Inherited via GameInterface
-	virtual bool OnCreate() override;
-	virtual void OnDestroy() override;
-	virtual void Update(const float deltaTime_) override;
-	virtual void Render() override;
-	virtual void HandleEvents(const SDL_Event& event) override;
+	bool OnCreate() override;
+	void OnDestroy() override;
+	void Update(const float deltaTime_) override;
+	void Render() override;
+	void HandleEvents(const SDL_Event& event) override;
 
 };
 

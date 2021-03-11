@@ -107,7 +107,7 @@ void Manager::Render() const
 
 
 #ifdef _DEBUG
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		g->DrawDebugGeometry();
 	}
@@ -164,8 +164,13 @@ GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 		renderer.AddLight(go->GetComponent<LightComponent>());
 	}
 
-
 	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+
+	for (GameObject* child : go->children)
+	{
+		AddGameObject(child, 0);
+	}
+	
 	return *go;
 }
 

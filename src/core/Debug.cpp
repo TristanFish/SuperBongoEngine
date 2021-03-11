@@ -33,7 +33,7 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	
 	if (TexShader.GetID() == 0)
 	{
-		TexShader = ShaderManager::GetShaders("src/graphics/shaders/2DTextureVert.glsl", "src/graphics/shaders/2DTextureFrag.glsl");
+		TexShader = ShaderManager::GetShaders("2DTextureVert.glsl", "2DTextureFrag.glsl");
 	}
 	if (textureVAO == 0)
 	{
@@ -77,7 +77,7 @@ void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, MATH:
 {
 	if (ObjShader.GetID() == 0)
 	{
-		ObjShader = ShaderManager::GetShaders("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+		ObjShader = ShaderManager::GetShaders("DefaultVert.glsl", "DefaultFrag.glsl");
 	}
 	if (cubeVAO == 0)
 	{

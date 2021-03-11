@@ -2,18 +2,8 @@
 #include "Scene1.h"
 #include "custom/Player.h"
 #include "custom/MouseRay.h"
-#include "core/Debug.h"
-#include "core/TextureManager.h"
 #include "core/Logger.h"
 
-
-Scene1::Scene1()
-{}
-
-Scene1::~Scene1()
-{
-	
-}
 
 bool Scene1::OnCreate()
 {
@@ -43,16 +33,6 @@ bool Scene1::OnCreate()
 	//Scene::SaveMapData();
 	Scene::LoadMapData();
 	return true;
-}
-
-
-
-void Scene1::OnDestroy()
-{
-	delete objectList;
-	objectList = nullptr;
-
-	pElement = nullptr;
 }
 
 void Scene1::Update(const float deltaTime)

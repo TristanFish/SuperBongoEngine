@@ -9,7 +9,7 @@ Game1::Game1() : GameInterface(), currentSceneNum(0), currentScene(nullptr)
 
 Game1::~Game1()
 {
-	currentScene->OnDestroy();
+	delete currentScene;
 	currentScene = nullptr;
 }
 
@@ -27,6 +27,7 @@ bool Game1::OnCreate()
 
 void Game1::OnDestroy()
 {
+
 }
 
 void Game1::Update(const float deltaTime_)
@@ -50,7 +51,7 @@ void Game1::HandleEvents(const SDL_Event& event)
 
 void Game1::BuildScene() 
 {
-	currentScene->OnDestroy();
+	delete currentScene;
 	currentScene = nullptr;
 
 	switch (CoreEngine::GetInstance()->GetCurrentScene())

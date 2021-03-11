@@ -1,7 +1,6 @@
 #include "ModelManager.h"
 #include "TextureManager.h"
 #include <filesystem>
-#include <iostream>
 #include <cassert>
 #include "core/Logger.h"
 

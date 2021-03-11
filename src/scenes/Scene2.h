@@ -3,18 +3,18 @@
 
 #include "scenes/Scene.h"
 
-class Scene2 : public Scene
+class Scene2 final : public Scene
 {
 public:
-	Scene2();
-	~Scene2();
+	Scene2() = default;
+	
 	// Inherited via Scene
-	virtual bool OnCreate() override;
-	virtual void OnDestroy() override;
-	virtual void Reset() override;
-	virtual void Update(float deltaTime_) override;
-	virtual void HandleEvents(const SDL_Event& event) override;
-	virtual void Render() const override;
+	bool OnCreate() override;
+	void OnDestroy() override {}
+	void Reset() override;
+	void Update(float deltaTime_) override;
+	void HandleEvents(const SDL_Event& event) override;
+	void Render() const override;
 };
 
 #endif

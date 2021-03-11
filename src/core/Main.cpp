@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {	
 
-	CoreEngine::GetInstance()->SetGameInterface(new Game1);
+	CoreEngine::GetInstance()->SetGameInterface(new Game1());
 	if(!CoreEngine::GetInstance()->Init())
 	{
 		printf("Engine failed to Launch");

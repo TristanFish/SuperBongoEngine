@@ -46,6 +46,7 @@ class ShaderProgram;
 
 class ShaderManager
 {
+	static const std::string shaderPath;
 	
 	static std::unordered_map<const char*, Shader> shaders;
 	static std::unordered_map<ShaderGroup, ShaderProgram> programs;

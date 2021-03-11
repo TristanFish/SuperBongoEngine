@@ -6,7 +6,7 @@ Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 	mr = AddComponent<MeshRenderer>();
 	mr->LoadModel("Plane.fbx");
 	mr->renderFlags = RenderProperties::OVERRIDE_RENDERER;
-	mr->CreateShader("src/graphics/shaders/WaterVert.glsl", "src/graphics/shaders/WaterFrag.glsl");
+	mr->CreateShader("WaterVert.glsl", "WaterFrag.glsl");
 	mr->SetInstanceID(0);
 
 	this->name = name;

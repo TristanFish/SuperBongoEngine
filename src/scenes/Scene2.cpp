@@ -1,13 +1,5 @@
 #include "Scene2.h"
 #include "core/CoreEngine.h"
-Scene2::Scene2()
-{
-
-}
-
-Scene2::~Scene2()
-{
-}
 
 bool Scene2::OnCreate()
 {
@@ -17,11 +9,6 @@ bool Scene2::OnCreate()
 	objectList->Init();
 
 	return true;
-}
-
-void Scene2::OnDestroy()
-{
-	delete objectList;
 }
 
 void Scene2::Reset()

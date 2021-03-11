@@ -14,8 +14,8 @@ void Renderer::Init()
 	skyBox = new SkyBox();
 
 	//Set up renderer shaders
-	gBufferShader = ShaderManager::GetShaders("src/graphics/shaders/gBufferShaderVert.glsl", "src/graphics/shaders/gBufferShaderFrag.glsl");
-	resultShader = ShaderManager::GetShaders("src/graphics/shaders/gBufferResolveVert.glsl", "src/graphics/shaders/gBufferResolveFrag.glsl");
+	gBufferShader = ShaderManager::GetShaders("gBufferShaderVert.glsl", "gBufferShaderFrag.glsl");
+	resultShader = ShaderManager::GetShaders("gBufferResolveVert.glsl", "gBufferResolveFrag.glsl");
 	
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);

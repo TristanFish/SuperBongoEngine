@@ -3,7 +3,7 @@
 Bird::Bird(const char* name, MATH::Vec3 position) {
 
 	AddComponent<MeshRenderer>()->LoadModel("Grass.fbx");
-	GetComponent<MeshRenderer>()->CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 	birdSound = AudioManager::Get()->RetrieveSoundObject("birdchirp");
 	AddComponent<AudioSourceComponent>()->PlaySound(birdSound, &AudioManager::Get()->C1);

@@ -4,18 +4,19 @@
 #include "custom/MouseRay.h"
 
 
+
 using namespace MATH;
 
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
- const char* Scene::CheckAtributeValue(int i) const
+std::string Scene::CheckAtributeValue(int i) const
 {
-	 const char* value = new char();
+	std::string value;
 
-	if (i == 0) { value = "X"; }
-	if (i == 1) { value = "Y"; }
-	if (i == 2) { value = "Z"; }
-	if (i == 3) { value = "W"; }
+	if (i == 0) { value = 'X'; }
+	if (i == 1) { value = 'Y'; }
+	if (i == 2) { value = 'Z'; }
+	if (i == 3) { value = 'W'; }
 	return value;
 }
 
@@ -86,8 +87,25 @@ using namespace MATH;
 	 return tmax >= tmin;
  }
 
- 
 
+Scene::Scene() : name_(new char()), objectList(nullptr), pElement(nullptr)
+{
+}
+
+Scene::~Scene()
+{
+	if(objectList)
+	{
+		delete objectList;
+		objectList = nullptr;
+	}
+
+	if(name_)
+	{
+		delete name_;
+		name_ = nullptr;
+	}
+}
 
  void Scene::Update(const float deltaTime)
  {
@@ -113,13 +131,12 @@ using namespace MATH;
 	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
 
 	 // Blank variables that can be changed 
-	 static char* name_ = new char();
 	 static Vec3 Pos_ = Vec3(0.0f);
 	 static Vec3 Rot_ = Vec3(0.0f);
 	 static Vec3 Scale_ = Vec3(1.0f);
 
 
-	 if (ImGui::InputText("Mesh Name", name_, size_t(20)))
+	 if (ImGui::InputText("Mesh Name", name_, 20))
 	 {
 
 	 }
@@ -129,7 +146,6 @@ using namespace MATH;
 	 if (ImGui::Button("Create Object"))
 	 {
 		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
-		 name_ = new char();
 		 Pos_ = Vec3(0.0f);
 		 Rot_ = Vec3(0.0f);
 		 Scale_ = Vec3(1.0f);
@@ -144,7 +160,7 @@ using namespace MATH;
 	 if (event.type == SDL_MOUSEBUTTONDOWN)
 	 {
 		 mouseRay.CalaculateMouseRay();
-		 for (auto obj : objectList->GetGameObjects())
+		 for (auto* obj : objectList->GetGameObjects())
 		 {
 			 if (obj->HasComponent<MeshRenderer>())
 			 {
@@ -200,13 +216,13 @@ using namespace MATH;
 		// Loops through a vector for each
 		for (int i = 0; i < 3; i++)
 		{
-			pPosElement->SetAttribute(CheckAtributeValue(i), obj->transform.pos[i]);
+			pPosElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.pos[i]);
 			pNameElement->InsertEndChild(pPosElement);
 
-			pRotElement->SetAttribute(CheckAtributeValue(i), obj->transform.rotation[i]);
+			pRotElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.rotation[i]);
 			pNameElement->InsertEndChild(pRotElement);
 
-			pScaleElement->SetAttribute(CheckAtributeValue(i), obj->transform.scale[i]);
+			pScaleElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.scale[i]);
 			pNameElement->InsertEndChild(pScaleElement);
 		}
 
@@ -216,7 +232,7 @@ using namespace MATH;
 			{
 				float nextValue = ceil(obj->GetComponent<MeshRenderer>()->meshColorTint[i] * 255);
 
-				pColorElement->SetAttribute(CheckAtributeValue(i), nextValue);
+				pColorElement->SetAttribute(CheckAtributeValue(i).c_str(), nextValue);
 				pNameElement->InsertEndChild(pColorElement);
 			}
 		}
@@ -312,9 +328,9 @@ void Scene::LoadMapData()
 		// Loops through each Element's attribute's and gets there values
 		for (int i = 0; i < 3; i++)
 		{
-			eResult = pPosElement->QueryFloatAttribute(CheckAtributeValue(i), &outPos[i]);
-			eResult = pRotElement->QueryFloatAttribute(CheckAtributeValue(i), &outRot[i]);
-			eResult = pScaleElement->QueryFloatAttribute(CheckAtributeValue(i), &outScale[i]);
+			eResult = pPosElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outPos[i]);
+			eResult = pRotElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outRot[i]);
+			eResult = pScaleElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outScale[i]);
 		}
 
 
@@ -327,7 +343,7 @@ void Scene::LoadMapData()
 
 			for (int i = 0; i < 4; i++)
 			{
-				eResult = pColorElement->QueryFloatAttribute(CheckAtributeValue(i), &outColor[i]);
+				eResult = pColorElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outColor[i]);
 			}
 
 			outColor /= 255.0f;

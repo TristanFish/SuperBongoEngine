@@ -59,7 +59,7 @@ void CoreEngine::Render()
 
 CoreEngine* CoreEngine::GetInstance()
 {
-	if (engineInstance.get() == nullptr)
+	if (engineInstance)
 	{
 		engineInstance.reset(new CoreEngine);
 	}
@@ -171,7 +171,7 @@ void CoreEngine::OnDestroy()
 	{
 		delete window;
 		window = nullptr;
-	};
+	}
 
 	Camera::removeInstance();
 

@@ -6,7 +6,7 @@ TestModel::TestModel(const char* name, MATH::Vec3 position)
 {
 	mr = AddComponent<MeshRenderer>();
 	mr->LoadModel("Cube.fbx");
-	mr->CreateShader("src/graphics/shaders/FogVert.glsl", "src/graphics/shaders/FogFrag.glsl");
+	mr->CreateShader("FogVert.glsl", "FogFrag.glsl");
 	mr->renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	mr->uaCallback = *this; 
 

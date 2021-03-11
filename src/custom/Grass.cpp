@@ -6,7 +6,7 @@ using namespace MATH;
 Grass::Grass(const char* name, MATH::Vec3 position, unsigned int amount_)
 {
 	AddComponent<MeshRenderer>()->LoadModel("GrassBunch1.fbx");
-	GetComponent<MeshRenderer>()->CreateShader("src/graphics/shaders/GrassVert.glsl", "src/graphics/shaders/GrassFrag.glsl");
+	GetComponent<MeshRenderer>()->CreateShader("GrassVert.glsl", "GrassFrag.glsl");
 	GetComponent<MeshRenderer>()->renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	GetComponent<MeshRenderer>()->SetInstanceID(1);
 	GetComponent<MeshRenderer>()->SetInstanceAmount(amount_);
