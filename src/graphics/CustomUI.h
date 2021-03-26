@@ -26,7 +26,7 @@ namespace CustomUI
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
-		void Render();
+		void Render() const;
 
 		//! GameObject Pointer
 		/*! Is a pointer to the selected object this panel uses */

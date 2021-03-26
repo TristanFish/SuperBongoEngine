@@ -2,34 +2,13 @@
 #define SCENE1_H
 
 #include "Scene.h"
-#include "custom/Camera.h"
 #include "custom/TestModel.h"
-#include "custom/Plane.h"
-#include "graphics/Shader.h"
-#include "custom/Water.h"
-#include "custom/Grass.h"
-#include "imgui/imgui.h"
-#include "custom/LightObject.h"
-#include "custom/SkyBox.h"
-#include "custom/Bird.h"
-
-/**< Forward declaring classes that we will use  */
-class Player;
-class Tilemap;
 
 //! Scene 1 class
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
 class Scene1 : public Scene
 {
 private:
-
-	LightObject* light;
-	Player* player; 
-	Grass* grass;
-	TestModel* fog;
-	Plane* plane;
-	Water* water;
-	Bird* bird;
 
 	Debug debug;
 public:

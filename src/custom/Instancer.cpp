@@ -8,7 +8,7 @@ Instancer::Instancer() : modelMatrices(nullptr)
 }
 Instancer::~Instancer()
 {
-	delete modelMatrices;
+	delete[] modelMatrices;
 	glDeleteBuffers(1, &instanceBuffer);
 }
 void Instancer::Init(const unsigned int& amount_, GameObject* g)

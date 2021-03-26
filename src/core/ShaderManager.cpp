@@ -101,7 +101,8 @@ const ShaderProgram& ShaderManager::GetShaders(const char* vert, const char* fra
 
 		ShaderProgram resultProgram;
 		resultProgram.LinkShaders(shaderIDs);
-		
+		resultProgram.shaders.emplace_back(vert);
+		resultProgram.shaders.emplace_back(frag);
 		programs[shadersToLink] = resultProgram;
 
 		return  programs[shadersToLink];

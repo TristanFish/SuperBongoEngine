@@ -26,7 +26,7 @@ public:
 private:
 	GLint shaderID;
 	std::ifstream shaderFile;
-	uint64_t shaderType;
+	uint32_t shaderType;
 };
 #endif // !SHADER_H
 

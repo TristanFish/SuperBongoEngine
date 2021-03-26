@@ -27,7 +27,7 @@ protected:
 
 	//! GameObject Pointer
 	/*! Stores our object that was most recently selected using our mouseRay */
-	std::vector<CustomUI::PropertiesPanel*> propertiesPannels;
+	std::vector<CustomUI::PropertiesPanel*> propertiesPanels;
 
 	//! Const Char* Pointer
 	/*! Stores our objects that can be spawned */
@@ -35,7 +35,7 @@ protected:
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
-	void CreateObjWithID(MATH::Vec3 pos_, MATH::Vec3 rot_, MATH::Vec3 scale_, const char* name_, const int& ID) const;
+	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const char* objName, const char* IDName) const;
 
 	//! Check Existing Panel Function
 	/*! Check's if the clicked object is already in the vector of propertiesPannels: 

@@ -27,7 +27,6 @@ class SkyBox :  public GameObject
 public:
 
 	void Update(const float deltaTime) override;
-	const char* GetClassIDName() const override;
 	
 	GLuint GetSkyBoxTexture() const;
 	unsigned int GetVAO() const;

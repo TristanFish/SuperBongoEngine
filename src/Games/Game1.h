@@ -15,7 +15,7 @@ private:
 public:
 
 	Game1();
-	~Game1() override;
+	~Game1();
 
 	// Inherited via GameInterface
 	bool OnCreate() override;

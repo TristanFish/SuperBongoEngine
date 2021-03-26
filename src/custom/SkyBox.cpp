@@ -53,7 +53,7 @@ SkyBox::SkyBox()
 	};
 #pragma endregion
 
-	bool result = LoadSkyBox("resources/skybox/right.jpg", "resources/skybox/left.jpg", "resources/skybox/top.jpg", "resources/skybox/bottom.jpg", "resources/skybox/front.jpg", "resources/skybox/back.jpg");
+	const bool result = LoadSkyBox("resources/skybox/right.jpg", "resources/skybox/left.jpg", "resources/skybox/top.jpg", "resources/skybox/bottom.jpg", "resources/skybox/front.jpg", "resources/skybox/back.jpg");
 	if (!result) 
 	{ 
 		EngineLogger::Error("Skybox failed to load textures", "SkyBox.cpp", __LINE__);
@@ -146,11 +146,6 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 void SkyBox::Update(const float deltaTime)
 {
 	
-}
-
-const char* SkyBox::GetClassIDName() const
-{
-	return "SkyBox";
 }
 
 void SkyBox::Render() const

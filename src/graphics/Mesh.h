@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "graphics/Vertex.h"
-#include "graphics/Shader.h"
 #include "graphics/Texture.h"
 #include "graphics/ShaderProgram.h"
 

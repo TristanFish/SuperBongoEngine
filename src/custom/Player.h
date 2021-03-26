@@ -25,9 +25,6 @@ public:
 	/*! Controls how the player will navigate the world */
 	void HandleEvents(const SDL_Event& event) override;
 
-	const char* GetClassIDName() const override;
-
-
 private:
 
 	//!moveSpeed float

@@ -43,7 +43,7 @@ public:
 	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
-	virtual const char* ComponentName() const = 0;
+	virtual const char* GetType() { return typeid(*this).name(); }
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/
@@ -76,11 +76,6 @@ public:
 	/*! Controls if it's properties panel is active*/
 	bool isMenuActive = false;
 
-	//!Object ID Integer
-	/*! Object ID is used so we know what object is being spawned 
-	 all objects that inherit from grass will have the same ID ext*/
-	unsigned int objectID;
-
 	//!Transform
 	/*! Control's all of the gameobjects positions/rotations/translations*/
 	Transform transform;
@@ -107,7 +102,7 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual const char* GetClassIDName() const = 0;
+	virtual const char* GetType() { return typeid(*this).name(); }
 	//!isActive Getter
 	/*!Returns if the gameobject is active or not*/
 	bool isActive()const { return active; }
@@ -137,9 +132,9 @@ public:
 	void SetName(const char* name_) { name = name_; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
-	virtual void operator()(RigidBody3D& otherBody) {}
+	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
 	//This functor is used for Attaching uniforms
-	virtual void operator()() {}
+	virtual void AttachUniforms() const {}
 
 private:
 
@@ -190,7 +185,7 @@ public:
 		{
 			if(dynamic_cast<T*>(*it))
 			{
-				EngineLogger::Warning("Component " + std::string((*it)->ComponentName()) + " already found in " + std::string(name), "ECS.h", __LINE__);
+				EngineLogger::Warning("Component " + std::string((*it)->GetType()) + " already found in " + std::string(name), "ECS.h", __LINE__);
 				return nullptr;
 			} 
 		}
@@ -265,15 +260,15 @@ public:
 
 	//! AddGameObject Function
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
-	GameObject& AddGameObject(GameObject* go, unsigned int objID);
+	GameObject& AddGameObject(GameObject* go);
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
-	const int GetNumObjects() { return gameObjects.size(); }
+	int GetNumObjects() const { return gameObjects.size(); }
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	const std::vector<GameObject*> GetGameObjects() { return gameObjects; }
+	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/

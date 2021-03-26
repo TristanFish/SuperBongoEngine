@@ -121,17 +121,10 @@ void Player::HandleEvents(const SDL_Event& event)
 		mouseDown = false;
 	}
 	if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
-		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
 	{
 		OnMouseMove(event.button.x, event.button.y);
 	}
 	
 #pragma endregion
 }
-
-const char* Player::GetClassIDName() const
-{
-	return "Player";
-}
-
-

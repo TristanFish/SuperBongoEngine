@@ -59,7 +59,7 @@ void CoreEngine::Render()
 
 CoreEngine* CoreEngine::GetInstance()
 {
-	if (engineInstance)
+	if (engineInstance == nullptr)
 	{
 		engineInstance.reset(new CoreEngine);
 	}
@@ -149,7 +149,8 @@ void CoreEngine::HandleEvents()
 			case SDL_SCANCODE_P:
 				ReloadCurrentScene();
 				break;
-
+			default:
+				break;
 			}
 		}
 		

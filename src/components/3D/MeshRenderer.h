@@ -6,7 +6,7 @@
 #include "graphics/ShaderProgram.h"
 #include "components/ECS.h"
 
-enum class RenderProperties : unsigned char
+enum RenderProperties : unsigned short
 {
 	NONE				= 0b00000000,
 	LIGHTING			= 0b00000001,
@@ -17,14 +17,12 @@ enum class RenderProperties : unsigned char
 	TRANSPARENT			= 0b00100000,
 	WATER				= 0b01000000,
 	OVERRIDE_RENDERER	= 0b10000000
-
-
 };
 
-inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)
-{
-	return (static_cast<char>(rp1) & static_cast<char>(rp2));
-}
+//inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)
+//{
+//	return (static_cast<char>(rp1) & static_cast<char>(rp2));
+//}
 
 
 //!MeshRenderer Class
@@ -68,8 +66,6 @@ public:
 	/*!Handles any events needed for the MeshRenderer*/
 	void HandleEvents(const SDL_Event& event) override {}
 
-	const char* ComponentName() const override;
-
 private:
 
 	//!AttachUniforms function
@@ -89,7 +85,7 @@ public:
 	typedef std::function<void ()> UniformAttachCallback;
 	UniformAttachCallback uaCallback;
 
-	void AddUniformFunction(void(*func)())
+	void AddUniformFunction(const std::function<void ()> &func)
 	{
 		uaCallback = func;
 	}
@@ -112,7 +108,7 @@ public:
 
 	 //!GetMeshes Getter
 	 /*!Returns the vector of meshes*/
-	const std::vector<Mesh>& GetMeshes() const { return model->meshes; };
+	const std::vector<Mesh>& GetMeshes() const { return model->meshes; }
 
 	//!SetInstanceID Setter
 	/*!Sets the instanceID variable*/

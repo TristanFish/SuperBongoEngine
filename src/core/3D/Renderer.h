@@ -55,7 +55,7 @@ private:
 
 
 	//Attaches the most important lights to this object's shader
-	void AttachLights(const MeshRenderer& mr) const;
+	void AttachLights() const;
 	//Draws this object into the shadow texture
 	void RenderShadowTexture(const MeshRenderer& mr) const;
 	//Draws shadows onto this object

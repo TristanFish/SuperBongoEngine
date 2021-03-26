@@ -6,8 +6,6 @@
 class GameInterface
 {
 public:
-	GameInterface() {};
-	virtual ~GameInterface() {};
 
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;

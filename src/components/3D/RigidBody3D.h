@@ -6,6 +6,7 @@
 #include "math/Vector.h"
 #include "components/3D/Collider3D.h"
 #include "components/3D/MeshRenderer.h"
+#include <typeinfo>
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
@@ -13,20 +14,13 @@ class RigidBody3D : public Component
 {
 private:
 
-	//! Float Mass
-	/*! Is the mass of our object */
+
 	float mass;
 
 	//! Vector3 Pointer Position
 	/*! Is the position of our object in world space */
 	MATH::Vec3* pos;
-
-	//! Vector3 Velocity
-	/*! Is the velocity of our object  */
 	MATH::Vec3 vel;
-
-	//! Vector3 Acceleration
-	/*! Is the acceleration of our object  */
 	MATH::Vec3 accel;
 
 	//! Float Linear Drag
@@ -36,15 +30,7 @@ private:
 	//! Float Rotational Inertia 
 	/*! Is the rotational inertia of our object  */
 	float rotInertia;
-
-	
-
-	//! Vector3 Angular Velocity 
-	/*! Is the angular velocity draw of our object  */
 	MATH::Vec3 angularVel;
-
-	//! Vector3 Angular Acceleration 
-	/*! Is the angular acceleration draw of our object  */
 	MATH::Vec3 angularAcc;
 
 	//! Float Angular Drag 
@@ -58,9 +44,12 @@ private:
 	
 public:
 	std::function<void(RigidBody3D&)> collisionEnterCallback;
+	
 	void OnCollisionEnter(RigidBody3D& otherBody);
 	
-	void AddCollisionFunction(void(*func)(RigidBody3D&))
+	
+
+	void AddCollisionFunction(const std::function<void(RigidBody3D&)> &func)
 	{
 		collisionEnterCallback = func;
 	}
@@ -80,7 +69,6 @@ public:
 	void Update(const float deltaTime) override;
 	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
-	const char* ComponentName() const override;
 
 	void ApplyImpulseForce(const MATH::Vec3& force);
 	void ApplyConstantForce(const MATH::Vec3& force);

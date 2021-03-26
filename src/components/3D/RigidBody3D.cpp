@@ -64,11 +64,6 @@ void RigidBody3D::HandleEvents(const SDL_Event& event)
 	//RigidBody doesn't do any event listening
 }
 
-const char* RigidBody3D::ComponentName() const
-{
-	return "RigidBody3D";
-}
-
 void RigidBody3D::ApplyImpulseForce(const Vec3& force)
 {
 	vel += (force / mass) * Timer::GetScaledDeltaTime();

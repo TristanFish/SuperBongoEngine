@@ -19,10 +19,6 @@ public:
 
 	//! Base Grass Destructor
 	~Grass() = default;
-
-	const char* GetClassIDName() const;
-
-private:
-
+	
 };
 

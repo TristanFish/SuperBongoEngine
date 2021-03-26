@@ -12,5 +12,4 @@ public:
 	~LightObject() override = default;
 	// Inherited via GameObject
 	void DrawDebugGeometry() const override;
-	const char* GetClassIDName() const override;
 };

@@ -43,11 +43,6 @@ void RigidBodyComponent::Update(const float deltaTime)
 
 }
 
-const char* RigidBodyComponent::ComponentName() const
-{
-	return "RigidBodyComponent";
-}
-
 void RigidBodyComponent::ApplyImpulseForce(const MATH::Vec3& force)
 {
 	vel += (force / mass) * Timer::GetScaledDeltaTime();

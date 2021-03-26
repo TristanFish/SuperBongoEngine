@@ -3,7 +3,7 @@
 #include "scenes/Scene1.h"
 #include "scenes/Scene2.h"
 
-Game1::Game1() : GameInterface(), currentSceneNum(0), currentScene(nullptr)
+Game1::Game1() : currentSceneNum(0), currentScene(nullptr)
 {
 }
 
@@ -17,7 +17,7 @@ bool Game1::OnCreate()
 {
 	if (CoreEngine::GetInstance()->GetCurrentScene() == 0)
 	{
-		currentScene = new Scene2();
+		currentScene = new Scene1();
 		currentSceneNum = 0;
 		return currentScene->OnCreate();
 	}
@@ -56,7 +56,7 @@ void Game1::BuildScene()
 
 	switch (CoreEngine::GetInstance()->GetCurrentScene())
 	{
-	case 0:
+	case 1:
 		currentScene = new Scene2();
 		break;
 	default:

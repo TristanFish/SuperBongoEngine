@@ -28,6 +28,7 @@ FMOD::Sound* AudioManager::RetrieveSoundObject(std::string soundName)
 	else 
 	{
 		EngineLogger::Warning("Map Key: " + soundName + " Not found, no sound object returned", "AudioManager.cpp", __LINE__);
+		return nullptr;
 	}
 }
 
@@ -78,10 +79,9 @@ void AudioManager::InitAudioManager()
 
 void AudioManager::CreateSounds()
 {
-	for (int i = 0; i < soundPaths.size(); i++) 
+	for (size_t i = 0; i < soundPaths.size(); i++) 
 	{
-		FMOD_RESULT r;
-		r = system->createSound(soundPaths[i].c_str(), FMOD_3D, nullptr, &sounds[i]);
+		const FMOD_RESULT r = system->createSound(soundPaths[i].c_str(), FMOD_3D, nullptr, &sounds[i]);
 		if (r != FMOD_OK) 
 		{
 			EngineLogger::Warning(FMOD_ErrorString(r), "AudioManager.cpp", __LINE__);
@@ -95,8 +95,8 @@ void AudioManager::CreateSounds()
 void AudioManager::Create3DReverbAttributes(FMOD_VECTOR position)
 {
 	FMOD_VECTOR pos = position;
-	float mindist = 10.0f;
-	float maxdist = 1000.0f;
+	const float mindist = 10.0f;
+	const float maxdist = 1000.0f;
 	reverb->set3DAttributes(&pos, mindist, maxdist);	
 }
 

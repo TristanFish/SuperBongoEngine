@@ -27,8 +27,3 @@ void AudioListenerComponent::SetListenerPosition()
 	audioSystemRef->set3DListenerAttributes(0, FMODlistenerPos, 0, &forwardVec, &FMODUp);
 	
 }
-
-const char* AudioListenerComponent::ComponentName() const
-{
-	return "AudioListenerComponent";
-}

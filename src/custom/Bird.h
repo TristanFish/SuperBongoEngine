@@ -20,13 +20,6 @@ private:
 	//! Base Grass Destructor
 	~Bird() = default;
 
-	//! Update Function (Inherited from Gameobject)
-	void Update(const float deltaTime) override {}
-
-	//! Handle Events Function (Inherited from Gameobject)
-	void HandleEvents(const SDL_Event& event) override {}
-
-	const char* GetClassIDName() const override;
 
 };
 

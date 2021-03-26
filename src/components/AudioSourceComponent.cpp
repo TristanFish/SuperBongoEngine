@@ -67,11 +67,6 @@ void AudioSourceComponent::SetAudioPosition()
 	}
 }
 
-const char* AudioSourceComponent::ComponentName() const
-{
-	return "AudioSourceComponent";
-}
-
 AudioSourceComponent::~AudioSourceComponent()
 {
 	gameobject = nullptr; 

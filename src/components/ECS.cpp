@@ -5,7 +5,7 @@
 #include "3D/LightComponent.h"
 #include "core/Logger.h"
 
-GameObject::GameObject(): name("Default"), objectID(0)
+GameObject::GameObject(): name("Default")
 {
 }
 
@@ -29,6 +29,14 @@ void GameObject::Init()
 	for (Component* comp : componentList)
 	{
 		comp->Init(this);
+		if(RigidBody3D* rbComp = dynamic_cast<RigidBody3D*>(comp))
+		{
+			rbComp->AddCollisionFunction(std::bind(&GameObject::OnCollisionEnter, this, std::placeholders::_1));
+		}
+		else if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
+		{
+			mComp->AddUniformFunction(std::bind(&GameObject::AttachUniforms, this));
+		}
 	}
 }
 
@@ -147,9 +155,8 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
+GameObject& Manager::AddGameObject(GameObject* go)
 {
-	go->objectID = objID;
 	gameObjects.emplace_back(go);
 	if (go->HasComponent<RigidBody3D>())
 	{
@@ -168,7 +175,7 @@ GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
 
 	for (GameObject* child : go->children)
 	{
-		AddGameObject(child, 0);
+		AddGameObject(child);
 	}
 	
 	return *go;

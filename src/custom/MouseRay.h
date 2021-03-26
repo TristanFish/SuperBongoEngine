@@ -22,7 +22,7 @@ private:
 
 	//! Vec2 Function GetDeviceCoords
 	/*! Converts the local Mouse Position to normal Coordinates */
-	MATH::Vec2 GetDeviceCoords(int x_, int y_);
+	MATH::Vec2 GetDeviceCoords(float x_, float y_);
 
 	//! Vec4 Function GetEyeCoords
 	/*! Converts clipping Coordinates to eye Coordinates */
@@ -36,10 +36,10 @@ private:
 public:
 
 	//! MouseRay Constructor
-	MouseRay();
+	MouseRay() = default;
 
 	//! MouseRay Destructor
-	~MouseRay();
+	~MouseRay() = default;
 
 	//! Vector3 Inverse Ray
 	/*! Is the inverse of the currentRay */
@@ -53,7 +53,7 @@ public:
 
 	//! Get Current Ray Getter
 	/*! Returns the current ray */
-	const Ray GetCurrentRay() { return ray; }
+	Ray GetCurrentRay() const { return ray; }
 
 	//! Handle Events Function
 	/*! Used for getting the mouse position in local/screen space */

@@ -79,9 +79,4 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 
 }
 
-const char* MeshRenderer::ComponentName() const
-{
-	return "MeshRenderer";
-}
-
 

@@ -2,6 +2,7 @@
 #include "custom/TestModel.h"
 #include "custom/Plane.h"
 #include "custom/MouseRay.h"
+#include "core/Logger.h"
 
 
 
@@ -20,37 +21,34 @@ std::string Scene::CheckAtributeValue(int i) const
 	return value;
 }
 
- void Scene::CreateObjWithID(Vec3 pos_, Vec3 rot_, Vec3 scale_, const char* name_, const int& ID) const
- {
-	 switch (ID)
-	 {
-	 case 3:
-		 Plane * newPlane_;
-		 newPlane_ = new Plane(name_, pos_);
-		 newPlane_->SetRotation(rot_);
-		 newPlane_->SetScale(scale_);
-		 objectList->AddGameObject(newPlane_, ID);
-		 break;
-	 case 4:
-		 TestModel * newTestModel;
-		 newTestModel = new TestModel(name_, pos_);
-		 newTestModel->SetRotation(rot_);
-		 newTestModel->SetScale(scale_);
-		 objectList->AddGameObject(newTestModel, ID);
-		 break;
-	 default:
-		 break;
-	 }
-
- }
+void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
+{
+	if(strcmp(IDName, "Plane") == 0)
+	{
+		Plane* newPlane_ = new Plane(name_, pos_);
+		newPlane_->SetRotation(rot_);
+		newPlane_->SetScale(scale_);
+		objectList->AddGameObject(newPlane_);
+		return;
+	}
+	if(strcmp(IDName,"TestModel") == 0)
+	{
+		TestModel* newTestModel = new TestModel(name_, pos_);
+		newTestModel->SetRotation(rot_);
+		newTestModel->SetScale(scale_);
+		objectList->AddGameObject(newTestModel);
+		return;
+	}
+	EngineLogger::Warning("ID \"" + std::string(IDName) + "\" was not found","Scene.cpp", __LINE__);
+}
 
  void Scene::CheckExistingPanel(GameObject* obj)
  {
-	 for (size_t i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPanels.size(); i++)
 	 {
-		 if (propertiesPannels[i]->selectedObj->name == obj->name)
+		 if (propertiesPanels[i]->selectedObj->name == obj->name)
 		 {
-			 propertiesPannels.erase(propertiesPannels.begin() + i);
+			 propertiesPanels.erase(propertiesPanels.begin() + i);
 		 }
 	 }
  }
@@ -105,6 +103,16 @@ Scene::~Scene()
 		delete name_;
 		name_ = nullptr;
 	}
+
+	for(auto panel : propertiesPanels)
+	{
+		if(panel)
+		{
+			delete panel;
+			panel = nullptr;
+		}
+	}
+	propertiesPanels.clear();
 }
 
  void Scene::Update(const float deltaTime)
@@ -117,9 +125,9 @@ Scene::~Scene()
 	 ImGui::NewFrame();
 	 // Let's the use add game objects
 
-	 for (size_t i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPanels.size(); i++)
 	 {
-		 propertiesPannels[i]->Render();
+		 propertiesPanels[i]->Render();
 	 }
 
 	 performancePanel.Render();
@@ -145,7 +153,7 @@ Scene::~Scene()
 	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
 	 if (ImGui::Button("Create Object"))
 	 {
-		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
+		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
 		 Pos_ = Vec3(0.0f);
 		 Rot_ = Vec3(0.0f);
 		 Scale_ = Vec3(1.0f);
@@ -157,7 +165,8 @@ Scene::~Scene()
  void Scene::HandleEvents(const SDL_Event& event)
  {
 	 mouseRay.HandleEvents(event);
-	 if (event.type == SDL_MOUSEBUTTONDOWN)
+	 if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
+		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 	 {
 		 mouseRay.CalaculateMouseRay();
 		 for (auto* obj : objectList->GetGameObjects())
@@ -170,7 +179,7 @@ Scene::~Scene()
 					if (!obj->isMenuActive)
 					{
 						CheckExistingPanel(obj);
-						propertiesPannels.push_back(new CustomUI::PropertiesPanel(obj));
+						propertiesPanels.push_back(new CustomUI::PropertiesPanel(obj));
 					}
 					obj->isMenuActive = true;
 					return;
@@ -187,8 +196,7 @@ Scene::~Scene()
 	MapData.InsertFirstChild(pRoot);
 
 	// Create a base Element that holds the gameobjects
-	XMLElement* gListElement;
-	gListElement = MapData.NewElement("GameObjects");
+	XMLElement* gListElement = MapData.NewElement("GameObjects");
 	int ObjAmount = 0;
 
 	pRoot->InsertFirstChild(gListElement);
@@ -210,7 +218,7 @@ Scene::~Scene()
 		XMLElement* pScaleElement = MapData.NewElement("Scale");
 		XMLElement* pColorElement = MapData.NewElement("Color");
 
-		pIDElement->SetAttribute("ID", obj->objectID);
+		pIDElement->SetAttribute("ID", obj->GetType());
 		pNameElement->InsertEndChild(pIDElement);
 
 		// Loops through a vector for each
@@ -230,7 +238,7 @@ Scene::~Scene()
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				float nextValue = ceil(obj->GetComponent<MeshRenderer>()->meshColorTint[i] * 255);
+				const float nextValue = ceil(obj->GetComponent<MeshRenderer>()->meshColorTint[i] * 255);
 
 				pColorElement->SetAttribute(CheckAtributeValue(i).c_str(), nextValue);
 				pNameElement->InsertEndChild(pColorElement);
@@ -242,7 +250,7 @@ Scene::~Scene()
 	pRoot->InsertEndChild(gListElement);
 
 	// Save's the file and checks for successful save
-	XMLError eResult = MapData.SaveFile("MapData.xml");
+	const XMLError eResult = MapData.SaveFile("MapData.xml");
 	if (eResult != XML_SUCCESS)
 	{
 		EngineLogger::Error("Unable to save XML document", "Scene.cpp", __LINE__);
@@ -278,13 +286,13 @@ void Scene::LoadMapData()
 	{
 
 		GameObject* tempObject = nullptr;
-		int outID = 0;
+		const char* outID = "gy";
 		XMLElement* pIDElement;
 		loop++;
 
 		// Gets the gamobjects ID and sets it to the "outID"
 		pIDElement = pNameElement->FirstChildElement("Object");
-		eResult = pIDElement->QueryIntAttribute("ID", &outID);
+		eResult = pIDElement->QueryAttribute("ID", &outID);//  QueryIntAttribute("ID", outID);
 
 		// If the save file has more gamobjects then we have spawned it will spawn 
 		// in what is needed depending on the objects IDs
@@ -300,18 +308,18 @@ void Scene::LoadMapData()
 
 			const char* objectName;
 			eResult = pNameElement->QueryStringAttribute("Equals", &objectName);
-			if (outID == 4)
+			if (strcmp(outID, "TestModel") == 0)
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new TestModel(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
+				objectList->AddGameObject(tempObject);
 
 			}
-			if (outID == 3)
+			if (strcmp(outID, "Plane") == 0)
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
+				objectList->AddGameObject(tempObject);
 
 			}
 		}

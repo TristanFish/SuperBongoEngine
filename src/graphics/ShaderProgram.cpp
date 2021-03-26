@@ -27,7 +27,7 @@ GLuint ShaderProgram::LinkShaders(const std::vector<GLint>& shaders)
 	}
 
 	//link every shader to this program
-	for(int i = 0; i < shaders.size(); i++)
+	for(size_t i = 0; i < shaders.size(); i++)
 	{
 		glAttachShader(programID, shaders[i]);
 	}
@@ -106,4 +106,15 @@ void ShaderProgram::TakeUniform(const std::string& name, const int i) const
 	}
 	glUniform1i(location, i);
 
+}
+
+void ShaderProgram::TakeUniform(const std::string& name, const Uint16 i) const
+{
+	const GLint location = glGetUniformLocation(programID, name.c_str());
+	if (location < 0) 
+	{ 
+		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__); 
+		return; 
+	}
+	glUniform1ui(location, i);
 }

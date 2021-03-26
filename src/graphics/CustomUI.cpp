@@ -1,6 +1,6 @@
 #include "CustomUI.h"
-#include "windows.h"
-#include "psapi.h"
+#include <windows.h>
+#include <psapi.h>
 #include "core/Logger.h"
 #include "core/Timer.h"
 #include "imgui/imgui.h"
@@ -16,7 +16,7 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 	selectedObj = nullptr;
 }
 
-void CustomUI::PropertiesPanel::Render()
+void CustomUI::PropertiesPanel::Render() const
 {
 	if (selectedObj->isMenuActive)
 	{

@@ -35,7 +35,6 @@ public:
 	void Update(const float deltaTime) override;
 	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
-	const char* ComponentName() const override;
 
 	void ApplyImpulseForce(const MATH::Vec3& force);
 	void ApplyConstantForce(const MATH::Vec3& force);
