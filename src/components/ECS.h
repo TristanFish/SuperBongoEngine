@@ -11,6 +11,7 @@
 #include "core/3D/Renderer.h"
 #include "core/Logger.h"
 
+
 class GameObject;
 class RigidBody3D;
 
@@ -56,6 +57,8 @@ Update, render and handleEvents need to be defined per class that inherits from 
 Check Player.h to see how to create gameobjects*/
 class GameObject
 {
+
+
 protected:
 	friend class Manager;
 	//! Active boolean
@@ -66,7 +69,16 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
+	// Enum Class Type
+	/*!Holds enumerations to all the classes that can be instantiated in our engine*/
+	enum class Type { None, Box, Plane, Sphere, Light, Grass };
+
+
+	Type typeID = Type::None;
+
 public:
+
+	
 
 	//!Name Char*
 	/*! Hold's the name of this gameobject*/
@@ -93,6 +105,14 @@ public:
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/
 	virtual void Update(const float deltaTime);
+
+	//GetType function
+	/*!Returns the type of class that the owning class is*/
+	inline Type getType() const { return typeID; }
+
+
+	inline void SetType(Type typeID_) { typeID = typeID_; }
+
 
 	//!Virtual HandleEvents Function
 	/*!Handles and Keyboard/Mouse events*/
@@ -131,6 +151,7 @@ public:
 	/*!Set's the Name of this a gameobject*/
 	void SetName(const char* name_) { name = name_; }
 
+
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
 	//This functor is used for Attaching uniforms
@@ -142,6 +163,7 @@ private:
 	void CheckIfTemplateTypeInheritsFromComponent() const { static_assert(std::is_base_of<Component, T>::value, "Non Component type was used in a component based gameobject function"); }
 
 public:
+
 	//!Template HasComponent boolean
 	/*!Checks if this gameobject has the specified component*/
 	template <typename T>
@@ -214,6 +236,7 @@ public:
 		go->parent = this;
 		return dynamic_cast<T*>(go);
 	}
+
 };
 
 //! Manager Class

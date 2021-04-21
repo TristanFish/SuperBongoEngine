@@ -6,7 +6,7 @@ using namespace MATH;
 
 bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	// TO-DO(Tristan) OPTIMISE THE SHIT OUTTA THIS 
+	/*
 	float rb1Halfx = ((abs(rb1.collider.minVertices.x) + abs(rb1.collider.maxVertices.x)) / 2.0f);
 	float rb2Halfx = ((abs(rb2.collider.minVertices.x) + abs(rb2.collider.maxVertices.x)) / 2.0f);
 	float rb1Halfy = ((abs(rb1.collider.minVertices.y) + abs(rb1.collider.maxVertices.y)) / 2.0f);
@@ -23,8 +23,13 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 	{	
 		return true;
 	}
-	 
-	return false;
+	 */
+
+
+	return (abs(rb1.collider.minVertices.x) <= abs(rb2.collider.maxVertices.x) && abs(rb1.collider.maxVertices.x) >= abs(rb2.collider.minVertices.x)) &&
+		(abs(rb1.collider.minVertices.y) <= abs(rb2.collider.maxVertices.y) && abs(rb1.collider.maxVertices.y) >= abs(rb2.collider.minVertices.y)) &&
+		(abs(rb1.collider.minVertices.z) <= abs(rb2.collider.maxVertices.z) && abs(rb1.collider.maxVertices.z) >= abs(rb2.collider.minVertices.z));
+
 }
 
 bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
@@ -32,7 +37,7 @@ bool Physics3D::SphereBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 	RigidBody3D* sphere = nullptr;
 	RigidBody3D* box = nullptr;
 
-	if (rb1.GetColliderShape() == Collider3D::shape::AABB)
+	if (rb1.GetColliderShape() == Collider3D::type::AABB)
 	{
 		sphere = &rb2;
 		box = &rb1;
@@ -140,7 +145,7 @@ void Physics3D::SphereBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 	RigidBody3D* sphere = nullptr;
 	RigidBody3D* box = nullptr;
 
-	if (rb1.GetColliderShape() == Collider3D::shape::AABB)
+	if (rb1.GetColliderShape() == Collider3D::type::AABB)
 	{
 		box = &rb1;
 		sphere = &rb2;
@@ -229,9 +234,9 @@ void Physics3D::SpherePlaneResolve(RigidBody3D& sphere, RigidBody3D& plane)
 
 bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 {
-	switch (rb1.collider.colliderShape | rb2.collider.colliderShape)
+	switch (rb1.collider.colliderType | rb2.collider.colliderType)
 	{
-	case Collider3D::shape::AABB:
+	case Collider3D::type::AABB:
 		if (BoxBoxDetect(rb1, rb2))
 		{
 			BoxBoxResolve(rb1, rb2);
@@ -239,7 +244,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		}
 		return false;
 		break;
-	case Collider3D::shape::Sphere | Collider3D::shape::AABB:
+	case Collider3D::type::Sphere | Collider3D::type::AABB:
 		if (SphereBoxDetect(rb1, rb2))
 		{
 			SphereBoxResolve(rb1, rb2);
@@ -252,7 +257,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		break;
 	}
 
-	if (rb1.GetColliderShape() == Collider3D::shape::AABB && rb2.GetColliderShape() == Collider3D::shape::Plane)
+	if (rb1.GetColliderShape() == Collider3D::type::AABB && rb2.GetColliderShape() == Collider3D::type::Plane)
 	{
 		if (BoxPlaneDetect(rb1, rb2))
 		{
@@ -261,7 +266,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		}
 		else { return false; }
 	}
-	if (rb1.GetColliderShape() == Collider3D::shape::Plane && rb2.GetColliderShape() == Collider3D::shape::AABB)
+	if (rb1.GetColliderShape() == Collider3D::type::Plane && rb2.GetColliderShape() == Collider3D::type::AABB)
 	{
 		if (BoxPlaneDetect(rb2, rb1))
 		{

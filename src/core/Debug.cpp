@@ -1,10 +1,8 @@
 #include "Debug.h"
 #include <glew/glew.h>
-#include "custom/Camera.h"
-#include "core/ShaderManager.h"
-
-ShaderProgram Debug::TexShader;
-ShaderProgram Debug::ObjShader;
+#include "custom/Rendering/Camera.h"
+Shader Debug::TexShader;
+Shader Debug::ObjShader;
 
 Debug::~Debug()
 {
@@ -21,7 +19,7 @@ Debug::~Debug()
 	}
 }
 
-void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, MATH::Vec4 color) const
+void Debug::DrawSphere(MATH::Vec3 position, float radius, bool wireFrame, Vec4 color) const
 {
 
 }
@@ -33,7 +31,7 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	
 	if (TexShader.GetID() == 0)
 	{
-		TexShader = ShaderManager::GetShaders("2DTextureVert.glsl", "2DTextureFrag.glsl");
+		TexShader.CreateShader("src/graphics/shaders/2DTextureVert.glsl", "src/graphics/shaders/2DTextureFrag.glsl");
 	}
 	if (textureVAO == 0)
 	{
@@ -73,11 +71,11 @@ void Debug::DrawTextureToScreen(GLuint texID, float left, float right, float bot
 	glUseProgram(0);
 }
 
-void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, MATH::Vec4 color) const
+void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 {
 	if (ObjShader.GetID() == 0)
 	{
-		ObjShader = ShaderManager::GetShaders("DefaultVert.glsl", "DefaultFrag.glsl");
+		ObjShader.CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
 	}
 	if (cubeVAO == 0)
 	{
@@ -139,15 +137,15 @@ void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, MATH:
 		glBindVertexArray(0);
 	}
 
-	MATH::Matrix4 model;
+	Matrix4 model;
 	model.loadIdentity();
-	model = model * MATH::MMath::translate(position) * MATH::MMath::scale(size);
+	model = model * MMath::translate(position) * MMath::scale(size);
 
 	ObjShader.RunShader();
-	ObjShader.TakeUniform("modelMatrix", model);
-	ObjShader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
-	ObjShader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	ObjShader.TakeUniform("meshColor", color);
+	ObjShader.TakeInUniformMat4("modelMatrix", model);
+	ObjShader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
+	ObjShader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	ObjShader.TakeInUniformVec4("meshColor", color);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -166,6 +164,6 @@ void Debug::DrawCube(MATH::Vec3 position, MATH::Vec3 size, bool wireFrame, MATH:
 
 }
 
-void Debug::DrawLine(MATH::Vec3 start, MATH::Vec3 end, MATH::Vec4 color)
+void Debug::DrawLine(Vec3 start, Vec3 end, Vec4 color)
 {
 }

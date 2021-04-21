@@ -41,6 +41,7 @@ bool Scene1::OnCreate()
 	//Scene::SaveMapData();
 	//Scene::LoadMapData();
 	return true;
+
 }
 
 void Scene1::Update(const float deltaTime)

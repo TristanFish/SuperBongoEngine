@@ -1,10 +1,8 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
-#include "custom/Plane.h"
-#include "custom/MouseRay.h"
 #include "core/Logger.h"
-
-
+#include "custom/Primitives/Plane.h"
+#include <math.h>
 
 using namespace MATH;
 
@@ -31,7 +29,7 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 		objectList->AddGameObject(newPlane_);
 		return;
 	}
-	if(strcmp(IDName,"TestModel") == 0)
+	else if(strcmp(IDName,"TestModel") == 0)
 	{
 		TestModel* newTestModel = new TestModel(name_, pos_);
 		newTestModel->SetRotation(rot_);
@@ -61,7 +59,6 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 
 	 bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
 
-	 
 			
 	 const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
 	 const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
@@ -88,15 +85,11 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 
 Scene::Scene() : name_(new char()), objectList(nullptr), pElement(nullptr)
 {
+	objectList = std::make_unique<Manager>();
 }
 
 Scene::~Scene()
 {
-	if(objectList)
-	{
-		delete objectList;
-		objectList = nullptr;
-	}
 
 	if(name_)
 	{
@@ -134,9 +127,9 @@ Scene::~Scene()
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
-	 static int objID = 2;
+	 static int objID = 0;
 	 ImGui::Begin("Add Game Object", &enabled);
-	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
+	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 3);
 
 	 // Blank variables that can be changed 
 	 static Vec3 Pos_ = Vec3(0.0f);
@@ -153,7 +146,9 @@ Scene::~Scene()
 	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
 	 if (ImGui::Button("Create Object"))
 	 {
+
 		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
+
 		 Pos_ = Vec3(0.0f);
 		 Rot_ = Vec3(0.0f);
 		 Scale_ = Vec3(1.0f);
@@ -173,7 +168,7 @@ Scene::~Scene()
 		 {
 			 if (obj->HasComponent<MeshRenderer>())
 			 {
-				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
+				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().origin, obj))
 				{
 					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
 					if (!obj->isMenuActive)
@@ -218,7 +213,9 @@ Scene::~Scene()
 		XMLElement* pScaleElement = MapData.NewElement("Scale");
 		XMLElement* pColorElement = MapData.NewElement("Color");
 
+
 		pIDElement->SetAttribute("ID", obj->GetType());
+
 		pNameElement->InsertEndChild(pIDElement);
 
 		// Loops through a vector for each
@@ -303,11 +300,13 @@ void Scene::LoadMapData()
 			tempObject = objectList->GetGameObjects()[loop - 1];
 		}
 
+		// ID LOADING NEEDS TO BE FIXED
 		if (loop > objectList->GetGameObjects().size())
 		{
 
 			const char* objectName;
 			eResult = pNameElement->QueryStringAttribute("Equals", &objectName);
+
 			if (strcmp(outID, "TestModel") == 0)
 			{
 				// Add's a new gamobject to the scene
@@ -317,7 +316,6 @@ void Scene::LoadMapData()
 			}
 			if (strcmp(outID, "Plane") == 0)
 			{
-				// Add's a new gamobject to the scene
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject);
 

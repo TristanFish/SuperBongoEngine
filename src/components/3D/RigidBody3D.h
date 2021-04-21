@@ -37,6 +37,12 @@ private:
 	/*! Is the angular drag draw of our object  */
 	float angularDrag;
 
+
+	//! Collider3D Collider
+	/*! Every RigidBody3D has a collider that allows it to collide with objects */
+	Collider3D collider;
+
+
 	//! Friend class Physics3D
 	/*! Allows us to access all the variables from Physics3D */
 	friend class Physics3D;
@@ -54,9 +60,7 @@ public:
 		collisionEnterCallback = func;
 	}
 
-	//! Collider3D Collider
-	/*! Every RigidBody3D has a collider that allows it to collide with objects */
-	Collider3D collider;
+	
 
 	//! RigidBody3D Constructor
 	RigidBody3D();
@@ -77,9 +81,10 @@ public:
 	void ApplyImpulseTorque(const MATH::Vec3& torque);
 	void ApplyConstantTorque(const MATH::Vec3& torque);
 
-	inline void setColliderSize(MATH::Vec3 s) { collider.size = s; }
-	inline void setColliderShape(Collider3D::shape newShape) { collider.colliderShape = newShape; }
-	inline Collider3D::shape GetColliderShape() const { return collider.colliderShape; }
+
+	inline void SetColliderSize(MATH::Vec3 s) { collider.size = s; }
+	inline void SetColliderType(Collider3D::type newShape) { collider.colliderType = newShape; }
+	inline Collider3D::type GetColliderShape() { return collider.colliderType; }
 
 	inline bool isMoveable() const { return collider.isMoveable; }
 	inline void setMoveable(bool b) { collider.isMoveable = b; }
@@ -87,9 +92,13 @@ public:
 	
 	//Getters and setters
 #pragma region getters/setters
+
+	inline Collider3D GetCollider() { return collider; }
+
 	inline MATH::Vec3 GetPosition() const { return *pos; }
 	inline void SetPosition(const MATH::Vec3& p) const { *pos = p; }
 	inline MATH::Vec3 GetVelocity() const { return vel; }
+
 	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline MATH::Vec3 GetAccel() const { return accel; }
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }

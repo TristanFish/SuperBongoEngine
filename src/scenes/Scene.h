@@ -6,8 +6,11 @@
 #include "External/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
+#include "custom/Primitives/Primitives.h"
+#include "VMath.h"
 #include "custom/MouseRay.h"
-
+#include <memory>
+#include <stdio.h>
 using namespace tinyxml2;
 
 
@@ -16,7 +19,7 @@ using namespace tinyxml2;
 class Scene
 {
 protected:
-	//! MouseRay Pointer
+	//! MouseRay
 	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
 	MouseRay mouseRay;
 
@@ -31,7 +34,7 @@ protected:
 
 	//! Const Char* Pointer
 	/*! Stores our objects that can be spawned */
-	const char* objClasses[2] = { "Plane", "Test Object" };
+	const char* objClasses[3] = { "Plane", "Box","Sphere" };
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
@@ -47,9 +50,9 @@ protected:
 	bool CheckIntersection(const MouseRay& ray, const MATH::Vec3& origin, GameObject* obj) const;
 
 public:
-	Manager* objectList;
+	std::unique_ptr<Manager> objectList;
 
-	// Used for saving and loading xml document information 
+	// Used for saving and loading xml document information
 	XMLElement* pElement;
 	Scene();
 	virtual ~Scene();

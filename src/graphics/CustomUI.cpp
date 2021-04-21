@@ -1,9 +1,7 @@
 #include "CustomUI.h"
-#include <windows.h>
-#include <psapi.h>
-#include "core/Logger.h"
-#include "core/Timer.h"
-#include "imgui/imgui.h"
+#include "windows.h"
+#include "core/GameManager.h"
+#include "psapi.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -16,7 +14,7 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 	selectedObj = nullptr;
 }
 
-void CustomUI::PropertiesPanel::Render() const
+void CustomUI::PropertiesPanel::Render()
 {
 	if (selectedObj->isMenuActive)
 	{
@@ -29,18 +27,18 @@ void CustomUI::PropertiesPanel::Render() const
 		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
 		// Change the standard transform components 
-		ImGui::DragFloat3("Position", selectedObj->transform.pos);
-		ImGui::DragFloat3("Rotation", selectedObj->transform.rotation);
-		ImGui::DragFloat3("Scale", selectedObj->transform.scale, 0.0f, 10.0f);
+		ImGui::DragFloat3("Position", selectedObj->transform.GetPosition());
+		ImGui::DragFloat3("Rotation", selectedObj->transform.GetRotation());
+		ImGui::DragFloat3("Scale", selectedObj->transform.GetScale(), 0.0f, 10.0f);
 
 		// Create a new color that is a copy of the meshes color
-		ImGui::ColorEdit4("Mesh Color", selectedObj->GetComponent<MeshRenderer>()->meshColorTint);
+		ImGui::ColorEdit4("Mesh Color", (float*)selectedObj->getComponent<MeshRenderer>().meshColorTint);
 		
 		
 		// MAKE SAVE MAP DATA A STATIC FUNCTION
 		if (ImGui::Button("Save"))
 		{
-		
+			GameManager::GetCurrentScene()->SaveMapData();
 		}
 
 		ImGui::End();
@@ -52,7 +50,15 @@ void CustomUI::PropertiesPanel::Render() const
 
 
 
+CustomUI::PerformancePanel::PerformancePanel() : lastestFPS(0)
+{
 
+}
+
+CustomUI::PerformancePanel::~PerformancePanel()
+{
+
+}
 
 void CustomUI::PerformancePanel::Update(const float deltatime)
 {
@@ -90,6 +96,25 @@ void CustomUI::PerformancePanel::Render() const
 	ImGui::End();
 }
 
+
+
+CustomUI::HierarchyPanel::HierarchyPanel(std::vector<GameObject*> gameobjects_)
+{
+	gameobjects = gameobjects_;
+}
+
+CustomUI::HierarchyPanel::~HierarchyPanel()
+{
+	if (gameobjects.size() > 0)
+	{
+		for (auto obj : gameobjects)
+		{
+			delete obj;
+			obj = nullptr;
+		}
+		gameobjects.clear();
+	}
+}
  
 
 int PerformanceMonitor::FPSLimit = 60;
@@ -124,7 +149,7 @@ void PerformanceMonitor::InitMonitor()
 
 void PerformanceMonitor::DebugFPS()
 {
-	EngineLogger::Trace("FPS: " + std::to_string(1 / Timer::GetDeltaTime()), "CustomUI.cpp", __LINE__);
+	std::cout << "FPS: " << 1/Timer::GetDeltaTime()  << std::endl;
 }
 
 float PerformanceMonitor::GetFPS()
@@ -150,7 +175,7 @@ double PerformanceMonitor::GetCPUUsage()
 {
 	 FILETIME ftime, fsys, fuser;
 	 ULARGE_INTEGER now, sys, user;
-
+	 double percent;
 
 	 GetSystemTimeAsFileTime(&ftime);
 	 memcpy(&now, &ftime, sizeof(FILETIME));
@@ -158,13 +183,15 @@ double PerformanceMonitor::GetCPUUsage()
 	 GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
 	 memcpy(&sys, &fsys, sizeof(FILETIME));
 	 memcpy(&user, &fuser, sizeof(FILETIME));
-	 double percent = static_cast<double>((sys.QuadPart - lastSysCPU.QuadPart) + (user.QuadPart - lastUserCPU.QuadPart));
-	 percent /= static_cast<double>((now.QuadPart - lastCPU.QuadPart));
-	 percent /= static_cast<double>(numProcessors);
+	 percent = (sys.QuadPart - lastSysCPU.QuadPart) +
+		 (user.QuadPart - lastUserCPU.QuadPart);
+	 percent /= (now.QuadPart - lastCPU.QuadPart);
+	 percent /= numProcessors;
 	 lastCPU = now;
 	 lastUserCPU = user;
 	 lastSysCPU = sys;
 
-	 return percent * 100.0;
+	 return percent * 100;
 }
+
 

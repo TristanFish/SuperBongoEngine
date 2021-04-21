@@ -3,7 +3,7 @@
 
 #include "components/ECS.h"
 #include "components/Components.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 
 
 class SkyBox :  public GameObject

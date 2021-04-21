@@ -1,5 +1,5 @@
 #include "MeshRenderer.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 #include "core/ModelManager.h"
 #include "core/ShaderManager.h"
 

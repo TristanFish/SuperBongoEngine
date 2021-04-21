@@ -1,7 +1,6 @@
 #include "SpriteComponent.h"
 #include "graphics/Texture.h"
-#include "custom/Camera.h"
-#include "core/ShaderManager.h"
+#include "custom/Rendering/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
@@ -24,7 +23,7 @@ void SpriteComponent::setTexture(const char* path)
 
 void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPath)
 {
-	shader = ShaderManager::GetShaders(vertexPath, fragmentPath);
+	 shader.CreateShader(vertexPath, fragmentPath);
 }
 
 void SpriteComponent::Init(GameObject *g)
@@ -88,9 +87,9 @@ void SpriteComponent::Render() const
 	shader.RunShader();	
 	
 	//setup uniforms
-	shader.TakeUniform("viewMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeUniform("modelMatrix", gameobject->transform.GetModelMatrix());
+	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeInUniformMat4("modelMatrix", gameobject->transform.GetModelMatrix());
 
 	//bind texture
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());
@@ -104,4 +103,9 @@ void SpriteComponent::Render() const
 	//unbind texture and shader
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
+}
+
+void SpriteComponent::HandleEvents(const SDL_Event& event)
+{
+
 }

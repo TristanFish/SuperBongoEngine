@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "core/Timer.h"
-#include "custom/Camera.h"
+#include "custom/Rendering/Camera.h"
 #include "core/InputManager.h"
 #include "math/Quaternion.h"
 

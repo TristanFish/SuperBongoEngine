@@ -64,7 +64,9 @@ void GameObject::HandleEvents(const SDL_Event& event)
 }
 
 
-Manager::~Manager()
+
+
+Manager::~Manager() 
 {
 	for (GameObject* g : gameObjects)
 	{
@@ -82,7 +84,7 @@ Manager::~Manager()
 	rigidBodies.clear();
 }
 
-void Manager::Init()
+void Manager::Init() 
 {
 	for(GameObject* go : gameObjects)
 	{
