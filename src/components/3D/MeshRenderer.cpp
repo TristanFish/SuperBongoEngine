@@ -1,21 +1,26 @@
-#include <assimp/Importer.hpp>
 #include "MeshRenderer.h"
 #include "custom/Rendering/Camera.h"
 #include "core/ModelManager.h"
+#include "core/ShaderManager.h"
 
-MeshRenderer::MeshRenderer() : instanceID(0) { }
+using namespace MATH;
 
-MeshRenderer::MeshRenderer(const char* name)
+MeshRenderer::MeshRenderer() : renderFlags(RenderProperties::LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+
+bool MeshRenderer::LoadModel(const char* name)
 {
-	renderFlags = RenderProperties::LIGHTING;
 	model = &ModelManager::GetModel(name);
-}
 
-MeshRenderer::~MeshRenderer() { }
+	if(model)
+	{
+		return true;
+	}
+	return false;
+}
 
 void MeshRenderer::CreateShader(const char* vert, const char* frag)
 {
-	shader.CreateShader(vert, frag);
+	shader = ShaderManager::GetShaders(vert, frag);
 }
 
 void MeshRenderer::Init(GameObject* g)
@@ -27,14 +32,14 @@ void MeshRenderer::Update(const float deltaTime) { }
 
 void MeshRenderer::Render() const
 {
-    Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
 
 	if(instanceID == 0)
     {
         shader.RunShader();
-		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+		shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeUniform("modelMatrix", gameobject->GetModelMatrix());
         //shader.TakeInUniformMat3("normalMatrix", normMat);
 		AttachUniforms();
 
@@ -48,9 +53,9 @@ void MeshRenderer::Render() const
 	if (instanceID == 1)
 	{
 		shader.RunShader();
-		shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader.TakeInUniformMat3("normalMatrix", normMat);
+		shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+		shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeUniform("normalMatrix", normMat);
 		AttachUniforms();
 		model->meshes[0].RenderInstanced(shader, model->meshes, instanceAmount);
 		glUseProgram(0);
@@ -58,14 +63,14 @@ void MeshRenderer::Render() const
 
 }
 
-void MeshRenderer::Render(const Shader& shader) const
+void MeshRenderer::Render(const ShaderProgram& shader) const
 {
-	Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
-	shader.TakeInUniformVec4("meshColorTint", meshColorTint);
-	shader.TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeInUniformMat4("viewMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeInUniformMat3("normalMatrix", normMat);
-	shader.TakeInUniformMat4("modelMatrix", gameobject->GetModelMatrix());
+	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+	shader.TakeUniform("meshColorTint", meshColorTint);
+	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeUniform("normalMatrix", normMat);
+	shader.TakeUniform("modelMatrix", gameobject->GetModelMatrix());
 
 	for (auto& m : model->meshes)
 	{
@@ -73,7 +78,5 @@ void MeshRenderer::Render(const Shader& shader) const
 	}
 
 }
-
-void MeshRenderer::HandleEvents(const SDL_Event& event) { }
 
 

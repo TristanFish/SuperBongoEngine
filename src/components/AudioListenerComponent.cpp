@@ -27,9 +27,3 @@ void AudioListenerComponent::SetListenerPosition()
 	audioSystemRef->set3DListenerAttributes(0, FMODlistenerPos, 0, &forwardVec, &FMODUp);
 	
 }
-
-//Nothing to render
-void AudioListenerComponent::Render(){}
-
-//Nothing to handle for now, maybe an audio event system later
-void AudioListenerComponent::HandleEvents(const SDL_Event& event){}

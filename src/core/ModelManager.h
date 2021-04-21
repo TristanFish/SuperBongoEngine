@@ -25,9 +25,9 @@ private:
 	/*! Loads all the models when given the filepath */
 	static void LoadAllModels();
 
-	//! Friend GameManager
-	/*! Enables us to access all of the variables in the "GameManager" */
-	friend class GameManager;
+	//! Friend CoreEngine
+	/*! Enables us to access all of the variables in the "CoreEngine" */
+	friend class CoreEngine;
 };
 
 

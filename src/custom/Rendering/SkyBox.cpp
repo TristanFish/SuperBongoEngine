@@ -1,5 +1,8 @@
 #include "SkyBox.h"
 #include "core/ModelManager.h"
+#include "core/ShaderManager.h"
+
+using namespace MATH;
 
 SkyBox::SkyBox()
 {
@@ -50,8 +53,11 @@ SkyBox::SkyBox()
 	};
 #pragma endregion
 
-	bool result = LoadSkyBox("resources/skybox/right.jpg", "resources/skybox/left.jpg", "resources/skybox/top.jpg", "resources/skybox/bottom.jpg", "resources/skybox/front.jpg", "resources/skybox/back.jpg");
-	if (!result) { std::cout << "sky box failed to load textures" << std::endl; }
+	const bool result = LoadSkyBox("resources/skybox/right.jpg", "resources/skybox/left.jpg", "resources/skybox/top.jpg", "resources/skybox/bottom.jpg", "resources/skybox/front.jpg", "resources/skybox/back.jpg");
+	if (!result) 
+	{ 
+		EngineLogger::Error("Skybox failed to load textures", "SkyBox.cpp", __LINE__);
+	}
 	
 	glGenVertexArrays(1, &skyboxVAO);
 	glGenBuffers(1, &skyboxVBO);
@@ -61,9 +67,8 @@ SkyBox::SkyBox()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-	shader = new Shader();
-	shader->CreateShader("src/graphics/shaders/SkyBoxVert.glsl", "src/graphics/shaders/SkyBoxFrag.glsl");
-	shader->RunShader();
+	shader = ShaderManager::GetShaders("SkyBoxVert.glsl", "SkyBoxFrag.glsl");
+	shader.RunShader();
 	
 }
 
@@ -150,9 +155,9 @@ void SkyBox::Render() const
 	
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
-	shader->RunShader();
-	shader->TakeInUniformMat4("viewMatrix", viewConvert);
-	shader->TakeInUniformMat4("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.RunShader();
+	shader.TakeUniform("viewMatrix", viewConvert);
+	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -164,10 +169,6 @@ void SkyBox::Render() const
 	//glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	
-}
-
-void SkyBox::HandleEvents(const SDL_Event& event)
-{
 }
 
 Matrix4 SkyBox::Mat3ToMat4(Matrix3 _m) const

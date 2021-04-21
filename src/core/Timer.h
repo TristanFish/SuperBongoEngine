@@ -3,6 +3,10 @@
 
 #include "sdl/SDL.h"
 #include <iostream>
+#include <string>
+#include "core/Logger.h"
+
+constexpr float MILLI_TO_SEC = 1000.0f;
 
 class Timer
 {
@@ -13,14 +17,21 @@ private:
 	static float timeScale;
 public:
 
-	Timer();
-	~Timer();
+	Timer() = delete;
+	Timer(const Timer&) = delete;
+	Timer(Timer&&) = delete;
+	Timer& operator=(const Timer&) = delete;
+	Timer& operator=(Timer&&) = delete;
+	~Timer() = delete;
 
-	inline static void SetTimeScale(float ts) { timeScale = ts; std::cout << "Time scale changed to: " << timeScale << std::endl; }
+	inline static void SetTimeScale(const float ts) { timeScale = ts; EngineLogger::Info("Time scale changed to: " + std::to_string(timeScale), "Timer.h", __LINE__); }
 	static float GetDeltaTime();
 	static float GetScaledDeltaTime();
 	static void UpdateTimer();
 	static unsigned int SleepTime(const unsigned int fps);
+
+	static float GetCurrentTickMilli();
+	static float GetCurrentTickSec();
 
 };
 

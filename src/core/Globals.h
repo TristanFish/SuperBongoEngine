@@ -2,7 +2,7 @@
 
 struct Globals
 {
-	static int SCREEN_WIDTH;
-	static int SCREEN_HEIGHT;
+	static const int SCREEN_WIDTH = 1200;
+	static const int SCREEN_HEIGHT = 800;
 	
 };

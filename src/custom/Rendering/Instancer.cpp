@@ -1,18 +1,20 @@
 #include "Instancer.h"
 #include "math/MMath.h"
 
+using namespace MATH;
+
 Instancer::Instancer() : modelMatrices(nullptr)
 {
 }
 Instancer::~Instancer()
 {
-	delete modelMatrices;
+	delete[] modelMatrices;
 	glDeleteBuffers(1, &instanceBuffer);
 }
 void Instancer::Init(const unsigned int& amount_, GameObject* g)
 {
 	CalculateModelMatrices(g->transform, amount_);
-	BindBuffers(g->getComponent<MeshRenderer>(), amount_);
+	BindBuffers(*g->GetComponent<MeshRenderer>(), amount_);
 }
 
 
@@ -20,19 +22,19 @@ void Instancer::Init(const unsigned int& amount_, GameObject* g)
 void Instancer::CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount)
 {
 	modelMatrices = new MATH::Matrix4[instanceAmount];
-	float radius = 1.0;
-	float offset = 50.0f;
+	const float radius = 1.0;
+	const float offset = 50.0f;
 	for (unsigned int i = 0; i < instanceAmount; i++)
 	{
-		MATH::Matrix4 model = MATH::Matrix4(1.0f);
-		MATH::Vec3 NextPos = MATH::Vec3(0.0f, 0.0f, 0.0f);
+		Matrix4 model = Matrix4(1.0f);
+		Vec3 NextPos = Vec3(0.0f, 0.0f, 0.0f);
 		// The Below Code/Math is from LearnOpengl.com(Instancing)
 		// Changes the values of the models that we want to load.
-		float angle = float(i) / (float)instanceAmount * 360;
-		float displacement = (rand() % (int)(2 * offset * 100)) / 100.0f - offset;
-		float x = sin(angle) * radius + displacement;
-		displacement = (rand() % (int)(2 * offset * 100)) / 100.0f - offset;
-		float z = cos(angle) * radius + displacement;
+		const float angle = static_cast<float>(i) / static_cast<float>(instanceAmount) * 360.0f;
+		float displacement = (rand() % static_cast<int>(2 * offset * 100)) / 100.0f - offset;
+		const float x = sin(angle) * radius + displacement;
+		displacement = (rand() % static_cast<int>(2 * offset * 100)) / 100.0f - offset;
+		const float z = cos(angle) * radius + displacement;
 
 		NextPos = transform.pos + MATH::Vec3(x, 0.0f, z);
 		
@@ -55,7 +57,7 @@ void Instancer::BindBuffers(const MeshRenderer& renderer, const unsigned int ins
 	for (unsigned int i = 0; i < renderer.GetMeshes().size(); i++)
 	{
 		
-		unsigned int VAO = renderer.GetMeshes()[i].GetVAO();
+		const unsigned int VAO = renderer.GetMeshes()[i].GetVAO();
 
 		glBindVertexArray(VAO);
 

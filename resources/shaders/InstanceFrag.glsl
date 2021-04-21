@@ -8,9 +8,6 @@ uniform vec4 meshColor;
 uniform sampler2D diffuseTex1;
 
 
-
-
-
 void main()
 {
 	fragColor =   meshColor;

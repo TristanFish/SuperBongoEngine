@@ -33,12 +33,17 @@ MATH::Vec3 Transform::Up() const
 	return rotationMatrix * MATH::Vec3(0.0f, 1.0f, 0.0f);
 }
 
-void Transform::setPos(const MATH::Vec3& pos)
+void Transform::SetPos(const MATH::Vec3& pos)
 {
 	this->pos = pos;
 }
 
-void Transform::setRot(const MATH::Vec3& rot)
+void Transform::SetRot(const MATH::Vec3& rot)
 {
 	rotation = rot;
+}
+
+void Transform::SetScale(const MATH::Vec3& scale)
+{
+	this->scale = scale;
 }

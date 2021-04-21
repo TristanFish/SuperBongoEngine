@@ -2,22 +2,21 @@
 
 #include "components/Components.h"
 #include "glew/glew.h"
-#include "custom/SkyBox.h"
 #include "custom/Rendering/SkyBox.h"
 #include "core/Globals.h"
 #include "core/Debug.h"
 
 class SkyBox;
 
-class Water : public GameObject, public MeshRenderer
+class Water : public GameObject
 {
 public:
 	
 	
-	const void GetSkyBoxInfo();
-	void Render() const override;
+	void GetSkyBoxInfo();
+	void Render() const;
 	Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox);
-	~Water();
+	~Water() override;
 private:
 
 	static const int REFLECTION_WIDTH = 1280;
@@ -38,6 +37,7 @@ private:
 	unsigned int skyBoxVAO;
 	SkyBox* skyBox = nullptr;
 	float time;
+	MeshRenderer* mr;
 
 	void BindReflectionFrameBuffer() const;
 	void BindRefractionFrameBuffer() const;
@@ -52,7 +52,7 @@ private:
 
 
 	void Update(const float deltaTime) override;
-	void HandleEvents(const SDL_Event& event) override;
+	void HandleEvents(const SDL_Event& event) override {}
 
 
 };

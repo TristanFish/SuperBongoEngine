@@ -1,20 +1,23 @@
 #include "Box.h"
 
+using namespace MATH;
+
 Box::Box()
 {
 }
 
-Box::Box(const char* name, MATH::Vec3 position) : MeshRenderer("Cube.fbx")
+Box::Box(const char* name, MATH::Vec3 position)
 {
+	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
+
+	AddComponent<RigidBody3D>();
 	this->name = name;
-	transform.setPos(position);
+	transform.SetPos(position);
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
-	RigidBody3D::Init(this);
-	MeshRenderer::Init(this);
-
-	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
+	typeID = Type::Box;
 
 }
 
@@ -42,5 +45,5 @@ void Box::HandleEvents(const SDL_Event& event)
 
 void Box::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	//std::cout << this->name << " Collided With: " << otherBody.gameobject->name << std::endl;
 }

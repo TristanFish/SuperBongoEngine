@@ -1,9 +1,9 @@
-#pragma once
-#include "math/Vector.h"
-#include "imgui/imgui.h"
+#ifndef CUSTOMUI_H
+#define CUSTOMUI_H
+
 #include "components/ECS.h"
 #include "components/3D/MeshRenderer.h"
-#include "core/Timer.h"
+
 
 
 //! CustomUI namespace
@@ -26,7 +26,7 @@ namespace CustomUI
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
-		void Render();
+		void Render() const;
 
 		//! GameObject Pointer
 		/*! Is a pointer to the selected object this panel uses */
@@ -54,8 +54,11 @@ namespace CustomUI
 
 		//! Latest FPS float
 	   /*! Is used to update the FPS text depending on the "fpsUpdateSpeed" variable */
-		int lastestFPS;
+		int lastestFPS = 0;
 	public:
+		PerformancePanel();
+		~PerformancePanel();
+
 
 		//! Update Function
 	   /*! Updates the needed variables in this class */
@@ -64,6 +67,18 @@ namespace CustomUI
 		//! Render Function
 	   /*! Renders the needed IMGUI info */
 		void Render() const;
+	};
+
+	class HierarchyPanel
+	{
+	public:
+		HierarchyPanel(std::vector<GameObject*> gameobjects_);
+		~HierarchyPanel();
+
+
+	private:
+		std::vector<GameObject*> gameobjects;
+
 	};
 
 }
@@ -113,3 +128,4 @@ public:
 	static float UpdateLoopTime;
 };
  
+#endif

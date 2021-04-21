@@ -3,16 +3,16 @@
 
 #include "components/ECS.h"
 #include "audio/AudioManager.h"
-#include "SoundAttributes.h"
-#include <vector>
+#include "audio/SoundAttributes.h"
 
 class AudioSourceComponent : public Component
 {
 	public:
-	void Init(GameObject* g);
-	void Update(const float deltaTime);
-	void Render();
-	void HandleEvents(const SDL_Event& event);
+	public:
+	void Init(GameObject* g) override;
+	void Update(const float deltaTime) override;
+	void Render() const override {}
+	void HandleEvents(const SDL_Event& event) override {}
 
 	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */
 	void PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef);

@@ -22,12 +22,11 @@ private:
 
 public:
 
-	void Init(GameObject* g);
-	void Update(const float deltaTime);
-	void Render();
-	void HandleEvents(const SDL_Event& event);
-
+	void Init(GameObject* g) override;
+	void Update(const float deltaTime) override;
+	void HandleEvents(const SDL_Event& event) override {}
+	
 	/*! Sets the listener position to the posiiton of the game object inheriting the listener component */
 	void SetListenerPosition();
 };
-#endif;
+#endif

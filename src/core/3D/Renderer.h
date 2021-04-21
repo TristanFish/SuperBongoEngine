@@ -1,8 +1,7 @@
 #pragma once
 #include <vector>
-#include <unordered_map>
-#include "graphics/Shader.h"
 #include "core/Debug.h"
+#include "graphics/ShaderProgram.h"
 
 
 
@@ -27,8 +26,8 @@ public:
 	static SkyBox* GetSkyBox();
 	
 private:
-	Shader gBufferShader;
-	Shader resultShader;
+	ShaderProgram gBufferShader;
+	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
 
 	GLuint depthTexture;
@@ -56,7 +55,7 @@ private:
 
 
 	//Attaches the most important lights to this object's shader
-	void AttachLights(const MeshRenderer& mr) const;
+	void AttachLights() const;
 	//Draws this object into the shadow texture
 	void RenderShadowTexture(const MeshRenderer& mr) const;
 	//Draws shadows onto this object

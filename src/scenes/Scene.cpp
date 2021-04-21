@@ -1,87 +1,79 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
+#include "core/Logger.h"
 #include "custom/Primitives/Plane.h"
-#include "custom/MouseRay.h"
 #include <math.h>
+
+using namespace MATH;
+
 // Returns X,Y,Z Depending on the int it is given
 // Used for looking through a vector
- const char* Scene::CheckAtributeValue(int i) const
+std::string Scene::CheckAtributeValue(int i) const
 {
-	 const char* value = new char();
+	std::string value;
 
-	if (i == 0) { value = "X"; }
-	if (i == 1) { value = "Y"; }
-	if (i == 2) { value = "Z"; }
-	if (i == 3) { value = "W"; }
+	if (i == 0) { value = 'X'; }
+	if (i == 1) { value = 'Y'; }
+	if (i == 2) { value = 'Z'; }
+	if (i == 3) { value = 'W'; }
 	return value;
 }
 
- void Scene::CreateObjWithID(Vec3 pos_, Vec3 rot_, Vec3 scale_, const char* name_, const int& ID) const
- {
-	 switch (ID)
-	 {
-	 case 3:
-		 Plane * newPlane_;
-		 newPlane_ = new Plane(name_, pos_);
-		 newPlane_->SetRotation(rot_);
-		 newPlane_->SetScale(scale_);
-		 objectList->AddGameObject(newPlane_, ID);
-		 break;
-	 case 4:
-		 Box * newBox_;
-		 newBox_ = new Box(name_, pos_);
-		 newBox_->SetRotation(rot_);
-		 newBox_->SetScale(scale_);
-		 objectList->AddGameObject(newBox_, ID);
-		 break;
-
-	 case 5:
-		 Sphere * newSphere_;
-		 newSphere_ = new Sphere(name_, pos_);
-		 newSphere_->SetRotation(rot_);
-		 newSphere_->SetScale(scale_);
-		 objectList->AddGameObject(newSphere_, ID);
-	 default:
-		 break;
-	 }
-
- }
+void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
+{
+	if(strcmp(IDName, "Plane") == 0)
+	{
+		Plane* newPlane_ = new Plane(name_, pos_);
+		newPlane_->SetRotation(rot_);
+		newPlane_->SetScale(scale_);
+		objectList->AddGameObject(newPlane_);
+		return;
+	}
+	else if(strcmp(IDName,"TestModel") == 0)
+	{
+		TestModel* newTestModel = new TestModel(name_, pos_);
+		newTestModel->SetRotation(rot_);
+		newTestModel->SetScale(scale_);
+		objectList->AddGameObject(newTestModel);
+		return;
+	}
+	EngineLogger::Warning("ID \"" + std::string(IDName) + "\" was not found","Scene.cpp", __LINE__);
+}
 
  void Scene::CheckExistingPanel(GameObject* obj)
  {
-	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPanels.size(); i++)
 	 {
-		 if (propertiesPannels[i]->selectedObj->name == obj->name)
+		 if (propertiesPanels[i]->selectedObj->name == obj->name)
 		 {
-			 propertiesPannels.erase(propertiesPannels.begin() + i);
+			 propertiesPanels.erase(propertiesPanels.begin() + i);
 		 }
 	 }
  }
 
- bool Scene::CheckIntersection(MouseRay* ray, const Vec3& origin, GameObject* obj)
+ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObject* obj) const
  {
 	 Vec3 bounds[2];
-	 bounds[0] = obj->getComponent<MeshRenderer>().GetMinVector();
+	 bounds[0] = obj->GetComponent<MeshRenderer>()->GetMinVector();
 
 
-	 bounds[1] = obj->getComponent<MeshRenderer>().GetMaxVector();
+	 bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
 
-	 
 			
-	 float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
-	 float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray->invDir.x;
-
-	 float tmin = std::min(tx1, tx2);
-	 float tmax = std::max(tx1, tx2);
-
-	 float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
-	 float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray->invDir.y;
-
-	 tmin = std::max(tmin, std::min(ty1, ty2));
-	 tmax = std::min(tmax, std::max(ty1, ty2));
-
-	 float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
-	 float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray->invDir.z;
+	 const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	 const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+																		
+	 float tmin = std::min(tx1, tx2);									
+	 float tmax = std::max(tx1, tx2);									
+																		
+	 const float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	 const float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+																		 
+	 tmin = std::max(tmin, std::min(ty1, ty2));							 
+	 tmax = std::min(tmax, std::max(ty1, ty2));							 
+																		 
+	 const float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	 const float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
 
 	 tmin = std::max(tmin, std::min(tz1, tz2));
 	 tmax = std::min(tmax, std::max(tz1, tz2));
@@ -90,8 +82,31 @@
 	 return tmax >= tmin;
  }
 
- 
 
+Scene::Scene() : name_(new char()), objectList(nullptr), pElement(nullptr)
+{
+	objectList = std::make_unique<Manager>();
+}
+
+Scene::~Scene()
+{
+
+	if(name_)
+	{
+		delete name_;
+		name_ = nullptr;
+	}
+
+	for(auto panel : propertiesPanels)
+	{
+		if(panel)
+		{
+			delete panel;
+			panel = nullptr;
+		}
+	}
+	propertiesPanels.clear();
+}
 
  void Scene::Update(const float deltaTime)
  {
@@ -103,9 +118,9 @@
 	 ImGui::NewFrame();
 	 // Let's the use add game objects
 
-	 for (int i = 0; i < propertiesPannels.size(); i++)
+	 for (size_t i = 0; i < propertiesPanels.size(); i++)
 	 {
-		 propertiesPannels[i]->Render();
+		 propertiesPanels[i]->Render();
 	 }
 
 	 performancePanel.Render();
@@ -117,13 +132,12 @@
 	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 3);
 
 	 // Blank variables that can be changed 
-	 static char* name_ = new char();
 	 static Vec3 Pos_ = Vec3(0.0f);
 	 static Vec3 Rot_ = Vec3(0.0f);
 	 static Vec3 Scale_ = Vec3(1.0f);
 
 
-	 if (ImGui::InputText("Mesh Name", name_, size_t(20)))
+	 if (ImGui::InputText("Mesh Name", name_, 20))
 	 {
 
 	 }
@@ -132,8 +146,9 @@
 	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
 	 if (ImGui::Button("Create Object"))
 	 {
-		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objID + 3);
-		 name_ = new char();
+
+		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
+
 		 Pos_ = Vec3(0.0f);
 		 Rot_ = Vec3(0.0f);
 		 Scale_ = Vec3(1.0f);
@@ -144,21 +159,22 @@
 
  void Scene::HandleEvents(const SDL_Event& event)
  {
-	 mouseRay->HandleEvents(event);
-	 if (event.type == SDL_MOUSEBUTTONDOWN)
+	 mouseRay.HandleEvents(event);
+	 if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
+		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 	 {
-		 mouseRay->CalaculateMouseRay();
-		 for (auto obj : objectList->GetGameObjects())
+		 mouseRay.CalaculateMouseRay();
+		 for (auto* obj : objectList->GetGameObjects())
 		 {
-			 if (obj->hasComponent<MeshRenderer>())
+			 if (obj->HasComponent<MeshRenderer>())
 			 {
-				if (CheckIntersection(mouseRay, mouseRay->GetCurrentRay()->Origin, obj))
+				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().origin, obj))
 				{
-					std::cout << "Mouse Hit - " << obj->name << std::endl;
+					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
 					if (!obj->isMenuActive)
 					{
 						CheckExistingPanel(obj);
-						propertiesPannels.push_back(new CustomUI::PropertiesPanel(obj));
+						propertiesPanels.push_back(new CustomUI::PropertiesPanel(obj));
 					}
 					obj->isMenuActive = true;
 					return;
@@ -175,8 +191,7 @@
 	MapData.InsertFirstChild(pRoot);
 
 	// Create a base Element that holds the gameobjects
-	XMLElement* gListElement;
-	gListElement = MapData.NewElement("GameObjects");
+	XMLElement* gListElement = MapData.NewElement("GameObjects");
 	int ObjAmount = 0;
 
 	pRoot->InsertFirstChild(gListElement);
@@ -198,29 +213,31 @@
 		XMLElement* pScaleElement = MapData.NewElement("Scale");
 		XMLElement* pColorElement = MapData.NewElement("Color");
 
-		pIDElement->SetAttribute("ID", obj->objectID);
+
+		pIDElement->SetAttribute("ID", obj->GetType());
+
 		pNameElement->InsertEndChild(pIDElement);
 
 		// Loops through a vector for each
 		for (int i = 0; i < 3; i++)
 		{
-			pPosElement->SetAttribute(CheckAtributeValue(i), obj->transform.pos[i]);
+			pPosElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.pos[i]);
 			pNameElement->InsertEndChild(pPosElement);
 
-			pRotElement->SetAttribute(CheckAtributeValue(i), obj->transform.rotation[i]);
+			pRotElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.rotation[i]);
 			pNameElement->InsertEndChild(pRotElement);
 
-			pScaleElement->SetAttribute(CheckAtributeValue(i), obj->transform.scale[i]);
+			pScaleElement->SetAttribute(CheckAtributeValue(i).c_str(), obj->transform.scale[i]);
 			pNameElement->InsertEndChild(pScaleElement);
 		}
 
-		if (obj->hasComponent<MeshRenderer>())
+		if (obj->HasComponent<MeshRenderer>())
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				float nextValue = ceil(obj->getComponent<MeshRenderer>().meshColorTint[i] * 255);
+				const float nextValue = ceil(obj->GetComponent<MeshRenderer>()->meshColorTint[i] * 255);
 
-				pColorElement->SetAttribute(CheckAtributeValue(i), nextValue);
+				pColorElement->SetAttribute(CheckAtributeValue(i).c_str(), nextValue);
 				pNameElement->InsertEndChild(pColorElement);
 			}
 		}
@@ -230,10 +247,10 @@
 	pRoot->InsertEndChild(gListElement);
 
 	// Save's the file and checks for successful save
-	XMLError eResult = MapData.SaveFile("MapData.xml");
+	const XMLError eResult = MapData.SaveFile("MapData.xml");
 	if (eResult != XML_SUCCESS)
 	{
-		std::cout << "Unable to save XML document" << std::endl;
+		EngineLogger::Error("Unable to save XML document", "Scene.cpp", __LINE__);
 	}
 }
 
@@ -244,16 +261,16 @@ void Scene::LoadMapData()
 
 	if (eResult != XML_SUCCESS)
 	{
-		std::cout << "Couldn't load the Map File" << std::endl;
+		EngineLogger::Error("Couldn't load the Map File", "Scene.cpp", __LINE__);
 	}
 
 	// Get's the root node
 	XMLNode* pRoot = MapData.FirstChild();
 
-	int loop = 0;
+	size_t loop = 0;
 	XMLElement* pGameObjects;
 	pGameObjects = pRoot->FirstChildElement("GameObjects");
-	if (pGameObjects == nullptr) { std::cout << "Gameobjects not accessed properly" << std::endl; }
+	if (pGameObjects == nullptr) { EngineLogger::Error("GameObjects not accessed properly", "Scene.cpp", __LINE__); }
 	int objCount = 0;
 
 
@@ -266,13 +283,13 @@ void Scene::LoadMapData()
 	{
 
 		GameObject* tempObject = nullptr;
-		int outID = 0;
+		const char* outID = "gy";
 		XMLElement* pIDElement;
 		loop++;
 
 		// Gets the gamobjects ID and sets it to the "outID"
 		pIDElement = pNameElement->FirstChildElement("Object");
-		eResult = pIDElement->QueryIntAttribute("ID", &outID);
+		eResult = pIDElement->QueryAttribute("ID", &outID);//  QueryIntAttribute("ID", outID);
 
 		// If the save file has more gamobjects then we have spawned it will spawn 
 		// in what is needed depending on the objects IDs
@@ -283,24 +300,25 @@ void Scene::LoadMapData()
 			tempObject = objectList->GetGameObjects()[loop - 1];
 		}
 
+		// ID LOADING NEEDS TO BE FIXED
 		if (loop > objectList->GetGameObjects().size())
 		{
-			std::cout << outID << std::endl;
+
 			const char* objectName;
 			eResult = pNameElement->QueryStringAttribute("Equals", &objectName);
-			if (outID == 4)
+
+			if (strcmp(outID, "TestModel") == 0)
 			{
 				// Add's a new gamobject to the scene
 				tempObject = new TestModel(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
-				std::cout << "New Object" << std::endl;
+				objectList->AddGameObject(tempObject);
+
 			}
-			if (outID == 3)
+			if (strcmp(outID, "Plane") == 0)
 			{
-				// Add's a new gamobject to the scene
 				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
-				objectList->AddGameObject(tempObject, 4);
-				std::cout << "New Object" << std::endl;
+				objectList->AddGameObject(tempObject);
+
 			}
 		}
 
@@ -316,14 +334,14 @@ void Scene::LoadMapData()
 		// Loops through each Element's attribute's and gets there values
 		for (int i = 0; i < 3; i++)
 		{
-			eResult = pPosElement->QueryFloatAttribute(CheckAtributeValue(i), &outPos[i]);
-			eResult = pRotElement->QueryFloatAttribute(CheckAtributeValue(i), &outRot[i]);
-			eResult = pScaleElement->QueryFloatAttribute(CheckAtributeValue(i), &outScale[i]);
+			eResult = pPosElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outPos[i]);
+			eResult = pRotElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outRot[i]);
+			eResult = pScaleElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outScale[i]);
 		}
 
 
 		// Used for loading in Mesh Colors
-		if (tempObject->hasComponent<MeshRenderer>())
+		if (tempObject->HasComponent<MeshRenderer>())
 		{
 			MATH::Vec4 outColor;
 
@@ -331,18 +349,18 @@ void Scene::LoadMapData()
 
 			for (int i = 0; i < 4; i++)
 			{
-				eResult = pColorElement->QueryFloatAttribute(CheckAtributeValue(i), &outColor[i]);
+				eResult = pColorElement->QueryFloatAttribute(CheckAtributeValue(i).c_str(), &outColor[i]);
 			}
 
 			outColor /= 255.0f;
 
-			tempObject->getComponent<MeshRenderer>().SetColorTint(outColor);
+			tempObject->GetComponent<MeshRenderer>()->SetColorTint(outColor);
 		}
 
 
 		if (eResult != XML_SUCCESS)
 		{
-			std::cout << "Unable to set new values for " << tempObject->name << std::endl;
+			EngineLogger::Error("Unable to set new values for " + std::string(tempObject->name), "Scene.cpp", __LINE__);
 		}
 
 		tempObject->SetPos(outPos);

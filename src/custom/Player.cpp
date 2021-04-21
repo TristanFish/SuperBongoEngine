@@ -4,24 +4,18 @@
 #include "core/InputManager.h"
 #include "math/Quaternion.h"
 
-Player::Player() : moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
-{
-}
+using namespace MATH;
 
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(70.0f), RunSpeed(10.0f)
-{
 
+Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
+{
+	AddComponent<AudioListenerComponent>();
+	
 	name = n;
 	transform = Transform(pos);
 	transform.rotation.y = -90.0f;
-	AudioListenerComponent::Init(this);
-	
 }
 
-Player::~Player()
-{
-	
-}
 
 void Player::Update(const float deltaTime)
 {
@@ -58,23 +52,23 @@ void Player::Update(const float deltaTime)
 	transform.pos += moveDir * moveSpeed * deltaTime;
 #pragma endregion
 
+	
 	//transform.Update(deltaTime);
+	for (Component* comp : componentList)
+	{
+		if(comp->active)
+		{
+			comp->Update(deltaTime);
+		}
+	}
+	
 	Camera::getInstance()->setPosition(transform.GetPosition());
 	Camera::getInstance()->setRotation(transform.rotationMatrix);
-	//Dont really need to update this but once models are moving their sound posititions will have to follow
-	AudioListenerComponent::Update(deltaTime);
-	//RigidBody3D::Update(deltaTime);
-	//MeshRenderer::Update(deltaTime);
-}
-
-void Player::Render() const
-{
-	//MeshRenderer::Render();
 }
 
 Vec3 GetMouseVector(int x, int y)
 {
-	Vec3 mousePosition = Vec3(static_cast<float>(x), static_cast<float>(y), 0.0f);
+	const Vec3 mousePosition = Vec3(static_cast<float>(x), static_cast<float>(y), 0.0f);
 	Vec3 v = Camera::getInstance()->getInvNDC() * mousePosition;
 
 	return v;
@@ -116,24 +110,21 @@ void Player::HandleEvents(const SDL_Event& event)
 	//MeshRenderer::HandleEvents(event);
 #pragma region Rotation Controls
 	//Rotation controls
-	if (InputManager::GetInstance()->GetKey(SDLK_LALT))
+	
+	if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
 	{
-		if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-		{
-			mouseDown = true;
-			mouseStart = GetMouseVector(event.button.x, event.button.y);
-		}
-		else if (event.type == SDL_EventType::SDL_MOUSEBUTTONUP)
-		{
-			mouseDown = false;
-		}
-		if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
-			SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-		{
-			OnMouseMove(event.button.x, event.button.y);
-		}
+		mouseDown = true;
+		mouseStart = GetMouseVector(event.button.x, event.button.y);
 	}
+	else if (event.type == SDL_EventType::SDL_MOUSEBUTTONUP)
+	{
+		mouseDown = false;
+	}
+	if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
+		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
+	{
+		OnMouseMove(event.button.x, event.button.y);
+	}
+	
 #pragma endregion
 }
-
-

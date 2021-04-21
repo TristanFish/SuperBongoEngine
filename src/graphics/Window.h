@@ -1,12 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <glew/glew.h>
 #include <sdl/SDL.h>
-#include <iostream>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl3.h"
+
 
 //! Window Class
 /*! Controls the windows attributes such as width & height */
@@ -42,7 +38,7 @@ public:
 
 	//! OnCreate Function 
 	/*! Initialized all the needed variables */
-	void OnCreate(const char* name, int w, int h);
+	bool OnCreate(const char* name, int w, int h);
 
 	//! OnDestroy Function 
 	/*! Calls the windows destroy functions and deletes any needed pointers */

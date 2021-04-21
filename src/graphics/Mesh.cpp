@@ -1,5 +1,7 @@
 #include "Mesh.h"
+#include "core/ShaderManager.h"
 
+using namespace MATH;
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices, const std::vector<Texture>& textures, MATH::Vec4 color)
 {
@@ -16,7 +18,7 @@ Mesh::Mesh(const Mesh& m)
 	indices = m.indices;
 	textures = m.textures;
 	color = m.color;
-	shader.SetID(m.shader.GetID());
+	shader = m.shader;
 	vao = m.vao;
 	vbo = m.vbo;
 	ebo = m.ebo;
@@ -34,7 +36,7 @@ void Mesh::DeleteMesh()
 	glDeleteVertexArrays(1, &vao);
 }
 
-void Mesh::RenderRegular(const Shader& shader) const
+void Mesh::RenderRegular(const ShaderProgram& shader) const
 {
 	size_t diffN = 1;
 	size_t specN = 1;
@@ -85,7 +87,7 @@ void Mesh::RenderRegular(const Shader& shader) const
 }
 
 // Used for instance rendering 
-void Mesh::RenderInstanced(const Shader& shader, const std::vector<Mesh>& meshes,const unsigned int amount) const
+void Mesh::RenderInstanced(const ShaderProgram& shader, const std::vector<Mesh>& meshes,const unsigned int amount) const
 {
 	unsigned int diffN = 1;
 	unsigned int specN = 1;
@@ -134,7 +136,7 @@ Mesh& Mesh::operator=(const Mesh& m)
 	indices = m.indices;
 	textures = m.textures;
 	color = m.color;
-	shader.SetID(m.shader.GetID());
+	shader = m.shader;
 	vao = m.vao;
 	vbo = m.vbo;
 	ebo = m.ebo;

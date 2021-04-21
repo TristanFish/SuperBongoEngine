@@ -1,59 +1,22 @@
 #include "TestModel.h"
 
-TestModel::TestModel()
-{
+using namespace MATH;
 
-}
-
-TestModel::TestModel(const char* name, MATH::Vec3 position) : MeshRenderer("Cube.fbx")
+TestModel::TestModel(const char* name, Vec3 position)
 {
+	mr = AddComponent<MeshRenderer>();
+	mr->LoadModel("Cube.fbx");
+	mr->CreateShader("FogVert.glsl", "FogFrag.glsl");
+	mr->renderFlags = RenderProperties::OVERRIDE_RENDERER;
+
+	
 	this->name = name;
-	transform.setPos(position);
-	//RigidBody3D::setColliderShape(Collider3D::shape::Sphere);
-
-	RigidBody3D::Init(this);
-	//RigidBody3D::ApplyConstantForce(Vec3(0.0, -1.0, 0.0));
-	MeshRenderer::renderFlags = RenderProperties::OVERRIDE_RENDERER;
-	MeshRenderer::Init(this);
-	MeshRenderer::CreateShader("src/graphics/shaders/FogVert.glsl", "src/graphics/shaders/FogFrag.glsl");
-}
-
-TestModel::~TestModel()
-{
+	transform.SetPos(position);
 }
 
 void TestModel::AttachUniforms() const
 {
-	
-	shader.TakeInUniformFloat("Fog.maxDist", 50.0f);
-	shader.TakeInUniformFloat("Fog.minDist", 10.0f);
-	shader.TakeInUniformVec3("Fog.color", Vec3(1.0f, 1.0f, 0.0f));
+	mr->shader.TakeUniform("Fog.maxDist", 50.0f);
+	mr->shader.TakeUniform("Fog.minDist", 10.0f);
+	mr->shader.TakeUniform("Fog.color", Vec3(1.0f, 1.0f, 0.0f));
 }
-
-void TestModel::Update(const float deltaTime)
-{
-	//transform.rotation.y += deltaTime;
-	transform.Update(deltaTime);
-	MeshRenderer::Update(deltaTime);
-	RigidBody3D::Update(deltaTime);
-}
-
-void TestModel::Render() const
-{
-	MeshRenderer::Render();
-
-}
-
-void TestModel::HandleEvents(const SDL_Event& event)
-{
-	MeshRenderer::HandleEvents(event);
-}
-
-void TestModel::OnCollisionEnter(RigidBody3D& otherBody)
-{
-	std::cout << "Hit " << otherBody.gameobject->name << std::endl;
-}
-
-
-
-

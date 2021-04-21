@@ -2,7 +2,7 @@
 #include "graphics/Mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-#include <assimp/postprocess.h>
+
 
 class Model
 {
@@ -11,16 +11,16 @@ public:
 
 	bool isLoaded;
 
-	Vec3 p_min;
-	Vec3 p_max;
+	MATH::Vec3 p_min;
+	MATH::Vec3 p_max;
 
 	std::string modelPath;
 
 	Model();
 	Model(const std::string& path);
 
-	const Vec3 GetColor() { return Vec3(meshes[0].color); }
-	void SetColor(const Vec3 color_) { meshes[0].color = Vec4(color_.x,color_.y,color_.z, meshes[0].color.w); }
+	const MATH::Vec3 GetColor() { return MATH::Vec3(meshes[0].color); }
+	void SetColor(const MATH::Vec3 color_) { meshes[0].color = MATH::Vec4(color_.x,color_.y,color_.z, meshes[0].color.w); }
 
 	void CalculateMaxMins();
 
@@ -28,7 +28,7 @@ public:
 	void DestroyModel();
 	
 private:
-	Vec4 color;
+	MATH::Vec4 color;
 
 	std::vector<Vertex> vertices;
 

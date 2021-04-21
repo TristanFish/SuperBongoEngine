@@ -38,25 +38,25 @@ public:
 	/*! Updates the transforms variables */
 	void Update(const float deltaTime);
 
-	//!inline GetPosition Getter
+	//!GetPosition Getter
 	/*! Returns the transforms position */
-	inline MATH::Vec3& GetPosition() { return pos; }
+	MATH::Vec3& GetPosition() { return pos; }
 
-	//!inline GetRotation Getter
+	//!GetRotation Getter
 	/*! Returns the transforms rotation */
-	inline MATH::Vec3& GetRotation() { return rotation; }
+	MATH::Vec3& GetRotation() { return rotation; }
 
-	//!inline GetScale Getter
+	//!GetScale Getter
 	/*! Returns the transforms scale */
-	inline MATH::Vec3& GetScale() { return scale; }
+	MATH::Vec3& GetScale() { return scale; }
 
-	//!inline GetModelMatrix Getter
+	//!GetModelMatrix Getter
 	/*! Returns the transforms model matrix */
-	inline MATH::Matrix4& GetModelMatrix() { return modelMatrix; }
+	const MATH::Matrix4& GetModelMatrix() const { return modelMatrix; }
 
-	//!inline GetRotationMatrix Getter
+	//!GetRotationMatrix Getter
 	/*! Returns the transforms rotation matrix */
-	inline MATH::Matrix4& GetRotationMatrix() { return rotationMatrix; }
+	const MATH::Matrix4& GetRotationMatrix() const { return rotationMatrix; }
 
 	//!Forward Vec3
 	/*! Vector that always points in front of the object */
@@ -71,11 +71,15 @@ public:
 
 	//!SetPosition Setter
 	/*! Sets the position of the transform */
-	void setPos(const MATH::Vec3& pos);
+	void SetPos(const MATH::Vec3& pos);
 
 	//!SetRotation Setter
 	/*! Sets the rotation of the transform */
-	void setRot(const MATH::Vec3& rot);
+	void SetRot(const MATH::Vec3& rot);
+
+	//!SetScale Setter
+	/*! Sets the rotation of the transform */
+	void SetScale(const MATH::Vec3& scale);
 
 };
 

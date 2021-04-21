@@ -2,7 +2,7 @@
 layout (location = 0) out vec4 gAlbedo;
 layout (location = 1) out vec3 gNormal;
 layout (location = 2) out vec3 gPosition;
-layout (location = 3) out vec4 gDepth;
+layout (location = 3) out float gDepth;
 
 in vec3 vertPos;
 in vec3 vertNormal;
@@ -72,6 +72,6 @@ void main()
 
 	gPosition = vertPos;
 	gNormal = vertNormal;
-	gDepth = vec4(vec3(gl_FragCoord.z), 1.0);
+	gDepth = gl_FragCoord.z;
 	gAlbedo = vec4(product,1.0);
 }

@@ -8,12 +8,8 @@ class LightObject : public GameObject, public LightComponent
 public:
 	Debug light;
 
-	LightObject();
-	LightObject(const char* name, Vec3 position);
-	~LightObject();
+	LightObject(const char* name, MATH::Vec3 position);
+	~LightObject() override = default;
 	// Inherited via GameObject
-	virtual void Update(const float deltaTime) override;
-	virtual void Render() const override;
-	virtual void HandleEvents(const SDL_Event& event) override;
-	virtual void DrawDebugGeometry() override;
+	void DrawDebugGeometry() const override;
 };

@@ -1,21 +1,21 @@
 #include "Sphere.h"
 
+using namespace MATH;
+
 Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(const char* name, MATH::Vec3 position) : MeshRenderer("Sphere.fbx")
+Sphere::Sphere(const char* name, MATH::Vec3 position)
 {
+	AddComponent<MeshRenderer>()->LoadModel("Sphere.fbx");
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	this->name = name;
-	transform.setPos(position);
+	transform.SetPos(position);
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
-	RigidBody3D::Init(this);
-	MeshRenderer::Init(this);
-
-	MeshRenderer::CreateShader("src/graphics/shaders/DefaultVert.glsl", "src/graphics/shaders/DefaultFrag.glsl");
-
+	typeID = Type::Sphere;
 }
 
 Sphere::~Sphere()
