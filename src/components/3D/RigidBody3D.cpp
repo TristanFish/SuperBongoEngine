@@ -30,8 +30,8 @@ void RigidBody3D::Init(GameObject *g)
 	pos = &g->transform.pos;
 	collider.minVertices = gameobject->GetComponent<MeshRenderer>()->GetMinVector();
 	collider.maxVertices = gameobject->GetComponent<MeshRenderer>()->GetMaxVector();
-	setColliderSize(g->transform.GetScale());
-
+	SetColliderSize(g->transform.GetScale());
+	
 	mass = 1.0f;
 	vel = MATH::Vec3();
 	accel = MATH::Vec3();

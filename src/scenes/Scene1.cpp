@@ -5,7 +5,6 @@
 #include "core/Logger.h"
 #include "custom/LightObject.h"
 #include "custom/Bird.h"
-#include "custom/Plane.h"
 #include "custom/Grass.h"
 
 const char* GetType(GameObject& go)
@@ -16,7 +15,6 @@ const char* GetType(GameObject& go)
 bool Scene1::OnCreate()
 {
 	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
-	objectList = new Manager();
 
 	//Setup the player
 	Player* player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));

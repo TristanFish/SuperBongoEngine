@@ -1,12 +1,14 @@
 #pragma once
 #include <glew/glew.h>
+
+#include "graphics/Shader.h"
 #include "math/MMath.h"
 #include "graphics/ShaderProgram.h"
 class Debug
 {
 public:
-	static ShaderProgram TexShader;
-	static ShaderProgram ObjShader;
+	static ShaderProgram texShader;
+	static ShaderProgram objShader;
 
 	mutable GLuint textureVAO = 0;
 	mutable GLuint textureVBO;

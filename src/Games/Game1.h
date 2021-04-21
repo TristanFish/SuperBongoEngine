@@ -1,14 +1,12 @@
 #ifndef GAME1_H
 #define GAME1_H
 
-#include "scenes/Scene.h"
 #include "core/GameInterface.h"
 
 class Game1 final : public GameInterface
 {
 private:
 	int currentSceneNum;
-	Scene* currentScene;
 
 	void BuildScene();
 

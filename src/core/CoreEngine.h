@@ -18,11 +18,12 @@ private:
 	static std::unique_ptr<CoreEngine> engineInstance;
 	friend std::default_delete<CoreEngine>;
 
-	GameInterface* gameInterface;
 
 
 public:
 	int currentSceneNum;
+	GameInterface* gameInterface;
+	
 	static CoreEngine* GetInstance();
 
 	CoreEngine(const CoreEngine&) = delete;

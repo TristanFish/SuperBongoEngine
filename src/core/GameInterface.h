@@ -6,7 +6,10 @@
 class GameInterface
 {
 public:
+	
+	class Scene* currentScene;
 
+	
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime_) = 0;

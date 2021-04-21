@@ -1,7 +1,11 @@
 #include "CustomUI.h"
 #include "windows.h"
-#include "core/GameManager.h"
+#include "core/CoreEngine.h"
+#include "imgui/imgui.h"
 #include "psapi.h"
+#include "Scene.h"
+#include "core/GameInterface.h"
+#include "core/Timer.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -14,7 +18,7 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 	selectedObj = nullptr;
 }
 
-void CustomUI::PropertiesPanel::Render()
+void CustomUI::PropertiesPanel::Render() const
 {
 	if (selectedObj->isMenuActive)
 	{
@@ -32,13 +36,13 @@ void CustomUI::PropertiesPanel::Render()
 		ImGui::DragFloat3("Scale", selectedObj->transform.GetScale(), 0.0f, 10.0f);
 
 		// Create a new color that is a copy of the meshes color
-		ImGui::ColorEdit4("Mesh Color", (float*)selectedObj->getComponent<MeshRenderer>().meshColorTint);
+		ImGui::ColorEdit4("Mesh Color", selectedObj->GetComponent<MeshRenderer>()->meshColorTint);
 		
 		
 		// MAKE SAVE MAP DATA A STATIC FUNCTION
 		if (ImGui::Button("Save"))
 		{
-			GameManager::GetCurrentScene()->SaveMapData();
+			CoreEngine::GetInstance()->gameInterface->currentScene->SaveMapData();
 		}
 
 		ImGui::End();

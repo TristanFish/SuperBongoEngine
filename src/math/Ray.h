@@ -8,9 +8,9 @@ class Ray
 	
 
 public:
-	MATH::Vec3 Direction;
+	MATH::Vec3 direction;
 
-	MATH::Vec3 Origin;
+	MATH::Vec3 origin;
 
 	Ray(const MATH::Vec3 dir_, const MATH::Vec3 origin_);
 

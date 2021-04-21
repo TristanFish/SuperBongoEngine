@@ -1,5 +1,4 @@
 #include "CoreEngine.h"
-#include "custom/Camera.h"
 #include "Globals.h"
 #include "ShaderManager.h"
 #include "core/ModelManager.h"

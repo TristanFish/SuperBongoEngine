@@ -3,8 +3,9 @@
 #include "scenes/Scene1.h"
 #include "scenes/Scene2.h"
 
-Game1::Game1() : currentSceneNum(0), currentScene(nullptr)
+Game1::Game1() : currentSceneNum(0)
 {
+	currentScene = nullptr;
 }
 
 Game1::~Game1()

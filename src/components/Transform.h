@@ -40,15 +40,15 @@ public:
 
 	//!GetPosition Getter
 	/*! Returns the transforms position */
-	const MATH::Vec3& GetPosition() const { return pos; }
+	MATH::Vec3& GetPosition() { return pos; }
 
 	//!GetRotation Getter
 	/*! Returns the transforms rotation */
-	const MATH::Vec3& GetRotation() const { return rotation; }
+	MATH::Vec3& GetRotation() { return rotation; }
 
 	//!GetScale Getter
 	/*! Returns the transforms scale */
-	const MATH::Vec3& GetScale() const { return scale; }
+	MATH::Vec3& GetScale() { return scale; }
 
 	//!GetModelMatrix Getter
 	/*! Returns the transforms model matrix */

@@ -5,7 +5,6 @@ bool Scene2::OnCreate()
 {
 	EngineLogger::Info("Scene 2 Created", "Scene2.cpp", __LINE__);
 
-	objectList = new Manager();
 	objectList->Init();
 
 	return true;
