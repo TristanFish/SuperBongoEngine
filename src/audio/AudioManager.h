@@ -26,8 +26,11 @@ public:
 	}
 
 	void Update();
-	void CreateAndPlaySound(const char* filename);
-	void MonitorChannel(FMOD::Channel c);
+
+	/*! Monitors a channel to see if its currently playing audio */
+	bool MonitorChannel( FMOD::Channel& c) const;
+
+	/*! Creates a channel group for single channels to be combines into */
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
 
 	FMOD::Sound* RetrieveSoundObject(std::string soundName);
@@ -42,32 +45,35 @@ private:
 
 	//Sound bank
 #pragma region sounds
-	FMOD::Sound* newSound = nullptr;
+	FMOD::Sound* birdChirp = nullptr;
+	std::string birdChirpString{ "birdchirp" };
+
 	FMOD::Sound* leafCrunch = nullptr;
 	std::string leafCrunchString { "leafcrunch" };
-#pragma endregion 
-		
-	FMOD::Reverb3D* reverb = nullptr;
-	
+
 	std::vector <std::string> soundPaths;
 	std::vector <std::string> soundNames;
 	std::vector <FMOD::Sound*> sounds;
 	std::map <std::string, FMOD::Sound*> soundPairs;
+#pragma endregion 
+		
+	FMOD::Reverb3D* reverb = nullptr;
+	
 	
 	AudioManager();
 	AudioManager(const AudioManager&) = delete;
 
-	//Just to keep track of all of our audio sources
-	void AddAudioSource(AudioSourceComponent& newComponent);
-
+	/*! initializes the FMOD system  */
 	void InitAudioManager();
+
+	/*! Creates sound pointers for all sound objects and their appropriate sound paths */
 	void CreateSounds();
 	void Create3DReverbAttributes(FMOD_VECTOR pos);
 	void Create3DReverb();
 	void CreateAndSetPan(float pan);
 	//void SetAudioSourcePos(MATH::Vec3& sourcepos);
 
-	//This is where we load sounds, provide a new buffer and file path for every sound
+	/*! Takes all sounds and paths and submits combines into a map */
 	void LoadSounds();
 
 	

@@ -7,19 +7,19 @@ struct Collider3D
 {
 public:
 
-	enum class shape : char
+	enum class type : char
 	{
 		Sphere	 = 0b0001,
 		AABB	 = 0b0010,
         Plane    = 0b0100 
 	};
 
-	friend inline constexpr Collider3D::shape operator | (Collider3D::shape x, Collider3D::shape y)
+	friend inline constexpr Collider3D::type operator | (Collider3D::type x, Collider3D::type y)
 	{
-		return static_cast<Collider3D::shape>(static_cast<char>(x) | static_cast<char>(y));
+		return static_cast<Collider3D::type>(static_cast<char>(x) | static_cast<char>(y));
 	}
 
-	shape colliderShape;
+	type colliderType;
 	bool isMoveable, isTrigger,isWiremesh;
 	MATH::Vec3 size;
 	MATH::Vec3 minVertices,maxVertices;
@@ -27,7 +27,7 @@ public:
 	Collider3D(MATH::Vec3 minVert_,MATH::Vec3 maxVert_)
 	{
 
-		colliderShape = shape::AABB;
+		colliderType = type::AABB;
 		isMoveable = true;
 		isTrigger = false;
 		//isWiremesh = false;

@@ -4,22 +4,15 @@ unsigned int Timer::currentTicks = 0;
 unsigned int Timer::prevTicks = 0;
 float Timer::timeScale = 1.0f;
 
-Timer::Timer()
-{
-}
-
-Timer::~Timer()
-{
-}
 
 float Timer::GetDeltaTime()
 {
-	return (static_cast<float>(currentTicks - prevTicks) / 1000.0f);
+	return (static_cast<float>(currentTicks - prevTicks) / MILLI_TO_SEC);
 }
 
 float Timer::GetScaledDeltaTime()
 {
-	return (static_cast<float>(currentTicks - prevTicks) / 1000.0f)* timeScale;
+	return (static_cast<float>(currentTicks - prevTicks) / MILLI_TO_SEC)* timeScale;
 }
 
 void Timer::UpdateTimer()
@@ -31,8 +24,14 @@ void Timer::UpdateTimer()
 unsigned int Timer::SleepTime(const unsigned int fps)
 {
 
-	unsigned int milliSecsPerFrame = 1000 / fps;
-	unsigned int sleepTime = milliSecsPerFrame - SDL_GetTicks();
+	const unsigned int milliSecsPerFrame = MILLI_TO_SEC / fps;
+
+	if (milliSecsPerFrame == 0)
+	{
+		return 0;
+	}
+
+	const unsigned int sleepTime = milliSecsPerFrame - (SDL_GetTicks() - currentTicks);
 
 	if (sleepTime > milliSecsPerFrame)
 	{
@@ -41,4 +40,14 @@ unsigned int Timer::SleepTime(const unsigned int fps)
 
 	return sleepTime;
 
+}
+
+float Timer::GetCurrentTickMilli()
+{
+	return static_cast<float>(currentTicks);
+}
+
+float Timer::GetCurrentTickSec()
+{
+	return static_cast<float>(currentTicks) / MILLI_TO_SEC;
 }

@@ -1,5 +1,9 @@
 #include "Window.h"
-
+#include "core/Logger.h"
+#include <glew/glew.h>
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 Window::Window() : window(nullptr)
 {
@@ -10,11 +14,12 @@ Window::~Window()
 	OnDestroy();
 }
 
-void Window::OnCreate(const char* name, int w, int h)
+bool Window::OnCreate(const char* name, int w, int h)
 {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0)
 	{
-		std::cout << "SDL_INIT_EVERYTHING went wrong in Window" << std::endl;
+		EngineLogger::Error("SDL_Init went wrong", "window.cpp", __LINE__);
+		return false;
 	}
 
 	this->width = w;
@@ -24,7 +29,8 @@ void Window::OnCreate(const char* name, int w, int h)
 	
 	if (window == nullptr)
 	{
-		std::cout << "Window is null" << std::endl;
+		EngineLogger::Error("window is null", "window.cpp", __LINE__);
+		return false;
 	}
 
 	context = SDL_GL_CreateContext(window);
@@ -40,7 +46,8 @@ void Window::OnCreate(const char* name, int w, int h)
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
 	{
-		std::cout << "Glew didnt init in Window" << std::endl;
+		EngineLogger::Error("Glew didnt init", "window.cpp", __LINE__);
+		return false;
 	}
 	glViewport(0, 0, width, height);
 
@@ -57,6 +64,8 @@ void Window::OnCreate(const char* name, int w, int h)
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(window, context);
 	ImGui_ImplOpenGL3_Init("#version 450");
+
+	return true;
 }
 
 void Window::OnDestroy()

@@ -1,5 +1,7 @@
 #include "Model.h"
 #include "core/TextureManager.h"
+#include "core/Logger.h"
+#include <assimp/postprocess.h>
 
 Model::Model()
 {
@@ -42,7 +44,7 @@ void Model::LoadModel()
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		std::cout << "ASSIMP error: " << importer.GetErrorString() << std::endl;
+		EngineLogger::Error("ASSIMP error: " + std::string(importer.GetErrorString()), "Model.cpp", __LINE__);
 		return;
 	}
 
@@ -148,7 +150,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		col = *mesh->mColors[0];
 	}
 
-	MATH::Vec4 color = Vec4(col.r, col.g, col.b, col.a);
+	MATH::Vec4 color = MATH::Vec4(col.r, col.g, col.b, col.a);
 
 	 CalculateMaxMins();
 

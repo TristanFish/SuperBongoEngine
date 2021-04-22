@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include <iostream>
+#include "core/Logger.h"
 
 Texture::Texture()
 {
@@ -25,7 +26,7 @@ bool Texture::LoadImage()
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	SDL_Surface* textureSurface = IMG_Load(path.c_str());
 	if (textureSurface == nullptr) {
-		std::cout << "texture: " << path << " didn't load" << std::endl;
+		EngineLogger::Error("texture: " + path + " didn't load", "Texture.cpp", __LINE__);
 		return false;
 	}
 	int numOfColours = textureSurface->format->BytesPerPixel;

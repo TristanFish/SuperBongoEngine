@@ -1,61 +1,45 @@
 
 #include "Scene1.h"
 #include "custom/Player.h"
-#include "tiles/Tilemap.h"
 #include "custom/MouseRay.h"
-#include "core/Debug.h"
-#include "core/TextureManager.h"
+#include "core/Logger.h"
+#include "custom/LightObject.h"
+#include "custom/Bird.h"
+#include "custom/Grass.h"
 
-
-Scene1::Scene1()
-{}
-
-Scene1::~Scene1()
+const char* GetType(GameObject& go)
 {
-	
+	return typeid(go).name();
 }
 
 bool Scene1::OnCreate()
 {
-	
-	std::cout << "=================\n" << "scene1 load start" << std::endl << "=================\n";
-	objectList = new Manager();
+	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 
 	//Setup the player
-	player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
+	Player* player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
-	grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
-	plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
-	//fog = new TestModel("Fog", MATH::Vec3(0.0f, 10.0f, 0.0f));
-	light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
-
-	mouseRay = new MouseRay();
-	objectList->AddGameObject(player,1);
-	objectList->AddGameObject(grass, 2);
-	objectList->AddGameObject(plane, 3);
-	//objectList->AddGameObject(fog, 4);
-	objectList->AddGameObject(light, 5);
+	Grass* grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
+	Plane* plane = new Plane("Plane", MATH::Vec3(0.0f, 0.0f, 0.0f));
+	//TestModel* fog = new TestModel("Fog", MATH::Vec3(0.0f, 1000.0f, 0.0f));
+	LightObject* light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
+	Bird* bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));
+	mouseRay = MouseRay();
+	objectList->AddGameObject(player);
+	objectList->AddGameObject(grass);
+	objectList->AddGameObject(plane);
+	//objectList->AddGameObject(fog);
+	objectList->AddGameObject(light);
+	objectList->AddGameObject(bird);
 
 	objectList->Init();
-
+	
 	PerformanceMonitor::InitMonitor();
 	
 	//Scene::SaveMapData();
-	Scene::LoadMapData();
-	return false;
-}
+	//Scene::LoadMapData();
+	return true;
 
-
-
-void Scene1::OnDestroy()
-{
-	delete objectList;
-	objectList = nullptr;
-
-	delete mouseRay;
-	mouseRay = nullptr;
-
-	pElement = nullptr;
 }
 
 void Scene1::Update(const float deltaTime)
@@ -64,14 +48,10 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 	objectList->CheckCollisions();
 	objectList->Update(deltaTime);
-
 }
-
-
 
 void Scene1::Render() const
 {
-	
 	Scene::Render();
 	objectList->Render();
 }

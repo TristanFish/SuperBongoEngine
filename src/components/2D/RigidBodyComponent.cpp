@@ -1,5 +1,4 @@
 #include "RigidBodyComponent.h"
-#include "math/VMATH.h"
 #include "core/Timer.h"
 
 
@@ -42,16 +41,6 @@ void RigidBodyComponent::Update(const float deltaTime)
 
 	gameobject->SetRotation(MATH::Vec3(0.0f, 0.0f, zAngle));
 
-}
-
-void RigidBodyComponent::Render() const
-{
-	//RigidBody doesn't do any rendering
-}
-
-void RigidBodyComponent::HandleEvents(const SDL_Event& event)
-{
-	//RigidBody doesn't do any event listening
 }
 
 void RigidBodyComponent::ApplyImpulseForce(const MATH::Vec3& force)

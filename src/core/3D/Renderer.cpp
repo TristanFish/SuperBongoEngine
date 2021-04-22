@@ -4,14 +4,19 @@
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
+#include "custom/Rendering/SkyBox.h"
+#include "core/ShaderManager.h"
 
+using namespace MATH;
 
 void Renderer::Init()
 {
-	//Set up renderer shaders
-	gBufferShader.CreateShader("src/graphics/shaders/gBufferShaderVert.glsl", "src/graphics/shaders/gBufferShaderFrag.glsl");
-	resultShader.CreateShader("src/graphics/shaders/gBufferResolveVert.glsl", "src/graphics/shaders/gBufferResolveFrag.glsl");
+	skyBox = new SkyBox();
 
+	//Set up renderer shaders
+	gBufferShader = ShaderManager::GetShaders("gBufferShaderVert.glsl", "gBufferShaderFrag.glsl");
+	resultShader = ShaderManager::GetShaders("gBufferResolveVert.glsl", "gBufferResolveFrag.glsl");
+	
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
@@ -52,7 +57,7 @@ void Renderer::Init()
 	//Dpeth texture (not used for depth calculations, just used for a visualization)
 	glGenTextures(1, &depthTexture);
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
@@ -60,7 +65,7 @@ void Renderer::Init()
 
 	//Stencil texture not functional yet, going to be used to mark whether lighting/shadows are applied to objects
 	glBindTexture(GL_TEXTURE_2D, stencilTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R8UI, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
@@ -72,9 +77,10 @@ void Renderer::Init()
 	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cout << "Framebuffer not complete!" << std::endl;
+		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
 	}
-	//currentGTexture = albedoTexture;
+
+	//Set frame buffer back to default
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 
@@ -102,6 +108,7 @@ void Renderer::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	glBindVertexArray(0);
+
 }
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
@@ -116,13 +123,16 @@ void Renderer::AddLight(LightComponent* light)
 
 void Renderer::Render() const
 {
-
+	//Skybox here
+	skyBox->Render();
+	
+	
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
+
 		//Check meshrenderers for specific flags and do certain functions based on those flags
 		if (meshRenderers[i]->renderFlags & RenderProperties::OVERRIDE_RENDERER)
 		{
@@ -132,8 +142,20 @@ void Renderer::Render() const
 
 		gBufferShader.RunShader();
 
+	/*	LIGHTING			= 0b00000001,
+		CREATES_SHADOWS		= 0b00000010,
+		RECIEVES_SHADOWS	= 0b00000100,
+		BLOOM				= 0b00001000,
+		PHYSICS_MOVEMENT	= 0b00010000,
+		TRANSPARENT			= 0b00100000,
+		WATER				= 0b01000000,
+		OVERRIDE_SHADER		= 0b10000000*/
+
+		const Uint16 stencilMarker = meshRenderers[i]->renderFlags;
+
 		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
 		{
+			
 		}
 		if (meshRenderers[i]->renderFlags & RenderProperties::CREATES_SHADOWS)
 		{
@@ -151,11 +173,20 @@ void Renderer::Render() const
 		{
 			RenderPhysics(*meshRenderers[i]);
 		}
+		if (meshRenderers[i]->renderFlags & RenderProperties::WATER)
+		{
+			RenderWaterEffects(*meshRenderers[i]);
+		}
+
+		gBufferShader.TakeUniform("stencilMarker", stencilMarker);
+		
 		meshRenderers[i]->Render(gBufferShader);
 		glUseProgram(0);
 	}
+	
 	pos.DrawCube(Vec3(0), Vec3(15), true, MATH::Vec4(1.0f, 0.0f, 0.0f, 1.0f));
-
+	
+	
 	//Rebind the default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glEnable(GL_DEPTH_TEST);
@@ -165,10 +196,7 @@ void Renderer::Render() const
 	albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
 	depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
-
 	RenderGBufferResult();
-
-
 
 	//Uses the gBufferResolve shader to render the result of the gBuffer
 
@@ -177,6 +205,8 @@ void Renderer::Render() const
 
 void Renderer::DestroyRenderer()
 {
+	delete(skyBox);
+	skyBox = nullptr;
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 	glDeleteTextures(1, &depthTexture);
 	glDeleteTextures(1, &stencilTexture);
@@ -187,6 +217,12 @@ void Renderer::DestroyRenderer()
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
 }
+
+SkyBox* Renderer::GetSkyBox()
+{
+	 return skyBox; 
+}
+
 
 //Binds all the gBuffer textures
 void Renderer::BindGBufferTextures() const
@@ -231,30 +267,28 @@ void Renderer::RenderGBufferResult() const
 	resultShader.RunShader();
 
 	BindGBufferTextures();
-
+	//AttachLights();
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-
-
 
 	UnbindGBufferTextures();
 
 	glUseProgram(0);
 }
 
-void Renderer::AttachLights(const MeshRenderer& mr) const
+void Renderer::AttachLights() const
 {
 	for (size_t i = 0; i < lights.size(); i++)
 	{
-		std::string lightNum = "uLights[" + std::to_string(i);
+		std::string lightNum = "[" + std::to_string(i) + "]";
 		
-		gBufferShader.TakeInUniformVec3(lightNum + "].lPos", lights[i]->gameobject->transform.GetPosition());
-		gBufferShader.TakeInUniformVec3(lightNum + "].lAmb", lights[i]->ambColor);
-		gBufferShader.TakeInUniformVec3(lightNum + "].lDiff", lights[i]->diffColor);
-		gBufferShader.TakeInUniformVec3(lightNum + "].lSpec", lights[i]->specColor);
-		gBufferShader.TakeInUniformFloat(lightNum + "].lIntens", lights[i]->intensity);
-		//shader.TakeInUniformInt("activeLights", lights.size());
+		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
+		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
+		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
+		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
+		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
+		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
 	}
 }
 
@@ -271,5 +305,9 @@ void Renderer::RenderBloom(const MeshRenderer& mr) const
 }
 
 void Renderer::RenderPhysics(const MeshRenderer& mr) const
+{
+}
+
+void Renderer::RenderWaterEffects(const MeshRenderer& mr) const
 {
 }

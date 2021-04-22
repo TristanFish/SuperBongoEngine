@@ -1,11 +1,15 @@
 #pragma once
 #include <vector>
-#include <unordered_map>
-#include "graphics/Shader.h"
 #include "core/Debug.h"
+#include "graphics/ShaderProgram.h"
 
+
+
+
+class SkyBox;
 class MeshRenderer;
 class LightComponent;
+
 
 class Renderer
 {
@@ -19,10 +23,11 @@ public:
 	void AddLight(LightComponent* light);
 	void Render() const;
 	void DestroyRenderer();
+	static SkyBox* GetSkyBox();
+	
 private:
-	Shader gBufferShader;
-	Shader resultShader;
-
+	ShaderProgram gBufferShader;
+	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
 
 	GLuint depthTexture;
@@ -40,6 +45,7 @@ private:
 	Debug depth;
 	Debug stencil;
 
+	static inline SkyBox* skyBox;
 	//GLuint currentGTexture;
 
 	void BindGBufferTextures() const;
@@ -49,7 +55,7 @@ private:
 
 
 	//Attaches the most important lights to this object's shader
-	void AttachLights(const MeshRenderer& mr) const;
+	void AttachLights() const;
 	//Draws this object into the shadow texture
 	void RenderShadowTexture(const MeshRenderer& mr) const;
 	//Draws shadows onto this object
@@ -58,6 +64,8 @@ private:
 	void RenderBloom(const MeshRenderer& mr) const;
 	//Does physics movement
 	void RenderPhysics(const MeshRenderer& mr) const;
+	//Does water stuff
+	void RenderWaterEffects(const MeshRenderer& mr) const;
 		/*NONE			
 		LIGHTING		
 		CREATES_SHADOWS	

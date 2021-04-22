@@ -1,6 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#include <stdio.h>	/// Needed for the printf statement, could have used cin and cout but I have issues.  
+#include <stdio.h>	/// Needed for the printf statement, could have used cin and cou but I have issues.  
 #include "Vector.h"
 
 namespace  MATH {

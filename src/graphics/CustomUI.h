@@ -1,26 +1,36 @@
-#pragma once
-#include "math/Vector.h"
-#include "imgui/imgui.h"
+#ifndef CUSTOMUI_H
+#define CUSTOMUI_H
+
 #include "components/ECS.h"
 #include "components/3D/MeshRenderer.h"
-#include "core/Timer.h"
 
 
 
+//! CustomUI namespace
+/*!  This namespace holds all of our custom IMGUI functionalities */
 namespace CustomUI
 {
-	
+	//! Properties panel Class
+	/*!  This class creates & controls the Properties Panel UI for each gameobject */
 	class PropertiesPanel
 	{
 	public:
+
+		//! Properties panel Constructor
+		/*!  Initializes the variables that are needed for this class */
 		PropertiesPanel(GameObject* obj);
 
+		//! Properties panel Destructor
+		/*! Destroys all pointer's that this class uses */
 		~PropertiesPanel();
 
-		void Render();
-		GameObject* selectedObj;
-	private:
+		//! Render Function
+		/*! Renders the IMGUI UI on screen */
+		void Render() const;
 
+		//! GameObject Pointer
+		/*! Is a pointer to the selected object this panel uses */
+		GameObject* selectedObj;
 
 	};
 
@@ -30,9 +40,6 @@ namespace CustomUI
 	class PerformancePanel
 	{
 	private:
-
-		
-
 		//! FPS Update Speed float
 		/*! Controls how fast we want to add a new float into the fpsValues Vector */
 		 float fpsUpdateSpeed = 0.5f;
@@ -47,8 +54,11 @@ namespace CustomUI
 
 		//! Latest FPS float
 	   /*! Is used to update the FPS text depending on the "fpsUpdateSpeed" variable */
-		int lastestFPS;
+		int lastestFPS = 0;
 	public:
+		PerformancePanel();
+		~PerformancePanel();
+
 
 		//! Update Function
 	   /*! Updates the needed variables in this class */
@@ -57,6 +67,18 @@ namespace CustomUI
 		//! Render Function
 	   /*! Renders the needed IMGUI info */
 		void Render() const;
+	};
+
+	class HierarchyPanel
+	{
+	public:
+		HierarchyPanel(std::vector<GameObject*> gameobjects_);
+		~HierarchyPanel();
+
+
+	private:
+		std::vector<GameObject*> gameobjects;
+
 	};
 
 }
@@ -106,3 +128,4 @@ public:
 	static float UpdateLoopTime;
 };
  
+#endif

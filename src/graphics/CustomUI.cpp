@@ -1,6 +1,11 @@
 #include "CustomUI.h"
 #include "windows.h"
+#include "core/CoreEngine.h"
+#include "imgui/imgui.h"
 #include "psapi.h"
+#include "Scene.h"
+#include "core/GameInterface.h"
+#include "core/Timer.h"
 
 CustomUI::PropertiesPanel::PropertiesPanel(GameObject* obj)
 {
@@ -13,7 +18,7 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 	selectedObj = nullptr;
 }
 
-void CustomUI::PropertiesPanel::Render()
+void CustomUI::PropertiesPanel::Render() const
 {
 	if (selectedObj->isMenuActive)
 	{
@@ -21,13 +26,9 @@ void CustomUI::PropertiesPanel::Render()
 
 		ImGui::Begin(selectedObj->name, &selectedObj->isMenuActive);
 	
-
-		char* TempName = new char();
-		TempName = (char*)selectedObj->name;
-		if (ImGui::InputText("Mesh Name", TempName, size_t(20)))
-		{
-			selectedObj->SetName(TempName);
-		}
+		char* tempName =  const_cast<char*>(selectedObj->name);
+		
+		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
 		// Change the standard transform components 
 		ImGui::DragFloat3("Position", selectedObj->transform.GetPosition());
@@ -35,23 +36,33 @@ void CustomUI::PropertiesPanel::Render()
 		ImGui::DragFloat3("Scale", selectedObj->transform.GetScale(), 0.0f, 10.0f);
 
 		// Create a new color that is a copy of the meshes color
-		ImGui::ColorEdit4("Mesh Color", (float*)selectedObj->getComponent<MeshRenderer>().meshColorTint);
+		ImGui::ColorEdit4("Mesh Color", selectedObj->GetComponent<MeshRenderer>()->meshColorTint);
 		
 		
 		// MAKE SAVE MAP DATA A STATIC FUNCTION
 		if (ImGui::Button("Save"))
 		{
-		
+			CoreEngine::GetInstance()->gameInterface->currentScene->SaveMapData();
 		}
 
 		ImGui::End();
+		tempName = nullptr;
+		delete tempName;
 	}
 
 }
 
 
 
+CustomUI::PerformancePanel::PerformancePanel() : lastestFPS(0)
+{
 
+}
+
+CustomUI::PerformancePanel::~PerformancePanel()
+{
+
+}
 
 void CustomUI::PerformancePanel::Update(const float deltatime)
 {
@@ -60,7 +71,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 	if (fpsUpdateSpeed <= 0.0f)
 	{
 		if (fpsValues.size() == 100)
-			fpsValues.clear();
+			fpsValues.erase(fpsValues.begin());
 
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;
@@ -89,6 +100,25 @@ void CustomUI::PerformancePanel::Render() const
 	ImGui::End();
 }
 
+
+
+CustomUI::HierarchyPanel::HierarchyPanel(std::vector<GameObject*> gameobjects_)
+{
+	gameobjects = gameobjects_;
+}
+
+CustomUI::HierarchyPanel::~HierarchyPanel()
+{
+	if (gameobjects.size() > 0)
+	{
+		for (auto obj : gameobjects)
+		{
+			delete obj;
+			obj = nullptr;
+		}
+		gameobjects.clear();
+	}
+}
  
 
 int PerformanceMonitor::FPSLimit = 60;
@@ -167,4 +197,5 @@ double PerformanceMonitor::GetCPUUsage()
 
 	 return percent * 100;
 }
+
 

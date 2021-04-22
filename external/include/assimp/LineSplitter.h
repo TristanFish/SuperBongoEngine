@@ -68,7 +68,7 @@ for(LineSplitter splitter(stream);splitter;++splitter) {
        if (strtol(splitter[2]) > 5) { .. }
     }
 
-    std::cout << "Current line is: " << splitter.get_index() << std::endl;
+    std::cou << "Current line is: " << splitter.get_index() << std::endl;
 }
 @endcode
 */

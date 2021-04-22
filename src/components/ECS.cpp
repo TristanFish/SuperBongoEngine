@@ -3,20 +3,70 @@
 #include "core/3D/Physics3D.h"
 #include "3D/MeshRenderer.h"
 #include "3D/LightComponent.h"
+#include "core/Logger.h"
 
-
-GameObject::GameObject(): name("Default"), transform()
+GameObject::GameObject(): name("Default")
 {
 }
-
 
 GameObject::~GameObject()
 {
 	name = nullptr;
+
+	for(Component* comp : componentList)
+	{
+		if(comp)
+		{
+			delete comp;
+			comp = nullptr;
+		}
+	}
+	componentList.clear();
+}
+
+void GameObject::Init()
+{
+	for (Component* comp : componentList)
+	{
+		comp->Init(this);
+		if(RigidBody3D* rbComp = dynamic_cast<RigidBody3D*>(comp))
+		{
+			rbComp->AddCollisionFunction(std::bind(&GameObject::OnCollisionEnter, this, std::placeholders::_1));
+		}
+		else if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
+		{
+			mComp->AddUniformFunction(std::bind(&GameObject::AttachUniforms, this));
+		}
+	}
+}
+
+void GameObject::Update(const float deltaTime)
+{
+	transform.Update(deltaTime);
+	for(Component* comp : componentList)
+	{
+		if(comp->active)
+		{
+			comp->Update(deltaTime);
+		}
+	}
+}
+
+void GameObject::HandleEvents(const SDL_Event& event)
+{
+	for(Component* comp : componentList)
+	{
+		if(comp->active)
+		{
+			comp->HandleEvents(event);
+		}
+	}
 }
 
 
-Manager::~Manager()
+
+
+Manager::~Manager() 
 {
 	for (GameObject* g : gameObjects)
 	{
@@ -34,22 +84,24 @@ Manager::~Manager()
 	rigidBodies.clear();
 }
 
-void Manager::Init()
+void Manager::Init() 
 {
+	for(GameObject* go : gameObjects)
+	{
+		go->Init();
+	}
 	renderer.Init();
 }
 
 void Manager::Update(const float deltaTime)
 {
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		if (g->isActive())
 		{
 			g->Update(deltaTime);
 		}
 	}
-
-	
 }
 void Manager::Render() const
 {
@@ -65,7 +117,7 @@ void Manager::Render() const
 
 
 #ifdef _DEBUG
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		g->DrawDebugGeometry();
 	}
@@ -85,7 +137,7 @@ void Manager::HandleEvents(const SDL_Event& event)
 //Finds THE FIRST gameobject with the given name
 GameObject& Manager::FindGameObject(const char* name)
 {
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		if (g->name == name)
 		{
@@ -95,40 +147,44 @@ GameObject& Manager::FindGameObject(const char* name)
 
 	std::cerr << "No object named \"" << name << "\" was found. Messing things up so that you know something went wrong" << std::endl;
 
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
-		g->transform.GetPosition() = MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100));
-		g->transform.GetScale() = MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100));
+		g->transform.SetPos(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
+		g->transform.SetScale(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
 	}
 
 	return *gameObjects[0];
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go, unsigned int objID)
+GameObject& Manager::AddGameObject(GameObject* go)
 {
-	go->objectID = objID;
 	gameObjects.emplace_back(go);
-	if (go->hasComponent<RigidBody3D>())
+	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(&go->getComponent<RigidBody3D>());
+		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
 	}
-	if (go->hasComponent<MeshRenderer>())
+	if (go->HasComponent<MeshRenderer>())
 	{
-		renderer.AddMeshRenderer(&go->getComponent<MeshRenderer>());
+		renderer.AddMeshRenderer(go->GetComponent<MeshRenderer>());
 	}
-	if (go->hasComponent<LightComponent>())
+	if (go->HasComponent<LightComponent>())
 	{
-		renderer.AddLight(&go->getComponent<LightComponent>());
+		renderer.AddLight(go->GetComponent<LightComponent>());
 	}
 
-	std::cout << go->name << " added to objectList" << std::endl;
+	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+
+	for (GameObject* child : go->children)
+	{
+		AddGameObject(child);
+	}
+	
 	return *go;
 }
 
 void Manager::CheckCollisions()
 {
-	//std::cout << rigidBodies.size() << std::endl;
 	for (size_t i = 0; i < rigidBodies.size(); i++)
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
