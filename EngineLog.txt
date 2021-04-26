@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 72
+[INFO]: Logger Created in: CoreEngine.cpp on line: 73
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
 [INFO]: Fire.png in: TextureManager.cpp on line: 16
@@ -22,11 +22,10 @@
 [INFO]: Plane.fbx in: ModelManager.cpp on line: 22
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Scene 1 Created in: Scene1.cpp on line: 18
-[INFO]: class MeshRenderer in: C:\Users\Tremaine\Desktop\Programming\Humber\C++\Engines\src\custom\Plane.cpp on line: 11
 [INFO]: Sound Played in: AudioSourceComponent.cpp on line: 30
 [INFO]: Player added to objectList in: ECS.cpp on line: 174
 [INFO]: Grass added to objectList in: ECS.cpp on line: 174
 [INFO]: Plane added to objectList in: ECS.cpp on line: 174
 [INFO]: Light added to objectList in: ECS.cpp on line: 174
 [INFO]: bird added to objectList in: ECS.cpp on line: 174
-[INFO]: Closing Game in: CoreEngine.cpp on line: 147
+[INFO]: Closing Game in: CoreEngine.cpp on line: 153

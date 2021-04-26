@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\MouseEventListener.h" />
+    <ClInclude Include="src\core\MouseEventDispatcher.h" />
     <ClInclude Include="src\graphics\ShaderProgram.h" />
     <ClInclude Include="src\core\ShaderManager.h" />
     <ClInclude Include="src\scenes\Scene2.h" />
@@ -262,6 +264,8 @@
     <ClInclude Include="src\custom\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\MouseEventListener.cpp" />
+    <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
     <ClCompile Include="src\core\ShaderManager.cpp" />
     <ClCompile Include="src\scenes\Scene2.cpp" />

@@ -1,10 +1,55 @@
-#pragma once
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
-#include <memory>
 
 #include "sdl/SDL.h"
+#include "math/Vector.h"
 #include <unordered_map>
+#include <memory>
 
+
+
+enum MouseButton : Uint8
+{
+	MBUTTON_NONE = 0,
+	MBUTTON_LEFT = 1,
+	MBUTTON_RIGHT = 2,
+	MBUTTON_MIDDLE = 4
+};
+
+class MouseState
+{
+private:
+	MouseState()
+	{
+		prevPosition = MATH::Vec2();
+		position = MATH::Vec2();
+
+		buttonsPressed = 0;
+
+		MouseScroll = 0;
+	}
+	
+	MATH::Vec2 prevPosition;
+	MATH::Vec2 position;
+	
+	Uint8 buttonsPressed;
+
+	int MouseScroll;
+
+public:
+
+	friend class InputManager;
+
+	MATH::Vec2 GetPreviousPosition() const { return prevPosition; }
+	MATH::Vec2 GetCurrentPosition() const { return position; }
+	MATH::Vec2 GetDeltaPosition() const { return position - prevPosition; }
+	
+	bool GetButton(MouseButton buttonToCheck) const {return (buttonsPressed & buttonToCheck); }
+	
+
+	
+};
 
 //! InputManager Class
 /*! Manages any user inputs in the engine */
@@ -30,7 +75,7 @@ public:
 
 	//! GetMouseButton Getter
 	/*! Returns true if the mouse button is pressed */
-	bool GetMouseButton(Uint8 mouseButton);
+	bool GetMouseButton(Uint8 mouseButton) { return false; }
 
 private:
 
@@ -43,9 +88,9 @@ private:
 	/*! Stores all the keys that can be pressed */
 	std::unordered_map<SDL_Keycode, bool> keys;
 
-	//! mouseButtons unordered_map
-	/*! Stores all the mouse buttons that can be pressed */
-	std::unordered_map<Uint8, bool> mouseButtons;
+	MouseState mouse;
+	
 };
 
 
+#endif

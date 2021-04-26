@@ -19,6 +19,7 @@ Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSp
 
 void Player::Update(const float deltaTime)
 {
+	GameObject::Update(deltaTime);
 	//Always update your inherited components and transform
 #pragma region Movement Controls
 
@@ -52,79 +53,10 @@ void Player::Update(const float deltaTime)
 	transform.pos += moveDir * moveSpeed * deltaTime;
 #pragma endregion
 
-	
-	//transform.Update(deltaTime);
-	for (Component* comp : componentList)
-	{
-		if(comp->active)
-		{
-			comp->Update(deltaTime);
-		}
-	}
-	
-	Camera::getInstance()->setPosition(transform.GetPosition());
-	Camera::getInstance()->setRotation(transform.rotationMatrix);
 }
 
-Vec3 GetMouseVector(int x, int y)
-{
-	const Vec3 mousePosition = Vec3(static_cast<float>(x), static_cast<float>(y), 0.0f);
-	Vec3 v = Camera::getInstance()->getInvNDC() * mousePosition;
-
-	return v;
-}
-
-void Player::OnMouseMove(int x, int y)
-{
-	if (mouseDown == false)
-	{
-		return;
-	}
-
-	mouseEnd = GetMouseVector(x, y);
-
-	transform.rotation.x += (mouseEnd.y - mouseStart.y) * turnSpeed * Timer::GetDeltaTime();
-	transform.rotation.y += (mouseEnd.x - mouseStart.x) * turnSpeed * Timer::GetDeltaTime();
-
-	if (transform.rotation.x > 89.0f)
-	{
-		transform.rotation.x = 89.0f;
-	}
-	if (transform.rotation.x < -89.0f)
-	{
-		transform.rotation.x = -89.0f;
-	}
-	Vec3 direction;
-	direction.x = cos(transform.rotation.y) * cos(transform.rotation.x);
-	direction.y = sin(transform.rotation.x);
-	direction.z = sin(transform.rotation.y) * cos(transform.rotation.x);
-	direction = VMath::normalize(direction);
-
-	transform.rotationMatrix = MMath::lookAt(Vec3(), direction, Vec3(0.0f, 1.0f, 0.0f));
-	/// reset for the next mousemove
-	mouseStart = mouseEnd;
-}
 
 void Player::HandleEvents(const SDL_Event& event)
 {
-	//MeshRenderer::HandleEvents(event);
-#pragma region Rotation Controls
-	//Rotation controls
-	
-	if (event.type == SDL_EventType::SDL_MOUSEBUTTONDOWN)
-	{
-		mouseDown = true;
-		mouseStart = GetMouseVector(event.button.x, event.button.y);
-	}
-	else if (event.type == SDL_EventType::SDL_MOUSEBUTTONUP)
-	{
-		mouseDown = false;
-	}
-	if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
-		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT))
-	{
-		OnMouseMove(event.button.x, event.button.y);
-	}
-	
-#pragma endregion
+
 }

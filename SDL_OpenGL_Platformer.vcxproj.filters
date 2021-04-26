@@ -497,6 +497,8 @@
     <ClInclude Include="src\graphics\ShaderProgram.h" />
     <ClInclude Include="src\components\AudioListenerComponent.h" />
     <ClInclude Include="src\components\AudioSourceComponent.h" />
+    <ClInclude Include="src\core\MouseEventDispatcher.h" />
+    <ClInclude Include="src\core\MouseEventListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -577,6 +579,8 @@
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
     <ClCompile Include="src\components\AudioListenerComponent.cpp" />
     <ClCompile Include="src\components\AudioSourceComponent.cpp" />
+    <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
+    <ClCompile Include="src\core\MouseEventListener.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
