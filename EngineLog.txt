@@ -28,4 +28,28 @@
 [INFO]: Plane added to objectList in: ECS.cpp on line: 174
 [INFO]: Light added to objectList in: ECS.cpp on line: 174
 [INFO]: bird added to objectList in: ECS.cpp on line: 174
-[INFO]: Closing Game in: CoreEngine.cpp on line: 153
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit bird in: Scene.cpp on line: 41
+[INFO]: Mouse hit Plane in: Scene.cpp on line: 41

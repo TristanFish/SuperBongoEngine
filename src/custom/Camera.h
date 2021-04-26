@@ -30,9 +30,14 @@ public:
 	inline MATH::Vec3 getRotation() const { return MATH::MMath::calcEulerAngles(rotationMatrix) * (1.0f / DEGREES_TO_RADIANS); }
 	inline void setPosition(MATH::Vec3 pos) { position = pos; }
 	inline void setRotation(MATH::Matrix4 rot) { rotationMatrix = rot; }
-
+	inline float getNearPlane() const { return nearPlane; }
+	inline float getFarPlane() const { return farPlane; }
 	MATH::Vec3 GetMouseVector(int x, int y) const;
 
+
+	MATH::Vec3 Up() const;
+	MATH::Vec3 Right() const;
+	MATH::Vec3 Forward() const;
 	
 private:
 	
@@ -45,6 +50,9 @@ private:
 	MATH::Matrix4 perspecProjMatrix;
 	MATH::Matrix4 invNDC;
 
+	float nearPlane;
+	float farPlane;
+	
 	float zoom;
 	const float panSpeed;
 	const float sensitivity;
@@ -63,10 +71,6 @@ private:
 	void OnMouseReleased(MATH::Vec2 mouse, int buttonType) override;
 	void OnMouseScroll(int y) override;
 	void OnMouseMove(MATH::Vec2 mouse) override;
-
-	MATH::Vec3 Up() const;
-	MATH::Vec3 Right() const;
-	MATH::Vec3 Forward() const;
 	
 };
 #endif 

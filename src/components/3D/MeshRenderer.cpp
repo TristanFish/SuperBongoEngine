@@ -5,7 +5,7 @@
 
 using namespace MATH;
 
-MeshRenderer::MeshRenderer() : renderFlags(RenderProperties::LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+MeshRenderer::MeshRenderer() : renderFlags(LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
 bool MeshRenderer::LoadModel(const char* name)
 {
@@ -26,9 +26,26 @@ void MeshRenderer::CreateShader(const char* vert, const char* frag)
 void MeshRenderer::Init(GameObject* g)
 {
 	gameobject = g;
+
+	if(model)
+	{
+		ABB.maxVert = MMath::translate(g->transform.pos) * model->p_max * gameobject->transform.scale.x;
+		ABB.minVert = MMath::translate(g->transform.pos) * model->p_min * gameobject->transform.scale.x;
+		
+		std::cout << g->name << "'s max and min verts" << std::endl;
+		ABB.maxVert.print();
+		ABB.minVert.print();
+	}
 }
 
-void MeshRenderer::Update(const float deltaTime) { }
+void MeshRenderer::Update(const float deltaTime)
+{
+	if(model)
+	{
+		ABB.maxVert = MMath::translate(gameobject->transform.pos) * model->p_max * gameobject->transform.scale.x;
+		ABB.minVert = MMath::translate(gameobject->transform.pos) * model->p_min * gameobject->transform.scale.x;
+	}
+}
 
 void MeshRenderer::Render() const
 {

@@ -13,7 +13,7 @@ using namespace tinyxml2;
 
 //! Scene Class
 /*! Standard scene class that all scenes will inherit from  */
-class Scene
+class Scene : public MouseEventListener
 {
 protected:
 	//! MouseRay Pointer
@@ -65,6 +65,9 @@ public:
 
 
 	std::string CheckAtributeValue(int i) const;
+
+	void OnMouseMove(MATH::Vec2 mouse) override;
+	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;
 	
 };
 

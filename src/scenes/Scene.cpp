@@ -21,6 +21,37 @@ std::string Scene::CheckAtributeValue(int i) const
 	return value;
 }
 
+void Scene::OnMouseMove(MATH::Vec2 mouse)
+{
+	
+}
+
+void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
+{
+
+	 if (buttonType == SDL_BUTTON_LEFT)
+	 {
+		 mouseRay.CalaculateMouseRay();
+		 for (auto* obj : objectList->GetGameObjects())
+		 {
+			 if (obj->HasComponent<MeshRenderer>())
+			 {
+				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
+				{
+					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
+					if (!obj->isMenuActive)
+					{
+						CheckExistingPanel(obj);
+						propertiesPanels.push_back(new CustomUI::PropertiesPanel(obj));
+					}
+					obj->isMenuActive = true;
+					return;
+				}
+			 }
+		 }
+	 }
+}
+
 void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
 {
 	if(strcmp(IDName, "Plane") == 0)
@@ -165,28 +196,6 @@ Scene::~Scene()
  void Scene::HandleEvents(const SDL_Event& event)
  {
 	 mouseRay.HandleEvents(event);
-	 if (event.type == SDL_EventType::SDL_MOUSEMOTION &&
-		SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-	 {
-		 mouseRay.CalaculateMouseRay();
-		 for (auto* obj : objectList->GetGameObjects())
-		 {
-			 if (obj->HasComponent<MeshRenderer>())
-			 {
-				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
-				{
-					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
-					if (!obj->isMenuActive)
-					{
-						CheckExistingPanel(obj);
-						propertiesPanels.push_back(new CustomUI::PropertiesPanel(obj));
-					}
-					obj->isMenuActive = true;
-					return;
-				}
-			 }
-		 }
-	 }
  }
 
  void Scene::SaveMapData() const

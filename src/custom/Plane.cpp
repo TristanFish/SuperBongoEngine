@@ -15,7 +15,7 @@ Plane::Plane(const char* name, Vec3 position)
 	transform.SetPos(position);
 
 	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
-	transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
+	//transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
 	transform.rotation.print();
 }
 

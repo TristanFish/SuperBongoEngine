@@ -1,4 +1,6 @@
 #include "Physics3D.h"
+
+#include "custom/Camera.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
 
@@ -113,6 +115,14 @@ bool Physics3D::SpherePlaneDetect(RigidBody3D& sphere, RigidBody3D& plane)
 
 	//Vec3 closestPoint 
 	return false;
+}
+
+bool Physics3D::RayOBBDetect(const Ray& ray, const OrientedBoundingBox& obb)
+{
+	float tMin = Camera::getInstance()->getNearPlane();
+	float tMax = Camera::getInstance()->getFarPlane();
+
+	return true;
 }
 
 MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box)

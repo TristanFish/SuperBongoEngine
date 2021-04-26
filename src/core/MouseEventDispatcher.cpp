@@ -3,6 +3,7 @@
 
 using namespace MATH;
 
+bool MouseEventDispatcher::firstUpdate = true;
 std::vector<MouseEventListener*> MouseEventDispatcher::mouseEventListeners;
 Vec2 MouseEventDispatcher::mousePosition = Vec2();
 Vec2 MouseEventDispatcher::prevPosition = Vec2();
@@ -12,10 +13,9 @@ MouseEventDispatcher::~MouseEventDispatcher()
 	mouseEventListeners.clear();
 }
 
-void MouseEventDispatcher::RegisterListener(MouseEventListener* engine)
+void MouseEventDispatcher::RegisterListener(MouseEventListener* listener)
 {
-	mouseEventListeners.push_back(engine);
-	UpdateMousePosition();
+	mouseEventListeners.push_back(listener);
 }
 
 void MouseEventDispatcher::UnRegisterListener(MouseEventListener* listener)
@@ -109,7 +109,16 @@ void MouseEventDispatcher::UpdateMousePosition()
 
 	y = Globals::SCREEN_HEIGHT - y;
 
-	prevPosition = mousePosition;
-	mousePosition = Vec2(x, y);
+	if(firstUpdate)
+	{
+		prevPosition.x = mousePosition.x = static_cast<float>(x);	
+		prevPosition.y = mousePosition.y = static_cast<float>(y);
+		firstUpdate = false;
+	}
+	else
+	{
+		prevPosition = mousePosition;
+		mousePosition = Vec2(static_cast<float>(x), static_cast<float>(y));
+	}
 }
 

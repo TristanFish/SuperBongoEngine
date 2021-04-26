@@ -3,6 +3,7 @@
 
 #include "math/VMath.h"
 #include "MMath.h"
+#include "Ray.h"
 #include "components/3D/RigidBody3D.h"
 
 class Physics3D
@@ -13,6 +14,7 @@ private:
 	static bool SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box);
 	static bool BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane);
 	static bool SpherePlaneDetect(RigidBody3D& sphere, RigidBody3D& plane);
+	static bool RayOBBDetect(const Ray& ray, const OrientedBoundingBox& obb);
 	static MATH::Vec3 CircleBoxClosestEdge(RigidBody3D& circle, RigidBody3D& box);
 
 

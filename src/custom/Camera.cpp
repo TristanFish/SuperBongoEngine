@@ -10,11 +10,11 @@ using namespace MATH;
 
 Camera* Camera::instance;
 
-Camera::Camera() : zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
+Camera::Camera() : nearPlane(0.1f), farPlane(150.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
 {
 
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-	perspecProjMatrix = MMath::perspective(zoom, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), 0.1f, 150.0f);
+	perspecProjMatrix = MMath::perspective(zoom, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), nearPlane, farPlane);
 	
 	int viewport[4];
 
@@ -123,7 +123,7 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 	mouseEnd = GetMouseVector(mouse.x, mouse.y);
 
 	rotation.x += (mouseEnd.y - mouseStart.y) * sensitivity * Timer::GetDeltaTime();
-	rotation.y -= (mouseEnd.x - mouseStart.x) * sensitivity * Timer::GetDeltaTime();
+	rotation.y += (mouseEnd.x - mouseStart.x) * sensitivity * Timer::GetDeltaTime();
 
 	if (rotation.x > 89.0f)
 	{
@@ -134,14 +134,14 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 		rotation.x = -89.0f;
 	}
 
-	if(rotation.y > 360.0f)
-	{
-		rotation.y -= 360.0f;
-	}
-	if(rotation.y < 0.0f)
-	{
-		rotation.y += 360.0f;
-	}
+	//if(rotation.y > 360.0f)
+	//{
+	//	rotation.y -= 360.0f;
+	//}
+	//if(rotation.y < 0.0f)
+	//{
+	//	rotation.y += 360.0f;
+	//}
 	
 	Vec3 direction;
 	direction.x = cos(rotation.y) * cos(rotation.x);
@@ -154,17 +154,17 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 	mouseStart = mouseEnd;
 }
 
-MATH::Vec3 Camera::Up() const
+Vec3 Camera::Up() const
 {
 	return rotationMatrix * MATH::Vec3(0.0f, 1.0f, 0.0f);
 }
 
-MATH::Vec3 Camera::Right() const
+Vec3 Camera::Right() const
 {
 	return rotationMatrix * MATH::Vec3(1.0f, 0.0f, 0.0f);
 }
 
-MATH::Vec3 Camera::Forward() const
+Vec3 Camera::Forward() const
 {
 	return rotationMatrix * MATH::Vec3(0.0f, 0.0f, -1.0f);
 }
