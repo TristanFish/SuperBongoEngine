@@ -133,6 +133,12 @@ void Renderer::Render() const
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
 
+		if(IsMeshOnScreen(*meshRenderers[i]))
+		{
+			EngineLogger::Info(meshRenderers[i]->gameobject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
+			continue;
+		}
+
 		//Check meshrenderers for specific flags and do certain functions based on those flags
 		if (meshRenderers[i]->renderFlags & RenderProperties::OVERRIDE_RENDERER)
 		{
@@ -184,8 +190,6 @@ void Renderer::Render() const
 		glUseProgram(0);
 	}
 	
-	pos.DrawCube(Vec3(0), Vec3(15), true, MATH::Vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	
 	
 	//Rebind the default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -223,6 +227,13 @@ SkyBox* Renderer::GetSkyBox()
 	 return skyBox; 
 }
 
+
+bool Renderer::IsMeshOnScreen(const MeshRenderer& mr) const
+{
+	OrientedBoundingBox obb = mr.ABB;
+
+	return true;
+}
 
 //Binds all the gBuffer textures
 void Renderer::BindGBufferTextures() const

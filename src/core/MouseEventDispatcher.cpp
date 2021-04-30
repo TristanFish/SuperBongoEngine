@@ -1,5 +1,6 @@
 #include "MouseEventDispatcher.h"
 #include "Globals.h"
+#include "core/Logger.h"
 
 using namespace MATH;
 
@@ -56,6 +57,7 @@ void MouseEventDispatcher::Update(SDL_Event e)
 
 void MouseEventDispatcher::NotifyMousePressed(int buttonType)
 {
+	EngineLogger::Info("Mouse button pressed: " + std::to_string(buttonType), "MouseEventDisptcher.cpp", __LINE__);
 	for (auto& listener : mouseEventListeners)
 	{
 		listener->OnMousePressed(mousePosition, buttonType);

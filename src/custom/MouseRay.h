@@ -15,7 +15,6 @@ private:
 	//! Vector3 Current Ray
 	/*! Is the direction on the current ray */
 	Ray ray;
-
 	//! Vector2 Local Mouse Position
 	/*! Where the mouse is in local/screen coordinates */
 	MATH::Vec2 localMousePos;
@@ -34,6 +33,7 @@ private:
 
 
 public:
+	float intersectionDist;
 
 	//! MouseRay Constructor
 	MouseRay() = default;
@@ -53,7 +53,7 @@ public:
 
 	//! Get Current Ray Getter
 	/*! Returns the current ray */
-	Ray GetCurrentRay() const { return ray; }
+	Ray& GetCurrentRay() { return ray; }
 
 	//! Handle Events Function
 	/*! Used for getting the mouse position in local/screen space */

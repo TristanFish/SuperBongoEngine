@@ -22,34 +22,72 @@
 [INFO]: Plane.fbx in: ModelManager.cpp on line: 22
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Scene 1 Created in: Scene1.cpp on line: 18
-[INFO]: Sound Played in: AudioSourceComponent.cpp on line: 30
 [INFO]: Player added to objectList in: ECS.cpp on line: 174
-[INFO]: Grass added to objectList in: ECS.cpp on line: 174
-[INFO]: Plane added to objectList in: ECS.cpp on line: 174
+[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 174
+[INFO]: SecondPlane added to objectList in: ECS.cpp on line: 174
 [INFO]: Light added to objectList in: ECS.cpp on line: 174
-[INFO]: bird added to objectList in: ECS.cpp on line: 174
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit bird in: Scene.cpp on line: 41
-[INFO]: Mouse hit Plane in: Scene.cpp on line: 41
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 3 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 3 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 3 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit SecondPlane in: Scene.cpp on line: 54
+[INFO]: Mouse button pressed: 1 in: MouseEventDisptcher.cpp on line: 60
+[INFO]: Mouse hit FirstPlane in: Scene.cpp on line: 54
+[INFO]: Closing Game in: CoreEngine.cpp on line: 153

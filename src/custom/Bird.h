@@ -8,6 +8,7 @@ class Bird : public GameObject
 public:
 
 	Bird(const char* name, MATH::Vec3 position);
+	
 	//! Base Grass Constructor
 private:
 
@@ -20,6 +21,7 @@ private:
 	//! Base Grass Destructor
 	~Bird() = default;
 
+	Debug frame;
 
 };
 

@@ -1,5 +1,4 @@
 #include "Physics3D.h"
-
 #include "custom/Camera.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
@@ -117,11 +116,135 @@ bool Physics3D::SpherePlaneDetect(RigidBody3D& sphere, RigidBody3D& plane)
 	return false;
 }
 
-bool Physics3D::RayOBBDetect(const Ray& ray, const OrientedBoundingBox& obb)
-{
+bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
+{	
+	Matrix4 modelMatrix = obb.transform;
+	
 	float tMin = Camera::getInstance()->getNearPlane();
 	float tMax = Camera::getInstance()->getFarPlane();
 
+	
+	Vec3 worldPos(modelMatrix.getColumn(3));
+	Vec3 delta = worldPos - ray.GetCurrentRay().Origin;
+
+	Vec3 xAxis(modelMatrix.getColumn(0));
+	float dotDelta = VMath::dot(xAxis, delta);
+	float dotDir = VMath::dot(ray.GetCurrentRay().Direction, xAxis);
+
+	if(fabs(dotDir) > 0.001f)
+	{
+		float t1 = (dotDelta + obb.minVert.x) / dotDir;
+		float t2 = (dotDelta + obb.maxVert.x) / dotDir;
+
+		if(t1 > t2)
+		{
+			float w = t1;
+			t1 = t2;
+			t2 = w;
+		}
+
+		if(t2 < tMax)
+		{
+			tMax = t2;
+		}
+
+		if(t1 > tMin)
+		{
+			tMin = t1;
+		}
+
+		if(tMax < tMin)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if(-dotDelta + obb.minVert.x > 0.0f || -dotDelta + obb.maxVert.x < 0.0f)
+		{
+			return false;
+		}
+	}
+
+	Vec3 yAxis(modelMatrix.getColumn(1));
+	dotDelta = VMath::dot(yAxis, delta);
+	dotDir = VMath::dot(ray.GetCurrentRay().Direction, yAxis);
+	
+	if(fabs(dotDir) > 0.001f)
+	{
+		float t1 = (dotDelta + obb.minVert.y) / dotDir;
+		float t2 = (dotDelta + obb.maxVert.y) / dotDir;
+
+		if(t1 > t2)
+		{
+			float w = t1;
+			t1 = t2;
+			t2 = w;
+		}
+
+		if(t2 < tMax)
+		{
+			tMax = t2;
+		}
+
+		if(t1 > tMin)
+		{
+			tMin = t1;
+		}
+
+		if(tMax < tMin)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if(-dotDelta + obb.minVert.y > 0.0f || -dotDelta + obb.maxVert.y < 0.0f)
+		{
+			return false;
+		}
+	}
+
+	Vec3 zAxis(modelMatrix.getColumn(2));
+	dotDelta = VMath::dot(zAxis, delta);
+	dotDir = VMath::dot(ray.GetCurrentRay().Direction, zAxis);
+	
+	if(fabs(dotDir) > 0.001f)
+	{
+		float t1 = (dotDelta + obb.minVert.z) / dotDir;
+		float t2 = (dotDelta + obb.maxVert.z) / dotDir;
+
+		if(t1 > t2)
+		{
+			float w = t1;
+			t1 = t2;
+			t2 = w;
+		}
+
+		if(t2 < tMax)
+		{
+			tMax = t2;
+		}
+
+		if(t1 > tMin)
+		{
+			tMin = t1;
+		}
+
+		if(tMax < tMin)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if(-dotDelta + obb.minVert.z > 0.0f || -dotDelta + obb.maxVert.z < 0.0f)
+		{
+			return false;
+		}
+	}
+	
+	ray.intersectionDist = tMin;
 	return true;
 }
 

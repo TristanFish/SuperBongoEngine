@@ -9,14 +9,22 @@ class Ray
 
 public:
 	MATH::Vec3 Direction;
-
 	MATH::Vec3 Origin;
-
-	Ray(const MATH::Vec3 dir_, const MATH::Vec3 origin_);
 
 	Ray();
 
-	~Ray();
+	Ray(MATH::Vec3 dir_, MATH::Vec3 origin_);
+
+	~Ray() = default;
+
+	MATH::Vec3 CurrentPosition(float t) const;
+
+	bool IsColliding()
+	{
+		return true;
+	}
+
+	std::string ToString() const;
 
 private:
 

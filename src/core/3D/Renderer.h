@@ -48,6 +48,8 @@ private:
 	static inline SkyBox* skyBox;
 	//GLuint currentGTexture;
 
+	bool IsMeshOnScreen(const MeshRenderer& mr) const;
+
 	void BindGBufferTextures() const;
 	void UnbindGBufferTextures() const;
 

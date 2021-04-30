@@ -20,7 +20,10 @@ Camera::Camera() : nearPlane(0.1f), farPlane(150.0f), zoom(60.0f), panSpeed(20.0
 
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
+	rotation.x = 3.14f;
+
 	invNDC = MMath::inverse(MMath::viewportNDC(viewport[2], viewport[3]));
+	rotationMatrix = MMath::lookAt(position, Forward(), Vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Camera::Update(float deltaTime)
@@ -81,7 +84,7 @@ Vec3 Camera::GetMouseVector(int x, int y) const
 
 void Camera::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 {
-	if(buttonType == SDL_BUTTON_LEFT)
+	if(buttonType == SDL_BUTTON_RIGHT)
 	{
 		mouseDown = true;
 		mouseStart = GetMouseVector(mouse.x, mouse.y);
@@ -90,7 +93,7 @@ void Camera::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 
 void Camera::OnMouseReleased(MATH::Vec2 mouse, int buttonType)
 {
-	if(buttonType == SDL_BUTTON_LEFT)
+	if(buttonType == SDL_BUTTON_RIGHT)
 	{
 		mouseDown = false;
 	}
@@ -125,23 +128,25 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 	rotation.x += (mouseEnd.y - mouseStart.y) * sensitivity * Timer::GetDeltaTime();
 	rotation.y += (mouseEnd.x - mouseStart.x) * sensitivity * Timer::GetDeltaTime();
 
-	if (rotation.x > 89.0f)
+	if (rotation.x < 1.5708f)
 	{
-		rotation.x = 89.0f;
+		rotation.x = 1.5708f;
 	}
-	if (rotation.x < -89.0f)
+	if (rotation.x > 4.71f)
 	{
-		rotation.x = -89.0f;
+		rotation.x = 4.71f;
 	}
 
-	//if(rotation.y > 360.0f)
-	//{
-	//	rotation.y -= 360.0f;
-	//}
-	//if(rotation.y < 0.0f)
-	//{
-	//	rotation.y += 360.0f;
-	//}
+	std::cout << rotation.x << std::endl;
+
+	if(rotation.y > 6.28319f)
+	{
+		rotation.y -= 6.28319f;
+	}
+	if(rotation.y < 0.0f)
+	{
+		rotation.y += 6.28319f;
+	}
 	
 	Vec3 direction;
 	direction.x = cos(rotation.y) * cos(rotation.x);

@@ -26,7 +26,7 @@ public:
 	/*!Enables the components to know what gameobject they are attached too*/
 	GameObject* gameobject;
 
-	bool active;
+	bool active = true;
 	//!Virtual Init Function
 	/*!Initializes all of the needed variables*/
 	virtual void Init(GameObject *g) = 0;
@@ -110,6 +110,8 @@ public:
 	//!isActive Setter
 	/*!Sets the gameobject as active or not*/
 	void SetActive(const bool a) { active = a; }
+
+	std::string GetName() const { return std::string(name); }
 
 	//!GetModelMatrix Getter
 	/*!Returns the gameobject model matrix*/

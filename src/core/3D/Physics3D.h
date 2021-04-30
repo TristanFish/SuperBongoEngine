@@ -5,6 +5,7 @@
 #include "MMath.h"
 #include "Ray.h"
 #include "components/3D/RigidBody3D.h"
+#include "custom/MouseRay.h"
 
 class Physics3D
 {
@@ -14,7 +15,6 @@ private:
 	static bool SphereBoxDetect(RigidBody3D& sphere, RigidBody3D& box);
 	static bool BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane);
 	static bool SpherePlaneDetect(RigidBody3D& sphere, RigidBody3D& plane);
-	static bool RayOBBDetect(const Ray& ray, const OrientedBoundingBox& obb);
 	static MATH::Vec3 CircleBoxClosestEdge(RigidBody3D& circle, RigidBody3D& box);
 
 
@@ -26,6 +26,7 @@ private:
 	
 public:
 	static bool DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2);
+	static bool RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb);
 
 };
 #endif

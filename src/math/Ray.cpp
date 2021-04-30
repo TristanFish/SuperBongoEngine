@@ -1,7 +1,9 @@
 
 #include "Ray.h"
 
-Ray::Ray(const MATH::Vec3 dir_, const MATH::Vec3 origin_)
+using namespace MATH;
+
+Ray::Ray(Vec3 dir_, Vec3 origin_)
 {
 	Direction = dir_;
 	Origin = origin_;
@@ -9,10 +11,19 @@ Ray::Ray(const MATH::Vec3 dir_, const MATH::Vec3 origin_)
 
 Ray::Ray()
 {
-	Direction = MATH::Vec3(0.0f);
-	Origin = MATH::Vec3(0.0f);
+	Direction = Vec3(0.0f);
+	Origin = Vec3(0.0f);
 }
 
-Ray::~Ray()
+Vec3 Ray::CurrentPosition(float t) const
 {
+	return Vec3(Origin + Direction * t);
+}
+
+std::string Ray::ToString() const
+{
+	std::string dir = "Dir: " + Direction.ToString();
+	std::string ori = "Ori: " + Origin.ToString();
+	
+	return dir.append(ori);
 }

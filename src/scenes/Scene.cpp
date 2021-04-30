@@ -3,7 +3,7 @@
 #include "custom/Plane.h"
 #include "custom/MouseRay.h"
 #include "core/Logger.h"
-
+#include "core/3D/Physics3D.h"
 
 
 using namespace MATH;
@@ -28,28 +28,38 @@ void Scene::OnMouseMove(MATH::Vec2 mouse)
 
 void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 {
-
-	 if (buttonType == SDL_BUTTON_LEFT)
-	 {
-		 mouseRay.CalaculateMouseRay();
-		 for (auto* obj : objectList->GetGameObjects())
-		 {
-			 if (obj->HasComponent<MeshRenderer>())
-			 {
-				if (CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
+	if (buttonType == SDL_BUTTON_LEFT)
+	{
+		mouseRay.CalaculateMouseRay();
+		GameObject* hitResult = nullptr;
+		float shortestDistance = FLT_MAX;
+		for (auto* obj : objectList->GetGameObjects())
+		{
+			if (obj->HasComponent<MeshRenderer>())
+			{
+				MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+				if (Physics3D::RayOBBDetect(mouseRay, mr->ABB))//(CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
 				{
-					EngineLogger::Info("Mouse hit " + std::string(obj->name), "Scene.cpp", __LINE__);
-					if (!obj->isMenuActive)
+					if(mouseRay.intersectionDist < shortestDistance)
 					{
-						CheckExistingPanel(obj);
-						propertiesPanels.push_back(new CustomUI::PropertiesPanel(obj));
+						hitResult = obj;
+						shortestDistance = mouseRay.intersectionDist;
 					}
-					obj->isMenuActive = true;
-					return;
 				}
-			 }
-		 }
-	 }
+			}
+		}
+
+		if(hitResult)
+		{
+			EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
+			if (!hitResult->isMenuActive)
+			{
+				CheckExistingPanel(hitResult);
+				propertiesPanels.push_back(new CustomUI::PropertiesPanel(hitResult));
+			}
+			hitResult->isMenuActive = true;
+		}
+	}
 }
 
 void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
@@ -84,37 +94,37 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 	 }
  }
 
- bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObject* obj) const
- {
-	 Vec3 bounds[2];
-	 bounds[0] = obj->GetComponent<MeshRenderer>()->GetMinVector();
+bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObject* obj) const
+{
+	Vec3 bounds[2];
+	bounds[0] = obj->GetComponent<MeshRenderer>()->GetMinVector();
 
 
-	 bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
+	bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
 
 	 
 			
-	 const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
-	 const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
+	const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
 																		
-	 float tmin = std::min(tx1, tx2);									
-	 float tmax = std::max(tx1, tx2);									
+	float tmin = std::min(tx1, tx2);									
+	float tmax = std::max(tx1, tx2);									
 																		
-	 const float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
-	 const float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	const float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
+	const float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
 																		 
-	 tmin = std::max(tmin, std::min(ty1, ty2));							 
-	 tmax = std::min(tmax, std::max(ty1, ty2));							 
+	tmin = std::max(tmin, std::min(ty1, ty2));							 
+	tmax = std::min(tmax, std::max(ty1, ty2));							 
 																		 
-	 const float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
-	 const float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	const float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
+	const float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
 
-	 tmin = std::max(tmin, std::min(tz1, tz2));
-	 tmax = std::min(tmax, std::max(tz1, tz2));
+	tmin = std::max(tmin, std::min(tz1, tz2));
+	tmax = std::min(tmax, std::max(tz1, tz2));
 
 
-	 return tmax >= tmin;
- }
+	return tmax >= tmin;
+}
 
 
 Scene::Scene() : name_(new char()), objectList(nullptr), pElement(nullptr)
@@ -146,59 +156,64 @@ Scene::~Scene()
 	propertiesPanels.clear();
 }
 
- void Scene::Update(const float deltaTime)
- {
-	 performancePanel.Update(deltaTime);
- }
+void Scene::Update(const float deltaTime)
+{
+	objectList->Update(deltaTime);
+	objectList->CheckCollisions();
+	performancePanel.Update(deltaTime);
+}
 
- void Scene::Render() const
- {
-	 ImGui::NewFrame();
-	 // Let's the use add game objects
+void Scene::Render() const
+{
+	ImGui::NewFrame();
+	// Let's the use add game objects
 
-	 for (size_t i = 0; i < propertiesPanels.size(); i++)
-	 {
-		 propertiesPanels[i]->Render();
-	 }
+	for (size_t i = 0; i < propertiesPanels.size(); i++)
+	{
+		propertiesPanels[i]->Render();
+	}
 
 	 performancePanel.Render();
 
-	 // Displays panel that allows user to add gameobjects at runtime
-	 bool enabled = true;
-	 static int objID = 2;
-	 ImGui::Begin("Add Game Object", &enabled);
-	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
+	// Displays panel that allows user to add gameobjects at runtime
+	bool enabled = true;
+	static int objID = 2;
+	ImGui::Begin("Add Game Object", &enabled);
+	ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 2);
 
-	 // Blank variables that can be changed 
-	 static Vec3 Pos_ = Vec3(0.0f);
-	 static Vec3 Rot_ = Vec3(0.0f);
-	 static Vec3 Scale_ = Vec3(1.0f);
+	// Blank variables that can be changed 
+	static Vec3 Pos_ = Vec3(0.0f);
+	static Vec3 Rot_ = Vec3(0.0f);
+	static Vec3 Scale_ = Vec3(1.0f);
 
 
-	 if (ImGui::InputText("Mesh Name", name_, 20))
-	 {
+	if (ImGui::InputText("Mesh Name", name_, 20))
+	{
 
-	 }
-	 ImGui::DragFloat3("Position", Pos_);
-	 ImGui::DragFloat3("Rotation", Rot_);
-	 ImGui::DragFloat3("Scale", Scale_, -1, 1);
-	 if (ImGui::Button("Create Object"))
-	 {
-		 CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
-		 Pos_ = Vec3(0.0f);
-		 Rot_ = Vec3(0.0f);
-		 Scale_ = Vec3(1.0f);
-	 }
-	 ImGui::End();
+	}
+	ImGui::DragFloat3("Position", Pos_);
+	ImGui::DragFloat3("Rotation", Rot_);
+	ImGui::DragFloat3("Scale", Scale_, -1, 1);
+	
+	if (ImGui::Button("Create Object"))
+	{
+		CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
+		Pos_ = Vec3(0.0f);
+		Rot_ = Vec3(0.0f);
+		Scale_ = Vec3(1.0f);
+	}
+	ImGui::End();
 
- }
+	objectList->Render();
+}
 
- void Scene::HandleEvents(const SDL_Event& event)
- {
-	 mouseRay.HandleEvents(event);
- }
+void Scene::HandleEvents(const SDL_Event& event)
+{
+	mouseRay.HandleEvents(event);
+	objectList->HandleEvents(event);
+}
 
- void Scene::SaveMapData() const
+void Scene::SaveMapData() const
 {
 	XMLDoc MapData;
 	XMLNode* pRoot = MapData.NewElement("Root");
@@ -379,4 +394,3 @@ void Scene::LoadMapData()
 		tempObject->SetScale(outScale);
 	}
 }
-

@@ -29,8 +29,9 @@ void MeshRenderer::Init(GameObject* g)
 
 	if(model)
 	{
-		ABB.maxVert = MMath::translate(g->transform.pos) * model->p_max * gameobject->transform.scale.x;
-		ABB.minVert = MMath::translate(g->transform.pos) * model->p_min * gameobject->transform.scale.x;
+		ABB.maxVert = model->p_max * gameobject->transform.scale.x;
+		ABB.minVert = model->p_min * gameobject->transform.scale.x;
+		ABB.transform = gameobject->transform.GetModelMatrix();
 		
 		std::cout << g->name << "'s max and min verts" << std::endl;
 		ABB.maxVert.print();
@@ -42,8 +43,19 @@ void MeshRenderer::Update(const float deltaTime)
 {
 	if(model)
 	{
-		ABB.maxVert = MMath::translate(gameobject->transform.pos) * model->p_max * gameobject->transform.scale.x;
-		ABB.minVert = MMath::translate(gameobject->transform.pos) * model->p_min * gameobject->transform.scale.x;
+		//assume uniform scale
+		float scale = gameobject->transform.scale.x;
+		//if(scale >= 1.0f)
+		//{
+		//	
+		//} else
+		//{
+		//	scale /= 2.0f;
+		//}
+		
+		ABB.maxVert = model->p_max * scale;
+		ABB.minVert = model->p_min * scale;
+		ABB.transform = gameobject->transform.GetModelMatrix();
 	}
 }
 
@@ -77,7 +89,6 @@ void MeshRenderer::Render() const
 		model->meshes[0].RenderInstanced(shader, model->meshes, instanceAmount);
 		glUseProgram(0);
     }
-
 }
 
 void MeshRenderer::Render(const ShaderProgram& shader) const
@@ -93,7 +104,6 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 	{
 		m.RenderRegular(shader);
 	}
-
 }
 
 
