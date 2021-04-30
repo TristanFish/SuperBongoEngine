@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "custom/TestModel.h"
-#include "custom/Plane.h"
+#include "custom/PlaneObject.h"
 #include "custom/MouseRay.h"
 #include "core/Logger.h"
 #include "core/3D/Physics3D.h"
@@ -38,7 +38,7 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 			if (obj->HasComponent<MeshRenderer>())
 			{
 				MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
-				if (Physics3D::RayOBBDetect(mouseRay, mr->ABB))//(CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
+				if (Physics3D::RayOBBDetect(mouseRay, mr->OBB))//(CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
 				{
 					if(mouseRay.intersectionDist < shortestDistance)
 					{
@@ -64,9 +64,9 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 
 void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
 {
-	if(strcmp(IDName, "Plane") == 0)
+	if(strcmp(IDName, "PlaneObject") == 0)
 	{
-		Plane* newPlane_ = new Plane(name_, pos_);
+		PlaneObject* newPlane_ = new PlaneObject(name_, pos_);
 		newPlane_->SetRotation(rot_);
 		newPlane_->SetScale(scale_);
 		objectList->AddGameObject(newPlane_);
@@ -339,10 +339,10 @@ void Scene::LoadMapData()
 				objectList->AddGameObject(tempObject);
 
 			}
-			if (strcmp(outID, "Plane") == 0)
+			if (strcmp(outID, "PlaneObject") == 0)
 			{
 				// Add's a new gamobject to the scene
-				tempObject = new Plane(objectName, Vec3(0.0f, 0.0f, 0.0f));
+				tempObject = new PlaneObject(objectName, Vec3(0.0f, 0.0f, 0.0f));
 				objectList->AddGameObject(tempObject);
 
 			}
@@ -382,7 +382,6 @@ void Scene::LoadMapData()
 
 			tempObject->GetComponent<MeshRenderer>()->SetColorTint(outColor);
 		}
-
 
 		if (eResult != XML_SUCCESS)
 		{

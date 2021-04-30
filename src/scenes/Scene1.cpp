@@ -5,7 +5,7 @@
 #include "core/Logger.h"
 #include "custom/LightObject.h"
 #include "custom/Bird.h"
-#include "custom/Plane.h"
+#include "custom/PlaneObject.h"
 #include "custom/Grass.h"
 
 const char* GetType(GameObject& go)
@@ -22,8 +22,8 @@ bool Scene1::OnCreate()
 	Player* player = new Player("Player", MATH::Vec3(0.0f, 20.0f, 70.0f));
 
 	//Grass* grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
-	Plane* plane = new Plane("FirstPlane", MATH::Vec3(0.0f, 0.0f, 10.0f));
-	Plane* plane2 = new Plane("SecondPlane", MATH::Vec3(0.0f, 0.0f, -10.0f));
+	PlaneObject* plane = new PlaneObject("FirstPlane", MATH::Vec3(0.0f, 0.0f, 10.0f));
+	PlaneObject* plane2 = new PlaneObject("SecondPlane", MATH::Vec3(0.0f, 0.0f, -10.0f));
 	//TestModel* fog = new TestModel("Fog", MATH::Vec3(0.0f, 1000.0f, 0.0f));
 	LightObject* light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
 	//Bird* bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));

@@ -29,13 +29,9 @@ void MeshRenderer::Init(GameObject* g)
 
 	if(model)
 	{
-		ABB.maxVert = model->p_max * gameobject->transform.scale.x;
-		ABB.minVert = model->p_min * gameobject->transform.scale.x;
-		ABB.transform = gameobject->transform.GetModelMatrix();
-		
-		std::cout << g->name << "'s max and min verts" << std::endl;
-		ABB.maxVert.print();
-		ABB.minVert.print();
+		OBB.maxVert = model->p_max * gameobject->transform.scale.x;
+		OBB.minVert = model->p_min * gameobject->transform.scale.x;
+		OBB.transform = gameobject->transform.GetModelMatrix();
 	}
 }
 
@@ -53,9 +49,9 @@ void MeshRenderer::Update(const float deltaTime)
 		//	scale /= 2.0f;
 		//}
 		
-		ABB.maxVert = model->p_max * scale;
-		ABB.minVert = model->p_min * scale;
-		ABB.transform = gameobject->transform.GetModelMatrix();
+		OBB.maxVert = model->p_max * scale;
+		OBB.minVert = model->p_min * scale;
+		OBB.transform = gameobject->transform.GetModelMatrix();
 	}
 }
 

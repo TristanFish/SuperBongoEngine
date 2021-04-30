@@ -10,6 +10,7 @@ class Ray
 public:
 	MATH::Vec3 Direction;
 	MATH::Vec3 Origin;
+	float distance;
 
 	Ray();
 

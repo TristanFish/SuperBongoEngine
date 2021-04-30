@@ -12,6 +12,7 @@ Camera* Camera::instance;
 
 Camera::Camera() : nearPlane(0.1f), farPlane(150.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
 {
+	position.z = 100.0f;
 
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
 	perspecProjMatrix = MMath::perspective(zoom, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), nearPlane, farPlane);
@@ -21,9 +22,16 @@ Camera::Camera() : nearPlane(0.1f), farPlane(150.0f), zoom(60.0f), panSpeed(20.0
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
 	rotation.x = 3.14f;
+	rotation.y = 1.57f;
+	Vec3 direction;
+	direction.x = cos(rotation.y) * cos(rotation.x);
+	direction.y = sin(rotation.x);
+	direction.z = sin(rotation.y) * cos(rotation.x);
+	direction = VMath::normalize(direction);
+	rotationMatrix = MMath::lookAt(Vec3(), direction, Vec3(0.0f, 1.0f, 0.0f));
 
 	invNDC = MMath::inverse(MMath::viewportNDC(viewport[2], viewport[3]));
-	rotationMatrix = MMath::lookAt(position, Forward(), Vec3(0.0f, 1.0f, 0.0f));
+	viewMatrix = MMath::inverse(MMath::translate(position) * rotationMatrix);
 }
 
 void Camera::Update(float deltaTime)
@@ -136,8 +144,6 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 	{
 		rotation.x = 4.71f;
 	}
-
-	std::cout << rotation.x << std::endl;
 
 	if(rotation.y > 6.28319f)
 	{

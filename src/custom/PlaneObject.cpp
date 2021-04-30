@@ -1,15 +1,15 @@
-#include "Plane.h"
+#include "PlaneObject.h"
 
 using namespace MATH;
 
 
 
-Plane::Plane(const char* name, Vec3 position)
+PlaneObject::PlaneObject(const char* name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Plane.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	
-	//AddComponent<RigidBody3D>()->collisionEnterCallback = std::bind(&Plane::OnCollisionEnter, this, std::placeholders::_1);
+	//AddComponent<RigidBody3D>()->collisionEnterCallback = std::bind(&PlaneObject::OnCollisionEnter, this, std::placeholders::_1);
 	
 	this->name = name;
 	transform.SetPos(position);
@@ -19,7 +19,7 @@ Plane::Plane(const char* name, Vec3 position)
 	transform.rotation.print();
 }
 
-void Plane::OnCollisionEnter(RigidBody3D& otherBody)
+void PlaneObject::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << "Plane Collided with something" << std::endl;
+	std::cout << "PlaneObject Collided with something" << std::endl;
 }

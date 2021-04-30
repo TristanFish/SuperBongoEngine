@@ -370,7 +370,6 @@
     </ClInclude>
     <ClInclude Include="src\custom\TestModel.h" />
     <ClInclude Include="src\core\Debug.h" />
-    <ClInclude Include="src\custom\Plane.h" />
     <ClInclude Include="src\components\3D\Collider3D.h" />
     <ClInclude Include="src\custom\Grass.h" />
     <ClInclude Include="src\core\Globals.h" />
@@ -499,6 +498,9 @@
     <ClInclude Include="src\components\AudioSourceComponent.h" />
     <ClInclude Include="src\core\MouseEventDispatcher.h" />
     <ClInclude Include="src\core\MouseEventListener.h" />
+    <ClInclude Include="src\custom\PlaneObject.h" />
+    <ClInclude Include="src\math\Plane.h" />
+    <ClInclude Include="src\core\OctSpatialPartition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -539,7 +541,6 @@
     </ClCompile>
     <ClCompile Include="src\custom\TestModel.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
-    <ClCompile Include="src\custom\Plane.cpp" />
     <ClCompile Include="src\custom\Grass.cpp" />
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\components\3D\LightComponent.cpp" />
@@ -581,6 +582,9 @@
     <ClCompile Include="src\components\AudioSourceComponent.cpp" />
     <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
     <ClCompile Include="src\core\MouseEventListener.cpp" />
+    <ClCompile Include="src\custom\PlaneObject.cpp" />
+    <ClCompile Include="src\math\Plane.cpp" />
+    <ClCompile Include="src\core\OctSpatialPartition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

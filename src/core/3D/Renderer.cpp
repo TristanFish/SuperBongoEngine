@@ -4,6 +4,8 @@
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
+
+#include "../../../Plane.h"
 #include "custom/SkyBox.h"
 #include "core/ShaderManager.h"
 
@@ -133,7 +135,7 @@ void Renderer::Render() const
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
 
-		if(IsMeshOnScreen(*meshRenderers[i]))
+		if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
 			EngineLogger::Info(meshRenderers[i]->gameobject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
 			continue;
@@ -228,11 +230,101 @@ SkyBox* Renderer::GetSkyBox()
 }
 
 
-bool Renderer::IsMeshOnScreen(const MeshRenderer& mr) const
+bool Renderer::IsMeshOnScreen(const MeshRenderer& mr)
 {
-	OrientedBoundingBox obb = mr.ABB;
+	OrientedBoundingBox obb = mr.OBB;
 
-	return true;
+	Camera* cam = Camera::getInstance();
+	Matrix4 projViewMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
+
+
+	Vec3 PVMPos = projViewMatrix * obb.transform.getColumn(3);
+	//vertices[0] = projViewMatrix * obb.transform * obb.maxVert;
+	//vertices[1] = projViewMatrix * obb.transform * obb.minVert;
+	//vertices[2] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.maxVert.z); //
+	//vertices[3] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.minVert.z); //
+	//vertices[4] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.maxVert.y, obb.minVert.z); //
+	//vertices[5] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.minVert.y, obb.maxVert.z); //
+	//vertices[6] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.maxVert.z); //
+	//vertices[7] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.minVert.z); //
+
+	//Get frustum planes
+	Plane frustumPlanes[6];
+
+	
+
+	///	0  4  8  12
+	///	1  5  9  13
+	///	2  6  10 14
+	///	3  7  11 15
+
+	// 11  12  13  14
+	// 21  22  23  24
+	// 31  32  33  34
+	// 41  42  43  44
+	
+	//Left & Right
+	frustumPlanes[0] = Plane(projViewMatrix[3] + projViewMatrix[0], 
+							 projViewMatrix[7] + projViewMatrix[4], 
+							 projViewMatrix[11] + projViewMatrix[8], 
+							 projViewMatrix[15] + projViewMatrix[12]);
+	frustumPlanes[1] = Plane(projViewMatrix[3] - projViewMatrix[0], 
+							 projViewMatrix[7] - projViewMatrix[4], 
+							 projViewMatrix[11] - projViewMatrix[8], 
+							 projViewMatrix[15] - projViewMatrix[12]);
+
+	//Bottom & Top
+	frustumPlanes[2] = Plane(projViewMatrix[3] + projViewMatrix[1], 
+							 projViewMatrix[7] + projViewMatrix[5], 
+							 projViewMatrix[11] + projViewMatrix[9], 
+							 projViewMatrix[15] + projViewMatrix[13]);
+	frustumPlanes[3] = Plane(projViewMatrix[3] - projViewMatrix[1], 
+							 projViewMatrix[7] - projViewMatrix[5], 
+							 projViewMatrix[11] - projViewMatrix[9], 
+							 projViewMatrix[15] - projViewMatrix[13]);
+
+	//Near & Far
+	frustumPlanes[4] = Plane(projViewMatrix[3] + projViewMatrix[2], 
+							 projViewMatrix[7] + projViewMatrix[6], 
+							 projViewMatrix[11] + projViewMatrix[10], 
+							 projViewMatrix[15] + projViewMatrix[14]);
+	frustumPlanes[5] = Plane(projViewMatrix[3] - projViewMatrix[2], 
+							 projViewMatrix[7] - projViewMatrix[6], 
+							 projViewMatrix[11] - projViewMatrix[10], 
+							 projViewMatrix[15] - projViewMatrix[14]);
+	frustumPlanes[0].Normalize();
+	frustumPlanes[1].Normalize();
+	frustumPlanes[2].Normalize();
+	frustumPlanes[3].Normalize();
+	frustumPlanes[4].Normalize();
+	frustumPlanes[5].Normalize();
+	
+	bool isVertexInsideAllPlanes = true;
+
+	//loop foreach plane
+	for(int j = 0; j < 6; j++)
+	{
+		//if any vertex is outside any plane this vertex cannot be inside the frustum
+		if(frustumPlanes[j].DistanceFromPoint(PVMPos) < 0)
+		{
+			isVertexInsideAllPlanes = false;
+		}
+
+		//if this vertex is outside of any planes stop checking planes and move onto the next vertex
+		if(isVertexInsideAllPlanes == false)
+		{
+			break;
+		}
+	}
+	
+	//if any vertex is inside all planes then this mesh should be rendered
+	if(isVertexInsideAllPlanes == true)
+	{
+		return true;
+	}
+
+
+	return false;
 }
 
 //Binds all the gBuffer textures

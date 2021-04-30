@@ -40,7 +40,7 @@ public:
 	/*!This is the corresponding shader used in this MeshRenderer*/
 	ShaderProgram shader;
 
-	OrientedBoundingBox ABB;
+	OrientedBoundingBox OBB;
 	
 	MeshRenderer();
 	virtual ~MeshRenderer() = default;
@@ -96,11 +96,11 @@ public:
 
 	//!GetMinVector Getter
 	/*!Returns the meshes minimum bounding vector*/
-	MATH::Vec3 GetMinVector() const  { return ABB.minVert; }
+	MATH::Vec3 GetMinVector() const  { return OBB.minVert; }
 
 	 //!GetMaxVector Getter
 	 /*!Returns the meshes maximum bounding vector*/
-	MATH::Vec3 GetMaxVector() const { return ABB.maxVert; }
+	MATH::Vec3 GetMaxVector() const { return OBB.maxVert; }
 
 	 //!MeshColorTint Vec4
 	 /*!Stores the color of the mesh*/
