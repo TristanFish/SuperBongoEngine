@@ -84,6 +84,8 @@ Manager::~Manager()
 
 void Manager::Init()
 {
+	osp = OctSpatialPartition(500);
+	
 	for(GameObject* go : gameObjects)
 	{
 		go->Init();
@@ -164,7 +166,9 @@ GameObject& Manager::AddGameObject(GameObject* go)
 	}
 	if (go->HasComponent<MeshRenderer>())
 	{
-		renderer.AddMeshRenderer(go->GetComponent<MeshRenderer>());
+		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+		renderer.AddMeshRenderer(mr);
+		osp.AddObject(mr);
 	}
 	if (go->HasComponent<LightComponent>())
 	{

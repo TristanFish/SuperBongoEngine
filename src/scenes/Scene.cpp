@@ -31,6 +31,8 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
 		mouseRay.CalaculateMouseRay();
+
+		//GameObject* hitResult = objectList->osp.GetCollision(mouseRay);
 		GameObject* hitResult = nullptr;
 		float shortestDistance = FLT_MAX;
 		for (auto* obj : objectList->GetGameObjects())

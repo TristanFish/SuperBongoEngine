@@ -5,7 +5,7 @@
 #include "core/Debug.h"
 #include <sdl/SDL.h>
 
-#include "../../../Plane.h"
+#include "math/Plane.h"
 #include "custom/SkyBox.h"
 #include "core/ShaderManager.h"
 

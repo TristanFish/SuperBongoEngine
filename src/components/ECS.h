@@ -10,6 +10,7 @@
 #include "sdl/SDL.h"
 #include "core/3D/Renderer.h"
 #include "core/Logger.h"
+#include "core/OctSpatialPartition.h"
 
 class GameObject;
 class RigidBody3D;
@@ -237,7 +238,9 @@ private:
 	//! Renderer 
 	/*! Handles the rendering of all the gameobjects*/
 	Renderer renderer;
+
 public:
+	OctSpatialPartition osp;
 
 	//! Manager Destructor
 	/*! Destroys all of the gameobjects and clears all vectors used by this class*/
