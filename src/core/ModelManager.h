@@ -14,8 +14,8 @@ public:
 
 	//! Static DestroyAllModels Function
 	/*!  Destroys all of the models in the "models" unordered_map */
-	static void DestroyAllModels();
 private:
+	static void DestroyAllModels();
 
 	//! Static Models unordered_map
 	/*!  Stores all of the models in our scene */

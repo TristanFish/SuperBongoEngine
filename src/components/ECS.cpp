@@ -168,7 +168,7 @@ GameObject& Manager::AddGameObject(GameObject* go)
 	{
 		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
 		renderer.AddMeshRenderer(mr);
-		osp.AddObject(mr);
+		//osp.AddObject(mr);
 	}
 	if (go->HasComponent<LightComponent>())
 	{

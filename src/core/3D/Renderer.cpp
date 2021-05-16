@@ -137,7 +137,7 @@ void Renderer::Render() const
 
 		if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
-			EngineLogger::Info(meshRenderers[i]->gameobject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
+			//EngineLogger::Info(meshRenderers[i]->gameobject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
 			continue;
 		}
 
