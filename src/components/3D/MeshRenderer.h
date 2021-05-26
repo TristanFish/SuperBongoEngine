@@ -19,10 +19,12 @@ enum RenderProperties : unsigned short
 	OVERRIDE_RENDERER	= 0b10000000
 };
 
-//inline constexpr char operator&(RenderProperties rp1, RenderProperties rp2)
-//{
-//	return (static_cast<char>(rp1) & static_cast<char>(rp2));
-//}
+struct OrientedBoundingBox
+{
+	MATH::Vec3 maxVert;
+	MATH::Vec3 minVert;
+	MATH::Matrix4 transform;
+};
 
 
 //!MeshRenderer Class
@@ -36,8 +38,10 @@ public:
 
 	//!Shader
 	/*!This is the corresponding shader used in this MeshRenderer*/
-	 ShaderProgram shader;
+	ShaderProgram shader;
 
+	OrientedBoundingBox OBB;
+	
 	MeshRenderer();
 	virtual ~MeshRenderer() = default;
 
@@ -92,11 +96,11 @@ public:
 
 	//!GetMinVector Getter
 	/*!Returns the meshes minimum bounding vector*/
-	MATH::Vec3 GetMinVector() const  { return model->p_min; }
+	MATH::Vec3 GetMinVector() const  { return OBB.minVert; }
 
 	 //!GetMaxVector Getter
 	 /*!Returns the meshes maximum bounding vector*/
-	MATH::Vec3 GetMaxVector() const { return model->p_max; }
+	MATH::Vec3 GetMaxVector() const { return OBB.maxVert; }
 
 	 //!MeshColorTint Vec4
 	 /*!Stores the color of the mesh*/
@@ -118,6 +122,8 @@ public:
 	/*!Sets the instanceAmount variable*/
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
+
+	
 
 private:
 

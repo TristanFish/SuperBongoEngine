@@ -2,6 +2,8 @@
 
 std::unique_ptr<InputManager> InputManager::instance = nullptr;
 
+using namespace MATH;
+
 InputManager* InputManager::GetInstance()
 {
 	if (instance.get() == nullptr)
@@ -28,23 +30,17 @@ void InputManager::PollEvents(SDL_Event& event)
 		keys[event.key.keysym.sym] = false;
 	}
 
-	if (event.type == SDL_MOUSEBUTTONDOWN)
-	{
-		mouseButtons[event.button.button] = true;
-	}
+	int mousex;
+	int mousey;
+	
+	Uint32 mouseButton = SDL_GetMouseState(&mousex, &mousey);
 
-	if (event.type == SDL_MOUSEBUTTONUP)
-	{
-		mouseButtons[event.button.button] = false;
-	}
+	mouse.prevPosition = mouse.position;
+	mouse.position = Vec2(mousex, mousey);
+	
 }
 
 bool InputManager::GetKey(SDL_Keycode key)
 {
 	return keys[key];
-}
-
-bool InputManager::GetMouseButton(Uint8 mouseButton)
-{
-	return mouseButtons[mouseButton];
 }

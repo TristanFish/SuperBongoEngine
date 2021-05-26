@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\OctSpatialPartition.h" />
+    <ClInclude Include="src\math\Plane.h" />
+    <ClInclude Include="src\core\MouseEventListener.h" />
+    <ClInclude Include="src\core\MouseEventDispatcher.h" />
     <ClInclude Include="src\graphics\ShaderProgram.h" />
     <ClInclude Include="src\core\ShaderManager.h" />
     <ClInclude Include="src\scenes\Scene2.h" />
@@ -141,7 +145,7 @@
     <ClInclude Include="src\core\Globals.h" />
     <ClInclude Include="src\custom\LightObject.h" />
     <ClInclude Include="src\custom\MouseRay.h" />
-    <ClInclude Include="src\custom\Primitives\Plane.h" />
+    <ClInclude Include="src\custom\Primitives\PlaneObject.h" />
     <ClInclude Include="src\core\Debug.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\core\3D\Renderer.h" />
@@ -265,6 +269,10 @@
     <ClInclude Include="src\custom\Rendering\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\OctSpatialPartition.cpp" />
+    <ClCompile Include="src\math\Plane.cpp" />
+    <ClCompile Include="src\core\MouseEventListener.cpp" />
+    <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
     <ClCompile Include="src\core\ShaderManager.cpp" />
     <ClCompile Include="src\scenes\Scene2.cpp" />
@@ -298,7 +306,7 @@
     <ClCompile Include="src\core\Globals.cpp" />
     <ClCompile Include="src\custom\LightObject.cpp" />
     <ClCompile Include="src\custom\MouseRay.cpp" />
-    <ClCompile Include="src\custom\Primitives\Plane.cpp" />
+    <ClCompile Include="src\custom\Primitives\PlaneObject.cpp" />
     <ClCompile Include="src\core\Debug.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\core\3D\Renderer.cpp" />

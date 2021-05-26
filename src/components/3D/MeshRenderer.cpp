@@ -5,7 +5,7 @@
 
 using namespace MATH;
 
-MeshRenderer::MeshRenderer() : renderFlags(RenderProperties::LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+MeshRenderer::MeshRenderer() : renderFlags(LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
 bool MeshRenderer::LoadModel(const char* name)
 {
@@ -26,9 +26,34 @@ void MeshRenderer::CreateShader(const char* vert, const char* frag)
 void MeshRenderer::Init(GameObject* g)
 {
 	gameobject = g;
+
+	if(model)
+	{
+		OBB.maxVert = model->p_max * gameobject->transform.scale.x;
+		OBB.minVert = model->p_min * gameobject->transform.scale.x;
+		OBB.transform = gameobject->transform.GetModelMatrix();
+	}
 }
 
-void MeshRenderer::Update(const float deltaTime) { }
+void MeshRenderer::Update(const float deltaTime)
+{
+	if(model)
+	{
+		//assume uniform scale
+		float scale = gameobject->transform.scale.x;
+		//if(scale >= 1.0f)
+		//{
+		//	
+		//} else
+		//{
+		//	scale /= 2.0f;
+		//}
+		
+		OBB.maxVert = model->p_max * scale;
+		OBB.minVert = model->p_min * scale;
+		OBB.transform = gameobject->transform.GetModelMatrix();
+	}
+}
 
 void MeshRenderer::Render() const
 {
@@ -60,7 +85,6 @@ void MeshRenderer::Render() const
 		model->meshes[0].RenderInstanced(shader, model->meshes, instanceAmount);
 		glUseProgram(0);
     }
-
 }
 
 void MeshRenderer::Render(const ShaderProgram& shader) const
@@ -76,7 +100,6 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 	{
 		m.RenderRegular(shader);
 	}
-
 }
 
 

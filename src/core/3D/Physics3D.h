@@ -3,7 +3,9 @@
 
 #include "math/VMath.h"
 #include "MMath.h"
+#include "Ray.h"
 #include "components/3D/RigidBody3D.h"
+#include "custom/MouseRay.h"
 
 class Physics3D
 {
@@ -24,6 +26,7 @@ private:
 	
 public:
 	static bool DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2);
+	static bool RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb);
 
 };
 #endif

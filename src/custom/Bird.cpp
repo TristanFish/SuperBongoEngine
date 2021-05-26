@@ -11,8 +11,8 @@ Bird::Bird(const char* name, MATH::Vec3 position) {
 	this->name = name;
 	this->transform.pos = position;
 
-	this->transform.SetRot(MATH::Vec3(-90.0f, 0.0f, 90.0f));
-	this->transform.scale = MATH::Vec3(0.01f, 0.01f, 0.01f);
-	this->transform.SetPos(MATH::Vec3(0.0f, 6.0f, 0.0f));
+	this->transform.SetRot(MATH::Vec3(0.0f, 0.0f, 90.0f));
+	this->transform.scale = MATH::Vec3(0.1f, 0.1f, 0.1f);
+	this->transform.SetPos(MATH::Vec3(0.0f, 6.0f, 20.0f));
 
 }
