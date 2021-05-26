@@ -11,7 +11,8 @@ public:
 	{
 		Sphere	 = 0b0001,
 		AABB	 = 0b0010,
-        Plane    = 0b0100 
+        Plane    = 0b0100,
+		OBB		 = 0b1000
 	};
 
 	friend inline constexpr Collider3D::type operator | (Collider3D::type x, Collider3D::type y)
@@ -20,7 +21,8 @@ public:
 	}
 
 	type colliderType;
-	bool isMoveable, isTrigger,isWiremesh;
+	bool isMoveable, isTrigger;
+
 	MATH::Vec3 size;
 	MATH::Vec3 minVertices,maxVertices;
 
@@ -30,7 +32,6 @@ public:
 		colliderType = type::AABB;
 		isMoveable = true;
 		isTrigger = false;
-		//isWiremesh = false;
 		size = MATH::Vec3(1.0f, 1.0f, 1.0f);
 	}
 };

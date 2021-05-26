@@ -7,14 +7,15 @@
 #include "graphics/CustomUI.h"
 #include "graphics/Window.h"
 #include "Timer.h"
-#include "sdl/SDL.h"
 #include "scenes/Scene.h"
-#include <Windows.h>
+#include "core/MouseEventDispatcher.h"
 #include "core/Logger.h"
 #include "scenes/Scene1.h"
 #include "core/GameInterface.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl.h"
+#include <sdl/SDL.h>
+#include <Windows.h>
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -78,6 +79,8 @@ bool CoreEngine::Init()
 		return false;
 	}
 
+	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
+	
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 
@@ -133,7 +136,10 @@ void CoreEngine::HandleEvents()
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
 		InputManager::GetInstance()->PollEvents(event);
+		MouseEventDispatcher::Update(event);
+		
 
+		
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
 			isRunning = false;

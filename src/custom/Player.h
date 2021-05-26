@@ -34,27 +34,6 @@ private:
 	//!turnSpeed float
 	/*! Holds how fast the player will turn */
 	const float turnSpeed;
-
-	//!mouseDown boolean
-	/*! Changes when the mouse down state gets changed */
-	bool mouseDown;
-
-	//!mouseStart Vector3
-	/*! Used for detecting trackball player rotation */
-	MATH::Vec3 mouseStart;
-
-	//!mouseEnd Vector3
-	/*! Used for detecting trackball player rotation  */
-	MATH::Vec3 mouseEnd;
-
-	//!lookMatrix Matrix4
-	/*! Used for detecting trackball player rotation  */
-	MATH::Matrix4 lookMatrix;
-
-
-	//!OnMouseMove
-	/*! Moves/rotates the player with the mouse*/
-	void OnMouseMove(int x, int y);
 };
 
 #endif

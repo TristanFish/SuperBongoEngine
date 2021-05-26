@@ -4,19 +4,26 @@
 #include "Vector.h"
 class Ray
 {
-
 	
-
 public:
-	MATH::Vec3 direction;
-
-	MATH::Vec3 origin;
-
-	Ray(const MATH::Vec3 dir_, const MATH::Vec3 origin_);
+	MATH::Vec3 Direction;
+	MATH::Vec3 Origin;
+	float distance;
 
 	Ray();
 
-	~Ray();
+	Ray(MATH::Vec3 dir_, MATH::Vec3 origin_);
+
+	~Ray() = default;
+
+	MATH::Vec3 CurrentPosition(float t) const;
+
+	bool IsColliding()
+	{
+		return true;
+	}
+
+	std::string ToString() const;
 
 private:
 

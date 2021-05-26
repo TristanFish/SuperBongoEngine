@@ -2,8 +2,9 @@
 #define VECTOR_H
 #include <cmath>
 #include <iostream>
+#include <string>
 
-		/// Used for passing exceptions 
+/// Used for passing exceptions 
 		///
 		/// Vec3 definitions followed by Vec4 
 		/// There are notes at the bottom of this file you might want to read
@@ -48,9 +49,22 @@ namespace MATH {
 			return Vec2(x / v.x, y / v.y);
 		}
 
+		inline const Vec2 operator + (const Vec2& v) const
+		{
+			return Vec2(x + v.x, y + v.y);
+		}
+		inline const Vec2 operator - (const Vec2& v) const
+		{
+			return Vec2(x - v.x, y - v.y);
+		}
+		
 		inline const Vec2  operator * (const float s) const {
 			return Vec2(s * x, s * y);
 		}
+		inline const Vec2  operator / (const float s) const {
+			return Vec2(x / s, y / s);
+		}
+
 		inline const Vec2  operator - (const float s) const {
 			return Vec2(s - x, s - y);
 		}
@@ -185,6 +199,18 @@ namespace MATH {
 
 		inline operator float* () {
 			return static_cast<float*>(&x);
+		}
+
+		std::string ToString() const
+		{
+			using namespace std;
+			string s = to_string(x);
+			s.append(", ");
+			s.append(to_string(y));
+			s.append(", ");
+			s.append(to_string(z));
+			
+			return s;
 		}
 
 	};

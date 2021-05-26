@@ -492,7 +492,7 @@
     <ClInclude Include="src\graphics\ShaderProgram.h" />
     <ClInclude Include="src\components\AudioListenerComponent.h" />
     <ClInclude Include="src\components\AudioSourceComponent.h" />
-    <ClInclude Include="src\custom\Primitives\Plane.h" />
+    <ClInclude Include="src\custom\Primitives\PlaneObject.h" />
     <ClInclude Include="src\custom\Rendering\Water.h" />
     <ClInclude Include="src\custom\Rendering\SkyBox.h" />
     <ClInclude Include="src\custom\Rendering\Instancer.h" />
@@ -500,6 +500,10 @@
     <ClInclude Include="src\custom\Primitives\Sphere.h" />
     <ClInclude Include="src\custom\Primitives\Box.h" />
     <ClInclude Include="src\custom\Primitives\Primitives.h" />
+    <ClInclude Include="src\core\MouseEventDispatcher.h" />
+    <ClInclude Include="src\core\MouseEventListener.h" />
+    <ClInclude Include="src\math\Plane.h" />
+    <ClInclude Include="src\core\OctSpatialPartition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\math\VMath.cpp">
@@ -575,13 +579,17 @@
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
     <ClCompile Include="src\components\AudioListenerComponent.cpp" />
     <ClCompile Include="src\components\AudioSourceComponent.cpp" />
-    <ClCompile Include="src\custom\Primitives\Plane.cpp" />
+    <ClCompile Include="src\custom\Primitives\PlaneObject.cpp" />
     <ClCompile Include="src\custom\Rendering\Water.cpp" />
     <ClCompile Include="src\custom\Rendering\SkyBox.cpp" />
     <ClCompile Include="src\custom\Rendering\Instancer.cpp" />
     <ClCompile Include="src\custom\Rendering\Camera.cpp" />
     <ClCompile Include="src\custom\Primitives\Sphere.cpp" />
     <ClCompile Include="src\custom\Primitives\Box.cpp" />
+    <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
+    <ClCompile Include="src\core\MouseEventListener.cpp" />
+    <ClCompile Include="src\math\Plane.cpp" />
+    <ClCompile Include="src\core\OctSpatialPartition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
