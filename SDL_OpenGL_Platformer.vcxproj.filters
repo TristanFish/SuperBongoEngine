@@ -306,18 +306,6 @@
     <ClInclude Include="external\include\sdl\SDL_vulkan.h">
       <Filter>external\include\sdl</Filter>
     </ClInclude>
-    <ClInclude Include="src\math\VMath.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Vector.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\MMath.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\math\Matrix.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="external\include\glew\eglew.h">
       <Filter>external\include\glew</Filter>
     </ClInclude>
@@ -330,53 +318,6 @@
     <ClInclude Include="external\include\glew\wglew.h">
       <Filter>external\include\glew</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ECS.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\Components.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Window.h">
-      <Filter>src\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scenes\Scene.h">
-      <Filter>src\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scenes\Scene1.h">
-      <Filter>src\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\Transform.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Shader.h" />
-    <ClInclude Include="src\core\Timer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\custom\Player.h" />
-    <ClInclude Include="src\components\3D\RigidBody3D.h" />
-    <ClInclude Include="src\components\2D\RigidBodyComponent.h" />
-    <ClInclude Include="src\components\2D\SpriteComponent.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\2D\Physics2D.h" />
-    <ClInclude Include="src\core\3D\Physics3D.h" />
-    <ClInclude Include="src\components\3D\MeshRenderer.h" />
-    <ClInclude Include="src\components\2D\Collider.h" />
-    <ClInclude Include="src\graphics\Vertex.h" />
-    <ClInclude Include="src\graphics\Mesh.h" />
-    <ClInclude Include="src\graphics\Texture.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="src\custom\TestModel.h" />
-    <ClInclude Include="src\core\Debug.h" />
-    <ClInclude Include="src\components\3D\Collider3D.h" />
-    <ClInclude Include="src\custom\Grass.h" />
-    <ClInclude Include="src\core\Globals.h" />
-    <ClInclude Include="src\components\3D\LightComponent.h" />
-    <ClInclude Include="src\custom\LightObject.h" />
-    <ClInclude Include="src\core\ModelManager.h" />
-    <ClInclude Include="src\core\TextureManager.h" />
-    <ClInclude Include="src\core\3D\Renderer.h" />
     <ClInclude Include="external\include\imgui\imconfig.h" />
     <ClInclude Include="external\include\imgui\imgui.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
@@ -385,13 +326,6 @@
     <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\include\imgui\imstb_textedit.h" />
     <ClInclude Include="external\include\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\custom\MouseRay.h" />
-    <ClInclude Include="src\graphics\Model.h" />
-    <ClInclude Include="src\math\Ray.h" />
-    <ClInclude Include="src\graphics\CustomUI.h" />
-    <ClInclude Include="src\audio\AudioManager.h" />
-    <ClInclude Include="src\audio\AudioUtility.h" />
-    <ClInclude Include="src\audio\SoundAttributes.h" />
     <ClInclude Include="external\include\fmod\fmod.h" />
     <ClInclude Include="external\include\fmod\fmod.hpp" />
     <ClInclude Include="external\include\fmod\fmod_codec.h" />
@@ -477,119 +411,185 @@
     <ClInclude Include="external\include\assimp\Vertex.h" />
     <ClInclude Include="external\include\assimp\XMLTools.h" />
     <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
-    <ClInclude Include="src\core\InputManager.h" />
-    <ClInclude Include="src\math\Quaternion.h" />
-    <ClInclude Include="src\External\tinyxml2.h" />
-    <ClInclude Include="src\custom\Bird.h" />
-    <ClInclude Include="src\core\Logger.h" />
-    <ClInclude Include="src\core\CoreEngine.h">
+    <ClInclude Include="external\include\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="game\Game1.h" />
+    <ClInclude Include="engine\audio\AudioManager.h" />
+    <ClInclude Include="engine\audio\AudioUtility.h" />
+    <ClInclude Include="engine\audio\SoundAttributes.h" />
+    <ClInclude Include="engine\components\2D\Collider.h" />
+    <ClInclude Include="engine\components\2D\RigidBodyComponent.h" />
+    <ClInclude Include="engine\components\2D\SpriteComponent.h">
+      <Filter>src\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\Collider3D.h" />
+    <ClInclude Include="engine\components\3D\LightComponent.h" />
+    <ClInclude Include="engine\components\3D\MeshRenderer.h" />
+    <ClInclude Include="engine\components\3D\RigidBody3D.h" />
+    <ClInclude Include="engine\components\AudioListenerComponent.h" />
+    <ClInclude Include="engine\components\AudioSourceComponent.h" />
+    <ClInclude Include="engine\components\Components.h">
+      <Filter>src\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\ECS.h">
+      <Filter>src\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Transform.h">
+      <Filter>src\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\2D\Physics2D.h" />
+    <ClInclude Include="engine\core\3D\Physics3D.h" />
+    <ClInclude Include="engine\core\3D\Renderer.h" />
+    <ClInclude Include="engine\core\CoreEngine.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\GameInterface.h" />
-    <ClInclude Include="src\Games\Game1.h" />
-    <ClInclude Include="src\scenes\Scene2.h" />
-    <ClInclude Include="src\core\ShaderManager.h" />
-    <ClInclude Include="src\graphics\ShaderProgram.h" />
-    <ClInclude Include="src\components\AudioListenerComponent.h" />
-    <ClInclude Include="src\components\AudioSourceComponent.h" />
-    <ClInclude Include="src\custom\Primitives\PlaneObject.h" />
-    <ClInclude Include="src\custom\Rendering\Water.h" />
-    <ClInclude Include="src\custom\Rendering\SkyBox.h" />
-    <ClInclude Include="src\custom\Rendering\Instancer.h" />
-    <ClInclude Include="src\custom\Rendering\Camera.h" />
-    <ClInclude Include="src\custom\Primitives\Sphere.h" />
-    <ClInclude Include="src\custom\Primitives\Box.h" />
-    <ClInclude Include="src\custom\Primitives\Primitives.h" />
-    <ClInclude Include="src\core\MouseEventDispatcher.h" />
-    <ClInclude Include="src\core\MouseEventListener.h" />
-    <ClInclude Include="src\math\Plane.h" />
-    <ClInclude Include="src\core\OctSpatialPartition.h" />
+    <ClInclude Include="engine\core\Debug.h" />
+    <ClInclude Include="engine\core\GameInterface.h" />
+    <ClInclude Include="engine\core\Globals.h" />
+    <ClInclude Include="engine\core\InputManager.h" />
+    <ClInclude Include="engine\core\Logger.h" />
+    <ClInclude Include="engine\core\ModelManager.h" />
+    <ClInclude Include="engine\core\MouseEventDispatcher.h" />
+    <ClInclude Include="engine\core\MouseEventListener.h" />
+    <ClInclude Include="engine\core\OctSpatialPartition.h" />
+    <ClInclude Include="engine\core\ShaderManager.h" />
+    <ClInclude Include="engine\core\TextureManager.h" />
+    <ClInclude Include="engine\core\Timer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\CustomUI.h" />
+    <ClInclude Include="engine\graphics\Mesh.h" />
+    <ClInclude Include="engine\graphics\Model.h" />
+    <ClInclude Include="engine\graphics\Shader.h" />
+    <ClInclude Include="engine\graphics\ShaderProgram.h" />
+    <ClInclude Include="engine\graphics\Texture.h">
+      <Filter>src\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Vertex.h" />
+    <ClInclude Include="engine\graphics\Window.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Matrix.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\MMath.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Plane.h" />
+    <ClInclude Include="engine\math\Quaternion.h" />
+    <ClInclude Include="engine\math\Ray.h" />
+    <ClInclude Include="engine\math\Vector.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\VMath.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\scenes\Scene.h">
+      <Filter>src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\scenes\Scene1.h">
+      <Filter>src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\scenes\Scene2.h" />
+    <ClInclude Include="engine\Primitives\Box.h" />
+    <ClInclude Include="engine\Primitives\PlaneObject.h" />
+    <ClInclude Include="engine\Primitives\Primitives.h" />
+    <ClInclude Include="engine\Primitives\Sphere.h" />
+    <ClInclude Include="engine\Rendering\Camera.h" />
+    <ClInclude Include="engine\Rendering\Instancer.h" />
+    <ClInclude Include="engine\Rendering\SkyBox.h" />
+    <ClInclude Include="engine\Rendering\Water.h" />
+    <ClInclude Include="game\custom\Bird.h" />
+    <ClInclude Include="game\custom\Grass.h" />
+    <ClInclude Include="game\custom\LightObject.h" />
+    <ClInclude Include="game\custom\MouseRay.h" />
+    <ClInclude Include="game\custom\Player.h" />
+    <ClInclude Include="game\custom\TestModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\math\VMath.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\Vector.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\math\MMath.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\ECS.cpp" />
-    <ClCompile Include="src\graphics\Window.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scenes\Scene1.cpp">
-      <Filter>src\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\Transform.cpp" />
-    <ClCompile Include="src\graphics\Shader.cpp" />
-    <ClCompile Include="src\core\Main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Timer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\custom\Player.cpp" />
-    <ClCompile Include="src\components\3D\RigidBody3D.cpp" />
-    <ClCompile Include="src\components\2D\RigidBodyComponent.cpp" />
-    <ClCompile Include="src\components\2D\SpriteComponent.cpp" />
-    <ClCompile Include="src\core\2D\Physics2D.cpp" />
-    <ClCompile Include="src\core\3D\Physics3D.cpp" />
-    <ClCompile Include="src\components\3D\MeshRenderer.cpp" />
-    <ClCompile Include="src\graphics\Mesh.cpp" />
-    <ClCompile Include="src\graphics\Texture.cpp">
-      <Filter>src\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\custom\TestModel.cpp" />
-    <ClCompile Include="src\core\Debug.cpp" />
-    <ClCompile Include="src\custom\Grass.cpp" />
-    <ClCompile Include="src\core\Globals.cpp" />
-    <ClCompile Include="src\components\3D\LightComponent.cpp" />
-    <ClCompile Include="src\custom\LightObject.cpp" />
-    <ClCompile Include="src\core\ModelManager.cpp" />
-    <ClCompile Include="src\core\TextureManager.cpp" />
-    <ClCompile Include="src\core\3D\Renderer.cpp" />
     <ClCompile Include="external\include\imgui\imgui.cpp" />
     <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
     <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\scenes\Scene.cpp" />
-    <ClCompile Include="src\custom\MouseRay.cpp" />
-    <ClCompile Include="src\graphics\Model.cpp" />
-    <ClCompile Include="src\math\Ray.cpp" />
-    <ClCompile Include="src\graphics\CustomUI.cpp" />
-    <ClCompile Include="src\audio\AudioManager.cpp" />
-    <ClCompile Include="src\audio\AudioUtility.cpp" />
-    <ClCompile Include="src\audio\SoundAttributes.cpp" />
-    <ClCompile Include="src\core\InputManager.cpp" />
-    <ClCompile Include="src\math\Quaternion.cpp" />
-    <ClCompile Include="src\External\tinyxml2.cpp" />
-    <ClCompile Include="src\custom\Bird.cpp" />
-    <ClCompile Include="src\core\Logger.cpp" />
-    <ClCompile Include="src\core\CoreEngine.cpp">
+    <ClCompile Include="external\include\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="game\Game1.cpp" />
+    <ClCompile Include="engine\audio\AudioManager.cpp" />
+    <ClCompile Include="engine\audio\AudioUtility.cpp" />
+    <ClCompile Include="engine\audio\SoundAttributes.cpp" />
+    <ClCompile Include="engine\components\2D\RigidBodyComponent.cpp" />
+    <ClCompile Include="engine\components\2D\SpriteComponent.cpp" />
+    <ClCompile Include="engine\components\3D\LightComponent.cpp" />
+    <ClCompile Include="engine\components\3D\MeshRenderer.cpp" />
+    <ClCompile Include="engine\components\3D\RigidBody3D.cpp" />
+    <ClCompile Include="engine\components\AudioListenerComponent.cpp" />
+    <ClCompile Include="engine\components\AudioSourceComponent.cpp" />
+    <ClCompile Include="engine\components\ECS.cpp" />
+    <ClCompile Include="engine\components\Transform.cpp" />
+    <ClCompile Include="engine\core\2D\Physics2D.cpp" />
+    <ClCompile Include="engine\core\3D\Physics3D.cpp" />
+    <ClCompile Include="engine\core\3D\Renderer.cpp" />
+    <ClCompile Include="engine\core\CoreEngine.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\GameInterface.cpp" />
-    <ClCompile Include="src\Games\Game1.cpp" />
-    <ClCompile Include="src\scenes\Scene2.cpp" />
-    <ClCompile Include="src\core\ShaderManager.cpp" />
-    <ClCompile Include="src\graphics\ShaderProgram.cpp" />
-    <ClCompile Include="src\components\AudioListenerComponent.cpp" />
-    <ClCompile Include="src\components\AudioSourceComponent.cpp" />
-    <ClCompile Include="src\custom\Primitives\PlaneObject.cpp" />
-    <ClCompile Include="src\custom\Rendering\Water.cpp" />
-    <ClCompile Include="src\custom\Rendering\SkyBox.cpp" />
-    <ClCompile Include="src\custom\Rendering\Instancer.cpp" />
-    <ClCompile Include="src\custom\Rendering\Camera.cpp" />
-    <ClCompile Include="src\custom\Primitives\Sphere.cpp" />
-    <ClCompile Include="src\custom\Primitives\Box.cpp" />
-    <ClCompile Include="src\core\MouseEventDispatcher.cpp" />
-    <ClCompile Include="src\core\MouseEventListener.cpp" />
-    <ClCompile Include="src\math\Plane.cpp" />
-    <ClCompile Include="src\core\OctSpatialPartition.cpp" />
+    <ClCompile Include="engine\core\Debug.cpp" />
+    <ClCompile Include="engine\core\GameInterface.cpp" />
+    <ClCompile Include="engine\core\Globals.cpp" />
+    <ClCompile Include="engine\core\InputManager.cpp" />
+    <ClCompile Include="engine\core\Logger.cpp" />
+    <ClCompile Include="engine\core\Main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\ModelManager.cpp" />
+    <ClCompile Include="engine\core\MouseEventDispatcher.cpp" />
+    <ClCompile Include="engine\core\MouseEventListener.cpp" />
+    <ClCompile Include="engine\core\OctSpatialPartition.cpp" />
+    <ClCompile Include="engine\core\ShaderManager.cpp" />
+    <ClCompile Include="engine\core\TextureManager.cpp" />
+    <ClCompile Include="engine\core\Timer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\CustomUI.cpp" />
+    <ClCompile Include="engine\graphics\Mesh.cpp" />
+    <ClCompile Include="engine\graphics\Model.cpp" />
+    <ClCompile Include="engine\graphics\Shader.cpp" />
+    <ClCompile Include="engine\graphics\ShaderProgram.cpp" />
+    <ClCompile Include="engine\graphics\Texture.cpp">
+      <Filter>src\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Window.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\MMath.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\Plane.cpp" />
+    <ClCompile Include="engine\math\Quaternion.cpp" />
+    <ClCompile Include="engine\math\Ray.cpp" />
+    <ClCompile Include="engine\math\Vector.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\VMath.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\scenes\Scene.cpp" />
+    <ClCompile Include="engine\scenes\Scene1.cpp">
+      <Filter>src\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\scenes\Scene2.cpp" />
+    <ClCompile Include="engine\Primitives\Box.cpp" />
+    <ClCompile Include="engine\Primitives\PlaneObject.cpp" />
+    <ClCompile Include="engine\Primitives\Sphere.cpp" />
+    <ClCompile Include="engine\Rendering\Camera.cpp" />
+    <ClCompile Include="engine\Rendering\Instancer.cpp" />
+    <ClCompile Include="engine\Rendering\SkyBox.cpp" />
+    <ClCompile Include="engine\Rendering\Water.cpp" />
+    <ClCompile Include="game\custom\Bird.cpp" />
+    <ClCompile Include="game\custom\Grass.cpp" />
+    <ClCompile Include="game\custom\LightObject.cpp" />
+    <ClCompile Include="game\custom\MouseRay.cpp" />
+    <ClCompile Include="game\custom\Player.cpp" />
+    <ClCompile Include="game\custom\TestModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
