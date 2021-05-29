@@ -1,4 +1,5 @@
 #include "Box.h"
+#include "components/Components.h"
 
 using namespace MATH;
 
@@ -23,24 +24,6 @@ Box::Box(const char* name, MATH::Vec3 position)
 
 Box::~Box()
 {
-}
-
-void Box::Update(const float deltaTime)
-{
-	//transform.rotation.y += deltaTime;
-	transform.Update(deltaTime);
-	MeshRenderer::Update(deltaTime);
-	RigidBody3D::Update(deltaTime);
-}
-
-void Box::Render() const
-{
-	MeshRenderer::Render();
-}
-
-void Box::HandleEvents(const SDL_Event& event)
-{
-	MeshRenderer::HandleEvents(event);
 }
 
 void Box::OnCollisionEnter(RigidBody3D& otherBody)

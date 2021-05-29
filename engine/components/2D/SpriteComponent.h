@@ -1,7 +1,6 @@
 #ifndef SPRITECOMPONENT_H
 #define SPRITECOMPONENT_H
 
-#include <sdl/SDL.h>
 #include "components/ECS.h"
 #include "graphics/ShaderProgram.h"
 #include <glew/glew.h>

@@ -1,4 +1,6 @@
 #include "AudioSourceComponent.h"
+#include "GameObject.h"
+#include "core/Logger.h"
 
 
 void AudioSourceComponent::Init(GameObject* g)

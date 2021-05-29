@@ -1,4 +1,5 @@
 #include "Sphere.h"
+#include "components/Components.h"
 
 using namespace MATH;
 
@@ -20,24 +21,6 @@ Sphere::Sphere(const char* name, MATH::Vec3 position)
 
 Sphere::~Sphere()
 {
-}
-
-void Sphere::Update(const float deltaTime)
-{
-	//transform.rotation.y += deltaTime;
-	transform.Update(deltaTime);
-	MeshRenderer::Update(deltaTime);
-	RigidBody3D::Update(deltaTime);
-}
-
-void Sphere::Render() const
-{
-	MeshRenderer::Render();
-}
-
-void Sphere::HandleEvents(const SDL_Event& event)
-{
-	MeshRenderer::HandleEvents(event);
 }
 
 void Sphere::OnCollisionEnter(RigidBody3D& otherBody)

@@ -1,7 +1,7 @@
 #ifndef CUSTOMUI_H
 #define CUSTOMUI_H
 
-#include "components/ECS.h"
+#include "components/GameObject.h"
 #include "components/3D/MeshRenderer.h"
 
 

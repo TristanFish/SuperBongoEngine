@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\components\Component.h" />
+    <ClInclude Include="engine\components\GameObject.h" />
+    <ClInclude Include="engine\components\SceneGraph.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
     <ClInclude Include="engine\math\Plane.h" />
     <ClInclude Include="engine\core\events\MouseEventListener.h" />
@@ -269,6 +272,8 @@
     <ClInclude Include="engine\rendering\Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\components\GameObject.cpp" />
+    <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
     <ClCompile Include="engine\math\Plane.cpp" />
     <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
@@ -325,7 +330,6 @@
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="game\scenes\Scene.cpp" />
     <ClCompile Include="game\scenes\Scene1.cpp" />
-    <ClCompile Include="engine\components\ECS.cpp" />
     <ClCompile Include="engine\math\MMath.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
     <ClCompile Include="engine\math\VMath.cpp" />

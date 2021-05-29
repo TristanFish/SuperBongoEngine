@@ -1,7 +1,9 @@
 #ifndef INSTANCER_H
 #define INSTANCER_H
-#include "components/ECS.h"
-#include "components/Components.h"
+
+#include "3D/MeshRenderer.h"
+#include "components/GameObject.h"
+#include "glew/glew.h"
 
 //
 //This class is going to be turned into a component

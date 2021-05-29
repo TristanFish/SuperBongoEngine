@@ -1,7 +1,9 @@
 #ifndef BIRD_H
 #define BIRD_H
 
-#include "components/Components.h"
+#include "components/GameObject.h"
+#include "core/Debug.h"
+#include "fmod/fmod.hpp"
 
 class Bird : public GameObject
 {

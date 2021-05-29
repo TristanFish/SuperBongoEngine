@@ -1,9 +1,10 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include "components/ECS.h"
-#include "components/Components.h"
+#include "components/GameObject.h"
 #include "Rendering/Camera.h"
+#include "glew/glew.h"
+#include "graphics/ShaderProgram.h"
 
 
 class SkyBox :  public GameObject

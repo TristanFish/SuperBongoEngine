@@ -1,4 +1,6 @@
 #include "Physics3D.h"
+
+#include "core/Logger.h"
 #include "Rendering/Camera.h"
 #include "math/Vector.h"
 #include "math/VMath.h"

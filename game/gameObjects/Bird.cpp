@@ -1,4 +1,5 @@
 #include "Bird.h"
+#include "components/Components.h"
 
 Bird::Bird(const char* name, MATH::Vec3 position) {
 

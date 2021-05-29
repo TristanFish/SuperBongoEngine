@@ -130,7 +130,7 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 
 Scene::Scene() : name_(new char()), objectList(nullptr), pElement(nullptr)
 {
-	objectList = std::make_unique<Manager>();
+	objectList = std::make_unique<SceneGraph>();
 }
 
 Scene::~Scene()

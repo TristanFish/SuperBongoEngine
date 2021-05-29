@@ -504,6 +504,9 @@
     <ClInclude Include="engine\core\resources\ShaderManager.h" />
     <ClInclude Include="engine\core\resources\ModelManager.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
+    <ClInclude Include="engine\components\GameObject.h" />
+    <ClInclude Include="engine\components\Component.h" />
+    <ClInclude Include="engine\components\SceneGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -524,7 +527,6 @@
     <ClCompile Include="engine\components\3D\RigidBody3D.cpp" />
     <ClCompile Include="engine\components\AudioListenerComponent.cpp" />
     <ClCompile Include="engine\components\AudioSourceComponent.cpp" />
-    <ClCompile Include="engine\components\ECS.cpp" />
     <ClCompile Include="engine\components\Transform.cpp" />
     <ClCompile Include="engine\core\2D\Physics2D.cpp" />
     <ClCompile Include="engine\core\3D\Physics3D.cpp" />
@@ -590,6 +592,8 @@
     <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
     <ClCompile Include="engine\core\resources\ModelManager.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
+    <ClCompile Include="engine\components\GameObject.cpp" />
+    <ClCompile Include="engine\components\SceneGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

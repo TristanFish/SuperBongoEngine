@@ -3,6 +3,7 @@
 #include "core/MouseRay.h"
 #include "core/3D/Physics3D.h"
 #include "components/ECS.h"
+#include "core/Logger.h"
 
 int OctNode::childNum = 0;
 

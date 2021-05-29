@@ -1,13 +1,13 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "sdl/SDL.h"
-#include "components/ECS.h"
+#include "components/SceneGraph.h"
 #include "tinyxml2/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
-#include "Primitives/Primitives.h"
+#include "primitives/Primitives.h"
 #include "core/MouseRay.h"
+#include "sdl/SDL.h"
 #include <memory>
 
 using namespace tinyxml2;
@@ -48,7 +48,7 @@ protected:
 	bool CheckIntersection(const MouseRay& ray, const MATH::Vec3& origin, GameObject* obj) const;
 
 public:
-	std::unique_ptr<Manager> objectList;
+	std::unique_ptr<SceneGraph> objectList;
 
 	// Used for saving and loading xml document information
 	XMLElement* pElement;

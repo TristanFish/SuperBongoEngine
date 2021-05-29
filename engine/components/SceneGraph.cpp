@@ -1,72 +1,9 @@
-#include "ECS.h"
-#include "3D/RigidBody3D.h"
-#include "core/3D/Physics3D.h"
-#include "3D/MeshRenderer.h"
-#include "3D/LightComponent.h"
+#include "SceneGraph.h"
+#include "GameObject.h"
 #include "core/Logger.h"
+#include "core/3D/Physics3D.h"
 
-GameObject::GameObject(): name("Default")
-{
-}
-
-GameObject::~GameObject()
-{
-	name = nullptr;
-
-	for(Component* comp : componentList)
-	{
-		if(comp)
-		{
-			delete comp;
-			comp = nullptr;
-		}
-	}
-	componentList.clear();
-}
-
-void GameObject::Init()
-{
-	for (Component* comp : componentList)
-	{
-		comp->Init(this);
-		if(RigidBody3D* rbComp = dynamic_cast<RigidBody3D*>(comp))
-		{
-			rbComp->AddCollisionFunction(std::bind(&GameObject::OnCollisionEnter, this, std::placeholders::_1));
-		}
-		else if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
-		{
-			mComp->AddUniformFunction(std::bind(&GameObject::AttachUniforms, this));
-		}
-	}
-}
-
-void GameObject::Update(const float deltaTime)
-{
-	transform.Update(deltaTime);
-	for(Component* comp : componentList)
-	{
-		if(comp->active)
-		{
-			comp->Update(deltaTime);
-		}
-	}
-}
-
-void GameObject::HandleEvents(const SDL_Event& event)
-{
-	for(Component* comp : componentList)
-	{
-		if(comp->active)
-		{
-			comp->HandleEvents(event);
-		}
-	}
-}
-
-
-
-
-Manager::~Manager() 
+SceneGraph::~SceneGraph() 
 {
 	for (GameObject* g : gameObjects)
 	{
@@ -84,9 +21,9 @@ Manager::~Manager()
 	rigidBodies.clear();
 }
 
-void Manager::Init() 
+void SceneGraph::Init() 
 {
-	osp = OctSpatialPartition(500);
+	//osp = OctSpatialPartition(500);
 	
 	for(GameObject* go : gameObjects)
 	{
@@ -95,7 +32,7 @@ void Manager::Init()
 	renderer.Init();
 }
 
-void Manager::Update(const float deltaTime)
+void SceneGraph::Update(const float deltaTime)
 {
 	for (auto* g : gameObjects)
 	{
@@ -105,7 +42,7 @@ void Manager::Update(const float deltaTime)
 		}
 	}
 }
-void Manager::Render() const
+void SceneGraph::Render() const
 {
 	//Clear the default framebuffer
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -128,7 +65,7 @@ void Manager::Render() const
 	renderer.Render();
 }
 
-void Manager::HandleEvents(const SDL_Event& event)
+void SceneGraph::HandleEvents(const SDL_Event& event)
 {
 	for (auto g : gameObjects)
 	{
@@ -137,7 +74,7 @@ void Manager::HandleEvents(const SDL_Event& event)
 }
 
 //Finds THE FIRST gameobject with the given name
-GameObject& Manager::FindGameObject(const char* name)
+GameObject& SceneGraph::FindGameObject(const char* name)
 {
 	for (auto* g : gameObjects)
 	{
@@ -159,7 +96,7 @@ GameObject& Manager::FindGameObject(const char* name)
 }
 
 //Adds a gameobject with a name and position
-GameObject& Manager::AddGameObject(GameObject* go)
+GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 	gameObjects.emplace_back(go);
 	if (go->HasComponent<RigidBody3D>())
@@ -187,7 +124,7 @@ GameObject& Manager::AddGameObject(GameObject* go)
 	return *go;
 }
 
-void Manager::CheckCollisions()
+void SceneGraph::CheckCollisions()
 {
 	for (size_t i = 0; i < rigidBodies.size(); i++)
 	{
