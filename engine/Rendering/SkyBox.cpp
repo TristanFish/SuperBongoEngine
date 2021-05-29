@@ -1,6 +1,6 @@
 #include "SkyBox.h"
-#include "core/ModelManager.h"
-#include "core/ShaderManager.h"
+#include "core/resources/ModelManager.h"
+#include "core/resources/ShaderManager.h"
 
 using namespace MATH;
 

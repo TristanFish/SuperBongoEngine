@@ -6,8 +6,8 @@
 #include "tinyxml2/tinyxml2.h"
 #include "imgui/imgui.h"
 #include "graphics/CustomUI.h"
-#include "custom/Primitives/Primitives.h"
-#include "custom/MouseRay.h"
+#include "Primitives/Primitives.h"
+#include "core/MouseRay.h"
 #include <memory>
 
 using namespace tinyxml2;

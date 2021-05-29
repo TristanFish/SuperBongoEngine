@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
-#include "custom/Rendering/Camera.h"
-#include "core/ModelManager.h"
-#include "core/ShaderManager.h"
+#include "Rendering/Camera.h"
+#include "core/resources/ModelManager.h"
+#include "core/resources/ShaderManager.h"
 
 using namespace MATH;
 

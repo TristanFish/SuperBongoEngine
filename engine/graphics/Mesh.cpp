@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include "core/ShaderManager.h"
+#include "core/resources/ShaderManager.h"
 
 using namespace MATH;
 

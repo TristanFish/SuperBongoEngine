@@ -1,8 +1,8 @@
 #include "Debug.h"
 #include <glew/glew.h>
 
-#include "ShaderManager.h"
-#include "custom/Rendering/Camera.h"
+#include "resources/ShaderManager.h"
+#include "Rendering/Camera.h"
 
 ShaderProgram Debug::texShader;
 ShaderProgram Debug::objShader;

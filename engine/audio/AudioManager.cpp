@@ -123,13 +123,13 @@ void AudioManager::LoadSounds()
 	//Please keep all sounds keys in all lower case so we don't have to debug dumb stuff
 	//Add any sounds you want in this function, just follow suit.
 	//A map of any 2 objects you place here is inserted into inside CreateSound
-	soundPaths.emplace_back("src/sounds/tumbleweed.wav");
+	soundPaths.emplace_back("resources/sounds/tumbleweed.wav");
 	//Sound object goes here
 	sounds.emplace_back(leafCrunch);
 	//String object that has name you intend to search through
 	soundNames.emplace_back(leafCrunchString);
 
-	soundPaths.emplace_back("src/sounds/canary.wav");
+	soundPaths.emplace_back("resources/sounds/canary.wav");
 	sounds.emplace_back(birdChirp);
 	soundNames.emplace_back(birdChirpString);
 

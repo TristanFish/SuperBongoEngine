@@ -438,21 +438,13 @@
     </ClInclude>
     <ClInclude Include="engine\core\2D\Physics2D.h" />
     <ClInclude Include="engine\core\3D\Physics3D.h" />
-    <ClInclude Include="engine\core\3D\Renderer.h" />
     <ClInclude Include="engine\core\CoreEngine.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\Debug.h" />
     <ClInclude Include="engine\core\GameInterface.h" />
     <ClInclude Include="engine\core\Globals.h" />
-    <ClInclude Include="engine\core\InputManager.h" />
     <ClInclude Include="engine\core\Logger.h" />
-    <ClInclude Include="engine\core\ModelManager.h" />
-    <ClInclude Include="engine\core\MouseEventDispatcher.h" />
-    <ClInclude Include="engine\core\MouseEventListener.h" />
-    <ClInclude Include="engine\core\OctSpatialPartition.h" />
-    <ClInclude Include="engine\core\ShaderManager.h" />
-    <ClInclude Include="engine\core\TextureManager.h" />
     <ClInclude Include="engine\core\Timer.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -483,27 +475,35 @@
     <ClInclude Include="engine\math\VMath.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="engine\scenes\Scene.h">
+    <ClInclude Include="engine\primitives\Box.h" />
+    <ClInclude Include="engine\primitives\PlaneObject.h" />
+    <ClInclude Include="engine\primitives\Primitives.h" />
+    <ClInclude Include="engine\primitives\Sphere.h" />
+    <ClInclude Include="engine\rendering\Camera.h" />
+    <ClInclude Include="engine\rendering\SkyBox.h" />
+    <ClInclude Include="engine\rendering\Water.h" />
+    <ClInclude Include="game\gameObjects\Bird.h" />
+    <ClInclude Include="game\gameObjects\Grass.h" />
+    <ClInclude Include="game\gameObjects\LightObject.h" />
+    <ClInclude Include="game\gameObjects\Player.h" />
+    <ClInclude Include="game\gameObjects\TestModel.h" />
+    <ClInclude Include="game\scenes\Scene.h">
       <Filter>src\scenes</Filter>
     </ClInclude>
-    <ClInclude Include="engine\scenes\Scene1.h">
+    <ClInclude Include="game\scenes\Scene1.h">
       <Filter>src\scenes</Filter>
     </ClInclude>
-    <ClInclude Include="engine\scenes\Scene2.h" />
-    <ClInclude Include="engine\Primitives\Box.h" />
-    <ClInclude Include="engine\Primitives\PlaneObject.h" />
-    <ClInclude Include="engine\Primitives\Primitives.h" />
-    <ClInclude Include="engine\Primitives\Sphere.h" />
-    <ClInclude Include="engine\Rendering\Camera.h" />
-    <ClInclude Include="engine\Rendering\Instancer.h" />
-    <ClInclude Include="engine\Rendering\SkyBox.h" />
-    <ClInclude Include="engine\Rendering\Water.h" />
-    <ClInclude Include="game\custom\Bird.h" />
-    <ClInclude Include="game\custom\Grass.h" />
-    <ClInclude Include="game\custom\LightObject.h" />
-    <ClInclude Include="game\custom\MouseRay.h" />
-    <ClInclude Include="game\custom\Player.h" />
-    <ClInclude Include="game\custom\TestModel.h" />
+    <ClInclude Include="game\scenes\Scene2.h" />
+    <ClInclude Include="engine\components\Instancer.h" />
+    <ClInclude Include="engine\core\MouseRay.h" />
+    <ClInclude Include="engine\core\events\InputManager.h" />
+    <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
+    <ClInclude Include="engine\core\events\MouseEventListener.h" />
+    <ClInclude Include="engine\rendering\Renderer.h" />
+    <ClInclude Include="engine\core\resources\TextureManager.h" />
+    <ClInclude Include="engine\core\resources\ShaderManager.h" />
+    <ClInclude Include="engine\core\resources\ModelManager.h" />
+    <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -528,24 +528,16 @@
     <ClCompile Include="engine\components\Transform.cpp" />
     <ClCompile Include="engine\core\2D\Physics2D.cpp" />
     <ClCompile Include="engine\core\3D\Physics3D.cpp" />
-    <ClCompile Include="engine\core\3D\Renderer.cpp" />
     <ClCompile Include="engine\core\CoreEngine.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\Debug.cpp" />
     <ClCompile Include="engine\core\GameInterface.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
-    <ClCompile Include="engine\core\InputManager.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />
     <ClCompile Include="engine\core\Main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\ModelManager.cpp" />
-    <ClCompile Include="engine\core\MouseEventDispatcher.cpp" />
-    <ClCompile Include="engine\core\MouseEventListener.cpp" />
-    <ClCompile Include="engine\core\OctSpatialPartition.cpp" />
-    <ClCompile Include="engine\core\ShaderManager.cpp" />
-    <ClCompile Include="engine\core\TextureManager.cpp" />
     <ClCompile Include="engine\core\Timer.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -572,24 +564,32 @@
     <ClCompile Include="engine\math\VMath.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="engine\scenes\Scene.cpp" />
-    <ClCompile Include="engine\scenes\Scene1.cpp">
+    <ClCompile Include="engine\primitives\Box.cpp" />
+    <ClCompile Include="engine\primitives\PlaneObject.cpp" />
+    <ClCompile Include="engine\primitives\Sphere.cpp" />
+    <ClCompile Include="engine\rendering\Camera.cpp" />
+    <ClCompile Include="engine\rendering\SkyBox.cpp" />
+    <ClCompile Include="engine\rendering\Water.cpp" />
+    <ClCompile Include="game\gameObjects\Bird.cpp" />
+    <ClCompile Include="game\gameObjects\Grass.cpp" />
+    <ClCompile Include="game\gameObjects\LightObject.cpp" />
+    <ClCompile Include="game\gameObjects\Player.cpp" />
+    <ClCompile Include="game\gameObjects\TestModel.cpp" />
+    <ClCompile Include="game\scenes\Scene.cpp" />
+    <ClCompile Include="game\scenes\Scene1.cpp">
       <Filter>src\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="engine\scenes\Scene2.cpp" />
-    <ClCompile Include="engine\Primitives\Box.cpp" />
-    <ClCompile Include="engine\Primitives\PlaneObject.cpp" />
-    <ClCompile Include="engine\Primitives\Sphere.cpp" />
-    <ClCompile Include="engine\Rendering\Camera.cpp" />
-    <ClCompile Include="engine\Rendering\Instancer.cpp" />
-    <ClCompile Include="engine\Rendering\SkyBox.cpp" />
-    <ClCompile Include="engine\Rendering\Water.cpp" />
-    <ClCompile Include="game\custom\Bird.cpp" />
-    <ClCompile Include="game\custom\Grass.cpp" />
-    <ClCompile Include="game\custom\LightObject.cpp" />
-    <ClCompile Include="game\custom\MouseRay.cpp" />
-    <ClCompile Include="game\custom\Player.cpp" />
-    <ClCompile Include="game\custom\TestModel.cpp" />
+    <ClCompile Include="game\scenes\Scene2.cpp" />
+    <ClCompile Include="engine\components\Instancer.cpp" />
+    <ClCompile Include="engine\core\MouseRay.cpp" />
+    <ClCompile Include="engine\core\events\InputManager.cpp" />
+    <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
+    <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
+    <ClCompile Include="engine\rendering\Renderer.cpp" />
+    <ClCompile Include="engine\core\resources\TextureManager.cpp" />
+    <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
+    <ClCompile Include="engine\core\resources\ModelManager.cpp" />
+    <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

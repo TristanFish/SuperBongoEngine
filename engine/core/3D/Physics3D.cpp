@@ -1,5 +1,5 @@
 #include "Physics3D.h"
-#include "custom/Rendering/Camera.h"
+#include "Rendering/Camera.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
 

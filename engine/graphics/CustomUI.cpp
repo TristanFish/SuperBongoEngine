@@ -3,7 +3,7 @@
 #include "core/CoreEngine.h"
 #include "imgui/imgui.h"
 #include "psapi.h"
-#include "Scene.h"
+#include "scenes/Scene.h"
 #include "core/GameInterface.h"
 #include "core/Timer.h"
 

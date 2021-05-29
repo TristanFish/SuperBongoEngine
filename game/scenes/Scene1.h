@@ -2,7 +2,7 @@
 #define SCENE1_H
 
 #include "Scene.h"
-#include "custom/TestModel.h"
+#include "gameObjects/TestModel.h"
 
 //! Scene 1 class
 /*!  This class inherits from Scene and controls all events and object's in the first scene */

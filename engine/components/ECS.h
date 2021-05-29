@@ -8,9 +8,9 @@
 #include "math/Vector.h"
 #include "components/Transform.h"
 #include "sdl/SDL.h"
-#include "core/3D/Renderer.h"
+#include "rendering/Renderer.h"
 #include "core/Logger.h"
-#include "core/OctSpatialPartition.h"
+#include "core/3D/OctSpatialPartition.h"
 
 
 class GameObject;

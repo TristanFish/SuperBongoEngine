@@ -4,7 +4,7 @@
 #include <glew/glew.h>
 
 
-#include "core/InputManager.h"
+#include "core/events/InputManager.h"
 #include "core/Timer.h"
 using namespace MATH;
 

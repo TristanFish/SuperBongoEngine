@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "core/TextureManager.h"
+#include "core/resources/TextureManager.h"
 #include "core/Logger.h"
 #include <assimp/postprocess.h>
 

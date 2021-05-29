@@ -4,9 +4,9 @@
 #include "core/Globals.h"
 #include "core/Debug.h"
 #include <sdl/SDL.h>
-#include "custom/Rendering/SkyBox.h"
+#include "Rendering/SkyBox.h"
 #include "math/Plane.h"
-#include "core/ShaderManager.h"
+#include "core/resources/ShaderManager.h"
 
 using namespace MATH;
 

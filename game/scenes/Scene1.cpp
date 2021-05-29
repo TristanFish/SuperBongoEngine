@@ -1,12 +1,12 @@
 
 #include "Scene1.h"
-#include "custom/Player.h"
-#include "custom/MouseRay.h"
+#include "gameObjects/Player.h"
+#include "core/MouseRay.h"
 #include "core/Logger.h"
-#include "custom/LightObject.h"
-#include "custom/Bird.h"
-#include "custom/Primitives/PlaneObject.h"
-#include "custom/Grass.h"
+#include "gameObjects/LightObject.h"
+#include "gameObjects/Bird.h"
+#include "Primitives/PlaneObject.h"
+#include "gameObjects/Grass.h"
 
 const char* GetType(GameObject& go)
 {

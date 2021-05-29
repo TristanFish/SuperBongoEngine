@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "core/Timer.h"
-#include "custom/Rendering/Camera.h"
-#include "core/InputManager.h"
+#include "Rendering/Camera.h"
+#include "core/events/InputManager.h"
 #include "math/Quaternion.h"
 
 using namespace MATH;

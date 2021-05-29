@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include "MMath.h"
-#include "core/MouseEventListener.h"
+#include "core/events/MouseEventListener.h"
 #include <sdl/SDL.h>
 
 

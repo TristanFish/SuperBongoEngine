@@ -1,8 +1,8 @@
 #include "SpriteComponent.h"
 
-#include "core/ShaderManager.h"
+#include "core/resources/ShaderManager.h"
 #include "graphics/Texture.h"
-#include "custom/Rendering/Camera.h"
+#include "rendering/Camera.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {

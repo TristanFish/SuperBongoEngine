@@ -1,6 +1,7 @@
 #include "OctSpatialPartition.h"
 
-#include "3D/Physics3D.h"
+#include "core/MouseRay.h"
+#include "core/3D/Physics3D.h"
 #include "components/ECS.h"
 
 int OctNode::childNum = 0;

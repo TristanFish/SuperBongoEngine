@@ -1,8 +1,8 @@
 #include "Scene.h"
-#include "custom/TestModel.h"
-#include "custom/Primitives/PlaneObject.h"
+#include "gameObjects/TestModel.h"
+#include "Primitives/PlaneObject.h"
 #include <math.h>
-#include "custom/MouseRay.h"
+#include "core/MouseRay.h"
 #include "core/Logger.h"
 #include "core/3D/Physics3D.h"
 

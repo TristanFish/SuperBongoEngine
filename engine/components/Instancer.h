@@ -3,6 +3,9 @@
 #include "components/ECS.h"
 #include "components/Components.h"
 
+//
+//This class is going to be turned into a component
+//
 
 /*! Grass class
 /*! This class handles how we are going to render multiple instances of a gameobject given only one model*/
