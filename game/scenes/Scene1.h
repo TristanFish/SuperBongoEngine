@@ -3,7 +3,8 @@
 
 #include "Scene.h"
 #include "gameObjects/TestModel.h"
-
+#include "core/Globals.h"
+#include "Utility/SaveUtility.h"
 //! Scene 1 class
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
 class Scene1 : public Scene

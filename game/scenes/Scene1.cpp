@@ -7,7 +7,7 @@
 #include "gameObjects/Bird.h"
 #include "Primitives/PlaneObject.h"
 #include "gameObjects/Grass.h"
-
+#include "core/resources/SaveManager.h"
 const char* GetType(GameObject& go)
 {
 	return typeid(go).name();
@@ -39,8 +39,13 @@ bool Scene1::OnCreate()
 	
 	PerformanceMonitor::InitMonitor();
 	
-	//Scene::SaveMapData();
-	//Scene::LoadMapData();
+	SaveUtility::GetInstance()->CreateSave("TestSave",FileType::SCENE);
+
+	ElementInfo testInfo;
+	testInfo.parentName = "Root";
+
+	SaveUtility::GetInstance()->CompileSaves();
+
 	return true;
 
 }
