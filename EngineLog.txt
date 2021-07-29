@@ -22,9 +22,19 @@
 [INFO]: Plane.fbx in: ModelManager.cpp on line: 22
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
-[INFO]: Scene 1 Created in: Scene1.cpp on line: 18
-[INFO]: Player added to objectList in: ECS.cpp on line: 117
-[INFO]: Grass added to objectList in: ECS.cpp on line: 117
-[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 117
-[INFO]: Light added to objectList in: ECS.cpp on line: 117
-[INFO]: TestSave Successfully Added To The Save Queue in: SaveUtility.cpp on line: 29
+[INFO]: Scene 1 Created in: Scene1.cpp on line: 14
+[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 207
+[SAVE]: FirstPlane Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: TestSave Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 219
+[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 125
+[INFO]: Grass added to objectList in: ECS.cpp on line: 125
+[INFO]: Light added to objectList in: ECS.cpp on line: 125
+[INFO]: Player added to objectList in: ECS.cpp on line: 125
+[INFO]: Mouse hit íð%êôôÏ in: Scene.cpp on line: 46
+[INFO]: Mouse hit íð%êôôÏ in: Scene.cpp on line: 46
+[INFO]: Closing Game in: CoreEngine.cpp on line: 152

@@ -5,6 +5,8 @@
 #include <memory>
 
 #include "core/resources/SaveFile.h"
+
+class GameObject;
 class SaveUtility
 {
 private:
@@ -12,7 +14,13 @@ private:
 	static std::unique_ptr<SaveUtility> utilityInstance;
 	friend std::default_delete<SaveUtility>;
 
+
+
+
+	void HandleAttributes(SaveFile& save,ElementInfo& elm);
 public:
+
+
 
 	SaveUtility();
 	~SaveUtility();
@@ -36,8 +44,10 @@ public:
 
 	void AddElement(const std::string saveName, const std::string elmName, const ElementInfo& element);
 
-	void AddElement(const std::string saveName, const std::string elmName, const std::string parentName, tinyxml2::XMLElement* element);
+	void AddElement(const std::string saveName, const std::string elmName, const std::string parentName, tinyxml2::XMLElement* element = nullptr);
 
+
+	void SaveObject(const std::string saveName, GameObject* obj);
 };
 
 #endif

@@ -8,6 +8,8 @@
 #include "primitives/Primitives.h"
 #include "core/MouseRay.h"
 #include "sdl/SDL.h"
+#include "Utility/SaveUtility.h"
+#include "Utility/LoadUtility.h"
 #include <memory>
 
 using namespace tinyxml2;
@@ -47,11 +49,11 @@ protected:
 	/*! Checks if the MouseRay has intersected with a object */
 	bool CheckIntersection(const MouseRay& ray, const MATH::Vec3& origin, GameObject* obj) const;
 
+
 public:
 	std::unique_ptr<SceneGraph> objectList;
 
 	// Used for saving and loading xml document information
-	XMLElement* pElement;
 	Scene();
 	virtual ~Scene();
 
@@ -65,7 +67,6 @@ public:
 	virtual void LoadMapData();
 
 
-	std::string CheckAtributeValue(int i) const;
 
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;

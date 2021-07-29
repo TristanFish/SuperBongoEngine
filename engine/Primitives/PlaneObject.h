@@ -12,6 +12,9 @@ public:
 	~PlaneObject() override = default;
 	
 	void OnCollisionEnter(RigidBody3D& otherBody) override;
+
+	PlaneObject* GetClone() const override { return new PlaneObject(*this); };
+
 };
 
 #endif

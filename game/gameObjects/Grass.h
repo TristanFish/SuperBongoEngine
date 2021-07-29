@@ -19,6 +19,9 @@ public:
 
 	//! Base Grass Destructor
 	~Grass() = default;
+
+	Grass* GetClone() const override { return new Grass(*this); };
+
 	
 };
 

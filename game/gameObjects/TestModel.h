@@ -43,6 +43,7 @@ public:
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override {}
 
 
+	TestModel* GetClone() const override { return new TestModel(*this); };
 private:
 
 	

@@ -12,7 +12,7 @@
 
 
 
-typedef std::variant<int, float, const char*,double> Attribute;
+typedef std::variant<int, float,double,bool,std::string> Attribute;
 
 
 //! FileType enum class
@@ -44,14 +44,14 @@ struct ElementInfo
 
 	//! Standard Constructor
 	/*!Initializes the structs variables. */
-	inline ElementInfo() : parentName(""), element(nullptr)
+	inline ElementInfo() : parentName(""), element(nullptr), Attributes(std::map<std::string, Attribute>())
 	{
 	
 	}
 
 	//! Alternate Constructor
 	/*!Initializes the structs variables. and sets the parent name to the passed in string*/
-	inline ElementInfo(std::string parentName_) : element(nullptr)
+	inline ElementInfo(std::string parentName_) : element(nullptr), Attributes(std::map<std::string, Attribute>())
 	{
 		parentName = parentName_;
 	}
@@ -122,7 +122,7 @@ private:
 
 	//! GetFileType Function
 	/*!Returns what file type this SaveFile will be saved as when converting to xml*/
-	std::string GetFileType();
+	std::string GetSaveFileType();
 
 	//! GetFileDestination Function
 	/*!Returns where the file will be saved to*/
@@ -137,6 +137,8 @@ public:
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename and type*/
 	SaveFile(const std::string& FileName_, const FileType type = FileType::DEFAULT);
+
+
 
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename all its elements and the Doc*/
@@ -167,6 +169,10 @@ public:
 	/*!Returns the address to an element with a given name*/
 	ElementInfo& FindElement(std::string elmName);
 
+	//! FindElement Function
+	/*!Returns the address to an element with a given name*/
+	Attribute& FindAttribute(std::string elmName, std::string atrbName);
+
 	//! AddElement Function
 	/*!Adds an element to the save file*/
 	 void AddElement(const std::string name, const ElementInfo element);
@@ -184,6 +190,8 @@ public:
 	 void AddAttributes(const std::string elmName, std::map<std::string, Attribute> attributes);
 
 
+	 inline std::string GetFileName() { return FileName; }
+
 	 //! GetFileType Function
 	 /*!Returns this SaveFile's type*/
 	 inline FileType GetFileType() const { return fileType; }
@@ -192,7 +200,7 @@ public:
 	 /*!Sets this SaveFile's type*/
 	 inline void SetFileType(FileType type) { fileType = type; }
 
-
+	 inline std::map<std::string, ElementInfo>& GetElements() { return Elements; }
 
 	 friend class SaveUtility;
 };

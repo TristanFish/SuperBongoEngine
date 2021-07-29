@@ -13,6 +13,8 @@ SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), E
 	InitalizeFile();
 }
 
+
+
 SaveFile::SaveFile(std::string& FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_) : rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>())
 {
 	FileName = FileName_;
@@ -37,7 +39,10 @@ SaveFile::SaveFile(const SaveFile& file)
 	fileType = file.fileType;
 	file.Doc.DeepCopy(&Doc);
 	rootNode = Doc.NewElement("Root");
+	FindElement("Root").element = Doc.RootElement();
 }
+
+
 
 ElementInfo& SaveFile::FindElement(std::string elmName)
 {
@@ -51,6 +56,31 @@ ElementInfo& SaveFile::FindElement(std::string elmName)
 	{
 		EngineLogger::Info(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
 	}
+}
+
+Attribute& SaveFile::FindAttribute(std::string elmName, std::string atrbName)
+{
+
+	std::map<std::string, ElementInfo>::iterator elmIter = Elements.find(elmName);
+
+	if (elmIter != Elements.end())
+	{
+		std::map<std::string, Attribute>::iterator atribIter = elmIter->second.Attributes.find(atrbName);
+
+		if (atribIter != elmIter->second.Attributes.end())
+		{
+			return atribIter->second;
+		}
+		else
+		{
+			EngineLogger::Info(atrbName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
+		}
+	}
+	else
+	{
+		EngineLogger::Info(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
+	}
+
 }
 
 SaveFile::~SaveFile()
@@ -83,7 +113,7 @@ void SaveFile::InitalizeFile()
 	Doc.InsertFirstChild(rootNode);
 
 	ElementInfo info;
-	info.element = Doc.FirstChildElement("Root");
+	info.element = Doc.RootElement();
 
 	AddElement("Root", info);
 	insertionOrder.reserve(10);
@@ -101,6 +131,8 @@ void SaveFile::AddElements(const std::map<std::string, ElementInfo> elements)
 	for (auto element : elements)
 	{
 		Elements.emplace(element.first, element.second);
+		insertionOrder.emplace(insertionOrder.end(), element.first);
+
 	}
 }
 
@@ -144,7 +176,7 @@ void SaveFile::AddAttributes(const std::string elmName, std::map<std::string, At
 	}
 }
 
-std::string SaveFile::GetFileType()
+std::string SaveFile::GetSaveFileType()
 {
 	switch (fileType)
 	{
@@ -186,7 +218,7 @@ std::string SaveFile::GetFileDestination()
 
 void SaveFile::Save()
 {
-	const tinyxml2::XMLError eResult = Doc.SaveFile((GetFileDestination() + FileName + GetFileType()).c_str());
+	const tinyxml2::XMLError eResult = Doc.SaveFile((GetFileDestination() + FileName + GetSaveFileType()).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
 		EngineLogger::Error("Unable to save " + FileName + " XML document", "SaveUtility.cpp", __LINE__);

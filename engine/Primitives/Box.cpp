@@ -17,9 +17,6 @@ Box::Box(const char* name, MATH::Vec3 position)
 	transform.SetPos(position);
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
-
-	typeID = Type::Box;
-
 }
 
 Box::~Box()

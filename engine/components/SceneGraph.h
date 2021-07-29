@@ -8,6 +8,7 @@
 
 class RigidBody3D;
 class GameObject;
+class SaveFile;
 //! SceneGraph Class
 /*!There'll be one manager per scene it holds an array of gameobjects to update/render etc.
 see how its used in scene1*/
@@ -23,10 +24,10 @@ private:
 	/*! Holds all of the rigidbodies in our scene*/
 	std::vector<RigidBody3D*> rigidBodies;
 
-
 	//! Renderer 
 	/*! Handles the rendering of all the gameobjects*/
 	Renderer renderer;
+	
 
 public:
 	//OctSpatialPartition osp;
@@ -63,6 +64,10 @@ public:
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
 	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+
+
+	void LoadObject(SaveFile& file);
+
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/

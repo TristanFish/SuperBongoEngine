@@ -11,6 +11,9 @@ public:
 
 	Bird(const char* name, MATH::Vec3 position);
 	
+	Bird* GetClone() const override { return new Bird(*this); };
+
+
 	//! Base Grass Constructor
 private:
 

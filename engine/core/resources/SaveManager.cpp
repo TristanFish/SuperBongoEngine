@@ -1,12 +1,19 @@
 #include "SaveManager.h"
-
+#include "components/GameObject.h"
 std::unordered_map<std::string, SaveFile> SaveManager::SaveFiles = std::unordered_map<std::string, SaveFile>();
 
 std::unordered_map<std::string, SaveFile> SaveManager::SaveQueue = std::unordered_map<std::string, SaveFile>();
+std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std::unordered_map<std::string, GameObject*>();
 
 
 
 
+
+void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
+{
+	EngineLogger::Save(name + " Has Been Added To The SaveFiles", "SaveManager.cpp", __LINE__);
+	SaveFiles.emplace(name, File);
+}
 
 void SaveManager::RemoveSave(const std::string saveName)
 {
@@ -14,10 +21,10 @@ void SaveManager::RemoveSave(const std::string saveName)
 	{
 		if (SaveFiles.erase(saveName))
 		{
-			EngineLogger::Info(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
+			EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
 		}
 		else {
-			EngineLogger::Info(saveName + " File Has Not Been Located", "SaveManager.cpp", __LINE__);
+			EngineLogger::Save(saveName + " File Has Not Been Located", "SaveManager.cpp", __LINE__);
 
 		}
 	}
