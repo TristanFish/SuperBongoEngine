@@ -30,6 +30,8 @@ protected:
 	/*! Stores our object that was most recently selected using our mouseRay */
 	std::vector<CustomUI::PropertiesPanel*> propertiesPanels;
 
+	CustomUI::HierarchyPanel hierarchyPanel;
+
 	//! Const Char* Pointer
 	/*! Stores our objects that can be spawned */
 	const char* objClasses[3] = { "Plane", "Box","Sphere" };
@@ -56,6 +58,7 @@ public:
 	virtual ~Scene();
 
 	virtual bool OnCreate() = 0;
+	virtual bool PostCreate();
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime);
 	virtual void Render() const;

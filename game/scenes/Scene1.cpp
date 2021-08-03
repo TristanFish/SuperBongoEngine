@@ -22,7 +22,9 @@ bool Scene1::OnCreate()
 
 	Grass* grass = new Grass("Grass", MATH::Vec3(0.0f, 1.0f, 0.0f), 700);
 	PlaneObject* plane = new PlaneObject("FirstPlane", MATH::Vec3(0.0f, 0.0f, 10.0f));
-	//PlaneObject* plane2 = new PlaneObject("SecondPlane", MATH::Vec3(0.0f, 0.0f, -10.0f));
+	PlaneObject* plane2 = new PlaneObject("SecondPlane", MATH::Vec3(0.0f, 0.0f, -10.0f));
+	
+	plane->AddChild(plane2);
 	//TestModel* fog = new TestModel("Fog", MATH::Vec3(0.0f, 1000.0f, 0.0f));
 	LightObject* light = new LightObject("Light", MATH::Vec3(0.0f, 20.0f, 0.0f));
 	//Bird* bird = new Bird("bird", MATH::Vec3(20.0f, 0.0f, 20.0f));
@@ -30,7 +32,7 @@ bool Scene1::OnCreate()
 	objectList->AddGameObject(player);
 	objectList->AddGameObject(grass);
 	objectList->AddGameObject(plane);
-	//objectList->AddGameObject(plane2);
+	objectList->AddGameObject(plane2);
 	//objectList->AddGameObject(fog);
 	objectList->AddGameObject(light);
 	//objectList->AddGameObject(bird);

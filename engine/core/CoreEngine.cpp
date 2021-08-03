@@ -91,6 +91,7 @@ bool CoreEngine::Init()
 			OnDestroy();
 			return false;
 		}
+
 	}
 
 	isRunning = true;

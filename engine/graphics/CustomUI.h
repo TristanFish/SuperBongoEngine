@@ -54,7 +54,7 @@ namespace CustomUI
 
 		//! Latest FPS float
 	   /*! Is used to update the FPS text depending on the "fpsUpdateSpeed" variable */
-		int lastestFPS = 0;
+		int latestFPS = 0;
 	public:
 		PerformancePanel();
 		~PerformancePanel();
@@ -72,12 +72,19 @@ namespace CustomUI
 	class HierarchyPanel
 	{
 	public:
-		HierarchyPanel(std::vector<GameObject*> gameobjects_);
+
+		HierarchyPanel() = default;
+
 		~HierarchyPanel();
 
-
+		void ConstructHierarchy(std::vector<GameObject*>& allParentObjects);
+		void Update();
+		void Render() const;
+	
 	private:
 		std::vector<GameObject*> gameobjects;
+
+		void DisplayGameObjectInHierarchy(GameObject* go) const;
 
 	};
 

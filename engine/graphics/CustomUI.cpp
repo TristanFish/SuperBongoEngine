@@ -54,7 +54,7 @@ void CustomUI::PropertiesPanel::Render() const
 
 
 
-CustomUI::PerformancePanel::PerformancePanel() : lastestFPS(0)
+CustomUI::PerformancePanel::PerformancePanel() : latestFPS(0)
 {
 
 }
@@ -76,7 +76,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;
 
-		lastestFPS = (int)PerformanceMonitor::GetFPS();
+		latestFPS = (int)PerformanceMonitor::GetFPS();
 	}
 }
 
@@ -85,7 +85,7 @@ void CustomUI::PerformancePanel::Render() const
 	ImGui::Begin("Performance Monitor");
 
 	ImGui::PlotLines("FPS", fpsValues.data(), fpsValues.size()); 	ImGui::SameLine();
-	ImGui::Text("%i", lastestFPS);
+	ImGui::Text("%i", latestFPS);
 
 
 	ImGui::Checkbox("Limit FPS", &PerformanceMonitor::LimitFPS); ImGui::SameLine();
@@ -102,24 +102,56 @@ void CustomUI::PerformancePanel::Render() const
 
 
 
-CustomUI::HierarchyPanel::HierarchyPanel(std::vector<GameObject*> gameobjects_)
-{
-	gameobjects = gameobjects_;
-}
+
 
 CustomUI::HierarchyPanel::~HierarchyPanel()
 {
-	if (gameobjects.size() > 0)
+	gameobjects.clear();
+}
+
+void CustomUI::HierarchyPanel::ConstructHierarchy(std::vector<GameObject*>& allParentObjects)
+{
+	for (auto object : allParentObjects)
 	{
-		for (auto obj : gameobjects)
-		{
-			delete obj;
-			obj = nullptr;
-		}
-		gameobjects.clear();
+		gameobjects.push_back(object);
 	}
 }
- 
+
+void CustomUI::HierarchyPanel::Update()
+{
+	
+}
+
+void CustomUI::HierarchyPanel::Render() const
+{
+	ImGui::Begin("Hierarchy");
+
+	for (auto& go : gameobjects)
+	{
+		DisplayGameObjectInHierarchy(go);
+	}
+
+	ImGui::End();
+}
+
+void CustomUI::HierarchyPanel::DisplayGameObjectInHierarchy(GameObject* go) const
+{
+	if(go->GetChildCount() > 0)
+	{
+		if(ImGui::CollapsingHeader(go->name))
+		{
+			for (auto* obj : go->GetChildren())
+			{
+				DisplayGameObjectInHierarchy(obj);
+			}
+		}
+	}
+	else
+	{
+		ImGui::Text(go->name);
+	}
+}
+
 
 int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
@@ -131,6 +163,7 @@ bool PerformanceMonitor::LimitFPS = false;
 ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 int numProcessors;
 HANDLE self;
+
 
 void PerformanceMonitor::InitMonitor()
 {
