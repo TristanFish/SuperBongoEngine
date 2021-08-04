@@ -124,7 +124,7 @@ void CustomUI::HierarchyPanel::Update()
 
 void CustomUI::HierarchyPanel::Render() const
 {
-	ImGui::Begin("Hierarchy");
+	ImGui::Begin("Object Hierarchy");
 
 	for (auto& go : gameobjects)
 	{
