@@ -534,8 +534,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\Debug.cpp" />
-    <ClCompile Include="engine\core\GameInterface.cpp" />
-    <ClCompile Include="engine\core\Globals.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />
     <ClCompile Include="engine\core\Main.cpp">
       <Filter>src</Filter>

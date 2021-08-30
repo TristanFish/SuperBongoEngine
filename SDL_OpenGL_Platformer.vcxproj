@@ -282,7 +282,6 @@
     <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
     <ClCompile Include="game\scenes\Scene2.cpp" />
     <ClCompile Include="game\Game1.cpp" />
-    <ClCompile Include="engine\core\GameInterface.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />
     <ClCompile Include="engine\primitives\Box.cpp" />
     <ClCompile Include="engine\primitives\Sphere.cpp" />
@@ -308,7 +307,6 @@
     <ClCompile Include="game\gameObjects\Grass.cpp" />
     <ClCompile Include="engine\core\resources\ModelManager.cpp" />
     <ClCompile Include="engine\components\3D\LightComponent.cpp" />
-    <ClCompile Include="engine\core\Globals.cpp" />
     <ClCompile Include="game\gameObjects\LightObject.cpp" />
     <ClCompile Include="engine\core\MouseRay.cpp" />
     <ClCompile Include="engine\primitives\PlaneObject.cpp" />
