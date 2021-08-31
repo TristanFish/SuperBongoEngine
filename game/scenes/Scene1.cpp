@@ -18,8 +18,8 @@ bool Scene1::OnCreate()
 	LoadMapData();
 
 
-
 	PerformanceMonitor::InitMonitor();
+
 
 	objectList->Init();
 
