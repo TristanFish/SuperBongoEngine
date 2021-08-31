@@ -25,7 +25,7 @@ public:
 	/*! Controls how the player will navigate the world */
 	void HandleEvents(const SDL_Event& event) override;
 
-	Player* GetClone() const override { return new Player(*this); };
+	Player* GetClone() const override { return new Player(this->name, this->transform.pos); };
 
 private:
 
