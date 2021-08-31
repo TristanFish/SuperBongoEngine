@@ -20,7 +20,7 @@ public:
 	//! Base Grass Destructor
 	~Grass() = default;
 
-	Grass* GetClone() const override { return new Grass(*this); };
+	Grass* GetClone() const override { return new Grass(this->name, this->transform.pos); };
 
 	
 };

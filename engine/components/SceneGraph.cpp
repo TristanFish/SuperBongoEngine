@@ -30,11 +30,7 @@ SceneGraph::~SceneGraph()
 void SceneGraph::Init() 
 {
 	//osp = OctSpatialPartition(500);
-	
-	for(GameObject* go : gameObjects)
-	{
-		go->Init();
-	}
+
 	renderer.Init();
 
 
@@ -114,7 +110,7 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 //Adds a gameobject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
-
+	go->Init();
 
 	gameObjects.emplace_back(go);
 	if (go->HasComponent<RigidBody3D>())
@@ -178,11 +174,13 @@ void SceneGraph::LoadObject(SaveFile& file)
 		{
 			if (TypeName == obj.first)
 			{
-				obj.second->SetName(prevLoadedObjName.data());
-				obj.second->SetPos(Position);
-				obj.second->SetRotation(Rotation);
-				obj.second->SetScale(Scale);
-				AddGameObject(obj.second->GetClone());
+				GameObject* clone = obj.second->GetClone();
+				clone->SetName(prevLoadedObjName.data());
+				clone->SetPos(Position);
+				clone->SetRotation(Rotation);
+				clone->SetScale(Scale);
+				AddGameObject(clone);
+
 				break;
 			}
 		}
