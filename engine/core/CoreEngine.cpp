@@ -121,6 +121,7 @@ void CoreEngine::Run()
 
 	}
 
+	gameInterface->currentScene->SaveMapData();
 	OnDestroy();
 }
 

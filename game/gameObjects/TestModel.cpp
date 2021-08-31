@@ -2,7 +2,7 @@
 
 using namespace MATH;
 
-TestModel::TestModel(const char* name, Vec3 position)
+TestModel::TestModel(std::string name, Vec3 position)
 {
 	mr = AddComponent<MeshRenderer>();
 	mr->LoadModel("Cube.fbx");

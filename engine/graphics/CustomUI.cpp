@@ -24,9 +24,9 @@ void CustomUI::PropertiesPanel::Render() const
 	{
 		// Gets the mesh's properties and then displays them with ImGui
 
-		ImGui::Begin(selectedObj->name, &selectedObj->isMenuActive);
+		ImGui::Begin(selectedObj->name.c_str(), &selectedObj->isMenuActive);
 	
-		char* tempName =  const_cast<char*>(selectedObj->name);
+		char* tempName =  const_cast<char*>(selectedObj->name.c_str());
 		
 		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 
@@ -138,7 +138,7 @@ void CustomUI::HierarchyPanel::DisplayGameObjectInHierarchy(GameObject* go) cons
 {
 	if(go->GetChildCount() > 0)
 	{
-		if(ImGui::CollapsingHeader(go->name))
+		if(ImGui::CollapsingHeader(go->name.c_str()))
 		{
 			for (auto* obj : go->GetChildren())
 			{
@@ -148,7 +148,7 @@ void CustomUI::HierarchyPanel::DisplayGameObjectInHierarchy(GameObject* go) cons
 	}
 	else
 	{
-		ImGui::Text(go->name);
+		ImGui::Text(go->name.c_str());
 	}
 }
 

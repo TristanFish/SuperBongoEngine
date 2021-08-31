@@ -1,0 +1,10 @@
+<Root>
+    <Objects>
+        <FirstPlane/>
+        <Grass/>
+        <Light/>
+        <Player/>
+        <Box/>
+        <Sphere/>
+    </Objects>
+</Root>

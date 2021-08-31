@@ -3,6 +3,6 @@
 
 #include "Box.h"
 #include "Sphere.h"
-#include "Plane.h"
+#include "PlaneObject.h"
 
 #endif

@@ -13,8 +13,15 @@ private:
 	static std::unique_ptr<LoadUtility> utilityInstance;
 	friend std::default_delete<LoadUtility>;
 
+	void LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile& file);
 
-	void LoadExistingSave(std::string fileName);
+	void AddObjectToMap(const char* classType) const;
+
+	void LoadSave(const std::string saveName, const std::string savePath,FileType extention);
+
+	void QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttribute* atrib);
+
+	FileType GetFileExtention(std::string ext) const;
 public:
 
 	LoadUtility();
@@ -23,7 +30,15 @@ public:
 	static LoadUtility* GetInstance();
 
 
+	void LoadExistingSaves();
+
+	int LoadInt(std::string saveName, std::string elmName, std::string atribName);
 	
+	float LoadFloat(std::string saveName, std::string elmName, std::string atribName);
+
+
+	std::string LoadString(std::string saveName, std::string elmName, std::string atribName);
+
 };
 
 #endif

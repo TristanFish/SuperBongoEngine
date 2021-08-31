@@ -347,4 +347,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-imgui.ini
+
+# Capstone Ignore Files
+EngineLog.txt

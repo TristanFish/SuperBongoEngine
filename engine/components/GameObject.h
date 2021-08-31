@@ -28,22 +28,21 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-	// Enum Class Type
-	/*!Holds enumerations to all the classes that can be instantiated in our engine*/
-	enum class Type { None, Box, Plane, Sphere, Light, Grass };
 
 
-	Type typeID = Type::None;
 
 public:
 
-	//!Name Char*
-	/*! Holds the name of this gameobject*/
-	const char* name;
+	/*! Hold's the name of this gameobject*/
+	std::string name;
 
 	//!IsMenuActive boolean
 	/*! Controls if the gameobjrct's properties panel is active*/
 	bool isMenuActive = false;
+
+	//!canBeInstantiated boolean
+	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
+	bool canBeInstantiated = false;
 
 	//!Transform
 	/*! Controls all of the gameobjects positions/rotations/translations*/
@@ -63,12 +62,6 @@ public:
 	/*!Updates the Gameobject position/rotation/translation*/
 	virtual void Update(const float deltaTime);
 
-	//GetType function
-	/*!Returns the type of class that the owning class is*/
-	inline Type getType() const { return typeID; }
-
-	inline void SetType(Type typeID_) { typeID = typeID_; }
-
 	//!Virtual HandleEvents Function
 	/*!Handles and Keyboard/Mouse events*/
 	virtual void HandleEvents(const SDL_Event& event);
@@ -77,7 +70,12 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual const char* GetType() { return typeid(*this).name(); }
+	virtual GameObject* GetClone() const = 0;
+
+	//GetType function
+	/*!Returns the type of class that the owning class is*/
+	inline const char* GetType() const { return typeid(*this).name(); }
+
 	//!isActive Getter
 	/*!Returns if the gameobject is active or not*/
 	bool isActive()const { return active; }
@@ -104,9 +102,9 @@ public:
 	/*!Sets the rotation of this a gameobject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.rotation = rotation_; }
 
-	//!SetName Setter
 	/*!Sets the Name of this a gameobject*/
-	void SetName(const char* name_) { name = name_; }
+	void SetName(std::string name_) { name = name_; }
+
 
 	GameObject* GetParent() const { return parent; }
 

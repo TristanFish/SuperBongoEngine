@@ -7,7 +7,7 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(const char* name, MATH::Vec3 position)
+Sphere::Sphere(std::string name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Sphere.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
@@ -16,7 +16,7 @@ Sphere::Sphere(const char* name, MATH::Vec3 position)
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
-	typeID = Type::Sphere;
+	canBeInstantiated = true;
 }
 
 Sphere::~Sphere()

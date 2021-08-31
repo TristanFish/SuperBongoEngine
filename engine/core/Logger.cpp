@@ -23,6 +23,11 @@ void EngineLogger::Info(const std::string message_, const std::string& fileName_
 	Log(MessageType::TYPE_INFO, "[INFO]: " + message_, fileName_, line_);
 }
 
+void EngineLogger::Save(const std::string message_, const std::string& fileName_, const int line_)
+{
+	Log(MessageType::TYPE_SAVE, "[SAVE]: " + message_, fileName_, line_);
+}
+
 void EngineLogger::Trace(const std::string message_, const std::string& fileName_, const int line_)
 {
 	Log(MessageType::TYPE_TRACE, "[TRACE]: " + message_, fileName_, line_);

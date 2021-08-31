@@ -5,9 +5,12 @@
 #include "rendering/Renderer.h"
 #include "SDL_events.h"
 #include <vector>
+#include <unordered_map>
+
 
 class RigidBody3D;
 class GameObject;
+class SaveFile;
 //! SceneGraph Class
 /*!There'll be one manager per scene it holds an array of gameobjects to update/render etc.
 see how its used in scene1*/
@@ -23,10 +26,14 @@ private:
 	/*! Holds all of the rigidbodies in our scene*/
 	std::vector<RigidBody3D*> rigidBodies;
 
+	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
+
 
 	//! Renderer 
 	/*! Handles the rendering of all the gameobjects*/
 	Renderer renderer;
+	
+	std::string prevLoadedObjName;
 
 public:
 	//OctSpatialPartition osp;
@@ -56,13 +63,19 @@ public:
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
+	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
+
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
-	int GetNumObjects() const { return gameObjects.size(); }
+	 int GetNumObjects() const { return gameObjects.size(); }
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+
+
+	void LoadObject(SaveFile& file);
+
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
