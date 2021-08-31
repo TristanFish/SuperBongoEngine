@@ -34,6 +34,8 @@ protected:
 	/*! Stores our object that was most recently selected using our mouseRay */
 	std::vector<CustomUI::PropertiesPanel*> propertiesPanels;
 
+	CustomUI::HierarchyPanel hierarchyPanel;
+
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
 	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const char* objName, std::string objType) const;
@@ -55,6 +57,7 @@ public:
 	virtual ~Scene();
 
 	virtual bool OnCreate() = 0;
+	virtual bool PostCreate();
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime);
 	virtual void Render() const;

@@ -10,7 +10,7 @@ Grass::Grass(std::string name, MATH::Vec3 position, unsigned int amount_)
 	GetComponent<MeshRenderer>()->renderFlags = RenderProperties::OVERRIDE_RENDERER;
 	GetComponent<MeshRenderer>()->SetInstanceID(1);
 	GetComponent<MeshRenderer>()->SetInstanceAmount(amount_);
-
+	amount = amount_;
 	
 	this->name = name;
 	transform.SetPos(position);

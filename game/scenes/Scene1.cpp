@@ -13,7 +13,6 @@ bool Scene1::OnCreate()
 {
 	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 
-
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	LoadMapData();
 

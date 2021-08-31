@@ -1,11 +1,13 @@
 #include "Transform.h"
 
-Transform::Transform() : pos(MATH::Vec3()), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
+#include "GameObject.h"
+
+Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
 {
 	rotationMatrix = MATH::MMath::calcRotationMatrix(rotation);
 }
 
-Transform::Transform(const MATH::Vec3& pos_) : pos(pos_), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
+Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
 {
 	rotationMatrix = MATH::MMath::calcRotationMatrix(rotation);
 }
@@ -16,6 +18,11 @@ void Transform::Update(const float deltaTime)
 	rotationMatrix = MMath::calcRotationMatrix(rotation);
 
 	modelMatrix = MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
+
+	if(parent != nullptr)
+	{
+		modelMatrix = modelMatrix * parent->modelMatrix;
+	}
 }
 
 MATH::Vec3 Transform::Forward() const

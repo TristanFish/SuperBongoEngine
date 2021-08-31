@@ -110,31 +110,40 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 //Adds a gameobject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
-	go->Init();
 
-	gameObjects.emplace_back(go);
-	if (go->HasComponent<RigidBody3D>())
+	//if the gameObject that was added doesn't already exist in the scenegraph
+	if(std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
-	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		renderer.AddMeshRenderer(mr);
-		//osp.AddObject(mr);
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		renderer.AddLight(go->GetComponent<LightComponent>());
-	}
+		go->Init();
+	
+		gameObjects.emplace_back(go);
 
-	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+		if (go->HasComponent<RigidBody3D>())
+		{
+			rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		}
+		if (go->HasComponent<MeshRenderer>())
+		{
+			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+			renderer.AddMeshRenderer(mr);
+			//osp.AddObject(mr);
+		}
+		if (go->HasComponent<LightComponent>())
+		{
+			renderer.AddLight(go->GetComponent<LightComponent>());
+		}
 
-	for (GameObject* child : go->children)
-	{
-		AddGameObject(child);
+		EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+
+		for (GameObject* child : go->children)
+		{
+			AddGameObject(child);
+		}
+
+		return *go;
 	}
 	
+	EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
 	return *go;
 }
 

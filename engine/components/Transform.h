@@ -3,7 +3,6 @@
 
 #include "math/MMath.h"
 
-
 //! Transform Class
 /*! 
 Not quite a component but similar enough to be in the same folder path
@@ -17,6 +16,8 @@ private:
 	MATH::Matrix4 modelMatrix;
 	
 public:
+	Transform* parent;
+	
 	//!rotationMatrix Matrix4
 	/*! The transforms Rotation Matrix */
 	MATH::Matrix4 rotationMatrix;
@@ -58,6 +59,8 @@ public:
 	/*! Returns the transforms rotation matrix */
 	const MATH::Matrix4& GetRotationMatrix() const { return rotationMatrix; }
 
+	void SetParent(Transform* parentTrans) { parent = parentTrans; }
+	
 	//!Forward Vec3
 	/*! Vector that always points in front of the object */
 	MATH::Vec3 Forward() const;

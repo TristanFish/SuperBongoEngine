@@ -120,6 +120,7 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 
 Scene::Scene() : name_(new char()), objectList(std::make_unique<SceneGraph>())
 {
+	objectList = std::make_unique<SceneGraph>();
 }
 
 Scene::~Scene()
@@ -142,6 +143,23 @@ Scene::~Scene()
 	propertiesPanels.clear();
 }
 
+bool Scene::PostCreate()
+{
+	std::vector<GameObject*> gameObjects;
+	
+	for (auto object : objectList->GetGameObjects())
+	{
+		if(object->GetParent() == nullptr)
+		{
+			gameObjects.push_back(object);
+		}
+	}
+	
+	hierarchyPanel.ConstructHierarchy(gameObjects);
+
+	return true;
+}
+
 void Scene::Update(const float deltaTime)
 {
 	objectList->Update(deltaTime);
@@ -160,6 +178,7 @@ void Scene::Render() const
 	}
 
 	 performancePanel.Render();
+	 hierarchyPanel.Render();
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
