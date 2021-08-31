@@ -8,6 +8,8 @@
 #include "primitives/Primitives.h"
 #include "core/MouseRay.h"
 #include "sdl/SDL.h"
+#include "Utility/SaveUtility.h"
+#include "Utility/LoadUtility.h"
 #include <memory>
 
 using namespace tinyxml2;
@@ -26,17 +28,15 @@ protected:
 	CustomUI::PerformancePanel performancePanel;
 	char* name_;
 
+	
+
 	//! GameObject Pointer
 	/*! Stores our object that was most recently selected using our mouseRay */
 	std::vector<CustomUI::PropertiesPanel*> propertiesPanels;
 
-	//! Const Char* Pointer
-	/*! Stores our objects that can be spawned */
-	const char* objClasses[3] = { "Plane", "Box","Sphere" };
-
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
-	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const char* objName, const char* IDName) const;
+	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const char* objName, std::string objType) const;
 
 	//! Check Existing Panel Function
 	/*! Check's if the clicked object is already in the vector of propertiesPannels: 
@@ -47,11 +47,10 @@ protected:
 	/*! Checks if the MouseRay has intersected with a object */
 	bool CheckIntersection(const MouseRay& ray, const MATH::Vec3& origin, GameObject* obj) const;
 
+
 public:
 	std::unique_ptr<SceneGraph> objectList;
-
 	// Used for saving and loading xml document information
-	XMLElement* pElement;
 	Scene();
 	virtual ~Scene();
 
@@ -65,7 +64,6 @@ public:
 	virtual void LoadMapData();
 
 
-	std::string CheckAtributeValue(int i) const;
 
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;

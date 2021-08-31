@@ -7,11 +7,11 @@
 using namespace MATH;
 
 
-Player::Player(const char* n, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
+Player::Player(std::string name_, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
 {
 	AddComponent<AudioListenerComponent>();
 	
-	name = n;
+	name = name_;
 	transform = Transform(pos);
 	transform.rotation.y = -90.0f;
 }

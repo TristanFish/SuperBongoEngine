@@ -63,3 +63,4 @@ void GameObject::HandleEvents(const SDL_Event& event)
 		}
 	}
 }
+

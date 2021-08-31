@@ -24,9 +24,9 @@ void CustomUI::PropertiesPanel::Render() const
 	{
 		// Gets the mesh's properties and then displays them with ImGui
 
-		ImGui::Begin(selectedObj->name, &selectedObj->isMenuActive);
+		ImGui::Begin(selectedObj->name.c_str(), &selectedObj->isMenuActive);
 	
-		char* tempName =  const_cast<char*>(selectedObj->name);
+		char* tempName =  const_cast<char*>(selectedObj->name.c_str());
 		
 		ImGui::InputText("Mesh Name", tempName, size_t(tempName));
 

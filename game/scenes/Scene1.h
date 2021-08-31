@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "gameObjects/TestModel.h"
+#include "core/Globals.h"
 
 //! Scene 1 class
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
@@ -39,13 +40,5 @@ public:
 	//! Virtual overridden Reset Function
 	/*! When called resets the scene back to its original state */
 	void Reset() override;
-
-	//! Virtual overridden SaveMapData Function
-	/*! Saves objects and object transforms in the scene */
-	void SaveMapData() const override;
-
-	//! Virtual overridden LoadMapData Function
-	/*! Loads objects and object transforms in the scene */
-	void LoadMapData() override;
 };
 #endif

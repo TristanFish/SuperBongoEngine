@@ -507,6 +507,10 @@
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
+    <ClInclude Include="engine\core\resources\SaveManager.h" />
+    <ClInclude Include="engine\core\resources\SaveFile.h" />
+    <ClInclude Include="engine\Utility\SaveUtility.h" />
+    <ClInclude Include="engine\Utility\LoadUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -592,6 +596,10 @@
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
+    <ClCompile Include="engine\core\resources\SaveManager.cpp" />
+    <ClCompile Include="engine\core\resources\SaveFile.cpp" />
+    <ClCompile Include="engine\Utility\SaveUtility.cpp" />
+    <ClCompile Include="engine\Utility\LoadUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

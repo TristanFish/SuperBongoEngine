@@ -270,6 +270,10 @@
     <ClInclude Include="game\gameObjects\TestModel.h" />
     <ClInclude Include="engine\core\resources\TextureManager.h" />
     <ClInclude Include="engine\rendering\Water.h" />
+    <ClInclude Include="engine\core\resources\SaveManager.h" />
+    <ClInclude Include="engine\core\resources\SaveFile.h" />
+    <ClInclude Include="engine\Utility\SaveUtility.h" />
+    <ClInclude Include="engine\Utility\LoadUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\GameObject.cpp" />
@@ -337,6 +341,10 @@
     <ClCompile Include="game\gameObjects\TestModel.cpp" />
     <ClCompile Include="engine\core\resources\TextureManager.cpp" />
     <ClCompile Include="engine\rendering\Water.cpp" />
+    <ClCompile Include="engine\core\resources\SaveManager.cpp" />
+    <ClCompile Include="engine\core\resources\SaveFile.cpp" />
+    <ClCompile Include="engine\Utility\SaveUtility.cpp" />
+    <ClCompile Include="engine\Utility\LoadUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
