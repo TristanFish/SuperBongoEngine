@@ -16,7 +16,7 @@ public:
 	// Inherited via GameObject
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
-	Sphere* GetClone() const override { return new Sphere(*this); };
+	Sphere* GetClone() const override { return new Sphere(this->name, this->transform.pos); };
 
 
 private:

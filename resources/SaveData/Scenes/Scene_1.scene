@@ -6,5 +6,6 @@
         <Player/>
         <Box/>
         <Sphere/>
+        <test/>
     </Objects>
 </Root>
