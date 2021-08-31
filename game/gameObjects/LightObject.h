@@ -8,8 +8,11 @@ class LightObject : public GameObject, public LightComponent
 public:
 	Debug light;
 
-	LightObject(const char* name, MATH::Vec3 position);
+	LightObject(std::string name, MATH::Vec3 position);
 	~LightObject() override = default;
 	// Inherited via GameObject
 	void DrawDebugGeometry() const override;
+
+	LightObject* GetClone() const override { return new LightObject(*this); };
+
 };

@@ -2,6 +2,12 @@
 #include "GameObject.h"
 #include "core/Logger.h"
 #include "core/3D/Physics3D.h"
+#include "core/Globals.h"
+#include "core/resources/SaveFile.h"
+#include "Primitives/PlaneObject.h"
+#include "../game/gameObjects/Grass.h"
+#include "../game/gameObjects/LightObject.h"
+#include "core/resources/SaveManager.h"
 
 SceneGraph::~SceneGraph() 
 {
@@ -30,6 +36,16 @@ void SceneGraph::Init()
 		go->Init();
 	}
 	renderer.Init();
+
+
+	for (auto obj : SaveManager::SaveableObjects)
+	{
+
+		if (obj.second->GetClone()->canBeInstantiated)
+		{
+			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
+		}
+	}
 }
 
 void SceneGraph::Update(const float deltaTime)
@@ -98,6 +114,8 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 //Adds a gameobject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
+
+
 	gameObjects.emplace_back(go);
 	if (go->HasComponent<RigidBody3D>())
 	{
@@ -122,6 +140,53 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	}
 	
 	return *go;
+}
+
+std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
+{
+	return InstantiableObjects;
+}
+
+void SceneGraph::LoadObject(SaveFile& file)
+{
+	if (file.GetFileType() == FileType::OBJECT)
+	{
+		ElementInfo PosElm = file.FindElement("Position");
+		ElementInfo RotElm = file.FindElement("Rotation");
+		ElementInfo ScaleElm = file.FindElement("Scale");
+		ElementInfo TypeElm = file.FindElement("Type");
+		ElementInfo NameElm = file.FindElement("Name");
+
+		MATH::Vec3 Position;
+		MATH::Vec3 Rotation;
+		MATH::Vec3 Scale;
+
+		for (int i = 0; i < 3; i++)
+		{
+
+			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVec3(i)]);
+			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVec3(i)]);
+			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVec3(i)]);
+
+		}
+
+		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
+		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
+		
+		
+		for (auto obj : SaveManager::SaveableObjects)
+		{
+			if (TypeName == obj.first)
+			{
+				obj.second->SetName(prevLoadedObjName.data());
+				obj.second->SetPos(Position);
+				obj.second->SetRotation(Rotation);
+				obj.second->SetScale(Scale);
+				AddGameObject(obj.second->GetClone());
+				break;
+			}
+		}
+	}
 }
 
 void SceneGraph::CheckCollisions()

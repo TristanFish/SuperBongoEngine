@@ -11,7 +11,7 @@ public:
 
 	//!Alternate Player Constructor
 	/*! Initialzes the variables in player */
-	Player(const char* n, const MATH::Vec3& pos);
+	Player(std::string name, const MATH::Vec3& pos);
 
 	//!Virtual Player Destructor
 	/*! Destroys any of the players pointers/vectors */
@@ -24,6 +24,8 @@ public:
 	//!Virtual HandleEvents Function
 	/*! Controls how the player will navigate the world */
 	void HandleEvents(const SDL_Event& event) override;
+
+	Player* GetClone() const override { return new Player(*this); };
 
 private:
 

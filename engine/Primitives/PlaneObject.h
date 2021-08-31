@@ -8,10 +8,13 @@ class PlaneObject : public GameObject
 {
 
 public:
-	PlaneObject(const char* name, MATH::Vec3 position);
+	PlaneObject(std::string name, MATH::Vec3 position);
 	~PlaneObject() override = default;
 	
 	void OnCollisionEnter(RigidBody3D& otherBody) override;
+
+	PlaneObject* GetClone() const override { return new PlaneObject(*this); };
+
 };
 
 #endif
