@@ -61,6 +61,8 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 	{
 		if (obj.first == objType)
 		{
+
+			obj.second->SetName(objName_);
 			obj.second->SetPos(pos_);
 			obj.second->SetRotation(rot_);
 			obj.second->SetScale(scale_);

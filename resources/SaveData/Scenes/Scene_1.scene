@@ -4,5 +4,7 @@
         <Grass/>
         <Light/>
         <Player/>
+        <Box/>
+        <Sphere/>
     </Objects>
 </Root>
