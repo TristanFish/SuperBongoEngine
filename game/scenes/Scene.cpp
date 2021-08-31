@@ -54,25 +54,22 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 	}
 }
 
-void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, const char* IDName) const
+void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const char* objName_, std::string objType) const
 {
-	if(strcmp(IDName, "PlaneObject") == 0)
+
+	for (auto obj : objectList->GetInstantiableObjects())
 	{
-		PlaneObject* newPlane_ = new PlaneObject(name_, pos_);
-		newPlane_->SetRotation(rot_);
-		newPlane_->SetScale(scale_);
-		objectList->AddGameObject(newPlane_);
-		return;
+		if (obj.first == objType)
+		{
+			obj.second->SetPos(pos_);
+			obj.second->SetRotation(rot_);
+			obj.second->SetScale(scale_);
+			objectList->AddGameObject(obj.second->GetClone());
+			return;
+		}
 	}
-	else if(strcmp(IDName,"TestModel") == 0)
-	{
-		TestModel* newTestModel = new TestModel(name_, pos_);
-		newTestModel->SetRotation(rot_);
-		newTestModel->SetScale(scale_);
-		objectList->AddGameObject(newTestModel);
-		return;
-	}
-	EngineLogger::Warning("ID \"" + std::string(IDName) + "\" was not found","Scene.cpp", __LINE__);
+
+	EngineLogger::Warning(objType +" Could not be instantiated","Scene.cpp", __LINE__);
 }
 
  void Scene::CheckExistingPanel(GameObject* obj)
@@ -164,9 +161,19 @@ void Scene::Render() const
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
-	 static int objID = 0;
 	 ImGui::Begin("Add Game Object", &enabled);
-	 ImGui::ListBox("Test Level", &objID, objClasses, IM_ARRAYSIZE(objClasses), 3);
+	
+	 static std::string selectedObj;
+
+	 ImGui::ListBoxHeader("Test Level");
+	 for (auto obj : objectList->GetInstantiableObjects())
+	 {
+		 if (ImGui::Selectable(obj.first.c_str()))
+		 {
+			 selectedObj = obj.first;
+		 }
+	 }
+	 ImGui::ListBoxFooter();
 
 	// Blank variables that can be changed 
 	static Vec3 Pos_ = Vec3(0.0f);
@@ -186,7 +193,7 @@ void Scene::Render() const
 	
 	if (ImGui::Button("Create Object"))
 	{
-		CreateObjWithID(Pos_, Rot_, Scale_, name_, objClasses[objID]);
+		CreateObjWithID(Pos_, Rot_, Scale_, name_, selectedObj);
 		Pos_ = Vec3(0.0f);
 		Rot_ = Vec3(0.0f);
 		Scale_ = Vec3(1.0f);
@@ -206,7 +213,15 @@ void Scene::HandleEvents(const SDL_Event& event)
 void Scene::SaveMapData() const
 {
 
-	SaveUtility::GetInstance()->CreateSave("Scene_1", FileType::SCENE);
+	if (SaveManager::HasSave("Scene_1"))
+	{
+		SaveManager::TransferToSaveQueue("Scene_1");
+	}
+	else
+	{
+		SaveUtility::GetInstance()->CreateSave("Scene_1", FileType::SCENE);
+	}
+
 
 	ElementInfo info = ElementInfo("Root");
 

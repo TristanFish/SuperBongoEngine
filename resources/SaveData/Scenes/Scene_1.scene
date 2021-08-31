@@ -1,8 +1,8 @@
 <Root>
     <Objects>
-        <Player/>
-        <Grass/>
         <FirstPlane/>
+        <Grass/>
         <Light/>
+        <Player/>
     </Objects>
 </Root>

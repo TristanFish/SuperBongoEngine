@@ -15,16 +15,15 @@ bool Scene1::OnCreate()
 
 
 	LoadUtility::GetInstance()->LoadExistingSaves();
-
-
-
 	LoadMapData();
+
+
 
 	PerformanceMonitor::InitMonitor();
 
 	objectList->Init();
-	return true;
 
+	return true;
 }
 
 void Scene1::Update(const float deltaTime)

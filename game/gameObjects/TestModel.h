@@ -17,7 +17,7 @@ public:
 	//! Secondary Test Model Constructor
 	/*! This is the main constructor that we will use and takes in a char* for our gameobject name 
 	and a Vec3 Position for where our object will be in world space*/
-	TestModel(const char* name, MATH::Vec3 position);
+	TestModel(std::string name, MATH::Vec3 position);
 
 	//! Test Model Destructor
 	~TestModel()

@@ -36,6 +36,16 @@ void SceneGraph::Init()
 		go->Init();
 	}
 	renderer.Init();
+
+
+	for (auto obj : SaveManager::SaveableObjects)
+	{
+
+		if (obj.second->GetClone()->canBeInstantiated)
+		{
+			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
+		}
+	}
 }
 
 void SceneGraph::Update(const float deltaTime)
@@ -132,6 +142,11 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	return *go;
 }
 
+std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
+{
+	return InstantiableObjects;
+}
+
 void SceneGraph::LoadObject(SaveFile& file)
 {
 	if (file.GetFileType() == FileType::OBJECT)
@@ -155,7 +170,7 @@ void SceneGraph::LoadObject(SaveFile& file)
 
 		}
 
-		std::string ObjName = std::get<std::string>(NameElm.Attributes["Is"]);
+		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
 		
 		
@@ -163,7 +178,7 @@ void SceneGraph::LoadObject(SaveFile& file)
 		{
 			if (TypeName == obj.first)
 			{
-				obj.second->SetName(ObjName.c_str());
+				obj.second->SetName(prevLoadedObjName.data());
 				obj.second->SetPos(Position);
 				obj.second->SetRotation(Rotation);
 				obj.second->SetScale(Scale);

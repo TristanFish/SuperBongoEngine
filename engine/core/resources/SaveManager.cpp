@@ -47,6 +47,25 @@ SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 	}
 }
 
+bool SaveManager::HasSave(const std::string& saveName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator saveFilesIter = SaveFiles.begin();
+
+
+	while (saveFilesIter != SaveFiles.end())
+	{
+
+		if (saveFilesIter->first == saveName)
+		{
+			return true;
+		}
+
+		saveFilesIter++;
+	}
+
+	return false;
+}
+
 void SaveManager::SaveAll()
 {
 	std::unordered_map<std::string, SaveFile>::iterator saveQueueIter = SaveQueue.begin();
@@ -77,4 +96,25 @@ void SaveManager::SaveAll()
 void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 {
 	SaveQueue.emplace(name, File);
+}
+
+void SaveManager::TransferToSaveQueue(const std::string& saveName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator saveFilesIter = SaveFiles.begin();
+
+
+	while (saveFilesIter != SaveFiles.end())
+	{
+
+		if (saveFilesIter->first == saveName)
+		{
+			SaveQueue.emplace(saveFilesIter->first, saveFilesIter->second);
+
+			RemoveSave(saveName);
+			break;
+		}
+
+		saveFilesIter++;
+	}		
+
 }

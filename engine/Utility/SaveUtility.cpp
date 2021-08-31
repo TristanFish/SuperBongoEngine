@@ -52,8 +52,16 @@ SaveUtility* SaveUtility::GetInstance()
 
 void SaveUtility::CreateSave(const std::string saveName, FileType type)
 {
-	SaveManager::AddToSaveQueue(saveName, SaveFile(saveName,type));
-	EngineLogger::Save(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__);
+	if (SaveManager::SaveFiles.find(saveName) != SaveManager::SaveFiles.end())
+	{
+		EngineLogger::Save(saveName + " Already Exists", "SaveUtility.cpp", __LINE__);
+	}
+	else
+	{
+		SaveManager::AddToSaveQueue(saveName, SaveFile(saveName, type));
+		EngineLogger::Save(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__);
+	}
+
 
 }
 
@@ -138,13 +146,38 @@ void SaveUtility::OverwriteElement(const std::string saveName, const std::string
 
 void SaveUtility::AddElement(const std::string saveName, const std::string elmName, const ElementInfo& element)
 {
-	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveQueue.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
 
-	if (iter != SaveManager::SaveQueue.end())
+	if (iter != SaveManager::SaveFiles.end())
 	{
-		iter->second.AddElement(elmName, element);
+		if (iter->second.HasElement(elmName))
+		{
+			iter->second.FindElement(elmName) = element;
+		}
+		else
+		{
+			iter->second.AddElement(elmName, element);
+		}
+
+		SaveManager::TransferToSaveQueue(saveName);
+
+		
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		if (iterQueue->second.HasElement(elmName))
+		{
+			iterQueue->second.FindElement(elmName) = element;
+		}
+		else
+		{
+			iterQueue->second.AddElement(elmName, element);
+		}
 	}
 	else {
+
+
 
 		EngineLogger::Save(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__);
 	}
@@ -153,16 +186,41 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 void SaveUtility::AddElement(const std::string saveName, const std::string elmName, const std::string parentName, tinyxml2::XMLElement* element)
 {
 	ElementInfo elmInfo = ElementInfo();
-
 	elmInfo.element = element;
 	elmInfo.parentName = parentName;
-	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveQueue.find(saveName);
 
-	if (iter != SaveManager::SaveQueue.end())
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
+
+	if (iter != SaveManager::SaveFiles.end())
 	{
-		iter->second.AddElement(elmName, elmInfo);
+		if (iter->second.HasElement(elmName))
+		{
+			iter->second.FindElement(elmName) = elmInfo;
+		}
+		else
+		{
+			iter->second.AddElement(elmName, elmInfo);
+		}
+
+		SaveManager::TransferToSaveQueue(saveName);
+
+
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		if (iter->second.HasElement(elmName))
+		{
+			iter->second.FindElement(elmName) = elmInfo;
+		}
+		else
+		{
+			iter->second.AddElement(elmName, elmInfo);
+		}
 	}
 	else {
+
+
 
 		EngineLogger::Save(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__);
 	}

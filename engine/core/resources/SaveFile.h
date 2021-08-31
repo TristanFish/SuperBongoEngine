@@ -169,6 +169,10 @@ public:
 	/*!Returns the address to an element with a given name*/
 	ElementInfo& FindElement(std::string elmName);
 
+	//! HasElement Function
+	/*!Return's if this savefile contains the element with a given name*/
+	bool HasElement(const std::string elmName);
+
 	//! FindElement Function
 	/*!Returns the address to an element with a given name*/
 	Attribute& FindAttribute(std::string elmName, std::string atrbName);

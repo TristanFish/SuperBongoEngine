@@ -7,7 +7,7 @@ Box::Box()
 {
 }
 
-Box::Box(const char* name, MATH::Vec3 position)
+Box::Box(std::string name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
@@ -17,6 +17,8 @@ Box::Box(const char* name, MATH::Vec3 position)
 	transform.SetPos(position);
 
 	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
+
+	canBeInstantiated = true;
 }
 
 Box::~Box()

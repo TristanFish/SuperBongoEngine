@@ -33,15 +33,17 @@ protected:
 
 public:
 
-	
-
 	//!Name Char*
 	/*! Hold's the name of this gameobject*/
-	const char* name;
+	std::string name;
 
 	//!IsMenuActive boolean
 	/*! Controls if it's properties panel is active*/
 	bool isMenuActive = false;
+
+	//!canBeInstantiated boolean
+	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
+	bool canBeInstantiated = false;
 
 	//!Transform
 	/*! Control's all of the gameobjects positions/rotations/translations*/
@@ -104,7 +106,8 @@ public:
 
 	//!SetName Setter
 	/*!Set's the Name of this a gameobject*/
-	void SetName(const char* name_) { name = name_; }
+	void SetName(std::string name_) { name = name_; }
+
 
 
 	//This functor is used for OnCollisionEnter functions for gameobjects

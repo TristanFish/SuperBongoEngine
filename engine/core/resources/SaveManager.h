@@ -23,10 +23,16 @@ public:
 	static std::unordered_map<std::string, GameObject*> SaveableObjects;
 
 
+
 	static SaveFile& GetSaveFile(const std::string saveName);
+
+
+	static bool HasSave(const std::string& saveName);
+
 
 	static void SaveAll();
 	static void AddToSaveQueue(const std::string& name, const  SaveFile& File);
+	static void TransferToSaveQueue(const std::string& saveName);
 
 
 	friend class SaveUtility;

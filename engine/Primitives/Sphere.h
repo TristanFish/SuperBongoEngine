@@ -9,7 +9,7 @@ class Sphere : public GameObject
 
 public:
 	Sphere();
-	Sphere(const char* name, MATH::Vec3 position);
+	Sphere(std::string name, MATH::Vec3 position);
 	~Sphere();
 
 

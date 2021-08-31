@@ -58,6 +58,17 @@ ElementInfo& SaveFile::FindElement(std::string elmName)
 	}
 }
 
+bool SaveFile::HasElement(const std::string elmName)
+{
+	std::map<std::string, ElementInfo>::iterator iter = Elements.find(elmName);
+
+	if (iter != Elements.end())
+	{
+		return true;
+	}
+	return false;
+}
+
 Attribute& SaveFile::FindAttribute(std::string elmName, std::string atrbName)
 {
 

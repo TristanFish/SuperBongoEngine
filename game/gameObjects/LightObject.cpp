@@ -3,7 +3,7 @@
 using namespace MATH;
 
 
-LightObject::LightObject(const char* name, Vec3 position)
+LightObject::LightObject(std::string name, Vec3 position)
 {
 	AddComponent<LightComponent>();
 	this->name = name;
