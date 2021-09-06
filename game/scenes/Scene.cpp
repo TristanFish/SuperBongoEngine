@@ -7,6 +7,7 @@
 #include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 
+#include "imgui/imgui_internal.h"
 using namespace MATH;
 
 
@@ -61,12 +62,12 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 	{
 		if (obj.first == objType)
 		{
-
-			obj.second->SetName(objName_);
-			obj.second->SetPos(pos_);
-			obj.second->SetRotation(rot_);
-			obj.second->SetScale(scale_);
-			objectList->AddGameObject(obj.second->GetClone());
+			GameObject* clone = obj.second->GetClone();
+			clone->SetName(objName_);
+			clone->SetPos(pos_);
+			clone->SetRotation(rot_);
+			clone->SetScale(scale_);
+			objectList->AddGameObject(clone);
 			return;
 		}
 	}
@@ -117,7 +118,7 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 }
 
 
-Scene::Scene() : name_(new char()), objectList(nullptr)
+Scene::Scene() : name_(new char()), objectList(std::make_unique<SceneGraph>())
 {
 	objectList = std::make_unique<SceneGraph>();
 }
@@ -142,6 +143,23 @@ Scene::~Scene()
 	propertiesPanels.clear();
 }
 
+bool Scene::PostCreate()
+{
+	std::vector<GameObject*> gameObjects;
+	
+	for (auto object : objectList->GetGameObjects())
+	{
+		if(object->GetParent() == nullptr)
+		{
+			gameObjects.push_back(object);
+		}
+	}
+	
+	hierarchyPanel.ConstructHierarchy(gameObjects);
+
+	return true;
+}
+
 void Scene::Update(const float deltaTime)
 {
 	objectList->Update(deltaTime);
@@ -160,6 +178,7 @@ void Scene::Render() const
 	}
 
 	 performancePanel.Render();
+	 hierarchyPanel.Render();
 
 	 // Displays panel that allows user to add gameobjects at runtime
 	 bool enabled = true;
@@ -170,7 +189,7 @@ void Scene::Render() const
 	 ImGui::ListBoxHeader("Test Level");
 	 for (auto obj : objectList->GetInstantiableObjects())
 	 {
-		 if (ImGui::Selectable(obj.first.c_str()))
+		 if (ImGui::Selectable(obj.first.c_str(), false,ImGuiSelectableFlags_SelectOnClick))
 		 {
 			 selectedObj = obj.first;
 		 }

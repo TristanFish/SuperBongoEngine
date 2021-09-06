@@ -600,6 +600,7 @@
     <ClCompile Include="engine\core\resources\SaveFile.cpp" />
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
+    <ClCompile Include="engine\core\Globals.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

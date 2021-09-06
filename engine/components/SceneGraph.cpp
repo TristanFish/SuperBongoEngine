@@ -30,11 +30,7 @@ SceneGraph::~SceneGraph()
 void SceneGraph::Init() 
 {
 	//osp = OctSpatialPartition(500);
-	
-	for(GameObject* go : gameObjects)
-	{
-		go->Init();
-	}
+
 	renderer.Init();
 
 
@@ -115,30 +111,39 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 
+	//if the gameObject that was added doesn't already exist in the scenegraph
+	if(std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
+	{
+		go->Init();
+	
+		gameObjects.emplace_back(go);
 
-	gameObjects.emplace_back(go);
-	if (go->HasComponent<RigidBody3D>())
-	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
-	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		renderer.AddMeshRenderer(mr);
-		//osp.AddObject(mr);
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		renderer.AddLight(go->GetComponent<LightComponent>());
-	}
+		if (go->HasComponent<RigidBody3D>())
+		{
+			rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		}
+		if (go->HasComponent<MeshRenderer>())
+		{
+			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+			renderer.AddMeshRenderer(mr);
+			//osp.AddObject(mr);
+		}
+		if (go->HasComponent<LightComponent>())
+		{
+			renderer.AddLight(go->GetComponent<LightComponent>());
+		}
 
-	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+		EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
 
-	for (GameObject* child : go->children)
-	{
-		AddGameObject(child);
+		for (GameObject* child : go->children)
+		{
+			AddGameObject(child);
+		}
+
+		return *go;
 	}
 	
+	EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
 	return *go;
 }
 
@@ -178,11 +183,13 @@ void SceneGraph::LoadObject(SaveFile& file)
 		{
 			if (TypeName == obj.first)
 			{
-				obj.second->SetName(prevLoadedObjName.data());
-				obj.second->SetPos(Position);
-				obj.second->SetRotation(Rotation);
-				obj.second->SetScale(Scale);
-				AddGameObject(obj.second->GetClone());
+				GameObject* clone = obj.second->GetClone();
+				clone->SetName(prevLoadedObjName.data());
+				clone->SetPos(Position);
+				clone->SetRotation(Rotation);
+				clone->SetScale(Scale);
+				AddGameObject(clone);
+
 				break;
 			}
 		}

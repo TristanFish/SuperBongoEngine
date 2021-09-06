@@ -14,7 +14,7 @@ public:
 
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
-	Box* GetClone() const override { return new Box(*this); };
+	Box* GetClone() const override { return new Box(this->name, this->transform.pos); };
 
 
 private:

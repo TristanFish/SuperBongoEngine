@@ -20,7 +20,10 @@ bool Game1::OnCreate()
 	{
 		currentScene = new Scene1();
 		currentSceneNum = 0;
-		return currentScene->OnCreate();
+		bool create = currentScene->OnCreate();
+		bool postCreate = currentScene->PostCreate();
+
+		return (create && postCreate);
 	}
 	EngineLogger::Error("Engine's scene is not initialized to 0", "Game1.cpp", __LINE__);
 	return false;
@@ -69,6 +72,12 @@ void Game1::BuildScene()
 	if (!currentScene->OnCreate())
 	{
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
+		CoreEngine::GetInstance()->OnDestroy();
+	}
+
+	if(!currentScene->PostCreate())
+	{
+		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
 }

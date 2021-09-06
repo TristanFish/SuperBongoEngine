@@ -21,7 +21,7 @@ class GameObject
 protected:
 	friend class SceneGraph;
 	//! Active boolean
-	/*! Control's if the gameobject is active or not*/
+	/*! Controls if the gameobject is active or not*/
 	bool active = true;
 
 	GameObject* parent;
@@ -33,12 +33,11 @@ protected:
 
 public:
 
-	//!Name Char*
 	/*! Hold's the name of this gameobject*/
 	std::string name;
 
 	//!IsMenuActive boolean
-	/*! Controls if it's properties panel is active*/
+	/*! Controls if the gameobjrct's properties panel is active*/
 	bool isMenuActive = false;
 
 	//!canBeInstantiated boolean
@@ -46,7 +45,7 @@ public:
 	bool canBeInstantiated = false;
 
 	//!Transform
-	/*! Control's all of the gameobjects positions/rotations/translations*/
+	/*! Controls all of the gameobjects positions/rotations/translations*/
 	Transform transform;
 
 	//!Gameobject Constructor
@@ -63,7 +62,6 @@ public:
 	/*!Updates the Gameobject position/rotation/translation*/
 	virtual void Update(const float deltaTime);
 
-	
 	//!Virtual HandleEvents Function
 	/*!Handles and Keyboard/Mouse events*/
 	virtual void HandleEvents(const SDL_Event& event);
@@ -93,21 +91,29 @@ public:
 	const MATH::Matrix4& GetModelMatrix() const { return transform.GetModelMatrix(); }
 
 	//!SetPos Setter
-	/*!Set's the position of this a gameobject*/
+	/*!Sets the position of this a gameobject*/
 	void SetPos(const MATH::Vec3& pos_) {  transform.SetPos(pos_); }
 
 	//!SetScale Setter
-	/*!Set's the scale of this a gameobject*/
+	/*!Sets the scale of this a gameobject*/
 	void SetScale(const MATH::Vec3& scale_) { transform.scale = scale_; }
 
 	//!SetRotation Setter
-	/*!Set's the rotation of this a gameobject*/
+	/*!Sets the rotation of this a gameobject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.rotation = rotation_; }
 
-	//!SetName Setter
-	/*!Set's the Name of this a gameobject*/
+	/*!Sets the Name of this a gameobject*/
 	void SetName(std::string name_) { name = name_; }
 
+
+	GameObject* GetParent() const { return parent; }
+
+	std::vector<GameObject*>& GetChildren() { return children; }
+
+	GameObject* GetChild(int i) const { return children[i]; }
+	
+	int GetChildCount() const { return children.size(); }
+	
 
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
@@ -187,11 +193,20 @@ public:
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);
 	}
 
+	GameObject* AddChild(GameObject* go)
+	{
+		children.emplace_back(go);
+		go->parent = this;
+		go->transform.SetParent(&this->transform);
+		return go;
+	}
+
 	template <typename T>
 	T* AddChild(GameObject* go)
 	{
 		children.emplace_back(go);
 		go->parent = this;
+		go->transform.SetParent(&this->transform);
 		return dynamic_cast<T*>(go);
 	}
 

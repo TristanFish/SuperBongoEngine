@@ -11,6 +11,8 @@ class Grass : public GameObject, public Instancer
 {
 public:
 
+	unsigned int amount;
+	
 	//! Secondary Grass Constructor
 	/*! This is the main constructor that we will use and takes in a char* for our gameobject name
 	and a Vec3 Position for where our object will be in world space and a unsigned int amount that determents
@@ -20,7 +22,7 @@ public:
 	//! Base Grass Destructor
 	~Grass() = default;
 
-	Grass* GetClone() const override { return new Grass(*this); };
+	Grass* GetClone() const override { return new Grass(this->name, this->transform.pos, amount); }
 
 	
 };

@@ -13,7 +13,7 @@ public:
 	
 	void OnCollisionEnter(RigidBody3D& otherBody) override;
 
-	PlaneObject* GetClone() const override { return new PlaneObject(*this); };
+	PlaneObject* GetClone() const override { return new PlaneObject(this->name, this->transform.pos); };
 
 };
 
