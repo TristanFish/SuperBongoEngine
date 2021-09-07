@@ -524,8 +524,7 @@ void CustomUI::Viewport::Render()
 
 	GLuint ID = Renderer::GetInstance()->GetAlbedoTextureID();
 
-
-	ImGui::Image((void*)ID, ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+	ImGui::Image((ImTextureID)ID, ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
 	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
 	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
@@ -569,6 +568,10 @@ void CustomUI::Viewport::Render()
 	ImGui::PopStyleVar();
 
 }
+
+
+
+
 
 
 CustomUI::DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
