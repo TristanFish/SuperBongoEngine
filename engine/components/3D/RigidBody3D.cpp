@@ -3,6 +3,7 @@
 #include "MMath.h"
 #include "core/Timer.h"
 
+#include "components/3D/MeshRenderer.h"
 
 using namespace MATH;
 

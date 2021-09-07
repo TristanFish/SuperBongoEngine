@@ -511,6 +511,9 @@
     <ClInclude Include="engine\core\resources\SaveFile.h" />
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="external\include\imgui\imgui_stdlib.h" />
+    <ClInclude Include="engine\graphics\UIStatics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -601,6 +604,9 @@
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="engine\graphics\UIStatics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

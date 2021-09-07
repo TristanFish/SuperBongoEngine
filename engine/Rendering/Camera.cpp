@@ -10,7 +10,7 @@ using namespace MATH;
 
 Camera* Camera::instance;
 
-Camera::Camera() : nearPlane(0.1f), farPlane(150.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
+Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
 {
 	position.z = 100.0f;
 

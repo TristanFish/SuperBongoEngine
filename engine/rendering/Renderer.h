@@ -1,7 +1,13 @@
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
+
 #include <vector>
+
+
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
+#include "graphics/CustomUI.h"
+
 
 
 
@@ -9,8 +15,6 @@
 class SkyBox;
 class MeshRenderer;
 class LightComponent;
-
-
 class Renderer
 {
 public:
@@ -21,11 +25,28 @@ public:
 	void Init();
 	void AddMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
-	void Render() const;
+	void Render() ;
 	void DestroyRenderer();
+
+	static Renderer* GetInstance();
+
+
 	static SkyBox* GetSkyBox();
 	
+	GLuint GetAlbedoTextureID() { return gBuffer; }
+
+
+	void Resize(const int size_x, const int size_y);
+
 private:
+
+
+	
+
+	// Viewport 
+	/*! Handles all of the needed functions for the viewport */
+	 CustomUI::Viewport viewport;
+
 	ShaderProgram gBufferShader;
 	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
@@ -50,10 +71,14 @@ private:
 
 	static bool IsMeshOnScreen(const MeshRenderer& mr);
 
+
+	static std::unique_ptr<Renderer> rendererInstance;
+	friend std::default_delete<Renderer>;
+
 	void BindGBufferTextures() const;
 	void UnbindGBufferTextures() const;
 
-	void RenderGBufferResult() const;
+	void RenderGBufferResult() ;
 
 
 	//Attaches the most important lights to this object's shader
@@ -75,4 +100,4 @@ private:
 		BLOOM			
 		PHYSICS_MOVEMENT */
 };
-
+#endif

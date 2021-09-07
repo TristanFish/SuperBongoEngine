@@ -14,7 +14,7 @@ public:
 	void Reset() override;
 	void Update(float deltaTime_) override;
 	void HandleEvents(const SDL_Event& event) override;
-	void Render() const override;
+	void Render() override;
 };
 
 #endif

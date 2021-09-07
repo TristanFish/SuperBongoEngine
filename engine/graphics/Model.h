@@ -1,4 +1,7 @@
-#pragma once
+#ifndef MODEL_H
+#define MODEL_H
+
+
 #include "graphics/Mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -37,3 +40,4 @@ private:
 	 std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
 };
 
+#endif

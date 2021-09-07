@@ -36,7 +36,7 @@ void Game1::OnDestroy()
 
 void Game1::Update(const float deltaTime_)
 {
-	if (currentSceneNum != CoreEngine::GetInstance()->GetCurrentScene())
+	if (currentSceneNum != CoreEngine::GetInstance()->GetCurrentSceneNum())
 	{
 		BuildScene();
 	}
@@ -58,7 +58,7 @@ void Game1::BuildScene()
 	delete currentScene;
 	currentScene = nullptr;
 
-	switch (CoreEngine::GetInstance()->GetCurrentScene())
+	switch (CoreEngine::GetInstance()->GetCurrentSceneNum())
 	{
 	case 1:
 		currentScene = new Scene2();
@@ -68,7 +68,7 @@ void Game1::BuildScene()
 		break;
 	}
 
-	currentSceneNum = CoreEngine::GetInstance()->GetCurrentScene();
+	currentSceneNum = CoreEngine::GetInstance()->GetCurrentSceneNum();
 	if (!currentScene->OnCreate())
 	{
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);

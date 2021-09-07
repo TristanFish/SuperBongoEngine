@@ -5,7 +5,6 @@
 #include "components/ECS.h"
 #include "math/Vector.h"
 #include "components/3D/Collider3D.h"
-#include "components/3D/MeshRenderer.h"
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */

@@ -39,6 +39,12 @@ namespace MATH {
 			y = 0.0f;
 		}
 
+		inline Vec2(float _default)
+		{
+			x = _default;
+			y = _default;
+		}
+
 		inline Vec2(float _x, float _y)
 		{
 			x = _x;
@@ -47,6 +53,10 @@ namespace MATH {
 
 		inline const Vec2 operator / (const Vec2& v) const {
 			return Vec2(x / v.x, y / v.y);
+		}
+
+		inline const bool operator != (const Vec2& v) const {
+			return (x != v.x || y != v.y);
 		}
 
 		inline const Vec2 operator + (const Vec2& v) const

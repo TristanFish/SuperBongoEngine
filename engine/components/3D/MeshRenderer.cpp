@@ -29,8 +29,8 @@ void MeshRenderer::Init(GameObject* g)
 
 	if(model)
 	{
-		OBB.maxVert = model->p_max * gameobject->transform.scale.x;
-		OBB.minVert = model->p_min * gameobject->transform.scale.x;
+		OBB.maxVert = model->p_max ;
+		OBB.minVert = model->p_min ;
 		OBB.transform = gameobject->transform.GetModelMatrix();
 	}
 }
@@ -101,5 +101,6 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 		m.RenderRegular(shader);
 	}
 }
+
 
 
