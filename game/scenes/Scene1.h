@@ -31,7 +31,7 @@ public:
 
 	//! Virtual overridden Render Function
 	/*! Renders all of the gameobjects throughout the loop */
-	void Render() const override;
+	void Render() override;
 
 	//! Virtual overridden HandleEvents Function
 	/*! Checks for keyboard/mouse events throughout the loop */

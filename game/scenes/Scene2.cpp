@@ -34,7 +34,7 @@ void Scene2::HandleEvents(const SDL_Event& event_)
 	}
 }
 
-void Scene2::Render() const
+void Scene2::Render() 
 {
 	Scene::Render();
 	objectList->Render();

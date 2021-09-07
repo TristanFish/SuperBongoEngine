@@ -1,9 +1,15 @@
-#pragma once
+#ifndef DEBUG_DRAWING_H
+#define DEBUG_DRAWING_H
+
+
+
 #include <glew/glew.h>
 
 #include "graphics/Shader.h"
 #include "math/MMath.h"
 #include "graphics/ShaderProgram.h"
+
+
 class Debug
 {
 public:
@@ -30,3 +36,4 @@ public:
 
 };
 
+#endif

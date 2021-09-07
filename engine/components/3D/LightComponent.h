@@ -1,4 +1,6 @@
-#pragma once
+#ifndef LIGHTCOMPONENT_H
+#define LIGHTCOMPONENT_H
+
 #include "components/ECS.h"
 #include "core/Debug.h"
 
@@ -28,4 +30,4 @@ private:
 
 	Debug lightCube;
 };
-
+#endif

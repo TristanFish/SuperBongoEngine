@@ -13,14 +13,18 @@ bool Scene1::OnCreate()
 {
 	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 
+	Scene_Name = "Scene_1";
+
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	LoadMapData();
 
 
-	PerformanceMonitor::InitMonitor();
+	CustomUI::PerformanceMonitor::InitMonitor();
 
 
 	objectList->Init();
+
+
 
 	return true;
 }
@@ -31,7 +35,7 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 }
 
-void Scene1::Render() const
+void Scene1::Render() 
 {
 	Scene::Render();
 }

@@ -25,6 +25,8 @@ bool Window::OnCreate(const char* name, int w, int h)
 	this->width = w;
 	this->height = h;
 
+	
+
 	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 	
 	if (window == nullptr)
@@ -36,6 +38,8 @@ bool Window::OnCreate(const char* name, int w, int h)
 	context = SDL_GL_CreateContext(window);
 	int major;
 	int minor;
+
+
 
 	glGetIntegerv(GL_MAJOR_VERSION, &major);
 	glGetIntegerv(GL_MINOR_VERSION, &minor);
@@ -56,7 +60,8 @@ bool Window::OnCreate(const char* name, int w, int h)
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 															  // Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
@@ -97,9 +102,12 @@ SDL_Window* Window::GetWindow() const
 
 void Window::SetAttributes(int major, int minor)
 {
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
 

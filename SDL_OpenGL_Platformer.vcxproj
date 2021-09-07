@@ -23,11 +23,14 @@
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
+    <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\math\Plane.h" />
     <ClInclude Include="engine\core\events\MouseEventListener.h" />
     <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
     <ClInclude Include="engine\graphics\ShaderProgram.h" />
     <ClInclude Include="engine\core\resources\ShaderManager.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="external\include\imgui\imgui_stdlib.h" />
     <ClInclude Include="game\scenes\Scene2.h" />
     <ClInclude Include="game\Game1.h" />
     <ClInclude Include="engine\core\GameInterface.h" />
@@ -280,11 +283,14 @@
     <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
+    <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\math\Plane.cpp" />
     <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
     <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
     <ClCompile Include="engine\graphics\ShaderProgram.cpp" />
     <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="game\scenes\Scene2.cpp" />
     <ClCompile Include="game\Game1.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />
@@ -479,6 +485,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)engine\;$(SolutionDir)external\include\sdl;$(SolutionDir)external\include\;$(SolutionDir)src\scenes;$(SolutionDir)game\;$(SolutionDir)engine\math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

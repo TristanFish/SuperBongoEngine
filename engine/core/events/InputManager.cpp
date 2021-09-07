@@ -1,5 +1,4 @@
 #include "InputManager.h"
-
 std::unique_ptr<InputManager> InputManager::instance = nullptr;
 
 using namespace MATH;
@@ -42,5 +41,8 @@ void InputManager::PollEvents(SDL_Event& event)
 
 bool InputManager::GetKey(SDL_Keycode key)
 {
+
 	return keys[key];
+
+
 }

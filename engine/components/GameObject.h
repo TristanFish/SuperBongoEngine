@@ -37,8 +37,9 @@ public:
 	std::string name;
 
 	//!IsMenuActive boolean
-	/*! Controls if the gameobjrct's properties panel is active*/
-	bool isMenuActive = false;
+	/*! Controls if the gameobject's properties panel is active*/
+	bool isObjectSelected = false;
+
 
 	//!canBeInstantiated boolean
 	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
@@ -106,15 +107,19 @@ public:
 	void SetName(std::string name_) { name = name_; }
 
 
-	GameObject* GetParent() const { return parent; }
-
-	std::vector<GameObject*>& GetChildren() { return children; }
-
-	GameObject* GetChild(int i) const { return children[i]; }
+	inline GameObject* GetParent() const { return parent; }
 	
-	int GetChildCount() const { return children.size(); }
+	inline GameObject* GetChild(int i) const { return children[i]; }
+
+	inline std::vector<GameObject*>& GetChildren() { return children; }
+
+	inline std::vector<Component*> GetComponents() const { return componentList; }
+
+	inline int GetChildCount() const { return children.size(); }
 	
 
+
+	inline bool operator == (const GameObject* v) { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
@@ -200,6 +205,25 @@ public:
 		go->transform.SetParent(&this->transform);
 		return go;
 	}
+
+	void RemoveChild(GameObject* go)
+	{
+		std::vector<GameObject*>::iterator iter = children.begin();
+
+		while (iter != children.end())
+		{
+			if ((*iter) == go)
+			{
+				children.erase(iter);
+				go->parent = nullptr;
+				go->transform.SetParent(nullptr);
+				break;
+			}
+			iter++;
+		}
+	}
+
+
 
 	template <typename T>
 	T* AddChild(GameObject* go)

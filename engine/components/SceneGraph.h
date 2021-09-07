@@ -29,9 +29,7 @@ private:
 	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
 
-	//! Renderer 
-	/*! Handles the rendering of all the gameobjects*/
-	Renderer renderer;
+	
 	
 	std::string prevLoadedObjName;
 
@@ -63,6 +61,8 @@ public:
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
+	void LoadGameObject(GameObject* go);
+
 	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
 
 	//! GetNumObject Getter
@@ -77,9 +77,12 @@ public:
 	void LoadObject(SaveFile& file);
 
 
+
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
+
+
 };
 
 #endif

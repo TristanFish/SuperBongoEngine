@@ -4,7 +4,6 @@
 #include "resources/ModelManager.h"
 #include "resources/TextureManager.h"
 #include "events/InputManager.h"
-#include "graphics/CustomUI.h"
 #include "graphics/Window.h"
 #include "Timer.h"
 #include "scenes/Scene.h"
@@ -15,7 +14,6 @@
 #include "imgui/imgui_impl_sdl.h"
 #include <sdl/SDL.h>
 #include <Windows.h>
-
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
 CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)
@@ -41,9 +39,7 @@ void CoreEngine::Update(const float deltaTime_)
 void CoreEngine::Render()
 {
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(window->GetWindow());
-
-	//currentScene->Render();
+	ImGui_ImplSDL2_NewFrame();
 
 	if (gameInterface)
 	{
@@ -52,6 +48,15 @@ void CoreEngine::Render()
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
+
+	SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+	ImGui::UpdatePlatformWindows();
+	ImGui::RenderPlatformWindowsDefault();
+	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+
 
 	SDL_GL_SwapWindow(window->GetWindow());
 }
@@ -94,6 +99,8 @@ bool CoreEngine::Init()
 
 	}
 
+
+
 	isRunning = true;
 	return true;
 }
@@ -110,14 +117,14 @@ void CoreEngine::Run()
 		Update(Timer::GetDeltaTime());
 		const Uint32 timeAfterUpdate = SDL_GetTicks();
 
-		PerformanceMonitor::UpdateLoopTime = static_cast<float>(timeAfterUpdate - timeBeforeUpdate);
+		CustomUI::PerformanceMonitor::UpdateLoopTime = static_cast<float>(timeAfterUpdate - timeBeforeUpdate);
 
 
 		const Uint32 timebeforeRender = SDL_GetTicks();
 		Render();
 		const Uint32 timeafterRender = SDL_GetTicks();
 
-		PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
+		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
 
 	}
 
@@ -169,6 +176,7 @@ void CoreEngine::HandleEvents()
 
 void CoreEngine::OnDestroy()
 {
+
 	if (gameInterface)
 	{
 		delete gameInterface;
@@ -186,6 +194,9 @@ void CoreEngine::OnDestroy()
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();
 	ShaderManager::DestroyAllShaders();
+
+	
+
 	SDL_Quit();
 }
 
@@ -194,9 +205,14 @@ void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
 	gameInterface = gameInterface_;
 }
 
-int CoreEngine::GetCurrentScene() const
+int CoreEngine::GetCurrentSceneNum() const
 {
 	return currentSceneNum;
+}
+
+Scene* CoreEngine::GetCurrentScene() const
+{
+	return gameInterface->currentScene;
 }
 
 void CoreEngine::ReloadCurrentScene()

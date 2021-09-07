@@ -6,6 +6,7 @@
 #include "components/ECS.h"
 #include <functional>
 
+
 enum RenderProperties : unsigned short
 {
 	NONE				= 0b00000000,
@@ -14,7 +15,7 @@ enum RenderProperties : unsigned short
 	RECIEVES_SHADOWS	= 0b00000100,
 	BLOOM				= 0b00001000,
 	PHYSICS_MOVEMENT	= 0b00010000,
-	TRANSPARENT			= 0b00100000,
+	TRANSPARENTT		= 0b00100000,
 	WATER				= 0b01000000,
 	OVERRIDE_RENDERER	= 0b10000000
 };
@@ -25,7 +26,6 @@ struct OrientedBoundingBox
 	MATH::Vec3 minVert;
 	MATH::Matrix4 transform;
 };
-
 
 //!MeshRenderer Class
 /*!Allows any gameobject with this component to render a mesh*/

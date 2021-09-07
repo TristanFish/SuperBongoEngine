@@ -20,7 +20,7 @@ SceneGraph::~SceneGraph()
 		}
 	}
 
-	renderer.DestroyRenderer();
+	Renderer::GetInstance()->DestroyRenderer();
 
 	gameObjects.clear();
 
@@ -31,7 +31,7 @@ void SceneGraph::Init()
 {
 	//osp = OctSpatialPartition(500);
 
-	renderer.Init();
+	Renderer::GetInstance()->Init();
 
 
 	for (auto obj : SaveManager::SaveableObjects)
@@ -61,7 +61,7 @@ void SceneGraph::Render() const
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	//Bind the gbuffer and clear it
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, renderer.gBuffer);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Renderer::GetInstance()->gBuffer);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
@@ -74,7 +74,7 @@ void SceneGraph::Render() const
 	}
 #endif // DEBUG
 
-	renderer.Render();
+	Renderer::GetInstance()->Render();
 }
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
@@ -114,37 +114,48 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	//if the gameObject that was added doesn't already exist in the scenegraph
 	if(std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
 	{
-		go->Init();
-	
-		gameObjects.emplace_back(go);
-
-		if (go->HasComponent<RigidBody3D>())
-		{
-			rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
-		}
-		if (go->HasComponent<MeshRenderer>())
-		{
-			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-			renderer.AddMeshRenderer(mr);
-			//osp.AddObject(mr);
-		}
-		if (go->HasComponent<LightComponent>())
-		{
-			renderer.AddLight(go->GetComponent<LightComponent>());
-		}
-
-		EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
-
-		for (GameObject* child : go->children)
-		{
-			AddGameObject(child);
-		}
+		LoadGameObject(go);
 
 		return *go;
 	}
 	
-	EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
+	
+	
+	go->name += "_" + 1;
+
+	LoadGameObject(go);
+
+	//EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
 	return *go;
+}
+
+void SceneGraph::LoadGameObject(GameObject* go)
+{
+	go->Init();
+
+	gameObjects.emplace_back(go);
+
+	if (go->HasComponent<RigidBody3D>())
+	{
+		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+	}
+	if (go->HasComponent<MeshRenderer>())
+	{
+		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+		Renderer::GetInstance()->AddMeshRenderer(mr);
+		//osp.AddObject(mr);
+	}
+	if (go->HasComponent<LightComponent>())
+	{
+		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
+	}
+
+	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+
+	for (GameObject* child : go->children)
+	{
+		AddGameObject(child);
+	}
 }
 
 std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()

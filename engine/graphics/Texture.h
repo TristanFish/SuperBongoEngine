@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
 #include "sdl/SDL.h"
 #include "sdl/SDL_image.h"
 #include <glew/glew.h>
@@ -22,3 +24,5 @@ public:
 	inline GLuint getTextureID() const { return textureID; }
 
 };
+
+#endif
