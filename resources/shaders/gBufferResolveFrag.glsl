@@ -1,5 +1,9 @@
 #version 450
-out vec4 fragColor;
+
+layout (location = 0) out vec4 fragColor;
+layout (location = 1) out vec4 gTexture;
+
+
 
 in vec2 vertUV;
 
@@ -7,6 +11,7 @@ uniform sampler2D albedoTexture;
 uniform sampler2D normTexture;
 uniform sampler2D posTexture;
 uniform sampler2D depthTexture;
+
 //uniform usampler2D stencilTexture;
 
 uniform int activeLights = 1;
@@ -15,6 +20,7 @@ uniform vec3 lightsAmb[2];
 uniform vec3 lightsDiff[2];
 uniform vec3 lightsSpec[2];
 uniform float lightsIntens[2];
+
 
 void main()
 {
@@ -60,5 +66,7 @@ void main()
 //		stenModifier = vec4(1.0, 0.0, 0.0, 1.0);
 //	}
 
+
+	gTexture = col + lightCol;
 	fragColor = col + lightCol;
 }

@@ -24,7 +24,25 @@ void Renderer::Init()
 	gBufferShader = ShaderManager::GetShaders("gBufferShaderVert.glsl", "gBufferShaderFrag.glsl");
 	resultShader = ShaderManager::GetShaders("gBufferResolveVert.glsl", "gBufferResolveFrag.glsl");
 	
+	//Colour texture
+	glGenTextures(1, &gBufferTexture);
+	glBindTexture(GL_TEXTURE_2D, gBufferTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gBufferTexture, 0);
 
+	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT1 };
+	glDrawBuffers(1, buffersTex);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
+	}
+
+	//Set frame buffer back to default
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);
@@ -45,6 +63,7 @@ void Renderer::Init()
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, albedoTexture, 0);
 
+	
 	//Normal texture
 	glGenTextures(1, &normTexture);
 	glBindTexture(GL_TEXTURE_2D, normTexture);
@@ -80,9 +99,11 @@ void Renderer::Init()
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, stencilTexture, 0);
 
+	
 
-	const GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4};
-	glDrawBuffers(5, buffers);
+
+	const GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 };
+	glDrawBuffers(6, buffers);
 	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -91,6 +112,8 @@ void Renderer::Init()
 
 	//Set frame buffer back to default
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+
 
 
 	vao = 0;
@@ -136,8 +159,7 @@ void Renderer::Render()
 	skyBox->Render();
 	
 	
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
@@ -227,6 +249,7 @@ void Renderer::DestroyRenderer()
 	glDeleteTextures(1, &depthTexture);
 	glDeleteTextures(1, &stencilTexture);
 	glDeleteTextures(1, &posTexture);
+	glDeleteTextures(1, &gBufferTexture);
 	glDeleteTextures(1, &normTexture);
 	glDeleteTextures(1, &albedoTexture);
 	glDeleteFramebuffers(1, &gBuffer);
@@ -257,8 +280,28 @@ void Renderer::Resize(const int size_x, const int size_y)
 	glDeleteTextures(1, &stencilTexture);
 	glDeleteTextures(1, &posTexture);
 	glDeleteTextures(1, &normTexture);
+	glDeleteTextures(1, &gBufferTexture);
 	glDeleteTextures(1, &albedoTexture);
 	glDeleteFramebuffers(1, &gBuffer);
+
+
+	//Colour texture
+	glGenTextures(1, &gBufferTexture);
+	glBindTexture(GL_TEXTURE_2D, gBufferTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, size_x, size_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gBufferTexture, 0);
+
+	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT1 };
+	glDrawBuffers(1, buffersTex);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
+	}
+
 
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);
@@ -278,6 +321,8 @@ void Renderer::Resize(const int size_x, const int size_y)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, albedoTexture, 0);
+
+	
 
 	//Normal texture
 	glGenTextures(1, &normTexture);
@@ -446,6 +491,9 @@ void Renderer::BindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture);
+
+
+
 }
 
 void Renderer::UnbindGBufferTextures() const

@@ -33,7 +33,7 @@ public:
 
 	static SkyBox* GetSkyBox();
 	
-	GLuint GetAlbedoTextureID() { return gBuffer; }
+	GLuint GetAlbedoTextureID() { return gBufferTexture; }
 
 
 	void Resize(const int size_x, const int size_y);
@@ -52,6 +52,8 @@ private:
 	GLuint depthRenderBuffer;
 
 	GLuint depthTexture;
+	GLuint gBufferTexture;
+
 	GLuint stencilTexture;
 	GLuint posTexture;
 	GLuint normTexture;
