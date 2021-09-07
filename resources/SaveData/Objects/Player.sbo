@@ -1,7 +1,7 @@
 <Root>
     <Name Is="Player">
         <Transform>
-            <Position X="-922.32257" Y="1111.6289" Z="-125.62023"/>
+            <Position X="-1246.0018" Y="1314.8237" Z="58.339245"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>

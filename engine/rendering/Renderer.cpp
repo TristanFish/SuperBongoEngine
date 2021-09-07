@@ -23,6 +23,8 @@ void Renderer::Init()
 	//Set up renderer shaders
 	gBufferShader = ShaderManager::GetShaders("gBufferShaderVert.glsl", "gBufferShaderFrag.glsl");
 	resultShader = ShaderManager::GetShaders("gBufferResolveVert.glsl", "gBufferResolveFrag.glsl");
+
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 	
 	//Colour texture
 	glGenTextures(1, &gBufferTexture);
@@ -30,11 +32,8 @@ void Renderer::Init()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gBufferTexture, 0);
-
-	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT1 };
-	glDrawBuffers(1, buffersTex);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gBufferTexture, 0);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -92,6 +91,7 @@ void Renderer::Init()
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, depthTexture, 0);
 
 	//Stencil texture not functional yet, going to be used to mark whether lighting/shadows are applied to objects
+	glGenTextures(1, &stencilTexture);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -141,6 +141,8 @@ void Renderer::Init()
 
 	glBindVertexArray(0);
 
+	
+	
 }
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
@@ -226,7 +228,7 @@ void Renderer::Render()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glEnable(GL_DEPTH_TEST);
 
-	//pos.DrawTextureToScreen(posTexture, -1.0f, -0.5f, 0.0f, -0.5f);
+	//pos.DrawTextureToScreen(gBufferTexture, -1.0f, -0.5f, 0.0f, -0.5f);
 	//norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
 	//albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
 	//depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
@@ -292,9 +294,9 @@ void Renderer::Resize(const int size_x, const int size_y)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gBufferTexture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gBufferTexture, 0);
 
-	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT1 };
+	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT0 };
 	glDrawBuffers(1, buffersTex);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -516,9 +518,10 @@ void Renderer::RenderGBufferResult()
 
 	BindGBufferTextures();
 
-	//AttachLights();
-	glBindVertexArray(vao);
+	AttachLights();
+	//glBindVertexArray(vao);
 	viewport.Render();
+	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
 	UnbindGBufferTextures();
@@ -528,17 +531,40 @@ void Renderer::RenderGBufferResult()
 
 void Renderer::AttachLights() const
 {
-	for (size_t i = 0; i < lights.size(); i++)
+//	for (size_t i = 0; i < lights.size(); i++)
+//	{
+//		std::string lightNum = "[" + std::to_string(i) + "]";
+//		
+//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
+//		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
+//		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
+//		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
+//		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
+//		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
+//	}
+
+	std::vector<Vec3> positions;
+	std::vector<Vec3> ambs;
+	std::vector<Vec3> diffs;
+	std::vector<Vec3> specs;
+	std::vector<float> intensities;
+
+	for(size_t i = 0; i < lights.size(); i++)
 	{
-		std::string lightNum = "[" + std::to_string(i) + "]";
-		
-		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
-		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
-		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
-		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
-		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
-		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
+		positions.push_back(lights[i]->gameobject->transform.GetPosition());
+		ambs.push_back(lights[i]->ambColor);
+		diffs.push_back(lights[i]->diffColor);
+		specs.push_back(lights[i]->specColor);
+		intensities.push_back(lights[i]->intensity);
 	}
+
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
+	glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
+
+	
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const

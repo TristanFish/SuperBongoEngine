@@ -522,7 +522,7 @@ void CustomUI::Viewport::Render()
 
 	}
 
-	GLuint ID = Renderer::GetInstance()->GetAlbedoTextureID();
+	GLuint ID = Renderer::GetInstance()->GetgBufferTextureID();
 
 	ImGui::Image((ImTextureID)ID, ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
