@@ -130,10 +130,6 @@ OrientedBoundingBox* OctNode::GetBoundingBox() const
 	return octBounds;
 }
 
-OctSpatialPartition::OctSpatialPartition()
-{
-	
-}
 
 OctSpatialPartition::OctSpatialPartition(float worldSize)
 {

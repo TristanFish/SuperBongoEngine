@@ -9,4 +9,14 @@
             <Type ID="class Grass"/>
         </ObjectInfo>
     </Name>
+    <Name Is="Grass">
+        <Transform>
+            <Position X="0" Y="1" Z="0"/>
+            <Rotation X="-90" Y="0" Z="0"/>
+            <Scale X="5" Y="5" Z="5"/>
+        </Transform>
+        <ObjectInfo>
+            <Type ID="class Grass"/>
+        </ObjectInfo>
+    </Name>
 </Root>

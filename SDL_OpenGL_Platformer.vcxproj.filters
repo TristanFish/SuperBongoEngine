@@ -511,6 +511,9 @@
     <ClInclude Include="engine\core\resources\SaveFile.h" />
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -601,6 +604,8 @@
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

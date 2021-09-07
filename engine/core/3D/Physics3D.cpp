@@ -132,11 +132,11 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	
 	Vec3 worldPos(modelMatrix.getColumn(3));
-	Vec3 delta = worldPos - ray.GetCurrentRay().Origin;
+	Vec3 delta = worldPos - ray.GetCurrentRay().origin;
 
 	Vec3 xAxis(modelMatrix.getColumn(0));
 	float dotDelta = VMath::dot(xAxis, delta);
-	float dotDir = VMath::dot(ray.GetCurrentRay().Direction, xAxis);
+	float dotDir = VMath::dot(ray.GetCurrentRay().direction, xAxis);
 
 	if(fabs(dotDir) > 0.001f)
 	{
@@ -175,7 +175,7 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	Vec3 yAxis(modelMatrix.getColumn(1));
 	dotDelta = VMath::dot(yAxis, delta);
-	dotDir = VMath::dot(ray.GetCurrentRay().Direction, yAxis);
+	dotDir = VMath::dot(ray.GetCurrentRay().direction, yAxis);
 	
 	if(fabs(dotDir) > 0.001f)
 	{
@@ -214,7 +214,7 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	Vec3 zAxis(modelMatrix.getColumn(2));
 	dotDelta = VMath::dot(zAxis, delta);
-	dotDir = VMath::dot(ray.GetCurrentRay().Direction, zAxis);
+	dotDir = VMath::dot(ray.GetCurrentRay().direction, zAxis);
 	
 	if(fabs(dotDir) > 0.001f)
 	{

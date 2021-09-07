@@ -18,8 +18,7 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)
-{
+CoreEngine::CoreEngine(): window(nullptr), gameTimer(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)	{
 
 }
 
@@ -28,14 +27,14 @@ CoreEngine::~CoreEngine()
 	OnDestroy();
 }
 
-void CoreEngine::Update(const float deltaTime_)
-{
-	//currentScene->Update(Timer::GetScaledDeltaTime());
-	if (gameInterface)
-	{
-		gameInterface->Update(deltaTime_);
+void CoreEngine::Update(const float deltaTime_)	{
+	if (deltaTime_ >= 0.008f) {
+		if (gameInterface) {
+			gameInterface->Update(deltaTime_);
+		}
+		HandleEvents();
+		gameTimer->Reset();
 	}
-	HandleEvents();
 }
 
 void CoreEngine::Render()
@@ -82,7 +81,7 @@ bool CoreEngine::Init()
 	
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
-
+	
 	if (gameInterface)
 	{
 		if (!gameInterface->OnCreate())
@@ -94,20 +93,18 @@ bool CoreEngine::Init()
 
 	}
 
+	gameTimer = new Timer();
+	
 	isRunning = true;
 	return true;
 }
 
-void CoreEngine::Run()
-{
-	
-	Timer::UpdateTimer();
+void CoreEngine::Run()	{	
 
-	while (isRunning)
-	{
+	while (isRunning)	{
 		const Uint32 timeBeforeUpdate = SDL_GetTicks();
-		Timer::UpdateTimer();
-		Update(Timer::GetDeltaTime());
+		gameTimer->UpdateTimer();
+		Update(gameTimer->GetDeltaTime());
 		const Uint32 timeAfterUpdate = SDL_GetTicks();
 
 		PerformanceMonitor::UpdateLoopTime = static_cast<float>(timeAfterUpdate - timeBeforeUpdate);
@@ -169,15 +166,17 @@ void CoreEngine::HandleEvents()
 
 void CoreEngine::OnDestroy()
 {
-	if (gameInterface)
-	{
+	if (gameInterface)	{
 		delete gameInterface;
 		gameInterface = nullptr;
 	}
-	if (window)
-	{
+	if (window)	{
 		delete window;
 		window = nullptr;
+	}
+	if(gameTimer)	{
+		delete gameTimer;
+		gameTimer = nullptr;
 	}
 
 	Camera::removeInstance();
