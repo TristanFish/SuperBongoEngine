@@ -125,7 +125,7 @@ void CoreEngine::Run()
 		const Uint32 timeafterRender = SDL_GetTicks();
 
 		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
-
+		
 	}
 
 	gameInterface->currentScene->SaveMapData();

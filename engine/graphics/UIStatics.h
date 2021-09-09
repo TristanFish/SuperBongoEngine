@@ -3,25 +3,45 @@
 
 
 #include <memory>
+#include <iostream>
+
+
+#include "math/Vector.h"
 
 class GameObject;
 class SceneGraph;
-
+class MeshRenderer;
 class UIStatics
 {
 public:
 
+
 	UIStatics() = default;
 	~UIStatics();
+
+	static void ConstructUIStatics();
+
+
+	
+
+
+
+	//! DrawVec3 Function
+	/*! Draws a Vec3 to with screen with ImGui */
+	static void DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
+
+
+	//!DrawTextureSlot Function
+	/*! Will Draw a textured image that can be used to change a mesh/texture on drag drop if meshRenderer is overridden */
+	static void DrawTextureSlot( const char* textureName, MeshRenderer* meshRenderer = nullptr ,const float spacing = 15.0f, const MATH::Vec2& size = MATH::Vec2(64.0f, 64.0f));
+
+	static inline void SetSelectedObject(GameObject* go) { selectedObj = go; }
 
 
 	static inline std::shared_ptr<SceneGraph> GetSceneGraph() { return sceneGraph; }
 
 	static inline GameObject* GetSelectedObject() { return selectedObj; }
 
-	static inline void SetSelectedObject(GameObject* go) { selectedObj = go; }
-
-	static void ConstructUIStatics();
 
 private:
 

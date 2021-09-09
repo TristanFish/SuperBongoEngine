@@ -69,6 +69,10 @@ public:
 	/*!Returns the number of gameobjects in the scene*/
 	 int GetNumObjects() const { return gameObjects.size(); }
 
+	 //! isObjectActive Getter
+	/*!Return's if there is already an object with a given name*/
+	 bool isObjectActive(std::string objName);
+
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
 	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
