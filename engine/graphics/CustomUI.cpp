@@ -16,14 +16,30 @@
 #include "components/3D/MeshRenderer.h"
 
 
-CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
+CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true) , rendererFlagsNames(std::unordered_map<unsigned int,const char*>())
 {
 	
+	//rendererFlagsNames.push_back("NONE");
+	rendererFlagsNames.emplace(1,"LIGHTING");
+	rendererFlagsNames.emplace(2,"CREATES_SHADOWS");
+	rendererFlagsNames.emplace(4,"RECIEVES_SHADOWS");
+	rendererFlagsNames.emplace(8,"BLOOM");
+	rendererFlagsNames.emplace(16,"PHYSICS_MOVEMENT");
+	rendererFlagsNames.emplace(32,"TRANSPARENT");
+	rendererFlagsNames.emplace(64,"WATER");
+	rendererFlagsNames.emplace(128,"OVERRIDE_RENDERER");
+
 }
 
 CustomUI::PropertiesPanel::~PropertiesPanel()
 {
-	
+	for (auto name : rendererFlagsNames)
+	{
+		delete name.second;
+		name.second = nullptr;
+	}
+
+	rendererFlagsNames.clear();
 }
 
 void CustomUI::PropertiesPanel::Render() 
@@ -46,9 +62,9 @@ void CustomUI::PropertiesPanel::Render()
 		{
 			// Change the standard transform components 
 
-			DrawVec3("Position", UIStatics::GetSelectedObject()->transform.GetPosition(),80.0f);
-			DrawVec3("Rotation", UIStatics::GetSelectedObject()->transform.GetRotation(), 80.0f);
-			DrawVec3("Scale", UIStatics::GetSelectedObject()->transform.GetScale(), 80.0f);
+			UIStatics::DrawVec3("Position", UIStatics::GetSelectedObject()->transform.GetPosition(),80.0f);
+			UIStatics::DrawVec3("Rotation", UIStatics::GetSelectedObject()->transform.GetRotation(), 80.0f);
+			UIStatics::DrawVec3("Scale", UIStatics::GetSelectedObject()->transform.GetScale(), 80.0f);
 
 			ImGui::TreePop();
 		}
@@ -56,15 +72,54 @@ void CustomUI::PropertiesPanel::Render()
 		
 
 		// Create a new color that is a copy of the meshes color
-
-
 		if (UIStatics::GetSelectedObject()->HasComponent<MeshRenderer>())
 		{
 			bool opened = ImGui::TreeNodeEx((void*)(uint32_t)UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>(), tree_flags, "Renderer");
 
 			if (opened)
 			{
-				ImGui::ColorEdit4("Mesh Color", UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>()->meshColorTint);
+				MeshRenderer* meshRenderer = UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>();
+
+				ImGui::ColorEdit4("Mesh Color", meshRenderer->meshColorTint);
+
+				
+				GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+
+
+				if (ImGui::BeginCombo("##Flags", "Render Flags"))
+				{
+
+					for (auto flag = RenderProperties::LIGHTING; flag < RenderProperties::OVERRIDE_RENDERER; flag = RenderProperties(flag << 1))
+					{
+						bool isActive = (meshRenderer->renderFlags & flag);
+
+						if (ImGui::Checkbox(rendererFlagsNames[flag], &isActive))
+						{
+							bool isFlagActive = (meshRenderer->renderFlags & flag);
+							if (isFlagActive)
+							{
+								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags & ~flag);
+								std::cout << "Flag Removed" << std::endl;
+
+							}
+							else
+							{
+								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags | flag);
+								std::cout << "Flag Added" << std::endl;
+
+							}
+
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				UIStatics::DrawTextureSlot("texture_09.jpg",meshRenderer,5.0f);
+
+				
+				
+
 				ImGui::TreePop();
 			}
 		}
@@ -73,64 +128,7 @@ void CustomUI::PropertiesPanel::Render()
 
 }
 
-void CustomUI::PropertiesPanel::DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth)
-{
 
-
-	ImGui::PushID(label.c_str());
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, columnWidth);
-	ImGui::Text(label.c_str());
-	ImGui::NextColumn();
-
-
-	ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 1.0f,1.0f });
-
-	float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-	ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
-	
-	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f,0.1f,0.1f,1.0f });
-	ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-	ImGui::Button("X", buttonSize);
-	ImGui::PopItemFlag();
-	ImGui::PopStyleColor();
-
-
-	ImGui::SameLine();
-	ImGui::DragFloat("##X", &value.x, 0.1);
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-
-
-	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f,0.8f,0.1f,1.0f });
-	ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-	ImGui::Button("Y", buttonSize);
-	ImGui::PopItemFlag();
-	ImGui::PopStyleColor();
-
-
-	ImGui::SameLine();
-	ImGui::DragFloat("##Y", &value.y, 0.1);
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-
-	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f,0.1f,0.8f,1.0f });
-	ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-	ImGui::Button("Z", buttonSize);
-	ImGui::PopItemFlag();
-	ImGui::PopStyleColor();
-
-	ImGui::SameLine();
-	ImGui::DragFloat("##Z", &value.z, 0.1);
-	ImGui::PopItemWidth();
-
-
-	ImGui::Columns(1);
-	ImGui::PopStyleVar();
-	ImGui::PopID();
-}
 
 
 
@@ -498,21 +496,68 @@ double CustomUI::PerformanceMonitor::GetCPUUsage()
 
 
 
-CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f), isMouseHovered(false)
+CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true)
 {
+
+	modeMap.push_back("Lighting");
+	modeMap.push_back("Albedo");
+	modeMap.push_back("Position");
+	modeMap.push_back("Normals");
+	modeMap.push_back("Depth");
+	modeMap.push_back("Stencil");
 
 
 }
 
 CustomUI::Viewport::~Viewport()
 {
+	for (auto mode : modeMap)
+	{
+		delete mode;
+	}
+
+	modeMap.clear();
 }
 
 void CustomUI::Viewport::Render()
 {
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Viewport");
+	ImGui::Begin("Viewport",&isActive, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+
+
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu(std::string("Mode " + modeName).c_str()))
+		{
+			if (ImGui::BeginListBox("##RenderModeList"))
+			{
+				int index = 0;
+				for (auto Mode : modeMap)
+				{
+					RenderMode loopMode = static_cast<RenderMode>(index);
+
+					bool is_selected = (mode == loopMode);
+					if (ImGui::Selectable(Mode, is_selected))
+					{
+						ImGui::CloseCurrentPopup();
+						mode = loopMode;
+						modeName = "[" + std::string(Mode) + "]";
+
+					}
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
+
+					index++;
+				}
+				ImGui::EndListBox();
+			}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 
 	if (viewportSize != *(MATH::Vec2*)&viewportPanelSize)
 	{
@@ -522,9 +567,9 @@ void CustomUI::Viewport::Render()
 
 	}
 
-	GLuint ID = Renderer::GetInstance()->GetgBufferTextureID();
+	GLuint ID = Renderer::GetInstance()->GetModeTextureID();
 
-	ImGui::Image((ImTextureID)ID, ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
 	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
 	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
@@ -545,11 +590,12 @@ void CustomUI::Viewport::Render()
 	
 	isMouseHovered = ImGui::IsMouseHoveringRect(vMin, vMax);
 
+	
 
 	if (ImGui::BeginDragDropTarget())
 	{		
 		const char* path;
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Path"))
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Object"))
 		{
 			path = (const char*)payload->Data;
 
@@ -815,21 +861,54 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 	{
 		std::string fileType = path.extension().string();
 
+		GLuint iconTextureID;
 
-		ImGui::Button(filename.c_str(), ImVec2{ ItemSize,ItemSize });
-
-		if (ImGui::BeginDragDropSource())
+		if (fileType == ".sbo")
 		{
-
-			std::string fileDir = path.string();
-			ImGui::SetDragDropPayload("Content_Browser_Path", fileDir.c_str(), fileDir.size() * sizeof(const char*),ImGuiCond_Once);
-
-
-
-
-			ImGui::EndDragDropSource();
+			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 
+		else if (fileType == ".fbx")
+		{
+			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
+			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
+		}
+
+		else if (fileType == ".jpg")
+		{
+			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
+			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
+		}
+		else
+		{
+			ImGui::Button(filename.c_str(), { ItemSize,ItemSize });
+		}
+
+		
+
+		if (ImGui::IsItemHovered())
+		{
+			if (ImGui::BeginDragDropSource())
+			{
+				std::string fileDir = path.string();
+
+				if (path.extension().string() == ".sbo")
+				{
+					ImGui::SetDragDropPayload("Content_Browser_Object", fileDir.c_str(), fileDir.size() * sizeof(const char*), ImGuiCond_Once);
+				}
+				else if (path.extension().string() == ".fbx")
+				{
+					std::string meshName = path.filename().string();
+
+					ImGui::SetDragDropPayload("Content_Browser_Model", meshName.c_str(), meshName.size() * sizeof(const char*), ImGuiCond_Once);
+				}
+
+				ImGui::EndDragDropSource();
+			}
+		}
+
+		
 
 		ImGui::TextWrapped(filename.c_str());
 

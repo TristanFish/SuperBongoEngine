@@ -116,6 +116,10 @@ public:
 
 	//!SetInstanceID Setter
 	/*!Sets the instanceID variable*/
+	Model* GetModel() { return model; }
+
+	//!SetInstanceID Setter
+	/*!Sets the instanceID variable*/
 	void SetInstanceID(const int id)  { instanceID = id; }
 
 	//!SetInstanceAmount Setter

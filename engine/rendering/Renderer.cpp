@@ -26,22 +26,7 @@ void Renderer::Init()
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 	
-	//Colour texture
-	glGenTextures(1, &gBufferTexture);
-	glBindTexture(GL_TEXTURE_2D, gBufferTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gBufferTexture, 0);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
-	}
-
-	//Set frame buffer back to default
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	
 
 	//Create GBuffer
 	glGenFramebuffers(1, &gBuffer);
@@ -102,8 +87,8 @@ void Renderer::Init()
 	
 
 
-	const GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 };
-	glDrawBuffers(6, buffers);
+	const GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
+	glDrawBuffers(5, buffers);
 	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -274,6 +259,35 @@ SkyBox* Renderer::GetSkyBox()
 }
 
 
+GLuint Renderer::GetModeTextureID() const
+{
+	switch (viewport.GetRenderMode())
+	{
+	case CustomUI::RenderMode::Lighting:
+		return gBufferTexture;
+		break;
+	case CustomUI::RenderMode::Albedo:
+		return albedoTexture;
+		break;
+	case CustomUI::RenderMode::Position:
+		return posTexture;
+		break;
+	case CustomUI::RenderMode::Normals:
+		return normTexture;
+		break;
+	case CustomUI::RenderMode::Depth:
+		return depthTexture;
+		break;
+	case CustomUI::RenderMode::Stencil:
+		return stencilTexture;
+		break;
+	default:
+		break;
+	}
+
+	return albedoTexture;
+}
+
 void Renderer::Resize(const int size_x, const int size_y)
 {
 
@@ -286,23 +300,6 @@ void Renderer::Resize(const int size_x, const int size_y)
 	glDeleteTextures(1, &albedoTexture);
 	glDeleteFramebuffers(1, &gBuffer);
 
-
-	//Colour texture
-	glGenTextures(1, &gBufferTexture);
-	glBindTexture(GL_TEXTURE_2D, gBufferTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, size_x, size_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gBufferTexture, 0);
-
-	const GLenum buffersTex[] = { GL_COLOR_ATTACHMENT0 };
-	glDrawBuffers(1, buffersTex);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
-	}
 
 
 	//Create GBuffer
@@ -354,6 +351,7 @@ void Renderer::Resize(const int size_x, const int size_y)
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, depthTexture, 0);
 
 	//Stencil texture not functional yet, going to be used to mark whether lighting/shadows are applied to objects
+	glGenTextures(1, &stencilTexture);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, size_x, size_y, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -519,7 +517,7 @@ void Renderer::RenderGBufferResult()
 	BindGBufferTextures();
 
 	AttachLights();
-	//glBindVertexArray(vao);
+	glBindVertexArray(vao);
 	viewport.Render();
 	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
@@ -569,20 +567,25 @@ void Renderer::AttachLights() const
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderShade(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderBloom(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderPhysics(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderWaterEffects(const MeshRenderer& mr) const
 {
+
 }

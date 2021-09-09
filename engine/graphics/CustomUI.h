@@ -2,6 +2,7 @@
 #define CUSTOMUI_H
 
 #include <filesystem>
+#include <unordered_map>
 #include "math/Vector.h"
 #include "imgui/imgui.h"
 
@@ -88,18 +89,19 @@ namespace CustomUI
 		/*! Renders the IMGUI UI on screen */
 		void Render() override;
 
-		//! DrawVec3 Function
-		/*! Draws a Vec3 to with screen with ImGui */
-		void DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
+		
 
 	private:
 
 		//! isActive bool
 		/*! Hold's if the properties panel is being rendered or not */
 		bool isActive;
+
+
+		std::unordered_map<unsigned int,const char*> rendererFlagsNames;
 	};
 
-	
+
 
 	//! Performance panel Class
 	/*!  This class creates & Renders the performance Panel UI */
@@ -185,6 +187,17 @@ namespace CustomUI
 	};
 
 	
+	enum class RenderMode : unsigned int
+	{
+		Lighting = 0,
+		Albedo = 1,
+		Position = 2,
+		Normals = 3,
+		Depth = 4,
+		Stencil = 5
+		
+	};
+
 
 	//! Viewport panel Class
 	/*!  This class creates & Renders the Viewport Panel UI */
@@ -201,7 +214,7 @@ namespace CustomUI
 		void Render() override;
 
 
-
+		inline RenderMode GetRenderMode() const { return mode; };
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
@@ -218,10 +231,17 @@ namespace CustomUI
 		/*! Stores the viewports size */
 		MATH::Vec2 viewportSize;
 
+		std::string modeName;
+
+		RenderMode mode;
+
+		std::vector<const char*> modeMap;
 
 		//! isMouseHovered bool 
 		/*! Stores if the mouse is hovering over the viewport or not */
 		bool isMouseHovered;
+
+		bool isActive;
 
 
 	};

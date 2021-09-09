@@ -33,7 +33,7 @@ public:
 
 	static SkyBox* GetSkyBox();
 	
-	GLuint GetgBufferTextureID() { return albedoTexture; }
+	GLuint GetModeTextureID() const;
 
 
 	void Resize(const int size_x, const int size_y);

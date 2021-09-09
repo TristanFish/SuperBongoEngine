@@ -111,21 +111,22 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 
-	//if the gameObject that was added doesn't already exist in the scenegraph
-	if(std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
+	if (!isObjectActive(go->name))
 	{
 		LoadGameObject(go);
+	}
+	else
+	{
+		go->name += "_" + std::to_string(1);
 
-		return *go;
+		LoadGameObject(go);
 	}
 	
 	
 	
-	go->name += "_" + 1;
+	
+	
 
-	LoadGameObject(go);
-
-	//EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
 	return *go;
 }
 
@@ -161,6 +162,19 @@ void SceneGraph::LoadGameObject(GameObject* go)
 std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
 {
 	return InstantiableObjects;
+}
+
+bool SceneGraph::isObjectActive(std::string objName)
+{
+	for (auto obj : gameObjects)
+	{
+		if (obj->name == objName)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void SceneGraph::LoadObject(SaveFile& file)
