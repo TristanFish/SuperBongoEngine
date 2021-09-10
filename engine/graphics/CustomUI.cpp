@@ -3,6 +3,7 @@
 #include "psapi.h"
 #include "scenes/Scene.h"
 
+#include "core/Globals.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
 #include "core/Timer.h"
@@ -10,6 +11,8 @@
 
 #include "imgui/imgui_internal.h"
 #include "imgui/imgui_stdlib.h"
+
+#include "Utility/LoadUtility.h"
 
 #include "UIStatics.h"
 
@@ -35,7 +38,6 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 {
 	for (auto name : rendererFlagsNames)
 	{
-		delete name.second;
 		name.second = nullptr;
 	}
 
@@ -193,7 +195,7 @@ void CustomUI::HierarchyPanel::Render()
 void CustomUI::HierarchyPanel::Update(const float deltatime)
 {
 
-	size_t size = UIStatics::GetSceneGraph()->GetGameObjects().size();
+	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
 	if (gameobjects.size() < size || gameobjects.size() > size)
 	{
 		UpdateActiveObjects();
@@ -341,7 +343,7 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 void CustomUI::HierarchyPanel::UpdateActiveObjects()
 {
-	for (auto obj : UIStatics::GetSceneGraph()->GetGameObjects())
+	for (auto obj : Globals::s_SceneGraph->GetGameObjects())
 	{
 		std::vector<GameObject*>::iterator iter;
 		
@@ -513,7 +515,7 @@ CustomUI::Viewport::~Viewport()
 {
 	for (auto mode : modeMap)
 	{
-		delete mode;
+		mode = nullptr;
 	}
 
 	modeMap.clear();
@@ -603,8 +605,7 @@ void CustomUI::Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
-			UIStatics::GetSceneGraph()->LoadObject(file);
-
+			LoadUtility::GetInstance()->LoadObject(file);
 		}
 		ImGui::EndDragDropTarget();
 	}
@@ -645,7 +646,6 @@ void CustomUI::DockSpace::Render()
 void CustomUI::DockSpace::ConstructUserInterface()
 {
 
-	UIStatics::ConstructUIStatics();
 	hierarchy.ConstructHierarchy();
 
 }
@@ -868,14 +868,12 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
-
 		else if (fileType == ".fbx")
 		{
 			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
-
-		else if (fileType == ".jpg")
+		else if (fileType == ".jpg" | fileType == ".png")
 		{
 			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);

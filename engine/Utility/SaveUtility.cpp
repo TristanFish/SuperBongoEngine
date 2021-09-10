@@ -2,6 +2,8 @@
 #include "components/GameObject.h"
 #include "core/Globals.h"
 #include "core/resources/SaveManager.h"
+
+#include "math/Vector.h"
 std::unique_ptr<SaveUtility> SaveUtility::utilityInstance = std::unique_ptr<SaveUtility>();
 
 
@@ -228,6 +230,29 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 
 
 
+ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentName)
+{
+
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 3; i++)
+	{
+		element.Attributes.emplace(Globals::IntToVec3(i), value[i]);
+	}
+
+	return element;
+}
+
+ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, std::string parentName)
+{
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 4; i++)
+	{
+		element.Attributes.emplace(Globals::IntToVec3(i), value[i]);
+	}
+
+	return element;
+}
+
 void SaveUtility::CompileSaves()
 {
 
@@ -289,21 +314,10 @@ void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 	AddElement(saveName, "Transform", Transform);
 
 
-	ElementInfo Position = ElementInfo("Transform");
-	ElementInfo Rotation = ElementInfo("Transform");
-	ElementInfo Scale = ElementInfo("Transform");
 
-
-	for (int i = 0; i < 3; i++)
-	{
-		Position.Attributes.emplace(Globals::IntToVec3(i), obj->transform.pos[i]);
-		Rotation.Attributes.emplace(Globals::IntToVec3(i), obj->transform.rotation[i]);
-		Scale.Attributes.emplace(Globals::IntToVec3(i), obj->transform.scale[i]);
-
-	}
-	AddElement(saveName, "Position", Position);
-	AddElement(saveName, "Rotation", Rotation);
-	AddElement(saveName, "Scale", Scale);
+	AddElement(saveName, "Position", CreateVec3(obj->transform.pos,"Transform"));
+	AddElement(saveName, "Rotation", CreateVec3(obj->transform.rotation, "Transform"));
+	AddElement(saveName, "Scale", CreateVec3(obj->transform.scale, "Transform"));
 
 
 	ElementInfo ObjectInfo = ElementInfo("Name");
@@ -313,4 +327,14 @@ void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 	ElementInfo ObjectType = ElementInfo("ObjectInfo");
 	ObjectType.Attributes.emplace("ID", std::string(obj->GetType()));
 	AddElement(saveName, "Type", ObjectType);
+
+	ElementInfo Components = ElementInfo("Name");
+	AddElement(saveName, "Components", Components);
+
+	for (auto comp : obj->GetComponents())
+	{
+		comp->OnSaveComponent(saveName,"Components");
+	}
+
+
 }

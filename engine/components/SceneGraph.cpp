@@ -123,10 +123,6 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	}
 	
 	
-	
-	
-	
-
 	return *go;
 }
 
@@ -177,49 +173,7 @@ bool SceneGraph::isObjectActive(std::string objName)
 	return false;
 }
 
-void SceneGraph::LoadObject(SaveFile& file)
-{
-	if (file.GetFileType() == FileType::OBJECT)
-	{
-		ElementInfo PosElm = file.FindElement("Position");
-		ElementInfo RotElm = file.FindElement("Rotation");
-		ElementInfo ScaleElm = file.FindElement("Scale");
-		ElementInfo TypeElm = file.FindElement("Type");
-		ElementInfo NameElm = file.FindElement("Name");
 
-		MATH::Vec3 Position;
-		MATH::Vec3 Rotation;
-		MATH::Vec3 Scale;
-
-		for (int i = 0; i < 3; i++)
-		{
-
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVec3(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVec3(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVec3(i)]);
-
-		}
-
-		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
-		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
-		
-		
-		for (auto obj : SaveManager::SaveableObjects)
-		{
-			if (TypeName == obj.first)
-			{
-				GameObject* clone = obj.second->GetClone();
-				clone->SetName(prevLoadedObjName.data());
-				clone->SetPos(Position);
-				clone->SetRotation(Rotation);
-				clone->SetScale(Scale);
-				AddGameObject(clone);
-
-				break;
-			}
-		}
-	}
-}
 
 void SceneGraph::CheckCollisions()
 {

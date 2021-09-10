@@ -1,6 +1,15 @@
 #include "Globals.h"
 
+#include "components/SceneGraph.h"
+#include "core/CoreEngine.h"
+#include "scenes/Scene.h"
+
+
 std::string Globals::ENGINE_PATH = std::filesystem::current_path().string();
+
+std::shared_ptr<SceneGraph> Globals::s_SceneGraph = nullptr;
+
+
 
 std::string Globals::IntToVec3(const int i)
 {
@@ -24,5 +33,8 @@ std::string Globals::IntToVec3(const int i)
 	return "ERROR";
 }
 
-//int Globals::SCREEN_HEIGHT;
-//int Globals::SCREEN_WIDTH;
+void Globals::InitGlobals()
+{
+	s_SceneGraph = CoreEngine::GetInstance()->GetCurrentScene()->objectList;
+}
+

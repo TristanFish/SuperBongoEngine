@@ -15,6 +15,9 @@ bool Scene1::OnCreate()
 
 	Scene_Name = "Scene_1";
 
+	Globals::InitGlobals();
+
+
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	LoadMapData();
 

@@ -31,7 +31,6 @@ private:
 
 	
 	
-	std::string prevLoadedObjName;
 
 public:
 	//OctSpatialPartition osp;
@@ -76,9 +75,6 @@ public:
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
 	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
-
-
-	void LoadObject(SaveFile& file);
 
 
 

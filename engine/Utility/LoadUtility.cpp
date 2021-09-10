@@ -12,7 +12,15 @@
 std::unique_ptr<LoadUtility> LoadUtility::utilityInstance = std::unique_ptr<LoadUtility>();
 
 
+LoadUtility::LoadUtility()
+{
 
+}
+
+LoadUtility::~LoadUtility()
+{
+
+}
 
 
 
@@ -178,15 +186,7 @@ FileType LoadUtility::GetFileExtention( std::string ext) const
 	}
 }
 
-LoadUtility::LoadUtility()
-{
 
-}
-
-LoadUtility::~LoadUtility()
-{
-
-}
 
 LoadUtility* LoadUtility::GetInstance()
 {
@@ -233,6 +233,52 @@ float LoadUtility::LoadFloat(std::string saveName, std::string elmName, std::str
 	SaveManager::GetSaveFile(saveName).FindElement(elmName).element->QueryFloatAttribute(atribName.c_str(), &QueryiedValue);
 
 	return QueryiedValue;
+}
+
+void LoadUtility::LoadObject(SaveFile& file)
+{
+	if (file.GetFileType() == FileType::OBJECT)
+	{
+		ElementInfo PosElm = file.FindElement("Position");
+		ElementInfo RotElm = file.FindElement("Rotation");
+		ElementInfo ScaleElm = file.FindElement("Scale");
+		ElementInfo TypeElm = file.FindElement("Type");
+		ElementInfo NameElm = file.FindElement("Name");
+
+		MATH::Vec3 Position;
+		MATH::Vec3 Rotation;
+		MATH::Vec3 Scale;
+
+		for (int i = 0; i < 3; i++)
+		{
+
+			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVec3(i)]);
+			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVec3(i)]);
+			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVec3(i)]);
+
+		}
+
+		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
+		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
+
+		
+
+
+		for (auto obj : SaveManager::SaveableObjects)
+		{
+			if (TypeName == obj.first)
+			{
+				GameObject* clone = obj.second->GetClone();
+				clone->SetName(prevLoadedObjName.data());
+				clone->SetPos(Position);
+				clone->SetRotation(Rotation);
+				clone->SetScale(Scale);
+				Globals::s_SceneGraph->AddGameObject(clone);
+
+				break;
+			}
+		}
+	}
 }
 
 std::string LoadUtility::LoadString(std::string saveName, std::string elmName, std::string atribName)

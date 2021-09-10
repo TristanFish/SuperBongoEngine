@@ -14,7 +14,6 @@
 
 GameObject* UIStatics::selectedObj = nullptr;
 
-std::shared_ptr<SceneGraph> UIStatics::sceneGraph = nullptr;
 
 
 
@@ -23,11 +22,7 @@ UIStatics::~UIStatics()
 
 }
 
-void UIStatics::ConstructUIStatics()
-{
-	sceneGraph = CoreEngine::GetInstance()->GetCurrentScene()->objectList;
 
-}
 
 void UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth)
 {

@@ -3,6 +3,8 @@
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 
+#include "Utility/SaveUtility.h"
+
 using namespace MATH;
 
 MeshRenderer::MeshRenderer() : renderFlags(LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
@@ -102,5 +104,15 @@ void MeshRenderer::Render(const ShaderProgram& shader) const
 	}
 }
 
+void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
+{
+
+	ElementInfo Renderer = ElementInfo(parentName);
+	SaveUtility::GetInstance()->AddElement(saveName, "Renderer", Renderer);
+
+	ElementInfo MeshTint = SaveUtility::GetInstance()->CreateVec4(meshColorTint, "Renderer");
+
+	SaveUtility::GetInstance()->AddElement(saveName, "MeshColorTint", MeshTint);
+}
 
 

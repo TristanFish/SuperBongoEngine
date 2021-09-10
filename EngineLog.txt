@@ -4,8 +4,6 @@
 [INFO]: Fire.png in: TextureManager.cpp on line: 16
 [INFO]: FolderIcon.png in: TextureManager.cpp on line: 16
 [INFO]: Grass.jpg in: TextureManager.cpp on line: 16
-[INFO]: Green.png in: TextureManager.cpp on line: 16
-[INFO]: GuyWalk.png in: TextureManager.cpp on line: 16
 [INFO]: Hazard.png in: TextureManager.cpp on line: 16
 [INFO]: placeholderSquare.png in: TextureManager.cpp on line: 16
 [INFO]: pufflet.bmp in: TextureManager.cpp on line: 16
@@ -36,10 +34,10 @@
 [SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: TestSave Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 219
-[INFO]: Box added to objectList in: ECS.cpp on line: 154
-[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 154
-[INFO]: Grass added to objectList in: ECS.cpp on line: 154
-[INFO]: Light added to objectList in: ECS.cpp on line: 154
-[INFO]: Player added to objectList in: ECS.cpp on line: 154
-[INFO]: Sphere added to objectList in: ECS.cpp on line: 154
-[INFO]: test added to objectList in: ECS.cpp on line: 154
+[INFO]: Box added to objectList in: ECS.cpp on line: 150
+[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 150
+[INFO]: Grass added to objectList in: ECS.cpp on line: 150
+[INFO]: Light added to objectList in: ECS.cpp on line: 150
+[INFO]: Player added to objectList in: ECS.cpp on line: 150
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 150
+[INFO]: test added to objectList in: ECS.cpp on line: 150

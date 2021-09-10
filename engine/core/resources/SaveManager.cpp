@@ -17,17 +17,31 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 
 void SaveManager::RemoveSave(const std::string saveName)
 {
-	if (SaveFiles.size() > 1)
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.begin();
+
+	if (SaveFiles.size() < 1)
 	{
-		if (SaveFiles.erase(saveName))
+		return;
+	}
+
+
+	while (iter != SaveFiles.end())
+	{
+		if (iter->first == saveName)
 		{
+			SaveFiles.erase(iter);
 			EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
+			break;
 		}
 		else {
 			EngineLogger::Save(saveName + " File Has Not Been Located", "SaveManager.cpp", __LINE__);
-
+			break;
 		}
+
+		iter++;
 	}
+
+	
 }
 
 
@@ -36,14 +50,9 @@ SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
 
-	while (iter != SaveFiles.end())
+	if(iter != SaveFiles.end())
 	{
-
-		if (iter->first == saveName)
-		{
-			return iter->second;
-		}
-		iter++;
+		return iter->second;
 	}
 }
 
@@ -98,7 +107,7 @@ void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 	SaveQueue.emplace(name, File);
 }
 
-void SaveManager::TransferToSaveQueue(const std::string& saveName)
+bool SaveManager::TransferToSaveQueue(const std::string& saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator saveFilesIter = SaveFiles.begin();
 
@@ -111,10 +120,12 @@ void SaveManager::TransferToSaveQueue(const std::string& saveName)
 			SaveQueue.emplace(saveFilesIter->first, saveFilesIter->second);
 
 			RemoveSave(saveName);
-			break;
+			return true;
 		}
 
 		saveFilesIter++;
-	}		
+	}
+
+	return false;
 
 }

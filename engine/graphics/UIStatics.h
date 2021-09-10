@@ -19,10 +19,7 @@ public:
 	UIStatics() = default;
 	~UIStatics();
 
-	static void ConstructUIStatics();
 
-
-	
 
 
 
@@ -38,7 +35,6 @@ public:
 	static inline void SetSelectedObject(GameObject* go) { selectedObj = go; }
 
 
-	static inline std::shared_ptr<SceneGraph> GetSceneGraph() { return sceneGraph; }
 
 	static inline GameObject* GetSelectedObject() { return selectedObj; }
 
@@ -50,7 +46,6 @@ private:
 	static GameObject* selectedObj;
 
 
-	static std::shared_ptr<SceneGraph> sceneGraph;
 
 
 
