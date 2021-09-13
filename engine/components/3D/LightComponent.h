@@ -26,6 +26,8 @@ public:
 	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
 
+
+	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 private:
 
 	Debug lightCube;

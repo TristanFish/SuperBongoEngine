@@ -17,7 +17,7 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 
 void SaveManager::RemoveSave(const std::string saveName)
 {
-	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.begin();
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
 
 	if (SaveFiles.size() < 1)
 	{
@@ -25,20 +25,16 @@ void SaveManager::RemoveSave(const std::string saveName)
 	}
 
 
-	while (iter != SaveFiles.end())
+	if (iter != SaveFiles.end())
 	{
 		if (iter->first == saveName)
 		{
 			SaveFiles.erase(iter);
 			EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
-			break;
 		}
 		else {
 			EngineLogger::Save(saveName + " File Has Not Been Located", "SaveManager.cpp", __LINE__);
-			break;
 		}
-
-		iter++;
 	}
 
 	

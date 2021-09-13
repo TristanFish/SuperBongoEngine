@@ -8,5 +8,6 @@
         <ObjectInfo>
             <Type ID="class LightObject"/>
         </ObjectInfo>
+        <Components/>
     </Name>
 </Root>

@@ -10,7 +10,7 @@
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="1" Z="1"/>
+                <MeshColorTint W="1" X="1" Y="0" Z="0"/>
             </Renderer>
         </Components>
     </Name>

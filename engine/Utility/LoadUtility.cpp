@@ -252,16 +252,32 @@ void LoadUtility::LoadObject(SaveFile& file)
 		for (int i = 0; i < 3; i++)
 		{
 
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVec3(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVec3(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVec3(i)]);
+			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVector(i)]);
+			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVector(i)]);
+			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVector(i)]);
 
 		}
 
 		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
 
-		
+
+		ElementInfo MeshColorElm;
+
+		MATH::Vec4 MeshColor;
+
+		bool HasRenderer;
+		if (HasRenderer = file.HasElement("Renderer"))
+		{
+			MeshColorElm = file.FindElement("MeshColorTint");
+
+			for (int i = 0; i < 4; i++)
+			{
+
+				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
+
+			}
+		}
 
 
 		for (auto obj : SaveManager::SaveableObjects)
@@ -273,6 +289,12 @@ void LoadUtility::LoadObject(SaveFile& file)
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
 				clone->SetScale(Scale);
+				
+				if (HasRenderer)
+				{
+					clone->GetComponent<MeshRenderer>()->SetColorTint(MeshColor);
+				}
+				
 				Globals::s_SceneGraph->AddGameObject(clone);
 
 				break;

@@ -236,7 +236,7 @@ ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentN
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 3; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVec3(i), value[i]);
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
 	}
 
 	return element;
@@ -247,7 +247,7 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, std::string parentN
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVec3(i), value[i]);
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
 	}
 
 	return element;

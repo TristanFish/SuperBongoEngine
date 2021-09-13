@@ -11,7 +11,7 @@ std::shared_ptr<SceneGraph> Globals::s_SceneGraph = nullptr;
 
 
 
-std::string Globals::IntToVec3(const int i)
+std::string Globals::IntToVector(const int i)
 {
 	switch (i)
 	{
@@ -32,6 +32,7 @@ std::string Globals::IntToVec3(const int i)
 
 	return "ERROR";
 }
+
 
 void Globals::InitGlobals()
 {

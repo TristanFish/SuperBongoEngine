@@ -58,7 +58,7 @@ void CustomUI::PropertiesPanel::Render()
 		ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name);
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
-		bool opened = ImGui::TreeNodeEx((void*)(uint32_t)UIStatics::GetSelectedObject(), tree_flags, "Transform");
+		bool opened = ImGui::TreeNodeEx((void*)UIStatics::GetSelectedObject(), tree_flags, "Transform");
 
 		if (opened)
 		{
@@ -73,10 +73,9 @@ void CustomUI::PropertiesPanel::Render()
 		
 		
 
-		// Create a new color that is a copy of the meshes color
 		if (UIStatics::GetSelectedObject()->HasComponent<MeshRenderer>())
 		{
-			bool opened = ImGui::TreeNodeEx((void*)(uint32_t)UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>(), tree_flags, "Renderer");
+			bool opened = ImGui::TreeNodeEx((void*)UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>(), tree_flags, "Renderer");
 
 			if (opened)
 			{
@@ -124,6 +123,27 @@ void CustomUI::PropertiesPanel::Render()
 
 				ImGui::TreePop();
 			}
+		}
+
+		if (UIStatics::GetSelectedObject()->HasComponent<LightComponent>())
+		{
+			bool opened = ImGui::TreeNodeEx("LightSettings", tree_flags, "Light Settings");
+
+			if (opened)
+			{
+				LightComponent* lightComp = UIStatics::GetSelectedObject()->GetComponent<LightComponent>();
+
+
+				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1, 0.5, 500.0f);
+				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
+				ImGui::ColorEdit3("Diffuse Color", lightComp->diffColor);
+				ImGui::ColorEdit3("Specular Color", lightComp->specColor);
+
+				ImGui::TreePop();
+
+
+			}
+
 		}
 	}
 	ImGui::End();
