@@ -22,22 +22,23 @@
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Scene 1 Created in: Scene1.cpp on line: 14
-[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 207
-[SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 213
 [SAVE]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: TestSave Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
+[SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: FirstPlane Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
-[SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
-[SAVE]: TestSave Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
-[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 219
-[INFO]: Box added to objectList in: ECS.cpp on line: 150
-[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 150
-[INFO]: Grass added to objectList in: ECS.cpp on line: 150
-[INFO]: Light added to objectList in: ECS.cpp on line: 150
-[INFO]: Player added to objectList in: ECS.cpp on line: 150
-[INFO]: Sphere added to objectList in: ECS.cpp on line: 150
-[INFO]: test added to objectList in: ECS.cpp on line: 150
+[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 233
+[INFO]: Box added to objectList in: ECS.cpp on line: 152
+[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 152
+[INFO]: Grass added to objectList in: ECS.cpp on line: 152
+[INFO]: Light added to objectList in: ECS.cpp on line: 152
+[INFO]: Player added to objectList in: ECS.cpp on line: 152
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 152
+[INFO]: test added to objectList in: ECS.cpp on line: 152

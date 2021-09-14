@@ -200,12 +200,6 @@ void Scene::SaveMapData() const
 void Scene::LoadMapData()
 {
 
-
-	std::string objectDirectory;
-
-	objectDirectory = Globals::ENGINE_PATH;
-	objectDirectory.append("\\resources\\SaveData\\Objects\\");
-
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
 

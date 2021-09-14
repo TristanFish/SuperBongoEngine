@@ -1,7 +1,7 @@
 <Root>
-    <Name Is="test">
+    <Name Is="Box">
         <Transform>
-            <Position X="0" Y="44.5" Z="0"/>
+            <Position X="-68.300003" Y="3.9000001" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
@@ -10,7 +10,7 @@
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="1" Z="1"/>
+                <MeshColorTint W="1" X="1" Y="0" Z="0"/>
             </Renderer>
         </Components>
     </Name>

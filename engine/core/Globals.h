@@ -14,7 +14,7 @@ struct Globals
 	static const int SCREEN_WIDTH = 1780;
 	static const int SCREEN_HEIGHT = 1000;
 	static std::string ENGINE_PATH;
-
+	static std::string SAVE_DATA_PATH;
 
 	static std::string IntToVector(const int i);
 

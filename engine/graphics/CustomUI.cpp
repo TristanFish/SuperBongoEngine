@@ -32,16 +32,28 @@ CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true) , rendererFlagsNam
 	rendererFlagsNames.emplace(64,"WATER");
 	rendererFlagsNames.emplace(128,"OVERRIDE_RENDERER");
 
+
+	lightTypes.push_back("Point");
+
+	lightTypes.push_back("Spot");
 }
 
 CustomUI::PropertiesPanel::~PropertiesPanel()
 {
 	for (auto name : rendererFlagsNames)
 	{
+		delete name.second;
 		name.second = nullptr;
 	}
 
+	for (auto type : lightTypes)
+	{
+		delete type;
+		type = nullptr;
+	}
+
 	rendererFlagsNames.clear();
+	lightTypes.clear();
 }
 
 void CustomUI::PropertiesPanel::Render() 
@@ -133,6 +145,23 @@ void CustomUI::PropertiesPanel::Render()
 			{
 				LightComponent* lightComp = UIStatics::GetSelectedObject()->GetComponent<LightComponent>();
 
+				static int currentIndex = 0;
+				if (ImGui::BeginCombo("LightTypes", lightTypes[(int)lightComp->type -1]))
+				{
+					for (int i = 0; i < (int)LightType::SPOT; i++)
+					{
+
+						static bool isSelected = (currentIndex == i);
+
+						if (ImGui::Selectable(lightTypes[i], isSelected))
+						{
+							currentIndex = i;
+							lightComp->type = static_cast<LightType>(i +1);
+						}
+					}
+					ImGui::EndCombo();
+
+				}
 
 				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1, 0.5, 500.0f);
 				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
@@ -271,6 +300,11 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 				}
 
 			}
+
+			if (ImGui::MenuItem("Delete"))
+			{
+				Globals::s_SceneGraph->DeleteGameObject(go);
+			}
 			ImGui::EndPopup();
 		}
 
@@ -353,7 +387,15 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 		}
 
-		
+		if (ImGui::BeginPopupContextItem())
+		{
+
+			if (ImGui::MenuItem("Delete"))
+			{
+				Globals::s_SceneGraph->DeleteGameObject(go);
+			}
+			ImGui::EndPopup();
+		}
 		
 		
 
@@ -568,8 +610,6 @@ void CustomUI::Viewport::Render()
 						modeName = "[" + std::string(Mode) + "]";
 
 					}
-					if (is_selected)
-						ImGui::SetItemDefaultFocus();
 
 					index++;
 				}
@@ -812,16 +852,12 @@ void CustomUI::ContentBrowser::GeneratePathNav()
 	ImGui::Columns((int)DirectoryNames.size(), "Navigation", false);
 
 
-	
-
-
 	float spacing = 30.0f;
 
 
 
 	for (int i = 0; i < DirectoryNames.size(); i++ )
 	{
-
 
 		if (ImGui::Button(DirectoryNames[i].c_str(), ImVec2{ ImGui::GetColumnWidth(i) - spacing,0.0f }))
 		{

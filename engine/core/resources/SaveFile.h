@@ -68,6 +68,26 @@ struct ElementInfo
 		}
 	}
 
+	inline bool operator != (const ElementInfo & elm)
+	{
+
+
+		for (auto m_atrib : Attributes)
+		{
+			for (auto s_atrib : elm.Attributes)
+			{
+				if (m_atrib.first == s_atrib.first)
+				{
+					if (m_atrib.second != s_atrib.second)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+			return false;
+	}
 
 	//! HasParent Function
 	/*!Returns if the parent name is empty or not.*/
@@ -113,6 +133,9 @@ private:
 	/*!Stores what type of file that this is.*/
 	FileType fileType;
 
+	//! HasBeenEdited bool
+	/*!Is used when saving the save files so that we know what files need to be saved*/
+	bool HasBeenEdited;
 
 private:
 

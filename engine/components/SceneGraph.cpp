@@ -9,6 +9,8 @@
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
 
+#include "graphics/UIStatics.h"
+
 SceneGraph::~SceneGraph() 
 {
 	for (GameObject* g : gameObjects)
@@ -155,6 +157,47 @@ void SceneGraph::LoadGameObject(GameObject* go)
 	}
 }
 
+void SceneGraph::DeleteGameObject(GameObject* go)
+{
+	if (go->HasComponent<RigidBody3D>())
+	{
+
+		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
+		{
+			if (*iter == go->GetComponent<RigidBody3D>())
+			{
+				rigidBodies.erase(iter);
+				break;
+			}
+		}
+
+	}
+	if (go->HasComponent<MeshRenderer>())
+	{
+		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+		Renderer::GetInstance()->DeleteMeshRenderer(mr);
+		
+	}
+	if (go->HasComponent<LightComponent>())
+	{
+		Renderer::GetInstance()->DeleteLight(go->GetComponent<LightComponent>());
+	}
+
+
+	for (std::vector<GameObject*>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
+	{
+		if (*iter == go)
+		{
+			gameObjects.erase(iter);
+			delete go;
+			go = nullptr;
+			break;
+		}
+	}
+
+	UIStatics::SetSelectedObject(nullptr);
+}
+
 std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
 {
 	return InstantiableObjects;
@@ -172,8 +215,6 @@ bool SceneGraph::isObjectActive(std::string objName)
 
 	return false;
 }
-
-
 
 void SceneGraph::CheckCollisions()
 {

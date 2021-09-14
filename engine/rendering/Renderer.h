@@ -24,7 +24,11 @@ public:
 
 	void Init();
 	void AddMeshRenderer(MeshRenderer* mr);
+	void DeleteMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
+	void DeleteLight(LightComponent* light);
+
+
 	void Render() ;
 	void DestroyRenderer();
 

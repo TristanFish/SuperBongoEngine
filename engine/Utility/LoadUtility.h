@@ -36,12 +36,16 @@ public:
 
 	void LoadExistingSaves();
 
-	int LoadInt(std::string saveName, std::string elmName, std::string atribName);
-	
-	float LoadFloat(std::string saveName, std::string elmName, std::string atribName);
+	void LoadSceneSaves(std::string& objPath);
 
 	void LoadObject(SaveFile& file);
 
+
+
+
+	int LoadInt(std::string saveName, std::string elmName, std::string atribName);
+	
+	float LoadFloat(std::string saveName, std::string elmName, std::string atribName);
 
 	std::string LoadString(std::string saveName, std::string elmName, std::string atribName);
 

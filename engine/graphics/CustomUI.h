@@ -99,6 +99,9 @@ namespace CustomUI
 
 
 		std::unordered_map<unsigned int,const char*> rendererFlagsNames;
+
+
+		std::vector<const char*> lightTypes;
 	};
 
 

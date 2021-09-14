@@ -60,7 +60,6 @@ public:
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
-	void LoadGameObject(GameObject* go);
 
 	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
 
@@ -76,13 +75,13 @@ public:
 	/*!Returns the vector/list of gameobjects in the scene*/
 	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
 
-
-
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
 
+	void LoadGameObject(GameObject* go);
 
+	void DeleteGameObject(GameObject* go);
 };
 
 #endif

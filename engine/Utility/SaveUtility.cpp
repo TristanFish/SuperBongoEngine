@@ -155,7 +155,11 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	{
 		if (iter->second.HasElement(elmName))
 		{
-			iter->second.FindElement(elmName) = element;
+			if (iter->second.FindElement(elmName) != element)
+			{
+				iter->second.FindElement(elmName) = element;
+				iter->second.HasBeenEdited = true;
+			}
 		}
 		else
 		{
@@ -170,7 +174,11 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	{
 		if (iterQueue->second.HasElement(elmName))
 		{
-			iterQueue->second.FindElement(elmName) = element;
+			if (iterQueue->second.FindElement(elmName) != element)
+			{
+				iterQueue->second.FindElement(elmName) = element;
+				iterQueue->second.HasBeenEdited = true;
+			}
 		}
 		else
 		{
@@ -259,12 +267,14 @@ void SaveUtility::CompileSaves()
 	EngineLogger::Save("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__);
 	for (auto& save : SaveManager::SaveQueue)
 	{
+		if(!save.second.HasBeenEdited)
+			continue;
+
 		for (auto& elmName : save.second.insertionOrder)
 		{
 			ElementInfo &elm = save.second.Elements[elmName];
 			if (elm.IsRootChild())
 			{
-				//save.second.rootNode = save.second.Doc.NewElement("Root");
 				elm.element = save.second.Doc.NewElement(elmName.c_str());
 				save.second.rootNode->InsertFirstChild(elm.element);
 
