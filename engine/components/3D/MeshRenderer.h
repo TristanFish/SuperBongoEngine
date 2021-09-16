@@ -9,16 +9,38 @@
 
 enum RenderProperties : unsigned short
 {
-	NONE				= 0b00000000,
-	LIGHTING			= 0b00000001,
-	CREATES_SHADOWS		= 0b00000010,
-	RECIEVES_SHADOWS	= 0b00000100,
-	BLOOM				= 0b00001000,
-	PHYSICS_MOVEMENT	= 0b00010000,
-	TRANSPARENTT		= 0b00100000,
-	WATER				= 0b01000000,
-	OVERRIDE_RENDERER	= 0b10000000
+	RP_NONE					= 0b00000000,
+	RP_LIGHTING				= 0b00000001,
+	RP_CREATES_SHADOWS		= 0b00000010,
+	RP_RECIEVES_SHADOWS		= 0b00000100,
+	RP_BLOOM				= 0b00001000,
+	RP_PHYSICS_MOVEMENT		= 0b00010000,
+	RP_TRANSPARENT			= 0b00100000,
+	RP_WATER				= 0b01000000,
+	RP_OVERRIDE_RENDERER	= 0b10000000
 };
+
+struct RenderFlagPair
+{
+	const char* flagName;
+	RenderProperties flagEnum;
+
+	RenderFlagPair(const char* name, RenderProperties flag)
+	{
+		flagName = name;
+		flagEnum = flag;
+	}
+};
+
+static RenderFlagPair RenderFlagNameEnumPairs[]{RenderFlagPair("None", RP_NONE),
+									RenderFlagPair("Lighting", RP_LIGHTING),
+									RenderFlagPair("Creates Shadows", RP_CREATES_SHADOWS),
+									RenderFlagPair("Recieves Shadows", RP_RECIEVES_SHADOWS),
+									RenderFlagPair("Bloom", RP_BLOOM),
+									RenderFlagPair("Physics", RP_PHYSICS_MOVEMENT),
+									RenderFlagPair("Transparent", RP_TRANSPARENT),
+									RenderFlagPair("Water", RP_WATER),
+									RenderFlagPair("Overrides Default Renderer", RP_OVERRIDE_RENDERER)};
 
 struct OrientedBoundingBox
 {
@@ -33,7 +55,7 @@ class MeshRenderer : public Component
 {
 public:
 	//!RenderFlags 
-	/*!Control's what type of rendering we want to do for this MeshRenderer */
+	/*!Controls what type of rendering we want to do for this MeshRenderer */
 	RenderProperties renderFlags;
 
 	//!Shader

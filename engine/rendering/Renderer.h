@@ -7,6 +7,7 @@
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/CustomUI.h"
+#include "graphics/FrameBuffer.h"
 
 
 
@@ -20,9 +21,15 @@ class Renderer
 public:
 	std::vector<MeshRenderer*> meshRenderers;
 	std::vector<LightComponent*> lights;
-	GLuint gBuffer;
+	
+	//framebuffers
+	FrameBuffer gBuffer;
+	FrameBuffer gBufferRenderResult;
 
 	void Init();
+	void SetupFrameBuffers();
+	void SetupTextures();
+	
 	void AddMeshRenderer(MeshRenderer* mr);
 	void DeleteMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
@@ -39,6 +46,7 @@ public:
 	
 	GLuint GetModeTextureID() const;
 
+	GLuint GetgBufferTextureID() const { return albedoTexture.texture; }
 
 	void Resize(const int size_x, const int size_y);
 
@@ -55,17 +63,19 @@ private:
 	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
 
-	GLuint depthTexture;
-	GLuint gBufferTexture;
-
-	GLuint stencilTexture;
-	GLuint posTexture;
-	GLuint normTexture;
-	GLuint albedoTexture;
+	//textures
+	BufferTexture gBufferTexture;
+	
+	BufferTexture depthTexture;
+	BufferTexture stencilTexture;
+	BufferTexture posTexture;
+	BufferTexture normTexture;
+	BufferTexture albedoTexture;
 
 	GLuint vao;
 	GLuint vbo;
 
+	//debugging Textures
 	Debug pos;
 	Debug norm;
 	Debug albedo;

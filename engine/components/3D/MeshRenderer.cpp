@@ -7,7 +7,7 @@
 
 using namespace MATH;
 
-MeshRenderer::MeshRenderer() : renderFlags(LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+MeshRenderer::MeshRenderer() : renderFlags(RP_LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
 bool MeshRenderer::LoadModel(const char* name)
 {
