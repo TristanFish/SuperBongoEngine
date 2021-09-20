@@ -21,18 +21,8 @@
 #include "components/3D/MeshRenderer.h"
 
 
-CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true) , rendererFlagsNames(std::unordered_map<unsigned int,const char*>())
+CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
 {
-	
-	//rendererFlagsNames.push_back("NONE");
-	rendererFlagsNames.emplace(1,"LIGHTING");
-	rendererFlagsNames.emplace(2,"CREATES_SHADOWS");
-	rendererFlagsNames.emplace(4,"RECIEVES_SHADOWS");
-	rendererFlagsNames.emplace(8,"BLOOM");
-	rendererFlagsNames.emplace(16,"PHYSICS_MOVEMENT");
-	rendererFlagsNames.emplace(32,"TRANSPARENT");
-	rendererFlagsNames.emplace(64,"WATER");
-	rendererFlagsNames.emplace(128,"OVERRIDE_RENDERER");
 
 
 	lightTypes.push_back("Point");
@@ -42,29 +32,22 @@ CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true) , rendererFlagsNam
 
 CustomUI::PropertiesPanel::~PropertiesPanel()
 {
-	for (auto name : rendererFlagsNames)
-	{
-		delete name.second;
-		name.second = nullptr;
-	}
-
 	for (auto type : lightTypes)
 	{
 		delete type;
 		type = nullptr;
 	}
 
-	rendererFlagsNames.clear();
 	lightTypes.clear();
 }
 
 void CustomUI::PropertiesPanel::Render() 
 {
-	
+	GameObject* selectedObject = UIStatics::GetSelectedObject();
 
 	ImGui::Begin("Properties",&isActive);
 
-	if (UIStatics::GetSelectedObject())
+	if (selectedObject)
 	{
 		// Gets the mesh's properties and then displays them with ImGui
 
@@ -80,22 +63,19 @@ void CustomUI::PropertiesPanel::Render()
 		}
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
-		bool opened = ImGui::TreeNodeEx((void*)UIStatics::GetSelectedObject(), tree_flags, "Transform");
+		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
 
 		if (opened)
 		{
 			// Change the standard transform components 
+			UIStatics::DrawVec3("Position", selectedObject->transform.GetPosition(),80.0f);
 
-			
-
-			UIStatics::DrawVec3("Position", UIStatics::GetSelectedObject()->transform.GetPosition(),80.0f);
-
-			static MATH::Vec3 rotation = UIStatics::GetSelectedObject()->transform.GetRotation();
+			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
 
 
 			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
 			
-				UIStatics::GetSelectedObject()->transform.SetRot(rotation);
+				selectedObject->transform.SetRot(rotation);
 
 				MATH::Quaternion test = MATH::Quaternion::EulerToQuat(rotation);
 				
@@ -107,22 +87,20 @@ void CustomUI::PropertiesPanel::Render()
 			}
 			
 			
-			UIStatics::DrawVec3("Scale", UIStatics::GetSelectedObject()->transform.GetScale(), 80.0f);
+			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScale(), 80.0f);
 
 			ImGui::TreePop();
 		}
 		
 		
 
-		if (UIStatics::GetSelectedObject()->HasComponent<MeshRenderer>())
+		if (MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>())
 		{
-			bool opened = ImGui::TreeNodeEx((void*)UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>(), tree_flags, "Renderer");
+			bool opened = ImGui::TreeNodeEx((void*)mr, tree_flags, "Renderer");
 
 			if (opened)
 			{
-				MeshRenderer* meshRenderer = UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>();
-
-				ImGui::ColorEdit4("Mesh Color", meshRenderer->meshColorTint);
+				ImGui::ColorEdit4("Mesh Color", mr->meshColorTint);
 
 				
 				GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
@@ -131,32 +109,40 @@ void CustomUI::PropertiesPanel::Render()
 				if (ImGui::BeginCombo("##Flags", "Render Flags"))
 				{
 
-					for (auto flag = RenderProperties::LIGHTING; flag < RenderProperties::OVERRIDE_RENDERER; flag = RenderProperties(flag << 1))
+					const int renderFlagSize = IM_ARRAYSIZE(RenderFlagNameEnumPairs);
+
+
+					for (size_t i = 0; i < renderFlagSize; i++)
 					{
-						bool isActive = (meshRenderer->renderFlags & flag);
-
-						if (ImGui::Checkbox(rendererFlagsNames[flag], &isActive))
+						bool boxIsActive = (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum);
+						
+						if (ImGui::Checkbox(RenderFlagNameEnumPairs[i].flagName, &boxIsActive))
 						{
-							bool isFlagActive = (meshRenderer->renderFlags & flag);
-							if (isFlagActive)
+							std::cout << "Checkbox Open" << std::endl;
+							//If None is checked undo all boxes
+							if(i == 0)
 							{
-								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags & ~flag);
+								if(boxIsActive)
+								{
+									mr->renderFlags = static_cast<RenderProperties>(0);
+									break;
+								}
 							}
-							else
+							
+							if (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum)
 							{
-								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags | flag);
+								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags & ~RenderFlagNameEnumPairs[i].flagEnum);
+							} else
+							{
+								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags | RenderFlagNameEnumPairs[i].flagEnum);
 							}
-
 						}
 					}
 
 					ImGui::EndCombo();
 				}
 
-				UIStatics::DrawTextureSlot("texture_09.jpg",meshRenderer,5.0f);
-
-				
-				
+				UIStatics::DrawTextureSlot("texture_09.jpg",mr,5.0f);
 
 				ImGui::TreePop();
 			}
@@ -203,11 +189,6 @@ void CustomUI::PropertiesPanel::Render()
 	ImGui::End();
 
 }
-
-
-
-
-
 
 
 

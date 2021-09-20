@@ -31,6 +31,7 @@
     <ClInclude Include="engine\core\resources\ShaderManager.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="external\include\imgui\imgui_stdlib.h" />
+    <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="game\scenes\Scene2.h" />
     <ClInclude Include="game\Game1.h" />
     <ClInclude Include="engine\core\GameInterface.h" />
@@ -291,6 +292,7 @@
     <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
     <ClCompile Include="external\include\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="external\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="game\scenes\Scene2.cpp" />
     <ClCompile Include="game\Game1.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />

@@ -98,9 +98,6 @@ namespace CustomUI
 		bool isActive;
 
 
-		std::unordered_map<unsigned int,const char*> rendererFlagsNames;
-
-
 		std::vector<const char*> lightTypes;
 	};
 
