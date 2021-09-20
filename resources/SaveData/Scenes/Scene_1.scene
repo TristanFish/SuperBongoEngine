@@ -1,11 +1,11 @@
 <Root>
     <Objects>
-        <FirstPlane/>
         <Grass/>
         <Light/>
-        <Player/>
         <Box/>
         <Sphere/>
         <test/>
+        <Player/>
+        <Plane-1/>
     </Objects>
 </Root>

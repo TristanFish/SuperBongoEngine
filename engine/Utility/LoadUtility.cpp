@@ -134,6 +134,12 @@ void LoadUtility::LoadSave(const std::string saveName,  std::string savePath, Fi
 		}
 	}
 
+	if (extention == FileType::SCENE)
+	{
+		file.SetHasBeenEdited(true);
+	}
+
+
 	SaveManager::AddToSaveFiles(saveName,SaveFile(file));
 }
 

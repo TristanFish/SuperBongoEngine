@@ -46,6 +46,11 @@ public:
 	void AddElement(const std::string saveName, const std::string elmName, const ElementInfo& element);
 	void AddElement(const std::string saveName, const std::string elmName, const std::string parentName, tinyxml2::XMLElement* element = nullptr);
 
+
+	void RemoveElement(const std::string saveName, const std::string elmName);
+	void RemoveAllElements(const std::string saveName);
+
+
 	ElementInfo CreateVec3(const MATH::Vec3& value,std::string parentName);
 
 	ElementInfo CreateVec4(const MATH::Vec4& value, std::string parentName);

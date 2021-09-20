@@ -164,6 +164,7 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 		else
 		{
 			iter->second.AddElement(elmName, element);
+			iter->second.HasBeenEdited = true;
 		}
 
 		SaveManager::TransferToSaveQueue(saveName);
@@ -174,15 +175,19 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	{
 		if (iterQueue->second.HasElement(elmName))
 		{
+
 			if (iterQueue->second.FindElement(elmName) != element)
 			{
 				iterQueue->second.FindElement(elmName) = element;
 				iterQueue->second.HasBeenEdited = true;
 			}
+			
 		}
 		else
 		{
 			iterQueue->second.AddElement(elmName, element);
+			iterQueue->second.HasBeenEdited = true;
+
 		}
 	}
 	else {
@@ -219,13 +224,13 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	}
 	else if (iterQueue != SaveManager::SaveQueue.end())
 	{
-		if (iter->second.HasElement(elmName))
+		if (iterQueue->second.HasElement(elmName))
 		{
-			iter->second.FindElement(elmName) = elmInfo;
+			iterQueue->second.FindElement(elmName) = elmInfo;
 		}
 		else
 		{
-			iter->second.AddElement(elmName, elmInfo);
+			iterQueue->second.AddElement(elmName, elmInfo);
 		}
 	}
 	else {
@@ -237,6 +242,47 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 }
 
 
+
+void SaveUtility::RemoveElement(const std::string saveName, const std::string elmName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
+
+	if (iter != SaveManager::SaveFiles.end())
+	{
+		if (iter->second.HasElement(elmName))
+		{
+			iter->second.RemoveElement(elmName);
+		}
+
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		if (iterQueue->second.HasElement(elmName))
+		{
+			iterQueue->second.RemoveElement(elmName);
+		}
+	}
+
+}
+
+void SaveUtility::RemoveAllElements(const std::string saveName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
+
+	if (iter != SaveManager::SaveFiles.end())
+	{
+
+		
+		iter->second.ClearElements();
+
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		iterQueue->second.ClearElements();
+	}
+}
 
 ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentName)
 {
@@ -312,7 +358,12 @@ void SaveUtility::CompileSaves()
 
 void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 {
+
+	
+
 	CreateSave(saveName, FileType::OBJECT);
+
+	
 
 	ElementInfo Name = ElementInfo("Root");
 	Name.Attributes.emplace("Is", std::string(obj->name));
@@ -326,7 +377,7 @@ void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 
 
 	AddElement(saveName, "Position", CreateVec3(obj->transform.pos,"Transform"));
-	AddElement(saveName, "Rotation", CreateVec3(obj->transform.rotation, "Transform"));
+	AddElement(saveName, "Rotation", CreateVec3(MATH::Quaternion::QuatToEuler(obj->transform.rotation), "Transform"));
 	AddElement(saveName, "Scale", CreateVec3(obj->transform.scale, "Transform"));
 
 

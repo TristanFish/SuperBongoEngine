@@ -1,6 +1,7 @@
 #ifndef MMATH_H
 #define MMATH_H
 #include "Matrix.h"
+
 ///  A class devoted to graphics related Math - OpenGL style
 
 namespace  MATH {
@@ -31,6 +32,10 @@ namespace  MATH {
 		static Matrix4 lookAt(const Vec3& eye, const Vec3& at, const Vec3& up);					
 		static Matrix4 transpose(const Matrix4 &m);
 		static Matrix4 inverse(const Matrix4 &m);
+
+		static Matrix4 GetFromMat3( const Matrix3& m_);
+		static Matrix4 GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right);
+
 	};
 
 }

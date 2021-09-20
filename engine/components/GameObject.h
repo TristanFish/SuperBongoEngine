@@ -101,7 +101,7 @@ public:
 
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameobject*/
-	void SetRotation(const MATH::Vec3& rotation_) { transform.rotation = rotation_; }
+	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
 
 	/*!Sets the Name of this a gameobject*/
 	void SetName(std::string name_) { name = name_; }

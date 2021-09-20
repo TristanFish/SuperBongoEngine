@@ -7,6 +7,9 @@
 
 std::string Globals::ENGINE_PATH = std::filesystem::current_path().string();
 std::string Globals::SAVE_DATA_PATH = ENGINE_PATH + "\\resources\\SaveData\\";
+std::string Globals::SCENE_NAME = "";
+
+
 
 std::shared_ptr<SceneGraph> Globals::s_SceneGraph = nullptr;
 
@@ -38,5 +41,7 @@ std::string Globals::IntToVector(const int i)
 void Globals::InitGlobals()
 {
 	s_SceneGraph = CoreEngine::GetInstance()->GetCurrentScene()->objectList;
+
+	SCENE_NAME = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 }
 

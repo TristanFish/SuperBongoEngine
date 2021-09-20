@@ -13,6 +13,8 @@
 #include "imgui/imgui_stdlib.h"
 
 #include "Utility/LoadUtility.h"
+#include "core/resources/SaveManager.h"
+#include "core/CoreEngine.h"
 
 #include "UIStatics.h"
 
@@ -67,7 +69,15 @@ void CustomUI::PropertiesPanel::Render()
 		// Gets the mesh's properties and then displays them with ImGui
 
 
-		ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name);
+		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			std::string newObjName = UIStatics::GetSelectedObject()->name;
+
+			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
+			SaveManager::SetSaveName(oldObjName, newObjName);
+
+		}
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
 		bool opened = ImGui::TreeNodeEx((void*)UIStatics::GetSelectedObject(), tree_flags, "Transform");
@@ -76,8 +86,27 @@ void CustomUI::PropertiesPanel::Render()
 		{
 			// Change the standard transform components 
 
+			
+
 			UIStatics::DrawVec3("Position", UIStatics::GetSelectedObject()->transform.GetPosition(),80.0f);
-			UIStatics::DrawVec3("Rotation", UIStatics::GetSelectedObject()->transform.GetRotation(), 80.0f);
+
+			static MATH::Vec3 rotation = UIStatics::GetSelectedObject()->transform.GetRotation();
+
+
+			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
+			
+				UIStatics::GetSelectedObject()->transform.SetRot(rotation);
+
+				MATH::Quaternion test = MATH::Quaternion::EulerToQuat(rotation);
+				
+
+				MATH::Vec3 euler = MATH::Quaternion::QuatToEuler(test);
+
+
+				MATH::Quaternion test1;
+			}
+			
+			
 			UIStatics::DrawVec3("Scale", UIStatics::GetSelectedObject()->transform.GetScale(), 80.0f);
 
 			ImGui::TreePop();
@@ -112,14 +141,10 @@ void CustomUI::PropertiesPanel::Render()
 							if (isFlagActive)
 							{
 								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags & ~flag);
-								std::cout << "Flag Removed" << std::endl;
-
 							}
 							else
 							{
 								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags | flag);
-								std::cout << "Flag Added" << std::endl;
-
 							}
 
 						}
@@ -207,7 +232,7 @@ CustomUI::HierarchyPanel::~HierarchyPanel()
 
 }
 
-void CustomUI::HierarchyPanel::ConstructHierarchy()
+void CustomUI::HierarchyPanel::Construct()
 {
 	UpdateActiveObjects();
 
@@ -684,18 +709,32 @@ void CustomUI::Viewport::Render()
 CustomUI::DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
 {
 
+	uiInterfaces.push_back(new ContentBrowser());
+	uiInterfaces.push_back(new HierarchyPanel());
+	uiInterfaces.push_back(new PerformancePanel());
+	uiInterfaces.push_back(new PropertiesPanel());
+
+
 }
 
 CustomUI::DockSpace::~DockSpace()
 {
-	
+	for (auto panel : uiInterfaces)
+	{
+		delete panel;
+		panel = nullptr;
+	}
+
+	uiInterfaces.clear();
 }
 
 void CustomUI::DockSpace::Update(const float deltatime)
 {
-	performancePanel.Update(deltatime);
-
-	hierarchy.Update(deltatime);
+	
+	for (auto panel : uiInterfaces)
+	{
+		panel->Update(deltatime);
+	}
 }
 
 void CustomUI::DockSpace::Render()
@@ -706,7 +745,10 @@ void CustomUI::DockSpace::Render()
 void CustomUI::DockSpace::ConstructUserInterface()
 {
 
-	hierarchy.ConstructHierarchy();
+	for (auto panel : uiInterfaces)
+	{
+		panel->Construct();
+	}
 
 }
 
@@ -781,13 +823,10 @@ void CustomUI::DockSpace::GenerateDockSpace()
 	}
 
 
-	hierarchy.Render();
-
-	performancePanel.Render();
-
-	propertiesPanel.Render();
-
-	contentBrowser.Render();
+	for (auto panel : uiInterfaces)
+	{
+		panel->Render();
+	}
 
 	ImGui::End();
 }
