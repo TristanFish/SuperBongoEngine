@@ -171,19 +171,27 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 void Scene::SaveMapData() const
 {
 
+
+
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
 	{
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
 	
-
 	
 	ElementInfo info = ElementInfo("Root");
 
+
+
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
 
-
+	
 	info = ElementInfo("Objects");
+	
+
+	
+
+	
 	for (auto obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);

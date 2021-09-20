@@ -64,7 +64,7 @@ namespace CustomUI
 
 		virtual void Render() = 0;
 		virtual void Update(const float deltatime) {};
-
+		virtual void Construct() {};
 	private:
 
 	};
@@ -149,7 +149,7 @@ namespace CustomUI
 
 		//! ConstructHierarchy Function
 		/*! Copies over the passed in vector of gameobjects */
-		void ConstructHierarchy();
+		void Construct() override;
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
@@ -354,23 +354,9 @@ namespace CustomUI
 		/*! Return's true if the dock space full screen */
 		bool isDockSpaceFullScreen;
 
-		// ContentBrowser 
-		/*! Handles all of the needed functions for the Content browser */
-		ContentBrowser contentBrowser;
+		std::vector<UIInterface*> uiInterfaces;
 
-
-		// HierarchyPanel 
-		/*! Handles all of the needed functions for the hierarchy */
-		HierarchyPanel hierarchy;
-
-
-		// PerformancePanel 
-		/*! Handles all of the needed functions for the Performance Panel */
-		PerformancePanel performancePanel;
-
-		// PropertiesPanel 
-		/*! Handles all of the needed functions for the Properties Panel */
-		PropertiesPanel propertiesPanel;
+		
 
 
 	private:

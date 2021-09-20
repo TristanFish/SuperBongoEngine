@@ -25,9 +25,13 @@ public:
 
 
 	static SaveFile& GetSaveFile(const std::string saveName);
+	static void SetSaveName(const std::string old_Name, const std::string new_Name);
 
+
+	
 
 	static bool HasSave(const std::string& saveName);
+
 
 
 	static void SaveAll();

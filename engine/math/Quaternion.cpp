@@ -51,7 +51,7 @@ Quaternion Quaternion::Inverse() const
 	return Quaternion(Conjugate().quat / powf(Mag(), 2.0f));
 }
 
-Vec3 Quaternion::Rotate(Vec3& vec)
+Vec3 Quaternion::Rotate(const Vec3& vec)
 {
 	//create a quaternion with the real component of 0 and the imaginary component of the input vector
 	Quaternion p = Quaternion(0.0f, vec);
@@ -68,47 +68,44 @@ Vec4 Quaternion::GetQuat() const
 Matrix3 Quaternion::ConvertToMatrix()
 {
 	Matrix3 m;
-	m[0] = 1 - (2 * quat.y * quat.y) - (2 * quat.z * quat.z);
-	m[1] = (2 * quat.x * quat.y) - (2 * quat.w * quat.z);
-	m[2] = (2 * quat.x * quat.z) + (2 * quat.w * quat.y);
-	m[3] = (2 * quat.x * quat.y) + (2 * quat.w * quat.z);
-	m[4] = 1 - (2 * quat.x * quat.x) - (2 * quat.z * quat.z);
-	m[5] = (2 * quat.y * quat.z) - (2 * quat.w * quat.x);
-	m[6] = (2 * quat.x * quat.z) - (2 * quat.w * quat.y);
-	m[7] = (2 * quat.y * quat.z) + (2 * quat.w * quat.x);
-	m[8] = 1 - (2 * quat.x * quat.x) - (2 * quat.y * quat.y);
+
+
+	m[0] = 1.0f - (2.0f * quat.y * quat.y) - (2.0f * quat.z * quat.z);
+	m[1] = (2.0f * quat.x * quat.y) - (2.0f * quat.w * quat.z);
+	m[2] = (2.0f * quat.x * quat.z) + (2.0f * quat.w * quat.y);
+	m[3] = (2.0f * quat.x * quat.y) + (2.0f * quat.w * quat.z);
+	m[4] = 1.0f - (2.0f * quat.x * quat.x) - (2.0f * quat.z * quat.z);
+	m[5] = (2.0f * quat.y * quat.z) - (2.0f * quat.w * quat.x);
+	m[6] = (2.0f * quat.x * quat.z) - (2.0f * quat.w * quat.y);
+	m[7] = (2.0f * quat.y * quat.z) + (2.0f * quat.w * quat.x);
+	m[8] = 1.0f - (2.0f * quat.x * quat.x) - (2.0f * quat.y * quat.y);
 	return m;
 }
 
 Quaternion Quaternion::EulerToQuat(Vec3 v)
 {
 	Quaternion q;
-	//float cosYaw = cos(v.y * 0.5f);
-	//float sinYaw = sin(v.y * 0.5f);
-	//float cosPit = cos(v.x * 0.5f);
-	//float sinPit = sin(v.x * 0.5f);
-	//float cosRol = cos(v.z * 0.5f);
-	//float sinRol = sin(v.z * 0.5f);
 
-	//q.quat.w = cosRol * cosPit * cosYaw + sinRol * sinPit * sinYaw;
-	//q.quat.x = sinRol * cosPit * cosYaw - cosRol * sinPit * sinYaw;
-	//q.quat.y = cosRol * sinPit * cosYaw + sinRol * cosPit * sinYaw;
-	//q.quat.z = cosRol * cosPit * sinYaw - sinRol * sinPit * cosYaw;
+	v *= DEGREES_TO_RADIANS;
+	float cosYaw = cos(v.z * 0.5f);
+	float sinYaw = sin(v.z * 0.5f);
+	float cosPit = cos(v.y * 0.5f);
+	float sinPit = sin(v.y * 0.5f);
+	float cosRol = cos(v.x * 0.5f);
+	float sinRol = sin(v.x * 0.5f);
 
-	float cosYaw = cos(v.y) * DEGREES_TO_RADIANS;
-	float sinYaw = sin(v.y) * DEGREES_TO_RADIANS;
-	float cosPit = cos(v.x) * DEGREES_TO_RADIANS;
-	float sinPit = sin(v.x) * DEGREES_TO_RADIANS;
-	float cosRol = cos(v.z) * DEGREES_TO_RADIANS;
-	float sinRol = sin(v.z) * DEGREES_TO_RADIANS;
-
-	q.quat.w = sqrtf(1.0f + cosYaw * cosPit + cosYaw * cosRol - sinYaw * sinPit * sinRol + cosPit * cosRol) / 2.0f;
-	float w4 = q.quat.w * 4.0f;
-	q.quat.x = (cosPit * sinRol + cosYaw * sinRol + sinYaw * sinPit * cosRol) / w4;
-	q.quat.y = (sinYaw * cosPit + sinYaw * cosRol + cosYaw * sinPit * sinRol) / w4;
-	q.quat.z = (-sinYaw * sinRol + cosYaw * sinPit * cosRol + sinPit) / w4;
+	q.quat.w = cosRol * cosPit * cosYaw + sinRol * sinPit * sinYaw;
+	q.quat.x = sinRol * cosPit * cosYaw - cosRol * sinPit * sinYaw;
+	q.quat.y = cosRol * sinPit * cosYaw + sinRol * cosPit * sinYaw;
+	q.quat.z = cosRol * cosPit * sinYaw - sinRol * sinPit * cosYaw;
 
 	return q;
+}
+
+
+MATH::Vec3 Quaternion::GetVec3() const
+{
+	return Vec3(quat.x, quat.y, quat.z);
 }
 
 Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
@@ -136,6 +133,32 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 	return e / DEGREES_TO_RADIANS;
 }
 
+Quaternion MATH::Quaternion::operator+=(const Quaternion& q) 
+{
+	quat.x = q.quat.x;
+	quat.y = q.quat.y;
+	quat.z = q.quat.z;
+	quat.w = q.quat.w;
+
+	return *this;
+}
+
+Quaternion MATH::Quaternion::operator+(const float f) const
+{
+	
+
+	return Quaternion(Vec4(quat.x + f, quat.y + f, quat.z + f, quat.w + f));
+}
+
+
+Quaternion& MATH::Quaternion::operator=(const Vec3& q)
+{
+	quat.x = q.x;
+	quat.y = q.y;
+	quat.z = q.z;
+	return *this;
+}
+
 Quaternion Quaternion::operator*(const Quaternion& q) const
 {
 	//calculate the real component
@@ -157,7 +180,6 @@ Quaternion& MATH::Quaternion::operator=(const Quaternion& q)
 {
 	quat = q.quat;
 	return *this;
-	// TODO: insert return statement here
 }
 
 Quaternion MATH::Quaternion::operator-() const

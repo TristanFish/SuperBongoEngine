@@ -25,7 +25,7 @@ public:
 
 	//! DrawVec3 Function
 	/*! Draws a Vec3 to with screen with ImGui */
-	static void DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
+	static bool DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
 
 
 	//!DrawTextureSlot Function

@@ -13,6 +13,7 @@ namespace  MATH {
 	///                             /
 	///                           +Z
 	///
+	
 	class Matrix4 {
 
 		/// Let's just make sure that all is clear about how this matrix is layed out. 
@@ -37,6 +38,9 @@ namespace  MATH {
 			this->m[12] = m_[12]; this->m[13] = m_[13]; this->m[14] = m_[14]; this->m[15] = m_[15];
 			return *this;
 		}
+
+		
+		
 
 
 		inline explicit Matrix4(float x0, float x1, float x2, float x3,
@@ -185,6 +189,8 @@ namespace  MATH {
 		}
 
 
+		
+
 		/// These are a few esoteric funtions 
 		/// Defines functions to access rows and columns of a Matrix4.
 		inline Vec4 getColumn(int index) {
@@ -221,11 +227,18 @@ namespace  MATH {
 			return *(m + index);
 		}
 
-		inline Matrix3& operator = (const Matrix3 &m_) {
+		inline Matrix3& operator = (const Matrix3& m_) {
 			this->m[0] = m_[0]; this->m[1] = m_[1]; this->m[2] = m_[2];
 			this->m[3] = m_[3]; this->m[4] = m_[4]; this->m[5] = m_[5];
 			this->m[6] = m_[6]; this->m[7] = m_[7]; this->m[8] = m_[8];
 			return *this;
+		}
+
+		inline  Vec3 operator* (const Vec3& v) const {
+			float x = v.x * m[0] + v.y * m[3] + v.z * m[6] + 1.0f;
+			float y = v.x * m[1] + v.y * m[4] + v.z * m[7] + 1.0f;
+			float z = v.x * m[2] + v.y * m[5] + v.z * m[8] + 1.0f;
+			return Vec3(x, y, z);
 		}
 
 		/// Multiply two 3x3 matrices. 
@@ -247,7 +260,7 @@ namespace  MATH {
 
 		/// Extracts the inner 3x3 from a 4x4 matrix
 		/// using the assignment operator
-		inline Matrix3& operator = (const Matrix4 &m_) {
+		inline Matrix3& operator = (const Matrix4& m_) {
 			this->m[0] = m_[0]; this->m[1] = m_[1]; this->m[2] = m_[2];
 			this->m[3] = m_[4]; this->m[4] = m_[5]; this->m[5] = m_[6];
 			this->m[6] = m_[8]; this->m[7] = m_[9]; this->m[8] = m_[10];
@@ -256,7 +269,7 @@ namespace  MATH {
 
 		/// Extracts the inner 3x3 from a 4x4 matrix
 		/// using the constructor
-		inline Matrix3(const Matrix4 &m_) {
+		inline Matrix3(const Matrix4& m_) {
 			this->m[0] = m_[0]; this->m[1] = m_[1]; this->m[2] = m_[2];
 			this->m[3] = m_[4]; this->m[4] = m_[5]; this->m[5] = m_[6];
 			this->m[6] = m_[8]; this->m[7] = m_[9]; this->m[8] = m_[10];
@@ -308,6 +321,7 @@ namespace  MATH {
 		inline operator float* () { return static_cast<float*>(&m[0]); }
 		inline operator const float* () const { return static_cast<const float*>(&m[0]); }
 	};
+
 
 }
 

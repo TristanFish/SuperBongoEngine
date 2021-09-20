@@ -161,7 +161,7 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 {
 	if (go->HasComponent<RigidBody3D>())
 	{
-
+		
 		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
 		{
 			if (*iter == go->GetComponent<RigidBody3D>())

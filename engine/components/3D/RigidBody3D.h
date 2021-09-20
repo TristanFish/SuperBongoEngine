@@ -28,8 +28,9 @@ private:
 	//! Float Rotational Inertia 
 	/*! Is the rotational inertia of our object  */
 	float rotInertia;
-	MATH::Vec3 angularVel;
+	MATH::Quaternion angularVel;
 	MATH::Vec3 angularAcc;
+
 
 	//! Float Angular Drag 
 	/*! Is the angular drag draw of our object  */
@@ -69,7 +70,6 @@ public:
 	// Inherited via Component
 	void Init(GameObject *g) override;
 	void Update(const float deltaTime) override;
-	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
 	void ApplyImpulseForce(const MATH::Vec3& force);
@@ -104,7 +104,7 @@ public:
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
 	inline void SetMass(const float m) { mass = m; }
 
-	inline MATH::Vec3 GetAngVelocity() const { return angularVel; }
+	inline MATH::Vec3 GetAngVelocity() const { return angularVel.GetVec3(); }
 	inline void SetAngVelocity(const MATH::Vec3& vel) { angularVel = vel; }
 	inline MATH::Vec3 GetAngAccel() const { return angularAcc; }
 	inline void SetAngAccel(const MATH::Vec3& acc) { angularAcc = acc; }

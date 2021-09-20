@@ -2,22 +2,28 @@
 
 #include "GameObject.h"
 
-Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
+using namespace MATH;
+
+
+Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
 {
-	rotationMatrix = MATH::MMath::calcRotationMatrix(rotation);
+	
+
+	//rotation = Quaternion(Vec3(0.0f, 0.0f, 1.0f), -90);
 }
 
-Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), rotation(MATH::Vec3()), scale(MATH::Vec3(1.0f))
+Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
 {
-	rotationMatrix = MATH::MMath::calcRotationMatrix(rotation);
+	
 }
 
 void Transform::Update(const float deltaTime)
 {
-	using namespace MATH;
-	rotationMatrix = MMath::calcRotationMatrix(rotation);
+	
+	rotationMatrix =  MMath::GetFromMat3(rotation.ConvertToMatrix());
 
-	modelMatrix = MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
+
+	modelMatrix =  MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
 
 	if(parent != nullptr)
 	{
@@ -47,7 +53,7 @@ void Transform::SetPos(const MATH::Vec3& pos)
 
 void Transform::SetRot(const MATH::Vec3& rot)
 {
-	rotation = rot;
+	rotation = MATH::Quaternion::EulerToQuat(rot);
 }
 
 void Transform::SetScale(const MATH::Vec3& scale)

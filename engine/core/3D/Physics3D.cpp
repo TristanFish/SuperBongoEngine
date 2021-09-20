@@ -269,7 +269,7 @@ MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
 
-	Vec3 normal = MMath::calcRotationMatrix(box.gameobject->transform.rotation) * VMath::orthagonalize(clamped);
+	Vec3 normal = box.gameobject->transform.rotation.ConvertToMatrix() * VMath::orthagonalize(clamped);
 	//normal.z = VMath::mag(distance);
 
 	return normal;

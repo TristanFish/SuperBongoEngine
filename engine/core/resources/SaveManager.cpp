@@ -45,10 +45,49 @@ void SaveManager::RemoveSave(const std::string saveName)
 SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
 
 	if(iter != SaveFiles.end())
 	{
 		return iter->second;
+	}
+
+	else if (iterQueue != SaveQueue.end())
+	{
+		return iterQueue->second;
+	}
+}
+
+void SaveManager::SetSaveName(const std::string old_Name, const std::string new_Name)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(old_Name);
+	std::unordered_map<std::string, SaveFile>::iterator queueIter = SaveQueue.find(old_Name);
+
+
+
+
+	if (iter != SaveFiles.end())
+	{
+		iter->second.SetFileName(new_Name);
+		auto node = SaveFiles.extract(old_Name);
+		if (!node.empty())
+		{
+			node.key() = new_Name;
+			
+			SaveFiles.insert(std::move(node));
+		}
+	}
+
+	else if (queueIter != SaveQueue.end())
+	{
+		queueIter->second.SetFileName(new_Name);
+
+		auto node = SaveQueue.extract(old_Name);
+		if (!node.empty())
+		{
+			node.key() = new_Name;
+			SaveQueue.insert(std::move(node));
+		}
 	}
 }
 
