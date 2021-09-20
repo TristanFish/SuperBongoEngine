@@ -101,12 +101,11 @@ void CustomUI::PropertiesPanel::Render()
 									mr->renderFlags = static_cast<RenderProperties>(0);
 									break;
 								}
-								
 							}
 							
 							if (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum)
 							{
-								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum);
+								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags & ~RenderFlagNameEnumPairs[i].flagEnum);
 							} else
 							{
 								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags | RenderFlagNameEnumPairs[i].flagEnum);
