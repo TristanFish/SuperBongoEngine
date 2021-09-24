@@ -40,7 +40,7 @@ public:
 	void DestroyRenderer();
 
 	static Renderer* GetInstance();
-
+	static Renderer* ResetInstance();
 
 	static SkyBox* GetSkyBox();
 	

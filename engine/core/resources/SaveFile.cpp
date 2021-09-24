@@ -1,7 +1,7 @@
 #include "SaveFile.h"
 #include "core/Globals.h"
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 #include <utility>
 

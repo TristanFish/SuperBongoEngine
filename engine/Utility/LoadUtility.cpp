@@ -7,7 +7,8 @@
 #include "../game/gameObjects/TestModel.h"
 
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
+#include "core/GameInterface.h"
 
 #include "Primitives/Primitives.h"
 #include <filesystem>
@@ -208,10 +209,8 @@ LoadUtility* LoadUtility::GetInstance()
 void LoadUtility::LoadExistingSaves()
 {
 	std::string directory = Globals::SAVE_DATA_PATH;
-
 	std::string objDir = "Objects\\";
-
-	std::string sceneObjPath = (directory + objDir) + CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
+	std::string sceneObjPath = (directory + objDir);
 
 
 
@@ -223,8 +222,15 @@ void LoadUtility::LoadExistingSaves()
 
 		std::filesystem::path curPath = entry->path();
 
-		if(curPath == sceneObjPath + curPath.filename().string())
+
+		// Makes sure were not loading in any save files yet
+		if (curPath == (sceneObjPath + curPath.filename().string())  && entry->is_directory())
+		{
+			entry.disable_recursion_pending();
 			continue;
+		}
+
+		
 		if (entry->is_regular_file())
 		{			
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
@@ -233,15 +239,21 @@ void LoadUtility::LoadExistingSaves()
 
 	}
 
-	LoadSceneSaves(sceneObjPath);
+	
 
 
 	EngineLogger::Save("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__);
 }
 
-void LoadUtility::LoadSceneSaves(std::string& objPath)
+void LoadUtility::LoadSceneSaves()
 {
-	for (auto entry = std::filesystem::directory_iterator(objPath); entry != std::filesystem::directory_iterator(); ++entry)
+	EngineLogger::Save("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__);
+
+	std::string objDir = "Objects\\";
+
+	std::string sceneObjPath = (Globals::SAVE_DATA_PATH + objDir) + CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
+
+	for (auto entry = std::filesystem::directory_iterator(sceneObjPath); entry != std::filesystem::directory_iterator(); ++entry)
 	{
 		if (entry->is_regular_file())
 		{
@@ -251,6 +263,9 @@ void LoadUtility::LoadSceneSaves(std::string& objPath)
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
 		}
 	}
+
+	EngineLogger::Save("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__);
+
 }
 
 int LoadUtility::LoadInt(std::string saveName, std::string elmName, std::string atribName)

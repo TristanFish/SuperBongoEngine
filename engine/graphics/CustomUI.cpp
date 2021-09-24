@@ -1,8 +1,8 @@
 #include "CustomUI.h"
 #include "windows.h"
 #include "psapi.h"
-#include "scenes/Scene.h"
 
+#include "core/scene/DefaultScene.h"
 #include "core/Globals.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
@@ -76,14 +76,6 @@ void CustomUI::PropertiesPanel::Render()
 			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
 			
 				selectedObject->transform.SetRot(rotation);
-
-				MATH::Quaternion test = MATH::Quaternion::EulerToQuat(rotation);
-				
-
-				MATH::Vec3 euler = MATH::Quaternion::QuatToEuler(test);
-
-
-				MATH::Quaternion test1;
 			}
 			
 			
@@ -148,7 +140,7 @@ void CustomUI::PropertiesPanel::Render()
 			}
 		}
 
-		if (UIStatics::GetSelectedObject()->HasComponent<LightComponent>())
+		if (selectedObject->HasComponent<LightComponent>())
 		{
 			bool opened = ImGui::TreeNodeEx("LightSettings", tree_flags, "Light Settings");
 
@@ -245,6 +237,21 @@ void CustomUI::HierarchyPanel::Render()
 
 
 	ImGui::End();
+}
+
+void CustomUI::HierarchyPanel::Reset()
+{
+
+
+	if (gameobjects.size() >= 1)
+	{
+		for (auto obj : gameobjects)
+		{
+			obj = nullptr;
+		}
+		gameobjects.clear();
+
+	}
 }
 
 void CustomUI::HierarchyPanel::Update(const float deltatime)
@@ -723,6 +730,14 @@ void CustomUI::DockSpace::Render()
 	GenerateDockSpace();
 }
 
+void CustomUI::DockSpace::Reset()
+{
+	for (auto panel : uiInterfaces)
+	{
+		panel->Reset();
+	}
+}
+
 void CustomUI::DockSpace::ConstructUserInterface()
 {
 
@@ -796,6 +811,24 @@ void CustomUI::DockSpace::GenerateDockSpace()
 			// which we can't undo at the moment without finer window depth/z control.
 			ImGui::MenuItem("Fullscreen", NULL, &isDockSpaceFullScreen);
 			ImGui::MenuItem("Save", NULL, &isQueuedForSave);
+
+			if (ImGui::BeginMenu("Scene"))
+			{
+
+				ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue);
+				if (ImGui::Button("New Scene"))
+				{
+					std::vector<Scene*>& scenes = CoreEngine::GetInstance()->gameInterface->Scenes;
+
+					scenes.push_back(new DefaultScene());
+					CoreEngine::GetInstance()->currentSceneNum = scenes.size() - 1;
+					SaveUtility::GetInstance()->CreateSave("Default",FileType::SCENE);
+				}
+
+				ImGui::EndMenu();
+
+			}
+
 			ImGui::Separator();
 
 			ImGui::EndMenu();
@@ -980,6 +1013,27 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 
 				ImGui::EndDragDropSource();
 			}
+
+			if (ImGui::IsMouseDoubleClicked(0))
+			{
+
+				if (path.extension().string() == ".scene")
+				{
+					for (int i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
+					{
+						Scene* scene = CoreEngine::GetInstance()->gameInterface->Scenes[i];
+
+						std::string stem = path.stem().string();
+						if (scene->GetSceneName() == stem)
+						{
+							CoreEngine::GetInstance()->currentSceneNum = i;
+							
+						}
+					}
+				}
+
+			}
+
 		}
 
 		

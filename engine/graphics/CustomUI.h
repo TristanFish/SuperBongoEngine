@@ -65,6 +65,7 @@ namespace CustomUI
 		virtual void Render() = 0;
 		virtual void Update(const float deltatime) {};
 		virtual void Construct() {};
+		virtual void Reset() {};
 	private:
 
 	};
@@ -155,6 +156,8 @@ namespace CustomUI
 		/*! Renders all of the supplied IMGui panels */
 		void Render() override;
 	
+		void Reset() override;
+
 		void Update(const float deltatime) override;
 
 	private:
@@ -326,6 +329,8 @@ namespace CustomUI
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
 		void Render() override;
+
+		void Reset() override;
 
 		//! ConstructHierarchy Function
 		/*! Calls the hierarchy panels Construct Hierarchy function to initialize all of the gameobjects  */

@@ -133,15 +133,43 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 	return e / DEGREES_TO_RADIANS;
 }
 
-Quaternion MATH::Quaternion::operator+=(const Quaternion& q) 
+
+
+Quaternion MATH::Quaternion::operator+=(const Vec3& v)
 {
-	quat.x = q.quat.x;
-	quat.y = q.quat.y;
-	quat.z = q.quat.z;
-	quat.w = q.quat.w;
+	quat.x += v.x;
+	quat.y += v.y;
+	quat.z += v.z;
 
 	return *this;
 }
+
+Quaternion Quaternion::operator*(const float f) 
+{
+	
+	quat.x *= f;
+	quat.y *= f;
+	quat.z *= f;
+	quat.w *= f;
+
+	return *this;
+}
+
+Quaternion MATH::Quaternion::operator+=(const Quaternion& q) 
+{
+
+	quat.x += q.quat.x;
+	quat.y += q.quat.y;
+	quat.z += q.quat.z;
+	quat.w += q.quat.w;
+
+	return *this;
+}
+Quaternion MATH::Quaternion::operator+(const Quaternion& q) const
+{
+	return Quaternion(Vec4(quat.x + q.quat.x, quat.y + q.quat.y, quat.z + q.quat.z, quat.w + q.quat.w));
+}
+
 
 Quaternion MATH::Quaternion::operator+(const float f) const
 {

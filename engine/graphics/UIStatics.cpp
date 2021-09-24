@@ -4,7 +4,7 @@
 #include "components/SceneGraph.h"
 
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 #include "core/resources/TextureManager.h"
 

@@ -36,7 +36,7 @@ public:
 
 	void LoadExistingSaves();
 
-	void LoadSceneSaves(std::string& objPath);
+	void LoadSceneSaves();
 
 	void LoadObject(SaveFile& file);
 

@@ -2,7 +2,7 @@
 
 #include "components/SceneGraph.h"
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 
 std::string Globals::ENGINE_PATH = std::filesystem::current_path().string();

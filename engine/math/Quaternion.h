@@ -28,11 +28,19 @@ namespace MATH
 		static Vec3 QuatToEuler(Quaternion q);
 
 		Quaternion operator * (const Quaternion& q) const;
-		Quaternion operator * (const Vec4& v) const;
-		Quaternion operator + (const float f) const;
-		Quaternion& operator = (const Vec3& v);
+
 		Quaternion& operator = (const Quaternion& q);
-		Quaternion operator += (const Quaternion& q) ;
+		Quaternion operator += (const Quaternion& q);
+		Quaternion operator + (const Quaternion& q) const;
+
+
+		Quaternion operator * (const Vec4& v) const;
+		Quaternion operator * (const float f);
+		Quaternion operator + (const float f) const;
+
+		Quaternion& operator = (const Vec3& v);
+
+		Quaternion operator += (const Vec3& v);
 
 		Quaternion operator - () const;
 	};

@@ -9,6 +9,34 @@ std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std:
 
 
 
+std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
+{
+	std::vector<SaveFile> filesOfType;
+
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.begin();
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.begin();
+
+	while (iter != SaveFiles.end())
+	{
+		if (iter->second.GetFileType() == type)
+		{
+			filesOfType.push_back(iter->second);
+		}
+		iter++;
+	}
+
+	while (iterQueue != SaveQueue.end())
+	{
+		if (iter->second.GetFileType() == type)
+		{
+			filesOfType.push_back(iter->second);
+		}
+		iter++;
+	}
+
+	return filesOfType;
+}
+
 void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 {
 	EngineLogger::Save(name + " Has Been Added To The SaveFiles", "SaveManager.cpp", __LINE__);
@@ -51,7 +79,6 @@ SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 	{
 		return iter->second;
 	}
-
 	else if (iterQueue != SaveQueue.end())
 	{
 		return iterQueue->second;

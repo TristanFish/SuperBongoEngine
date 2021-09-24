@@ -28,7 +28,7 @@ private:
 	//! Float Rotational Inertia 
 	/*! Is the rotational inertia of our object  */
 	float rotInertia;
-	MATH::Quaternion angularVel;
+	MATH::Vec3 angularVel;
 	MATH::Vec3 angularAcc;
 
 
@@ -104,7 +104,7 @@ public:
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
 	inline void SetMass(const float m) { mass = m; }
 
-	inline MATH::Vec3 GetAngVelocity() const { return angularVel.GetVec3(); }
+	inline MATH::Vec3 GetAngVelocity() const { return angularVel; }
 	inline void SetAngVelocity(const MATH::Vec3& vel) { angularVel = vel; }
 	inline MATH::Vec3 GetAngAccel() const { return angularAcc; }
 	inline void SetAngAccel(const MATH::Vec3& acc) { angularAcc = acc; }
