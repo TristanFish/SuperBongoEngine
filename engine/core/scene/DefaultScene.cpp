@@ -31,7 +31,7 @@ bool DefaultScene::OnCreate()
 
 
 	Globals::InitGlobals();
-	//LoadUtility::GetInstance()->LoadExistingSaves();
+
 	LoadMapData();
 
 

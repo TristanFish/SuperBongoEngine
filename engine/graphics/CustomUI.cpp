@@ -814,8 +814,15 @@ void CustomUI::DockSpace::GenerateDockSpace()
 
 			if (ImGui::BeginMenu("Scene"))
 			{
+				static std::string oldSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				if (ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue))
+				{
+					std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 
-				ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue);
+					Globals::SCENE_NAME = newSceneName;
+
+					SaveManager::SetSaveName(oldSceneName, newSceneName);
+				}
 				if (ImGui::Button("New Scene"))
 				{
 					std::vector<Scene*>& scenes = CoreEngine::GetInstance()->gameInterface->Scenes;
@@ -1026,8 +1033,8 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 						std::string stem = path.stem().string();
 						if (scene->GetSceneName() == stem)
 						{
+							LoadUtility::GetInstance()->UnLoadSceneSaves();
 							CoreEngine::GetInstance()->currentSceneNum = i;
-							
 						}
 					}
 				}

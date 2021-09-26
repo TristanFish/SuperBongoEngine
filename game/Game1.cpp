@@ -31,23 +31,6 @@ bool Game1::OnCreate()
 		Scenes.push_back(new Scene2);
 
 
-		// Add's all scenes that use the DefaultScene Class
-		for (auto save : SaveManager::GetSavesOfType(FileType::SCENE))
-		{
-			bool HasScene = false;
-			for (auto scene : Scenes)
-			{
-				if (scene->GetSceneName() == save.GetFileName())
-				{
-					HasScene = true;
-				}
-			}
-
-			if (!HasScene)
-			{
-				Scenes.push_back(new DefaultScene(save.GetFileName()));
-			}
-		}
 		
 
 		return (create && postCreate);
@@ -93,15 +76,18 @@ void Game1::BuildScene()
 	
 	Renderer::ResetInstance();
 	
+	LoadUtility::GetInstance()->LoadSceneSaves();
 	if (!currentScene->OnCreate())
 	{
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
-
+	currentScene->LoadMapData();
+	currentScene->objectList->AddRenderingComponents();
 	if(!currentScene->PostCreate())
 	{
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
+
 }

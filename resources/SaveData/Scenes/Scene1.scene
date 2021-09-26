@@ -9,6 +9,6 @@
         <Plane-1/>
     </Objects>
     <SceneSettings>
-        <SceneName: :="Scene_1"/>
+        <SceneName: :="Scene1"/>
     </SceneSettings>
 </Root>

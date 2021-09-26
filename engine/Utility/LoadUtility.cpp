@@ -8,6 +8,8 @@
 
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
+#include "core/scene/DefaultScene.h"
+#include "core/GameInterface.h"
 #include "core/GameInterface.h"
 
 #include "Primitives/Primitives.h"
@@ -268,6 +270,17 @@ void LoadUtility::LoadSceneSaves()
 
 }
 
+void LoadUtility::UnLoadSceneSaves()
+{
+	EngineLogger::Save("===========OLD SCENE SAVES BEING UNLOADED===========", "SaveUtility.cpp", __LINE__);
+	for (auto elm : SaveManager::GetSaveFile(Globals::SCENE_NAME).GetElements())
+	{
+		SaveManager::RemoveSave(elm.first);
+	}
+
+	EngineLogger::Save("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__);
+}
+
 int LoadUtility::LoadInt(std::string saveName, std::string elmName, std::string atribName)
 {
 	int QueryiedValue = 0;
@@ -350,6 +363,40 @@ void LoadUtility::LoadObject(SaveFile& file)
 			}
 		}
 	}
+}
+
+void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface)
+{
+	std::vector<SaveFile> sceneFiles = SaveManager::GetSavesOfType(FileType::SCENE);
+	
+	for (int i = 0; i < G_Interface->Scenes.size(); i++)
+	{
+		if (G_Interface->Scenes[i]->GetSceneName() != sceneFiles[i].GetFileName())
+		{
+			G_Interface->Scenes[i]->SetSceneName(sceneFiles[i].GetFileName());
+		}
+	}
+
+	// Add's all scenes that use the DefaultScene Class
+	for (auto save : sceneFiles)
+	{
+		bool HasScene = false;
+		for (auto scene : G_Interface->Scenes)
+		{
+			if (scene->GetSceneName() == save.GetFileName())
+			{
+				HasScene = true;
+			}
+		}
+
+		if (!HasScene)
+		{
+			G_Interface->Scenes.push_back(new DefaultScene(save.GetFileName()));
+		}
+	}
+
+	
+
 }
 
 std::string LoadUtility::LoadString(std::string saveName, std::string elmName, std::string atribName)

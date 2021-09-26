@@ -173,8 +173,6 @@ void Scene::SaveMapData() const
 
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
-
-
 	info = ElementInfo("SceneSettings");
 	info.Attributes.emplace(":", Scene_Name);
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneName:", info);
@@ -211,7 +209,11 @@ void Scene::LoadMapData()
 {
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
+		if (!objectList->isObjectActive(elm.first))
+		{
+			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
 
-		LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
+		}
 	}
+
 }
