@@ -1,23 +1,34 @@
 #include "SaveFile.h"
 #include "core/Globals.h"
+#include "core/CoreEngine.h"
+#include "core/scene/Scene.h"
+
+#include <utility>
 
 
 
 
-SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), Elements(std::map<std::string, ElementInfo>()), rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>())
+SaveFile::SaveFile(const std::string FileName_, const FileType type) : Doc(), Elements(std::map<std::string, ElementInfo>()),
+rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
 {
 	FileName = FileName_;
-	fileType = type;
 
+	if (prevFileName.empty())
+	{
+		prevFileName = FileName;
+	}
+	fileType = type;
 
 	InitalizeFile();
 }
 
 
 
-SaveFile::SaveFile(std::string& FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_) : rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>())
+SaveFile::SaveFile(std::string FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_) : 
+	rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
 {
 	FileName = FileName_;
+	prevFileName = FileName.data();
 	Elements = Elements_;
 	Doc_.DeepCopy(&Doc);
 
@@ -26,7 +37,8 @@ SaveFile::SaveFile(std::string& FileName_, std::map<std::string, ElementInfo> El
 	
 }
 
-SaveFile::SaveFile() : Doc(), Elements(std::map<std::string, ElementInfo>()), FileName("None"), rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>())
+SaveFile::SaveFile() : Doc(), Elements(std::map<std::string, ElementInfo>()), FileName("None"), 
+rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
 {
 	InitalizeFile();
 }
@@ -34,9 +46,11 @@ SaveFile::SaveFile() : Doc(), Elements(std::map<std::string, ElementInfo>()), Fi
 SaveFile::SaveFile(const SaveFile& file)
 {
 	FileName = file.FileName;
+	prevFileName = file.prevFileName;
 	Elements = file.Elements;
 	insertionOrder = file.insertionOrder;
 	fileType = file.fileType;
+	HasBeenEdited = file.HasBeenEdited;
 	file.Doc.DeepCopy(&Doc);
 	rootNode = Doc.NewElement("Root");
 	FindElement("Root").element = Doc.RootElement();
@@ -187,6 +201,71 @@ void SaveFile::AddAttributes(const std::string elmName, std::map<std::string, At
 	}
 }
 
+void SaveFile::SetElementName(const std::string o_ElmName, const std::string n_ElmName)
+{
+	std::map<std::string, ElementInfo>::iterator iter = Elements.find(o_ElmName);
+
+
+
+	std::vector<std::string>::iterator insertIter = insertionOrder.begin();
+
+	if (iter != Elements.end())
+	{
+		
+		auto value = std::move(iter->second);
+		Elements.erase(iter);
+		Elements.insert({ n_ElmName, std::move(value) });
+	}
+
+	while (insertIter != insertionOrder.end())
+	{
+		if (*insertIter == o_ElmName)
+		{
+			*insertIter = n_ElmName;
+			break;
+		}
+
+		insertIter++;
+	}
+	
+}
+
+void SaveFile::RemoveElement(const std::string name)
+{
+	std::map<std::string, ElementInfo>::iterator iter = Elements.begin();
+	std::vector<std::string>::iterator insertIter = insertionOrder.begin();
+
+	while (iter != Elements.end())
+	{
+
+		if (iter->first == name)
+		{
+			Elements.erase(iter);
+			break;
+		}
+
+		iter++;
+	}
+
+
+	while (insertIter != insertionOrder.end())
+	{
+		if (*insertIter == name)
+		{
+			insertionOrder.erase(insertIter);
+			break;
+		}
+
+		insertIter++;
+	}
+}
+
+void SaveFile::ClearElements()
+{
+	Elements.clear();
+	insertionOrder.clear();
+}
+
 std::string SaveFile::GetSaveFileType()
 {
 	switch (fileType)
@@ -207,20 +286,23 @@ std::string SaveFile::GetSaveFileType()
 std::string SaveFile::GetFileDestination()
 {
 	std::string destination;
+	std::string sceneName;
 
-	destination = Globals::ENGINE_PATH;
+	sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
+	destination = Globals::SAVE_DATA_PATH;
 	switch (fileType)
 	{
 
 	case FileType::DEFAULT:
-		destination.append("\\resources\\SaveData\\Default\\");
+		destination.append("Default\\");
 		break;
 	case FileType::SCENE:
-		destination.append("\\resources\\SaveData\\Scenes\\");
+		destination.append("Scenes\\");
 		break;
 
 	case FileType::OBJECT:
-		destination.append("\\resources\\SaveData\\Objects\\");
+		destination.append("Objects\\");
+		destination.append(sceneName);
 		break;
 	}
 
@@ -229,7 +311,36 @@ std::string SaveFile::GetFileDestination()
 
 void SaveFile::Save()
 {
-	const tinyxml2::XMLError eResult = Doc.SaveFile((GetFileDestination() + FileName + GetSaveFileType()).c_str());
+	std::string Destination = GetFileDestination();
+
+	SaveFile& save = SaveManager::GetSaveFile(Globals::SCENE_NAME);
+
+	if (save.FileName != save.prevFileName)
+	{
+		std::filesystem::path oldPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
+		std::filesystem::path newPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
+
+		if (std::filesystem::exists(oldPath))
+		{
+			std::filesystem::rename(oldPath, newPath);
+		}
+	}
+	else
+	{
+		std::filesystem::create_directory(Destination);
+	}
+
+
+	
+
+	if (FileName != prevFileName)
+	{
+		std::filesystem::path oldObjPath = Destination + prevFileName + GetSaveFileType();
+		std::filesystem::remove(oldObjPath);
+	}
+
+
+	const tinyxml2::XMLError eResult = Doc.SaveFile((Destination + FileName + GetSaveFileType()).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
 		EngineLogger::Error("Unable to save " + FileName + " XML document", "SaveUtility.cpp", __LINE__);

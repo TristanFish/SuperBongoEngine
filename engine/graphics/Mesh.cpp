@@ -60,7 +60,9 @@ void Mesh::RenderRegular(const ShaderProgram& shader) const
 			number = std::to_string(specN++);
 		}
 
+
 		glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i);
+
 		glBindTexture(GL_TEXTURE_2D, textures[i].getTextureID());
 	}
 	glActiveTexture(GL_TEXTURE0);

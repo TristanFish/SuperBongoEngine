@@ -6,7 +6,7 @@
 #include "events/InputManager.h"
 #include "graphics/Window.h"
 #include "Timer.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 #include "events/MouseEventDispatcher.h"
 #include "core/Logger.h"
 #include "core/GameInterface.h"
@@ -87,6 +87,7 @@ bool CoreEngine::Init()
 	
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
+	LoadUtility::GetInstance()->LoadExistingSaves();
 
 	if (gameInterface)
 	{
@@ -98,6 +99,13 @@ bool CoreEngine::Init()
 		}
 
 	}
+
+	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
+	LoadUtility::GetInstance()->LoadSceneSaves();
+	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	GetCurrentScene()->LoadMapData();
+
+	
 
 
 

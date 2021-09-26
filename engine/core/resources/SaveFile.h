@@ -68,6 +68,26 @@ struct ElementInfo
 		}
 	}
 
+	inline bool operator != (const ElementInfo & elm)
+	{
+
+
+		for (auto m_atrib : Attributes)
+		{
+			for (auto s_atrib : elm.Attributes)
+			{
+				if (m_atrib.first == s_atrib.first)
+				{
+					if (m_atrib.second != s_atrib.second)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+			return false;
+	}
 
 	//! HasParent Function
 	/*!Returns if the parent name is empty or not.*/
@@ -92,6 +112,9 @@ private:
 	/*!Holds's the name of the file. This is mostly used for saving*/
 	std::string FileName;
 
+	//! string PreviousFileName 
+	/*!Hold's the file name when the application started*/
+	std::string prevFileName;
 
 	//!XMLDoc Doc
 	/*!Is a tinyxml2 class that is used to save all the information too and then save it as an xml document*/
@@ -113,6 +136,9 @@ private:
 	/*!Stores what type of file that this is.*/
 	FileType fileType;
 
+	//! HasBeenEdited bool
+	/*!Is used when saving the save files so that we know what files need to be saved*/
+	bool HasBeenEdited;
 
 private:
 
@@ -136,13 +162,11 @@ public:
 
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename and type*/
-	SaveFile(const std::string& FileName_, const FileType type = FileType::DEFAULT);
-
-
+	SaveFile(const std::string FileName_,const FileType type = FileType::DEFAULT);
 
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename all its elements and the Doc*/
-	SaveFile(std::string& FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_);
+	SaveFile(std::string FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_);
 
 	//! SaveFile Copy Constructor
 	/*!Copy's the given save file's variables to this save file*/
@@ -173,6 +197,10 @@ public:
 	/*!Return's if this savefile contains the element with a given name*/
 	bool HasElement(const std::string elmName);
 
+	inline bool GetHasBeenEdited() { return HasBeenEdited; }
+
+	inline void SetHasBeenEdited(bool HasBeenEdited_) { HasBeenEdited = HasBeenEdited_; }
+
 	//! FindElement Function
 	/*!Returns the address to an element with a given name*/
 	Attribute& FindAttribute(std::string elmName, std::string atrbName);
@@ -193,8 +221,16 @@ public:
 	 /*!Adds attributes to a given element*/
 	 void AddAttributes(const std::string elmName, std::map<std::string, Attribute> attributes);
 
+	 void SetElementName(const std::string o_ElmName, const std::string n_ElmName);
+
+	 void RemoveElement(const std::string name);
+
+	 void ClearElements();
+
 
 	 inline std::string GetFileName() { return FileName; }
+
+	 inline void SetFileName(const std::string& newName) { FileName = newName; }
 
 	 //! GetFileType Function
 	 /*!Returns this SaveFile's type*/

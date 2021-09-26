@@ -11,3 +11,8 @@ void LightComponent::Init(GameObject* g)
 	specColor = Vec3(0,0,1);
 	intensity = 1.0f;
 }
+
+void LightComponent::OnSaveComponent(const std::string& saveName, std::string parentName)
+{
+
+}

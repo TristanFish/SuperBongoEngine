@@ -13,7 +13,7 @@ Player::Player(std::string name_, const MATH::Vec3& pos) :  moveSpeed(20.0f), tu
 	
 	name = name_;
 	transform = Transform(pos);
-	transform.rotation.y = -90.0f;
+	transform.rotation.EulerToQuat(Vec3(0.0, -90.0f, 0.0f));
 }
 
 

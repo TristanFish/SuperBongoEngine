@@ -5,7 +5,7 @@
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-Window::Window() : window(nullptr)
+Window::Window() : window(nullptr),height(0),width(0)
 {
 }
 
@@ -43,8 +43,12 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 	context = SDL_GL_CreateContext(window);
 	
+	int major,minor;
+	glGetIntegerv(GL_MAJOR_VERSION, &major); 
+	
+	glGetIntegerv(GL_MINOR_VERSION, &minor);
 
-	SetAttributes(4, 6);
+	SetAttributes(major, minor);
 
 	
 

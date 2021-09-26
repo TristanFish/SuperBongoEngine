@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="engine\core\resources\ShaderManager.h" />
     <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="external\include\imgui\imgui_stdlib.h" />
+    <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="game\scenes\Scene2.h" />
     <ClInclude Include="game\Game1.h" />
     <ClInclude Include="engine\core\GameInterface.h" />
@@ -259,7 +261,7 @@
     <ClInclude Include="engine\components\Transform.h" />
     <ClInclude Include="engine\graphics\Shader.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
-    <ClInclude Include="game\scenes\Scene.h" />
+    <ClInclude Include="engine\core\scene\Scene.h" />
     <ClInclude Include="game\scenes\Scene1.h" />
     <ClInclude Include="engine\components\2D\SpriteComponent.h" />
     <ClInclude Include="engine\math\Matrix.h" />
@@ -279,6 +281,7 @@
     <ClInclude Include="engine\Utility\LoadUtility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
@@ -291,6 +294,7 @@
     <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
     <ClCompile Include="external\include\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="external\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="game\scenes\Scene2.cpp" />
     <ClCompile Include="game\Game1.cpp" />
     <ClCompile Include="engine\core\Logger.cpp" />
@@ -337,7 +341,7 @@
     <ClCompile Include="engine\components\2D\RigidBodyComponent.cpp" />
     <ClCompile Include="engine\components\Transform.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
-    <ClCompile Include="game\scenes\Scene.cpp" />
+    <ClCompile Include="engine\core\scene\Scene.cpp" />
     <ClCompile Include="game\scenes\Scene1.cpp" />
     <ClCompile Include="engine\math\MMath.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />

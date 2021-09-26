@@ -1,8 +1,9 @@
 #include "CustomUI.h"
 #include "windows.h"
 #include "psapi.h"
-#include "scenes/Scene.h"
 
+#include "core/scene/DefaultScene.h"
+#include "core/Globals.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
 #include "core/Timer.h"
@@ -11,76 +12,87 @@
 #include "imgui/imgui_internal.h"
 #include "imgui/imgui_stdlib.h"
 
+#include "Utility/LoadUtility.h"
+#include "core/resources/SaveManager.h"
+#include "core/CoreEngine.h"
+
 #include "UIStatics.h"
 
 #include "components/3D/MeshRenderer.h"
 
 
-CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true) , rendererFlagsNames(std::unordered_map<unsigned int,const char*>())
+CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
 {
-	
-	//rendererFlagsNames.push_back("NONE");
-	rendererFlagsNames.emplace(1,"LIGHTING");
-	rendererFlagsNames.emplace(2,"CREATES_SHADOWS");
-	rendererFlagsNames.emplace(4,"RECIEVES_SHADOWS");
-	rendererFlagsNames.emplace(8,"BLOOM");
-	rendererFlagsNames.emplace(16,"PHYSICS_MOVEMENT");
-	rendererFlagsNames.emplace(32,"TRANSPARENT");
-	rendererFlagsNames.emplace(64,"WATER");
-	rendererFlagsNames.emplace(128,"OVERRIDE_RENDERER");
 
+
+	lightTypes.push_back("Point");
+
+	lightTypes.push_back("Spot");
 }
 
 CustomUI::PropertiesPanel::~PropertiesPanel()
 {
-	for (auto name : rendererFlagsNames)
+	for (auto type : lightTypes)
 	{
-		delete name.second;
-		name.second = nullptr;
+		delete type;
+		type = nullptr;
 	}
 
-	rendererFlagsNames.clear();
+	lightTypes.clear();
 }
 
 void CustomUI::PropertiesPanel::Render() 
 {
-	
+	GameObject* selectedObject = UIStatics::GetSelectedObject();
 
 	ImGui::Begin("Properties",&isActive);
 
-	if (UIStatics::GetSelectedObject())
+	if (selectedObject)
 	{
 		// Gets the mesh's properties and then displays them with ImGui
 
 
-		ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name);
+		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			std::string newObjName = UIStatics::GetSelectedObject()->name;
+
+			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
+			SaveManager::SetSaveName(oldObjName, newObjName);
+
+		}
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
-		bool opened = ImGui::TreeNodeEx((void*)(uint32_t)UIStatics::GetSelectedObject(), tree_flags, "Transform");
+		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
 
 		if (opened)
 		{
 			// Change the standard transform components 
+			UIStatics::DrawVec3("Position", selectedObject->transform.GetPosition(),80.0f);
 
-			UIStatics::DrawVec3("Position", UIStatics::GetSelectedObject()->transform.GetPosition(),80.0f);
-			UIStatics::DrawVec3("Rotation", UIStatics::GetSelectedObject()->transform.GetRotation(), 80.0f);
-			UIStatics::DrawVec3("Scale", UIStatics::GetSelectedObject()->transform.GetScale(), 80.0f);
+			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
+
+
+			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
+			
+				selectedObject->transform.SetRot(rotation);
+			}
+			
+			
+			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScale(), 80.0f);
 
 			ImGui::TreePop();
 		}
 		
 		
 
-		// Create a new color that is a copy of the meshes color
-		if (UIStatics::GetSelectedObject()->HasComponent<MeshRenderer>())
+		if (MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>())
 		{
-			bool opened = ImGui::TreeNodeEx((void*)(uint32_t)UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>(), tree_flags, "Renderer");
+			bool opened = ImGui::TreeNodeEx((void*)mr, tree_flags, "Renderer");
 
 			if (opened)
 			{
-				MeshRenderer* meshRenderer = UIStatics::GetSelectedObject()->GetComponent<MeshRenderer>();
-
-				ImGui::ColorEdit4("Mesh Color", meshRenderer->meshColorTint);
+				ImGui::ColorEdit4("Mesh Color", mr->meshColorTint);
 
 				
 				GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
@@ -89,49 +101,86 @@ void CustomUI::PropertiesPanel::Render()
 				if (ImGui::BeginCombo("##Flags", "Render Flags"))
 				{
 
-					for (auto flag = RenderProperties::LIGHTING; flag < RenderProperties::OVERRIDE_RENDERER; flag = RenderProperties(flag << 1))
+					const int renderFlagSize = IM_ARRAYSIZE(RenderFlagNameEnumPairs);
+
+
+					for (size_t i = 0; i < renderFlagSize; i++)
 					{
-						bool isActive = (meshRenderer->renderFlags & flag);
-
-						if (ImGui::Checkbox(rendererFlagsNames[flag], &isActive))
+						bool boxIsActive = (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum);
+						
+						if (ImGui::Checkbox(RenderFlagNameEnumPairs[i].flagName, &boxIsActive))
 						{
-							bool isFlagActive = (meshRenderer->renderFlags & flag);
-							if (isFlagActive)
+							std::cout << "Checkbox Open" << std::endl;
+							//If None is checked undo all boxes
+							if(i == 0)
 							{
-								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags & ~flag);
-								std::cout << "Flag Removed" << std::endl;
-
+								if(boxIsActive)
+								{
+									mr->renderFlags = static_cast<RenderProperties>(0);
+									break;
+								}
 							}
-							else
+							
+							if (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum)
 							{
-								meshRenderer->renderFlags = RenderProperties(meshRenderer->renderFlags | flag);
-								std::cout << "Flag Added" << std::endl;
-
+								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags & ~RenderFlagNameEnumPairs[i].flagEnum);
+							} else
+							{
+								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags | RenderFlagNameEnumPairs[i].flagEnum);
 							}
-
 						}
 					}
 
 					ImGui::EndCombo();
 				}
 
-				UIStatics::DrawTextureSlot("texture_09.jpg",meshRenderer,5.0f);
-
-				
-				
+				UIStatics::DrawTextureSlot("texture_09.jpg",mr,5.0f);
 
 				ImGui::TreePop();
 			}
+		}
+
+		if (selectedObject->HasComponent<LightComponent>())
+		{
+			bool opened = ImGui::TreeNodeEx("LightSettings", tree_flags, "Light Settings");
+
+			if (opened)
+			{
+				LightComponent* lightComp = UIStatics::GetSelectedObject()->GetComponent<LightComponent>();
+
+				static int currentIndex = 0;
+				if (ImGui::BeginCombo("LightTypes", lightTypes[(int)lightComp->type -1]))
+				{
+					for (int i = 0; i < (int)LightType::SPOT; i++)
+					{
+
+						static bool isSelected = (currentIndex == i);
+
+						if (ImGui::Selectable(lightTypes[i], isSelected))
+						{
+							currentIndex = i;
+							lightComp->type = static_cast<LightType>(i +1);
+						}
+					}
+					ImGui::EndCombo();
+
+				}
+
+				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1, 0.5, 500.0f);
+				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
+				ImGui::ColorEdit3("Diffuse Color", lightComp->diffColor);
+				ImGui::ColorEdit3("Specular Color", lightComp->specColor);
+
+				ImGui::TreePop();
+
+
+			}
+
 		}
 	}
 	ImGui::End();
 
 }
-
-
-
-
-
 
 
 
@@ -156,7 +205,7 @@ CustomUI::HierarchyPanel::~HierarchyPanel()
 
 }
 
-void CustomUI::HierarchyPanel::ConstructHierarchy()
+void CustomUI::HierarchyPanel::Construct()
 {
 	UpdateActiveObjects();
 
@@ -190,10 +239,25 @@ void CustomUI::HierarchyPanel::Render()
 	ImGui::End();
 }
 
+void CustomUI::HierarchyPanel::Reset()
+{
+
+
+	if (gameobjects.size() >= 1)
+	{
+		for (auto obj : gameobjects)
+		{
+			obj = nullptr;
+		}
+		gameobjects.clear();
+
+	}
+}
+
 void CustomUI::HierarchyPanel::Update(const float deltatime)
 {
 
-	size_t size = UIStatics::GetSceneGraph()->GetGameObjects().size();
+	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
 	if (gameobjects.size() < size || gameobjects.size() > size)
 	{
 		UpdateActiveObjects();
@@ -248,6 +312,11 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 				}
 
+			}
+
+			if (ImGui::MenuItem("Delete"))
+			{
+				Globals::s_SceneGraph->DeleteGameObject(go);
 			}
 			ImGui::EndPopup();
 		}
@@ -331,7 +400,15 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 		}
 
-		
+		if (ImGui::BeginPopupContextItem())
+		{
+
+			if (ImGui::MenuItem("Delete"))
+			{
+				Globals::s_SceneGraph->DeleteGameObject(go);
+			}
+			ImGui::EndPopup();
+		}
 		
 		
 
@@ -341,7 +418,7 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 void CustomUI::HierarchyPanel::UpdateActiveObjects()
 {
-	for (auto obj : UIStatics::GetSceneGraph()->GetGameObjects())
+	for (auto obj : Globals::s_SceneGraph->GetGameObjects())
 	{
 		std::vector<GameObject*>::iterator iter;
 		
@@ -513,7 +590,7 @@ CustomUI::Viewport::~Viewport()
 {
 	for (auto mode : modeMap)
 	{
-		delete mode;
+		mode = nullptr;
 	}
 
 	modeMap.clear();
@@ -546,8 +623,6 @@ void CustomUI::Viewport::Render()
 						modeName = "[" + std::string(Mode) + "]";
 
 					}
-					if (is_selected)
-						ImGui::SetItemDefaultFocus();
 
 					index++;
 				}
@@ -603,8 +678,7 @@ void CustomUI::Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
-			UIStatics::GetSceneGraph()->LoadObject(file);
-
+			LoadUtility::GetInstance()->LoadObject(file);
 		}
 		ImGui::EndDragDropTarget();
 	}
@@ -623,18 +697,32 @@ void CustomUI::Viewport::Render()
 CustomUI::DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
 {
 
+	uiInterfaces.push_back(new ContentBrowser());
+	uiInterfaces.push_back(new HierarchyPanel());
+	uiInterfaces.push_back(new PerformancePanel());
+	uiInterfaces.push_back(new PropertiesPanel());
+
+
 }
 
 CustomUI::DockSpace::~DockSpace()
 {
-	
+	for (auto panel : uiInterfaces)
+	{
+		delete panel;
+		panel = nullptr;
+	}
+
+	uiInterfaces.clear();
 }
 
 void CustomUI::DockSpace::Update(const float deltatime)
 {
-	performancePanel.Update(deltatime);
-
-	hierarchy.Update(deltatime);
+	
+	for (auto panel : uiInterfaces)
+	{
+		panel->Update(deltatime);
+	}
 }
 
 void CustomUI::DockSpace::Render()
@@ -642,11 +730,21 @@ void CustomUI::DockSpace::Render()
 	GenerateDockSpace();
 }
 
+void CustomUI::DockSpace::Reset()
+{
+	for (auto panel : uiInterfaces)
+	{
+		panel->Reset();
+	}
+}
+
 void CustomUI::DockSpace::ConstructUserInterface()
 {
 
-	UIStatics::ConstructUIStatics();
-	hierarchy.ConstructHierarchy();
+	for (auto panel : uiInterfaces)
+	{
+		panel->Construct();
+	}
 
 }
 
@@ -713,6 +811,31 @@ void CustomUI::DockSpace::GenerateDockSpace()
 			// which we can't undo at the moment without finer window depth/z control.
 			ImGui::MenuItem("Fullscreen", NULL, &isDockSpaceFullScreen);
 			ImGui::MenuItem("Save", NULL, &isQueuedForSave);
+
+			if (ImGui::BeginMenu("Scene"))
+			{
+				static std::string oldSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				if (ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue))
+				{
+					std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+
+					Globals::SCENE_NAME = newSceneName;
+
+					SaveManager::SetSaveName(oldSceneName, newSceneName);
+				}
+				if (ImGui::Button("New Scene"))
+				{
+					std::vector<Scene*>& scenes = CoreEngine::GetInstance()->gameInterface->Scenes;
+
+					scenes.push_back(new DefaultScene());
+					CoreEngine::GetInstance()->currentSceneNum = scenes.size() - 1;
+					SaveUtility::GetInstance()->CreateSave("Default",FileType::SCENE);
+				}
+
+				ImGui::EndMenu();
+
+			}
+
 			ImGui::Separator();
 
 			ImGui::EndMenu();
@@ -721,13 +844,10 @@ void CustomUI::DockSpace::GenerateDockSpace()
 	}
 
 
-	hierarchy.Render();
-
-	performancePanel.Render();
-
-	propertiesPanel.Render();
-
-	contentBrowser.Render();
+	for (auto panel : uiInterfaces)
+	{
+		panel->Render();
+	}
 
 	ImGui::End();
 }
@@ -792,16 +912,12 @@ void CustomUI::ContentBrowser::GeneratePathNav()
 	ImGui::Columns((int)DirectoryNames.size(), "Navigation", false);
 
 
-	
-
-
 	float spacing = 30.0f;
 
 
 
 	for (int i = 0; i < DirectoryNames.size(); i++ )
 	{
-
 
 		if (ImGui::Button(DirectoryNames[i].c_str(), ImVec2{ ImGui::GetColumnWidth(i) - spacing,0.0f }))
 		{
@@ -868,14 +984,12 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
-
 		else if (fileType == ".fbx")
 		{
 			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
-
-		else if (fileType == ".jpg")
+		else if (fileType == ".jpg" | fileType == ".png")
 		{
 			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
@@ -906,6 +1020,27 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 
 				ImGui::EndDragDropSource();
 			}
+
+			if (ImGui::IsMouseDoubleClicked(0))
+			{
+
+				if (path.extension().string() == ".scene")
+				{
+					for (int i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
+					{
+						Scene* scene = CoreEngine::GetInstance()->gameInterface->Scenes[i];
+
+						std::string stem = path.stem().string();
+						if (scene->GetSceneName() == stem)
+						{
+							LoadUtility::GetInstance()->UnLoadSceneSaves();
+							CoreEngine::GetInstance()->currentSceneNum = i;
+						}
+					}
+				}
+
+			}
+
 		}
 
 		

@@ -2,7 +2,7 @@
 #define TRANSFORM_H
 
 #include "math/MMath.h"
-
+#include "math/Quaternion.h"
 //! Transform Class
 /*! 
 Not quite a component but similar enough to be in the same folder path
@@ -14,17 +14,21 @@ private:
 	//!modelMatrix Matrix4
 	/*! The transforms Model Matrix */
 	MATH::Matrix4 modelMatrix;
+
+	//!rotationMatrix Matrix4
+	/*! The transforms Rotation Matrix */
+	MATH::Matrix4 rotationMatrix;
 	
 public:
 	Transform* parent;
 	
-	//!rotationMatrix Matrix4
-	/*! The transforms Rotation Matrix */
-	MATH::Matrix4 rotationMatrix;
+
 
 	//!Standard Transform Vec3s
 	/*! Stores the main transform variables */
-	MATH::Vec3 pos, rotation, scale;
+	MATH::Vec3 pos, scale;
+
+	MATH::Quaternion rotation;
 
 	//!Transform Constructor
 	/*! Initializes the rotational Matrix */
@@ -45,7 +49,7 @@ public:
 
 	//!GetRotation Getter
 	/*! Returns the transforms rotation */
-	MATH::Vec3& GetRotation() { return rotation; }
+	MATH::Vec3 GetRotation() { return MATH::Quaternion::QuatToEuler(rotation); }
 
 	//!GetScale Getter
 	/*! Returns the transforms scale */

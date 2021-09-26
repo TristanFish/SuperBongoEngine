@@ -19,16 +19,13 @@ public:
 	UIStatics() = default;
 	~UIStatics();
 
-	static void ConstructUIStatics();
 
-
-	
 
 
 
 	//! DrawVec3 Function
 	/*! Draws a Vec3 to with screen with ImGui */
-	static void DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
+	static bool DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth);
 
 
 	//!DrawTextureSlot Function
@@ -38,7 +35,6 @@ public:
 	static inline void SetSelectedObject(GameObject* go) { selectedObj = go; }
 
 
-	static inline std::shared_ptr<SceneGraph> GetSceneGraph() { return sceneGraph; }
 
 	static inline GameObject* GetSelectedObject() { return selectedObj; }
 
@@ -50,7 +46,6 @@ private:
 	static GameObject* selectedObj;
 
 
-	static std::shared_ptr<SceneGraph> sceneGraph;
 
 
 

@@ -4,7 +4,7 @@
 #include "components/SceneGraph.h"
 
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 #include "core/resources/TextureManager.h"
 
@@ -14,7 +14,6 @@
 
 GameObject* UIStatics::selectedObj = nullptr;
 
-std::shared_ptr<SceneGraph> UIStatics::sceneGraph = nullptr;
 
 
 
@@ -23,15 +22,11 @@ UIStatics::~UIStatics()
 
 }
 
-void UIStatics::ConstructUIStatics()
+
+
+bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth)
 {
-	sceneGraph = CoreEngine::GetInstance()->GetCurrentScene()->objectList;
-
-}
-
-void UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth)
-{
-
+	bool returnb = false;
 
 	ImGui::PushID(label.c_str());
 
@@ -53,9 +48,9 @@ void UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopItemFlag();
 	ImGui::PopStyleColor();
 
-
 	ImGui::SameLine();
-	ImGui::DragFloat("##X", &value.x, 0.1);
+	if (ImGui::DragFloat("##X", &value.x, 0.1))
+		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -68,7 +63,8 @@ void UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Y", &value.y, 0.1);
+	if (ImGui::DragFloat("##Y", &value.y, 0.1))
+		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -79,13 +75,17 @@ void UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopStyleColor();
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Z", &value.z, 0.1);
+	if (ImGui::DragFloat("##Z", &value.z, 0.1))
+		returnb = true;
 	ImGui::PopItemWidth();
 
 
 	ImGui::Columns(1);
 	ImGui::PopStyleVar();
 	ImGui::PopID();
+
+
+	return returnb;
 }
 
 void UIStatics::DrawTextureSlot(const char* textureName, MeshRenderer* meshRenderer,const float spacing, const MATH::Vec2& size)

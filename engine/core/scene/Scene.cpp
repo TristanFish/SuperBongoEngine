@@ -29,17 +29,8 @@ Scene::~Scene()
 
 bool Scene::PostCreate()
 {
-	std::vector<GameObject*> gameObjects;
 	
-	for (auto object : objectList->GetGameObjects())
-	{
-		if(object->GetParent() == nullptr)
-		{
-			gameObjects.push_back(object);
-		}
-	}
-	
-	
+
 	dockSpace.ConstructUserInterface();
 
 	return true;
@@ -58,49 +49,6 @@ void Scene::Render()
 	// Let's the use add game objects
 
 	dockSpace.Render();
-
-	 // Displays panel that allows user to add gameobjects at runtime
-	 ImGui::Begin("Add Game Object");
-	
-	 static std::string selectedObj;
-
-	 static std::string name_;
-
-
-	 ImGui::ListBoxHeader("Test Level");
-	 for (auto obj : objectList->GetInstantiableObjects())
-	 {
-		 if (ImGui::Selectable(obj.first.c_str(), false,ImGuiSelectableFlags_SelectOnClick))
-		 {
-			 selectedObj = obj.first;
-		 }
-	 }
-	 ImGui::ListBoxFooter();
-
-	// Blank variables that can be changed 
-	static Vec3 Pos_ = Vec3(0.0f);
-	static Vec3 Rot_ = Vec3(0.0f);
-	static Vec3 Scale_ = Vec3(1.0f);
-
-
-	if (ImGui::InputText("Mesh Name", &name_))
-	{
-
-
-	}
-
-	ImGui::DragFloat3("Position", Pos_);
-	ImGui::DragFloat3("Rotation", Rot_);
-	ImGui::DragFloat3("Scale", Scale_, -1, 1);
-	
-	if (ImGui::Button("Create Object"))
-	{
-		CreateObjWithID(Pos_, Rot_, Scale_, name_, selectedObj);
-		Pos_ = Vec3(0.0f);
-		Rot_ = Vec3(0.0f);
-		Scale_ = Vec3(1.0f);
-	}
-	ImGui::End();
 
 	objectList->Render();
 }
@@ -213,22 +161,37 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 void Scene::SaveMapData() const
 {
 
-	if (SaveManager::HasSave(Scene_Name))
-	{
-		SaveManager::TransferToSaveQueue(Scene_Name);
-	}
-	else
+
+
+	if (!SaveManager::TransferToSaveQueue(Scene_Name))
 	{
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
-
-
+	
+	
 	ElementInfo info = ElementInfo("Root");
 
+
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
+	info = ElementInfo("SceneSettings");
+	info.Attributes.emplace(":", Scene_Name);
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneName:", info);
+
+
+
+
+	info = ElementInfo("Root");
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
 
 
+
+	
 	info = ElementInfo("Objects");
+	
+
+	
+
+	
 	for (auto obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);
@@ -244,16 +207,13 @@ void Scene::SaveMapData() const
 
 void Scene::LoadMapData()
 {
-
-
-	std::string objectDirectory;
-
-	objectDirectory = Globals::ENGINE_PATH;
-	objectDirectory.append("\\resources\\SaveData\\Objects\\");
-
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
-		objectList->LoadObject(SaveManager::GetSaveFile(elm.first));
+		if (!objectList->isObjectActive(elm.first))
+		{
+			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
 
+		}
 	}
+
 }
