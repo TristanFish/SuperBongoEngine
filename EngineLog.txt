@@ -46,33 +46,3 @@
 [INFO]: Player added to objectList in: ECS.cpp on line: 169
 [INFO]: Sphere added to objectList in: ECS.cpp on line: 169
 [INFO]: test added to objectList in: ECS.cpp on line: 169
-[SAVE]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 281
-[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 252
-[SAVE]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 269
-[INFO]: Scene 2 Created in: Scene2.cpp on line: 14
-[INFO]: BlueBox added to objectList in: ECS.cpp on line: 169
-[INFO]: RedBox added to objectList in: ECS.cpp on line: 169
-[SAVE]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 281
-[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 252
-[SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 269
-[INFO]: Scene 1 Created in: Scene1.cpp on line: 20
