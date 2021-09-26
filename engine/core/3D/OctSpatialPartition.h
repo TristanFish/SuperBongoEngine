@@ -56,7 +56,7 @@ private:
 class OctSpatialPartition
 {
 public:
-	OctSpatialPartition();
+
 	OctSpatialPartition(float worldSize);
 	~OctSpatialPartition();
 

@@ -2,31 +2,36 @@
 #define RAY_H
 #include "VMath.h"
 #include "Vector.h"
-class Ray
+#include "core/3D/New3D/CollisionDetection.h"
+
+struct Ray
 {
-	
 public:
-	MATH::Vec3 Direction;
-	MATH::Vec3 Origin;
+	MATH::Vec3 direction;
+	MATH::Vec3 origin;
 	float distance;
 
 	Ray();
 
 	Ray(MATH::Vec3 dir_, MATH::Vec3 origin_);
 
+	//Copy function
+	inline Ray& operator =(const Ray& ray_) {
+		origin = ray_.origin;
+		direction = ray_.direction;
+		distance = 0.0f;
+	}
+
 	~Ray() = default;
 
 	MATH::Vec3 CurrentPosition(float t) const;
 
-	bool IsColliding()
-	{
-		return true;
+	inline bool isColliding(BoundingBox* box_) {
+		distance = -1.0f;
+		return CollisionDetection::RayObbIntersection(this, box_);
 	}
-
+	
 	std::string ToString() const;
-
-private:
-
 
 };
 #endif
