@@ -19,12 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
     <ClInclude Include="engine\math\Plane.h" />
     <ClInclude Include="engine\core\events\MouseEventListener.h" />
@@ -279,8 +276,6 @@
     <ClInclude Include="engine\Utility\LoadUtility.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />

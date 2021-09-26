@@ -1,17 +1,7 @@
 <Root>
     <Name Is="Player">
         <Transform>
-            <Position X="-100.28032" Y="384.14322" Z="-120.85996"/>
-            <Rotation X="0" Y="-90" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
-        </Transform>
-        <ObjectInfo>
-            <Type ID="class Player"/>
-        </ObjectInfo>
-    </Name>
-    <Name Is="Player">
-        <Transform>
-            <Position X="-100.28032" Y="384.14322" Z="-120.85996"/>
+            <Position X="4.619976" Y="93.400444" Z="-57.420036"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>

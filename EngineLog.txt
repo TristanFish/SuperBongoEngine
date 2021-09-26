@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 70
+[INFO]: Logger Created in: CoreEngine.cpp on line: 71
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
 [INFO]: Fire.png in: TextureManager.cpp on line: 16
@@ -24,7 +24,6 @@
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Scene 1 Created in: Scene1.cpp on line: 14
 [SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 207
-[SAVE]: .sbo Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: FirstPlane Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
@@ -36,13 +35,13 @@
 [SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: TestSave Has Been Added To The SaveFiles in: SaveManager.cpp on line: 14
 [SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 219
-[INFO]: Box added to objectList in: ECS.cpp on line: 136
-[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 136
-[INFO]: Grass added to objectList in: ECS.cpp on line: 136
-[INFO]: Light added to objectList in: ECS.cpp on line: 136
-[INFO]: Player added to objectList in: ECS.cpp on line: 136
-[INFO]: Sphere added to objectList in: ECS.cpp on line: 136
-[INFO]: test added to objectList in: ECS.cpp on line: 136
+[INFO]: Box added to objectList in: ECS.cpp on line: 131
+[INFO]: FirstPlane added to objectList in: ECS.cpp on line: 131
+[INFO]: Grass added to objectList in: ECS.cpp on line: 131
+[INFO]: Light added to objectList in: ECS.cpp on line: 131
+[INFO]: Player added to objectList in: ECS.cpp on line: 131
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 131
+[INFO]: test added to objectList in: ECS.cpp on line: 131
 [SAVE]: Scene_1 File Has Been Deleted in: SaveManager.cpp on line: 24
 [SAVE]: Box Already Exists in: SaveUtility.cpp on line: 57
 [SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 24

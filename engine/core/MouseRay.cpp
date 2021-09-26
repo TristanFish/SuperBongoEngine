@@ -43,7 +43,7 @@ MATH::Vec3 MouseRay::GetWorldCoords(MATH::Vec4 eyeCoords)
 
 void MouseRay::CalaculateMouseRay()
 {
-	ray.origin = Camera::getInstance()->getPosition();
+	ray.Origin = Camera::getInstance()->getPosition();
 
 	const MATH::Vec2 mousePos = localMousePos;
 
@@ -54,8 +54,8 @@ void MouseRay::CalaculateMouseRay()
 
 	const MATH::Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
-	ray.direction = worldRay;
+	ray.Direction = worldRay;
 
-	invDir = MATH::Vec3(1.0f / ray.direction.x, 1.0f / ray.direction.y, 1.0f / ray.direction.z);
+	invDir = MATH::Vec3(1.0f / ray.Direction.x, 1.0f / ray.Direction.y, 1.0f / ray.Direction.z);
 
 }

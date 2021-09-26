@@ -5,14 +5,13 @@
 
 class Window;
 class GameInterface;
-class Timer;
 
 class CoreEngine
 {
 
 private:
 	Window* window;
-	Timer* gameTimer;
+
 	unsigned int fps;
 	bool isRunning;
 
