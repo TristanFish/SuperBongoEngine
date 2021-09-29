@@ -566,7 +566,7 @@ double CustomUI::PerformanceMonitor::GetCPUUsage()
 
 
 
-CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true)
+CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true), aspectSize("[Free Aspect]")
 {
 
 	modeMap.push_back("Lighting");
@@ -576,7 +576,13 @@ CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewpor
 	modeMap.push_back("Depth");
 	modeMap.push_back("Stencil");
 
-
+	aspectRatios.push_back("Free Aspect");
+	aspectRatios.push_back("3:2");
+	aspectRatios.push_back("4:3");
+	aspectRatios.push_back("5:3");
+	aspectRatios.push_back("5:4");
+	aspectRatios.push_back("16:9");
+	aspectRatios.push_back("16:10");
 }
 
 CustomUI::Viewport::~Viewport()
@@ -624,6 +630,33 @@ void CustomUI::Viewport::Render()
 
 			ImGui::EndMenu();
 		}
+
+		if (ImGui::BeginMenu(std::string("Aspect Ratio " + aspectSize).c_str()))
+		{
+			if (ImGui::BeginListBox("##RenderModeList"))
+			{
+				int index = 0;
+				for (auto currentRatio : aspectRatios)
+				{
+					AspectRatio ratio = static_cast<AspectRatio>(index);
+
+					bool is_selected = (activeRatio == ratio);
+					if (ImGui::Selectable(currentRatio, is_selected))
+					{
+						ImGui::CloseCurrentPopup();
+						activeRatio = ratio;
+						aspectSize = "[" + std::string(currentRatio) + "]";
+
+					}
+
+					index++;
+				}
+				ImGui::EndListBox();
+			}
+
+			ImGui::EndMenu();
+		}
+		
 		ImGui::EndMenuBar();
 	}
 

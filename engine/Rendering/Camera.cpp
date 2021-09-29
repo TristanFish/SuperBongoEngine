@@ -95,7 +95,7 @@ void Camera::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 	if(buttonType == SDL_BUTTON_RIGHT)
 	{
 		mouseDown = true;
-		mouseStart = GetMouseVector(mouse.x, mouse.y);
+		mouseStart = GetMouseVector(static_cast<int>(mouse.x), static_cast<int>(mouse.y));
 	}
 }
 
@@ -131,7 +131,7 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 		return;
 	}
 
-	mouseEnd = GetMouseVector(mouse.x, mouse.y);
+	mouseEnd = GetMouseVector(static_cast<int>(mouse.x), static_cast<int>(mouse.y));
 
 	rotation.x += (mouseEnd.y - mouseStart.y) * sensitivity * Timer::GetDeltaTime();
 	rotation.y += (mouseEnd.x - mouseStart.x) * sensitivity * Timer::GetDeltaTime();

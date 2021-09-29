@@ -198,6 +198,16 @@ namespace CustomUI
 		
 	};
 
+	enum class AspectRatio : unsigned int
+	{
+		FREE_ASPECT,
+		THREE_TWO,
+		FOUR_THREE,
+		FIVE_THREE,
+		FIVE_FOUR,
+		SIXTEEN_NINE,
+		SIXTEEN_TEN
+	};
 
 	//! Viewport panel Class
 	/*!  This class creates & Renders the Viewport Panel UI */
@@ -232,10 +242,13 @@ namespace CustomUI
 		MATH::Vec2 viewportSize;
 
 		std::string modeName;
+		std::string aspectSize;
 
 		RenderMode mode;
+		AspectRatio activeRatio;
 
 		std::vector<const char*> modeMap;
+		std::vector<const char*> aspectRatios;
 
 		//! isMouseHovered bool 
 		/*! Stores if the mouse is hovering over the viewport or not */

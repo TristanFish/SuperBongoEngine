@@ -42,20 +42,23 @@
 [INFO]: Player added to objectList in: ECS.cpp on line: 152
 [INFO]: Sphere added to objectList in: ECS.cpp on line: 152
 [INFO]: test added to objectList in: ECS.cpp on line: 152
+[INFO]: Closing Game in: CoreEngine.cpp on line: 160
 [SAVE]: Scene_1 File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: Box Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 33
-[SAVE]: FirstPlane Already Exists in: SaveUtility.cpp on line: 59
-[SAVE]: FirstPlane File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: Grass Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: Light Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 33
+[SAVE]: Plane-1 Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: Player Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: Sphere Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 33
 [SAVE]: test Already Exists in: SaveUtility.cpp on line: 59
 [SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 33
-[SAVE]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 267
-[SAVE]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 307
+[SAVE]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
+[SAVE]: Scene_1 Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE]: Player Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353
