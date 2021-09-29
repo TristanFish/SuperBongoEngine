@@ -16,7 +16,7 @@ void RigidBody3D::OnCollisionEnter(RigidBody3D& otherBody)
 }
 
 RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-                            angularVel(Quaternion()), angularAcc(0.0f), angularDrag(0.95f), 
+                            angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), 
                             collider(MATH::Vec3(),MATH::Vec3())
 {
 	
@@ -40,8 +40,8 @@ void RigidBody3D::Init(GameObject *g)
 	accel = MATH::Vec3();
 
 	rotInertia = 2.0f;
-	angularVel = MATH::Quaternion(Vec4(10.0f, 0.0f, 0.0f, 0.0f));
-	angularAcc = MATH::Vec3();
+	angularVel = MATH::Vec3(0.0f);
+	//angularAcc = MATH::Vec3(0.0f, 0.0f, 0.0f);
 
 	//collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
 	//collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
@@ -58,23 +58,27 @@ void RigidBody3D::Update(const float deltaTime)
 	obbSize.z = abs(collider.minVertices.z) + abs(collider.maxVertices.z);
 
 
-	
+	// STILL NEEDS SOME WORK TO FIX SOME STRECHING PROBLEMS
 	
 	//torque = InhertiaTensor * angularAcc;
 
-	//Vec3 AxisRotation = VMath::normalize(VMath::cross(gameobject->transform.Up(), angularVel.GetVec3()));
+	angularVel += angularAcc * deltaTime;
+	angularVel = angularVel * angularDrag;
 
-	//angularVel = angularVel.Mag() * AxisRotation;
+	Vec3 AxisRot = VMath::cross(gameobject->transform.Up(), vel);
 
-	//Quaternion newRot = (gameobject->transform.rotation) * (angularVel * gameobject->transform.rotation);
+	if (VMath::mag(AxisRot) > 0.0f){
+		//angularVel += VMath::mag(angularVel) * VMath::normalize(AxisRot);
 
-	//gameobject->transform.rotation += newRot.Normalized();
+	}
+
+	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameobject->transform.rotation)) * (deltaTime / 2);
+
+
+
+	gameobject->transform.rotation += newRot;
+	gameobject->transform.rotation = gameobject->transform.rotation.Normalized();
 	
-	//angularVel *= angularDrag;
-	
-	
-
-
 }
 
 
@@ -100,11 +104,7 @@ void RigidBody3D::ApplyConstantForce(const Vec3& force)
 
 void RigidBody3D::ApplyImpulseTorque(const Vec3& torque)
 {
-	Vec3 angVel; 
-	angVel += (torque / rotInertia) * Timer::GetScaledDeltaTime();
-
-	angularVel = Quaternion(Vec4(angVel.x, angVel.y, angVel.z, 0.0f));
-	
+	angularVel += (torque / rotInertia) * Timer::GetScaledDeltaTime();
 }
 
 void RigidBody3D::ApplyConstantTorque(const Vec3& torque)

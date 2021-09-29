@@ -27,8 +27,6 @@ protected:
 	
 
 	CustomUI::DockSpace dockSpace;
-
-
 	std::string Scene_Name;
 
 
@@ -63,8 +61,9 @@ public:
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;
 
-	inline std::string GetSceneName() const { return Scene_Name; }
-	
+	inline std::string& GetSceneName()  { return Scene_Name; }
+	inline void SetSceneName(std::string Name_) { Scene_Name = Name_; }
+
 };
 
 #endif

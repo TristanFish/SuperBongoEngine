@@ -218,6 +218,7 @@ void Renderer::DestroyRenderer()
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
 
+	
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
 }
@@ -228,6 +229,12 @@ Renderer* Renderer::GetInstance()
 	{
 		rendererInstance.reset(new Renderer);
 	}
+	return rendererInstance.get();
+}
+
+Renderer* Renderer::ResetInstance()
+{
+	rendererInstance.reset(new Renderer);
 	return rendererInstance.get();
 }
 

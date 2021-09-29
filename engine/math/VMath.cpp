@@ -32,6 +32,24 @@ float VMath::distance(const Vec3 &a, const Vec3 &b){
 	return(mag(r));
 }
 
+MATH::Vec4 VMath::normalize(const Vec4& a)
+{
+	float magnitude;
+	Vec4 result;
+	magnitude = float(sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w));
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+	if (magnitude < VERY_SMALL) {
+		std::string errorMsg("Divide by nearly zero! ");
+		throw errorMsg;
+	}
+#endif
+	result.x = a.x / magnitude;
+	result.y = a.y / magnitude;
+	result.z = a.z / magnitude;
+	result.w = a.w / magnitude;
+	return result;
+}
+
 Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
 {
 	Vec3 clampedVector = clampedV;

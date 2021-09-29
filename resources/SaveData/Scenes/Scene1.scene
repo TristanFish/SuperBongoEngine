@@ -8,4 +8,7 @@
         <Player/>
         <Plane-1/>
     </Objects>
+    <SceneSettings>
+        <SceneName: :="Scene1"/>
+    </SceneSettings>
 </Root>

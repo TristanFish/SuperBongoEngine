@@ -40,6 +40,9 @@ namespace MATH {
 		/// Return a normalized Vec3
 		static Vec3 normalize(const Vec3 &a);
 	
+		/// Return a normalized Vec3
+		static Vec4 normalize(const Vec4& a);
+
 		/// Reflect off a normal  
 		static Vec3 reflect(const Vec3 &v, const Vec3 &n);
 

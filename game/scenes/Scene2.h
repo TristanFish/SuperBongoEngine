@@ -1,12 +1,12 @@
 #ifndef SCENE2_H
 #define SCENE2_H
 
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 class Scene2 final : public Scene
 {
 public:
-	Scene2() = default;
+	Scene2();
 	
 	// Inherited via Scene
 	bool OnCreate() override;

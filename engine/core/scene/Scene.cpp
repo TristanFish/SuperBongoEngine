@@ -29,18 +29,8 @@ Scene::~Scene()
 
 bool Scene::PostCreate()
 {
-	std::vector<GameObject*> gameObjects;
 	
-	for (auto object : objectList->GetGameObjects())
-	{
-		if(object->GetParent() == nullptr)
-		{
-			gameObjects.push_back(object);
-		}
-	}
-	
-	
-	
+
 	dockSpace.ConstructUserInterface();
 
 	return true;
@@ -182,8 +172,18 @@ void Scene::SaveMapData() const
 	ElementInfo info = ElementInfo("Root");
 
 
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
+	info = ElementInfo("SceneSettings");
+	info.Attributes.emplace(":", Scene_Name);
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneName:", info);
 
+
+
+
+	info = ElementInfo("Root");
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
+
+
 
 	
 	info = ElementInfo("Objects");
@@ -207,10 +207,13 @@ void Scene::SaveMapData() const
 
 void Scene::LoadMapData()
 {
-
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
+		if (!objectList->isObjectActive(elm.first))
+		{
+			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
 
-		LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
+		}
 	}
+
 }

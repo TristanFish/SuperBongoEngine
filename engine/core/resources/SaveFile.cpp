@@ -1,7 +1,7 @@
 #include "SaveFile.h"
 #include "core/Globals.h"
 #include "core/CoreEngine.h"
-#include "scenes/Scene.h"
+#include "core/scene/Scene.h"
 
 #include <utility>
 
@@ -313,8 +313,25 @@ void SaveFile::Save()
 {
 	std::string Destination = GetFileDestination();
 
-	std::filesystem::create_directory(Destination);
+	SaveFile& save = SaveManager::GetSaveFile(Globals::SCENE_NAME);
 
+	if (save.FileName != save.prevFileName)
+	{
+		std::filesystem::path oldPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
+		std::filesystem::path newPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
+
+		if (std::filesystem::exists(oldPath))
+		{
+			std::filesystem::rename(oldPath, newPath);
+		}
+	}
+	else
+	{
+		std::filesystem::create_directory(Destination);
+	}
+
+
+	
 
 	if (FileName != prevFileName)
 	{
