@@ -1,7 +1,14 @@
-#pragma once
+#ifndef RENDERER_H
+#define RENDERER_H
+
 #include <vector>
+
+
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
+#include "graphics/CustomUI.h"
+#include "graphics/FrameBuffer.h"
+
 
 
 
@@ -9,36 +16,66 @@
 class SkyBox;
 class MeshRenderer;
 class LightComponent;
-
-
 class Renderer
 {
 public:
 	std::vector<MeshRenderer*> meshRenderers;
 	std::vector<LightComponent*> lights;
-	GLuint gBuffer;
+	
+	//framebuffers
+	FrameBuffer gBuffer;
+	FrameBuffer gBufferRenderResult;
 
 	void Init();
+	void SetupFrameBuffers();
+	void SetupTextures();
+	
 	void AddMeshRenderer(MeshRenderer* mr);
+	void DeleteMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
-	void Render() const;
+	void DeleteLight(LightComponent* light);
+
+
+	void Render() ;
 	void DestroyRenderer();
+
+	static Renderer* GetInstance();
+	static Renderer* ResetInstance();
+
 	static SkyBox* GetSkyBox();
 	
+	GLuint GetModeTextureID() const;
+
+	GLuint GetgBufferTextureID() const { return albedoTexture.texture; }
+
+	void Resize(const int size_x, const int size_y);
+
 private:
+
+
+	
+
+	// Viewport 
+	/*! Handles all of the needed functions for the viewport */
+	 CustomUI::Viewport viewport;
+
 	ShaderProgram gBufferShader;
 	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
 
-	GLuint depthTexture;
-	GLuint stencilTexture;
-	GLuint posTexture;
-	GLuint normTexture;
-	GLuint albedoTexture;
+	//textures
+	BufferTexture gBufferTexture;
+	
+	BufferTexture depthTexture;
+	BufferTexture stencilTexture;
+	BufferTexture posTexture;
+	BufferTexture normTexture;
+	BufferTexture albedoTexture;
 
 	GLuint vao;
 	GLuint vbo;
 
+	//debugging Textures
 	Debug pos;
 	Debug norm;
 	Debug albedo;
@@ -50,10 +87,14 @@ private:
 
 	static bool IsMeshOnScreen(const MeshRenderer& mr);
 
+
+	static std::unique_ptr<Renderer> rendererInstance;
+	friend std::default_delete<Renderer>;
+
 	void BindGBufferTextures() const;
 	void UnbindGBufferTextures() const;
 
-	void RenderGBufferResult() const;
+	void RenderGBufferResult() ;
 
 
 	//Attaches the most important lights to this object's shader
@@ -75,4 +116,4 @@ private:
 		BLOOM			
 		PHYSICS_MOVEMENT */
 };
-
+#endif

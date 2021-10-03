@@ -351,3 +351,5 @@ MigrationBackup/
 # Capstone Ignore Files
 EngineLog.txt
 imgui.ini
+EngineLog.txt
+imgui.ini

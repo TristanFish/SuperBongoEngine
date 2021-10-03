@@ -12,7 +12,6 @@ GameObject::GameObject(): name("Default")
 
 GameObject::~GameObject()
 {
-	name = nullptr;
 
 	for(Component* comp : componentList)
 	{

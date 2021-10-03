@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MESH_H
+#define MESH_H
+
 #include <vector>
 #include "graphics/Vertex.h"
 #include "graphics/Texture.h"
@@ -31,4 +33,4 @@ private:
 	GLuint ebo;
 
 };
-
+#endif

@@ -9,6 +9,8 @@
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
 
+#include "graphics/UIStatics.h"
+
 SceneGraph::~SceneGraph() 
 {
 	for (GameObject* g : gameObjects)
@@ -20,7 +22,7 @@ SceneGraph::~SceneGraph()
 		}
 	}
 
-	renderer.DestroyRenderer();
+	Renderer::GetInstance()->DestroyRenderer();
 
 	gameObjects.clear();
 
@@ -31,7 +33,7 @@ void SceneGraph::Init()
 {
 	//osp = OctSpatialPartition(500);
 
-	renderer.Init();
+	Renderer::GetInstance()->Init();
 
 
 	for (auto obj : SaveManager::SaveableObjects)
@@ -61,7 +63,7 @@ void SceneGraph::Render() const
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	//Bind the gbuffer and clear it
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, renderer.gBuffer);
+	Renderer::GetInstance()->gBuffer.Bind();
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
@@ -74,7 +76,7 @@ void SceneGraph::Render() const
 	}
 #endif // DEBUG
 
-	renderer.Render();
+	Renderer::GetInstance()->Render();
 }
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
@@ -111,40 +113,106 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 
-	//if the gameObject that was added doesn't already exist in the scenegraph
-	if(std::find(gameObjects.begin(), gameObjects.end(), go) == gameObjects.end())
+	if (!isObjectActive(go->name))
 	{
-		go->Init();
-	
-		gameObjects.emplace_back(go);
+		LoadGameObject(go);
+	}
+	else
+	{
+		go->name += "_" + std::to_string(1);
 
-		if (go->HasComponent<RigidBody3D>())
-		{
-			rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
-		}
+		LoadGameObject(go);
+	}
+	
+	
+	return *go;
+}
+
+void SceneGraph::AddRenderingComponents()
+{
+	for (auto go : gameObjects)
+	{
 		if (go->HasComponent<MeshRenderer>())
 		{
 			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-			renderer.AddMeshRenderer(mr);
+			Renderer::GetInstance()->AddMeshRenderer(mr);
 			//osp.AddObject(mr);
 		}
 		if (go->HasComponent<LightComponent>())
 		{
-			renderer.AddLight(go->GetComponent<LightComponent>());
+			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
 		}
-
-		EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
-
-		for (GameObject* child : go->children)
-		{
-			AddGameObject(child);
-		}
-
-		return *go;
 	}
-	
-	EngineLogger::Warning("GameObject" + std::string(go->name) + " was already found in the scenegraph", "SceneGraph.cpp", __LINE__);
-	return *go;
+}
+
+void SceneGraph::LoadGameObject(GameObject* go)
+{
+	go->Init();
+
+	gameObjects.emplace_back(go);
+
+	if (go->HasComponent<RigidBody3D>())
+	{
+		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+	}
+	if (go->HasComponent<MeshRenderer>())
+	{
+		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+		Renderer::GetInstance()->AddMeshRenderer(mr);
+		//osp.AddObject(mr);
+	}
+	if (go->HasComponent<LightComponent>())
+	{
+		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
+	}
+
+	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+
+	for (GameObject* child : go->children)
+	{
+		AddGameObject(child);
+	}
+}
+
+void SceneGraph::DeleteGameObject(GameObject* go)
+{
+	if (go->HasComponent<RigidBody3D>())
+	{
+		
+		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
+		{
+			if (*iter == go->GetComponent<RigidBody3D>())
+			{
+				rigidBodies.erase(iter);
+				break;
+			}
+		}
+
+	}
+	if (go->HasComponent<MeshRenderer>())
+	{
+		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+		Renderer::GetInstance()->DeleteMeshRenderer(mr);
+		
+	}
+	if (go->HasComponent<LightComponent>())
+	{
+		Renderer::GetInstance()->DeleteLight(go->GetComponent<LightComponent>());
+	}
+
+
+	for (std::vector<GameObject*>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
+	{
+		if (*iter == go)
+		{
+			gameObjects.erase(iter);
+			delete go;
+			go = nullptr;
+			break;
+		}
+	}
+
+	UIStatics::SetSelectedObject(nullptr);
 }
 
 std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
@@ -152,48 +220,17 @@ std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects(
 	return InstantiableObjects;
 }
 
-void SceneGraph::LoadObject(SaveFile& file)
+bool SceneGraph::isObjectActive(std::string objName)
 {
-	if (file.GetFileType() == FileType::OBJECT)
+	for (auto obj : gameObjects)
 	{
-		ElementInfo PosElm = file.FindElement("Position");
-		ElementInfo RotElm = file.FindElement("Rotation");
-		ElementInfo ScaleElm = file.FindElement("Scale");
-		ElementInfo TypeElm = file.FindElement("Type");
-		ElementInfo NameElm = file.FindElement("Name");
-
-		MATH::Vec3 Position;
-		MATH::Vec3 Rotation;
-		MATH::Vec3 Scale;
-
-		for (int i = 0; i < 3; i++)
+		if (obj->name == objName)
 		{
-
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVec3(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVec3(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVec3(i)]);
-
-		}
-
-		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
-		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
-		
-		
-		for (auto obj : SaveManager::SaveableObjects)
-		{
-			if (TypeName == obj.first)
-			{
-				GameObject* clone = obj.second->GetClone();
-				clone->SetName(prevLoadedObjName.data());
-				clone->SetPos(Position);
-				clone->SetRotation(Rotation);
-				clone->SetScale(Scale);
-				AddGameObject(clone);
-
-				break;
-			}
+			return true;
 		}
 	}
+
+	return false;
 }
 
 void SceneGraph::CheckCollisions()

@@ -57,6 +57,33 @@ Vec3 MATH::MMath::calcEulerAngles(const Matrix4& rot)
 	return euler;// * rad2deg;
 }
 
+MATH::Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
+{
+	Matrix4 m;
+	m[0] = right.x; m[1] = right.y;     m[2] = right.z; m[3] = 0;
+	m[4] = up.x;    m[5] = up.y;        m[6] = up.z; m[7] = 0;
+	m[8] = forward.x; m[9] = forward.y; m[10] = forward.z; m[11] = 0;
+	m[12] = 0;      m[13] = 0;          m[14] = 0; m[15] = 1;
+
+
+	
+	return m;
+}
+
+MATH::Matrix4 MMath::GetFromMat3(const Matrix3& m_)
+{
+	Matrix4 m;
+
+	m[0] = m_[0]; m[1] = m_[1]; m[2] = m_[2]; m[3] = 0;
+	m[4] = m_[3]; m[5] = m_[4]; m[6] = m_[5]; m[7] = 0;
+	m[8] = m_[6]; m[9] = m_[7]; m[10] = m_[8]; m[11] = 0;
+	m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+
+
+
+	return m;
+}
+
 Matrix4 MMath::rotate(float degrees_, float x_, float y_, float z_){
 	float cosang, sinang, cosm;
 	Vec3 rotAxis(x_,y_,z_);

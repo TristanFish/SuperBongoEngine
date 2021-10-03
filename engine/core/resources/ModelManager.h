@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MODELMANAGER_H
+#define MODELMANAGER_H
+
 #include <unordered_map>
 #include "graphics/Model.h"
 
@@ -29,6 +31,7 @@ private:
 	/*! Enables us to access all of the variables in the "CoreEngine" */
 	friend class CoreEngine;
 };
+#endif
 
 
 

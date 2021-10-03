@@ -1,0 +1,9 @@
+<Root>
+    <Objects>
+        <BlueBox/>
+        <RedBox/>
+    </Objects>
+    <SceneSettings>
+        <SceneName: :="Scene_2"/>
+    </SceneSettings>
+</Root>

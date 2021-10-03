@@ -5,7 +5,7 @@
 
 class Window;
 class GameInterface;
-
+class Scene;
 class CoreEngine
 {
 
@@ -37,7 +37,9 @@ public:
 
 	void SetGameInterface(GameInterface* gameInterface_);
 
-	int GetCurrentScene() const;
+	int GetCurrentSceneNum() const;
+	Scene* GetCurrentScene() const;
+
 	void ReloadCurrentScene();
 	void OnDestroy();
 

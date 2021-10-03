@@ -15,6 +15,7 @@ void TextureManager::LoadAllTextures()
 		textures[folder.path().filename().string()] = Texture(relative(folder.path()).string());
 		EngineLogger::Info(folder.path().filename().string(), "TextureManager.cpp", __LINE__);
 	}
+
 }
 
 Texture& TextureManager::GetTexture(const std::string& name)
@@ -22,6 +23,7 @@ Texture& TextureManager::GetTexture(const std::string& name)
 	if (textures.find(name) == textures.end())
 	{
 		EngineLogger::Error("No texture found with the name: " + name, "ModelManager.cpp", __LINE__);
+
 		assert(false && "Closing program");
 	}
 

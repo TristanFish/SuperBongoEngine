@@ -1,26 +1,34 @@
 
 #include "Scene1.h"
-#include "gameObjects/Player.h"
 #include "core/MouseRay.h"
 #include "core/Logger.h"
+#include "core/resources/SaveManager.h"
+#include "core/Globals.h"
+
 #include "gameObjects/LightObject.h"
 #include "gameObjects/Bird.h"
-#include "Primitives/PlaneObject.h"
+#include "gameObjects/Player.h"
 #include "gameObjects/Grass.h"
-#include "core/resources/SaveManager.h"
+
+#include "Primitives/PlaneObject.h"
+
+
+
 
 bool Scene1::OnCreate()
 {
 	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 
-	LoadUtility::GetInstance()->LoadExistingSaves();
-	LoadMapData();
 
 
-	PerformanceMonitor::InitMonitor();
+	Globals::InitGlobals();
+	CustomUI::PerformanceMonitor::InitMonitor();
+	
 
 
 	objectList->Init();
+
+
 
 	return true;
 }
@@ -31,7 +39,7 @@ void Scene1::Update(const float deltaTime)
 	Camera::getInstance()->Update(deltaTime);
 }
 
-void Scene1::Render() const
+void Scene1::Render() 
 {
 	Scene::Render();
 }

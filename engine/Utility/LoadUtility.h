@@ -13,11 +13,14 @@ private:
 	static std::unique_ptr<LoadUtility> utilityInstance;
 	friend std::default_delete<LoadUtility>;
 
-	void LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile& file);
+	std::string prevLoadedObjName;
 
+
+
+	void LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile& file);
 	void AddObjectToMap(const char* classType) const;
 
-	void LoadSave(const std::string saveName, const std::string savePath,FileType extention);
+	void LoadSave(const std::string saveName, const std::string savePath, FileType extention);
 
 	void QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttribute* atrib);
 
@@ -32,10 +35,19 @@ public:
 
 	void LoadExistingSaves();
 
+	void LoadSceneSaves();
+	void UnLoadSceneSaves();
+
+
+	void LoadObject(SaveFile& file);
+
+	void LoadDefaultScenes(class GameInterface* G_Interface);
+
+	
+
 	int LoadInt(std::string saveName, std::string elmName, std::string atribName);
 	
 	float LoadFloat(std::string saveName, std::string elmName, std::string atribName);
-
 
 	std::string LoadString(std::string saveName, std::string elmName, std::string atribName);
 

@@ -2,6 +2,8 @@
 #include "components/GameObject.h"
 #include "core/Globals.h"
 #include "core/resources/SaveManager.h"
+
+#include "math/Vector.h"
 std::unique_ptr<SaveUtility> SaveUtility::utilityInstance = std::unique_ptr<SaveUtility>();
 
 
@@ -153,11 +155,16 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	{
 		if (iter->second.HasElement(elmName))
 		{
-			iter->second.FindElement(elmName) = element;
+			if (iter->second.FindElement(elmName) != element)
+			{
+				iter->second.FindElement(elmName) = element;
+				iter->second.HasBeenEdited = true;
+			}
 		}
 		else
 		{
 			iter->second.AddElement(elmName, element);
+			iter->second.HasBeenEdited = true;
 		}
 
 		SaveManager::TransferToSaveQueue(saveName);
@@ -168,11 +175,19 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	{
 		if (iterQueue->second.HasElement(elmName))
 		{
-			iterQueue->second.FindElement(elmName) = element;
+
+			if (iterQueue->second.FindElement(elmName) != element)
+			{
+				iterQueue->second.FindElement(elmName) = element;
+				iterQueue->second.HasBeenEdited = true;
+			}
+			
 		}
 		else
 		{
 			iterQueue->second.AddElement(elmName, element);
+			iterQueue->second.HasBeenEdited = true;
+
 		}
 	}
 	else {
@@ -209,13 +224,13 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	}
 	else if (iterQueue != SaveManager::SaveQueue.end())
 	{
-		if (iter->second.HasElement(elmName))
+		if (iterQueue->second.HasElement(elmName))
 		{
-			iter->second.FindElement(elmName) = elmInfo;
+			iterQueue->second.FindElement(elmName) = elmInfo;
 		}
 		else
 		{
-			iter->second.AddElement(elmName, elmInfo);
+			iterQueue->second.AddElement(elmName, elmInfo);
 		}
 	}
 	else {
@@ -228,18 +243,84 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 
 
 
+void SaveUtility::RemoveElement(const std::string saveName, const std::string elmName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
+
+	if (iter != SaveManager::SaveFiles.end())
+	{
+		if (iter->second.HasElement(elmName))
+		{
+			iter->second.RemoveElement(elmName);
+		}
+
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		if (iterQueue->second.HasElement(elmName))
+		{
+			iterQueue->second.RemoveElement(elmName);
+		}
+	}
+
+}
+
+void SaveUtility::RemoveAllElements(const std::string saveName)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
+
+	if (iter != SaveManager::SaveFiles.end())
+	{
+
+		
+		iter->second.ClearElements();
+
+	}
+	else if (iterQueue != SaveManager::SaveQueue.end())
+	{
+		iterQueue->second.ClearElements();
+	}
+}
+
+ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentName)
+{
+
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 3; i++)
+	{
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
+	}
+
+	return element;
+}
+
+ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, std::string parentName)
+{
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 4; i++)
+	{
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
+	}
+
+	return element;
+}
+
 void SaveUtility::CompileSaves()
 {
 
 	EngineLogger::Save("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__);
 	for (auto& save : SaveManager::SaveQueue)
 	{
+		if(!save.second.HasBeenEdited)
+			continue;
+
 		for (auto& elmName : save.second.insertionOrder)
 		{
 			ElementInfo &elm = save.second.Elements[elmName];
 			if (elm.IsRootChild())
 			{
-				//save.second.rootNode = save.second.Doc.NewElement("Root");
 				elm.element = save.second.Doc.NewElement(elmName.c_str());
 				save.second.rootNode->InsertFirstChild(elm.element);
 
@@ -277,7 +358,12 @@ void SaveUtility::CompileSaves()
 
 void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 {
+
+	
+
 	CreateSave(saveName, FileType::OBJECT);
+
+	
 
 	ElementInfo Name = ElementInfo("Root");
 	Name.Attributes.emplace("Is", std::string(obj->name));
@@ -289,21 +375,10 @@ void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 	AddElement(saveName, "Transform", Transform);
 
 
-	ElementInfo Position = ElementInfo("Transform");
-	ElementInfo Rotation = ElementInfo("Transform");
-	ElementInfo Scale = ElementInfo("Transform");
 
-
-	for (int i = 0; i < 3; i++)
-	{
-		Position.Attributes.emplace(Globals::IntToVec3(i), obj->transform.pos[i]);
-		Rotation.Attributes.emplace(Globals::IntToVec3(i), obj->transform.rotation[i]);
-		Scale.Attributes.emplace(Globals::IntToVec3(i), obj->transform.scale[i]);
-
-	}
-	AddElement(saveName, "Position", Position);
-	AddElement(saveName, "Rotation", Rotation);
-	AddElement(saveName, "Scale", Scale);
+	AddElement(saveName, "Position", CreateVec3(obj->transform.pos,"Transform"));
+	AddElement(saveName, "Rotation", CreateVec3(MATH::Quaternion::QuatToEuler(obj->transform.rotation), "Transform"));
+	AddElement(saveName, "Scale", CreateVec3(obj->transform.scale, "Transform"));
 
 
 	ElementInfo ObjectInfo = ElementInfo("Name");
@@ -313,4 +388,14 @@ void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
 	ElementInfo ObjectType = ElementInfo("ObjectInfo");
 	ObjectType.Attributes.emplace("ID", std::string(obj->GetType()));
 	AddElement(saveName, "Type", ObjectType);
+
+	ElementInfo Components = ElementInfo("Name");
+	AddElement(saveName, "Components", Components);
+
+	for (auto comp : obj->GetComponents())
+	{
+		comp->OnSaveComponent(saveName,"Components");
+	}
+
+
 }

@@ -1,12 +1,13 @@
 <Root>
     <Name Is="Player">
         <Transform>
-            <Position X="4.619976" Y="93.400444" Z="-57.420036"/>
+            <Position X="-1332.6871" Y="1394.1686" Z="171.61951"/>
             <Rotation X="0" Y="-90" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
         <ObjectInfo>
             <Type ID="class Player"/>
         </ObjectInfo>
+        <Components/>
     </Name>
 </Root>

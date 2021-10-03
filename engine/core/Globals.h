@@ -2,15 +2,29 @@
 
 #include <iostream>
 #include <filesystem>
+#include <memory>
 
 
+class SceneGraph;
 struct Globals
 {
-	static const int SCREEN_WIDTH = 1200;
-	static const int SCREEN_HEIGHT = 800;
+	static std::shared_ptr<SceneGraph> s_SceneGraph;
+
+
+	static const int SCREEN_WIDTH = 1780;
+	static const int SCREEN_HEIGHT = 1000;
+	
+	static std::string SCENE_NAME;
+
 	static std::string ENGINE_PATH;
+	static std::string SAVE_DATA_PATH;
 
 
-	static std::string IntToVec3(const int i);
+
+	static std::string IntToVector(const int i);
+
+
+
+	static void InitGlobals();
 	
 };

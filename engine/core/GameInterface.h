@@ -2,13 +2,15 @@
 #define GAMEINTERFACE_H
 
 #include <sdl/SDL.h>
-
+#include <vector>
+class Scene;
 class GameInterface
 {
 public:
 	
-	class Scene* currentScene;
+	 Scene* currentScene;
 
+	std::vector<Scene*> Scenes;
 	
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;

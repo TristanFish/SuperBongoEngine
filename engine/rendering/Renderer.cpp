@@ -8,82 +8,24 @@
 #include "math/Plane.h"
 #include "core/resources/ShaderManager.h"
 
+
+std::unique_ptr<Renderer> Renderer::rendererInstance = std::unique_ptr<Renderer>();
+
+
 using namespace MATH;
+
 
 void Renderer::Init()
 {
+
 	skyBox = new SkyBox();
 
 	//Set up renderer shaders
 	gBufferShader = ShaderManager::GetShaders("gBufferShaderVert.glsl", "gBufferShaderFrag.glsl");
 	resultShader = ShaderManager::GetShaders("gBufferResolveVert.glsl", "gBufferResolveFrag.glsl");
-	
-	//Create GBuffer
-	glGenFramebuffers(1, &gBuffer);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
 
-	//Attach depthRenderBuffer
-	glGenRenderbuffers(1, &depthRenderBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
-
-	//Colour texture
-	glGenTextures(1, &albedoTexture);
-	glBindTexture(GL_TEXTURE_2D, albedoTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, albedoTexture, 0);
-
-	//Normal texture
-	glGenTextures(1, &normTexture);
-	glBindTexture(GL_TEXTURE_2D, normTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, normTexture, 0);
-
-	//Positions texture
-	glGenTextures(1, &posTexture);
-	glBindTexture(GL_TEXTURE_2D, posTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, posTexture, 0);
-
-	//Dpeth texture (not used for depth calculations, just used for a visualization)
-	glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16F, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, depthTexture, 0);
-
-	//Stencil texture not functional yet, going to be used to mark whether lighting/shadows are applied to objects
-	glBindTexture(GL_TEXTURE_2D, stencilTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, stencilTexture, 0);
-
-
-	const GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4};
-	glDrawBuffers(5, buffers);
-	
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
-	}
-
-	//Set frame buffer back to default
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
+	SetupTextures();
+	SetupFrameBuffers();
 
 	vao = 0;
 	
@@ -110,6 +52,38 @@ void Renderer::Init()
 
 	glBindVertexArray(0);
 
+	
+	
+}
+
+void Renderer::SetupFrameBuffers()
+{
+	gBuffer.InitFrameBuffer();
+	//Attach depthRenderBuffer
+	glGenRenderbuffers(1, &depthRenderBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+	gBuffer.AttachTexture(albedoTexture);
+	gBuffer.AttachTexture(normTexture);
+	gBuffer.AttachTexture(posTexture);
+	gBuffer.AttachTexture(depthTexture);
+	gBuffer.AttachTexture(stencilTexture);
+	gBuffer.FinalizeBuffer();
+
+	gBufferRenderResult.InitFrameBuffer();
+	gBufferRenderResult.AttachTexture(gBufferTexture);
+	gBufferRenderResult.FinalizeBuffer();
+}
+
+void Renderer::SetupTextures()
+{
+	albedoTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
+	normTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
+	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
+	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
+	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
+	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
@@ -117,19 +91,44 @@ void Renderer::AddMeshRenderer(MeshRenderer* mr)
 	meshRenderers.emplace_back(mr);
 }
 
+void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
+{
+	for (std::vector<MeshRenderer*>::iterator iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
+	{
+		if (*iter == mr)
+		{
+			meshRenderers.erase(iter);
+			break;
+		}
+	}
+}
+
 void Renderer::AddLight(LightComponent* light)
 {
 	lights.emplace_back(light);
 }
 
-void Renderer::Render() const
+void Renderer::DeleteLight(LightComponent* light)
+{
+	for (std::vector<LightComponent*>::iterator iter = lights.begin(); iter != lights.end(); iter++)
+	{
+		if (*iter == light)
+		{
+			lights.erase(iter);
+			delete light;
+			light = nullptr;
+			break;
+		}
+	}
+}
+
+void Renderer::Render() 
 {
 	//Skybox here
 	skyBox->Render();
 	
 	
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
 	{
@@ -141,7 +140,7 @@ void Renderer::Render() const
 		}
 
 		//Check meshrenderers for specific flags and do certain functions based on those flags
-		if (meshRenderers[i]->renderFlags & RenderProperties::OVERRIDE_RENDERER)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_OVERRIDE_RENDERER)
 		{
 			meshRenderers[i]->Render();
 			continue;
@@ -160,27 +159,27 @@ void Renderer::Render() const
 
 		const Uint16 stencilMarker = meshRenderers[i]->renderFlags;
 
-		if (meshRenderers[i]->renderFlags & RenderProperties::LIGHTING)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_LIGHTING)
 		{
 			
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::CREATES_SHADOWS)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_CREATES_SHADOWS)
 		{
 			RenderShadowTexture(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::RECIEVES_SHADOWS)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_RECIEVES_SHADOWS)
 		{
 			RenderShade(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::BLOOM)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_BLOOM)
 		{
 			RenderBloom(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::PHYSICS_MOVEMENT)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_PHYSICS_MOVEMENT)
 		{
 			RenderPhysics(*meshRenderers[i]);
 		}
-		if (meshRenderers[i]->renderFlags & RenderProperties::WATER)
+		if (meshRenderers[i]->renderFlags & RenderProperties::RP_WATER)
 		{
 			RenderWaterEffects(*meshRenderers[i]);
 		}
@@ -196,10 +195,10 @@ void Renderer::Render() const
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glEnable(GL_DEPTH_TEST);
 
-	pos.DrawTextureToScreen(posTexture, -1.0f, -0.5f, 0.0f, -0.5f);
-	norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
-	albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
-	depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
+	//pos.DrawTextureToScreen(gBufferTexture, -1.0f, -0.5f, 0.0f, -0.5f);
+	//norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
+	//albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
+	//depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
 	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 	RenderGBufferResult();
 
@@ -212,15 +211,31 @@ void Renderer::DestroyRenderer()
 {
 	delete(skyBox);
 	skyBox = nullptr;
+
+	
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
-	glDeleteTextures(1, &depthTexture);
-	glDeleteTextures(1, &stencilTexture);
-	glDeleteTextures(1, &posTexture);
-	glDeleteTextures(1, &normTexture);
-	glDeleteTextures(1, &albedoTexture);
-	glDeleteFramebuffers(1, &gBuffer);
+
+	gBuffer.DeleteFramebuffer();
+	gBufferRenderResult.DeleteFramebuffer();
+
+	
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
+}
+
+Renderer* Renderer::GetInstance()
+{
+	if (rendererInstance == nullptr)
+	{
+		rendererInstance.reset(new Renderer);
+	}
+	return rendererInstance.get();
+}
+
+Renderer* Renderer::ResetInstance()
+{
+	rendererInstance.reset(new Renderer);
+	return rendererInstance.get();
 }
 
 SkyBox* Renderer::GetSkyBox()
@@ -228,6 +243,50 @@ SkyBox* Renderer::GetSkyBox()
 	 return skyBox; 
 }
 
+
+GLuint Renderer::GetModeTextureID() const
+{
+	switch (viewport.GetRenderMode())
+	{
+	case CustomUI::RenderMode::Lighting:
+		return gBufferTexture.texture;
+		break;
+	case CustomUI::RenderMode::Albedo:
+		return albedoTexture.texture;
+		break;
+	case CustomUI::RenderMode::Position:
+		return posTexture.texture;
+		break;
+	case CustomUI::RenderMode::Normals:
+		return normTexture.texture;
+		break;
+	case CustomUI::RenderMode::Depth:
+		return depthTexture.texture;
+		break;
+	case CustomUI::RenderMode::Stencil:
+		return stencilTexture.texture;
+		break;
+	default:
+		break;
+	}
+
+	return albedoTexture.texture;
+}
+
+void Renderer::Resize(const int size_x, const int size_y)
+{
+
+	glDeleteRenderbuffers(1, &depthRenderBuffer);
+
+	gBuffer.DeleteFramebuffer();
+	gBufferRenderResult.DeleteFramebuffer();
+
+
+	SetupFrameBuffers();
+	
+	//Set frame buffer back to default
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+}
 
 bool Renderer::IsMeshOnScreen(const MeshRenderer& mr)
 {
@@ -331,23 +390,26 @@ void Renderer::BindGBufferTextures() const
 {
 	glActiveTexture(GL_TEXTURE0);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "albedoTexture"), 0);
-	glBindTexture(GL_TEXTURE_2D, albedoTexture);
+	glBindTexture(GL_TEXTURE_2D, albedoTexture.texture);
 
 	glActiveTexture(GL_TEXTURE1);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "normTexture"), 1);
-	glBindTexture(GL_TEXTURE_2D, normTexture);
+	glBindTexture(GL_TEXTURE_2D, normTexture.texture);
 
 	glActiveTexture(GL_TEXTURE2);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "posTexture"), 2);
-	glBindTexture(GL_TEXTURE_2D, posTexture);
+	glBindTexture(GL_TEXTURE_2D, posTexture.texture);
 
 	glActiveTexture(GL_TEXTURE3);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "depthTexture"), 3);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glBindTexture(GL_TEXTURE_2D, depthTexture.texture);
 
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
-	glBindTexture(GL_TEXTURE_2D, stencilTexture);
+	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
+
+
+
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -364,14 +426,16 @@ void Renderer::UnbindGBufferTextures() const
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Renderer::RenderGBufferResult() const
+void Renderer::RenderGBufferResult() 
 {
 	resultShader.RunShader();
 
 	BindGBufferTextures();
-	//AttachLights();
+
+	AttachLights();
 	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	viewport.Render();
+	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
 	UnbindGBufferTextures();
@@ -381,35 +445,63 @@ void Renderer::RenderGBufferResult() const
 
 void Renderer::AttachLights() const
 {
-	for (size_t i = 0; i < lights.size(); i++)
+//	for (size_t i = 0; i < lights.size(); i++)
+//	{
+//		std::string lightNum = "[" + std::to_string(i) + "]";
+//		
+//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
+//		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
+//		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
+//		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
+//		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
+//		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
+//	}
+
+	std::vector<Vec3> positions;
+	std::vector<Vec3> ambs;
+	std::vector<Vec3> diffs;
+	std::vector<Vec3> specs;
+	std::vector<float> intensities;
+
+	for(size_t i = 0; i < lights.size(); i++)
 	{
-		std::string lightNum = "[" + std::to_string(i) + "]";
-		
-		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
-		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
-		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
-		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
-		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
-		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
+		positions.push_back(lights[i]->gameobject->transform.GetPosition());
+		ambs.push_back(lights[i]->ambColor);
+		diffs.push_back(lights[i]->diffColor);
+		specs.push_back(lights[i]->specColor);
+		intensities.push_back(lights[i]->intensity);
 	}
+
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
+	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
+	glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
+
+	
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderShade(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderBloom(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderPhysics(const MeshRenderer& mr) const
 {
+
 }
 
 void Renderer::RenderWaterEffects(const MeshRenderer& mr) const
 {
+
 }

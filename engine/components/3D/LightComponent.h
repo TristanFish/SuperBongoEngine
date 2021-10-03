@@ -1,4 +1,6 @@
-#pragma once
+#ifndef LIGHTCOMPONENT_H
+#define LIGHTCOMPONENT_H
+
 #include "components/ECS.h"
 #include "core/Debug.h"
 
@@ -24,8 +26,10 @@ public:
 	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
 
+
+	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 private:
 
 	Debug lightCube;
 };
-
+#endif

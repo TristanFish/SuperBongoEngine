@@ -29,11 +29,8 @@ private:
 	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
 
-	//! Renderer 
-	/*! Handles the rendering of all the gameobjects*/
-	Renderer renderer;
 	
-	std::string prevLoadedObjName;
+	
 
 public:
 	//OctSpatialPartition osp;
@@ -63,23 +60,29 @@ public:
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
+	void AddRenderingComponents();
+
 	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
 	 int GetNumObjects() const { return gameObjects.size(); }
 
+	 //! isObjectActive Getter
+	/*!Return's if there is already an object with a given name*/
+	 bool isObjectActive(std::string objName);
+
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
 	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
 
-
-	void LoadObject(SaveFile& file);
-
-
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
+
+	void LoadGameObject(GameObject* go);
+
+	void DeleteGameObject(GameObject* go);
 };
 
 #endif

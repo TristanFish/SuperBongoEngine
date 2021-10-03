@@ -9,6 +9,34 @@ std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std:
 
 
 
+std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
+{
+	std::vector<SaveFile> filesOfType;
+
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.begin();
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.begin();
+
+	while (iter != SaveFiles.end())
+	{
+		if (iter->second.GetFileType() == type)
+		{
+			filesOfType.push_back(iter->second);
+		}
+		iter++;
+	}
+
+	while (iterQueue != SaveQueue.end())
+	{
+		if (iter->second.GetFileType() == type)
+		{
+			filesOfType.push_back(iter->second);
+		}
+		iter++;
+	}
+
+	return filesOfType;
+}
+
 void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 {
 	EngineLogger::Save(name + " Has Been Added To The SaveFiles", "SaveManager.cpp", __LINE__);
@@ -17,16 +45,25 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 
 void SaveManager::RemoveSave(const std::string saveName)
 {
-	if (SaveFiles.size() > 1)
-	{
-		if (SaveFiles.erase(saveName))
-		{
-			EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
-		}
-		else {
-			EngineLogger::Save(saveName + " File Has Not Been Located", "SaveManager.cpp", __LINE__);
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
 
-		}
+	if (SaveFiles.size() < 1)
+	{
+		return;
+	}
+
+
+	if (iter != SaveFiles.end())
+	{
+		SaveFiles.erase(iter);
+		EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
+	}
+
+	if (iterQueue != SaveQueue.end())
+	{
+		SaveQueue.erase(iterQueue);
+		EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);		
 	}
 }
 
@@ -35,15 +72,48 @@ void SaveManager::RemoveSave(const std::string saveName)
 SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
 
-	while (iter != SaveFiles.end())
+	if(iter != SaveFiles.end())
 	{
+		return iter->second;
+	}
+	else if (iterQueue != SaveQueue.end())
+	{
+		return iterQueue->second;
+	}
+}
 
-		if (iter->first == saveName)
+void SaveManager::SetSaveName(const std::string old_Name, const std::string new_Name)
+{
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(old_Name);
+	std::unordered_map<std::string, SaveFile>::iterator queueIter = SaveQueue.find(old_Name);
+
+
+
+
+	if (iter != SaveFiles.end())
+	{
+		iter->second.SetFileName(new_Name);
+		auto node = SaveFiles.extract(old_Name);
+		if (!node.empty())
 		{
-			return iter->second;
+			node.key() = new_Name;
+			
+			SaveFiles.insert(std::move(node));
 		}
-		iter++;
+	}
+
+	else if (queueIter != SaveQueue.end())
+	{
+		queueIter->second.SetFileName(new_Name);
+
+		auto node = SaveQueue.extract(old_Name);
+		if (!node.empty())
+		{
+			node.key() = new_Name;
+			SaveQueue.insert(std::move(node));
+		}
 	}
 }
 
@@ -98,7 +168,7 @@ void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 	SaveQueue.emplace(name, File);
 }
 
-void SaveManager::TransferToSaveQueue(const std::string& saveName)
+bool SaveManager::TransferToSaveQueue(const std::string& saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator saveFilesIter = SaveFiles.begin();
 
@@ -111,10 +181,12 @@ void SaveManager::TransferToSaveQueue(const std::string& saveName)
 			SaveQueue.emplace(saveFilesIter->first, saveFilesIter->second);
 
 			RemoveSave(saveName);
-			break;
+			return true;
 		}
 
 		saveFilesIter++;
-	}		
+	}
+
+	return false;
 
 }

@@ -27,7 +27,7 @@ public:
 	inline void setProjectionMatrix(MATH::Matrix4 projection_) { perspecProjMatrix = projection_; }
 	inline void setViewMatrix(MATH::Matrix4 view_) { viewMatrix = view_; }
 	inline MATH::Vec3 getPosition() const { return position; }
-	inline MATH::Vec3 getRotation() const { return MATH::MMath::calcEulerAngles(rotationMatrix) * (1.0f / DEGREES_TO_RADIANS); }
+	inline MATH::Vec3 getRotation() const { return MATH::MMath::calcEulerAngles(rotationMatrix) * static_cast<float>(1.0f / DEGREES_TO_RADIANS); }
 	inline void setPosition(MATH::Vec3 pos) { position = pos; }
 	inline void setRotation(MATH::Matrix4 rot) { rotationMatrix = rot; }
 	inline float getNearPlane() const { return nearPlane; }

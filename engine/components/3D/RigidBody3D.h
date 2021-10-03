@@ -5,7 +5,6 @@
 #include "components/ECS.h"
 #include "math/Vector.h"
 #include "components/3D/Collider3D.h"
-#include "components/3D/MeshRenderer.h"
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
@@ -31,6 +30,7 @@ private:
 	float rotInertia;
 	MATH::Vec3 angularVel;
 	MATH::Vec3 angularAcc;
+
 
 	//! Float Angular Drag 
 	/*! Is the angular drag draw of our object  */
@@ -70,7 +70,6 @@ public:
 	// Inherited via Component
 	void Init(GameObject *g) override;
 	void Update(const float deltaTime) override;
-	void Render() const override;
 	void HandleEvents(const SDL_Event& event) override;
 
 	void ApplyImpulseForce(const MATH::Vec3& force);

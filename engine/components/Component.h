@@ -3,6 +3,7 @@
 
 #include "SDL_events.h"
 #include <typeinfo>
+#include <iostream>
 
 //! Component Class
 /*!Component is an interface, 
@@ -35,7 +36,11 @@ public:
 	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
+	virtual void OnSaveComponent(const std::string& saveName,std::string parentName) {};
+
 	virtual const char* GetType() { return typeid(*this).name(); }
+
+
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/
