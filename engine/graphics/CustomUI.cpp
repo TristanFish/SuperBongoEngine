@@ -20,8 +20,9 @@
 
 #include "components/3D/MeshRenderer.h"
 
+using namespace CustomUI;
 
-CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
+PropertiesPanel::PropertiesPanel() : isActive(true)
 {
 
 
@@ -30,7 +31,7 @@ CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
 	lightTypes.push_back("Spot");
 }
 
-CustomUI::PropertiesPanel::~PropertiesPanel()
+PropertiesPanel::~PropertiesPanel()
 {
 	for (auto type : lightTypes)
 	{
@@ -41,7 +42,7 @@ CustomUI::PropertiesPanel::~PropertiesPanel()
 	lightTypes.clear();
 }
 
-void CustomUI::PropertiesPanel::Render() 
+void PropertiesPanel::Render() 
 {
 	GameObject* selectedObject = UIStatics::GetSelectedObject();
 
@@ -185,12 +186,12 @@ void CustomUI::PropertiesPanel::Render()
 
 
 
-CustomUI::HierarchyPanel::HierarchyPanel() : isActive(true)
+HierarchyPanel::HierarchyPanel() : isActive(true)
 {
 
 }
 
-CustomUI::HierarchyPanel::~HierarchyPanel()
+HierarchyPanel::~HierarchyPanel()
 {
 
 	if (gameobjects.size() >= 1)
@@ -205,7 +206,7 @@ CustomUI::HierarchyPanel::~HierarchyPanel()
 
 }
 
-void CustomUI::HierarchyPanel::Construct()
+void HierarchyPanel::Construct()
 {
 	UpdateActiveObjects();
 
@@ -213,7 +214,7 @@ void CustomUI::HierarchyPanel::Construct()
 
 }
 
-void CustomUI::HierarchyPanel::Render() 
+void HierarchyPanel::Render() 
 {
 
 	ImGui::Begin("Object Hierarchy", &isActive, ImGuiWindowFlags_NoTitleBar);
@@ -239,7 +240,7 @@ void CustomUI::HierarchyPanel::Render()
 	ImGui::End();
 }
 
-void CustomUI::HierarchyPanel::Reset()
+void HierarchyPanel::Reset()
 {
 
 
@@ -254,7 +255,7 @@ void CustomUI::HierarchyPanel::Reset()
 	}
 }
 
-void CustomUI::HierarchyPanel::Update(const float deltatime)
+void HierarchyPanel::Update(const float deltatime)
 {
 
 	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
@@ -264,7 +265,7 @@ void CustomUI::HierarchyPanel::Update(const float deltatime)
 	}
 }
 
-void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index) 
+void HierarchyPanel::GenerateTree(GameObject* go, int index) 
 {
 
 	ImGuiTreeNodeFlags tree_flags = ((UIStatics::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
@@ -416,7 +417,7 @@ void CustomUI::HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 }
 
-void CustomUI::HierarchyPanel::UpdateActiveObjects()
+void HierarchyPanel::UpdateActiveObjects()
 {
 	for (auto obj : Globals::s_SceneGraph->GetGameObjects())
 	{
@@ -430,7 +431,7 @@ void CustomUI::HierarchyPanel::UpdateActiveObjects()
 	}
 }
 
-int CustomUI::HierarchyPanel::GetObjIndex(std::string objName) const
+int HierarchyPanel::GetObjIndex(std::string objName) const
 {
 	for (int i = 0; i < gameobjects.size(); i++)
 	{
@@ -447,10 +448,10 @@ int CustomUI::HierarchyPanel::GetObjIndex(std::string objName) const
 
 
 
-int CustomUI::PerformanceMonitor::FPSLimit = 60;
-float CustomUI::PerformanceMonitor::RenderLoopTime = 0.0f;
-float CustomUI::PerformanceMonitor::UpdateLoopTime = 0.0f;
-bool CustomUI::PerformanceMonitor::LimitFPS = false;
+int PerformanceMonitor::FPSLimit = 60;
+float PerformanceMonitor::RenderLoopTime = 0.0f;
+float PerformanceMonitor::UpdateLoopTime = 0.0f;
+bool PerformanceMonitor::LimitFPS = false;
 
  
 // Varibables that are used to collect CPU data
@@ -458,17 +459,17 @@ ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 int numProcessors;
 HANDLE self;
 
-CustomUI::PerformancePanel::PerformancePanel() : latestFPS(0)
+PerformancePanel::PerformancePanel() : latestFPS(0)
 {
 
 }
 
-CustomUI::PerformancePanel::~PerformancePanel()
+PerformancePanel::~PerformancePanel()
 {
 
 }
 
-void CustomUI::PerformancePanel::Update(const float deltatime)
+void PerformancePanel::Update(const float deltatime)
 {
 	fpsUpdateSpeed -= deltatime;
 
@@ -484,7 +485,7 @@ void CustomUI::PerformancePanel::Update(const float deltatime)
 	}
 }
 
-void CustomUI::PerformancePanel::Render()
+void PerformancePanel::Render()
 {
 	ImGui::Begin("Performance Monitor");
 
@@ -504,7 +505,7 @@ void CustomUI::PerformancePanel::Render()
 	ImGui::End();
 }
 
-void CustomUI::PerformanceMonitor::InitMonitor()
+void PerformanceMonitor::InitMonitor()
 {
 
 	// This code block is used to find the CPU usage
@@ -523,17 +524,17 @@ void CustomUI::PerformanceMonitor::InitMonitor()
 	memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
 }
 
-void CustomUI::PerformanceMonitor::DebugFPS()
+void PerformanceMonitor::DebugFPS()
 {
 	std::cout << "FPS: " << 1/Timer::GetDeltaTime()  << std::endl;
 }
 
-float CustomUI::PerformanceMonitor::GetFPS()
+float PerformanceMonitor::GetFPS()
 {
 	return 1 / Timer::GetDeltaTime();
 }
 
-int CustomUI::PerformanceMonitor::GetMemoryUsage()
+int PerformanceMonitor::GetMemoryUsage()
 {
 
 	PROCESS_MEMORY_COUNTERS_EX pmc;
@@ -547,7 +548,7 @@ int CustomUI::PerformanceMonitor::GetMemoryUsage()
 	return physicalMemUsed_MB;
 }
 
-double CustomUI::PerformanceMonitor::GetCPUUsage()
+double PerformanceMonitor::GetCPUUsage()
 {
 	 FILETIME ftime, fsys, fuser;
 	 ULARGE_INTEGER now, sys, user;
@@ -573,7 +574,7 @@ double CustomUI::PerformanceMonitor::GetCPUUsage()
 
 
 
-CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true), aspectSize("[Free Aspect]")
+Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true), aspectSize("[Free Aspect]")
 {
 
 	modeMap.push_back("Lighting");
@@ -592,7 +593,7 @@ CustomUI::Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewpor
 	aspectRatios.push_back("16:10");
 }
 
-CustomUI::Viewport::~Viewport()
+Viewport::~Viewport()
 {
 	for (auto mode : modeMap)
 	{
@@ -602,7 +603,7 @@ CustomUI::Viewport::~Viewport()
 	modeMap.clear();
 }
 
-void CustomUI::Viewport::Render()
+void Viewport::Render()
 {
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
@@ -727,7 +728,7 @@ void CustomUI::Viewport::Render()
 
 
 
-CustomUI::DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
+DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
 {
 
 	uiInterfaces.push_back(new ContentBrowser());
@@ -738,7 +739,7 @@ CustomUI::DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(
 
 }
 
-CustomUI::DockSpace::~DockSpace()
+DockSpace::~DockSpace()
 {
 	for (auto panel : uiInterfaces)
 	{
@@ -749,7 +750,7 @@ CustomUI::DockSpace::~DockSpace()
 	uiInterfaces.clear();
 }
 
-void CustomUI::DockSpace::Update(const float deltatime)
+void DockSpace::Update(const float deltatime)
 {
 	
 	for (auto panel : uiInterfaces)
@@ -758,12 +759,12 @@ void CustomUI::DockSpace::Update(const float deltatime)
 	}
 }
 
-void CustomUI::DockSpace::Render()
+void DockSpace::Render()
 {
 	GenerateDockSpace();
 }
 
-void CustomUI::DockSpace::Reset()
+void DockSpace::Reset()
 {
 	for (auto panel : uiInterfaces)
 	{
@@ -771,7 +772,7 @@ void CustomUI::DockSpace::Reset()
 	}
 }
 
-void CustomUI::DockSpace::ConstructUserInterface()
+void DockSpace::ConstructUserInterface()
 {
 
 	for (auto panel : uiInterfaces)
@@ -781,7 +782,7 @@ void CustomUI::DockSpace::ConstructUserInterface()
 
 }
 
-void CustomUI::DockSpace::GenerateDockSpace()
+void DockSpace::GenerateDockSpace()
 {
 	//static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
@@ -887,19 +888,19 @@ void CustomUI::DockSpace::GenerateDockSpace()
 
 
 
-CustomUI::ContentBrowser::ContentBrowser() : ItemPadding(8.0f), ItemSize(64.0f)
+ContentBrowser::ContentBrowser() : ItemPadding(8.0f), ItemSize(64.0f)
 {
 	CurrentDirectory = "resources";
 
 	GenDirectoryItems();
 }
 
-CustomUI::ContentBrowser::~ContentBrowser()
+ContentBrowser::~ContentBrowser()
 {
 
 }
 
-void CustomUI::ContentBrowser::Render()
+void ContentBrowser::Render()
 {
 
 	ImGui::Begin("Content Browser");
@@ -912,7 +913,7 @@ void CustomUI::ContentBrowser::Render()
 	ImGui::End();
 }
 
-void CustomUI::ContentBrowser::GenerateContent()
+void ContentBrowser::GenerateContent()
 {
 	float cellSize = ItemSize + ItemPadding;
 
@@ -937,7 +938,7 @@ void CustomUI::ContentBrowser::GenerateContent()
 
 }
 
-void CustomUI::ContentBrowser::GeneratePathNav()
+void ContentBrowser::GeneratePathNav()
 {
 
 
@@ -981,7 +982,7 @@ void CustomUI::ContentBrowser::GeneratePathNav()
 
 }
 
-void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
+void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 {
 	std::filesystem::path path = entry.path();
 	std::string filename = entry.path().filename().string();
@@ -1089,7 +1090,7 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 	ImGui::NextColumn();
 }
 
-void CustomUI::ContentBrowser::GenDirectoryItems()
+void ContentBrowser::GenDirectoryItems()
 {
 
 	DirectoryItems.clear();
@@ -1119,7 +1120,7 @@ void CustomUI::ContentBrowser::GenDirectoryItems()
 
 }
 
-void CustomUI::ContentBrowser::ChangeDirectory(std::string dir)
+void ContentBrowser::ChangeDirectory(std::string dir)
 {
 	std::string oldDir = CurrentDirectory.string();
 	std::string dirString = CurrentDirectory.string();

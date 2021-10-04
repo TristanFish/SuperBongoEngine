@@ -516,6 +516,8 @@
     <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -611,6 +613,8 @@
     <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

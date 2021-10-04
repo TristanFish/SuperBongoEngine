@@ -40,13 +40,10 @@ void GameObject::Init()
 	}
 }
 
-void GameObject::Update(const float deltaTime)
-{
+void GameObject::Update(const float deltaTime)	{
 	transform.Update(deltaTime);
-	for(Component* comp : componentList)
-	{
-		if(comp->active)
-		{
+	for(Component* comp : componentList)	{
+		if(comp->active)	{
 			comp->Update(deltaTime);
 		}
 	}

@@ -8,8 +8,7 @@
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
-class RigidBody3D : public Component
-{
+class RigidBody3D : public Component	{
 private:
 
 
