@@ -64,7 +64,6 @@ void SaveUtility::CreateSave(const std::string saveName, FileType type)
 		EngineLogger::Save(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__);
 	}
 
-
 }
 
 void SaveUtility::CreateSave(const std::string saveName, const std::map<std::string, ElementInfo>& elements)

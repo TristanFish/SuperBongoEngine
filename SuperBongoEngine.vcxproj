@@ -359,24 +359,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="external\dll\assimp-vc142-mtd.dll" />
-    <None Include="external\dll\fmodL.dll" />
-    <None Include="external\dll\glew32.dll" />
-    <None Include="external\dll\libFLAC-8.dll" />
-    <None Include="external\dll\libfreetype-6.dll" />
-    <None Include="external\dll\libjpeg-9.dll" />
-    <None Include="external\dll\libmikmod-2.dll" />
-    <None Include="external\dll\libmodplug-1.dll" />
-    <None Include="external\dll\libogg-0.dll" />
-    <None Include="external\dll\libpng16-16.dll" />
-    <None Include="external\dll\libtiff-5.dll" />
-    <None Include="external\dll\libvorbis-0.dll" />
-    <None Include="external\dll\libvorbisfile-3.dll" />
-    <None Include="external\dll\libwebp-4.dll" />
-    <None Include="external\dll\SDL2.dll" />
-    <None Include="external\dll\SDL2_image.dll" />
-    <None Include="external\dll\smpeg2.dll" />
-    <None Include="external\dll\zlib1.dll" />
     <None Include="external\include\assimp\color4.inl" />
     <None Include="external\include\assimp\material.inl" />
     <None Include="external\include\assimp\matrix3x3.inl" />
@@ -419,7 +401,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
-    <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
+    <RootNamespace>SuperBongoEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
