@@ -424,7 +424,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
     <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

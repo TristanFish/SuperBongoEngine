@@ -22,7 +22,6 @@ namespace Kinematic	{
 	
 	class KinematicSeek	{
 	private:
-		KinematicSteeringOutput* result;
 		GameObject* aiObject;
 		GameObject* target;
 
@@ -35,7 +34,6 @@ namespace Kinematic	{
 
 	class KinematicArrive	{
 	private:
-		KinematicSteeringOutput* result;
 		GameObject* aiObject;
 		GameObject* target;
 		float radius, timeToTarget;

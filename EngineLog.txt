@@ -23,6 +23,7 @@
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
 [SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE]: .sbo Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
@@ -46,3 +47,97 @@
 [INFO]: Player added to objectList in: ECS.cpp on line: 169
 [INFO]: Sphere added to objectList in: ECS.cpp on line: 169
 [INFO]: test added to objectList in: ECS.cpp on line: 169
+[SAVE]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Box Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Grass Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Light Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Plane-1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Player Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Sphere Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: Scene1 Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Already Exists in: SaveUtility.cpp on line: 59
+[SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 66
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: test Was Not Located When Trying To Add An Element in: SaveUtility.cpp on line: 197
+[SAVE]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
+[SAVE]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353

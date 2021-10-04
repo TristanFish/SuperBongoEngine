@@ -8,7 +8,7 @@ AIComponent::AIComponent()	{
 }
 
 void AIComponent::Init(GameObject* g) {
-	
+	gameobject = g;
 }
 
 void AIComponent::Update(const float deltaTime)	{
