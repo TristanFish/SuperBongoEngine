@@ -516,6 +516,7 @@
     <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
+    <ClInclude Include="engine\Primitives\Tetrahedron.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -611,6 +612,7 @@
     <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
+    <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

@@ -6,6 +6,7 @@
 #include "../game/gameObjects/Player.h"
 #include "../game/gameObjects/TestModel.h"
 
+
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
 #include "core/scene/DefaultScene.h"
@@ -91,6 +92,10 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 	else if (classType == std::string("class Sphere"))
 	{
 		SaveManager::SaveableObjects.emplace(classType, new Sphere("None", MATH::Vec3()));
+	}
+	else if (classType == std::string("class Tetrahedron"))
+	{
+		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
 	}
 
 	else {
@@ -252,8 +257,12 @@ void LoadUtility::LoadSceneSaves()
 	EngineLogger::Save("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__);
 
 	std::string objDir = "Objects\\";
+	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+	std::string sceneObjPath = (Globals::SAVE_DATA_PATH + objDir) + sceneName + "\\";
 
-	std::string sceneObjPath = (Globals::SAVE_DATA_PATH + objDir) + CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
+	if (!std::filesystem::exists(sceneObjPath))
+		return;
+
 
 	for (auto entry = std::filesystem::directory_iterator(sceneObjPath); entry != std::filesystem::directory_iterator(); ++entry)
 	{
@@ -369,34 +378,29 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface)
 {
 	std::vector<SaveFile> sceneFiles = SaveManager::GetSavesOfType(FileType::SCENE);
 	
-	for (int i = 0; i < G_Interface->Scenes.size(); i++)
+	for (int i = 0; i < sceneFiles.size(); i++)
 	{
-		if (G_Interface->Scenes[i]->GetSceneName() != sceneFiles[i].GetFileName())
+		for (int s = 0; s < G_Interface->Scenes.size(); s++)
 		{
-			G_Interface->Scenes[i]->SetSceneName(sceneFiles[i].GetFileName());
+			std::string classType = std::get<std::string>(sceneFiles[i].FindAttribute("BaseClass:", ":"));
+			if (typeid(*G_Interface->Scenes[s]).name() == classType)
+			{
+				G_Interface->Scenes[s]->SetSceneName(sceneFiles[i].GetFileName());
+				
+			}
 		}
+		
 	}
 
 	// Add's all scenes that use the DefaultScene Class
 	for (auto save : sceneFiles)
 	{
-		bool HasScene = false;
-		for (auto scene : G_Interface->Scenes)
-		{
-			if (scene->GetSceneName() == save.GetFileName())
-			{
-				HasScene = true;
-			}
-		}
-
-		if (!HasScene)
+		std::string classType = std::get<std::string>(save.FindAttribute("BaseClass:", ":"));
+		if (classType == "class DefaultScene")
 		{
 			G_Interface->Scenes.push_back(new DefaultScene(save.GetFileName()));
 		}
 	}
-
-	
-
 }
 
 std::string LoadUtility::LoadString(std::string saveName, std::string elmName, std::string atribName)
