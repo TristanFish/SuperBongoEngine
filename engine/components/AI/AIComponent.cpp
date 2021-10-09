@@ -13,13 +13,13 @@ void AIComponent::Init(GameObject* g) {
 
 void AIComponent::Update(const float deltaTime)	{
 	//rotate object
-	gameobject->transform.rotation += steering.rotation * deltaTime;
+	gameobject->transform.rotation += Ksteering.rotation * deltaTime;
 
 	if(gameobject->HasComponent<RigidBody3D>())	{
-		if(VMath::mag(steering.velocity) > maxSpeed)	{
-			steering.velocity = VMath::normalize(steering.velocity)* maxSpeed;
+		if(VMath::mag(Ksteering.velocity) > maxSpeed)	{
+			Ksteering.velocity = VMath::normalize(Ksteering.velocity)* maxSpeed;
 		}
-		gameobject->GetComponent<RigidBody3D>()->SetVelocity(steering.velocity);
+		gameobject->GetComponent<RigidBody3D>()->SetVelocity(Ksteering.velocity);
 	}
 	
 }

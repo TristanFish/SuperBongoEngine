@@ -4,7 +4,6 @@
 #include "Vector.h"
 
 class GameObject;
-class AIComponent;
 
 using namespace MATH;
 

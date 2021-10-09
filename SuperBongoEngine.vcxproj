@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
@@ -283,6 +284,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />

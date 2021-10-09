@@ -54,7 +54,7 @@ bool KinematicSeek::getSteering()	{
 	aiObject->SetRotation(result.velocity);
 
 	result.rotation = Vec3(0.0f);
-	objectAIComp->SetSteering(result);
+	objectAIComp->SetKinematicSteering(result);
 	
 	return true;
 }
@@ -79,7 +79,6 @@ bool KinematicArrive::getSteering()	{
 		EngineLogger::Error(aiObject->GetName() + " does not have an AIComponent. KinmaticArrive has failed",
 			"Kinematic.cpp", __LINE__);
 
-		//returns 0s when failed
 		return false;
 	}
 
@@ -105,7 +104,7 @@ bool KinematicArrive::getSteering()	{
 
 	result.rotation = Vec3(0.0f);
 	
-	objectAIComp->SetSteering(result);
+	objectAIComp->SetKinematicSteering(result);
 	
 	return true;
 }

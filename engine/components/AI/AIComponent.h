@@ -4,12 +4,14 @@
 
 #include "components/Component.h"
 #include "components/AI/Algorithms/Kinematic.h"
+#include "components/AI/Algorithms/Dynamic.h"
 
 class AIComponent :	public Component	{
 private:
 	float maxSpeed;
 	float maxAcceleration;
-	Kinematic::KinematicSteeringOutput steering;
+	Kinematic::KinematicSteeringOutput Ksteering;
+	Dynamic::DynamicSteeringOutput Dsteering;
 
 public:
 	AIComponent();
@@ -18,8 +20,9 @@ public:
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 	void HandleEvents(const SDL_Event& event) override;
 	
-	void SetSteering(Kinematic::KinematicSteeringOutput steering_) { steering = steering_; }
-	
+	void SetKinematicSteering(Kinematic::KinematicSteeringOutput steering_) { Ksteering = steering_; }
+	void SetDynamicSteering(Dynamic::DynamicSteeringOutput steering_) { Dsteering = steering_; }
+
 	float GetMaxSpeed() const { return maxSpeed; }
 	float GetMaxAcceleration() const { return maxAcceleration; }
 
