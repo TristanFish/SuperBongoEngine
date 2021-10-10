@@ -13,6 +13,8 @@ void AIComponent::Init(GameObject* g) {
 
 void AIComponent::Update(const float deltaTime)	{
 	//rotate object
+
+	//kinematic update
 	gameobject->transform.rotation += Ksteering.rotation * deltaTime;
 
 	if(gameobject->HasComponent<RigidBody3D>())	{
@@ -22,6 +24,7 @@ void AIComponent::Update(const float deltaTime)	{
 		gameobject->GetComponent<RigidBody3D>()->SetVelocity(Ksteering.velocity);
 	}
 	
+	//needs dynamic update
 }
 
 void AIComponent::OnSaveComponent(const std::string& saveName, std::string parentName)	{

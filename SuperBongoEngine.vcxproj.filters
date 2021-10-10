@@ -519,6 +519,9 @@
     <ClInclude Include="engine\components\AI\AIComponent.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -617,6 +620,8 @@
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

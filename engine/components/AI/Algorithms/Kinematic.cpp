@@ -66,7 +66,8 @@ KinematicArrive::KinematicArrive(GameObject* aiObject_, GameObject* target_, flo
 	aiObject = aiObject_;
 	target = target_;
 	radius = radius_;
-	timeToTarget = timeToTarget_;
+	if (timeToTarget_ > VERY_SMALL)	timeToTarget = timeToTarget_;
+	else timeToTarget = 0.1f;
 }
 
 KinematicArrive::~KinematicArrive()	{
