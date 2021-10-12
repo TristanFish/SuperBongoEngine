@@ -15,8 +15,31 @@ DynamicSteeringOutput::DynamicSteeringOutput(Vec3 linearAccel_, Vec3 angularAcce
 	angularAccel = angularAccel_;
 }
 
+void DynamicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)	{
+
+	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
+
+		RigidBody3D* aiBody = aiObject_->GetComponent<RigidBody3D>();
+
+		aiBody->SetAngAccel(angularAccel);
+
+		if (VMath::mag(linearAccel) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
+			linearAccel = VMath::normalize(linearAccel) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
+		}
+
+		aiBody->SetAccel(linearAccel);
+	}
+	else {
+		EngineLogger::Error(aiObject_->GetName() + " does not have either an AIComponent or a RigidBody3D. Cannot update steering",
+			"Dynamic.cpp", __LINE__);
+	}
+
+
+
+}
+
 #pragma region DynamicSeek
-DynamicSeek::DynamicSeek(GameObject* aiObject_, GameObject* target_)	{
+DynamicSeek::DynamicSeek(GameObject* aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -30,18 +53,17 @@ bool DynamicSeek::getSteering()	{
 		return false;
 	}
 
-	AIComponent* objectAIComp = aiObject->GetComponent<AIComponent>();
 	DynamicSteeringOutput result = DynamicSteeringOutput();
 
 	//gets direction
-	result.linearAccel = target->transform.GetPosition() - aiObject->transform.GetPosition();
+	result.linearAccel = target.GetPosition() - aiObject->transform.GetPosition();
 
 	result.linearAccel = VMath::normalize(result.linearAccel);
-	result.linearAccel = objectAIComp->GetMaxAcceleration() * result.linearAccel;
+	result.linearAccel = aiObject->GetComponent<AIComponent>()->GetMaxAcceleration() * result.linearAccel;
 
 	result.angularAccel = Vec3(0.0f);
 
-	objectAIComp->SetDynamicSteering(result);
+	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 
 	return true;
 }
@@ -51,7 +73,7 @@ bool DynamicSeek::getSteering()	{
 
 
 #pragma region DynamicFlee
-DynamicFlee::DynamicFlee(GameObject* aiObject_, GameObject* target_)	{
+DynamicFlee::DynamicFlee(GameObject* aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -65,24 +87,23 @@ bool DynamicFlee::getSteering()	{
 		return false;
 	}
 
-	AIComponent* objectAIComp = aiObject->GetComponent<AIComponent>();
 	DynamicSteeringOutput result = DynamicSteeringOutput();
 
 	//gets direction
-	result.linearAccel = aiObject->transform.GetPosition() - target->transform.GetPosition();
+	result.linearAccel = aiObject->transform.GetPosition() - target.GetPosition();
 
 	result.linearAccel = VMath::normalize(result.linearAccel);
-	result.linearAccel = objectAIComp->GetMaxAcceleration() * result.linearAccel;
+	result.linearAccel = aiObject->GetComponent<AIComponent>()->GetMaxAcceleration() * result.linearAccel;
 
 	result.angularAccel = Vec3(0.0f);
 
-	objectAIComp->SetDynamicSteering(result);
+	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 
 	return true;
 }
 #pragma endregion
 
-DynamicArrive::DynamicArrive(GameObject* aiObject_, GameObject* target_, float arrivalRadius_, float slowRadius_, float timeToTarget_)	{
+DynamicArrive::DynamicArrive(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	arrivalRadius = arrivalRadius_;
@@ -103,7 +124,7 @@ bool DynamicArrive::getSteering()	{
 	DynamicSteeringOutput result = DynamicSteeringOutput();
 
 	//Get direction to target
-	result.linearAccel = target->transform.GetPosition() - aiObject->transform.GetPosition();
+	result.linearAccel = target.GetPosition() - aiObject->transform.GetPosition();
 
 	//check if in radius
 	if (VMath::mag(result.linearAccel) < arrivalRadius) {
@@ -114,19 +135,17 @@ bool DynamicArrive::getSteering()	{
 		return false;
 	}
 
-	float speed;
+	Vec3 desiredVelocity;
 	//if not in slow radius
-	if (!VMath::mag(result.linearAccel) < slowRadius)	{
+	if (!(VMath::mag(result.linearAccel) < slowRadius))	{
 		//use max speed
-		speed = aiObject->GetComponent<AIComponent>()->GetMaxSpeed();
+		desiredVelocity = VMath::normalize(result.linearAccel) * aiObject->GetComponent<AIComponent>()->GetMaxSpeed();
 	}
 	//if it is
 	else	{
 		//uses slowed speed
-		speed = aiObject->GetComponent<AIComponent>()->GetMaxSpeed() * VMath::mag(result.linearAccel) / slowRadius;
+		desiredVelocity = result.linearAccel * aiObject->GetComponent<AIComponent>()->GetMaxSpeed() / slowRadius;
 	}
-
-	Vec3 desiredVelocity = VMath::normalize(result.linearAccel) * aiObject->GetComponent<AIComponent>()->GetMaxSpeed();
 
 	//determine linearAcceleration we will be using
 	result.linearAccel = desiredVelocity - aiObject->GetComponent<RigidBody3D>()->GetVelocity();
@@ -139,12 +158,12 @@ bool DynamicArrive::getSteering()	{
 	result.angularAccel = Vec3(0.0f);
 
 	//pass result to aiObject's AI
-	aiObject->GetComponent<AIComponent>()->SetDynamicSteering(result);
+	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 
 	return true;
 }
 
-DynamicAlign::DynamicAlign(GameObject* aiObject_, GameObject* target_, float arrivalRadius_, float slowRadius_, float timeToTarget_)	{
+DynamicAlign::DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	arrivalRadius = arrivalRadius_;
@@ -161,13 +180,7 @@ bool DynamicAlign::getSteering()	{
 
 		return false;
 	}
-	//checks if the target has the required components
-	if (!target->HasComponent<RigidBody3D>()) {
-		EngineLogger::Error(aiObject->GetName() + " does not have either an AIComponent or a RigidBody3D. DynamicSeek has failed",
-			"Dynamic.cpp", __LINE__);
 
-		return false;
-	}
 
 	//DynamicSteeringOutput result = DynamicSteeringOutput();
 
@@ -197,7 +210,7 @@ bool DynamicAlign::getSteering()	{
 
 
 
-DynamicObstacleAvoidance::DynamicObstacleAvoidance(GameObject* aiObject_, GameObject* target_, float avoidDistance_, float lookAhead_) : DynamicSeek(aiObject_, target_) {
+DynamicObstacleAvoidance::DynamicObstacleAvoidance(GameObject* aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_) : DynamicSeek(aiObject_, target_) {
 	avoidDistance = avoidDistance_;
 	lookAhead = lookAhead_;
 }

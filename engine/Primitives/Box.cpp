@@ -27,5 +27,5 @@ Box::~Box()
 
 void Box::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	//std::cout << this->name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	//std::cout << this->name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }

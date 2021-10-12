@@ -190,7 +190,7 @@ GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
 			{
 				if(ray.intersectionDist < shortestDistance)
 				{
-					hitResult = obj->gameobject;
+					hitResult = obj->gameObject;
 					shortestDistance = ray.intersectionDist;
 				}
 			}

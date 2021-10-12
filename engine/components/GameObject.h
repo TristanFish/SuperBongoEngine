@@ -11,7 +11,7 @@
 class RigidBody3D;
 
 //! GameObject Class
-/*!Things should be inheriting from gameobject, gameobjects are placed into a manager
+/*!Things should be inheriting from gameObject, gameobjects are placed into a manager
 Update, render and handleEvents need to be defined per class that inherits from it.
 Check Player.h to see how to create gameobjects*/
 class GameObject
@@ -21,7 +21,7 @@ class GameObject
 protected:
 	friend class SceneGraph;
 	//! Active boolean
-	/*! Controls if the gameobject is active or not*/
+	/*! Controls if the gameObject is active or not*/
 	bool active = true;
 
 	GameObject* parent;
@@ -33,11 +33,11 @@ protected:
 
 public:
 
-	/*! Hold's the name of this gameobject*/
+	/*! Hold's the name of this gameObject*/
 	std::string name;
 
 	//!IsMenuActive boolean
-	/*! Controls if the gameobject's properties panel is active*/
+	/*! Controls if the gameObject's properties panel is active*/
 	bool isObjectSelected = false;
 
 
@@ -78,32 +78,32 @@ public:
 	inline const char* GetType() const { return typeid(*this).name(); }
 
 	//!isActive Getter
-	/*!Returns if the gameobject is active or not*/
+	/*!Returns if the gameObject is active or not*/
 	bool isActive()const { return active; }
 
 	//!isActive Setter
-	/*!Sets the gameobject as active or not*/
+	/*!Sets the gameObject as active or not*/
 	void SetActive(const bool a) { active = a; }
 
 	std::string GetName() const { return std::string(name); }
 
 	//!GetModelMatrix Getter
-	/*!Returns the gameobject model matrix*/
+	/*!Returns the gameObject model matrix*/
 	const MATH::Matrix4& GetModelMatrix() const { return transform.GetModelMatrix(); }
 
 	//!SetPos Setter
-	/*!Sets the position of this a gameobject*/
+	/*!Sets the position of this a gameObject*/
 	void SetPos(const MATH::Vec3& pos_) {  transform.SetPos(pos_); }
 
 	//!SetScale Setter
-	/*!Sets the scale of this a gameobject*/
+	/*!Sets the scale of this a gameObject*/
 	void SetScale(const MATH::Vec3& scale_) { transform.scale = scale_; }
 
 	//!SetRotation Setter
-	/*!Sets the rotation of this a gameobject*/
+	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
 
-	/*!Sets the Name of this a gameobject*/
+	/*!Sets the Name of this a gameObject*/
 	void SetName(std::string name_) { name = name_; }
 
 
@@ -129,12 +129,12 @@ public:
 private:
 
 	template <typename T>
-	void CheckIfTemplateTypeInheritsFromComponent() const { static_assert(std::is_base_of<Component, T>::value, "Non Component type was used in a component based gameobject function"); }
+	void CheckIfTemplateTypeInheritsFromComponent() const { static_assert(std::is_base_of<Component, T>::value, "Non Component type was used in a component based gameObject function"); }
 
 public:
 
 	//!Template HasComponent boolean
-	/*!Checks if this gameobject has the specified component*/
+	/*!Checks if this gameObject has the specified component*/
 	template <typename T>
 	bool HasComponent()
 	{
@@ -151,7 +151,7 @@ public:
 	}
 
 	//!Template GetComponent function
-	/*!Returns a component of type "T" if this gameobject has it*/
+	/*!Returns a component of type "T" if this gameObject has it*/
 	template <typename T>
 	T* GetComponent()
 	{

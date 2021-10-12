@@ -53,11 +53,11 @@ public:
 	void HandleEvents(const SDL_Event& event);
 
 	//! FindGameObject Function
-	/*!Returns the first gameobject with a given name*/
+	/*!Returns the first gameObject with a given name*/
 	GameObject& FindGameObject(const char* name);
 
 	//! AddGameObject Function
-	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
+	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
 	void AddRenderingComponents();

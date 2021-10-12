@@ -10,7 +10,7 @@
 //
 
 /*! Grass class
-/*! This class handles how we are going to render multiple instances of a gameobject given only one model*/
+/*! This class handles how we are going to render multiple instances of a gameObject given only one model*/
 class Instancer
 {
 	

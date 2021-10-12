@@ -73,7 +73,7 @@ namespace CustomUI
 	
 
 	//! Properties panel Class
-	/*!  This class creates & Renders the Properties Panel UI for each gameobject */
+	/*!  This class creates & Renders the Properties Panel UI for each gameObject */
 	class PropertiesPanel : public UIInterface
 	{
 	public:
@@ -177,14 +177,14 @@ namespace CustomUI
 	private:
 
 		//! GenerateTree Function
-		/*! Generates the gameobject tree for rendering*/
+		/*! Generates the gameObject tree for rendering*/
 		void GenerateTree(GameObject* go, int index);
 
 
 		void UpdateActiveObjects();
 
 		//! GetObjIndex Function
-		/*! Returns the index of the gameobject with a given name from the gameobjects vector*/
+		/*! Returns the index of the gameObject with a given name from the gameobjects vector*/
 		int GetObjIndex(std::string objName) const;
 
 	};

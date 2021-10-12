@@ -7,19 +7,31 @@ using namespace Kinematic;
 
 
 //Kinematic Steering Output
-KinematicSteeringOutput::KinematicSteeringOutput()	{
-	velocity = Vec3(0.0f);
-	rotation = Vec3(0.0f);
+KinematicSteeringOutput::KinematicSteeringOutput() : SteeringOutput() {
+	velocity = iVelocity;
+	rotation = iRotation;
 }
 
-KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_) {
-	velocity = velocity_;
-	rotation = rotation_;
+KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_) : SteeringOutput(velocity_, rotation_) {
+	velocity = iVelocity;
+	rotation = iRotation;
+}
+
+void KinematicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)	{
+
+	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
+		aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation); // if this causes issues old code was:  transform.rotation += rotation * deltaTime;
+		if (VMath::mag(velocity) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
+			velocity = VMath::normalize(velocity) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
+		}
+		aiObject_->GetComponent<RigidBody3D>()->SetVelocity(velocity);
+	}
+
 }
 
 //Kinematic Seek
 #pragma region KinematicSeek
-KinematicSeek::KinematicSeek(GameObject* aiObject_, GameObject* target_)	{
+KinematicSeek::KinematicSeek(GameObject* aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -36,25 +48,23 @@ bool KinematicSeek::getSteering()	{
 
 		return false;
 	}
-	
-	AIComponent* objectAIComp = aiObject->GetComponent<AIComponent>();
 
 	//change this to stack
 	KinematicSteeringOutput result = KinematicSteeringOutput();
 	
 	
 	//Gets direction to the target
-	result.velocity = target->transform.GetPosition() - aiObject->transform.GetPosition();
+	result.velocity = target.GetPosition() - aiObject->transform.GetPosition();
 	
 	//sets velocity at max possible speed
 	result.velocity = VMath::normalize(result.velocity);
-	result.velocity = objectAIComp->GetMaxSpeed() * result.velocity;
+	result.velocity = aiObject->GetComponent<AIComponent>()->GetMaxSpeed() * result.velocity;
 
 	//sets the rotation to be in the direction of the velocity - WIP this needs to be tested
 	aiObject->SetRotation(result.velocity);
 
 	result.rotation = Vec3(0.0f);
-	objectAIComp->SetKinematicSteering(result);
+	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 	
 	return true;
 }
@@ -62,7 +72,7 @@ bool KinematicSeek::getSteering()	{
 
 //Kinematic Arrive
 #pragma region KinematicArrive
-KinematicArrive::KinematicArrive(GameObject* aiObject_, GameObject* target_, float radius_, float timeToTarget_)	{
+KinematicArrive::KinematicArrive(GameObject* aiObject_, const Transform& target_, const float radius_, const float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	radius = radius_;
@@ -82,13 +92,11 @@ bool KinematicArrive::getSteering()	{
 
 		return false;
 	}
-
-	AIComponent* objectAIComp = aiObject->GetComponent<AIComponent>();
 	
 	KinematicSteeringOutput result = KinematicSteeringOutput();
 
 	//Get direction to target
-	result.velocity = target->transform.GetPosition() - aiObject->transform.GetPosition();
+	result.velocity = target.GetPosition() - aiObject->transform.GetPosition();
 	//check if in radius
 	if (VMath::mag(result.velocity) < radius)	{
 		//does not steer as it is in radius
@@ -105,7 +113,7 @@ bool KinematicArrive::getSteering()	{
 
 	result.rotation = Vec3(0.0f);
 	
-	objectAIComp->SetKinematicSteering(result);
+	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 	
 	return true;
 }

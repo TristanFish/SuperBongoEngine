@@ -2,6 +2,8 @@
 #define KINEMATIC_H
 
 #include "Vector.h"
+#include "components/Transform.h"
+#include "SteeringOutput.h"
 
 class GameObject;
 
@@ -10,22 +12,23 @@ using namespace MATH;
 //Holds all kinematic AI algorithms
 namespace Kinematic	{
 
-	class KinematicSteeringOutput	{
+	class KinematicSteeringOutput : public SteeringOutput	{
 	public:
 		Vec3 velocity, rotation;
 		
 		KinematicSteeringOutput();
 		KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_);
+		virtual void Update(const float deltaTime, GameObject* aiObject_) override;
 		
 	};
 	
 	class KinematicSeek	{
 	private:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 
 	public:
-		KinematicSeek(GameObject* aiObject_, GameObject* target_);
+		KinematicSeek(GameObject* aiObject_, const Transform& target_);
 		~KinematicSeek();
 		bool getSteering();
 		
@@ -34,11 +37,11 @@ namespace Kinematic	{
 	class KinematicArrive	{
 	private:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 		float radius, timeToTarget;
 
 	public:
-		KinematicArrive(GameObject* aiObject_, GameObject* target_, float radius_, float timeToTarget_);
+		KinematicArrive(GameObject* aiObject_, const Transform& target_, const float radius_, const float timeToTarget_);
 		~KinematicArrive();
 		bool getSteering();
 	};

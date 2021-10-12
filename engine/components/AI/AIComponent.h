@@ -6,22 +6,31 @@
 #include "components/AI/Algorithms/Kinematic.h"
 #include "components/AI/Algorithms/Dynamic.h"
 
+enum class AIType {
+	KinematicSteering, 
+	DynamicSteering
+};
+
 class AIComponent :	public Component	{
 private:
 	float maxSpeed;
 	float maxAcceleration;
-	Kinematic::KinematicSteeringOutput Ksteering;
-	Dynamic::DynamicSteeringOutput Dsteering;
+	Kinematic::KinematicSteeringOutput* kSteering;
+	Dynamic::DynamicSteeringOutput* dSteering;
+
+	//AIComponent is of type KinematicSteering by default
+	AIType aiType;
 
 public:
 	AIComponent();
-	void Init(GameObject* g) override; //fix this
+	~AIComponent();
+	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override;
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 	void HandleEvents(const SDL_Event& event) override;
 	
-	void SetKinematicSteering(Kinematic::KinematicSteeringOutput steering_) { Ksteering = steering_; }
-	void SetDynamicSteering(Dynamic::DynamicSteeringOutput steering_) { Dsteering = steering_; }
+	void SetAIType(AIType aiType_);
+	void SetSteering(SteeringOutput* steering_);
 
 	float GetMaxSpeed() const { return maxSpeed; }
 	float GetMaxAcceleration() const { return maxAcceleration; }

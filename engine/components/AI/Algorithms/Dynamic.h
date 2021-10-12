@@ -2,40 +2,40 @@
 #define DYNAMIC_H
 
 #include "Vector.h"
+#include "components/Transform.h"
+#include "SteeringOutput.h"
 
 class GameObject;
-
-
 using namespace MATH;
 
 namespace Dynamic {
 
-	class DynamicSteeringOutput	{
+	class DynamicSteeringOutput : public SteeringOutput	{
 	public:
-		Vec3 linearAccel;
-		Vec3 angularAccel;
+		Vec3 linearAccel, angularAccel;
 
 		DynamicSteeringOutput();
 		DynamicSteeringOutput(Vec3 linearAccel_, Vec3 angularAccel_);
+		virtual void Update(const float deltaTime, GameObject* aiObject_) override;
 
-		//DynamicSteeringOutput + DynamicSteeringOutput operator
-		inline const DynamicSteeringOutput operator + (const DynamicSteeringOutput& v) const {
-			return DynamicSteeringOutput(linearAccel + v.linearAccel, angularAccel + v.angularAccel);
-		}
-		//DynamicSteeringOutput += DynamicSteeringOutput operator
-		inline DynamicSteeringOutput& operator += (const DynamicSteeringOutput& v) {
-			linearAccel += v.linearAccel;
-			angularAccel += v.angularAccel;
-			return *this;
-		}
+		////DynamicSteeringOutput + DynamicSteeringOutput operator
+		//inline const DynamicSteeringOutput operator + (const DynamicSteeringOutput& v) const {
+		//	return DynamicSteeringOutput(linearAccel + v.linearAccel, angularAccel + v.angularAccel);
+		//}
+		////DynamicSteeringOutput += DynamicSteeringOutput operator
+		//inline DynamicSteeringOutput& operator += (const DynamicSteeringOutput& v) {
+		//	linearAccel += v.linearAccel;
+		//	angularAccel += v.angularAccel;
+		//	return *this;
+		//}
 	};
 
 	class DynamicSeek	{
 	protected:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 	public:
-		DynamicSeek(GameObject* aiObject_, GameObject* target_);
+		DynamicSeek(GameObject* aiObject_, const Transform& target_);
 		
 		//DynamicSeeking 
 		bool getSteering();
@@ -44,9 +44,9 @@ namespace Dynamic {
 	class DynamicFlee	{
 	private:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 	public:
-		DynamicFlee(GameObject* aiObject_, GameObject* target_);
+		DynamicFlee(GameObject* aiObject_, const Transform& target_);
 
 		//DynamicFleeing 
 		bool getSteering();
@@ -55,10 +55,10 @@ namespace Dynamic {
 	class DynamicArrive {
 	private:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 		float arrivalRadius, slowRadius, timeToTarget;
 	public:
-		DynamicArrive(GameObject* aiObject_, GameObject* target_, float arrivalRadius_, float slowRadius_, float timeToTarget_);
+		DynamicArrive(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicArriving
 		bool getSteering();
@@ -68,10 +68,10 @@ namespace Dynamic {
 	class DynamicAlign {
 	protected:
 		GameObject* aiObject;
-		GameObject* target;
+		Transform target;
 		float arrivalRadius, slowRadius, timeToTarget;
 	public:
-		DynamicAlign(GameObject* aiObject_, GameObject* target_, float arrivalRadius_, float slowRadius_, float timeToTarget_);
+		DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicAlign
 		bool getSteering();
@@ -85,7 +85,7 @@ namespace Dynamic {
 		float avoidDistance, lookAhead;
 
 	public:
-		DynamicObstacleAvoidance(GameObject* aiObject_, GameObject* target_, float avoidDistance_, float lookAhead_);
+		DynamicObstacleAvoidance(GameObject* aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_);
 
 		bool getSteering();
 

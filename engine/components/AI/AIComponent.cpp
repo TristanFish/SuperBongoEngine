@@ -5,26 +5,43 @@
 AIComponent::AIComponent()	{
 	maxSpeed = 1.0f;
 	maxAcceleration = 1.0f;
+	kSteering = nullptr;
+	dSteering = nullptr;
+	aiType = AIType::KinematicSteering;
+}
+
+AIComponent::~AIComponent()	{
+	if (kSteering) {
+		delete kSteering;
+		kSteering = nullptr;
+	}
+	if (dSteering) {
+		delete dSteering;
+		dSteering = nullptr;
+	}
 }
 
 void AIComponent::Init(GameObject* g) {
-	gameobject = g;
+	gameObject = g;
 }
 
 void AIComponent::Update(const float deltaTime)	{
-	//rotate object
+	switch (aiType)	{
+	case AIType::KinematicSteering:
+		kSteering->Update(deltaTime, gameObject);
+		break;
 
-	//kinematic update
-	gameobject->transform.rotation += Ksteering.rotation * deltaTime;
+	case AIType::DynamicSteering:
+		dSteering->Update(deltaTime, gameObject);
+		break;
 
-	if(gameobject->HasComponent<RigidBody3D>())	{
-		if(VMath::mag(Ksteering.velocity) > maxSpeed)	{
-			Ksteering.velocity = VMath::normalize(Ksteering.velocity)* maxSpeed;
-		}
-		gameobject->GetComponent<RigidBody3D>()->SetVelocity(Ksteering.velocity);
+	default:
+		EngineLogger::Warning(gameObject->GetName() + " has an incorrect aiType. No steering has been updated ",
+			"AIComponent.cpp", __LINE__);
+		break;
 	}
 	
-	//needs dynamic update
+
 }
 
 void AIComponent::OnSaveComponent(const std::string& saveName, std::string parentName)	{
@@ -33,6 +50,19 @@ void AIComponent::OnSaveComponent(const std::string& saveName, std::string paren
 
 void AIComponent::HandleEvents(const SDL_Event& event)
 {
+}
+
+void AIComponent::SetAIType(AIType aiType_)	{
+	aiType = aiType_;
+}
+
+void AIComponent::SetSteering(SteeringOutput* steering_)	{
+	if (dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
+		dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_);
+	}
+	else if (dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
+		dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_);
+	}
 }
 
 
