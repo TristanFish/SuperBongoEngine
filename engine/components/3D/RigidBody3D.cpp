@@ -58,26 +58,21 @@ void RigidBody3D::Update(const float deltaTime)
 	obbSize.z = abs(collider.minVertices.z) + abs(collider.maxVertices.z);
 
 
-	// STILL NEEDS SOME WORK TO FIX SOME STRECHING PROBLEMS
 	
-	//torque = InhertiaTensor * angularAcc;
 
 	angularVel += angularAcc * deltaTime;
 	angularVel = angularVel * angularDrag;
 
+
+	// Rotation Handling 
 	Vec3 AxisRot = VMath::cross(gameobject->transform.Up(), vel);
-
-	if (VMath::mag(AxisRot) > 0.0f){
-		//angularVel += VMath::mag(angularVel) * VMath::normalize(AxisRot);
-
-	}
-
 	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameobject->transform.rotation)) * (deltaTime / 2);
 
 
 
 	gameobject->transform.rotation += newRot;
 	gameobject->transform.rotation = gameobject->transform.rotation.Normalized();
+	// Rotation Handling 
 	
 }
 

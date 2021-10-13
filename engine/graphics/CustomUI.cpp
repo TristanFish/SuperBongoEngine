@@ -63,8 +63,9 @@ void CustomUI::PropertiesPanel::Render()
 		}
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+		
+		
 		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
-
 		if (opened)
 		{
 			// Change the standard transform components 
@@ -86,12 +87,15 @@ void CustomUI::PropertiesPanel::Render()
 		
 		
 
-		if (MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>())
+		if (selectedObject->HasComponent<MeshRenderer>())
 		{
-			bool opened = ImGui::TreeNodeEx((void*)mr, tree_flags, "Renderer");
+
+			bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
 
 			if (opened)
 			{
+				MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>();
+
 				ImGui::ColorEdit4("Mesh Color", mr->meshColorTint);
 
 				
@@ -177,6 +181,29 @@ void CustomUI::PropertiesPanel::Render()
 			}
 
 		}
+
+		if (selectedObject->HasComponent<RigidBody3D>())
+		{
+			RigidBody3D* rb = selectedObject->GetComponent<RigidBody3D>();
+
+			bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
+
+			if (opened)
+			{
+
+				UIStatics::DrawVec3("Velocity", rb->GetVelocity(), 100.0f);
+				UIStatics::DrawVec3("Acceleration", rb->GetAccel(), 100.0f);
+				UIStatics::DrawVec3("Angular Vel", rb->GetAngVelocity(), 100.0f);
+				UIStatics::DrawVec3("Angular Accel", rb->GetAngAccel(), 100.0f);
+
+
+				ImGui::TreePop();
+
+
+			}
+
+		}
+
 	}
 	ImGui::End();
 

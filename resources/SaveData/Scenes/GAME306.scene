@@ -1,8 +1,9 @@
 <Root>
     <Objects>
-        <BlueBox/>
+        <Tet_1/>
+        <Tet_2/>
     </Objects>
     <SceneSettings>
-	   <BaseClass: :="class DefaultScene"/>
+        <BaseClass: :="class DefaultScene"/>
     </SceneSettings>
 </Root>
