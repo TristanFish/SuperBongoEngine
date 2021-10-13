@@ -314,6 +314,7 @@ void Physics3D::SphereBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 
 void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 {
+	/*
 	if (rb1.collider.isMoveable)
 	{
 		rb1.vel.x = 0.0f;
@@ -332,7 +333,7 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 		rb2.accel.y = 0.0f;
 		rb2.accel.z = 0.0f;
 	}
-
+	*/
 	//rb1.accel.print();
 	rb1.OnCollisionEnter(rb2);
 	rb2.OnCollisionEnter(rb1);
@@ -340,6 +341,7 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 
 void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
 {
+	/*
 	if (box.collider.isMoveable)
 	{
 		box.vel.x = 0.0f;
@@ -358,7 +360,7 @@ void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
 		plane.accel.y = 0.0f;
 		plane.accel.z = 0.0f;
 	}
-
+	*/
 	box.OnCollisionEnter(box);
 	plane.OnCollisionEnter(box);
 }

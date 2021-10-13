@@ -29,10 +29,10 @@ RigidBody3D::~RigidBody3D()
 
 void RigidBody3D::Init(GameObject *g)
 {
-	gameObject = g;
+	gameobject = g;
 	pos = &g->transform.pos;
-	collider.minVertices = gameObject->GetComponent<MeshRenderer>()->GetMinVector();
-	collider.maxVertices = gameObject->GetComponent<MeshRenderer>()->GetMaxVector();
+	collider.minVertices = gameobject->GetComponent<MeshRenderer>()->GetMinVector();
+	collider.maxVertices = gameobject->GetComponent<MeshRenderer>()->GetMaxVector();
 	SetColliderSize(g->transform.GetScale());
 	
 	mass = 1.0f;
@@ -43,8 +43,8 @@ void RigidBody3D::Init(GameObject *g)
 	angularVel = MATH::Vec3(0.0f);
 	//angularAcc = MATH::Vec3(0.0f, 0.0f, 0.0f);
 
-	//collider.maxVertices = ((MMath::calcRotationMatrix(gameObject->transform.rotation) * collider.maxVertices));
-	//collider.minVertices = ((MMath::calcRotationMatrix(gameObject->transform.rotation) * collider.minVertices));
+	//collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
+	//collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -58,26 +58,21 @@ void RigidBody3D::Update(const float deltaTime)
 	obbSize.z = abs(collider.minVertices.z) + abs(collider.maxVertices.z);
 
 
-	// STILL NEEDS SOME WORK TO FIX SOME STRECHING PROBLEMS
 	
-	//torque = InhertiaTensor * angularAcc;
 
 	angularVel += angularAcc * deltaTime;
 	angularVel = angularVel * angularDrag;
 
-	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
 
-	if (VMath::mag(AxisRot) > 0.0f){
-		//angularVel += VMath::mag(angularVel) * VMath::normalize(AxisRot);
-
-	}
-
-	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.rotation)) * (deltaTime / 2);
+	// Rotation Handling 
+	Vec3 AxisRot = VMath::cross(gameobject->transform.Up(), vel);
+	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameobject->transform.rotation)) * (deltaTime / 2);
 
 
 
-	gameObject->transform.rotation += newRot;
-	gameObject->transform.rotation = gameObject->transform.rotation.Normalized();
+	gameobject->transform.rotation += newRot;
+	gameobject->transform.rotation = gameobject->transform.rotation.Normalized();
+	// Rotation Handling 
 	
 }
 

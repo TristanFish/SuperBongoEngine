@@ -4,5 +4,5 @@
 #include "Box.h"
 #include "Sphere.h"
 #include "PlaneObject.h"
-
+#include "Tetrahedron.h"
 #endif
