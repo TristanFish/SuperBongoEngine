@@ -875,13 +875,12 @@ void DockSpace::GenerateDockSpace()
 
 			if (ImGui::BeginMenu("Scene"))
 			{
-				static std::string oldSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
-				if (ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue))
+				 std::string oldSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				 std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				if (ImGui::InputText("##SceneName", &newSceneName, ImGuiInputTextFlags_EnterReturnsTrue))
 				{
-					std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
-
 					Globals::SCENE_NAME = newSceneName;
-
+					CoreEngine::GetInstance()->GetCurrentScene()->SetSceneName(newSceneName);
 					SaveManager::SetSaveName(oldSceneName, newSceneName);
 				}
 				if (ImGui::Button("New Scene"))
