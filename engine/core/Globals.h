@@ -11,8 +11,8 @@ struct Globals
 	static std::shared_ptr<SceneGraph> s_SceneGraph;
 
 
-	static const int SCREEN_WIDTH = 1780;
-	static const int SCREEN_HEIGHT = 1000;
+	static const int SCREEN_WIDTH = 1280;
+	static const int SCREEN_HEIGHT = 720;
 	
 	static std::string SCENE_NAME;
 

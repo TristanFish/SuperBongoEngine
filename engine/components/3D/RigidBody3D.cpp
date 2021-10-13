@@ -29,10 +29,10 @@ RigidBody3D::~RigidBody3D()
 
 void RigidBody3D::Init(GameObject *g)
 {
-	gameobject = g;
+	gameObject = g;
 	pos = &g->transform.pos;
-	collider.minVertices = gameobject->GetComponent<MeshRenderer>()->GetMinVector();
-	collider.maxVertices = gameobject->GetComponent<MeshRenderer>()->GetMaxVector();
+	collider.minVertices = gameObject->GetComponent<MeshRenderer>()->GetMinVector();
+	collider.maxVertices = gameObject->GetComponent<MeshRenderer>()->GetMaxVector();
 	SetColliderSize(g->transform.GetScale());
 	
 	mass = 1.0f;
@@ -65,13 +65,13 @@ void RigidBody3D::Update(const float deltaTime)
 
 
 	// Rotation Handling 
-	Vec3 AxisRot = VMath::cross(gameobject->transform.Up(), vel);
-	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameobject->transform.rotation)) * (deltaTime / 2);
+	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
+	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.rotation)) * (deltaTime / 2);
 
 
 
-	gameobject->transform.rotation += newRot;
-	gameobject->transform.rotation = gameobject->transform.rotation.Normalized();
+	gameObject->transform.rotation += newRot;
+	gameObject->transform.rotation = gameObject->transform.rotation.Normalized();
 	// Rotation Handling 
 	
 }
