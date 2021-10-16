@@ -29,20 +29,16 @@ public:
 
 	/*! Monitors a channel to see if its currently playing audio */
 	bool MonitorChannel( FMOD::Channel& c) const;
-
 	/*! Creates a channel group for single channels to be combines into */
 	void CreateChannelGroup(const char* groupName, FMOD::ChannelGroup* channelGroup);
-
 	FMOD::Sound* RetrieveSoundObject(std::string soundName);
-	FMOD::System* system = nullptr;
-	FMOD::ChannelGroup* G1 = nullptr;
-	FMOD::Channel* C1 = nullptr;
-
-
 	~AudioManager();
 
 private:
 
+	FMOD::System* system = nullptr;
+	FMOD::ChannelGroup* G1 = nullptr;
+	FMOD::Channel* C1 = nullptr;
 	//Sound bank
 #pragma region sounds
 	FMOD::Sound* birdChirp = nullptr;

@@ -15,6 +15,7 @@ Bird::Bird(const char* name, MATH::Vec3 position): MeshRenderer("Bird.obj") {
 
 Bird::~Bird()
 {
+	birdSound = nullptr;
 }
 
 void Bird::Update(const float deltaTime)
