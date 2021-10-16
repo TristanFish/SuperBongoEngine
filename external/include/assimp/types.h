@@ -454,7 +454,7 @@ enum aiDefaultLogStream
     /** Stream the log to a file */
     aiDefaultLogStream_FILE = 0x1,
 
-    /** Stream the log to std::cout */
+    /** Stream the log to std::cou */
     aiDefaultLogStream_STDOUT = 0x2,
 
     /** Stream the log to std::cerr */

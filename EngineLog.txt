@@ -1,0 +1,48 @@
+[INFO]: Logger Created in: CoreEngine.cpp on line: 76
+[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
+[INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
+[INFO]: Fire.png in: TextureManager.cpp on line: 16
+[INFO]: FolderIcon.png in: TextureManager.cpp on line: 16
+[INFO]: Grass.jpg in: TextureManager.cpp on line: 16
+[INFO]: Hazard.png in: TextureManager.cpp on line: 16
+[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 16
+[INFO]: pufflet.bmp in: TextureManager.cpp on line: 16
+[INFO]: ReSize.png in: TextureManager.cpp on line: 16
+[INFO]: test.JPG in: TextureManager.cpp on line: 16
+[INFO]: texture_02.jpg in: TextureManager.cpp on line: 16
+[INFO]: texture_08.jpg in: TextureManager.cpp on line: 16
+[INFO]: texture_09.jpg in: TextureManager.cpp on line: 16
+[INFO]: texture_10.jpg in: TextureManager.cpp on line: 16
+[INFO]: water_dudv.png in: TextureManager.cpp on line: 16
+[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 12
+[INFO]: Cube.fbx in: ModelManager.cpp on line: 22
+[INFO]: Grass.fbx in: ModelManager.cpp on line: 22
+[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 22
+[INFO]: Plane.fbx in: ModelManager.cpp on line: 22
+[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
+[INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
+[INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
+[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 218
+[SAVE]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 245
+[INFO]: Scene 1 Created in: Scene1.cpp on line: 20
+[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 267
+[INFO]: Box added to objectList in: ECS.cpp on line: 152
+[INFO]: Grass added to objectList in: ECS.cpp on line: 152
+[INFO]: Light added to objectList in: ECS.cpp on line: 152
+[INFO]: Plane-1 added to objectList in: ECS.cpp on line: 152
+[INFO]: Player added to objectList in: ECS.cpp on line: 152
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 152
+[INFO]: test added to objectList in: ECS.cpp on line: 152

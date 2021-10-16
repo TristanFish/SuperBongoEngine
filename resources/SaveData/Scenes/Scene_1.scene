@@ -1,0 +1,14 @@
+<Root>
+    <Objects>
+        <Grass/>
+        <Light/>
+        <Box/>
+        <Sphere/>
+        <test/>
+        <Player/>
+        <Plane-1/>
+    </Objects>
+    <SceneSettings>
+        <SceneName: :="Scene_1"/>
+    </SceneSettings>
+</Root>
