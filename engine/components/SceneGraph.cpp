@@ -128,6 +128,23 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	return *go;
 }
 
+void SceneGraph::AddRenderingComponents()
+{
+	for (auto go : gameObjects)
+	{
+		if (go->HasComponent<MeshRenderer>())
+		{
+			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+			Renderer::GetInstance()->AddMeshRenderer(mr);
+			//osp.AddObject(mr);
+		}
+		if (go->HasComponent<LightComponent>())
+		{
+			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
+		}
+	}
+}
+
 void SceneGraph::LoadGameObject(GameObject* go)
 {
 	go->Init();

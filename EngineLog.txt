@@ -18,19 +18,21 @@
 [INFO]: Cube.fbx in: ModelManager.cpp on line: 22
 [INFO]: Grass.fbx in: ModelManager.cpp on line: 22
 [INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 22
+[INFO]: ManyPolys.uvw in: ModelManager.cpp on line: 22
 [INFO]: Plane.fbx in: ModelManager.cpp on line: 22
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
-[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 218
+[SAVE]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 225
 [SAVE]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Scene_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 245
+[SAVE]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 252
 [INFO]: Scene 1 Created in: Scene1.cpp on line: 20
-[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 257
 [SAVE]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
@@ -38,11 +40,27 @@
 [SAVE]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 267
-[INFO]: Box added to objectList in: ECS.cpp on line: 152
-[INFO]: Grass added to objectList in: ECS.cpp on line: 152
-[INFO]: Light added to objectList in: ECS.cpp on line: 152
-[INFO]: Plane-1 added to objectList in: ECS.cpp on line: 152
-[INFO]: Player added to objectList in: ECS.cpp on line: 152
-[INFO]: Sphere added to objectList in: ECS.cpp on line: 152
-[INFO]: test added to objectList in: ECS.cpp on line: 152
+[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 278
+[INFO]: Box added to objectList in: ECS.cpp on line: 169
+[INFO]: Grass added to objectList in: ECS.cpp on line: 169
+[INFO]: Light added to objectList in: ECS.cpp on line: 169
+[INFO]: Plane-1 added to objectList in: ECS.cpp on line: 169
+[INFO]: Player added to objectList in: ECS.cpp on line: 169
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 169
+[INFO]: test added to objectList in: ECS.cpp on line: 169
+[SAVE]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 284
+[SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 60
+[SAVE]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 290
+[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 257
+[SAVE]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 278
+[INFO]: GAME306 Created in: DefaultScene.cpp on line: 30
+[INFO]: Tet_1 added to objectList in: ECS.cpp on line: 169
+[INFO]: Tet_2 added to objectList in: ECS.cpp on line: 169

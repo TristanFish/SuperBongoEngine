@@ -18,10 +18,9 @@ private:
 
 
 	void LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile& file);
-
 	void AddObjectToMap(const char* classType) const;
 
-	void LoadSave(const std::string saveName, const std::string savePath,FileType extention);
+	void LoadSave(const std::string saveName, const std::string savePath, FileType extention);
 
 	void QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttribute* atrib);
 
@@ -37,11 +36,14 @@ public:
 	void LoadExistingSaves();
 
 	void LoadSceneSaves();
+	void UnLoadSceneSaves();
+
 
 	void LoadObject(SaveFile& file);
 
+	void LoadDefaultScenes(class GameInterface* G_Interface);
 
-
+	
 
 	int LoadInt(std::string saveName, std::string elmName, std::string atribName);
 	

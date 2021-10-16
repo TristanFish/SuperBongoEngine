@@ -63,8 +63,9 @@ void CustomUI::PropertiesPanel::Render()
 		}
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+		
+		
 		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
-
 		if (opened)
 		{
 			// Change the standard transform components 
@@ -86,12 +87,15 @@ void CustomUI::PropertiesPanel::Render()
 		
 		
 
-		if (MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>())
+		if (selectedObject->HasComponent<MeshRenderer>())
 		{
-			bool opened = ImGui::TreeNodeEx((void*)mr, tree_flags, "Renderer");
+
+			bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
 
 			if (opened)
 			{
+				MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>();
+
 				ImGui::ColorEdit4("Mesh Color", mr->meshColorTint);
 
 				
@@ -177,6 +181,29 @@ void CustomUI::PropertiesPanel::Render()
 			}
 
 		}
+
+		if (selectedObject->HasComponent<RigidBody3D>())
+		{
+			RigidBody3D* rb = selectedObject->GetComponent<RigidBody3D>();
+
+			bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
+
+			if (opened)
+			{
+
+				UIStatics::DrawVec3("Velocity", rb->GetVelocity(), 100.0f);
+				UIStatics::DrawVec3("Acceleration", rb->GetAccel(), 100.0f);
+				UIStatics::DrawVec3("Angular Vel", rb->GetAngVelocity(), 100.0f);
+				UIStatics::DrawVec3("Angular Accel", rb->GetAngAccel(), 100.0f);
+
+
+				ImGui::TreePop();
+
+
+			}
+
+		}
+
 	}
 	ImGui::End();
 
@@ -814,8 +841,14 @@ void CustomUI::DockSpace::GenerateDockSpace()
 
 			if (ImGui::BeginMenu("Scene"))
 			{
-
-				ImGui::InputText("##SceneName", &CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName(), ImGuiInputTextFlags_EnterReturnsTrue);
+				 std::string oldSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				 std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
+				if (ImGui::InputText("##SceneName", &newSceneName, ImGuiInputTextFlags_EnterReturnsTrue))
+				{
+					Globals::SCENE_NAME = newSceneName;
+					CoreEngine::GetInstance()->GetCurrentScene()->SetSceneName(newSceneName);
+					SaveManager::SetSaveName(oldSceneName, newSceneName);
+				}
 				if (ImGui::Button("New Scene"))
 				{
 					std::vector<Scene*>& scenes = CoreEngine::GetInstance()->gameInterface->Scenes;
@@ -1026,8 +1059,8 @@ void CustomUI::ContentBrowser::GenerateItem(std::filesystem::directory_entry ent
 						std::string stem = path.stem().string();
 						if (scene->GetSceneName() == stem)
 						{
+							LoadUtility::GetInstance()->UnLoadSceneSaves();
 							CoreEngine::GetInstance()->currentSceneNum = i;
-							
 						}
 					}
 				}

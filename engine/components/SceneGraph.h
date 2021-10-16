@@ -60,6 +60,7 @@ public:
 	/*!Adds a gameobject with a pointer to a new gameobject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);
 
+	void AddRenderingComponents();
 
 	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
 

@@ -19,14 +19,9 @@ bool Scene1::OnCreate()
 {
 	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
 
-	Scene_Name = "Scene_1";
+
 
 	Globals::InitGlobals();
-
-	
-	LoadUtility::GetInstance()->LoadSceneSaves();
-
-	LoadMapData();
 	CustomUI::PerformanceMonitor::InitMonitor();
 	
 

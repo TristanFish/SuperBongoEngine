@@ -1,8 +1,9 @@
 <Root>
     <Objects>
         <BlueBox/>
+        <RedBox/>
     </Objects>
     <SceneSettings>
-        <SceneName: :="Scene_2"/>
+	  <BaseClass: :="class Scene2"/>
     </SceneSettings>
 </Root>
