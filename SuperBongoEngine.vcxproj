@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\gameObjects\AiGameObject.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
     <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
@@ -287,8 +288,10 @@
     <ClInclude Include="engine\Utility\LoadUtility.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
@@ -371,6 +374,7 @@
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="game\scenes\SceneAi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

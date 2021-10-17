@@ -52,16 +52,8 @@ void RigidBody3D::Update(const float deltaTime)
 	vel += accel * deltaTime;
 	*pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
 
-	Vec3 obbSize;
-	obbSize.x = abs(collider.minVertices.x) + abs(collider.maxVertices.x);
-	obbSize.y = abs(collider.minVertices.y) + abs(collider.maxVertices.y);
-	obbSize.z = abs(collider.minVertices.z) + abs(collider.maxVertices.z);
-
-
-	
-
 	angularVel += angularAcc * deltaTime;
-	angularVel = angularVel * angularDrag;
+	angularVel *= angularDrag;
 
 
 	// Rotation Handling 

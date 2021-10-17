@@ -8,18 +8,19 @@ using namespace Kinematic;
 
 //Kinematic Steering Output
 KinematicSteeringOutput::KinematicSteeringOutput() : SteeringOutput() {
-	velocity = iVelocity;
-	rotation = iRotation;
+	velocity = Vec3(0.0f);
+	rotation = Vec3(0.0f);
 }
 
-KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_) : SteeringOutput(velocity_, rotation_) {
-	velocity = iVelocity;
-	rotation = iRotation;
+KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_) {
+	velocity = velocity_;
+	rotation = rotation_;
 }
 
-void KinematicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)	{
+void KinematicSteeringOutput::Update(float deltaTime, GameObject* aiObject_)	{
 
 	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
+		
 		aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation); // if this causes issues old code was:  transform.rotation += rotation * deltaTime;
 		if (VMath::mag(velocity) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
 			velocity = VMath::normalize(velocity) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
@@ -109,8 +110,12 @@ bool KinematicArrive::getSteering()	{
 	result.velocity = result.velocity / timeToTarget;
 
 	//rotate to target - WIP needs to be tested
-	aiObject->SetRotation(result.velocity);
+	//this is what we think we need (ish)
+	//aiObject->transform.rotationMatrix = MMath::lookAt(aiObject->transform.GetPosition(), result.velocity, Vec3(0.0f, 1.0f, 0.0f));
 
+	//this is what it is rn (wrong)
+	aiObject->SetRotation(result.velocity);
+	
 	result.rotation = Vec3(0.0f);
 	
 	aiObject->GetComponent<AIComponent>()->SetSteering(&result);

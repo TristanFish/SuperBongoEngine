@@ -15,15 +15,15 @@ class AIComponent :	public Component	{
 private:
 	float maxSpeed;
 	float maxAcceleration;
-	Kinematic::KinematicSteeringOutput* kSteering;
-	Dynamic::DynamicSteeringOutput* dSteering;
+	Kinematic::KinematicSteeringOutput kSteering;
+	Dynamic::DynamicSteeringOutput dSteering;
 
 	//AIComponent is of type KinematicSteering by default
 	AIType aiType;
 
 public:
 	AIComponent();
-	~AIComponent();
+	~AIComponent() override; //overrides the component destructor, doing "override" removes a warning.
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override;
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
@@ -31,11 +31,12 @@ public:
 	
 	void SetAIType(AIType aiType_);
 	void SetSteering(SteeringOutput* steering_);
-
+	void SetMaxSpeed(float maxSpeed_) { maxSpeed = maxSpeed_; }
+	void SetMaxAcceleration(float maxAcceleration_) { maxAcceleration = maxAcceleration_; }
+	
 	float GetMaxSpeed() const { return maxSpeed; }
 	float GetMaxAcceleration() const { return maxAcceleration; }
-
-	//NOTE: have it check for a rigid body in the game object, since those are optional
+	
 };
 
 #endif

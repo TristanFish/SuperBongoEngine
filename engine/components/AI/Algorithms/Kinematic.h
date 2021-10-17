@@ -18,7 +18,7 @@ namespace Kinematic	{
 		
 		KinematicSteeringOutput();
 		KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_);
-		virtual void Update(const float deltaTime, GameObject* aiObject_) override;
+		virtual void Update(float deltaTime, GameObject* aiObject_) override;
 		
 	};
 	

@@ -524,6 +524,8 @@
     <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
     <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="game\gameObjects\AiGameObject.h" />
+    <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -626,6 +628,8 @@
     <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
+    <ClCompile Include="game\scenes\SceneAi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">

@@ -26,7 +26,7 @@ public:
 		{
 			mr = nullptr;
 		}
-	};
+	}
 
 	//! Attach Uniforms Function
 	/*! This virtual function can be overridden to allow us to send custom variables to the shader*/

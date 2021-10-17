@@ -5,34 +5,29 @@
 AIComponent::AIComponent()	{
 	maxSpeed = 1.0f;
 	maxAcceleration = 1.0f;
-	kSteering = nullptr;
-	dSteering = nullptr;
+	kSteering = Kinematic::KinematicSteeringOutput(Vec3(0.0f), Vec3(0.0f));
+	dSteering = Dynamic::DynamicSteeringOutput(Vec3(0.0f), Vec3(0.0f));
 	aiType = AIType::KinematicSteering;
 }
 
 AIComponent::~AIComponent()	{
-	if (kSteering) {
-		delete kSteering;
-		kSteering = nullptr;
-	}
-	if (dSteering) {
-		delete dSteering;
-		dSteering = nullptr;
-	}
+
 }
 
 void AIComponent::Init(GameObject* g) {
 	gameObject = g;
+	//AIComponent();
+	
 }
 
 void AIComponent::Update(const float deltaTime)	{
 	switch (aiType)	{
 	case AIType::KinematicSteering:
-		kSteering->Update(deltaTime, gameObject);
+		kSteering.Update(deltaTime, gameObject);
 		break;
 
 	case AIType::DynamicSteering:
-		dSteering->Update(deltaTime, gameObject);
+		dSteering.Update(deltaTime, gameObject);
 		break;
 
 	default:
@@ -57,11 +52,11 @@ void AIComponent::SetAIType(AIType aiType_)	{
 }
 
 void AIComponent::SetSteering(SteeringOutput* steering_)	{
-	if (dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
-		dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_);
+	if (Kinematic::KinematicSteeringOutput * steer = dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
+		kSteering = *steer;
 	}
-	else if (dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
-		dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_);
+	else if (Dynamic::DynamicSteeringOutput * steer = dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
+		dSteering = *steer;
 	}
 }
 
