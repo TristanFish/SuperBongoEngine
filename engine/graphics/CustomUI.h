@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "math/Vector.h"
 #include "imgui/imgui.h"
+#include "core/networking/NetworkManager.h"
 
 class GameObject;
 
@@ -70,6 +71,20 @@ namespace CustomUI
 
 	};
 
+	class NetworkPanel : public UIInterface
+	{
+	public:
+		NetRole role;
+		bool roleIsSet = false;
+		bool isConnected = false;
+		
+		
+		void SetNetworkRole(NetRole role);
+		void Disconnect();
+		
+		void Render() override;
+		
+	};
 	
 
 	//! Properties panel Class
@@ -324,6 +339,25 @@ namespace CustomUI
 
 	};
 
+	class ConsoleLog : public UIInterface
+	{
+	public:
+
+		ImGuiTextBuffer text;
+		ImGuiTextFilter filter;
+		ImVector<int> lineOffsets;
+		bool scrollToBottom;
+		
+		ConsoleLog();
+		virtual ~ConsoleLog();
+
+		void AddLog(const std::string& message);
+
+		void Render() override;
+
+		void Clear() { text.clear(); lineOffsets.clear(); }
+	};
+	
 	//! DockSpace Class
 	/*! This class initializes and renders all of the needed ImGui interfaces*/
 	class DockSpace : public UIInterface {

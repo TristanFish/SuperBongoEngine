@@ -68,7 +68,7 @@ ElementInfo& SaveFile::FindElement(std::string elmName)
 	}
 	else
 	{
-		EngineLogger::Info(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
+		EngineLogger::Info(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }
 
@@ -98,12 +98,12 @@ Attribute& SaveFile::FindAttribute(std::string elmName, std::string atrbName)
 		}
 		else
 		{
-			EngineLogger::Info(atrbName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
+			EngineLogger::Warning(atrbName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__, MessageTag::TYPE_SAVE);
 		}
 	}
 	else
 	{
-		EngineLogger::Info(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__);
+		EngineLogger::Warning(elmName + " Was Not Located When Trying To Be Found", "SaveFile.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 
 }
@@ -343,6 +343,6 @@ void SaveFile::Save()
 	const tinyxml2::XMLError eResult = Doc.SaveFile((Destination + FileName + GetSaveFileType()).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
-		EngineLogger::Error("Unable to save " + FileName + " XML document", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Error("Unable to save " + FileName + " XML document", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }

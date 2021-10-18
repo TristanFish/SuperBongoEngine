@@ -133,6 +133,26 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 	return e / DEGREES_TO_RADIANS;
 }
 
+Quaternion Quaternion::LookAt(const Vec3& eye, const Vec3& at, const Vec3& up)
+{
+	Vec3 forwardVector = VMath::normalize(at - eye);
+
+	float dot = VMath::dot(Vec3::Forward(), forwardVector);
+	
+	if(abs(dot - (-1.0f)) < 0.000001f)
+	{
+		return Quaternion(up, 180.0f);
+	}
+	if(abs(dot - (1.0f)) < 0.000001f)
+	{
+		return Quaternion();
+	}
+
+	float rotAngle = acos(dot);
+	Vec3 rotAxis = VMath::cross(eye, at);
+	rotAxis = VMath::normalize(rotAxis);
+	return Quaternion(rotAxis, rotAngle);
+}
 
 
 Quaternion MATH::Quaternion::operator+=(const Vec3& v)
@@ -157,7 +177,6 @@ Quaternion Quaternion::operator*(const float f)
 
 Quaternion MATH::Quaternion::operator+=(const Quaternion& q) 
 {
-
 	quat.x += q.quat.x;
 	quat.y += q.quat.y;
 	quat.z += q.quat.z;
@@ -173,8 +192,6 @@ Quaternion MATH::Quaternion::operator+(const Quaternion& q) const
 
 Quaternion MATH::Quaternion::operator+(const float f) const
 {
-	
-
 	return Quaternion(Vec4(quat.x + f, quat.y + f, quat.z + f, quat.w + f));
 }
 

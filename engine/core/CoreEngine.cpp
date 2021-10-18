@@ -84,7 +84,8 @@ bool CoreEngine::Init()
 	}
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
-	
+
+	NetworkManager::GetInstance()->Init();
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
@@ -197,7 +198,7 @@ void CoreEngine::OnDestroy()
 	}
 
 	Camera::removeInstance();
-
+	NetworkManager::GetInstance()->Cleanup();
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();

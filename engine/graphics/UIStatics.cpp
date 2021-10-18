@@ -49,7 +49,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopStyleColor();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &value.x, 0.1))
+	if (ImGui::DragFloat("##X", &value.x, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -63,7 +63,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &value.y, 0.1))
+	if (ImGui::DragFloat("##Y", &value.y, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -75,7 +75,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopStyleColor();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Z", &value.z, 0.1))
+	if (ImGui::DragFloat("##Z", &value.z, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 
@@ -98,7 +98,7 @@ void UIStatics::DrawTextureSlot(const char* textureName, MeshRenderer* meshRende
 
 
 	ImGui::Columns(2, "TextureColumns", false);
-	ImGui::SetColumnWidth(0, size.x * 1.25);
+	ImGui::SetColumnWidth(0, size.x * 1.25f);
 
 
 

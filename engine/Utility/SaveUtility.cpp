@@ -56,12 +56,12 @@ void SaveUtility::CreateSave(const std::string saveName, FileType type)
 {
 	if (SaveManager::SaveFiles.find(saveName) != SaveManager::SaveFiles.end())
 	{
-		EngineLogger::Save(saveName + " Already Exists", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Already Exists", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 	else
 	{
 		SaveManager::AddToSaveQueue(saveName, SaveFile(saveName, type));
-		EngineLogger::Save(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Info(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 
 }
@@ -96,7 +96,7 @@ void SaveUtility::OverwriteSave(const std::string saveName, const SaveFile& save
 	}
 	else {
 
-		EngineLogger::Save(saveName + " Was Not Located When Trying To Be Overwritten", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Was Not Located When Trying To Be Overwritten", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	}
 }
@@ -126,7 +126,7 @@ void SaveUtility::OverwriteSave(const std::string saveName, const std::map<std::
 	}
 	else {
 
-		EngineLogger::Save(saveName + " Was Not Located When Trying To Be Overwritten", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Was Not Located When Trying To Be Overwritten", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	}
 }
@@ -141,7 +141,7 @@ void SaveUtility::OverwriteElement(const std::string saveName, const std::string
 	}
 	else {
 
-		EngineLogger::Save(saveName + " Was Not Located When An Element Was Trying To Be Overwritten", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Was Not Located When An Element Was Trying To Be Overwritten", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }
 
@@ -193,7 +193,7 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 
 
 
-		EngineLogger::Save(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }
 
@@ -236,7 +236,7 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 
 
 
-		EngineLogger::Save(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Warning(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }
 
@@ -309,7 +309,7 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, std::string parentN
 void SaveUtility::CompileSaves()
 {
 
-	EngineLogger::Save("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	for (auto& save : SaveManager::SaveQueue)
 	{
 		if(!save.second.HasBeenEdited)
@@ -346,10 +346,10 @@ void SaveUtility::CompileSaves()
 		}
 		save.second.Save();
 
-		EngineLogger::Save(save.first + " Compiled Successfully", "SaveUtility.cpp", __LINE__);
+		EngineLogger::Info(save.first + " Compiled Successfully", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 
-	EngineLogger::Save("===========SAVES FINISHED COMPILING===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========SAVES FINISHED COMPILING===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 
 	SaveManager::SaveAll();

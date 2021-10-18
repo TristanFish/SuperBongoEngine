@@ -39,7 +39,7 @@ std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
 
 void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 {
-	EngineLogger::Save(name + " Has Been Added To The SaveFiles", "SaveManager.cpp", __LINE__);
+	EngineLogger::Info(name + " Has Been Added To The SaveFiles", "SaveManager.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	SaveFiles.emplace(name, File);
 }
 
@@ -57,13 +57,13 @@ void SaveManager::RemoveSave(const std::string saveName)
 	if (iter != SaveFiles.end())
 	{
 		SaveFiles.erase(iter);
-		EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);
+		EngineLogger::Info(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 
 	if (iterQueue != SaveQueue.end())
 	{
 		SaveQueue.erase(iterQueue);
-		EngineLogger::Save(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__);		
+		EngineLogger::Info(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__, MessageTag::TYPE_SAVE);		
 	}
 }
 

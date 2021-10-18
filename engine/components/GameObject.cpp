@@ -6,7 +6,7 @@
 #include <functional>
 
 
-GameObject::GameObject(): name("Default")
+GameObject::GameObject(): parent(nullptr), name("Default")
 {
 }
 

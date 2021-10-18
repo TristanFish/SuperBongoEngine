@@ -103,6 +103,9 @@
     <Filter Include="external\include\assimp\port\AndroidJNI">
       <UniqueIdentifier>{2198737d-a147-470e-9d40-e62e3099c0fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine\core\networking">
+      <UniqueIdentifier>{3e49fee4-58fc-4678-a949-9ce63ebcda1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\include\sdl\begin_code.h">
@@ -885,6 +888,12 @@
     <ClInclude Include="engine\components\AudioListenerComponent.h">
       <Filter>src\engine\components</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\networking\ENetNetworkManager.h">
+      <Filter>src\engine\core\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\networking\NetworkManager.h">
+      <Filter>src\engine\core\networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1111,6 +1120,12 @@
     </ClCompile>
     <ClCompile Include="engine\components\AudioListenerComponent.cpp">
       <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp">
+      <Filter>src\engine\core\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>src\engine\core\networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
