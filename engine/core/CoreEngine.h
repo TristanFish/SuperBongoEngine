@@ -43,13 +43,14 @@ public:
 	void ReloadCurrentScene();
 	void OnDestroy();
 
+
+	void PrintTest();
 private:
 	CoreEngine();
 	~CoreEngine();
 	void Update(const float deltaTime_);
 	void Render();
 	void HandleEvents();
-
 
 
 };

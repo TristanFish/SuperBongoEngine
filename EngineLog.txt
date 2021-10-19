@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 76
+[INFO]: Logger Created in: CoreEngine.cpp on line: 79
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
 [INFO]: Fire.png in: TextureManager.cpp on line: 16
@@ -48,19 +48,3 @@
 [INFO]: Player added to objectList in: ECS.cpp on line: 169
 [INFO]: Sphere added to objectList in: ECS.cpp on line: 169
 [INFO]: test added to objectList in: ECS.cpp on line: 169
-[SAVE]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 284
-[SAVE]: Box File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Grass File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Light File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Player File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: test File Has Been Deleted in: SaveManager.cpp on line: 60
-[SAVE]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 290
-[SAVE]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 257
-[SAVE]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 278
-[INFO]: GAME306 Created in: DefaultScene.cpp on line: 30
-[INFO]: Tet_1 added to objectList in: ECS.cpp on line: 169
-[INFO]: Tet_2 added to objectList in: ECS.cpp on line: 169

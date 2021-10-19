@@ -280,6 +280,9 @@
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\Task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
@@ -358,6 +361,9 @@
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

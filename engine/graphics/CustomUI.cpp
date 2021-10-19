@@ -170,7 +170,7 @@ void CustomUI::PropertiesPanel::Render()
 
 				}
 
-				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1, 0.5, 500.0f);
+				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1f, 0.5f, 500.0f);
 				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
 				ImGui::ColorEdit3("Diffuse Color", lightComp->diffColor);
 				ImGui::ColorEdit3("Specular Color", lightComp->specColor);

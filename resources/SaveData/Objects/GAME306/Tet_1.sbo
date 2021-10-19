@@ -1,8 +1,8 @@
 <Root>
     <Name Is="Tet_1">
         <Transform>
-            <Position X="-82.900002" Y="15.7" Z="-85.300003"/>
-            <Rotation X="0" Y="-46.714962" Z="0"/>
+            <Position X="0" Y="15.7" Z="-85.300003"/>
+            <Rotation X="-7.0064975e-06" Y="34.078629" Z="-5.8471023e-06"/>
             <Scale X="25" Y="25" Z="25"/>
         </Transform>
         <ObjectInfo>

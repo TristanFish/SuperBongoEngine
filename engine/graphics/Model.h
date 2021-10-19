@@ -29,7 +29,9 @@ public:
 
 	void LoadModel();
 	void DestroyModel();
-	
+
+
+	std::vector<Vertex> GetVerticies() const { return vertices; }
 private:
 	MATH::Vec4 color;
 

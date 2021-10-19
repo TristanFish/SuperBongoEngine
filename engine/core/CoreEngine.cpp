@@ -7,13 +7,16 @@
 #include "graphics/Window.h"
 #include "Timer.h"
 #include "core/scene/Scene.h"
-#include "events/MouseEventDispatcher.h"
 #include "core/Logger.h"
 #include "core/GameInterface.h"
+#include "events/MouseEventDispatcher.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_sdl.h"
 #include <sdl/SDL.h>
 #include <Windows.h>
+
+#include "synchronization/ThreadHandler.h"
+
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
 CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)
@@ -105,9 +108,15 @@ bool CoreEngine::Init()
 	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	GetCurrentScene()->LoadMapData();
 
-	
+	std::shared_ptr<Task> testTask = std::make_shared<Task>();
 
+	testTask->SetPriority(EPriority::Medium);
 
+	testTask->SetTask(&CoreEngine::PrintTest, this);
+
+	ThreadHandler::GetInstance()->AddTask(testTask);
+
+	ThreadHandler::GetInstance()->RunThreads();
 
 	isRunning = true;
 	return true;
@@ -182,6 +191,7 @@ void CoreEngine::HandleEvents()
 	}
 }
 
+
 void CoreEngine::OnDestroy()
 {
 
@@ -206,6 +216,11 @@ void CoreEngine::OnDestroy()
 	
 
 	SDL_Quit();
+}
+
+void CoreEngine::PrintTest()
+{
+	std::cout << "Something Worked!" << std::endl;
 }
 
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)

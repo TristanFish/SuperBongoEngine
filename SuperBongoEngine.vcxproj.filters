@@ -517,6 +517,9 @@
     <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\Task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\include\imgui\imgui.cpp" />
@@ -613,6 +616,9 @@
     <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\dll\glew32.dll">
