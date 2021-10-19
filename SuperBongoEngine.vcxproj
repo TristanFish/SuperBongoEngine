@@ -21,6 +21,13 @@
   <ItemGroup>
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
+    <ClInclude Include="game\gameObjects\AiGameObject.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
@@ -281,9 +288,18 @@
     <ClInclude Include="engine\core\resources\SaveFile.h" />
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
+    <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
@@ -360,6 +376,9 @@
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
+    <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="game\scenes\SceneAi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

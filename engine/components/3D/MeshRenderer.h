@@ -50,7 +50,7 @@ struct OrientedBoundingBox
 };
 
 //!MeshRenderer Class
-/*!Allows any gameobject with this component to render a mesh*/
+/*!Allows any gameObject with this component to render a mesh*/
 class MeshRenderer : public Component
 {
 public:
@@ -97,7 +97,7 @@ public:
 private:
 
 	//!AttachUniforms function
-	/*!Enables the components to know what gameobject they are attached to
+	/*!Enables the components to know what gameObject they are attached to
 	This function is used to attach any uniforms that are specific to the object being rendered
 	create a definition for this function where you set shader uniforms if
 	you're using the OVERRIDE_RENDERER renderflag for this object*/

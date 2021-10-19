@@ -16,8 +16,8 @@ class Component
 public:
 
 	//!GameObject Pointer
-	/*!Enables the components to know what gameobject they are attached too*/
-	GameObject* gameobject;
+	/*!Enables the components to know what gameObject they are attached too*/
+	GameObject* gameObject;
 
 	bool active = true;
 	//!Virtual Init Function
@@ -44,7 +44,7 @@ public:
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/
-	virtual ~Component() { gameobject = nullptr; }
+	virtual ~Component() { gameObject = nullptr; }
 };
 
 

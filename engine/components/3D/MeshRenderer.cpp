@@ -27,13 +27,13 @@ void MeshRenderer::CreateShader(const char* vert, const char* frag)
 
 void MeshRenderer::Init(GameObject* g)
 {
-	gameobject = g;
+	gameObject = g;
 
 	if(model)
 	{
 		OBB.maxVert = model->p_max ;
 		OBB.minVert = model->p_min ;
-		OBB.transform = gameobject->transform.GetModelMatrix();
+		OBB.transform = gameObject->transform.GetModelMatrix();
 	}
 }
 
@@ -42,7 +42,7 @@ void MeshRenderer::Update(const float deltaTime)
 	if(model)
 	{
 		//assume uniform scale
-		float scale = gameobject->transform.scale.x;
+		float scale = gameObject->transform.scale.x;
 		//if(scale >= 1.0f)
 		//{
 		//	
@@ -53,20 +53,20 @@ void MeshRenderer::Update(const float deltaTime)
 		
 		OBB.maxVert = model->p_max * scale;
 		OBB.minVert = model->p_min * scale;
-		OBB.transform = gameobject->transform.GetModelMatrix();
+		OBB.transform = gameObject->transform.GetModelMatrix();
 	}
 }
 
 void MeshRenderer::Render() const
 {
-    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
 
 	if(instanceID == 0)
     {
         shader.RunShader();
 		shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 		shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
-		shader.TakeUniform("modelMatrix", gameobject->GetModelMatrix());
+		shader.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
         //shader.TakeInUniformMat3("normalMatrix", normMat);
 		AttachUniforms();
 
@@ -91,12 +91,12 @@ void MeshRenderer::Render() const
 
 void MeshRenderer::Render(const ShaderProgram& shader) const
 {
-	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameobject->GetModelMatrix()));
+	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
 	shader.TakeUniform("meshColorTint", meshColorTint);
 	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
 	shader.TakeUniform("normalMatrix", normMat);
-	shader.TakeUniform("modelMatrix", gameobject->GetModelMatrix());
+	shader.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
 
 	for (auto& m : model->meshes)
 	{

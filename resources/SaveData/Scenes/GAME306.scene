@@ -1,0 +1,9 @@
+<Root>
+    <Objects>
+        <Tet_1/>
+        <Tet_2/>
+    </Objects>
+    <SceneSettings>
+        <BaseClass: :="class DefaultScene"/>
+    </SceneSettings>
+</Root>

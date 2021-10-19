@@ -15,7 +15,7 @@ RigidBodyComponent::~RigidBodyComponent()
 
 void RigidBodyComponent::Init(GameObject *g)
 {
-	gameobject = g;
+	gameObject = g;
 	pos = &g->transform.pos;
 	setColliderSize(g->transform.GetScale());
 
@@ -39,7 +39,7 @@ void RigidBodyComponent::Update(const float deltaTime)
 	angularVel *= angularDrag;
 	zAngle += angularVel * deltaTime + 0.5f * angularAcc * deltaTime * deltaTime;
 
-	gameobject->SetRotation(MATH::Vec3(0.0f, 0.0f, zAngle));
+	gameObject->SetRotation(MATH::Vec3(0.0f, 0.0f, zAngle));
 
 }
 

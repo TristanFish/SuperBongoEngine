@@ -894,6 +894,42 @@
     <ClInclude Include="engine\core\networking\NetworkManager.h">
       <Filter>src\engine\core\networking</Filter>
     </ClInclude>
+    <ClInclude Include="game\scenes\Scene1.h">
+      <Filter>src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="game\scenes\Scene2.h" />
+    <ClInclude Include="engine\components\Instancer.h" />
+    <ClInclude Include="engine\core\MouseRay.h" />
+    <ClInclude Include="engine\core\events\InputManager.h" />
+    <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
+    <ClInclude Include="engine\core\events\MouseEventListener.h" />
+    <ClInclude Include="engine\rendering\Renderer.h" />
+    <ClInclude Include="engine\core\resources\TextureManager.h" />
+    <ClInclude Include="engine\core\resources\ShaderManager.h" />
+    <ClInclude Include="engine\core\resources\ModelManager.h" />
+    <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
+    <ClInclude Include="engine\components\GameObject.h" />
+    <ClInclude Include="engine\components\Component.h" />
+    <ClInclude Include="engine\components\SceneGraph.h" />
+    <ClInclude Include="engine\core\resources\SaveManager.h" />
+    <ClInclude Include="engine\core\resources\SaveFile.h" />
+    <ClInclude Include="engine\Utility\SaveUtility.h" />
+    <ClInclude Include="engine\Utility\LoadUtility.h" />
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="external\include\imgui\imgui_stdlib.h" />
+    <ClInclude Include="engine\graphics\UIStatics.h" />
+    <ClInclude Include="engine\graphics\FrameBuffer.h" />
+    <ClInclude Include="engine\core\scene\DefaultScene.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
+    <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="game\gameObjects\AiGameObject.h" />
+    <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1127,6 +1163,56 @@
     <ClCompile Include="NetworkManager.cpp">
       <Filter>src\engine\core\networking</Filter>
     </ClCompile>
+    <ClCompile Include="engine\math\VMath.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\primitives\Box.cpp" />
+    <ClCompile Include="engine\primitives\PlaneObject.cpp" />
+    <ClCompile Include="engine\primitives\Sphere.cpp" />
+    <ClCompile Include="engine\rendering\Camera.cpp" />
+    <ClCompile Include="engine\rendering\SkyBox.cpp" />
+    <ClCompile Include="engine\rendering\Water.cpp" />
+    <ClCompile Include="game\gameObjects\Bird.cpp" />
+    <ClCompile Include="game\gameObjects\Grass.cpp" />
+    <ClCompile Include="game\gameObjects\LightObject.cpp" />
+    <ClCompile Include="game\gameObjects\Player.cpp" />
+    <ClCompile Include="game\gameObjects\TestModel.cpp" />
+    <ClCompile Include="engine\core\scene\Scene.cpp" />
+    <ClCompile Include="game\scenes\Scene1.cpp">
+      <Filter>src\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="game\scenes\Scene2.cpp" />
+    <ClCompile Include="engine\components\Instancer.cpp" />
+    <ClCompile Include="engine\core\MouseRay.cpp" />
+    <ClCompile Include="engine\core\events\InputManager.cpp" />
+    <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
+    <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
+    <ClCompile Include="engine\rendering\Renderer.cpp" />
+    <ClCompile Include="engine\core\resources\TextureManager.cpp" />
+    <ClCompile Include="engine\core\resources\ShaderManager.cpp" />
+    <ClCompile Include="engine\core\resources\ModelManager.cpp" />
+    <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
+    <ClCompile Include="engine\components\GameObject.cpp" />
+    <ClCompile Include="engine\components\SceneGraph.cpp" />
+    <ClCompile Include="engine\core\resources\SaveManager.cpp" />
+    <ClCompile Include="engine\core\resources\SaveFile.cpp" />
+    <ClCompile Include="engine\Utility\SaveUtility.cpp" />
+    <ClCompile Include="engine\Utility\LoadUtility.cpp" />
+    <ClCompile Include="engine\core\Globals.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\include\imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="engine\graphics\UIStatics.cpp" />
+    <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
+    <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
+    <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
+    <ClCompile Include="game\scenes\SceneAi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

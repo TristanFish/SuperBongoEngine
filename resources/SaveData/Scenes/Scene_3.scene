@@ -3,6 +3,6 @@
         <BlueBox/>
     </Objects>
     <SceneSettings>
-        <SceneName: :="Scene_3"/>
+	   <BaseClass: :="class DefaultScene"/>
     </SceneSettings>
 </Root>

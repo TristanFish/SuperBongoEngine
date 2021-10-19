@@ -60,7 +60,7 @@ void SaveManager::RemoveSave(const std::string saveName)
 		EngineLogger::Info(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 
-	if (iterQueue != SaveQueue.end())
+	else if (iterQueue != SaveQueue.end())
 	{
 		SaveQueue.erase(iterQueue);
 		EngineLogger::Info(saveName + " File Has Been Deleted", "SaveManager.cpp", __LINE__, MessageTag::TYPE_SAVE);		

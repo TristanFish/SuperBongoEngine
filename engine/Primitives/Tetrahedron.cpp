@@ -1,0 +1,33 @@
+#include "Tetrahedron.h"
+
+#include "components/Components.h"
+
+using namespace MATH;
+
+Tetrahedron::Tetrahedron()
+{
+}
+
+Tetrahedron::Tetrahedron(std::string name, MATH::Vec3 position)
+{
+	AddComponent<MeshRenderer>()->LoadModel("Tetrahedron.fbx");
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
+	AddComponent<RigidBody3D>();
+	GetComponent<RigidBody3D>()->ApplyConstantTorque(Vec3(0.0f, 20.0, 0.0));
+
+	this->name = name;
+	transform.SetPos(position);
+
+	transform.scale = Vec3(25.0f, 25.0f, 25.0f);
+
+	canBeInstantiated = true;
+}
+
+Tetrahedron::~Tetrahedron()
+{
+}
+
+void Tetrahedron::OnCollisionEnter(RigidBody3D& otherBody)
+{
+	std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
+}

@@ -87,7 +87,7 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 	}
 }
 
-//Finds THE FIRST gameobject with the given name
+//Finds THE FIRST gameObject with the given name
 GameObject& SceneGraph::FindGameObject(const char* name)
 {
 	for (auto* g : gameObjects)
@@ -109,7 +109,7 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 	return *gameObjects[0];
 }
 
-//Adds a gameobject with a name and position
+//Adds a gameObject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 
