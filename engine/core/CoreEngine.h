@@ -19,7 +19,6 @@ private:
 	friend std::default_delete<CoreEngine>;
 
 
-
 public:
 	int currentSceneNum;
 	GameInterface* gameInterface;

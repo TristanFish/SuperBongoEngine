@@ -24,7 +24,7 @@ FMOD_VECTOR AudioUtility::Vec3ToFMODVec(MATH::Vec3 vec)
 	return temp;
 }
 
-FMOD_VECTOR& AudioUtility::Vec3ToFMODVecR(MATH::Vec3& vec)
+FMOD_VECTOR AudioUtility::Vec3ToFMODVecR(MATH::Vec3& vec)
 {
 	FMOD_VECTOR temp;
 	temp.x = vec.x;

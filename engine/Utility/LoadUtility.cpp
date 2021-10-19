@@ -222,7 +222,7 @@ void LoadUtility::LoadExistingSaves()
 
 
 
-	EngineLogger::Save("===========EXISTING SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========EXISTING SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	for (auto entry = std::filesystem::recursive_directory_iterator(directory); entry != std::filesystem::recursive_directory_iterator(); ++entry)
 	{
@@ -249,12 +249,12 @@ void LoadUtility::LoadExistingSaves()
 	
 
 
-	EngineLogger::Save("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
 void LoadUtility::LoadSceneSaves()
 {
-	EngineLogger::Save("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	std::string objDir = "Objects\\";
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
@@ -275,19 +275,19 @@ void LoadUtility::LoadSceneSaves()
 		}
 	}
 
-	EngineLogger::Save("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 }
 
 void LoadUtility::UnLoadSceneSaves()
 {
-	EngineLogger::Save("===========OLD SCENE SAVES BEING UNLOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========OLD SCENE SAVES BEING UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	for (auto elm : SaveManager::GetSaveFile(Globals::SCENE_NAME).GetElements())
 	{
 		SaveManager::RemoveSave(elm.first);
 	}
 
-	EngineLogger::Save("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__);
+	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
 int LoadUtility::LoadInt(std::string saveName, std::string elmName, std::string atribName)

@@ -56,6 +56,11 @@ void Transform::SetRot(const MATH::Vec3& rot)
 	rotation = MATH::Quaternion::EulerToQuat(rot);
 }
 
+void Transform::SetRot(const Quaternion& rot)
+{
+	rotation = rot;
+}
+
 void Transform::SetScale(const MATH::Vec3& scale)
 {
 	this->scale = scale;

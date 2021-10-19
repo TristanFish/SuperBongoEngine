@@ -22,6 +22,68 @@
 
 using namespace CustomUI;
 
+void CustomUI::NetworkPanel::SetNetworkRole(NetRole role)
+{
+	this->role = role;
+	roleIsSet = true;
+	NetworkManager::GetInstance()->role = role;
+
+	NetworkManager::GetInstance()->CreateHost(7777, 4);	
+}
+
+void CustomUI::NetworkPanel::Disconnect()
+{
+	NetworkManager::GetInstance()->Disconnect();
+	isConnected = false;
+}
+
+void CustomUI::NetworkPanel::Render()
+{
+	ImGui::Begin("Networking");
+
+	if(!roleIsSet)
+	{
+		ImGui::Text("Select a network role");
+
+		if(ImGui::Button("Server"))
+		{
+			SetNetworkRole(NetRole::SERVER);
+		}
+		ImGui::SameLine();
+		if(ImGui::Button("Client"))
+		{
+			SetNetworkRole(NetRole::CLIENT);
+		}
+		
+	}
+	else if(!isConnected && role == NetRole::CLIENT)
+	{
+		if(ImGui::Button("Connect"))
+		{
+			if(NetworkManager::GetInstance()->Connect("",7777))
+			{
+				isConnected = true;
+			}
+		}
+	}
+	else
+	{
+		if(ImGui::Button("Disconnect"))
+		{
+			Disconnect();
+		}
+
+		std::string sendData;
+		if(ImGui::InputText("Send Message", &sendData, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			NetworkManager::GetInstance()->SendPacket(sendData);
+		}	
+	}
+	ImGui::End();
+}
+
+CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
+=======
 PropertiesPanel::PropertiesPanel() : isActive(true)
 {
 
@@ -171,7 +233,7 @@ void PropertiesPanel::Render()
 
 				}
 
-				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1, 0.5, 500.0f);
+				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1f, 0.5f, 500.0f);
 				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
 				ImGui::ColorEdit3("Diffuse Color", lightComp->diffColor);
 				ImGui::ColorEdit3("Specular Color", lightComp->specColor);
@@ -601,7 +663,7 @@ double PerformanceMonitor::GetCPUUsage()
 
 
 
-Viewport::Viewport() : viewportSize(0.0f), viewport_Min(0.0f), viewport_Max(0.0f),mode(RenderMode::Albedo), modeName("[Albedo]"), isMouseHovered(false), isActive(true), aspectSize("[Free Aspect]")
+CustomUI::Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Albedo]"), aspectSize("[Free Aspect]"), mode(RenderMode::Albedo), isMouseHovered(false), isActive(true)
 {
 
 	modeMap.push_back("Lighting");
@@ -695,12 +757,14 @@ void Viewport::Render()
 		ImGui::EndMenuBar();
 	}
 
-	if (viewportSize != *(MATH::Vec2*)&viewportPanelSize)
+	if (viewportSize != *reinterpret_cast<MATH::Vec2*>(&viewportPanelSize))
 	{
 		viewportSize = { viewportPanelSize.x,viewportPanelSize.y };
+		Camera* cam = Camera::getInstance();
+		cam->setAspectRatio(viewportSize.x / viewportSize.y);
+		cam->UpdatePerspectiveMatrix();
 		
 		Renderer::GetInstance()->Resize((int)viewportPanelSize.x, (int)viewportPanelSize.y);
-
 	}
 
 	GLuint ID = Renderer::GetInstance()->GetModeTextureID();
@@ -751,18 +815,93 @@ void Viewport::Render()
 }
 
 
+CustomUI::ConsoleLog::ConsoleLog()
+{
+	EngineLogger::SetCallback(std::bind(&ConsoleLog::AddLog, this, std::placeholders::_1));
+}
 
+CustomUI::ConsoleLog::~ConsoleLog()
+{
+	Clear();
+}
 
+void CustomUI::ConsoleLog::AddLog(const std::string& message)
+{
+	const void* bufferEnd = message.data() + message.size();
 
+	int oldSize = text.size();
+	text.append(message.c_str(), static_cast<const char*>(bufferEnd));
+	
+	for(int newSize = text.size(); oldSize < newSize; oldSize++)
+	{
+		if(text[oldSize] == '\n')
+		{
+			lineOffsets.push_back(oldSize);
+		}
+		scrollToBottom = true;
+	}
+}
 
-DockSpace::DockSpace() : isDockSpaceOpen(true), isDockSpaceFullScreen(true),isQueuedForSave(false), dockspaceFlags(ImGuiDockNodeFlags_None)
+void CustomUI::ConsoleLog::Render()
+{
+	ImGui::Begin("Console");
+
+	if(ImGui::Button("Clear"))
+	{
+		Clear();
+	}
+	
+	ImGui::SameLine();
+	bool copy = ImGui::Button("Copy");
+	ImGui::SameLine();
+	filter.Draw("Filter", -100.0f);
+	ImGui::Separator();
+	ImGui::BeginChild("scrolling");
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,1));
+
+	if(copy)
+	{
+		ImGui::LogToClipboard();
+	}
+
+	if(filter.IsActive())
+	{
+		const char* textStart = text.begin();
+		const char* line = textStart;
+		for(int lineNum = 0; line != NULL; lineNum++)
+		{
+			const char* lineEnd = (lineNum < lineOffsets.size()) ? textStart + lineOffsets[lineNum] : NULL;
+			if(filter.PassFilter(line, lineEnd))
+			{
+				ImGui::TextUnformatted(line, lineEnd);
+			}
+			line = lineEnd && lineEnd[1] ? lineEnd + 1 : NULL;
+		}
+	} else
+	{
+		ImGui::TextUnformatted(text.begin(), text.begin() + text.size());
+	}
+
+	if(scrollToBottom)
+	{
+		ImGui::SetScrollHereY(1.0f);
+	}
+
+	scrollToBottom = false;
+	ImGui::PopStyleVar();
+	ImGui::EndChild();
+	ImGui::End();
+}
+
+CustomUI::DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSave(false),isDockSpaceOpen(true), isDockSpaceFullScreen(true)
 {
 
 	uiInterfaces.push_back(new ContentBrowser());
 	uiInterfaces.push_back(new HierarchyPanel());
 	uiInterfaces.push_back(new PerformancePanel());
 	uiInterfaces.push_back(new PropertiesPanel());
-
+	uiInterfaces.push_back(new ConsoleLog());
+	uiInterfaces.push_back(new NetworkPanel());
 
 }
 

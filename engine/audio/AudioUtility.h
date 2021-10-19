@@ -12,6 +12,6 @@ public:
 	static float dBToVolume(float dB);
 	static float VolumeTodB(float vol);
 	static FMOD_VECTOR Vec3ToFMODVec(MATH::Vec3);
-	static FMOD_VECTOR& Vec3ToFMODVecR(MATH::Vec3& vec);
+	static FMOD_VECTOR Vec3ToFMODVecR(MATH::Vec3& vec);
 };
 #endif
