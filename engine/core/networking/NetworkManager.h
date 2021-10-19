@@ -20,7 +20,6 @@ public:
 protected:
 	std::thread networkPollingThread;
 	static std::unique_ptr<NetworkManager> networkInstance;
-	friend std::default_delete<NetworkManager>;
 	bool initialized;
 
 public:

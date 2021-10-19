@@ -8,7 +8,7 @@ NetworkManager* NetworkManager::GetInstance()
 {
 	if(networkInstance == nullptr)
 	{
-		networkInstance.reset(new ENetNetworkManager);
+		networkInstance.reset(new ENetNetworkManager());
 	}
 	return networkInstance.get();
 }

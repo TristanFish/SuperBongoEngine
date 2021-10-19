@@ -16,7 +16,7 @@
 #include <Windows.h>
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)
+CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), currentSceneNum(0), gameInterface(nullptr)
 {
 
 }
@@ -198,7 +198,6 @@ void CoreEngine::OnDestroy()
 	}
 
 	Camera::removeInstance();
-	NetworkManager::GetInstance()->Cleanup();
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();

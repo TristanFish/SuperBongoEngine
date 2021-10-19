@@ -7,6 +7,22 @@
 
 using namespace std;
 
+ENetNetworkManager::~ENetNetworkManager()
+{
+	initialized = false;
+	if(role == NetRole::SERVER)
+	{
+		networkPollingThread.join();
+	}
+	
+	if(user != nullptr)
+	{
+		enet_host_destroy(user);
+		user = nullptr;
+	}
+	enet_deinitialize();
+}
+
 void ENetNetworkManager::Init()
 {
 	if(enet_initialize() != 0)
@@ -14,7 +30,6 @@ void ENetNetworkManager::Init()
 		EngineLogger::Warning("ENet failed to initialize", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	}
 
-	atexit(enet_deinitialize);
 	EngineLogger::Info("ENet initialized successfully", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	initialized = true;
 }
@@ -22,14 +37,29 @@ void ENetNetworkManager::Init()
 void ENetNetworkManager::PollNetworkEvents()
 {
 	EngineLogger::Info("Started polling for network events", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
-	do
+	if(role == NetRole::CLIENT)
 	{
-		while(enet_host_service(user, &netEvent, 0) > 0)
+		do
 		{
-			HandleNetworkEvents();
+			while(enet_host_service(user, &netEvent, 1000) > 0)
+			{
+				HandleClientEvents();
+			}
 		}
+		while(clientConnected);
 	}
-	while(initialized);
+	else if(role == NetRole::SERVER)
+	{
+		do
+		{
+			while(enet_host_service(user, &netEvent, 1000) > 0)
+			{
+				HandleServerEvents();
+			}
+		}
+		while(initialized);
+	}
+
 }
 
 void ENetNetworkManager::HandleNetworkEvents()
@@ -56,16 +86,15 @@ void ENetNetworkManager::HandleServerEvents()
 			}
 		case ENET_EVENT_TYPE_CONNECT:
 			{
-				peerCount++;
 				connectedPeers.emplace_back(netEvent.peer);
-				EngineLogger::Info("A new client has connected, " + to_string(peerCount) + " peers connected to the server", 
+				EngineLogger::Info("A new client has connected, " + to_string(connectedPeers.size()) + " peers connected to the server", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 				break;
 			}
 		case ENET_EVENT_TYPE_DISCONNECT:
 			{
-				peerCount--;
-				EngineLogger::Info("A client has disconnected, " + to_string(peerCount) + " peers connected to the server", 
+				connectedPeers.erase(find(connectedPeers.begin(), connectedPeers.end(), netEvent.peer));
+				EngineLogger::Info("A client has disconnected, " + to_string(connectedPeers.size()) + " peers connected to the server", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 				break;
 			}
@@ -164,7 +193,6 @@ void ENetNetworkManager::CreateHost(unsigned int port, unsigned int maxConnectio
 	if(role == NetRole::SERVER)
 	{
 		networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
-		networkPollingThread.detach();
 	}
 }
 
@@ -184,12 +212,12 @@ bool ENetNetworkManager::Connect(const char* addressString, unsigned int port)
 		EngineLogger::Info("Peer available to connect to", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 
 		ENetEvent connectEvent;
-		if(enet_host_service(user, &connectEvent, 5000) > 0 && connectEvent.type == ENET_EVENT_TYPE_CONNECT)
+		if(enet_host_service(user, &connectEvent, 1000) > 0 && connectEvent.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			EngineLogger::Info("Successfully connected to peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 			connectedPeers.emplace_back(peer);
+			//Start polling for events
 			networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
-			networkPollingThread.detach();
 			return true;
 		}
 		else
@@ -232,10 +260,10 @@ void ENetNetworkManager::SendPacket(const string& data)
 	ss.read(buffer, size);
 
 	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
-	if(peerCount > 0)
+	if(!connectedPeers.empty())
 	{
 		enet_peer_send(connectedPeers[0], 0, packet);
-		EngineLogger::Info("Packet containing \"" + ss.rdbuf()->str() + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+		EngineLogger::Info("Packet containing \"" + ss.str() + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	}
 
 }
@@ -246,18 +274,31 @@ void ENetNetworkManager::SendPacketToPeer(const string& data)
 
 void ENetNetworkManager::Disconnect()
 {
-	if(role == NetRole::CLIENT)
+	if(!connectedPeers.empty())
 	{
-		enet_peer_disconnect(connectedPeers[0], 0);
-		enet_host_destroy(user);
-	}
-	else if(role == NetRole::SERVER)
-	{
-		enet_host_destroy(user);
+		if(role == NetRole::CLIENT)
+		{
+			networkPollingThread.join();
+			enet_peer_disconnect(connectedPeers[0], 0);
+
+			while(enet_host_service(user, &netEvent, 3000) > 0)
+			{
+				if(netEvent.type == ENET_EVENT_TYPE_DISCONNECT)
+				{
+					EngineLogger::Info("Disconnect successful", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+				}
+			}
+		}
+		else if(role == NetRole::SERVER)
+		{
+
+		}
+		
+		connectedPeers.clear();
 	}
 }
 
 void ENetNetworkManager::Cleanup()
 {
-	initialized = false;
+
 }

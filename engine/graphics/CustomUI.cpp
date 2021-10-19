@@ -33,6 +33,7 @@ void CustomUI::NetworkPanel::SetNetworkRole(NetRole role)
 void CustomUI::NetworkPanel::Disconnect()
 {
 	NetworkManager::GetInstance()->Disconnect();
+	isConnected = false;
 }
 
 void CustomUI::NetworkPanel::Render()
@@ -56,9 +57,12 @@ void CustomUI::NetworkPanel::Render()
 	}
 	else if(!isConnected && role == NetRole::CLIENT)
 	{
-		if(NetworkManager::GetInstance()->Connect("",7777))
+		if(ImGui::Button("Connect"))
 		{
-			isConnected = true;
+			if(NetworkManager::GetInstance()->Connect("",7777))
+			{
+				isConnected = true;
+			}
 		}
 	}
 	else

@@ -1,10 +1,52 @@
 #ifndef ENETNETWORKMANAGER_H
 #define ENETNETWORKMANAGER_H
 
+#include <mutex>
 #include <vector>
+#include <enet/enet.h>
 
 #include "NetworkManager.h"
-#include <enet/enet.h>
+
+class TempSemaphore
+{
+	std::mutex mutex;
+	std::condition_variable condition;
+	short count = 0;
+
+public:
+	TempSemaphore(short count_)
+	{
+		count = count_;
+	}
+
+	void Release()
+	{
+		std::lock_guard<decltype(mutex)> lock(mutex);
+		count++;
+		condition.notify_one();
+	}
+
+	void Acquire()
+	{
+		std::unique_lock<decltype(mutex)> lock(mutex);
+		while(!count)
+		{
+			condition.wait(lock);
+		}
+		count--;
+	}
+
+	bool TryAcquire()
+	{
+		std::lock_guard<decltype(mutex)> lock(mutex);
+		if(count)
+		{
+			count--;
+			return true;
+		}
+		return false;
+	}
+};
 
 constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
 
@@ -14,13 +56,17 @@ constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
 class ENetNetworkManager :public NetworkManager
 {
 private:
+	
 	ENetAddress address;
 	ENetHost* user;
 	ENetEvent netEvent;
 	std::vector<ENetPeer*> connectedPeers;
-	unsigned int peerCount = 0;
+	bool clientConnected = false;
 	
 public:
+
+	~ENetNetworkManager();
+	
 	void Init() override;
 	void PollNetworkEvents() override;
 	void HandleNetworkEvents() override;
