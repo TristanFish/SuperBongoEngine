@@ -12,10 +12,11 @@ Camera* Camera::instance;
 
 Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
 {
+	
 	position.z = 100.0f;
-
+	aspect = static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT);
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-	perspecProjMatrix = MMath::perspective(zoom, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), nearPlane, farPlane);
+	perspecProjMatrix = MMath::perspective(zoom, aspect, nearPlane, farPlane);
 	
 	int viewport[4];
 
@@ -90,6 +91,11 @@ Vec3 Camera::GetMouseVector(int x, int y) const
 	return v;
 }
 
+void Camera::UpdatePerspectiveMatrix()
+{
+	perspecProjMatrix = MMath::perspective(zoom, aspect, nearPlane, farPlane);
+}
+
 void Camera::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 {
 	if(buttonType == SDL_BUTTON_RIGHT)
@@ -121,7 +127,7 @@ void Camera::OnMouseScroll(int y)
 		zoom = 135.0f;
 	}
 	
-	perspecProjMatrix = MMath::perspective(zoom, (static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT)), 0.1f, 150.0f);
+	UpdatePerspectiveMatrix();
 }
 
 void Camera::OnMouseMove(MATH::Vec2 mouse)

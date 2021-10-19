@@ -9,17 +9,26 @@ using namespace std;
 
 ENetNetworkManager::~ENetNetworkManager()
 {
+	//if we are a client and still connected to a peer, disconnect ourselves
+	if(role == NetRole::CLIENT && clientConnected)
+	{
+		ENetNetworkManager::Disconnect();
+	}
+	
 	initialized = false;
+	//if we are a server stop polling for events
 	if(role == NetRole::SERVER)
 	{
 		networkPollingThread.join();
 	}
-	
+
+	//destroy our host
 	if(user != nullptr)
 	{
 		enet_host_destroy(user);
 		user = nullptr;
 	}
+	//deinitialize enet
 	enet_deinitialize();
 }
 
@@ -37,6 +46,7 @@ void ENetNetworkManager::Init()
 void ENetNetworkManager::PollNetworkEvents()
 {
 	EngineLogger::Info("Started polling for network events", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	//if we are a client continue polling for events until we're not connected to anyone
 	if(role == NetRole::CLIENT)
 	{
 		do
@@ -47,7 +57,7 @@ void ENetNetworkManager::PollNetworkEvents()
 			}
 		}
 		while(clientConnected);
-	}
+	}//if we are a server continue polling for events until we start shutting down enet
 	else if(role == NetRole::SERVER)
 	{
 		do
@@ -64,13 +74,6 @@ void ENetNetworkManager::PollNetworkEvents()
 
 void ENetNetworkManager::HandleNetworkEvents()
 {
-	if(role == NetRole::SERVER)
-	{
-		HandleServerEvents();
-	} else if(role == NetRole::CLIENT)
-	{
-		HandleClientEvents();
-	}
 }
 
 void ENetNetworkManager::HandleServerEvents()
@@ -100,6 +103,9 @@ void ENetNetworkManager::HandleServerEvents()
 			}
 		case ENET_EVENT_TYPE_RECEIVE:
 			{
+				//Receive is gonna need to be much more fleshed out
+				//Needs to track which client it's receiving from
+				//Needs to know what kind of data it's receiving
 				string parsedData = ParseData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
@@ -144,10 +150,12 @@ void ENetNetworkManager::HandleClientEvents()
 
 std::string ENetNetworkManager::ParseData(unsigned char* data) const
 {
+	//Copt data into this buffer so it can be turned from binary back into a string
 	char buffer[DEFAULT_BUFFER_LENGTH];
 	memcpy(buffer, data, netEvent.packet->dataLength);
 	stringstream ss(string(buffer, netEvent.packet->dataLength), stringstream::in | stringstream::out | stringstream::binary);
 	string deserializedData;
+	//Cereal needs these open and close brackets to properly flush the Archive
 	{
 		cereal::BinaryInputArchive iArchive(ss);
 
@@ -160,6 +168,7 @@ std::string ENetNetworkManager::ParseData(unsigned char* data) const
 stringstream ENetNetworkManager::SerializeData(const string& data)
 {
 	stringstream ss(stringstream::in | stringstream::out | stringstream::binary);
+	//Cereal needs these open and close brackets to properly flush the Archive
 	{
 		cereal::BinaryOutputArchive oarchive(ss);
 
@@ -171,6 +180,7 @@ stringstream ENetNetworkManager::SerializeData(const string& data)
 
 void ENetNetworkManager::CreateHost(unsigned int port, unsigned int maxConnections)
 {
+	
 	if(role == NetRole::SERVER)
 	{
 		address.port = port;
@@ -192,6 +202,7 @@ void ENetNetworkManager::CreateHost(unsigned int port, unsigned int maxConnectio
 	EngineLogger::Info("Host successfully created", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	if(role == NetRole::SERVER)
 	{
+		//if we're a server start polling as soon as we're created
 		networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
 	}
 }
@@ -212,11 +223,14 @@ bool ENetNetworkManager::Connect(const char* addressString, unsigned int port)
 		EngineLogger::Info("Peer available to connect to", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 
 		ENetEvent connectEvent;
+		//Check for a connect event
 		if(enet_host_service(user, &connectEvent, 1000) > 0 && connectEvent.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			EngineLogger::Info("Successfully connected to peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 			connectedPeers.emplace_back(peer);
 			//Start polling for events
+			clientConnected = true;
+			//if we're a client start polling as soon as we've connected to a server
 			networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
 			return true;
 		}
@@ -262,6 +276,7 @@ void ENetNetworkManager::SendPacket(const string& data)
 	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
 	if(!connectedPeers.empty())
 	{
+		//At the moment only sends data to the first connected peer
 		enet_peer_send(connectedPeers[0], 0, packet);
 		EngineLogger::Info("Packet containing \"" + ss.str() + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	}
@@ -278,6 +293,8 @@ void ENetNetworkManager::Disconnect()
 	{
 		if(role == NetRole::CLIENT)
 		{
+			clientConnected = false;
+			//since we're no longer connected to a server stop polling for events
 			networkPollingThread.join();
 			enet_peer_disconnect(connectedPeers[0], 0);
 

@@ -242,7 +242,7 @@ namespace CustomUI
 		void Render() override;
 
 
-		inline RenderMode GetRenderMode() const { return mode; };
+		inline RenderMode GetRenderMode() const { return mode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
@@ -339,6 +339,8 @@ namespace CustomUI
 
 	};
 
+	//! Console Log Class
+	/*!  This class shows the console output in-editor*/
 	class ConsoleLog : public UIInterface
 	{
 	public:

@@ -43,15 +43,15 @@ public:
 
 	static void OnCreate(const std::string& name_ = "EngineLog");
 	static void SetSeverity(MessageType type_);
-	static void Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE);
-	static void Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE);
-	static void Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE);
-	static void Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE);
-	static void FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE);
+	static void Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
 
 private:
 
-	static void Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag);
+	static void Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog);
 
 	static MessageType currentSev;
 	static std::string outputName;

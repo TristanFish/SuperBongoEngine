@@ -727,12 +727,14 @@ void CustomUI::Viewport::Render()
 		ImGui::EndMenuBar();
 	}
 
-	if (viewportSize != *(MATH::Vec2*)&viewportPanelSize)
+	if (viewportSize != *reinterpret_cast<MATH::Vec2*>(&viewportPanelSize))
 	{
 		viewportSize = { viewportPanelSize.x,viewportPanelSize.y };
+		Camera* cam = Camera::getInstance();
+		cam->setAspectRatio(viewportSize.x / viewportSize.y);
+		cam->UpdatePerspectiveMatrix();
 		
 		Renderer::GetInstance()->Resize((int)viewportPanelSize.x, (int)viewportPanelSize.y);
-
 	}
 
 	GLuint ID = Renderer::GetInstance()->GetModeTextureID();
@@ -795,9 +797,11 @@ CustomUI::ConsoleLog::~ConsoleLog()
 
 void CustomUI::ConsoleLog::AddLog(const std::string& message)
 {
-	int oldSize = text.size();
-	text.append(message.c_str());
+	const void* bufferEnd = message.data() + message.size();
 
+	int oldSize = text.size();
+	text.append(message.c_str(), static_cast<const char*>(bufferEnd));
+	
 	for(int newSize = text.size(); oldSize < newSize; oldSize++)
 	{
 		if(text[oldSize] == '\n')
@@ -845,7 +849,7 @@ void CustomUI::ConsoleLog::Render()
 		}
 	} else
 	{
-		ImGui::TextUnformatted(text.begin());
+		ImGui::TextUnformatted(text.begin(), text.begin() + text.size());
 	}
 
 	if(scrollToBottom)

@@ -50,40 +50,40 @@ std::string CreateTag(MessageTag tag)
 	}
 }
 
-void EngineLogger::Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
-	Log(MessageType::TYPE_INFO,  CreateTag(tag) + "[INFO]: " + message_, fileName_, line_, tag);
+	Log(MessageType::TYPE_INFO,  CreateTag(tag) + "[INFO]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
-	Log(MessageType::TYPE_TRACE, CreateTag(tag) + "[TRACE]: " + message_, fileName_, line_, tag);
+	Log(MessageType::TYPE_TRACE, CreateTag(tag) + "[TRACE]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
-	Log(MessageType::TYPE_WARNING, CreateTag(tag) + "[WARNING]: " + message_, fileName_, line_, tag);
+	Log(MessageType::TYPE_WARNING, CreateTag(tag) + "[WARNING]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
-	Log(MessageType::TYPE_ERROR, CreateTag(tag) + "[ERROR]: " + message_, fileName_, line_, tag);
+	Log(MessageType::TYPE_ERROR, CreateTag(tag) + "[ERROR]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
-	Log(MessageType::TYPE_FATAL_ERROR, CreateTag(tag) + "[FATAL_ERROR]: " + message_, fileName_, line_, tag);
+	Log(MessageType::TYPE_FATAL_ERROR, CreateTag(tag) + "[FATAL_ERROR]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag)
+void EngineLogger::Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	if (type_ <= currentSev && currentSev > MessageType::TYPE_NONE)
 	{
-		std::cout << message_ << " in: " << fileName_ << " on line: " << line_ << std::endl;
+		const std::string log = std::string(message_ + " in: " + fileName_ + " on line: " + std::to_string(line_) + "\n");
+		std::cout << log << std::endl;
 		std::ofstream out;
 		out.open(outputName.c_str(), std::ios::app | std::ios::out);
-		const std::string log = std::string(message_ + " in: " + fileName_ + " on line: " + std::to_string(line_) + "\n");
-		if(consoleCallback != nullptr)
+		if(consoleCallback != nullptr && sendToConsoleLog)
 		{
 			consoleCallback(log);
 		}

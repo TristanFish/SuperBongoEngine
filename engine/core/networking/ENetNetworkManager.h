@@ -73,7 +73,9 @@ public:
 	
 	void HandleServerEvents();
 	void HandleClientEvents();
+	//turns binary data into a string
 	std::string ParseData(unsigned char* data) const;
+	//turns string data into binary
 	std::stringstream SerializeData(const std::string& data);
 	
 	void CreateHost(unsigned int port, unsigned int maxConnections) override;
