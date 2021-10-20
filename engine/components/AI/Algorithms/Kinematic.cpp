@@ -21,7 +21,7 @@ void KinematicSteeringOutput::Update(float deltaTime, GameObject* aiObject_)	{
 
 	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
 		
-		aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation); // if this causes issues old code was:  transform.rotation += rotation * deltaTime;
+		aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation);	// if this causes issues old code was:  transform.rotation += rotation * deltaTime;
 		if (VMath::mag(velocity) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
 			velocity = VMath::normalize(velocity) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
 		}
@@ -61,8 +61,7 @@ bool KinematicSeek::getSteering()	{
 	result.velocity = VMath::normalize(result.velocity);
 	result.velocity = aiObject->GetComponent<AIComponent>()->GetMaxSpeed() * result.velocity;
 
-	//sets the rotation to be in the direction of the velocity - WIP this needs to be tested
-	aiObject->SetRotation(result.velocity);
+	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
 
 	result.rotation = Vec3(0.0f);
 	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
@@ -103,18 +102,15 @@ bool KinematicArrive::getSteering()	{
 		//does not steer as it is in radius
 		result.velocity = Vec3(0.0f);
 		result.rotation = Vec3(0.0f);
+
+		aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 		
 		return false;
 	}
 	//move to target in timeToTarget
 	result.velocity = result.velocity / timeToTarget;
 
-	//rotate to target - WIP needs to be tested
-	//this is what we think we need (ish)
-	//aiObject->transform.rotationMatrix = MMath::lookAt(aiObject->transform.GetPosition(), result.velocity, Vec3(0.0f, 1.0f, 0.0f));
-
-	//this is what it is rn (wrong)
-	aiObject->SetRotation(result.velocity);
+	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
 	
 	result.rotation = Vec3(0.0f);
 	
