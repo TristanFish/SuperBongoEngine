@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\Concurency\Task.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
@@ -293,6 +296,9 @@
     <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />

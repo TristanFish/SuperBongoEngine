@@ -109,20 +109,20 @@ bool CoreEngine::Init()
 	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	GetCurrentScene()->LoadMapData();
 
-	std::shared_ptr<Task> testTask_2 = std::make_shared<Task>();
-	std::shared_ptr<Task> testTask_3 = std::make_shared<Task>();
+	//std::shared_ptr<Task> testTask_2 = std::make_shared<Task>();
+	//std::shared_ptr<Task> testTask_3 = std::make_shared<Task>();
 
 
-	testTask_2->SetTask(&CoreEngine::PrintTest, this, 5);
-	testTask_3->SetTask(&CoreEngine::PrintTest, this, 6);
+	//testTask_2->SetTask(&CoreEngine::PrintTest, this, 5);
+	//testTask_3->SetTask(&CoreEngine::PrintTest, this, 6);
 
-	std::shared_ptr<Strand> testStrand = std::make_shared<Strand>(std::vector{ testTask_2,testTask_3 });
+	//std::shared_ptr<Strand> testStrand = std::make_shared<Strand>(std::vector{ testTask_2,testTask_3 });
 
 	
 
-	ThreadHandler::GetInstance()->AddStrand(testStrand);
+	//ThreadHandler::GetInstance()->AddStrand(testStrand);
 
-	ThreadHandler::GetInstance()->RunThreads();
+	//ThreadHandler::GetInstance()->RunThreads();
 	
 	isRunning = true;
 	return true;

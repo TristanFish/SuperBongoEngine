@@ -953,6 +953,9 @@
     <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\Concurency\Task.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1254,6 +1257,9 @@
     <ClCompile Include="engine\core\networking\NetworkManager.cpp">
       <Filter>src\engine\core\networking</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
