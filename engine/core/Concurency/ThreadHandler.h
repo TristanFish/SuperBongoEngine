@@ -5,6 +5,7 @@
 #include <queue>
 #include <memory>
 #include <thread>
+#include <mutex>
 #include "Task.h"
 
 
@@ -13,6 +14,11 @@ struct Strand
 {
 	std::vector<std::shared_ptr<Task>> linkedTasks;
 
+
+	inline Strand(std::vector<std::shared_ptr<Task>> linkedTasks_)
+	{
+		linkedTasks = linkedTasks_;
+	}
 };
 
 class ThreadHandler
@@ -58,6 +64,11 @@ public:
 	}
 
 	void AddTask(std::shared_ptr<Task> newTask);
+
+
+	void AddStrand(std::shared_ptr<Strand> newStrand);
+
+	void AddStrand(std::vector<std::shared_ptr<Task>> linkedTasks);
 
 	void RunThreads();
 };

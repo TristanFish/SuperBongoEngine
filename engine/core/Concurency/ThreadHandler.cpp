@@ -5,9 +5,11 @@ std::unique_ptr<ThreadHandler> ThreadHandler::threadHandlerInstance = std::uniqu
 
 ThreadHandler::ThreadHandler()
 {
-	for (int thread = 0; thread < std::thread::hardware_concurrency() - 1; thread++)
+	for (int thread = 0; thread < 4; thread++)
 	{
 		threads.push_back(std::make_shared<Thread>());
+
+
 	}
 }
 
@@ -33,6 +35,20 @@ void ThreadHandler::AddTask(std::shared_ptr<Task> newTask)
 	tasks.push(newTask);
 }
 
+void ThreadHandler::AddStrand(std::shared_ptr<Strand> newStrand)
+{
+
+	strands.push(newStrand);
+}
+
+void ThreadHandler::AddStrand(std::vector<std::shared_ptr<Task>> linkedTasks)
+{
+	std::shared_ptr<Strand> newStrand =  std::make_shared<Strand>(linkedTasks);
+
+	strands.push(newStrand);
+}
+
+
 void ThreadHandler::RunThreads()
 {
 	
@@ -48,12 +64,13 @@ void ThreadHandler::RunThreads()
 
 			for (auto task : currentStrand->linkedTasks)
 			{
+				std::unique_lock<std::mutex> waitLock(thread->GetMutex());
 				thread->SetNewTask(task);
-
-				while (!thread->IsCurrentTaskNull()) {}
+				thread->GetConditionVar().wait(waitLock, [&thread] { return  thread->IsCurrentTaskNull(); });
 			}
 
-
+			strands.pop();
+			break;
 		}
 
 

@@ -44,7 +44,7 @@ public:
 	void OnDestroy();
 
 
-	void PrintTest();
+	void PrintTest(int i);
 private:
 	CoreEngine();
 	~CoreEngine();

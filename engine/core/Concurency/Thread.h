@@ -32,7 +32,6 @@ private:
 	float computeTime;
 
 
-	//void UpdatePriority();
 public:
 	std::atomic_bool isActive;
 
@@ -45,6 +44,9 @@ public:
 	void JoinThread();
 
 	bool IsCurrentTaskNull() const;
+
+	std::mutex& GetMutex();
+	std::condition_variable& GetConditionVar();
 
 	void SetNewTask(std::shared_ptr<Task> newTask);
 	void SetPriority(EThreadPriority newPriority);

@@ -15,7 +15,7 @@
 #include <sdl/SDL.h>
 #include <Windows.h>
 
-#include "synchronization/ThreadHandler.h"
+#include "Concurency/ThreadHandler.h"
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -108,16 +108,21 @@ bool CoreEngine::Init()
 	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	GetCurrentScene()->LoadMapData();
 
-	std::shared_ptr<Task> testTask = std::make_shared<Task>();
+	std::shared_ptr<Task> testTask_2 = std::make_shared<Task>();
+	std::shared_ptr<Task> testTask_3 = std::make_shared<Task>();
 
-	testTask->SetPriority(EPriority::Medium);
 
-	testTask->SetTask(&CoreEngine::PrintTest, this);
+	testTask_2->SetTask(&CoreEngine::PrintTest, this, 5);
+	testTask_3->SetTask(&CoreEngine::PrintTest, this, 6);
 
-	ThreadHandler::GetInstance()->AddTask(testTask);
+	std::shared_ptr<Strand> testStrand = std::make_shared<Strand>(std::vector{ testTask_2,testTask_3 });
+
+	
+
+	ThreadHandler::GetInstance()->AddStrand(testStrand);
 
 	ThreadHandler::GetInstance()->RunThreads();
-
+	
 	isRunning = true;
 	return true;
 }
@@ -218,9 +223,9 @@ void CoreEngine::OnDestroy()
 	SDL_Quit();
 }
 
-void CoreEngine::PrintTest()
+void CoreEngine::PrintTest(int i)
 {
-	std::cout << "Something Worked!" << std::endl;
+	std::cout << "Something Worked! "<< i << std::endl;
 }
 
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
