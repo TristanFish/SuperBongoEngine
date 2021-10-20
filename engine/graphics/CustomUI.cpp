@@ -82,8 +82,6 @@ void CustomUI::NetworkPanel::Render()
 	ImGui::End();
 }
 
-CustomUI::PropertiesPanel::PropertiesPanel() : isActive(true)
-=======
 PropertiesPanel::PropertiesPanel() : isActive(true)
 {
 
