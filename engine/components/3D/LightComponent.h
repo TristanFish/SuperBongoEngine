@@ -10,6 +10,21 @@ enum class LightType
 	SPOT = 2,
 };
 
+struct LightTypePair
+{
+	const char* typeName;
+	LightType typeEnum;
+
+	LightTypePair(const char* name, LightType type)
+	{
+		typeName = name;
+		typeEnum = type;
+	}
+};
+
+static LightTypePair lightTypeNameEnumPairs[]{LightTypePair("Point", LightType::POINT),
+											  LightTypePair("Spot", LightType::SPOT) };
+
 class LightComponent : public Component
 {
 public:
@@ -28,6 +43,8 @@ public:
 
 
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
+
+	void ImGuiRender() override;
 private:
 
 	Debug lightCube;

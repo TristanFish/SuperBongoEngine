@@ -28,19 +28,3 @@
 [SAVE][INFO]: .sbo Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: d not be instantiated Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 252
-[INFO]: Scene Ai Created in: SceneAi.cpp on line: 15
-[INFO]: AiObj added to objectList in: ECS.cpp on line: 169
-[INFO]: targetSphereObj added to objectList in: ECS.cpp on line: 169
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 257
-[ERROR]: Object could not be added to loadable objects map in: LoadUtility.cpp on line: 103
-[SAVE][INFO]: AiObj Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: targetBoxObj Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: targetSphereObj Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 278

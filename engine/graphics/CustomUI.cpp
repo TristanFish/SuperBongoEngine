@@ -18,11 +18,11 @@
 
 #include "UIStatics.h"
 
-#include "components/3D/MeshRenderer.h"
-
 using namespace CustomUI;
 
-void CustomUI::NetworkPanel::SetNetworkRole(NetRole role)
+#pragma region NetworkPanel
+
+void NetworkPanel::SetNetworkRole(NetRole role)
 {
 	this->role = role;
 	roleIsSet = true;
@@ -31,13 +31,13 @@ void CustomUI::NetworkPanel::SetNetworkRole(NetRole role)
 	NetworkManager::GetInstance()->CreateHost(7777, 4);	
 }
 
-void CustomUI::NetworkPanel::Disconnect()
+void NetworkPanel::Disconnect()
 {
 	NetworkManager::GetInstance()->Disconnect();
 	isConnected = false;
 }
 
-void CustomUI::NetworkPanel::Render()
+void NetworkPanel::Render()
 {
 	ImGui::Begin("Networking");
 
@@ -68,9 +68,12 @@ void CustomUI::NetworkPanel::Render()
 	}
 	else
 	{
-		if(ImGui::Button("Disconnect"))
+		if(role == NetRole::CLIENT)
 		{
-			Disconnect();
+			if(ImGui::Button("Disconnect"))
+			{
+				Disconnect();
+			}
 		}
 
 		std::string sendData;
@@ -82,24 +85,18 @@ void CustomUI::NetworkPanel::Render()
 	ImGui::End();
 }
 
+
+
+#pragma endregion 
+
+#pragma region PropertiesPanel
+
 PropertiesPanel::PropertiesPanel() : isActive(true)
 {
-
-
-	lightTypes.push_back("Point");
-
-	lightTypes.push_back("Spot");
 }
 
 PropertiesPanel::~PropertiesPanel()
 {
-	for (auto type : lightTypes)
-	{
-		delete type;
-		type = nullptr;
-	}
-
-	lightTypes.clear();
 }
 
 void PropertiesPanel::Render() 
@@ -110,9 +107,7 @@ void PropertiesPanel::Render()
 
 	if (selectedObject)
 	{
-		// Gets the mesh's properties and then displays them with ImGui
-
-
+		#pragma region GameObject
 		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
 		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
@@ -145,133 +140,19 @@ void PropertiesPanel::Render()
 
 			ImGui::TreePop();
 		}
-		
-		
+		#pragma endregion 
 
-		if (selectedObject->HasComponent<MeshRenderer>())
+		for(Component* comp : selectedObject->GetComponents())
 		{
-
-			bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
-
-			if (opened)
-			{
-				MeshRenderer* mr = selectedObject->GetComponent<MeshRenderer>();
-
-				ImGui::ColorEdit4("Mesh Color", mr->meshColorTint);
-
-				
-				GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
-
-
-				if (ImGui::BeginCombo("##Flags", "Render Flags"))
-				{
-
-					const int renderFlagSize = IM_ARRAYSIZE(RenderFlagNameEnumPairs);
-
-
-					for (size_t i = 0; i < renderFlagSize; i++)
-					{
-						bool boxIsActive = (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum);
-						
-						if (ImGui::Checkbox(RenderFlagNameEnumPairs[i].flagName, &boxIsActive))
-						{
-							std::cout << "Checkbox Open" << std::endl;
-							//If None is checked undo all boxes
-							if(i == 0)
-							{
-								if(boxIsActive)
-								{
-									mr->renderFlags = static_cast<RenderProperties>(0);
-									break;
-								}
-							}
-							
-							if (mr->renderFlags & RenderFlagNameEnumPairs[i].flagEnum)
-							{
-								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags & ~RenderFlagNameEnumPairs[i].flagEnum);
-							} else
-							{
-								mr->renderFlags = static_cast<RenderProperties>(mr->renderFlags | RenderFlagNameEnumPairs[i].flagEnum);
-							}
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				UIStatics::DrawTextureSlot("texture_09.jpg",mr,5.0f);
-
-				ImGui::TreePop();
-			}
+			comp->ImGuiRender();
 		}
-
-		if (selectedObject->HasComponent<LightComponent>())
-		{
-			bool opened = ImGui::TreeNodeEx("LightSettings", tree_flags, "Light Settings");
-
-			if (opened)
-			{
-				LightComponent* lightComp = UIStatics::GetSelectedObject()->GetComponent<LightComponent>();
-
-				static int currentIndex = 0;
-				if (ImGui::BeginCombo("LightTypes", lightTypes[(int)lightComp->type -1]))
-				{
-					for (int i = 0; i < (int)LightType::SPOT; i++)
-					{
-
-						static bool isSelected = (currentIndex == i);
-
-						if (ImGui::Selectable(lightTypes[i], isSelected))
-						{
-							currentIndex = i;
-							lightComp->type = static_cast<LightType>(i +1);
-						}
-					}
-					ImGui::EndCombo();
-
-				}
-
-				ImGui::DragFloat("Intensity", &lightComp->intensity, 0.1f, 0.5f, 500.0f);
-				ImGui::ColorEdit3("Ambient Color", lightComp->ambColor);
-				ImGui::ColorEdit3("Diffuse Color", lightComp->diffColor);
-				ImGui::ColorEdit3("Specular Color", lightComp->specColor);
-
-				ImGui::TreePop();
-
-
-			}
-
-		}
-
-		if (selectedObject->HasComponent<RigidBody3D>())
-		{
-			RigidBody3D* rb = selectedObject->GetComponent<RigidBody3D>();
-
-			bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
-
-			if (opened)
-			{
-
-				UIStatics::DrawVec3("Velocity", rb->GetVelocity(), 100.0f);
-				UIStatics::DrawVec3("Acceleration", rb->GetAccel(), 100.0f);
-				UIStatics::DrawVec3("Angular Vel", rb->GetAngVelocity(), 100.0f);
-				UIStatics::DrawVec3("Angular Accel", rb->GetAngAccel(), 100.0f);
-
-
-				ImGui::TreePop();
-
-
-			}
-
-		}
-
 	}
 	ImGui::End();
-
 }
 
+#pragma endregion
 
-
+#pragma region HierarchyPanel
 
 HierarchyPanel::HierarchyPanel() : isActive(true)
 {
@@ -281,7 +162,7 @@ HierarchyPanel::HierarchyPanel() : isActive(true)
 HierarchyPanel::~HierarchyPanel()
 {
 
-	if (gameobjects.size() >= 1)
+	if (!gameobjects.empty())
 	{
 		for (auto obj : gameobjects)
 		{
@@ -533,7 +414,9 @@ int HierarchyPanel::GetObjIndex(std::string objName) const
 	return -1;
 }
 
+#pragma endregion
 
+#pragma region PerformanceMonitor
 
 int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
@@ -658,10 +541,11 @@ double PerformanceMonitor::GetCPUUsage()
 	 return percent * 100;
 }
 
+#pragma endregion 
 
+#pragma region Viewport
 
-
-CustomUI::Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Albedo]"), aspectSize("[Free Aspect]"), mode(RenderMode::Albedo), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Albedo]"), aspectSize("[Free Aspect]"), mode(RenderMode::Albedo), isMouseHovered(false), isActive(true)
 {
 
 	modeMap.push_back("Lighting");
@@ -812,18 +696,31 @@ void Viewport::Render()
 
 }
 
+#pragma endregion 
 
-CustomUI::ConsoleLog::ConsoleLog()
+#pragma region ConsoleLog
+
+ConsoleLog::ConsoleLog()
 {
 	EngineLogger::SetCallback(std::bind(&ConsoleLog::AddLog, this, std::placeholders::_1));
+
+	std::ifstream in(EngineLogger::outputName.c_str());
+
+	std::string content;
+	while(std::getline(in, content))
+	{
+		AddLog(content + "\n");
+	}
+	
+	
 }
 
-CustomUI::ConsoleLog::~ConsoleLog()
+ConsoleLog::~ConsoleLog()
 {
 	Clear();
 }
 
-void CustomUI::ConsoleLog::AddLog(const std::string& message)
+void ConsoleLog::AddLog(const std::string& message)
 {
 	const void* bufferEnd = message.data() + message.size();
 
@@ -840,7 +737,7 @@ void CustomUI::ConsoleLog::AddLog(const std::string& message)
 	}
 }
 
-void CustomUI::ConsoleLog::Render()
+void ConsoleLog::Render()
 {
 	ImGui::Begin("Console");
 
@@ -891,7 +788,11 @@ void CustomUI::ConsoleLog::Render()
 	ImGui::End();
 }
 
-CustomUI::DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSave(false),isDockSpaceOpen(true), isDockSpaceFullScreen(true)
+#pragma endregion 
+
+#pragma region DockSpace
+
+DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSave(false),isDockSpaceOpen(true), isDockSpaceFullScreen(true)
 {
 
 	uiInterfaces.push_back(new ContentBrowser());
@@ -1049,7 +950,9 @@ void DockSpace::GenerateDockSpace()
 	ImGui::End();
 }
 
+#pragma endregion
 
+#pragma region ContentBrowser
 
 ContentBrowser::ContentBrowser() : ItemPadding(8.0f), ItemSize(64.0f)
 {
@@ -1297,6 +1200,4 @@ void ContentBrowser::ChangeDirectory(std::string dir)
 	GenDirectoryItems();
 }
 
-
-
-
+#pragma endregion 

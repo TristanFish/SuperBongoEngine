@@ -4,6 +4,7 @@
 #include "core/Timer.h"
 
 #include "components/3D/MeshRenderer.h"
+#include "graphics/UIStatics.h"
 
 using namespace MATH;
 
@@ -73,6 +74,25 @@ void RigidBody3D::Update(const float deltaTime)
 void RigidBody3D::HandleEvents(const SDL_Event& event)
 {
 	//RigidBody doesn't do any event listening
+}
+
+void RigidBody3D::ImGuiRender()
+{
+	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+	
+	bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
+
+	if (opened)
+	{
+
+		UIStatics::DrawVec3("Velocity", vel, 100.0f);
+		UIStatics::DrawVec3("Acceleration", accel, 100.0f);
+		UIStatics::DrawVec3("Angular Vel", angularVel, 100.0f);
+		UIStatics::DrawVec3("Angular Accel", angularAcc, 100.0f);
+
+
+		ImGui::TreePop();
+	}
 }
 
 void RigidBody3D::ApplyImpulseForce(const Vec3& force)

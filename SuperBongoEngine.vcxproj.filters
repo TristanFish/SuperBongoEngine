@@ -106,6 +106,9 @@
     <Filter Include="src\engine\core\networking">
       <UniqueIdentifier>{3e49fee4-58fc-4678-a949-9ce63ebcda1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine\components\AI">
+      <UniqueIdentifier>{2664de0d-87a6-410a-9942-f20a223d29c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\include\sdl\begin_code.h">
@@ -920,16 +923,36 @@
     <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
-    <ClInclude Include="engine\components\AI\AIComponent.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
-    <ClInclude Include="engine\Primitives\Tetrahedron.h" />
-    <ClInclude Include="game\gameObjects\AiGameObject.h" />
-    <ClInclude Include="game\scenes\SceneAi.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\AiGameObject.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="game\scenes\SceneAi.h">
+      <Filter>src\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Primitives\Tetrahedron.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1160,9 +1183,6 @@
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp">
       <Filter>src\engine\core\networking</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkManager.cpp">
-      <Filter>src\engine\core\networking</Filter>
-    </ClCompile>
     <ClCompile Include="engine\math\VMath.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
@@ -1204,15 +1224,36 @@
     <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
-    <ClCompile Include="engine\components\AI\AIComponent.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
-    <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
-    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
-    <ClCompile Include="game\scenes\SceneAi.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\scenes\SceneAi.cpp">
+      <Filter>src\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Primitives\Tetrahedron.cpp">
+      <Filter>src\engine\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\networking\NetworkManager.cpp">
+      <Filter>src\engine\core\networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

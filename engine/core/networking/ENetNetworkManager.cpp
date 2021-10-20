@@ -76,6 +76,7 @@ void ENetNetworkManager::HandleNetworkEvents()
 {
 }
 
+//Handle incoming server events based on what type of event they are
 void ENetNetworkManager::HandleServerEvents()
 {
 	switch (netEvent.type)
@@ -150,7 +151,7 @@ void ENetNetworkManager::HandleClientEvents()
 
 std::string ENetNetworkManager::ParseData(unsigned char* data) const
 {
-	//Copt data into this buffer so it can be turned from binary back into a string
+	//Copy data into this buffer so it can be turned from binary back into a string
 	char buffer[DEFAULT_BUFFER_LENGTH];
 	memcpy(buffer, data, netEvent.packet->dataLength);
 	stringstream ss(string(buffer, netEvent.packet->dataLength), stringstream::in | stringstream::out | stringstream::binary);
@@ -172,6 +173,7 @@ stringstream ENetNetworkManager::SerializeData(const string& data)
 	{
 		cereal::BinaryOutputArchive oarchive(ss);
 
+		//puts "data" into the stringstream "ss" as binary data
 		oarchive(data);
 	}
 
@@ -228,7 +230,6 @@ bool ENetNetworkManager::Connect(const char* addressString, unsigned int port)
 		{
 			EngineLogger::Info("Successfully connected to peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 			connectedPeers.emplace_back(peer);
-			//Start polling for events
 			clientConnected = true;
 			//if we're a client start polling as soon as we've connected to a server
 			networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);

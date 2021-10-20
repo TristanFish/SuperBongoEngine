@@ -294,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
+    <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
@@ -375,7 +376,6 @@
     <ClCompile Include="engine\core\resources\SaveFile.cpp" />
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
-    <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
     <ClCompile Include="game\scenes\SceneAi.cpp" />

@@ -107,15 +107,15 @@ public:
 	void SetName(std::string name_) { name = name_; }
 
 
-	inline GameObject* GetParent() const { return parent; }
+	 GameObject* GetParent() const { return parent; }
 	
-	inline GameObject* GetChild(int i) const { return children[i]; }
+	 GameObject* GetChild(int i) const { return children[i]; }
 
-	inline std::vector<GameObject*>& GetChildren() { return children; }
+	 std::vector<GameObject*>& GetChildren() { return children; }
 
-	inline std::vector<Component*> GetComponents() const { return componentList; }
+	 const std::vector<Component*>& GetComponents() const { return componentList; }
 
-	inline int GetChildCount() const { return children.size(); }
+	 int GetChildCount() const { return children.size(); }
 	
 
 

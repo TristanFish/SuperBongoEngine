@@ -49,12 +49,12 @@ public:
 	static void Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
 	static void FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
 
+	static std::string outputName;
 private:
 
 	static void Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog);
 
 	static MessageType currentSev;
-	static std::string outputName;
 	static std::function<void(const std::string&)> consoleCallback;
 };
 
