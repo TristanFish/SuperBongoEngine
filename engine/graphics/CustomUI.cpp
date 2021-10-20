@@ -68,9 +68,12 @@ void NetworkPanel::Render()
 	}
 	else
 	{
-		if(ImGui::Button("Disconnect"))
+		if(role == NetRole::CLIENT)
 		{
-			Disconnect();
+			if(ImGui::Button("Disconnect"))
+			{
+				Disconnect();
+			}
 		}
 
 		std::string sendData;
@@ -698,6 +701,16 @@ void Viewport::Render()
 ConsoleLog::ConsoleLog()
 {
 	EngineLogger::SetCallback(std::bind(&ConsoleLog::AddLog, this, std::placeholders::_1));
+
+	std::ifstream in(EngineLogger::outputName.c_str());
+
+	std::string content;
+	while(std::getline(in, content))
+	{
+		AddLog(content + "\n");
+	}
+	
+	
 }
 
 ConsoleLog::~ConsoleLog()
