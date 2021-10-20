@@ -112,9 +112,6 @@ namespace CustomUI
 		//! isActive bool
 		/*! Hold's if the properties panel is being rendered or not */
 		bool isActive;
-
-
-		std::vector<const char*> lightTypes;
 	};
 
 

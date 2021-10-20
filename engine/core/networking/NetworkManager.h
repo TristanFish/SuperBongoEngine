@@ -33,23 +33,23 @@ public:
 	
 	virtual ~NetworkManager() = default;
 
-
+	//Initializes the networking system
 	virtual void Init() = 0;
-
+	//Checks for any incoming network events
 	virtual void PollNetworkEvents() = 0;
-
+	//Determines how incoming events are handled
 	virtual void HandleNetworkEvents() = 0;
 	//Creates a representation of the user's network info
 	virtual void CreateHost(unsigned int port, unsigned int maxConnections) = 0;
-
+	//Used for connecting clients to other devices
 	virtual bool Connect(const char* addressString, unsigned int port) = 0;
-
+	//Used for servers to send packets to all connected clients
 	virtual void BroadcastPacket(const std::string& data) = 0;
-	
+	//Send a packet to the first available peer
 	virtual void SendPacket(const std::string& data) = 0;
 
 	virtual void SendPacketToPeer(const std::string& data) = 0;
-
+	//Disconnects the client if it is connected to a server
 	virtual void Disconnect() = 0;
 	
 	virtual void Cleanup() = 0;

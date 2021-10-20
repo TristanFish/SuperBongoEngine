@@ -20,6 +20,9 @@ enum RenderProperties : unsigned short
 	RP_OVERRIDE_RENDERER	= 0b10000000
 };
 
+
+
+
 struct RenderFlagPair
 {
 	const char* flagName;
@@ -93,6 +96,8 @@ public:
 	void HandleEvents(const SDL_Event& event) override {}
 
 	void OnSaveComponent(const std::string& saveName,std::string parentName) override;
+
+	void ImGuiRender() override;
 
 private:
 
