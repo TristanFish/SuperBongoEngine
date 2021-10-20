@@ -16,8 +16,8 @@ class Component
 public:
 
 	//!GameObject Pointer
-	/*!Enables the components to know what gameobject they are attached too*/
-	GameObject* gameobject;
+	/*!Enables the components to know what gameObject they are attached too*/
+	GameObject* gameObject;
 
 	bool active = true;
 	//!Virtual Init Function
@@ -36,7 +36,9 @@ public:
 	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
-	virtual void OnSaveComponent(const std::string& saveName,std::string parentName) {};
+	virtual void OnSaveComponent(const std::string& saveName,std::string parentName) {}
+
+	virtual void ImGuiRender() {}
 
 	virtual const char* GetType() { return typeid(*this).name(); }
 
@@ -44,7 +46,7 @@ public:
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/
-	virtual ~Component() { gameobject = nullptr; }
+	virtual ~Component() { gameObject = nullptr; }
 };
 
 

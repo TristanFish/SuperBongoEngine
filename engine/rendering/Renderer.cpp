@@ -135,7 +135,7 @@ void Renderer::Render()
 
 		//if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
-			//EngineLogger::Info(meshRenderers[i]->gameobject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
+			//EngineLogger::Info(meshRenderers[i]->gameObject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
 			//continue;
 		}
 
@@ -449,7 +449,7 @@ void Renderer::AttachLights() const
 //	{
 //		std::string lightNum = "[" + std::to_string(i) + "]";
 //		
-//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameobject->transform.GetPosition());
+//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameObject->transform.GetPosition());
 //		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
 //		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
 //		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
@@ -465,7 +465,7 @@ void Renderer::AttachLights() const
 
 	for(size_t i = 0; i < lights.size(); i++)
 	{
-		positions.push_back(lights[i]->gameobject->transform.GetPosition());
+		positions.push_back(lights[i]->gameObject->transform.GetPosition());
 		ambs.push_back(lights[i]->ambColor);
 		diffs.push_back(lights[i]->diffColor);
 		specs.push_back(lights[i]->specColor);

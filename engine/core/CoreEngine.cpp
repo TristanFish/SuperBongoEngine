@@ -19,7 +19,7 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), gameInterface(nullptr), currentSceneNum(0)
+CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), currentSceneNum(0), gameInterface(nullptr)
 {
 
 }
@@ -87,7 +87,8 @@ bool CoreEngine::Init()
 	}
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
-	
+
+	NetworkManager::GetInstance()->Init();
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
@@ -212,7 +213,6 @@ void CoreEngine::OnDestroy()
 	}
 
 	Camera::removeInstance();
-
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();

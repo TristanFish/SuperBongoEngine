@@ -20,6 +20,9 @@ enum RenderProperties : unsigned short
 	RP_OVERRIDE_RENDERER	= 0b10000000
 };
 
+
+
+
 struct RenderFlagPair
 {
 	const char* flagName;
@@ -50,7 +53,7 @@ struct OrientedBoundingBox
 };
 
 //!MeshRenderer Class
-/*!Allows any gameobject with this component to render a mesh*/
+/*!Allows any gameObject with this component to render a mesh*/
 class MeshRenderer : public Component
 {
 public:
@@ -94,10 +97,12 @@ public:
 
 	void OnSaveComponent(const std::string& saveName,std::string parentName) override;
 
+	void ImGuiRender() override;
+
 private:
 
 	//!AttachUniforms function
-	/*!Enables the components to know what gameobject they are attached to
+	/*!Enables the components to know what gameObject they are attached to
 	This function is used to attach any uniforms that are specific to the object being rendered
 	create a definition for this function where you set shader uniforms if
 	you're using the OVERRIDE_RENDERER renderflag for this object*/

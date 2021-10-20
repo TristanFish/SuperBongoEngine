@@ -196,6 +196,23 @@ namespace MATH {
 		return *this;
 		}
 
+		static Vec3 Forward()
+		{
+			return Vec3(0.0f,0.0f,1.0f);
+		}
+		
+		static Vec3 Up()
+		{
+			return Vec3(0.0f,1.0f,1.0f);
+		}
+		
+		static Vec3 Left()
+		{
+			return Vec3(1.0f,0.0f,0.0f);
+		}
+
+		
+		
 		inline void print() { 
 			printf("%1.8f %1.8f %1.8f\n", x,y,z);		  
 		}

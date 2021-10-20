@@ -4,7 +4,6 @@
 #include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
-#include "Primitives/PlaneObject.h"
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
@@ -39,7 +38,7 @@ void SceneGraph::Init()
 	for (auto obj : SaveManager::SaveableObjects)
 	{
 
-		if (obj.second->GetClone()->canBeInstantiated)
+		if (obj.second->canBeInstantiated)
 		{
 			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
 		}
@@ -87,7 +86,7 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 	}
 }
 
-//Finds THE FIRST gameobject with the given name
+//Finds THE FIRST gameObject with the given name
 GameObject& SceneGraph::FindGameObject(const char* name)
 {
 	for (auto* g : gameObjects)
@@ -109,7 +108,7 @@ GameObject& SceneGraph::FindGameObject(const char* name)
 	return *gameObjects[0];
 }
 
-//Adds a gameobject with a name and position
+//Adds a gameObject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
 

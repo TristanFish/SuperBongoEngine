@@ -8,10 +8,10 @@ void AudioSourceComponent::Init(GameObject* g)
 	soundAtts.C1 = nullptr;
 	soundAtts.G1 = nullptr;
 	soundAtts.reverb = nullptr;
-	gameobject = nullptr;
+	gameObject = nullptr;
 	audioSystemRef = nullptr;
 
-	gameobject = g;
+	gameObject = g;
 	gameObjectPosition = g->transform.pos;
 
 	audioSystemRef = AudioManager::Get()->system;
@@ -71,7 +71,7 @@ void AudioSourceComponent::SetAudioPosition()
 
 AudioSourceComponent::~AudioSourceComponent()
 {
-	gameobject = nullptr; 
+	gameObject = nullptr; 
 	audioSystemRef = nullptr;
 	soundAtts.C1 = nullptr;
 	soundAtts.G1 = nullptr;

@@ -28,5 +28,5 @@ Sphere::~Sphere()
 
 void Sphere::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }

@@ -19,20 +19,23 @@ public:
 
 
 	static Camera* getInstance();
-	inline static void removeInstance() { delete instance; instance = nullptr; }
-	inline MATH::Matrix4& getProjectionMatrix() { return perspecProjMatrix; }
-	inline MATH::Matrix4& getViewMatrix() { return viewMatrix; }
-	inline MATH::Matrix4& getRotationMatrix() { return rotationMatrix; }
-	inline MATH::Matrix4& getInvNDC() { return invNDC; }
-	inline void setProjectionMatrix(MATH::Matrix4 projection_) { perspecProjMatrix = projection_; }
-	inline void setViewMatrix(MATH::Matrix4 view_) { viewMatrix = view_; }
-	inline MATH::Vec3 getPosition() const { return position; }
-	inline MATH::Vec3 getRotation() const { return MATH::MMath::calcEulerAngles(rotationMatrix) * (1.0f / DEGREES_TO_RADIANS); }
-	inline void setPosition(MATH::Vec3 pos) { position = pos; }
-	inline void setRotation(MATH::Matrix4 rot) { rotationMatrix = rot; }
-	inline float getNearPlane() const { return nearPlane; }
-	inline float getFarPlane() const { return farPlane; }
+	static void removeInstance() { delete instance; instance = nullptr; }
+	MATH::Matrix4& getProjectionMatrix() { return perspecProjMatrix; }
+	MATH::Matrix4& getViewMatrix() { return viewMatrix; }
+	MATH::Matrix4& getRotationMatrix() { return rotationMatrix; }
+	MATH::Matrix4& getInvNDC() { return invNDC; }
+	void setProjectionMatrix(MATH::Matrix4 projection_) { perspecProjMatrix = projection_; }
+	void setViewMatrix(MATH::Matrix4 view_) { viewMatrix = view_; }
+	MATH::Vec3 getPosition() const { return position; }
+	MATH::Vec3 getRotation() const { return MATH::MMath::calcEulerAngles(rotationMatrix) * static_cast<float>(1.0f / DEGREES_TO_RADIANS); }
+	void setPosition(MATH::Vec3 pos) { position = pos; }
+	void setRotation(MATH::Matrix4 rot) { rotationMatrix = rot; }
+	float getNearPlane() const { return nearPlane; }
+	float getFarPlane() const { return farPlane; }
+	float getAspectRatio() const { return aspect; }
+	void setAspectRatio(float a) { aspect = a; }
 	MATH::Vec3 GetMouseVector(int x, int y) const;
+	void UpdatePerspectiveMatrix();
 
 
 	MATH::Vec3 Up() const;
@@ -54,8 +57,10 @@ private:
 	float farPlane;
 	
 	float zoom;
+	float aspect;
 	const float panSpeed;
 	const float sensitivity;
+
 
 	//!mouseDown boolean
 	/*! Changes when the mouse down state gets changed */

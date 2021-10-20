@@ -8,8 +8,7 @@
 
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
-class RigidBody3D : public Component
-{
+class RigidBody3D : public Component	{
 private:
 
 
@@ -72,6 +71,8 @@ public:
 	void Update(const float deltaTime) override;
 	void HandleEvents(const SDL_Event& event) override;
 
+	void ImGuiRender() override;
+
 	void ApplyImpulseForce(const MATH::Vec3& force);
 	void ApplyConstantForce(const MATH::Vec3& force);
 	void SetConstantForce(const MATH::Vec3& force);
@@ -97,11 +98,9 @@ public:
 	inline void SetPosition(const MATH::Vec3& p) const { *pos = p; }
 
 	inline MATH::Vec3 GetVelocity() const  { return vel; }
-	inline MATH::Vec3& GetVelocity()  { return vel; }
 
 	inline void SetVelocity(const MATH::Vec3& velocity) { vel = velocity; }
 	inline MATH::Vec3 GetAccel() const { return accel; }
-	inline MATH::Vec3& GetAccel()  { return accel; }
 
 
 	inline void SetAccel(const MATH::Vec3& acc) { accel = acc; }
@@ -112,9 +111,8 @@ public:
 	inline MATH::Vec3 GetAngVelocity() const { return angularVel; }
 	inline MATH::Vec3& GetAngVelocity()  { return angularVel; }
 
-	inline void SetAngVelocity(const MATH::Vec3& vel) { angularVel = vel; }
+	inline void SetAngVelocity(const MATH::Vec3& aVel) { angularVel = aVel; }
 	inline MATH::Vec3 GetAngAccel() const { return angularAcc; }
-	inline MATH::Vec3& GetAngAccel()  { return angularAcc; }
 
 	inline void SetAngAccel(const MATH::Vec3& acc) { angularAcc = acc; }
 	inline float GetAngDrag() const { return angularDrag; }

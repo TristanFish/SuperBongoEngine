@@ -21,6 +21,7 @@ struct BufferTexture
 	
 	BufferTexture(TexType type_)
 	{
+		texture = 0;
 		type = type_;
 	}
 

@@ -26,6 +26,7 @@ namespace MATH
 		Matrix3 ConvertToMatrix();
 		static Quaternion EulerToQuat(Vec3 v);
 		static Vec3 QuatToEuler(Quaternion q);
+		static Quaternion LookAt(const Vec3& eye, const Vec3& at, const Vec3& up);
 
 		Quaternion operator * (const Quaternion& q) const;
 
@@ -38,7 +39,7 @@ namespace MATH
 		Quaternion operator * (const float f);
 		Quaternion operator + (const float f) const;
 
-		Quaternion& operator = (const Vec3& v);
+		Quaternion& operator = (const Vec3& q);
 
 		Quaternion operator += (const Vec3& v);
 

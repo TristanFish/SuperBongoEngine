@@ -84,6 +84,8 @@ public:
 	/*! Sets the rotation of the transform */
 	void SetRot(const MATH::Vec3& rot);
 
+	void SetRot(const MATH::Quaternion& rot);
+
 	//!SetScale Setter
 	/*! Sets the rotation of the transform */
 	void SetScale(const MATH::Vec3& scale);

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "math/Vector.h"
 #include "imgui/imgui.h"
+#include "core/networking/NetworkManager.h"
 
 class GameObject;
 
@@ -70,10 +71,24 @@ namespace CustomUI
 
 	};
 
+	class NetworkPanel : public UIInterface
+	{
+	public:
+		NetRole role;
+		bool roleIsSet = false;
+		bool isConnected = false;
+		
+		
+		void SetNetworkRole(NetRole role);
+		void Disconnect();
+		
+		void Render() override;
+		
+	};
 	
 
 	//! Properties panel Class
-	/*!  This class creates & Renders the Properties Panel UI for each gameobject */
+	/*!  This class creates & Renders the Properties Panel UI for each gameObject */
 	class PropertiesPanel : public UIInterface
 	{
 	public:
@@ -97,9 +112,6 @@ namespace CustomUI
 		//! isActive bool
 		/*! Hold's if the properties panel is being rendered or not */
 		bool isActive;
-
-
-		std::vector<const char*> lightTypes;
 	};
 
 
@@ -177,14 +189,14 @@ namespace CustomUI
 	private:
 
 		//! GenerateTree Function
-		/*! Generates the gameobject tree for rendering*/
+		/*! Generates the gameObject tree for rendering*/
 		void GenerateTree(GameObject* go, int index);
 
 
 		void UpdateActiveObjects();
 
 		//! GetObjIndex Function
-		/*! Returns the index of the gameobject with a given name from the gameobjects vector*/
+		/*! Returns the index of the gameObject with a given name from the gameobjects vector*/
 		int GetObjIndex(std::string objName) const;
 
 	};
@@ -201,6 +213,16 @@ namespace CustomUI
 		
 	};
 
+	enum class AspectRatio : unsigned int
+	{
+		FREE_ASPECT,
+		THREE_TWO,
+		FOUR_THREE,
+		FIVE_THREE,
+		FIVE_FOUR,
+		SIXTEEN_NINE,
+		SIXTEEN_TEN
+	};
 
 	//! Viewport panel Class
 	/*!  This class creates & Renders the Viewport Panel UI */
@@ -217,7 +239,7 @@ namespace CustomUI
 		void Render() override;
 
 
-		inline RenderMode GetRenderMode() const { return mode; };
+		inline RenderMode GetRenderMode() const { return mode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
@@ -235,10 +257,13 @@ namespace CustomUI
 		MATH::Vec2 viewportSize;
 
 		std::string modeName;
+		std::string aspectSize;
 
 		RenderMode mode;
+		AspectRatio activeRatio;
 
 		std::vector<const char*> modeMap;
+		std::vector<const char*> aspectRatios;
 
 		//! isMouseHovered bool 
 		/*! Stores if the mouse is hovering over the viewport or not */
@@ -311,6 +336,27 @@ namespace CustomUI
 
 	};
 
+	//! Console Log Class
+	/*!  This class shows the console output in-editor*/
+	class ConsoleLog : public UIInterface
+	{
+	public:
+
+		ImGuiTextBuffer text;
+		ImGuiTextFilter filter;
+		ImVector<int> lineOffsets;
+		bool scrollToBottom;
+		
+		ConsoleLog();
+		virtual ~ConsoleLog();
+
+		void AddLog(const std::string& message);
+
+		void Render() override;
+
+		void Clear() { text.clear(); lineOffsets.clear(); }
+	};
+	
 	//! DockSpace Class
 	/*! This class initializes and renders all of the needed ImGui interfaces*/
 	class DockSpace : public UIInterface {

@@ -19,6 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
+    <ClInclude Include="engine\core\networking\NetworkManager.h" />
+    <ClInclude Include="game\gameObjects\AiGameObject.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
@@ -279,12 +288,19 @@
     <ClInclude Include="engine\core\resources\SaveFile.h" />
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
-    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
-    <ClInclude Include="engine\core\Concurency\Thread.h" />
-    <ClInclude Include="engine\core\Concurency\Task.h" />
+    <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
+    <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
@@ -360,31 +376,12 @@
     <ClCompile Include="engine\core\resources\SaveFile.cpp" />
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
-    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
-    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
-    <ClCompile Include="engine\core\Concurency\Task.cpp" />
+    <ClCompile Include="game\scenes\SceneAi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="external\dll\assimp-vc142-mtd.dll" />
-    <None Include="external\dll\fmodL.dll" />
-    <None Include="external\dll\glew32.dll" />
-    <None Include="external\dll\libFLAC-8.dll" />
-    <None Include="external\dll\libfreetype-6.dll" />
-    <None Include="external\dll\libjpeg-9.dll" />
-    <None Include="external\dll\libmikmod-2.dll" />
-    <None Include="external\dll\libmodplug-1.dll" />
-    <None Include="external\dll\libogg-0.dll" />
-    <None Include="external\dll\libpng16-16.dll" />
-    <None Include="external\dll\libtiff-5.dll" />
-    <None Include="external\dll\libvorbis-0.dll" />
-    <None Include="external\dll\libvorbisfile-3.dll" />
-    <None Include="external\dll\libwebp-4.dll" />
-    <None Include="external\dll\SDL2.dll" />
-    <None Include="external\dll\SDL2_image.dll" />
-    <None Include="external\dll\smpeg2.dll" />
-    <None Include="external\dll\zlib1.dll" />
     <None Include="external\include\assimp\color4.inl" />
     <None Include="external\include\assimp\material.inl" />
     <None Include="external\include\assimp\matrix3x3.inl" />
@@ -427,7 +424,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{10C1E4B3-8948-43F7-B390-090DF18E9D37}</ProjectGuid>
-    <RootNamespace>SDLOpenGLPlatformer</RootNamespace>
+    <RootNamespace>SuperBongoEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -503,7 +500,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
