@@ -10,7 +10,7 @@ AiGameObject::AiGameObject(std::string name_, MATH::Vec3 position_)	{
 	AddComponent<RigidBody3D>();
 
 	aiComponent = AddComponent<AIComponent>();
-	aiComponent->SetAIType(AIType::DynamicSteering);
+	aiComponent->SetAIType(AIType::KinematicSteering);
 	aiComponent->SetMaxSpeed(15.0f);
 	aiComponent->SetMaxAcceleration(5.0f);
 
@@ -31,12 +31,24 @@ AiGameObject::~AiGameObject()	{
 
 void AiGameObject::Update(const float deltaTime)	{
 	if(aiTarget)	{
-		//Kinematic::KinematicSeek kSeekAlgorithm = Kinematic::KinematicSeek(this, aiTarget->transform);
-		////steering is already being set by the algorithm
-		//kSeekAlgorithm.getSteering();
+		Kinematic::KinematicSeek kSeekAlgo = Kinematic::KinematicSeek(this, aiTarget->transform);
+		//steering is already being set by the algorithm
+		kSeekAlgo.getSteering();
 
-		Dynamic::DynamicFlee dynamicSeek = Dynamic::DynamicFlee(this, aiTarget->transform);
-		dynamicSeek.getSteering();
+		/*Kinematic::KinematicArrive kArriveAlgo = Kinematic::KinematicArrive(this, aiTarget->transform, 10.0f, 1.0f);
+		kArriveAlgo.getSteering();*/
+
+		/*Dynamic::DynamicSeek dSeekAlgo = Dynamic::DynamicSeek(this, aiTarget->transform);
+		dSeekAlgo.getSteering();*/
+
+		/*Dynamic::DynamicArrive dArriveAlgo = Dynamic::DynamicArrive(this, aiTarget->transform, 10.0f, 25.0f, 1.0f);
+		dArriveAlgo.getSteering();*/
+		
+		/*Dynamic::DynamicFlee dFleeAlgo = Dynamic::DynamicFlee(this, aiTarget->transform);
+		dFleeAlgo.getSteering();*/
+
+		
+		
 	}
 
 	this->GameObject::Update(deltaTime);
