@@ -926,9 +926,6 @@
     <ClInclude Include="engine\components\AI\AIComponent.h">
       <Filter>src\engine\components\AI</Filter>
     </ClInclude>
-    <ClInclude Include="game\gameObjects\AiGameObject.h">
-      <Filter>src\engine\components\AI</Filter>
-    </ClInclude>
     <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h">
       <Filter>src\engine\components\AI</Filter>
     </ClInclude>
@@ -952,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
       <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\AiGameObject.h">
+      <Filter>src\game\gameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1227,9 +1227,6 @@
     <ClCompile Include="engine\components\AI\AIComponent.cpp">
       <Filter>src\engine\components\AI</Filter>
     </ClCompile>
-    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
-      <Filter>src\engine\components\AI</Filter>
-    </ClCompile>
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp">
       <Filter>src\engine\components\AI</Filter>
     </ClCompile>
@@ -1253,6 +1250,9 @@
     </ClCompile>
     <ClCompile Include="engine\core\networking\NetworkManager.cpp">
       <Filter>src\engine\core\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
+      <Filter>src\game\gameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

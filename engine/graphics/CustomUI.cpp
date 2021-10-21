@@ -414,7 +414,7 @@ int HierarchyPanel::GetObjIndex(std::string objName) const
 
 #pragma endregion
 
-#pragma region PerformanceMonitor
+#pragma region PerformancePanel
 
 int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
