@@ -2,7 +2,6 @@
 #include "components/3D/MeshRenderer.h"
 #include "components/3D/LightComponent.h"
 #include "core/Globals.h"
-#include "core/Debug.h"
 #include <sdl/SDL.h>
 #include "Rendering/SkyBox.h"
 #include "math/Plane.h"
@@ -58,6 +57,10 @@ void Renderer::Init()
 
 void Renderer::SetupFrameBuffers()
 {
+	//Setup default buffer
+	defaultBuffer.bufferID = 0;
+	defaultBuffer.clearColor = Colour(1.0f, 0.0f, 0.0f, 1.0f);
+	
 	gBuffer.InitFrameBuffer();
 	//Attach depthRenderBuffer
 	glGenRenderbuffers(1, &depthRenderBuffer);
@@ -105,6 +108,12 @@ void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 
 void Renderer::AddLight(LightComponent* light)
 {
+	if(lights.size() >= 10)
+	{
+		EngineLogger::Warning("Max number of lights reached, " 
+		 + light->gameObject->name + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+		return;
+	}
 	lights.emplace_back(light);
 }
 
@@ -122,12 +131,22 @@ void Renderer::DeleteLight(LightComponent* light)
 	}
 }
 
+void Renderer::DrawDebugGeometry(const std::vector<GameObject*>& objects)
+{
+	#ifdef _DEBUG
+	for (auto* g : objects)
+	{
+		g->DrawDebugGeometry();
+	}
+#endif // DEBUG
+}
+
 void Renderer::Render() 
 {
 	//Skybox here
 	skyBox->Render();
-	
-	
+
+	DrawDebugGeometry(Globals::s_SceneGraph->GetGameObjects());
 
 	//loop through all meshrenderers
 	for (size_t i = 0; i < meshRenderers.size(); i++)
@@ -192,14 +211,9 @@ void Renderer::Render()
 	
 	
 	//Rebind the default framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	defaultBuffer.Bind();
 	glEnable(GL_DEPTH_TEST);
 
-	//pos.DrawTextureToScreen(gBufferTexture, -1.0f, -0.5f, 0.0f, -0.5f);
-	//norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
-	//albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
-	//depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
-	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
 	RenderGBufferResult();
 
 	//Uses the gBufferResolve shader to render the result of the gBuffer
@@ -248,7 +262,7 @@ GLuint Renderer::GetModeTextureID() const
 {
 	switch (viewport.GetRenderMode())
 	{
-	case CustomUI::RenderMode::Lighting:
+	case CustomUI::RenderMode::Result:
 		return gBufferTexture.texture;
 		break;
 	case CustomUI::RenderMode::Albedo:
@@ -428,41 +442,39 @@ void Renderer::UnbindGBufferTextures() const
 
 void Renderer::RenderGBufferResult() 
 {
+	gBufferRenderResult.Bind();
 	resultShader.RunShader();
 
 	BindGBufferTextures();
 
 	AttachLights();
 	glBindVertexArray(vao);
-	viewport.Render();
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
-	UnbindGBufferTextures();
 
+	UnbindGBufferTextures();
 	glUseProgram(0);
+
+	defaultBuffer.Clear();
+
+	viewport.Render();
 }
 
 void Renderer::AttachLights() const
 {
-//	for (size_t i = 0; i < lights.size(); i++)
-//	{
-//		std::string lightNum = "[" + std::to_string(i) + "]";
-//		
-//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameObject->transform.GetPosition());
-//		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
-//		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
-//		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
-//		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
-//		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
-//	}
-
 	std::vector<Vec3> positions;
 	std::vector<Vec3> ambs;
 	std::vector<Vec3> diffs;
 	std::vector<Vec3> specs;
 	std::vector<float> intensities;
 
+	positions.reserve(lights.size());
+	ambs.reserve(lights.size());
+	diffs.reserve(lights.size());
+	specs.reserve(lights.size());
+	intensities.reserve(lights.size());
+	
 	for(size_t i = 0; i < lights.size(); i++)
 	{
 		positions.push_back(lights[i]->gameObject->transform.GetPosition());
@@ -471,7 +483,8 @@ void Renderer::AttachLights() const
 		specs.push_back(lights[i]->specColor);
 		intensities.push_back(lights[i]->intensity);
 	}
-
+	
+	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
 	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
 	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
 	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());

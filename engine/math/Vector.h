@@ -206,7 +206,7 @@ namespace MATH {
 			return Vec3(0.0f,1.0f,1.0f);
 		}
 		
-		static Vec3 Left()
+		static Vec3 Right()
 		{
 			return Vec3(1.0f,0.0f,0.0f);
 		}

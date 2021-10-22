@@ -167,6 +167,7 @@ void SkyBox::Render() const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	//glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	
