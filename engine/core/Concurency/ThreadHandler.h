@@ -28,12 +28,14 @@ class ThreadHandler
 
 private:
 
-	std::vector<std::shared_ptr<Thread>> threads;
-	std::priority_queue<std::shared_ptr<Task>,std::vector<std::shared_ptr<Task>> ,Task> tasks;
-	std::queue<std::shared_ptr<Strand>> strands;
+	std::vector<std::shared_ptr<Thread>> V_Threads;
+	std::priority_queue<std::shared_ptr<Task>,std::vector<std::shared_ptr<Task>> ,Task> PQ_Tasks;
+	std::queue<std::shared_ptr<Strand>> Q_Strands;
 
+	std::mutex m_HandlerMutex;
+	std::condition_variable m_ConditionVar;
 
-	static std::unique_ptr<ThreadHandler> threadHandlerInstance;
+	static std::unique_ptr<ThreadHandler> U_ThreadHandlerInstance;
 	friend std::default_delete<ThreadHandler>;
 
 public:
@@ -50,7 +52,7 @@ public:
 
 		newTask->SetTask(func, args);
 
-		tasks.push(newTask);
+		PQ_Tasks.push(newTask);
 	}
 
 	template<typename Func>
@@ -60,7 +62,7 @@ public:
 
 		newTask->SetTask(func);
 
-		tasks.push(newTask);
+		PQ_Tasks.push(newTask);
 	}
 
 	void AddTask(std::shared_ptr<Task> newTask);

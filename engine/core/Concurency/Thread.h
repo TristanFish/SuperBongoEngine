@@ -15,27 +15,38 @@ enum class EThreadPriority : int
 	THREAD_PRIORITYHIGHEST = 2
 };
 
+enum EThreadType : unsigned short
+{
+	TH_NONE = 0b00000000,
+	TH_WORKER = 0b00000001,
+	TH_RENDERER = 0b00000010,
+};
+
+
 class Task;
 class Thread
 {
 private:
-	std::thread thread;
+	std::thread T_Thread;
 
-	std::mutex mutex;
+	std::mutex M_Mutex;
 
-	std::condition_variable condition;
+	std::condition_variable C_ConditionVar;
 
-	std::shared_ptr<Task> currentTask;
+	std::shared_ptr<Task> T_CurrentTask;
 
-	EThreadPriority priority;
+	EThreadPriority E_Priority;
 
-	float computeTime;
+	EThreadType E_ThreadType;
+
+	float F_ComputeTime;
 
 
 public:
 	std::atomic_bool isActive;
 
 	Thread();
+	Thread(EThreadPriority priority, EThreadType threadType);
 	~Thread();
 	
 

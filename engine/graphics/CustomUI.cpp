@@ -68,12 +68,10 @@ void NetworkPanel::Render()
 	}
 	else
 	{
-		if(role == NetRole::CLIENT)
+
+		if(ImGui::Button("Disconnect"))
 		{
-			if(ImGui::Button("Disconnect"))
-			{
-				Disconnect();
-			}
+			Disconnect();
 		}
 
 		std::string sendData;

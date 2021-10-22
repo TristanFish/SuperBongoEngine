@@ -9,14 +9,21 @@
 
 	
 
-Task::Task(): priority(EPriority::Low)
+Task::Task(): E_Priority(ETaskPriority::Low)
 {
 
 }
-Task::Task(EPriority newPriority) : priority(newPriority)
+Task::Task(ETaskPriority newPriority) : E_Priority(newPriority)
 {
 
 }
+
+Task::Task(std::shared_ptr<Task> copyTask) : E_Priority(copyTask->E_Priority), F_Function(copyTask->F_Function)
+{
+
+
+}
+
 Task::~Task()
 {
 
@@ -24,10 +31,10 @@ Task::~Task()
 
 void Task::RunTask()
 {
-	function();
+	F_Function();
 }
 
 void Task::SetTask(std::function<void()> newFunc)
 {
-	function = newFunc;
+	F_Function = newFunc;
 }

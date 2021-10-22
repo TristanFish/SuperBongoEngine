@@ -241,7 +241,6 @@ void LoadUtility::LoadExistingSaves()
 		if (entry->is_regular_file())
 		{			
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
-			
 		}
 
 	}

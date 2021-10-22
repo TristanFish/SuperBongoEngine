@@ -13,7 +13,7 @@ MeshRenderer::MeshRenderer() : renderFlags(RP_LIGHTING), meshColorTint(Vec4(1.0)
 
 bool MeshRenderer::LoadModel(const char* name)
 {
-	model = &ModelManager::GetModel(name);
+	model = &ModelManager::GetInstance()->GetModel(name);
 
 	if(model)
 	{

@@ -88,10 +88,29 @@ bool CoreEngine::Init()
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
 
+	auto before_time = std::chrono::high_resolution_clock::now();
+
+
 	NetworkManager::GetInstance()->Init();
 	TextureManager::LoadAllTextures();
-	ModelManager::LoadAllModels();
+	ModelManager::GetInstance()->LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
+	
+	std::shared_ptr<Task> LoadModelsTask = std::make_shared<Task>();
+	LoadModelsTask->SetTask(&ModelManager::LoadAllModels, ModelManager::GetInstance());
+
+	std::shared_ptr<Task> LoadSavesTask = std::make_shared<Task>();
+	LoadSavesTask->SetTask(&LoadUtility::LoadExistingSaves, LoadUtility::GetInstance());
+
+	
+	ThreadHandler::GetInstance();
+	
+
+	auto after_time = std::chrono::high_resolution_clock::now();
+
+	auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(after_time - before_time);
+
+
 
 	if (gameInterface)
 	{
@@ -109,20 +128,6 @@ bool CoreEngine::Init()
 	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	GetCurrentScene()->LoadMapData();
 
-	//std::shared_ptr<Task> testTask_2 = std::make_shared<Task>();
-	//std::shared_ptr<Task> testTask_3 = std::make_shared<Task>();
-
-
-	//testTask_2->SetTask(&CoreEngine::PrintTest, this, 5);
-	//testTask_3->SetTask(&CoreEngine::PrintTest, this, 6);
-
-	//std::shared_ptr<Strand> testStrand = std::make_shared<Strand>(std::vector{ testTask_2,testTask_3 });
-
-	
-
-	//ThreadHandler::GetInstance()->AddStrand(testStrand);
-
-	//ThreadHandler::GetInstance()->RunThreads();
 	
 	isRunning = true;
 	return true;
@@ -214,7 +219,7 @@ void CoreEngine::OnDestroy()
 
 	Camera::removeInstance();
 	TextureManager::DeleteAllTextures();
-	ModelManager::DestroyAllModels();
+	ModelManager::GetInstance()->DestroyAllModels();
 	InputManager::RemoveInstance();
 	ShaderManager::DestroyAllShaders();
 

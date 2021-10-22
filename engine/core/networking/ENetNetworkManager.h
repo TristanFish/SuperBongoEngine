@@ -7,46 +7,6 @@
 
 #include "NetworkManager.h"
 
-class TempSemaphore
-{
-	std::mutex mutex;
-	std::condition_variable condition;
-	short count = 0;
-
-public:
-	TempSemaphore(short count_)
-	{
-		count = count_;
-	}
-
-	void Release()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		count++;
-		condition.notify_one();
-	}
-
-	void Acquire()
-	{
-		std::unique_lock<decltype(mutex)> lock(mutex);
-		while(!count)
-		{
-			condition.wait(lock);
-		}
-		count--;
-	}
-
-	bool TryAcquire()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		if(count)
-		{
-			count--;
-			return true;
-		}
-		return false;
-	}
-};
 
 constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
 

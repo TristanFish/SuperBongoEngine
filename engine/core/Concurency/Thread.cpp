@@ -5,18 +5,26 @@
 #include <chrono>
 
 #include <processthreadsapi.h>
+     
 
-//#define WIN32_LEAN_AND_MEAN      
 
-
-Thread::Thread() : computeTime(0.0f), isActive(true), priority(EThreadPriority::THREAD_PRIORITYIDLE)
+Thread::Thread() : F_ComputeTime(0.0f), isActive(true), E_Priority(EThreadPriority::THREAD_PRIORITYNORMAL), E_ThreadType(TH_WORKER)
 {
-	thread = std::thread(&Thread::ExecuteCurrentTask, this);
+
+	SetPriority(E_Priority);
+
+	T_Thread = std::thread(&Thread::ExecuteCurrentTask, this);
 	
-	
+}
+
+Thread::Thread(EThreadPriority priority, EThreadType threadType) : F_ComputeTime(0.0f), isActive(true)
+{
+
 	SetPriority(priority);
 
-	
+	E_ThreadType = threadType;
+
+	T_Thread = std::thread(&Thread::ExecuteCurrentTask, this);
 }
 
 Thread::~Thread()
@@ -26,19 +34,23 @@ Thread::~Thread()
 
 void Thread::SetNewTask(std::shared_ptr<Task> newTask)
 {
-	currentTask = newTask;
+	T_CurrentTask = newTask;
 }
 
 void Thread::ExecuteCurrentTask()
 {
 	while (isActive)
 	{
-		if (currentTask != nullptr)
+		if (T_CurrentTask != nullptr)
 		{
-			std::unique_lock<std::mutex>  uLock(mutex);
-			currentTask->RunTask();
-			currentTask = nullptr;
-			condition.notify_one();
+
+			std::unique_lock<std::mutex>  uLock(M_Mutex);
+
+			T_CurrentTask->RunTask();
+			
+
+			T_CurrentTask = nullptr;
+			C_ConditionVar.notify_one();
 		}
 		else
 		{
@@ -53,31 +65,31 @@ void Thread::JoinThread()
 {
 	isActive = false;
 
-	if (thread.joinable())
+	if (T_Thread.joinable())
 	{
-		thread.join();
+		T_Thread.join();
 	}
 }
 
 bool Thread::IsCurrentTaskNull() const
 {
-	return currentTask == nullptr;
+	return T_CurrentTask == nullptr;
 }
 
 std::mutex& Thread::GetMutex() 
 {
-	return mutex;
+	return M_Mutex;
 }
 
 std::condition_variable& Thread::GetConditionVar() 
 {
-	return condition;
+	return C_ConditionVar;
 }
 
 void Thread::SetPriority(EThreadPriority newPriority)
 {
 
-	std::scoped_lock<std::mutex> lock(mutex);
-	priority = newPriority;
-	SetThreadPriority(thread.native_handle(), -15);
+	std::scoped_lock<std::mutex> lock(M_Mutex);
+	E_Priority = newPriority;
+	SetThreadPriority(T_Thread.native_handle(), static_cast<int>(E_Priority));
 }
