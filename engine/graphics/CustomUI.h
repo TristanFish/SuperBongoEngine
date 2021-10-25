@@ -204,7 +204,7 @@ namespace CustomUI
 	
 	enum class RenderMode : unsigned int
 	{
-		Lighting = 0,
+		Result = 0,
 		Albedo = 1,
 		Position = 2,
 		Normals = 3,

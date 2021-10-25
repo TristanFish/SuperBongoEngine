@@ -29,7 +29,7 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 
 	
-	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
 
 	if (window == nullptr)
 	{

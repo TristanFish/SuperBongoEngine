@@ -14,7 +14,6 @@
 
 #include "Utility/LoadUtility.h"
 #include "core/resources/SaveManager.h"
-#include "core/CoreEngine.h"
 
 #include "UIStatics.h"
 
@@ -416,7 +415,7 @@ int HierarchyPanel::GetObjIndex(std::string objName) const
 
 #pragma endregion
 
-#pragma region PerformanceMonitor
+#pragma region PerformancePanel
 
 int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
@@ -545,10 +544,10 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Albedo]"), aspectSize("[Free Aspect]"), mode(RenderMode::Albedo), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), mode(RenderMode::Result), isMouseHovered(false), isActive(true)
 {
 
-	modeMap.push_back("Lighting");
+	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
 	modeMap.push_back("Position");
 	modeMap.push_back("Normals");

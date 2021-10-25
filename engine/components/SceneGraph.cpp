@@ -45,6 +45,15 @@ void SceneGraph::Init()
 	}
 }
 
+void SceneGraph::PostInit()
+{
+	for(GameObject* go : gameObjects)
+	{
+		go->PostInit();
+	}
+	sceneIsPostInit = true;
+}
+
 void SceneGraph::Update(const float deltaTime)
 {
 	for (auto* g : gameObjects)
@@ -58,22 +67,12 @@ void SceneGraph::Update(const float deltaTime)
 void SceneGraph::Render() const
 {
 	//Clear the default framebuffer
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Renderer::GetInstance()->defaultBuffer.Bind();
+	Renderer::GetInstance()->defaultBuffer.Clear();
 	//Bind the gbuffer and clear it
 	Renderer::GetInstance()->gBuffer.Bind();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Renderer::GetInstance()->gBuffer.Clear();
 	glEnable(GL_DEPTH_TEST);
-
-
-#ifdef _DEBUG
-	for (auto* g : gameObjects)
-	{
-		g->DrawDebugGeometry();
-	}
-#endif // DEBUG
 
 	Renderer::GetInstance()->Render();
 }
@@ -87,25 +86,19 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 }
 
 //Finds THE FIRST gameObject with the given name
-GameObject& SceneGraph::FindGameObject(const char* name)
+GameObject* SceneGraph::FindGameObject(const char* name)
 {
 	for (auto* g : gameObjects)
 	{
 		if (g->name == name)
 		{
-			return *g;
+			return g;
 		}
 	}
 
-	std::cerr << "No object named \"" << name << "\" was found. Messing things up so that you know something went wrong" << std::endl;
+	EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
-	for (auto* g : gameObjects)
-	{
-		g->transform.SetPos(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
-		g->transform.SetScale(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
-	}
-
-	return *gameObjects[0];
+	return nullptr;
 }
 
 //Adds a gameObject with a name and position
@@ -149,6 +142,13 @@ void SceneGraph::LoadGameObject(GameObject* go)
 	go->Init();
 
 	gameObjects.emplace_back(go);
+	EngineLogger::Info(std::string(go->name) + " added to scenegraph", "ECS.cpp", __LINE__);
+
+	if(sceneIsPostInit)
+	{
+		//if the scene has already finished its OnCreate function make sure to call PostInit
+		go->PostInit();
+	}
 
 	if (go->HasComponent<RigidBody3D>())
 	{
@@ -165,7 +165,7 @@ void SceneGraph::LoadGameObject(GameObject* go)
 		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
 	}
 
-	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
+	
 
 	for (GameObject* child : go->children)
 	{

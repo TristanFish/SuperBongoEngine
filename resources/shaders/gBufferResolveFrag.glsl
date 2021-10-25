@@ -1,5 +1,5 @@
 #version 450
-
+#define MAX_LIGHTS 10
 layout (location = 0) out vec4 fragColor;
 
 
@@ -12,12 +12,12 @@ uniform sampler2D posTexture;
 uniform sampler2D depthTexture;
 uniform usampler2D stencilTexture;
 
-uniform int activeLights = 1;
-uniform vec3 lightsPos[2];
-uniform vec3 lightsAmb[2];
-uniform vec3 lightsDiff[2];
-uniform vec3 lightsSpec[2];
-uniform float lightsIntens[2];
+uniform unsigned int activeLights = 1;
+uniform vec3 lightsPos[MAX_LIGHTS];
+uniform vec3 lightsAmb[MAX_LIGHTS];
+uniform vec3 lightsDiff[MAX_LIGHTS];
+uniform vec3 lightsSpec[MAX_LIGHTS];
+uniform float lightsIntens[MAX_LIGHTS];
 
 
 void main()
@@ -53,10 +53,12 @@ void main()
 
 		vec3 amb = lightsAmb[i] * col.xyz;
 		vec3 diffuse = lightsDiff[i] * diff * col.xyz;
-		vec3 spec = lightsSpec[i] * col.xyz;
+
+		float attenuation = clamp(10.0 / dist, 0.0, 1.0);
+		//vec3 spec = lightsSpec[i] * col.xyz;
 
 
-		lightCol = vec4(amb + diffuse, 1.0);
+		lightCol += vec4(attenuation * (amb + diffuse), 1.0);
 	}
 
 	fragColor = lightCol + col;

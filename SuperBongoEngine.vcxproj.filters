@@ -926,9 +926,6 @@
     <ClInclude Include="engine\components\AI\AIComponent.h">
       <Filter>src\engine\components\AI</Filter>
     </ClInclude>
-    <ClInclude Include="game\gameObjects\AiGameObject.h">
-      <Filter>src\engine\components\AI</Filter>
-    </ClInclude>
     <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h">
       <Filter>src\engine\components\AI</Filter>
     </ClInclude>
@@ -952,6 +949,15 @@
     </ClInclude>
     <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
       <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\AiGameObject.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Colour.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="NameEnumPair.h">
+      <Filter>src\engine\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1047,9 +1053,6 @@
     </ClCompile>
     <ClCompile Include="engine\components\Instancer.cpp">
       <Filter>src\engine\components</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\components\3D\LightComponent.cpp">
-      <Filter>src\engine\components\3D</Filter>
     </ClCompile>
     <ClCompile Include="game\gameObjects\LightObject.cpp">
       <Filter>src\game\gameObjects</Filter>
@@ -1227,9 +1230,6 @@
     <ClCompile Include="engine\components\AI\AIComponent.cpp">
       <Filter>src\engine\components\AI</Filter>
     </ClCompile>
-    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
-      <Filter>src\engine\components\AI</Filter>
-    </ClCompile>
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp">
       <Filter>src\engine\components\AI</Filter>
     </ClCompile>
@@ -1254,53 +1254,17 @@
     <ClCompile Include="engine\core\networking\NetworkManager.cpp">
       <Filter>src\engine\core\networking</Filter>
     </ClCompile>
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\LightComponent.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="src\graphics\shaders\2DTextureFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\2DTextureVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
     <None Include="external\include\assimp\color4.inl">
       <Filter>external\include\assimp</Filter>
-    </None>
-    <None Include="src\graphics\shaders\DefaultFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\DefaultVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\FogFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\FogVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\gBufferResolveVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\gBufferShaderVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\GrassFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\GrassVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\InstanceFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\InstanceVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
     </None>
     <None Include="external\include\assimp\material.inl">
       <Filter>external\include\assimp</Filter>
@@ -1310,24 +1274,6 @@
     </None>
     <None Include="external\include\assimp\matrix4x4.inl">
       <Filter>external\include\assimp</Filter>
-    </None>
-    <None Include="src\graphics\shaders\RefractFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\RefractVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\SkyBoxFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\SkyBoxVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\WaterFrag.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
-    </None>
-    <None Include="src\graphics\shaders\WaterVert.glsl">
-      <Filter>src\engine\graphics\shaders</Filter>
     </None>
     <None Include="external\include\assimp\quaternion.inl">
       <Filter>external\include\assimp</Filter>
@@ -1340,6 +1286,66 @@
     </None>
     <None Include="external\include\assimp\vector3.inl">
       <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="resources\shaders\2DTextureFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\2DTextureVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\DefaultFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\DefaultVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\FogFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\FogVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferResolveFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferResolveVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferShaderFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferShaderVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\GrassFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\GrassVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\InstanceFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\InstanceVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\RefractFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\RefractVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\SkyBoxFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\SkyBoxVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\WaterFrag.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\WaterVert.glsl">
+      <Filter>src\engine\graphics\shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

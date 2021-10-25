@@ -80,7 +80,7 @@ void EngineLogger::Log(const MessageType type_, const std::string& message_, con
 	if (type_ <= currentSev && currentSev > MessageType::TYPE_NONE)
 	{
 		const std::string log = std::string(message_ + " in: " + fileName_ + " on line: " + std::to_string(line_) + "\n");
-		std::cout << log;
+		//std::cout << log;
 		std::ofstream out;
 		out.open(outputName.c_str(), std::ios::app | std::ios::out);
 		if(consoleCallback != nullptr && sendToConsoleLog)

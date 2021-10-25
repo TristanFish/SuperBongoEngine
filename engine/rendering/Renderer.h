@@ -23,18 +23,23 @@ public:
 	std::vector<LightComponent*> lights;
 	
 	//framebuffers
+	FrameBuffer defaultBuffer;
 	FrameBuffer gBuffer;
 	FrameBuffer gBufferRenderResult;
 
 	void Init();
 	void SetupFrameBuffers();
 	void SetupTextures();
+
+	void BindDefaultBuffer() { defaultBuffer.Bind(); }
+	void ClearDefaultBuffer() { defaultBuffer.Clear(); }
 	
 	void AddMeshRenderer(MeshRenderer* mr);
 	void DeleteMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
 	void DeleteLight(LightComponent* light);
 
+	static void DrawDebugGeometry(const std::vector<GameObject*>& objects);
 
 	void Render() ;
 	void DestroyRenderer();
