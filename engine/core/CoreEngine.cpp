@@ -93,17 +93,18 @@ bool CoreEngine::Init()
 
 	NetworkManager::GetInstance()->Init();
 	TextureManager::LoadAllTextures();
-	ModelManager::GetInstance()->LoadAllModels();
-	LoadUtility::GetInstance()->LoadExistingSaves();
+	//ModelManager::GetInstance()->LoadAllModels();
+	//LoadUtility::GetInstance()->LoadExistingSaves();
 	
 	std::shared_ptr<Task> LoadModelsTask = std::make_shared<Task>();
 	LoadModelsTask->SetTask(&ModelManager::LoadAllModels, ModelManager::GetInstance());
 
-	std::shared_ptr<Task> LoadSavesTask = std::make_shared<Task>();
+	std::shared_ptr<Task> LoadSavesTask = std::make_shared<Task>(ETaskPriority::Medium,ETaskType::TT_RENDERING);
 	LoadSavesTask->SetTask(&LoadUtility::LoadExistingSaves, LoadUtility::GetInstance());
 
 	
-	ThreadHandler::GetInstance();
+
+	ThreadHandler::GetInstance()->AddStrand(std::make_shared<Strand>(std::vector{ LoadModelsTask,LoadSavesTask }));
 	
 
 	auto after_time = std::chrono::high_resolution_clock::now();
@@ -246,6 +247,11 @@ int CoreEngine::GetCurrentSceneNum() const
 Scene* CoreEngine::GetCurrentScene() const
 {
 	return gameInterface->currentScene;
+}
+
+Window* CoreEngine::GetWindow() const
+{
+	return window;
 }
 
 void CoreEngine::ReloadCurrentScene()

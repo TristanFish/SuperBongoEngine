@@ -17,9 +17,9 @@ enum class EThreadPriority : int
 
 enum EThreadType : unsigned short
 {
-	TH_NONE = 0b00000000,
-	TH_WORKER = 0b00000001,
-	TH_RENDERER = 0b00000010,
+	TH_GENERAL = 0b00000001,
+	TH_UPDATER = 0b00000010,
+	TH_RENDERER = 0b00000100,
 };
 
 
@@ -34,6 +34,8 @@ private:
 	std::condition_variable C_ConditionVar;
 
 	std::shared_ptr<Task> T_CurrentTask;
+
+	bool once_flag;
 
 	EThreadPriority E_Priority;
 
@@ -58,6 +60,8 @@ public:
 
 	std::mutex& GetMutex();
 	std::condition_variable& GetConditionVar();
+
+	EThreadType GetThreadType() const;
 
 	void SetNewTask(std::shared_ptr<Task> newTask);
 	void SetPriority(EThreadPriority newPriority);

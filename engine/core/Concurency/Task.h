@@ -12,11 +12,11 @@ enum class ETaskPriority : int
 };
 
 // What type of thread this task can execute on
-enum ETaskType : unsigned short
+enum class ETaskType : unsigned short
 {
-	TT_NONE = 0b00000000,
-	TT_WORKER = 0b00000001,
-	TT_RENDERER = 0b00000010,
+	TT_GENERAL = 0b00000001,
+	TT_UPDATE = 0b00000010,
+	TT_RENDERING = 0b00000100,
 };
 
 
@@ -25,12 +25,16 @@ class Task
 private:
 
 	std::function<void()> F_Function;
+
 	ETaskPriority E_Priority;
 
+	ETaskType E_TaskType;
+
+	bool B_HasBeenCompleted;
 public:
 
 	Task();
-	Task(ETaskPriority newPriority);
+	Task(ETaskPriority newPriority, ETaskType newType);
 	Task(std::shared_ptr<Task> copyTask);
 	~Task();
 
@@ -38,6 +42,9 @@ public:
 
 	inline void SetPriority(ETaskPriority newPriority) { E_Priority = newPriority; };
 	inline ETaskPriority GetPriority() const { return E_Priority; }
+
+	inline ETaskType GetTaskType() const { return E_TaskType; }
+	inline bool HasBeenCompleted() const { return B_HasBeenCompleted; }
 
 	/*Lamda Explanation:
 			std::forward is basicly a wrapper for static_cast<Func&&>(func)

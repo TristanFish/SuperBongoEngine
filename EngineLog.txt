@@ -33,3 +33,26 @@
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 251
+[INFO]: Scene 1 Created in: Scene1.cpp on line: 20
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 256
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 277
+[INFO]: Box added to objectList in: ECS.cpp on line: 168
+[INFO]: Grass added to objectList in: ECS.cpp on line: 168
+[INFO]: Light added to objectList in: ECS.cpp on line: 168
+[INFO]: Plane-1 added to objectList in: ECS.cpp on line: 168
+[INFO]: Player added to objectList in: ECS.cpp on line: 168
+[INFO]: Sphere added to objectList in: ECS.cpp on line: 168
+[INFO]: test added to objectList in: ECS.cpp on line: 168
+[WARNING]: Uniform ID: modelMatrix not found or unused in: Shader.cpp on line: 50
+[WARNING]: Uniform ID: viewMatrix not found or unused in: Shader.cpp on line: 50
+[WARNING]: Uniform ID: projectionMatrix not found or unused in: Shader.cpp on line: 50
+[WARNING]: Uniform ID: meshColor not found or unused in: Shader.cpp on line: 82
+[WARNING]: Uniform ID: viewMatrix not found or unused in: Shader.cpp on line: 50
+[WARNING]: Uniform ID: projectionMatrix not found or unused in: Shader.cpp on line: 50

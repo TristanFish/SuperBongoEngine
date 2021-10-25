@@ -39,6 +39,8 @@ public:
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;
 
+	Window* GetWindow() const;
+
 	void ReloadCurrentScene();
 	void OnDestroy();
 

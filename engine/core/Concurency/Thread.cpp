@@ -1,23 +1,25 @@
 #include "Thread.h"
 #include "Task.h"
 
+#include "core/CoreEngine.h"
+#include "graphics/Window.h"
 #include <windows.h>
 #include <chrono>
-
 #include <processthreadsapi.h>
      
 
 
-Thread::Thread() : F_ComputeTime(0.0f), isActive(true), E_Priority(EThreadPriority::THREAD_PRIORITYNORMAL), E_ThreadType(TH_WORKER)
+Thread::Thread() : F_ComputeTime(0.0f), isActive(true), E_Priority(EThreadPriority::THREAD_PRIORITYNORMAL), E_ThreadType(TH_GENERAL), once_flag(false)
 {
 
 	SetPriority(E_Priority);
+
 
 	T_Thread = std::thread(&Thread::ExecuteCurrentTask, this);
 	
 }
 
-Thread::Thread(EThreadPriority priority, EThreadType threadType) : F_ComputeTime(0.0f), isActive(true)
+Thread::Thread(EThreadPriority priority, EThreadType threadType) : F_ComputeTime(0.0f), isActive(true), once_flag(false)
 {
 
 	SetPriority(priority);
@@ -39,6 +41,13 @@ void Thread::SetNewTask(std::shared_ptr<Task> newTask)
 
 void Thread::ExecuteCurrentTask()
 {
+	// Make sure that the opengl/sdl thread is changed before we make any calls
+	if (E_ThreadType & EThreadType::TH_RENDERER && !once_flag)
+	{
+		CoreEngine::GetInstance()->GetWindow()->ChangeSDL_GL_Thread();
+		once_flag = true;
+	}
+
 	while (isActive)
 	{
 		if (T_CurrentTask != nullptr)
@@ -84,6 +93,11 @@ std::mutex& Thread::GetMutex()
 std::condition_variable& Thread::GetConditionVar() 
 {
 	return C_ConditionVar;
+}
+
+EThreadType Thread::GetThreadType() const
+{
+	return E_ThreadType;
 }
 
 void Thread::SetPriority(EThreadPriority newPriority)

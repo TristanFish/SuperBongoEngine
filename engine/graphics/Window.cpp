@@ -5,6 +5,8 @@
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#include <windows.h>
+#include <winbase.h>
 Window::Window() : window(nullptr),height(0),width(0)
 {
 }
@@ -43,6 +45,9 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 	context = SDL_GL_CreateContext(window);
 	
+
+	
+
 	int major,minor;
 	glGetIntegerv(GL_MAJOR_VERSION, &major); 
 	
@@ -104,6 +109,14 @@ int Window::GetHeight() const
 SDL_Window* Window::GetWindow() const
 {
 	return window;
+}
+
+void Window::ChangeSDL_GL_Thread()
+{
+
+	wglMakeCurrent(NULL, NULL);
+	renderThreadcontext = SDL_GL_CreateContext(window);;
+	SDL_GL_MakeCurrent(window, renderThreadcontext);
 }
 
 void Window::SetAttributes(int major, int minor)
