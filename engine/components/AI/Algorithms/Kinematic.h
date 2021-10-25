@@ -38,7 +38,9 @@ namespace Kinematic	{
 	private:
 		GameObject* aiObject;
 		Transform target;
-		float radius, timeToTarget;
+		
+		float radius;
+		float timeToTarget; //generally lest than 1 second
 
 	public:
 		KinematicArrive(GameObject* aiObject_, const Transform& target_, const float radius_, const float timeToTarget_);

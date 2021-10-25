@@ -6,7 +6,7 @@
 
 #include "gameObjects/AiGameObject.h"
 
-#include "Primitives/Box.h"
+#include "Primitives/Sphere.h"
 
 
 
@@ -26,7 +26,7 @@ bool SceneAi::OnCreate()
 	AiGameObject* mainAi = new AiGameObject("AiObj",Vec3(1.0f));
 	objectList->AddGameObject(mainAi);
 
-	Box* targetBox = new Box("targetBoxObj",Vec3(5.0f));
+	Sphere* targetBox = new Sphere("targetSphereObj",Vec3(5.0f, 2.5f, 7.0f));
 	objectList->AddGameObject(targetBox);
 
 	mainAi->aiTarget = targetBox;
