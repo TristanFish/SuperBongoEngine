@@ -179,7 +179,7 @@ namespace CustomUI
 		bool isActive;
 
 		//! gameobjects vector
-		/*! Hold's all of the gameobjects in the hierarchy */
+		/*! Holds all of the gameobjects in the hierarchy */
 		std::vector<GameObject*> gameobjects;
 
 		//! textFilter ImGuiTextFilter

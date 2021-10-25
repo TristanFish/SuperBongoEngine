@@ -158,17 +158,7 @@ HierarchyPanel::HierarchyPanel() : isActive(true)
 
 HierarchyPanel::~HierarchyPanel()
 {
-
-	if (!gameobjects.empty())
-	{
-		for (auto obj : gameobjects)
-		{
-			obj = nullptr;
-		}
-		gameobjects.clear();
-
-	}
-
+	gameobjects.clear();
 }
 
 void HierarchyPanel::Construct()
@@ -183,8 +173,6 @@ void HierarchyPanel::Render()
 {
 
 	ImGui::Begin("Object Hierarchy", &isActive, ImGuiWindowFlags_NoTitleBar);
-
-
 	
 	textFilter.Draw("##Obj Filter");
 
@@ -207,17 +195,7 @@ void HierarchyPanel::Render()
 
 void HierarchyPanel::Reset()
 {
-
-
-	if (gameobjects.size() >= 1)
-	{
-		for (auto obj : gameobjects)
-		{
-			obj = nullptr;
-		}
-		gameobjects.clear();
-
-	}
+	gameobjects.clear();
 }
 
 void HierarchyPanel::Update(const float deltatime)
@@ -391,7 +369,7 @@ void HierarchyPanel::UpdateActiveObjects()
 		iter = std::find(gameobjects.begin(), gameobjects.end(), obj);
 		if (iter == gameobjects.end())
 		{
-			gameobjects.push_back(obj);
+			gameobjects.emplace_back(obj);
 		}
 	}
 }
@@ -836,7 +814,8 @@ void DockSpace::Reset()
 
 void DockSpace::ConstructUserInterface()
 {
-
+	UIStatics::SetSelectedObject(nullptr);
+	
 	for (auto panel : uiInterfaces)
 	{
 		panel->Construct();

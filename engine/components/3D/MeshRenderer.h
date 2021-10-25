@@ -89,7 +89,7 @@ public:
 
 	//!Render override Function
 	/*!Render the mesh & run the shader that the function is given*/
-	void Render(const ShaderProgram& shader) const;
+	void Render(const ShaderProgram& shader_) const;
 
 	//!HandleEvents override Function
 	/*!Handles any events needed for the MeshRenderer*/
@@ -113,6 +113,10 @@ private:
 			uaCallback();
 		}
 	}
+
+	void RenderMesh(const Mesh& mesh, const ShaderProgram& shader) const;
+	void RenderInstancedMesh(const std::vector<Mesh>& meshes, const ShaderProgram& shader, unsigned int amount) const;
+
 public:
 	
 	typedef std::function<void ()> UniformAttachCallback;
