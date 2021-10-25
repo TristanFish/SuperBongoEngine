@@ -23,11 +23,18 @@ void DynamicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)
 
 		aiBody->SetAngAccel(angularAccel);
 
-		if (VMath::mag(linearAccel) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
-			linearAccel = VMath::normalize(linearAccel) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
+		if (VMath::mag(linearAccel) > aiObject_->GetComponent<AIComponent>()->GetMaxAcceleration()) {
+			linearAccel = VMath::normalize(linearAccel) * aiObject_->GetComponent<AIComponent>()->GetMaxAcceleration();
 		}
 
+		if(VMath::mag(aiBody->GetVelocity()) >= aiObject_->GetComponent<AIComponent>()->GetMaxSpeed())	{
+			aiBody->SetVelocity(VMath::normalize(aiBody->GetVelocity()) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed());
+		}
+		
 		aiBody->SetAccel(linearAccel);
+		if(abs(VMath::mag(linearAccel)) <= VERY_SMALL)	{
+			aiBody->SetVelocity(Vec3(0.0f));
+		}
 	}
 	else {
 		EngineLogger::Error(aiObject_->GetName() + " does not have either an AIComponent or a RigidBody3D. Cannot update steering",
@@ -61,6 +68,8 @@ bool DynamicSeek::getSteering()	{
 	result.linearAccel = VMath::normalize(result.linearAccel);
 	result.linearAccel = aiObject->GetComponent<AIComponent>()->GetMaxAcceleration() * result.linearAccel;
 
+	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
+	
 	result.angularAccel = Vec3(0.0f);
 
 	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
@@ -132,6 +141,8 @@ bool DynamicArrive::getSteering()	{
 		result.linearAccel = Vec3(0.0f);
 		result.angularAccel = Vec3(0.0f);
 
+		aiObject->GetComponent<AIComponent>()->SetSteering(&result);
+		
 		return false;
 	}
 
