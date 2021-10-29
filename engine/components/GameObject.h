@@ -111,7 +111,7 @@ public:
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
 
 	/*!Sets the Name of this a gameObject*/
-	void SetName(std::string name_) { name = name_; }
+	void SetName(const std::string& name_) { name = name_; }
 
 
 	 GameObject* GetParent() const { return parent; }
@@ -124,9 +124,7 @@ public:
 
 	 int GetChildCount() const { return children.size(); }
 	
-
-
-	inline bool operator == (const GameObject* v) { return name == v->name; }
+	bool operator == (const GameObject* v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}

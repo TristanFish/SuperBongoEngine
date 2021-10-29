@@ -12,4 +12,17 @@
     <SceneSettings>
         <BaseClass: :="class Scene1"/>
     </SceneSettings>
+    <Objects>
+        <Grass/>
+        <Light/>
+        <Box/>
+        <Sphere/>
+        <test/>
+        <Player/>
+        <Plane-1/>
+        <Light_1/>
+    </Objects>
+    <SceneSettings>
+        <BaseClass: :="class Scene1"/>
+    </SceneSettings>
 </Root>

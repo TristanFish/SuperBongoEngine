@@ -19,20 +19,7 @@
 
 std::unique_ptr<LoadUtility> LoadUtility::utilityInstance = std::unique_ptr<LoadUtility>();
 
-
-LoadUtility::LoadUtility()
-{
-
-}
-
-LoadUtility::~LoadUtility()
-{
-
-}
-
-
-
-void LoadUtility::LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile& file)
+void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile& file)
 {
 
 
@@ -53,7 +40,7 @@ void LoadUtility::LoadRecersiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 		if (!tmpElement->NoChildren())
 		{
-			LoadRecersiveElements(tmpElement->FirstChildElement(), file);
+			LoadRecursiveElements(tmpElement->FirstChildElement(), file);
 		}
 	}
 }
@@ -105,7 +92,7 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 	}
 }
 
-void LoadUtility::LoadSave(const std::string saveName,  std::string savePath, FileType extention)
+void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
 {
 	SaveFile file = SaveFile(saveName, extention);
 
@@ -124,7 +111,7 @@ void LoadUtility::LoadSave(const std::string saveName,  std::string savePath, Fi
 	tinyxml2::XMLNode* pRoot = SaveData.FirstChildElement("Root");
 
 
-	LoadRecersiveElements(pRoot->FirstChildElement(), file);
+	LoadRecursiveElements(pRoot->FirstChildElement(), file);
 	
 
 
@@ -135,7 +122,7 @@ void LoadUtility::LoadSave(const std::string saveName,  std::string savePath, Fi
 
 
 
-		if (SaveManager::SaveableObjects.find(classType.c_str()) == SaveManager::SaveableObjects.end())
+		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
 		{
 
 			AddObjectToMap(classType.c_str());
@@ -160,20 +147,18 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 	float floatValue = atrib->FloatValue();
 
 
-	 if (atrib->QueryFloatValue(&floatValue) == tinyxml2::XMLError::XML_SUCCESS)
+	if (atrib->QueryFloatValue(&floatValue) == tinyxml2::XMLError::XML_SUCCESS)
 	{
-	info.Attributes.emplace(atrib->Name(), floatValue);
+		info.Attributes.emplace(atrib->Name(), floatValue);
 	}
-
 	else if (atrib->QueryIntValue(&intValue) == tinyxml2::XMLError::XML_SUCCESS)
 	{
 		info.Attributes.emplace(atrib->Name(), intValue);
 	}
-
 	else if (atrib->Value() != "")
-	 {
+	{
 		 info.Attributes.emplace(atrib->Name(), std::string(atrib->Value()));
-	 }
+	}
 
 	else if (atrib->QueryBoolValue(&boolValue) == tinyxml2::XMLError::XML_SUCCESS)
 	 {
@@ -185,7 +170,7 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 	}
 }
 
-FileType LoadUtility::GetFileExtention( std::string ext) const
+FileType LoadUtility::GetFileExtention(const std::string& ext) const
 {
 
 	if (ext == ".scene")
@@ -290,7 +275,7 @@ void LoadUtility::UnLoadSceneSaves()
 	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
-int LoadUtility::LoadInt(std::string saveName, std::string elmName, std::string atribName)
+int LoadUtility::LoadInt(const std::string& saveName, const std::string& elmName, const std::string& atribName)
 {
 	int QueryiedValue = 0;
 	SaveManager::GetSaveFile(saveName).FindElement(elmName).element->QueryIntAttribute(atribName.c_str(), &QueryiedValue);
@@ -298,7 +283,7 @@ int LoadUtility::LoadInt(std::string saveName, std::string elmName, std::string 
 	return QueryiedValue;
 }
 
-float LoadUtility::LoadFloat(std::string saveName, std::string elmName, std::string atribName)
+float LoadUtility::LoadFloat(const std::string& saveName, const std::string& elmName, const std::string& atribName)
 {
 	float QueryiedValue = 0.0f;
 	SaveManager::GetSaveFile(saveName).FindElement(elmName).element->QueryFloatAttribute(atribName.c_str(), &QueryiedValue);
@@ -356,7 +341,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 			if (TypeName == obj.first)
 			{
 				GameObject* clone = obj.second->GetClone();
-				clone->SetName(prevLoadedObjName.data());
+				clone->SetName(prevLoadedObjName);
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
 				clone->SetScale(Scale);
@@ -374,13 +359,13 @@ void LoadUtility::LoadObject(SaveFile& file)
 	}
 }
 
-void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface)
+void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
 {
 	std::vector<SaveFile> sceneFiles = SaveManager::GetSavesOfType(FileType::SCENE);
 	
-	for (int i = 0; i < sceneFiles.size(); i++)
+	for (size_t i = 0; i < sceneFiles.size(); i++)
 	{
-		for (int s = 0; s < G_Interface->Scenes.size(); s++)
+		for (size_t s = 0; s < G_Interface->Scenes.size(); s++)
 		{
 			std::string classType = std::get<std::string>(sceneFiles[i].FindAttribute("BaseClass:", ":"));
 			if (typeid(*G_Interface->Scenes[s]).name() == classType)
@@ -403,7 +388,7 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface)
 	}
 }
 
-std::string LoadUtility::LoadString(std::string saveName, std::string elmName, std::string atribName)
+std::string LoadUtility::LoadString(const std::string& saveName, const std::string& elmName, const std::string& atribName)
 {
 	const char* QueryiedValue;
 	SaveManager::GetSaveFile(saveName).FindElement(elmName).element->QueryStringAttribute(atribName.c_str(), &QueryiedValue);
