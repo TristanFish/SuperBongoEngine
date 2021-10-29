@@ -124,8 +124,6 @@ void Renderer::DeleteLight(LightComponent* light)
 		if (*iter == light)
 		{
 			lights.erase(iter);
-			delete light;
-			light = nullptr;
 			break;
 		}
 	}
@@ -445,6 +443,7 @@ void Renderer::RenderGBufferResult()
 	gBufferRenderResult.Bind();
 	resultShader.RunShader();
 
+	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
 	BindGBufferTextures();
 
 	AttachLights();

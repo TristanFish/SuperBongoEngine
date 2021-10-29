@@ -215,5 +215,4 @@ void Scene::LoadMapData()
 
 		}
 	}
-
 }

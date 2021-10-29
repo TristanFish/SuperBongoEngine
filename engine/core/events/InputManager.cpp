@@ -35,7 +35,7 @@ void InputManager::PollEvents(SDL_Event& event)
 	Uint32 mouseButton = SDL_GetMouseState(&mousex, &mousey);
 
 	mouse.prevPosition = mouse.position;
-	mouse.position = Vec2(mousex, mousey);
+	mouse.position = Vec2(static_cast<float>(mousex), static_cast<float>(mousey));
 	
 }
 

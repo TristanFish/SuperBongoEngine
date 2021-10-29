@@ -320,7 +320,7 @@ namespace CustomUI
 
 		//! GenerateItem Function
 		/*! Generates a specefic item in the content browser*/
-		void GenerateItem(std::filesystem::directory_entry entry);
+		void GenerateItem(const std::filesystem::directory_entry& entry);
 
 		//! GenDirectoryItems Function
 		/*! Used to refresh all the items being displayed when the directory is changed*/
@@ -332,7 +332,7 @@ namespace CustomUI
 
 		//! ChangeDirectory Function
 		/*! Changes the current directory to whatever directory name is passed in e.g. CurrentDir = (Objects/Primitives/Cubes), PassedInDir = (Primitives), NewDir = (Objects/Primitives)*/
-		void ChangeDirectory(std::string dir);
+		void ChangeDirectory(const std::string& dir);
 
 	};
 

@@ -31,8 +31,20 @@ GLuint ShaderProgram::LinkShaders(const std::vector<GLint>& shaders)
 	{
 		glAttachShader(programID, shaders[i]);
 	}
-	
+
+	GLint status;
 	glLinkProgram(programID);
+	glGetProgramiv(programID, GL_LINK_STATUS, &status);
+	if(status == 0)
+	{
+		GLsizei errorLogSize = 0;
+		std::string errorLog;
+		glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &errorLogSize);
+		errorLog.resize(errorLogSize);
+		glGetProgramInfoLog(programID, errorLogSize, &errorLogSize, &errorLog[0]);
+		EngineLogger::Error(errorLog, "ShaderProgram.cpp", __LINE__);
+	}
+	
 	
 	return programID;
 }

@@ -181,10 +181,10 @@ public:
 		CheckIfTemplateTypeInheritsFromComponent<T>();
 		for(auto it = componentList.begin(); it != componentList.end(); ++it)
 		{
-			if(dynamic_cast<T*>(*it))
+			if(T* compType = dynamic_cast<T*>(*it))
 			{
 				EngineLogger::Warning("Component " + std::string((*it)->GetType()) + " already found in " + std::string(name), "ECS.h", __LINE__);
-				return nullptr;
+				return compType;
 			} 
 		}
 		componentList.emplace_back(new T());

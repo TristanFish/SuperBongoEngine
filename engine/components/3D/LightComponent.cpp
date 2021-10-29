@@ -8,9 +8,9 @@ void LightComponent::Init(GameObject* g)
 {
 	gameObject = g;
 	type = LightType::POINT;
-	ambColor = Vec3(0.1f, 0.0f, 0.0f);
-	diffColor = Vec3(0.0f, 1.0f, 0.0f);
-	specColor = Vec3(0,0,1);
+	ambColor = Vec3(1.0f);
+	diffColor = Vec3(1.0f);
+	specColor = Vec3(1.0f);
 	intensity = 1.0f;
 }
 
@@ -46,13 +46,11 @@ void LightComponent::ImGuiRender()
 
 		}
 
-		ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.5f, 500.0f);
+		ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 500.0f);
 		ImGui::ColorEdit3("Ambient Color", ambColor);
 		ImGui::ColorEdit3("Diffuse Color", diffColor);
 		ImGui::ColorEdit3("Specular Color", specColor);
 
 		ImGui::TreePop();
-
-
 	}
 }

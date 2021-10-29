@@ -16,6 +16,7 @@
 #include "core/resources/SaveManager.h"
 
 #include "UIStatics.h"
+#include "core/events/InputManager.h"
 
 using namespace CustomUI;
 
@@ -179,7 +180,7 @@ void HierarchyPanel::Render()
 	textFilter.Draw("##Obj Filter");
 
 	
-	for (int i = 0; i < gameobjects.size(); i++)
+	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
 		if (gameobjects[i]->GetParent() == nullptr)
 		{
@@ -202,7 +203,11 @@ void HierarchyPanel::Reset()
 
 void HierarchyPanel::Update(const float deltatime)
 {
-
+	if(InputManager::GetInstance()->GetKey(SDLK_DELETE))
+	{
+		Globals::s_SceneGraph->DeleteGameObject(UIStatics::GetSelectedObject());
+	}
+	
 	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
 	if (gameobjects.size() < size || gameobjects.size() > size)
 	{
@@ -378,7 +383,7 @@ void HierarchyPanel::UpdateActiveObjects()
 
 int HierarchyPanel::GetObjIndex(std::string objName) const
 {
-	for (int i = 0; i < gameobjects.size(); i++)
+	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
 		if (gameobjects[i]->name == objName)
 		{
@@ -507,9 +512,8 @@ double PerformanceMonitor::GetCPUUsage()
 	 GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
 	 memcpy(&sys, &fsys, sizeof(FILETIME));
 	 memcpy(&user, &fuser, sizeof(FILETIME));
-	 percent = (sys.QuadPart - lastSysCPU.QuadPart) +
-		 (user.QuadPart - lastUserCPU.QuadPart);
-	 percent /= (now.QuadPart - lastCPU.QuadPart);
+	 percent = static_cast<double>((sys.QuadPart - lastSysCPU.QuadPart) + (user.QuadPart - lastUserCPU.QuadPart));
+	 percent /= static_cast<double>(now.QuadPart - lastCPU.QuadPart);
 	 percent /= numProcessors;
 	 lastCPU = now;
 	 lastUserCPU = user;
@@ -973,7 +977,7 @@ void ContentBrowser::GenerateContent()
 	}
 
 	ImGui::Columns(colCount, 0, false);
-	for (int i = 0; i <  DirectoryItems.size(); i++)
+	for (size_t i = 0; i <  DirectoryItems.size(); i++)
 	{
 		GenerateItem(DirectoryItems[i]);
 	}
@@ -987,14 +991,14 @@ void ContentBrowser::GeneratePathNav()
 
 
 
-	ImGui::Columns((int)DirectoryNames.size(), "Navigation", false);
+	ImGui::Columns(static_cast<int>(DirectoryNames.size()), "Navigation", false);
 
 
 	float spacing = 30.0f;
 
 
 
-	for (int i = 0; i < DirectoryNames.size(); i++ )
+	for (size_t i = 0; i < DirectoryNames.size(); i++ )
 	{
 
 		if (ImGui::Button(DirectoryNames[i].c_str(), ImVec2{ ImGui::GetColumnWidth(i) - spacing,0.0f }))
@@ -1026,7 +1030,7 @@ void ContentBrowser::GeneratePathNav()
 
 }
 
-void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
+void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 {
 	std::filesystem::path path = entry.path();
 	std::string filename = entry.path().filename().string();
@@ -1069,7 +1073,7 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 		}
 		else if (fileType == ".jpg" | fileType == ".png")
 		{
-			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
+			iconTextureID = TextureManager::GetTexture(path.filename().string()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else
@@ -1104,7 +1108,7 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 
 				if (path.extension().string() == ".scene")
 				{
-					for (int i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
+					for (size_t i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
 					{
 						Scene* scene = CoreEngine::GetInstance()->gameInterface->Scenes[i];
 
@@ -1164,7 +1168,7 @@ void ContentBrowser::GenDirectoryItems()
 
 }
 
-void ContentBrowser::ChangeDirectory(std::string dir)
+void ContentBrowser::ChangeDirectory(const std::string& dir)
 {
 	std::string oldDir = CurrentDirectory.string();
 	std::string dirString = CurrentDirectory.string();
