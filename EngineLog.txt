@@ -1,20 +1,20 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 79
+[INFO]: Logger Created in: CoreEngine.cpp on line: 82
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 43
-[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
-[INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
-[INFO]: Fire.png in: TextureManager.cpp on line: 16
-[INFO]: FolderIcon.png in: TextureManager.cpp on line: 16
-[INFO]: Grass.jpg in: TextureManager.cpp on line: 16
-[INFO]: Hazard.png in: TextureManager.cpp on line: 16
-[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 16
-[INFO]: pufflet.bmp in: TextureManager.cpp on line: 16
-[INFO]: ReSize.png in: TextureManager.cpp on line: 16
-[INFO]: test.JPG in: TextureManager.cpp on line: 16
-[INFO]: texture_02.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_08.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_09.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_10.jpg in: TextureManager.cpp on line: 16
-[INFO]: water_dudv.png in: TextureManager.cpp on line: 16
+[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 24
+[INFO]: BallPlayer.png in: TextureManager.cpp on line: 28
+[INFO]: Fire.png in: TextureManager.cpp on line: 28
+[INFO]: FolderIcon.png in: TextureManager.cpp on line: 28
+[INFO]: Grass.jpg in: TextureManager.cpp on line: 28
+[INFO]: Hazard.png in: TextureManager.cpp on line: 28
+[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 28
+[INFO]: pufflet.bmp in: TextureManager.cpp on line: 28
+[INFO]: ReSize.png in: TextureManager.cpp on line: 28
+[INFO]: test.JPG in: TextureManager.cpp on line: 28
+[INFO]: texture_02.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_08.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_09.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_10.jpg in: TextureManager.cpp on line: 28
+[INFO]: water_dudv.png in: TextureManager.cpp on line: 28
 [INFO]: =================Loading all models================= in: ModelManager.cpp on line: 13
 [INFO]: Cube.fbx in: ModelManager.cpp on line: 23
 [INFO]: Grass.fbx in: ModelManager.cpp on line: 23
@@ -50,9 +50,3 @@
 [INFO]: Player added to objectList in: ECS.cpp on line: 168
 [INFO]: Sphere added to objectList in: ECS.cpp on line: 168
 [INFO]: test added to objectList in: ECS.cpp on line: 168
-[WARNING]: Uniform ID: modelMatrix not found or unused in: Shader.cpp on line: 50
-[WARNING]: Uniform ID: viewMatrix not found or unused in: Shader.cpp on line: 50
-[WARNING]: Uniform ID: projectionMatrix not found or unused in: Shader.cpp on line: 50
-[WARNING]: Uniform ID: meshColor not found or unused in: Shader.cpp on line: 82
-[WARNING]: Uniform ID: viewMatrix not found or unused in: Shader.cpp on line: 50
-[WARNING]: Uniform ID: projectionMatrix not found or unused in: Shader.cpp on line: 50

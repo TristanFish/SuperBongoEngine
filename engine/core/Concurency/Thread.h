@@ -24,7 +24,7 @@ enum EThreadType : unsigned short
 
 
 class Task;
-class Thread
+class Thread 
 {
 private:
 	std::thread T_Thread;

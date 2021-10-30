@@ -41,12 +41,6 @@ void Thread::SetNewTask(std::shared_ptr<Task> newTask)
 
 void Thread::ExecuteCurrentTask()
 {
-	// Make sure that the opengl/sdl thread is changed before we make any calls
-	if (E_ThreadType & EThreadType::TH_RENDERER && !once_flag)
-	{
-		CoreEngine::GetInstance()->GetWindow()->ChangeSDL_GL_Thread();
-		once_flag = true;
-	}
 
 	while (isActive)
 	{
@@ -54,18 +48,17 @@ void Thread::ExecuteCurrentTask()
 		{
 
 			std::unique_lock<std::mutex>  uLock(M_Mutex);
-
 			T_CurrentTask->RunTask();
-			
-
 			T_CurrentTask = nullptr;
 			C_ConditionVar.notify_one();
+			uLock.unlock();
 		}
 		else
 		{
 			// Make sure that this only happens once if it recently got called
 			//SetPriority(EThreadPriority::THREAD_PRIORITYIDLE);
-			std::this_thread::sleep_for(std::chrono::milliseconds(200));
+			if(~E_ThreadType & EThreadType::TH_RENDERER)
+				std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
 	}
 }

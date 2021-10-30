@@ -19,7 +19,7 @@ enum class ETaskType : unsigned short
 	TT_RENDERING = 0b00000100,
 };
 
-
+class Thread;
 class Task
 {
 private:
@@ -39,6 +39,7 @@ public:
 	~Task();
 
 	void RunTask();
+
 
 	inline void SetPriority(ETaskPriority newPriority) { E_Priority = newPriority; };
 	inline ETaskPriority GetPriority() const { return E_Priority; }

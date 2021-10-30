@@ -18,8 +18,6 @@ Window::~Window()
 
 bool Window::OnCreate(const char* name, int w, int h)
 {
-
-
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0)
 	{
 		EngineLogger::Error("SDL_Init went wrong", "window.cpp", __LINE__);
@@ -111,13 +109,7 @@ SDL_Window* Window::GetWindow() const
 	return window;
 }
 
-void Window::ChangeSDL_GL_Thread()
-{
 
-	wglMakeCurrent(NULL, NULL);
-	renderThreadcontext = SDL_GL_CreateContext(window);;
-	SDL_GL_MakeCurrent(window, renderThreadcontext);
-}
 
 void Window::SetAttributes(int major, int minor)
 {

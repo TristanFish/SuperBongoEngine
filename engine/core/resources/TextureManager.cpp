@@ -4,7 +4,19 @@
 #include <cassert>
 #include "core/Logger.h"
 
-std::unordered_map<std::string, Texture> TextureManager::textures;
+std::unique_ptr<TextureManager> TextureManager::textureManagerInstance = std::unique_ptr<TextureManager>();
+
+
+TextureManager::TextureManager() : textures(std::unordered_map<std::string,Texture>())
+{
+
+}
+
+TextureManager::~TextureManager()
+{
+
+}
+
 
 void TextureManager::LoadAllTextures()
 {
@@ -55,3 +67,14 @@ void TextureManager::DeleteAllTextures()
 	}
 	textures.clear();
 }
+
+TextureManager* TextureManager::GetInstance()
+{
+	if (textureManagerInstance == nullptr)
+	{
+		textureManagerInstance.reset(new TextureManager);
+	}
+	return textureManagerInstance.get();
+}
+
+

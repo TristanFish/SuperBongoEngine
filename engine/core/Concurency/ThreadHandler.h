@@ -9,6 +9,13 @@
 #include "Task.h"
 
 
+// What type of thread this task can execute on
+enum ETaskFlags : unsigned short
+{
+	TF_NONE = 0b00000000,
+	TF_WAITFORFINISH = 0b0000001,
+};
+
 class Thread;
 struct Strand
 {
@@ -45,6 +52,10 @@ public:
 
 	static ThreadHandler* GetInstance();
 
+
+
+#pragma region Adding Tasks
+
 	template<typename Func, typename... Args>
 	inline void AddTask(Func&& func, Args&&... args)
 	{
@@ -55,24 +66,25 @@ public:
 		PQ_Tasks.push(newTask);
 	}
 
-	template<typename Func>
-	inline void AddTask(Func&& func)
-	{
-		std::shared_ptr<Task> newTask;
 
-		newTask->SetTask(func);
-
-		PQ_Tasks.push(newTask);
-	}
-
-	void AddTask(std::shared_ptr<Task> newTask);
-
+	void AddTask(std::shared_ptr<Task> newTask, ETaskFlags taskFlag = ETaskFlags::TF_NONE);
 
 	void AddStrand(std::shared_ptr<Strand> newStrand);
 
 	void AddStrand(std::vector<std::shared_ptr<Task>> linkedTasks);
 
-	void RunThreads();
+#pragma endregion
+
+
+#pragma region Syncronization
+
+	void RunTasks();
+
+	void RunTasksWithWait();
+
+	void WaitForRender();
+
+#pragma endregion
 };
 #endif
 

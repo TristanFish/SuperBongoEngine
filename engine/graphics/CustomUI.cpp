@@ -1053,7 +1053,7 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 	if (entry.is_directory())
 	{
 
-		ImGui::ImageButton((ImTextureID)TextureManager::GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });
+		ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });
 
 
 		
@@ -1077,17 +1077,17 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 
 		if (fileType == ".sbo")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".fbx")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".jpg" | fileType == ".png")
 		{
-			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture(path.filename().string().c_str()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else

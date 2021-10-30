@@ -174,8 +174,8 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 
 		texturePath = texturePath.substr(texturePath.find_last_of('\\') + 1, texturePath.length());
 		//Load texture
-		TextureManager::GetTexture(texturePath).SetType(typeName);
-		textures.push_back(TextureManager::GetTexture(texturePath));
+		TextureManager::GetInstance()->GetTexture(texturePath).SetType(typeName);
+		textures.push_back(TextureManager::GetInstance()->GetTexture(texturePath));
 	}
 	return textures;
 }

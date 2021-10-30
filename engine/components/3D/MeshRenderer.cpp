@@ -128,7 +128,7 @@ void MeshRenderer::ImGuiRender()
 		ImGui::ColorEdit4("Mesh Color", meshColorTint);
 
 		
-		GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+		GLuint textureID = TextureManager::GetInstance()->GetTexture("texture_09.jpg").getTextureID();
 
 
 		if (ImGui::BeginCombo("##Flags", "Render Flags"))

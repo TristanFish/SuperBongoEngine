@@ -36,7 +36,10 @@ void CoreEngine::Update(const float deltaTime_)
 	{
 		gameInterface->Update(deltaTime_);
 	}
-	HandleEvents();
+
+	std::shared_ptr<Task> HandleEventsTask = std::make_shared<Task>(ETaskPriority::High, ETaskType::TT_RENDERING);
+	HandleEventsTask->SetTask(&CoreEngine::HandleEvents, this);
+	ThreadHandler::GetInstance()->AddTask(HandleEventsTask, ETaskFlags::TF_WAITFORFINISH);
 }
 
 void CoreEngine::Render()
@@ -79,12 +82,17 @@ bool CoreEngine::Init()
 	EngineLogger::Info("Logger Created", "CoreEngine.cpp", __LINE__);
 	
 	window = new Window();
-	if (!window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT))
+
+	std::shared_ptr<Task> CreateWindowTask = std::make_shared<Task>(ETaskPriority::Medium, ETaskType::TT_RENDERING);
+	CreateWindowTask->SetTask(&Window::OnCreate, window, "Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+
+	/*if (!window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT))
 	{
 		EngineLogger::FatalError("Window failed to initialize", "CoreEngine.cpp", __LINE__);
 		OnDestroy();
 		return false;
-	}
+	}*/
+	
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
 
@@ -92,43 +100,43 @@ bool CoreEngine::Init()
 
 
 	NetworkManager::GetInstance()->Init();
-	TextureManager::LoadAllTextures();
-	//ModelManager::GetInstance()->LoadAllModels();
-	//LoadUtility::GetInstance()->LoadExistingSaves();
-	
-	std::shared_ptr<Task> LoadModelsTask = std::make_shared<Task>();
-	LoadModelsTask->SetTask(&ModelManager::LoadAllModels, ModelManager::GetInstance());
+	TextureManager::GetInstance()->LoadAllTextures();
+	ModelManager::GetInstance()->LoadAllModels();
 
 	std::shared_ptr<Task> LoadSavesTask = std::make_shared<Task>(ETaskPriority::Medium,ETaskType::TT_RENDERING);
 	LoadSavesTask->SetTask(&LoadUtility::LoadExistingSaves, LoadUtility::GetInstance());
 
 	
 
-	ThreadHandler::GetInstance()->AddStrand(std::make_shared<Strand>(std::vector{ LoadModelsTask,LoadSavesTask }));
-	
-
-	auto after_time = std::chrono::high_resolution_clock::now();
-
-	auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(after_time - before_time);
-
-
-
 	if (gameInterface)
 	{
-		if (!gameInterface->OnCreate())
+
+		std::shared_ptr<Task> CreateInterfaceTask = std::make_shared<Task>(ETaskPriority::Medium, ETaskType::TT_RENDERING);
+		CreateInterfaceTask->SetTask(&GameInterface::OnCreate, gameInterface);
+
+		//Find a way to properly return values (Futures?)
+		ThreadHandler::GetInstance()->AddStrand(std::make_shared<Strand>(std::vector{CreateWindowTask,LoadSavesTask, CreateInterfaceTask }));
+
+		/*if (!gameInterface->OnCreate())
 		{
 			EngineLogger::FatalError("Game failed to initialize", "CoreEngine.cpp", __LINE__);
 			OnDestroy();
 			return false;
-		}
+		}*/
 
 	}
 
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
-	LoadUtility::GetInstance()->LoadSceneSaves();
-	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
-	GetCurrentScene()->LoadMapData();
 
+	std::shared_ptr<Task> LoadSceneSavesTask = std::make_shared<Task>(ETaskPriority::Medium, ETaskType::TT_RENDERING);
+	LoadSceneSavesTask->SetTask(&LoadUtility::LoadSceneSaves, LoadUtility::GetInstance());
+	ThreadHandler::GetInstance()->AddTask(LoadSceneSavesTask,ETaskFlags::TF_WAITFORFINISH);
+
+	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
+
+	std::shared_ptr<Task> LoadMapDataTask = std::make_shared<Task>(ETaskPriority::Medium, ETaskType::TT_RENDERING);
+	LoadMapDataTask->SetTask(&Scene::LoadMapData, GetCurrentScene());
+	ThreadHandler::GetInstance()->AddTask(LoadMapDataTask, ETaskFlags::TF_WAITFORFINISH);
 	
 	isRunning = true;
 	return true;
@@ -139,21 +147,28 @@ void CoreEngine::Run()
 	
 	Timer::UpdateTimer();
 
+	std::shared_ptr<Task> RenderTask = std::make_shared<Task>(ETaskPriority::High, ETaskType::TT_RENDERING);
 	while (isRunning)
 	{
-		const Uint32 timeBeforeUpdate = SDL_GetTicks();
+
+		auto timeBeforeUpdate = std::chrono::high_resolution_clock::now();
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
-		const Uint32 timeAfterUpdate = SDL_GetTicks();
-
-		CustomUI::PerformanceMonitor::UpdateLoopTime = static_cast<float>(timeAfterUpdate - timeBeforeUpdate);
+		auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
 
 
-		const Uint32 timebeforeRender = SDL_GetTicks();
-		Render();
-		const Uint32 timeafterRender = SDL_GetTicks();
+		auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeAfterUpdate - timeBeforeUpdate);
+		CustomUI::PerformanceMonitor::UpdateLoopTime = static_cast<float>(executeTime.count());
 
-		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
+
+		auto timebeforeRender = std::chrono::high_resolution_clock::now();
+		RenderTask->SetTask(&CoreEngine::Render, this);
+		ThreadHandler::GetInstance()->AddTask(RenderTask,ETaskFlags::TF_WAITFORFINISH);
+		auto timeafterRender = std::chrono::high_resolution_clock::now();
+
+
+		executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeafterRender - timebeforeRender);
+		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(executeTime.count());
 		
 	}
 
@@ -219,7 +234,7 @@ void CoreEngine::OnDestroy()
 	}
 
 	Camera::removeInstance();
-	TextureManager::DeleteAllTextures();
+	TextureManager::GetInstance()->DeleteAllTextures();
 	ModelManager::GetInstance()->DestroyAllModels();
 	InputManager::RemoveInstance();
 	ShaderManager::DestroyAllShaders();

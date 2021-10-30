@@ -1,13 +1,6 @@
 #include "Task.h"
 
-
-
-
-
-
-
-
-	
+#include "Thread.h"
 
 Task::Task(): E_Priority(ETaskPriority::Low), E_TaskType(ETaskType::TT_GENERAL), B_HasBeenCompleted(false)
 {
@@ -34,6 +27,8 @@ void Task::RunTask()
 	F_Function();
 	B_HasBeenCompleted = true;
 }
+
+
 
 void Task::SetTask(std::function<void()> newFunc)
 {

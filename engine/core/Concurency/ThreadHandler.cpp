@@ -10,7 +10,7 @@ ThreadHandler::ThreadHandler()
 		V_Threads.push_back(std::make_shared<Thread>());
 	}
 
-	V_Threads.push_back(std::make_shared<Thread>(EThreadPriority::THREAD_PRIORITYNORMAL,EThreadType::TH_RENDERER));
+	V_Threads.push_back(std::make_shared<Thread>(EThreadPriority::THREAD_PRIORITYHIGHEST,EThreadType::TH_RENDERER));
 }
 
 ThreadHandler::~ThreadHandler()
@@ -30,12 +30,18 @@ ThreadHandler* ThreadHandler::GetInstance()
 	return U_ThreadHandlerInstance.get();
 }
 
-void ThreadHandler::AddTask(std::shared_ptr<Task> newTask)
+void ThreadHandler::AddTask(std::shared_ptr<Task> newTask, ETaskFlags taskFlag)
 {
 	//std::unique_lock<std::mutex> lock(m_HandlerMutex);
 	PQ_Tasks.emplace(newTask);
 
-	RunThreads();
+
+	if (taskFlag & ETaskFlags::TF_WAITFORFINISH)
+	{
+		RunTasksWithWait();
+	}
+	else { RunTasks(); }
+	
 }
 
 void ThreadHandler::AddStrand(std::shared_ptr<Strand> newStrand)
@@ -43,7 +49,7 @@ void ThreadHandler::AddStrand(std::shared_ptr<Strand> newStrand)
 	std::scoped_lock<std::mutex> lock(m_HandlerMutex);
 	Q_Strands.push(newStrand);
 
-	RunThreads();
+	RunTasks();
 }
 
 void ThreadHandler::AddStrand(std::vector<std::shared_ptr<Task>> linkedTasks)
@@ -52,14 +58,32 @@ void ThreadHandler::AddStrand(std::vector<std::shared_ptr<Task>> linkedTasks)
 	std::shared_ptr<Strand> newStrand =  std::make_shared<Strand>(linkedTasks);
 	Q_Strands.push(newStrand);
 
-	RunThreads();
+	RunTasks();
 }
 
 
-void ThreadHandler::RunThreads()
+void ThreadHandler::WaitForRender()
+{
+	for (auto& thread : V_Threads)
+	{
+		if(~thread->GetThreadType() & TH_RENDERER)
+			continue;
+
+
+		if(thread->IsCurrentTaskNull())
+			break;
+
+		std::unique_lock<std::mutex> waitLock(thread->GetMutex());
+
+		thread->GetConditionVar().wait(waitLock, [&thread] { return  thread->IsCurrentTaskNull(); });
+		break;
+	}
+}
+
+void ThreadHandler::RunTasks()
 {
 	
-	for (auto thread : V_Threads)
+	for (auto& thread : V_Threads)
 	{
 		if(!thread->IsCurrentTaskNull())
 			continue;
@@ -68,12 +92,14 @@ void ThreadHandler::RunThreads()
 
 		if (!Q_Strands.empty())
 		{
-			std::shared_ptr<Strand> currentStrand = Q_Strands.front();
 
+			//std::unique_lock<std::mutex> strandWaitLock(m_HandlerMutex);
+
+			std::shared_ptr<Strand> currentStrand = Q_Strands.front();
 			bool nextThread = false;
 			for (auto task : currentStrand->linkedTasks)
 			{
-				std::unique_lock<std::mutex> waitLock(thread->GetMutex());
+				std::unique_lock<std::mutex> taskWaitLock(thread->GetMutex());
 
 				if (task->GetTaskType() != static_cast<ETaskType>(thread->GetThreadType()) && !task->HasBeenCompleted())
 				{
@@ -84,9 +110,11 @@ void ThreadHandler::RunThreads()
 				if (!task->HasBeenCompleted())
 				{
 					thread->SetNewTask(task);
-					thread->GetConditionVar().wait(waitLock, [&thread] { return  thread->IsCurrentTaskNull(); });
+					thread->GetConditionVar().wait(taskWaitLock, [thread] { return  thread->IsCurrentTaskNull(); });
 				}
 			}
+
+			
 
 			if(nextThread)
 				continue;
@@ -107,4 +135,26 @@ void ThreadHandler::RunThreads()
 		
 	}
 
+}
+
+void ThreadHandler::RunTasksWithWait()
+{
+	for (auto& thread : V_Threads)
+	{
+		if (!thread->IsCurrentTaskNull())
+			continue;
+
+		if (PQ_Tasks.empty())
+			break;
+
+		if (PQ_Tasks.top()->GetTaskType() != static_cast<ETaskType>(thread->GetThreadType()))
+			continue;
+
+		std::unique_lock<std::mutex> taskWaitLock(thread->GetMutex());
+
+		thread->SetNewTask(PQ_Tasks.top());
+		PQ_Tasks.pop();
+
+		thread->GetConditionVar().wait(taskWaitLock, [thread] { return  thread->IsCurrentTaskNull(); });
+	}
 }
