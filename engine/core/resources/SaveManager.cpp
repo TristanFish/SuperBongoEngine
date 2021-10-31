@@ -82,7 +82,7 @@ SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 	}
 }
 
-void SaveManager::SetSaveName(const std::string old_Name, const std::string new_Name)
+void SaveManager::SetSaveName(const std::string& old_Name, const std::string& new_Name)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(old_Name);
 	std::unordered_map<std::string, SaveFile>::iterator queueIter = SaveQueue.find(old_Name);

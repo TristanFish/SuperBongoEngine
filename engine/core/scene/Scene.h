@@ -32,7 +32,7 @@ protected:
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
-	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, std::string objName_, std::string objType) const;
+	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const std::string& objName_, const std::string& objType) const;
 
 
 	//! Check Intersection function
@@ -61,8 +61,8 @@ public:
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;
 
-	inline std::string& GetSceneName()  { return Scene_Name; }
-	inline void SetSceneName(std::string Name_) { Scene_Name = Name_; }
+	std::string& GetSceneName()  { return Scene_Name; }
+	void SetSceneName(const std::string& Name_) { Scene_Name = Name_; }
 
 };
 

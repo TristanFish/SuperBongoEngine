@@ -101,7 +101,7 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 	}
 }
 
-void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, std::string objName_, std::string objType) const
+void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const std::string& objName_, const std::string& objType) const
 {
 
 	for (auto obj : objectList->GetInstantiableObjects())

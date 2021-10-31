@@ -18,7 +18,7 @@
 #include "resources/TextureManager.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), currentSceneNum(0), gameInterface(nullptr)
+CoreEngine::CoreEngine(): window(nullptr), isRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
 {
 
 }
@@ -136,7 +136,11 @@ void CoreEngine::Run()
 		const Uint32 timeafterRender = SDL_GetTicks();
 
 		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
-		SDL_Delay(Timer::SleepTime(fps));
+
+		if(limitfps)
+		{
+			SDL_Delay(Timer::SleepTime(fps));
+		}
 	}
 
 	gameInterface->currentScene->SaveMapData();

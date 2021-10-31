@@ -398,10 +398,8 @@ int HierarchyPanel::GetObjIndex(std::string objName) const
 
 #pragma region PerformancePanel
 
-int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
 float PerformanceMonitor::UpdateLoopTime = 0.0f;
-bool PerformanceMonitor::LimitFPS = false;
 
  
 // Varibables that are used to collect CPU data
@@ -431,7 +429,7 @@ void PerformancePanel::Update(const float deltatime)
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;
 
-		latestFPS = (int)PerformanceMonitor::GetFPS();
+		latestFPS = static_cast<int>(PerformanceMonitor::GetFPS());
 	}
 }
 
@@ -443,9 +441,10 @@ void PerformancePanel::Render()
 	ImGui::Text("%i", latestFPS);
 
 
-	ImGui::Checkbox("Limit FPS", &PerformanceMonitor::LimitFPS); ImGui::SameLine();
-	ImGui::InputInt("", &PerformanceMonitor::FPSLimit);
-
+	ImGui::Checkbox("Limit FPS", &CoreEngine::GetInstance()->limitfps); ImGui::SameLine();
+	ImGui::InputInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps));
+	//ImGui::SliderInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps), 0, 200);
+	
 	ImGui::Text("Render Loop Time %f ms", PerformanceMonitor::RenderLoopTime);
 	ImGui::Text("Update Loop Time %f ms", PerformanceMonitor::UpdateLoopTime);
 	ImGui::Text("Physical Memory Usage %i MB", PerformanceMonitor::GetMemoryUsage());

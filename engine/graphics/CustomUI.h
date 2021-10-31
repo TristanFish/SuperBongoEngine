@@ -43,15 +43,6 @@ namespace CustomUI
 		/*!  Returns percent of CPU usage the application is using  */
 		static double GetCPUUsage();
 
-
-		//! Frames Per Second Integer
-		/*!  This variable stores the user inputed FPS limit  */
-		static int FPSLimit;
-
-		//! Limit Frames Per Second boolean
-		/*!  This variable toggles if the FPSLimit variable is used  */
-		static bool LimitFPS;
-
 		//! Render Loop Time Float
 		/*!  This variable contains how faster our application is rendering in milliseconds */
 		static float RenderLoopTime;
@@ -128,7 +119,7 @@ namespace CustomUI
 	private:
 		//! FPS Update Speed float
 		/*! Controls how fast we want to add a new float into the fpsValues Vector */
-		 float fpsUpdateSpeed = 0.5f;
+		 float fpsUpdateSpeed = 0.1f;
 
 		 //! Initial Speed float
 		/*! Is used to reset the "fpsUpdateSpeed" variable once it get to 0 */
@@ -155,6 +146,8 @@ namespace CustomUI
 		void Render() override;
 	};
 
+
+	
 	//! Hierarchy panel Class
 	/*!  This class creates & Renders the hierarchy Panel UI */
 	class HierarchyPanel : public UIInterface
