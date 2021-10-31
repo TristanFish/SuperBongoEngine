@@ -1,11 +1,14 @@
 #include "Window.h"
-#include "core/Logger.h"
-#include <glew/glew.h>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl3.h"
 
-Window::Window() : window(nullptr),height(0),width(0)
+#include <glew/glew.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_opengl3.h>
+#include <imgui/imgui_impl_sdl.h>
+
+#include "core/Logger.h"
+
+
+Window::Window() : width(0),height(0),window(nullptr)
 {
 }
 

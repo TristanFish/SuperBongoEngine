@@ -3,9 +3,10 @@ std::unique_ptr<InputManager> InputManager::instance = nullptr;
 
 using namespace MATH;
 
+
 InputManager* InputManager::GetInstance()
 {
-	if (instance.get() == nullptr)
+	if (instance == nullptr)
 	{
 		instance.reset(new InputManager);
 	}

@@ -292,7 +292,6 @@
     <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
     <ClInclude Include="game\scenes\SceneAi.h" />
-    <ClInclude Include="NameEnumPair.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />

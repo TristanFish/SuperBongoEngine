@@ -11,7 +11,9 @@ public:
 	 Scene* currentScene;
 
 	std::vector<Scene*> Scenes;
+
 	
+	virtual ~GameInterface() = default;
 	virtual bool OnCreate() = 0;
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime_) = 0;

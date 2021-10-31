@@ -6,8 +6,6 @@
 #include <utility>
 
 
-
-
 SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), rootNode(Doc.NewElement("Root")),
 insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
 {

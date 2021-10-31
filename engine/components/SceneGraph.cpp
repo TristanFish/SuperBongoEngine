@@ -10,6 +10,7 @@
 
 #include "graphics/UIStatics.h"
 
+
 SceneGraph::~SceneGraph() 
 {
 	for (GameObject* g : gameObjects)
@@ -21,8 +22,6 @@ SceneGraph::~SceneGraph()
 		}
 	}
 
-	Renderer::GetInstance()->DestroyRenderer();
-
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -31,8 +30,6 @@ SceneGraph::~SceneGraph()
 void SceneGraph::Init() 
 {
 	//osp = OctSpatialPartition(500);
-
-	Renderer::GetInstance()->Init();
 
 
 	for (auto obj : SaveManager::SaveableObjects)

@@ -4,6 +4,7 @@
 
 using namespace MATH;
 
+
 void LightComponent::Init(GameObject* g)
 {
 	gameObject = g;

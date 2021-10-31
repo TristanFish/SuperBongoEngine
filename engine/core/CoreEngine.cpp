@@ -1,19 +1,21 @@
 #include "CoreEngine.h"
-#include "Globals.h"
-#include "resources/ShaderManager.h"
-#include "resources/ModelManager.h"
-#include "resources/TextureManager.h"
-#include "events/InputManager.h"
-#include "graphics/Window.h"
-#include "Timer.h"
-#include "core/scene/Scene.h"
-#include "events/MouseEventDispatcher.h"
-#include "core/Logger.h"
-#include "core/GameInterface.h"
-#include "imgui/imgui_impl_opengl3.h"
-#include "imgui/imgui_impl_sdl.h"
-#include <sdl/SDL.h>
+
 #include <Windows.h>
+#include <imgui/imgui_impl_opengl3.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <sdl/SDL.h>
+
+#include "Globals.h"
+#include "Timer.h"
+#include "core/GameInterface.h"
+#include "core/Logger.h"
+#include "core/scene/Scene.h"
+#include "events/InputManager.h"
+#include "events/MouseEventDispatcher.h"
+#include "graphics/Window.h"
+#include "resources/ModelManager.h"
+#include "resources/ShaderManager.h"
+#include "resources/TextureManager.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
 CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), currentSceneNum(0), gameInterface(nullptr)
@@ -23,7 +25,6 @@ CoreEngine::CoreEngine(): window(nullptr), fps(60), isRunning(false), currentSce
 
 CoreEngine::~CoreEngine()
 {
-	OnDestroy();
 }
 
 void CoreEngine::Update(const float deltaTime_)
@@ -89,7 +90,8 @@ bool CoreEngine::Init()
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
-
+	Renderer::GetInstance()->Init();
+	
 	if (gameInterface)
 	{
 		if (!gameInterface->OnCreate())
@@ -134,7 +136,7 @@ void CoreEngine::Run()
 		const Uint32 timeafterRender = SDL_GetTicks();
 
 		CustomUI::PerformanceMonitor::RenderLoopTime = static_cast<float>(timeafterRender - timebeforeRender);
-		
+		SDL_Delay(Timer::SleepTime(fps));
 	}
 
 	gameInterface->currentScene->SaveMapData();
@@ -197,11 +199,13 @@ void CoreEngine::OnDestroy()
 		window = nullptr;
 	}
 
+	Renderer::GetInstance()->DestroyRenderer();
 	Camera::removeInstance();
 	TextureManager::DeleteAllTextures();
 	ModelManager::DestroyAllModels();
 	InputManager::RemoveInstance();
 	ShaderManager::DestroyAllShaders();
+	SaveManager::DeleteSaveableObjects();
 
 	
 

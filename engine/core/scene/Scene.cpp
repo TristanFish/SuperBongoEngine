@@ -1,23 +1,17 @@
 #include "Scene.h"
-#include "gameObjects/TestModel.h"
-#include "Primitives/PlaneObject.h"
-#include <math.h>
-#include "core/MouseRay.h"
-#include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+
+#include <imgui/imgui_internal.h>
+
 #include "core/Globals.h"
-
-
-#include "imgui/imgui_stdlib.h"
-#include "imgui/imgui_internal.h"
+#include "core/Logger.h"
+#include "core/MouseRay.h"
+#include "core/3D/Physics3D.h"
+#include "gameObjects/TestModel.h"
 using namespace MATH;
 
 
 
-
-
-
-Scene::Scene() : objectList(std::make_shared<SceneGraph>()), Scene_Name("Scene_" + std::rand())
+Scene::Scene() : Scene_Name("Scene_" + std::to_string(std::rand())), objectList(std::make_shared<SceneGraph>())
 {
 	
 }
@@ -160,9 +154,6 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 
 void Scene::SaveMapData() const
 {
-
-
-
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
 	{
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);

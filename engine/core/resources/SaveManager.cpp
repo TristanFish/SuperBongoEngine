@@ -6,9 +6,6 @@ std::unordered_map<std::string, SaveFile> SaveManager::SaveQueue = std::unordere
 std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std::unordered_map<std::string, GameObject*>();
 
 
-
-
-
 std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
 {
 	std::vector<SaveFile> filesOfType;
@@ -43,15 +40,16 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 	SaveFiles.emplace(name, File);
 }
 
-void SaveManager::RemoveSave(const std::string saveName)
+void SaveManager::RemoveSave(const std::string& saveName)
 {
-	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
-	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
-
-	if (SaveFiles.size() < 1)
+	if (SaveFiles.empty())
 	{
 		return;
 	}
+
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
+
 
 
 	if (iter != SaveFiles.end())
@@ -166,6 +164,17 @@ void SaveManager::SaveAll()
 void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 {
 	SaveQueue.emplace(name, File);
+}
+
+void SaveManager::DeleteSaveableObjects()
+{
+	for (auto pair : SaveableObjects)
+	{
+		delete pair.second;
+		pair.second = nullptr;
+	}
+
+	SaveableObjects.clear();
 }
 
 bool SaveManager::TransferToSaveQueue(const std::string& saveName)

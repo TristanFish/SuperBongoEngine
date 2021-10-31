@@ -6,11 +6,9 @@
 #include "../game/gameObjects/Player.h"
 #include "../game/gameObjects/TestModel.h"
 
-
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
 #include "core/scene/DefaultScene.h"
-#include "core/GameInterface.h"
 #include "core/GameInterface.h"
 
 #include "Primitives/Primitives.h"
@@ -50,7 +48,7 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 
 	if (classType == std::string("class Bird"))
 	{
-		SaveManager::SaveableObjects.emplace(classType,new Bird("None", MATH::Vec3()));
+		SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3()));
 	}
 	else if (classType == std::string("class Grass"))
 	{
@@ -377,7 +375,7 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
 		
 	}
 
-	// Add's all scenes that use the DefaultScene Class
+	// Adds all scenes that use the DefaultScene Class
 	for (auto save : sceneFiles)
 	{
 		std::string classType = std::get<std::string>(save.FindAttribute("BaseClass:", ":"));

@@ -7,7 +7,6 @@
 #include "SDL_events.h"
 #include <vector>
 
-
 class RigidBody3D;
 
 //! GameObject Class
@@ -140,6 +139,8 @@ public:
 
 	//!Template HasComponent boolean
 	/*!Checks if this gameObject has the specified component*/
+	
+	
 	template <typename T>
 	bool HasComponent()
 	{
@@ -197,7 +198,9 @@ public:
 		{
 			if(dynamic_cast<T*>(*it))
 			{
+				delete *it;
 				componentList.erase(it);
+				return;
 			}
 		}
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);

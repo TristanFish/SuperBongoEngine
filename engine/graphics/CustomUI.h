@@ -3,9 +3,12 @@
 
 #include <filesystem>
 #include <unordered_map>
-#include "math/Vector.h"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
+#include <imgui/imgui_stdlib.h>
+
 #include "core/networking/NetworkManager.h"
+#include "math/Vector.h"
 
 class GameObject;
 
@@ -63,10 +66,12 @@ namespace CustomUI
 
 	public:
 
+		virtual ~UIInterface() = default;
+		
 		virtual void Render() = 0;
-		virtual void Update(const float deltatime) {};
-		virtual void Construct() {};
-		virtual void Reset() {};
+		virtual void Update(const float deltatime) {}
+		virtual void Construct() {}
+		virtual void Reset() {}
 	private:
 
 	};
@@ -99,7 +104,7 @@ namespace CustomUI
 
 		//! Properties panel Destructor
 		/*! Destroys all pointer's that this class uses */
-		~PropertiesPanel();
+		virtual ~PropertiesPanel();
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
@@ -138,7 +143,7 @@ namespace CustomUI
 		int latestFPS = 0;
 	public:
 		PerformancePanel();
-		~PerformancePanel();
+		virtual ~PerformancePanel();
 
 
 		//! Update Function
@@ -158,7 +163,7 @@ namespace CustomUI
 
 		HierarchyPanel();
 
-		~HierarchyPanel();
+		virtual ~HierarchyPanel();
 
 		//! ConstructHierarchy Function
 		/*! Copies over the passed in vector of gameobjects */
@@ -232,7 +237,7 @@ namespace CustomUI
 	public:
 
 		Viewport();
-		~Viewport();
+		virtual ~Viewport();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
@@ -283,7 +288,7 @@ namespace CustomUI
 	public:
 
 		ContentBrowser();
-		~ContentBrowser();
+		virtual ~ContentBrowser();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
@@ -365,7 +370,7 @@ namespace CustomUI
 
 		DockSpace();
 
-		~DockSpace();
+		virtual ~DockSpace();
 
 
 		//! Update Function

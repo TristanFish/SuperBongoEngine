@@ -6,13 +6,6 @@
 #include "core/resources/SaveManager.h"
 #include "core/Globals.h"
 
-#include "gameObjects/LightObject.h"
-#include "gameObjects/Bird.h"
-#include "gameObjects/Player.h"
-#include "gameObjects/Grass.h"
-
-#include "Primitives/PlaneObject.h"
-
 
 
 DefaultScene::DefaultScene(std::string Scene_Name_) 

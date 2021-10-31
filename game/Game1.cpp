@@ -6,6 +6,7 @@
 
 #include "scenes/SceneAi.h"
 
+
 Game1::Game1() : currentSceneNum(0)
 {
 	currentScene = nullptr;
@@ -14,7 +15,7 @@ Game1::Game1() : currentSceneNum(0)
 
 Game1::~Game1()
 {
-	for (auto scene : Scenes)
+	for (auto* scene : Scenes)
 	{
 		delete scene;
 		scene = nullptr;

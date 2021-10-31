@@ -9,8 +9,8 @@
 //This class is going to be turned into a component
 //
 
-/*! Grass class
-/*! This class handles how we are going to render multiple instances of a gameObject given only one model*/
+/*! Instancer class
+//! This class handles how we are going to render multiple instances of a gameObject given only one model*/
 class Instancer
 {
 	
@@ -26,7 +26,7 @@ public:
 	//! Base Instancer Constructor
 	Instancer();
 	//! Base Instancer Destructor
-	~Instancer();
+	virtual ~Instancer();
 	
 
 	//! Calculate Model Matrices function
@@ -37,7 +37,7 @@ public:
 private:
 
 	GLuint instanceBuffer;
-	MATH::Matrix4* modelMatrices;
+	std::vector<MATH::Matrix4> modelMatrices;
 
 	//! Bind Buffers function
 	/*!  Binds the instance buffer and sends the model matrices to the shader. 

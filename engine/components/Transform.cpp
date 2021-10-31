@@ -5,14 +5,14 @@
 using namespace MATH;
 
 
-Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
+Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), scale(MATH::Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
 {
 	
 
 	//rotation = Quaternion(Vec3(0.0f, 0.0f, 1.0f), -90);
 }
 
-Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
+Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), scale(MATH::Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
 {
 	
 }

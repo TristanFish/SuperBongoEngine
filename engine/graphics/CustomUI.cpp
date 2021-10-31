@@ -1,24 +1,22 @@
 #include "CustomUI.h"
-#include "windows.h"
-#include "psapi.h"
 
-#include "core/scene/DefaultScene.h"
-#include "core/Globals.h"
+#include <Windows.h>
+
+
+#include "psapi.h"
+#include "UIStatics.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
+#include "core/Globals.h"
 #include "core/Timer.h"
-#include "core/resources/TextureManager.h"
-
-#include "imgui/imgui_internal.h"
-#include "imgui/imgui_stdlib.h"
-
-#include "Utility/LoadUtility.h"
-#include "core/resources/SaveManager.h"
-
-#include "UIStatics.h"
 #include "core/events/InputManager.h"
+#include "core/resources/SaveManager.h"
+#include "core/resources/TextureManager.h"
+#include "core/scene/DefaultScene.h"
+#include "Utility/LoadUtility.h"
 
 using namespace CustomUI;
+
 
 #pragma region NetworkPanel
 
@@ -369,7 +367,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 void HierarchyPanel::UpdateActiveObjects()
 {
-	for (auto obj : Globals::s_SceneGraph->GetGameObjects())
+	for (auto* obj : Globals::s_SceneGraph->GetGameObjects())
 	{
 		std::vector<GameObject*>::iterator iter;
 		
@@ -478,12 +476,12 @@ void PerformanceMonitor::InitMonitor()
 
 void PerformanceMonitor::DebugFPS()
 {
-	std::cout << "FPS: " << 1/Timer::GetDeltaTime()  << std::endl;
+	std::cout << "FPS: " << 1.0f / Timer::GetDeltaTime()  << std::endl;
 }
 
 float PerformanceMonitor::GetFPS()
 {
-	return 1 / Timer::GetDeltaTime();
+	return 1.0f / Timer::GetDeltaTime();
 }
 
 int PerformanceMonitor::GetMemoryUsage()
@@ -776,18 +774,18 @@ void ConsoleLog::Render()
 DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSave(false),isDockSpaceOpen(true), isDockSpaceFullScreen(true)
 {
 
-	uiInterfaces.push_back(new ContentBrowser());
-	uiInterfaces.push_back(new HierarchyPanel());
-	uiInterfaces.push_back(new PerformancePanel());
-	uiInterfaces.push_back(new PropertiesPanel());
-	uiInterfaces.push_back(new ConsoleLog());
-	uiInterfaces.push_back(new NetworkPanel());
+	uiInterfaces.emplace_back(new ContentBrowser());
+	uiInterfaces.emplace_back(new HierarchyPanel());
+	uiInterfaces.emplace_back(new PerformancePanel());
+	uiInterfaces.emplace_back(new PropertiesPanel());
+	uiInterfaces.emplace_back(new ConsoleLog());
+	uiInterfaces.emplace_back(new NetworkPanel());
 
 }
 
 DockSpace::~DockSpace()
 {
-	for (auto panel : uiInterfaces)
+	for (auto* panel : uiInterfaces)
 	{
 		delete panel;
 		panel = nullptr;

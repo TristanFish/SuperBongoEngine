@@ -5,6 +5,7 @@
 
 using namespace Dynamic;
 
+
 DynamicSteeringOutput::DynamicSteeringOutput()	{
 	linearAccel = Vec3(0.0f);
 	angularAccel = Vec3(0.0f);

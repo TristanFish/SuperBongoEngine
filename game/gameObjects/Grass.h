@@ -20,7 +20,7 @@ public:
 	Grass(std::string name, MATH::Vec3 position, unsigned int amount_);
 
 	//! Base Grass Destructor
-	~Grass() = default;
+	virtual ~Grass() = default;
 
 	Grass* GetClone() const override { return new Grass(this->name, this->transform.pos, amount); }
 
