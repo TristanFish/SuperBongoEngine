@@ -9,7 +9,7 @@
 
 using namespace MATH;
 
-MeshRenderer::MeshRenderer() : renderFlags(RP_LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+MeshRenderer::MeshRenderer() : renderFlags(RP_NONE), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
 bool MeshRenderer::LoadModel(const char* name)
 {
@@ -225,15 +225,9 @@ void MeshRenderer::ImGuiRender()
 	{
 		ImGui::ColorEdit4("Mesh Color", meshColorTint);
 
-		
-		GLuint textureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
-
-
 		if (ImGui::BeginCombo("##Flags", "Render Flags"))
 		{
-
 			const int renderFlagSize = IM_ARRAYSIZE(RenderFlagNameEnumPairs);
-
 
 			for (size_t i = 0; i < renderFlagSize; i++)
 			{
@@ -241,7 +235,6 @@ void MeshRenderer::ImGuiRender()
 				
 				if (ImGui::Checkbox(RenderFlagNameEnumPairs[i].flagName, &boxIsActive))
 				{
-					std::cout << "Checkbox Open" << std::endl;
 					//If None is checked undo all boxes
 					if(i == 0)
 					{
@@ -261,10 +254,8 @@ void MeshRenderer::ImGuiRender()
 					}
 				}
 			}
-
 			ImGui::EndCombo();
 		}
-
 		UIStatics::DrawTextureSlot("texture_09.jpg", this,5.0f);
 
 		ImGui::TreePop();

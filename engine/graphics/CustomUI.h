@@ -53,8 +53,8 @@ namespace CustomUI
 	};
 
 
-	class UIInterface {
-
+	class UIInterface
+	{
 	public:
 
 		virtual ~UIInterface() = default;
@@ -63,8 +63,6 @@ namespace CustomUI
 		virtual void Update(const float deltatime) {}
 		virtual void Construct() {}
 		virtual void Reset() {}
-	private:
-
 	};
 
 	class NetworkPanel : public UIInterface

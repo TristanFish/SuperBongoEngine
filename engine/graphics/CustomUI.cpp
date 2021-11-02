@@ -149,10 +149,7 @@ void PropertiesPanel::Render()
 
 #pragma region HierarchyPanel
 
-HierarchyPanel::HierarchyPanel() : isActive(true)
-{
-
-}
+HierarchyPanel::HierarchyPanel() : isActive(true) {}
 
 HierarchyPanel::~HierarchyPanel()
 {
@@ -162,19 +159,15 @@ HierarchyPanel::~HierarchyPanel()
 void HierarchyPanel::Construct()
 {
 	UpdateActiveObjects();
-
 	isActive = true;
-
 }
 
 void HierarchyPanel::Render() 
 {
-
 	ImGui::Begin("Object Hierarchy", &isActive, ImGuiWindowFlags_NoTitleBar);
 	
 	textFilter.Draw("##Obj Filter");
 
-	
 	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
 		if (gameobjects[i]->GetParent() == nullptr)
@@ -184,10 +177,7 @@ void HierarchyPanel::Render()
 				GenerateTree(gameobjects[i], i);
 			}
 		}
-		
 	}
-
-
 	ImGui::End();
 }
 
@@ -212,19 +202,16 @@ void HierarchyPanel::Update(const float deltatime)
 
 void HierarchyPanel::GenerateTree(GameObject* go, int index) 
 {
-
 	ImGuiTreeNodeFlags tree_flags = ((UIStatics::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
 		((go->GetChildCount() == 0) ?  ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen : 0) 
 		| ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	if (go->GetChildCount() > 0)
 	{
-
 		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
 		
 		if (ImGui::BeginDragDropSource())
 		{
-
 			ImGui::SetDragDropPayload("Obj_Index", &index, sizeof(int));
 
 			ImGui::EndDragDropSource();
@@ -249,15 +236,12 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 		if (ImGui::BeginPopupContextItem())
 		{
-
 			if (go->GetParent())
 			{
 				if (ImGui::MenuItem("UnParent"))
 				{
 					go->GetParent()->RemoveChild(go);
-
 				}
-
 			}
 
 			if (ImGui::MenuItem("Delete"))
@@ -280,13 +264,10 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 				GenerateTree(obj, GetObjIndex(obj->GetName()));
 			}
 			ImGui::TreePop();
-
 		}
-
 	}
 	else 
 	{
-
 		ImGuiDragDropFlags dragDrop_flags = ImGuiDragDropFlags_None;
 
 		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
@@ -301,7 +282,6 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 		{
 			ImGui::SetDragDropPayload("Obj_Index", &index, sizeof(int));
 			ImGui::Text("This is a drag and drop source");
-
 
 			ImGui::EndDragDropSource();
 		}
@@ -375,8 +355,6 @@ int HierarchyPanel::GetObjIndex(const std::string& objName) const
 			return i;
 		}
 	}
-
-	
 
 	return -1;
 }
@@ -1021,6 +999,7 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 						{
 							LoadUtility::GetInstance()->UnLoadSceneSaves();
 							CoreEngine::GetInstance()->currentSceneNum = i;
+							break;
 						}
 					}
 				}

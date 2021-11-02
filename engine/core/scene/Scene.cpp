@@ -161,31 +161,19 @@ void Scene::SaveMapData() const
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
 	
-	
 	ElementInfo info = ElementInfo("Root");
-
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
 	info.Attributes.emplace(":", std::string(typeid(*this).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
-
-
-
 	info = ElementInfo("Root");
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
-
-
-
 	
 	info = ElementInfo("Objects");
 	
-
-	
-
-	
-	for (auto obj : objectList->GetGameObjects())
+	for (auto* obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);
 
@@ -193,9 +181,6 @@ void Scene::SaveMapData() const
 	}
 
 	SaveUtility::GetInstance()->CompileSaves();
-
-
-
 }
 
 void Scene::LoadMapData()

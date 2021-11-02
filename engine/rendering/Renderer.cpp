@@ -91,7 +91,12 @@ void Renderer::SetupTextures()
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
 {
-	meshRenderers.emplace_back(mr);
+	const auto mrIt = std::find(meshRenderers.begin(), meshRenderers.end(), mr);
+	//if this meshrenderer doesn't already exist then add it
+	if(mrIt == meshRenderers.end())
+	{
+		meshRenderers.emplace_back(mr);
+	}
 }
 
 void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
@@ -114,7 +119,12 @@ void Renderer::AddLight(LightComponent* light)
 		 + light->gameObject->name + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 		return;
 	}
-	lights.emplace_back(light);
+	//if this meshrenderer doesn't already exist then add it
+	const auto lightIt = std::find(lights.begin(), lights.end(), light);
+	if(lightIt == lights.end())
+	{
+		lights.emplace_back(light);
+	}
 }
 
 void Renderer::DeleteLight(LightComponent* light)

@@ -39,8 +39,7 @@ void SceneGraph::Init()
 {
 	//osp = OctSpatialPartition(500);
 
-
-	for (auto obj : SaveManager::SaveableObjects)
+	for (const auto& obj : SaveManager::SaveableObjects)
 	{
 
 		if (obj.second->canBeInstantiated)
@@ -84,7 +83,7 @@ void SceneGraph::Render() const
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
 {
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		g->HandleEvents(event);
 	}
@@ -182,7 +181,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 {
 	if (go->HasComponent<RigidBody3D>())
 	{
-		
 		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
 		{
 			if (*iter == go->GetComponent<RigidBody3D>())
@@ -191,7 +189,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 				break;
 			}
 		}
-
 	}
 	if (go->HasComponent<MeshRenderer>())
 	{
@@ -224,9 +221,9 @@ const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableO
 	return InstantiableObjects;
 }
 
-bool SceneGraph::isObjectActive(std::string objName)
+bool SceneGraph::isObjectActive(const std::string& objName)
 {
-	for (auto obj : gameObjects)
+	for (auto* obj : gameObjects)
 	{
 		if (obj->name == objName)
 		{
