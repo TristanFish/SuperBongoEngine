@@ -1,17 +1,12 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <memory>
+
 #include "components/SceneGraph.h"
 #include "tinyxml2/tinyxml2.h"
-#include "primitives/Primitives.h"
 #include "core/MouseRay.h"
-#include "sdl/SDL.h"
 #include "Utility/SaveUtility.h"
-#include "Utility/LoadUtility.h"
-
-
-#include "graphics/CustomUI.h"
-#include <memory>
 
 
 
@@ -24,9 +19,6 @@ protected:
 	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
 	MouseRay mouseRay;
 
-	
-
-	CustomUI::DockSpace dockSpace;
 	std::string Scene_Name;
 
 
@@ -46,7 +38,7 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	virtual bool OnCreate() = 0;
+	virtual bool OnCreate();
 	virtual bool PostCreate();
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime);

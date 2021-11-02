@@ -1,10 +1,11 @@
 #ifndef MESHRENDERER_H
 #define MESHRENDERER_H
 
+#include <functional>
+
 #include "graphics/Model.h"
 #include "graphics/ShaderProgram.h"
 #include "components/ECS.h"
-#include <functional>
 
 
 enum RenderProperties : unsigned short

@@ -7,7 +7,7 @@ Box::Box()
 {
 }
 
-Box::Box(std::string name, MATH::Vec3 position)
+Box::Box(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");

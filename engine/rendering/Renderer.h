@@ -41,11 +41,11 @@ public:
 
 	static void DrawDebugGeometry(const std::vector<GameObject*>& objects);
 
-	void Render() ;
+	void Render();
 	void DestroyRenderer();
 
 	static Renderer* GetInstance();
-	static Renderer* ResetInstance();
+	void ClearComponents();
 
 	static SkyBox* GetSkyBox();
 	

@@ -3,6 +3,10 @@
 #include <memory>
 
 
+namespace CustomUI {
+	class DockSpace;
+}
+
 class Window;
 class GameInterface;
 class Scene;
@@ -23,6 +27,7 @@ public:
 	bool limitfps = true;
 	int currentSceneNum;
 	GameInterface* gameInterface;
+	CustomUI::DockSpace* dockSpace;
 	
 	static CoreEngine* GetInstance();
 

@@ -5,6 +5,7 @@ std::unordered_map<std::string, SaveFile> SaveManager::SaveFiles = std::unordere
 std::unordered_map<std::string, SaveFile> SaveManager::SaveQueue = std::unordered_map<std::string, SaveFile>();
 std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std::unordered_map<std::string, GameObject*>();
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
 {

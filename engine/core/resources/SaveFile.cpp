@@ -5,9 +5,13 @@
 
 #include <utility>
 
+#include "SaveManager.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 
 SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), rootNode(Doc.NewElement("Root")),
-insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
+                                                                        insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
 {
 	FileName = FileName_;
 
@@ -149,7 +153,7 @@ void SaveFile::AddElement(const std::string& name,  ElementInfo element)
 
 void SaveFile::AddElements(const std::map<std::string, ElementInfo>& elements)
 {
-	for (auto element : elements)
+	for (const auto& element : elements)
 	{
 		Elements.emplace(element.first, element.second);
 		insertionOrder.emplace(insertionOrder.end(), element.first);
@@ -310,15 +314,11 @@ void SaveFile::Save()
 		std::filesystem::create_directory(Destination);
 	}
 
-
-	
-
 	if (FileName != prevFileName)
 	{
 		std::filesystem::path oldObjPath = Destination + prevFileName + GetSaveFileType();
 		std::filesystem::remove(oldObjPath);
 	}
-
 
 	const tinyxml2::XMLError eResult = Doc.SaveFile((Destination + FileName + GetSaveFileType()).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)

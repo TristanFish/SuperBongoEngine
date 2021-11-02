@@ -3,6 +3,8 @@
 #include <sstream>
 
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 Shader::Shader()
 {
 	shaderID = 0;
@@ -15,6 +17,9 @@ Shader::Shader(const char* path)
 
 Shader::Shader(const Shader& s)
 {
+	shaderID = s.shaderID;
+	shaderType = s.shaderType;
+	
 	*this = s;
 }
 

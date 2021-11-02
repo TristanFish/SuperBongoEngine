@@ -77,7 +77,7 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual GameObject* GetClone() const = 0;
+	virtual GameObject* NewClone() const = 0;
 
 	//GetType function
 	/*!Returns the type of class that the owning class is*/

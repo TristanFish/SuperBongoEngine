@@ -7,26 +7,12 @@
 
 bool Scene1::OnCreate()
 {
-	EngineLogger::Info("Scene 1 Created", "Scene1.cpp", __LINE__);
-
-
-
-	Globals::InitGlobals();
-	CustomUI::PerformanceMonitor::InitMonitor();
-	
-
-
-	objectList->Init();
-
-
-
-	return true;
+	return Scene::OnCreate();
 }
 
 void Scene1::Update(const float deltaTime)
 {
 	Scene::Update(deltaTime);
-	Camera::getInstance()->Update(deltaTime);
 }
 
 void Scene1::Render() 

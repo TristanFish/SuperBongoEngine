@@ -8,7 +8,7 @@ Tetrahedron::Tetrahedron()
 {
 }
 
-Tetrahedron::Tetrahedron(std::string name, MATH::Vec3 position)
+Tetrahedron::Tetrahedron(const std::string& name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Tetrahedron.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");

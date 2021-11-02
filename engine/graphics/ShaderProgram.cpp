@@ -2,15 +2,34 @@
 
 #include "core/Logger.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 ShaderProgram::ShaderProgram()
 {
 	programID = 0;
+}
+
+ShaderProgram::ShaderProgram(const ShaderProgram& sp)
+{
+	programID = sp.programID;
+}
+
+ShaderProgram::ShaderProgram(const ShaderProgram&& sp)
+{
+	programID = sp.programID;
+}
+
+ShaderProgram& ShaderProgram::operator=(const ShaderProgram&& sp)
+{
+	programID = sp.programID;
+	return *this;
 }
 
 bool ShaderProgram::operator==(const ShaderProgram& sp) const
 {
 	return programID == sp.programID;
 }
+
 
 void ShaderProgram::DeleteProgram()
 {

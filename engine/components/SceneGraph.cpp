@@ -22,6 +22,14 @@ SceneGraph::~SceneGraph()
 		}
 	}
 
+	for (auto nameObjectPair : InstantiableObjects)
+	{
+		delete nameObjectPair.second;
+		nameObjectPair.second = nullptr;
+	}
+
+	InstantiableObjects.clear();
+	
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -37,7 +45,7 @@ void SceneGraph::Init()
 
 		if (obj.second->canBeInstantiated)
 		{
-			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
+			InstantiableObjects.emplace(obj.first, obj.second->NewClone());
 		}
 	}
 }
@@ -119,7 +127,7 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 
 void SceneGraph::AddRenderingComponents()
 {
-	for (auto go : gameObjects)
+	for (auto* go : gameObjects)
 	{
 		if (go->HasComponent<MeshRenderer>())
 		{
@@ -211,7 +219,7 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 	UIStatics::SetSelectedObject(nullptr);
 }
 
-std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
+const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableObjects() const
 {
 	return InstantiableObjects;
 }

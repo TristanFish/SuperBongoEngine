@@ -1,10 +1,12 @@
 #include "Game1.h"
 #include "core/CoreEngine.h"
+#include "core/Globals.h"
 #include "scenes/Scene1.h"
 #include "scenes/Scene2.h"
 #include "core/scene/DefaultScene.h"
 
 #include "scenes/SceneAi.h"
+#include "Utility/LoadUtility.h"
 
 
 Game1::Game1() : currentSceneNum(0)
@@ -69,16 +71,10 @@ void Game1::HandleEvents(const SDL_Event& event)
 
 void Game1::BuildScene() 
 {
-	//delete currentScene;
-	currentScene = nullptr;
-
-
 	currentScene = Scenes[CoreEngine::GetInstance()->GetCurrentSceneNum()];
-	
-
 	currentSceneNum = CoreEngine::GetInstance()->GetCurrentSceneNum();
 	
-	Renderer::ResetInstance();
+	Renderer::GetInstance()->ClearComponents();
 	
 	LoadUtility::GetInstance()->LoadSceneSaves();
 	if (!currentScene->OnCreate())
@@ -86,8 +82,9 @@ void Game1::BuildScene()
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
+	Globals::InitGlobals();
 	currentScene->LoadMapData();
-	currentScene->objectList->AddRenderingComponents();
+	//currentScene->objectList->AddRenderingComponents();
 	if(!currentScene->PostCreate())
 	{
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);

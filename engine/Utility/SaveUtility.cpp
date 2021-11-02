@@ -8,8 +8,7 @@
 
 std::unique_ptr<SaveUtility> SaveUtility::utilityInstance = std::unique_ptr<SaveUtility>();
 
-
-
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 void SaveUtility::HandleAttributes(SaveFile& save, ElementInfo& elm)
 {

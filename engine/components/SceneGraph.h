@@ -68,7 +68,7 @@ public:
 
 	void AddRenderingComponents();
 
-	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
+	const std::unordered_map<std::string, GameObject*>& GetInstantiableObjects() const;
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/

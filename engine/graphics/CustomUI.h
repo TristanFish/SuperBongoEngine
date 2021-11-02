@@ -195,7 +195,7 @@ namespace CustomUI
 
 		//! GetObjIndex Function
 		/*! Returns the index of the gameObject with a given name from the gameobjects vector*/
-		int GetObjIndex(std::string objName) const;
+		int GetObjIndex(const std::string& objName) const;
 
 	};
 

@@ -37,7 +37,7 @@ public:
 
 	void Render() const;
 
-	SkyBox* GetClone() const override { return new SkyBox(*this); };
+	SkyBox* NewClone() const override { return new SkyBox(*this); };
 
 
 };

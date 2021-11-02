@@ -6,10 +6,11 @@
 #include "core/Logger.h"
 #include "core/MouseRay.h"
 #include "core/3D/Physics3D.h"
+#include "core/resources/SaveManager.h"
 #include "gameObjects/TestModel.h"
+#include "Utility/LoadUtility.h"
+
 using namespace MATH;
-
-
 
 Scene::Scene() : Scene_Name("Scene_" + std::to_string(std::rand())), objectList(std::make_shared<SceneGraph>())
 {
@@ -21,12 +22,18 @@ Scene::~Scene()
 
 }
 
+bool Scene::OnCreate()
+{
+	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
+	
+	objectList->Init();
+
+	return true;
+}
+
 bool Scene::PostCreate()
 {
-	
-
-	dockSpace.ConstructUserInterface();
-
+	objectList->PostInit();
 	return true;
 }
 
@@ -34,16 +41,11 @@ void Scene::Update(const float deltaTime)
 {
 	objectList->Update(deltaTime);
 	objectList->CheckCollisions();
-	dockSpace.Update(deltaTime);
+	Camera::getInstance()->Update(deltaTime);
 }
 
 void Scene::Render() 
 {
-	ImGui::NewFrame();
-	// Let's the use add game objects
-
-	dockSpace.Render();
-
 	objectList->Render();
 }
 
@@ -65,8 +67,8 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 {
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
-		if (!dockSpace.IsMouseOverViewPort())
-			return;
+		/*if (!dockSpace.IsMouseOverViewPort())
+			return;*/
 
 		mouseRay.CalaculateMouseRay();
 
@@ -108,7 +110,7 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 	{
 		if (obj.first == objType)
 		{
-			GameObject* clone = obj.second->GetClone();
+			GameObject* clone = obj.second->NewClone();
 			clone->SetName(objName_);
 			clone->SetPos(pos_);
 			clone->SetRotation(rot_);
@@ -203,7 +205,6 @@ void Scene::LoadMapData()
 		if (!objectList->isObjectActive(elm.first))
 		{
 			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
-
 		}
 	}
 }

@@ -11,12 +11,12 @@ public:
 	
 	GameObject* aiTarget;
 
-	AiGameObject(std::string name_, MATH::Vec3 position_);
+	AiGameObject(const std::string& name_, MATH::Vec3 position_);
 	~AiGameObject() override;
 
 	void Update(const float deltaTime) override;
 	
-	AiGameObject* GetClone() const override { return new AiGameObject(this->name, this->transform.pos); };
+	AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.pos); };
 };
 
 #endif

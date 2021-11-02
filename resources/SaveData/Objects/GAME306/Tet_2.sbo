@@ -2,7 +2,7 @@
     <Name Is="Tet_2">
         <Transform>
             <Position X="0" Y="15.7" Z="-85.300003"/>
-            <Rotation X="0" Y="-46.714962" Z="0"/>
+            <Rotation X="0" Y="52.842445" Z="0"/>
             <Scale X="25" Y="25" Z="25"/>
         </Transform>
         <ObjectInfo>

@@ -176,10 +176,6 @@ void Renderer::Render()
 
 		const Uint16 stencilMarker = meshRenderers[i]->renderFlags;
 
-		if (meshRenderers[i]->renderFlags & RenderProperties::RP_LIGHTING)
-		{
-			
-		}
 		if (meshRenderers[i]->renderFlags & RenderProperties::RP_CREATES_SHADOWS)
 		{
 			RenderShadowTexture(*meshRenderers[i]);
@@ -244,10 +240,10 @@ Renderer* Renderer::GetInstance()
 	return rendererInstance.get();
 }
 
-Renderer* Renderer::ResetInstance()
+void Renderer::ClearComponents()
 {
-	rendererInstance.reset(new Renderer);
-	return rendererInstance.get();
+	meshRenderers.clear();
+	lights.clear();
 }
 
 SkyBox* Renderer::GetSkyBox()
@@ -419,9 +415,6 @@ void Renderer::BindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
-
-
-
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -450,7 +443,6 @@ void Renderer::RenderGBufferResult()
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-
 
 	UnbindGBufferTextures();
 	glUseProgram(0);

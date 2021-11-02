@@ -1,6 +1,6 @@
 #include "AiGameObject.h"
 
-AiGameObject::AiGameObject(std::string name_, MATH::Vec3 position_)	{
+AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	name = name_;
 	SetPos(position_);
 	mRenderer = AddComponent<MeshRenderer>();

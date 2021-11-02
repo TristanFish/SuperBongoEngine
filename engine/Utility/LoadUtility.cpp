@@ -17,6 +17,8 @@
 
 std::unique_ptr<LoadUtility> LoadUtility::utilityInstance = std::unique_ptr<LoadUtility>();
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile& file)
 {
 
@@ -338,7 +340,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 		{
 			if (TypeName == obj.first)
 			{
-				GameObject* clone = obj.second->GetClone();
+				GameObject* clone = obj.second->NewClone();
 				clone->SetName(prevLoadedObjName);
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
