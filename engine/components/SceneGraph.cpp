@@ -39,12 +39,17 @@ void SceneGraph::Init()
 {
 	//osp = OctSpatialPartition(500);
 
+	
+	
 	for (const auto& obj : SaveManager::SaveableObjects)
 	{
-
-		if (obj.second->canBeInstantiated)
+		//if obj is not already in InstantiableObjects
+		if(InstantiableObjects.find(obj.first) == InstantiableObjects.end())
 		{
-			InstantiableObjects.emplace(obj.first, obj.second->NewClone());
+			if (obj.second->canBeInstantiated)
+			{
+				InstantiableObjects.emplace(obj.first, obj.second->NewClone());
+			}
 		}
 	}
 }
