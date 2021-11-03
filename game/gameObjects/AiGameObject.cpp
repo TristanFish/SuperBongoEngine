@@ -4,7 +4,7 @@ AiGameObject::AiGameObject(std::string name_, MATH::Vec3 position_)	{
 	name = name_;
 	SetPos(position_);
 	mRenderer = AddComponent<MeshRenderer>();
-	mRenderer->LoadModel("Sphere.fbx");
+	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 	AddComponent<RigidBody3D>();

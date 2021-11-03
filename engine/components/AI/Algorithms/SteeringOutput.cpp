@@ -41,6 +41,13 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 
 		return aiObject_->transform.rotation;
 	}
+
+	const Matrix4 lookAt = MMath::lookAt(aiObject_->transform.pos, aiObject_->transform.pos + direction_, aiObject_->transform.Up());
+
+	//The line below also works (rotation from the origin) but is less mathematically clear imo
+	//const Matrix4 lookAt = MMath::lookAt(Vec3(), direction_, aiObject_->transform.Up());
+	
+	return MMath::ConvertMatToQuat(lookAt);
 	
 	Vec3 direction = VMath::normalize(direction_);
 	
@@ -50,7 +57,6 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 	
 	Vec3 aiZAxis = aiRotation.Rotate(zAxis);
 
-	
 	//if its already facing
 	if (aiZAxis == direction) {
 		return aiRotation;
@@ -67,14 +73,13 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 	
 	float angle = asin(abs(axisMag));
 	axis = VMath::normalize(axis);
-	
 
+	
 	float sinAngle = sin(angle / 2.0f);
 
-	float radiansToDegrees = (180 / M_PI) * cos(angle / 2);
+	float radiansToDegrees = RADIANS_TO_DEGREES * cos(angle / 2);
 	
-	return Quaternion(Vec4((sinAngle * axis.x), (sinAngle * axis.y), (sinAngle * axis.z), cos(angle / 2)));
-	
+	return Quaternion(sinAngle * axis.x, sinAngle * axis.y, sinAngle * axis.z, cos(angle / 2));
 }
 
 

@@ -10,6 +10,14 @@ Quaternion::Quaternion(float r, const Vec3& i)
 	quat.w = r;
 }
 
+Quaternion::Quaternion(float x, float y, float z, float w)
+{
+	quat.x = x;
+	quat.y = y;
+	quat.z = z;
+	quat.w = w;
+}
+
 Quaternion::Quaternion(const Vec4& v)
 {
 	quat = v;
@@ -148,8 +156,8 @@ Quaternion Quaternion::LookAt(const Vec3& eye, const Vec3& at, const Vec3& up)
 		return Quaternion();
 	}
 
-	float rotAngle = acos(dot);
-	Vec3 rotAxis = VMath::cross(eye, at);
+	float rotAngle = acos(dot) * RADIANS_TO_DEGREES;
+	Vec3 rotAxis = VMath::cross(Vec3::Forward(), forwardVector);
 	rotAxis = VMath::normalize(rotAxis);
 	return Quaternion(rotAxis, rotAngle);
 }
@@ -166,7 +174,6 @@ Quaternion MATH::Quaternion::operator+=(const Vec3& v)
 
 Quaternion Quaternion::operator*(const float f) 
 {
-	
 	quat.x *= f;
 	quat.y *= f;
 	quat.z *= f;
