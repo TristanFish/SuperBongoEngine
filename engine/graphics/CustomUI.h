@@ -235,22 +235,23 @@ namespace CustomUI
 		void Render() override;
 
 
-		inline RenderMode GetRenderMode() const { return mode; }
+		RenderMode GetRenderMode() const { return mode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
-		inline bool GetIsMouseHovered() const { return isMouseHovered; }
+		bool GetIsMouseHovered() const { return isMouseHovered; }
 
+		MATH::Vec2 GetViewportSize() const { return viewportSize; }
+		MATH::Vec2 GetViewportMin() const { return viewport_Min; }
+		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
+	
 	private:
-
-		//! viewport_Min/Max Vec2s 
-		/*! Stores the viewport min/max positons on the screen */
-		MATH::Vec2 viewport_Min, viewport_Max;
-
-
 		//! viewportSize Vec2 
 		/*! Stores the viewports size */
 		MATH::Vec2 viewportSize;
+		//! viewport_Min/Max Vec2s 
+		/*! Stores the viewport min/max positons on the screen */
+		MATH::Vec2 viewport_Min, viewport_Max;
 
 		std::string modeName;
 		std::string aspectSize;
@@ -377,11 +378,6 @@ namespace CustomUI
 		//! ConstructHierarchy Function
 		/*! Calls the hierarchy panels Construct Hierarchy function to initialize all of the gameobjects  */
 		void ConstructUserInterface();
-
-
-		//! IsMouseOverViewPort Function
-		/*! Calls the viewports panels IsMouseOverViewPort function */
-		inline bool IsMouseOverViewPort() { return false; }
 
 	private:
 

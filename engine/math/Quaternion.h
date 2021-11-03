@@ -20,17 +20,17 @@ namespace MATH
 		Quaternion Normalized() const;
 		Quaternion Conjugate() const;
 		Quaternion Inverse() const;
-		Vec3 Rotate(const Vec3& vec);
+		Vec3 Rotate(const Vec3& vec) const;
 		Vec3 GetVec3() const;
 		Vec4 GetQuat() const;
-		Matrix3 ConvertToMatrix();
+		Matrix3 ConvertToMatrix() const;
 		static Quaternion EulerToQuat(Vec3 v);
 		static Vec3 QuatToEuler(Quaternion q);
 		static Quaternion LookAt(const Vec3& eye, const Vec3& at, const Vec3& up);
 
 		Quaternion operator * (const Quaternion& q) const;
 
-		Quaternion& operator = (const Quaternion& q);
+		Quaternion& operator = (const Quaternion& q) = default;
 		Quaternion operator += (const Quaternion& q);
 		Quaternion operator + (const Quaternion& q) const;
 

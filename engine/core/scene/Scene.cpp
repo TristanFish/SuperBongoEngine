@@ -8,6 +8,7 @@
 #include "core/3D/Physics3D.h"
 #include "core/resources/SaveManager.h"
 #include "gameObjects/TestModel.h"
+#include "graphics/UIStatics.h"
 #include "Utility/LoadUtility.h"
 
 using namespace MATH;
@@ -63,14 +64,14 @@ void Scene::OnMouseMove(MATH::Vec2 mouse)
 
 }
 
-void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
+void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 {
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
-		/*if (!dockSpace.IsMouseOverViewPort())
-			return;*/
+		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+			return;
 
-		mouseRay.CalaculateMouseRay();
+		mouseRay.CalculateMouseRay();
 
 		//GameObject* hitResult = objectList->osp.GetCollision(mouseRay);
 		GameObject* hitResult = nullptr;
@@ -99,6 +100,7 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 				
 			}
 			hitResult->isObjectSelected = true;
+			UIStatics::SetSelectedObject(hitResult);
 		}
 	}
 }

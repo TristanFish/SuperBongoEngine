@@ -1,7 +1,7 @@
 <Root>
     <Name Is="Light_1">
         <Transform>
-            <Position X="-10.3" Y="0.80000001" Z="73.099998"/>
+            <Position X="-4.8000002" Y="15.7" Z="45.099998"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>

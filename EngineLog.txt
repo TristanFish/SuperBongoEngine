@@ -31,7 +31,7 @@
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 237
-[INFO]: Scene: Scene_41 Created in: Scene1.cpp on line: 27
+[INFO]: Scene: Scene_41 Created in: Scene1.cpp on line: 28
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -50,147 +50,24 @@
 [INFO]: Player added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Sphere added to scenegraph in: ECS.cpp on line: 154
 [INFO]: test added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
+[SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Grass Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Light Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Plane-1 Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Player Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Sphere Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: test Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_2 Created in: Scene1.cpp on line: 27
-[INFO]: BlueBox added to scenegraph in: ECS.cpp on line: 154
-[INFO]: RedBox added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene1 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_2 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_3 Created in: Scene1.cpp on line: 23
-[INFO]: BlueBox added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[INFO]: Scene: Scene_AI Created in: Scene1.cpp on line: 23
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: GAME306 Created in: Scene1.cpp on line: 23
-[INFO]: Tet_1 added to scenegraph in: ECS.cpp on line: 154
-[INFO]: Tet_2 added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: Tet_1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Tet_2 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[INFO]: Scene: Scene_AI Created in: Scene1.cpp on line: 23
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_2 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_3 Created in: Scene1.cpp on line: 23
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene1 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_2 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_3 Created in: Scene1.cpp on line: 23
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 269
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 275
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
-[INFO]: Scene: Scene_2 Created in: Scene1.cpp on line: 27
-[SAVE][INFO]: Scene_2 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: BlueBox Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: RedBox Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
-[SAVE][INFO]: Scene_2 Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE][INFO]: Player Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353
