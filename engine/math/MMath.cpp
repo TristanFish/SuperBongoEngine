@@ -1,5 +1,6 @@
 #include "VMath.h"
 #include "MMath.h"
+#include "Quaternion.h"
 using namespace MATH;
 
 
@@ -68,6 +69,55 @@ MATH::Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
 
 	
 	return m;
+}
+
+Quaternion MMath::ConvertMatToQuat(const Matrix4& mat_)
+{
+	Quaternion q;
+	float s;
+	float x;
+	float y;
+	float z;
+	float w;
+	
+	Matrix3 mat = mat_;
+	float trace = mat[0] + mat[4] + mat[8];
+	if(trace > 0)
+	{
+		s = sqrt(trace + 1.0f) * 2;
+		w = 0.25f * s;
+		x = (mat[7] - mat[5]) / s;
+		y = (mat[2] - mat[6]) / s;
+		z = (mat[3] - mat[1]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else if((mat[0] > mat[4]) & (mat[0] > mat[8]))
+	{
+		s = sqrt(1.0f + mat[0] - mat[4] - mat[8]) * 2;
+		w = (mat[7] - mat[5]) / s;
+		x = 0.25f * s;
+		y = (mat[1] + mat[3]) / s;
+		z = (mat[2] + mat[6]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else if(mat[4] > mat[8])
+	{
+		s = sqrt(1.0f + mat[4] - mat[0] - mat[8]) * 2;
+		w = (mat[2] - mat[6]) / s;
+		x = (mat[1] + mat[3]) / s;
+		y = 0.25f * s;
+		z = (mat[5] + mat[7]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else
+	{
+		s = sqrt(1.0f + mat[8] - mat[0] - mat[4]) * 2;
+		w = (mat[3] - mat[1]) / s;
+		x = (mat[2] + mat[6]) / s;
+		y = (mat[5] + mat[7]) / s;
+		z = 0.25f * s;
+		return Quaternion(x, y, z, w);
+	}
 }
 
 MATH::Matrix4 MMath::GetFromMat3(const Matrix3& m_)

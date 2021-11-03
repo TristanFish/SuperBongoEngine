@@ -11,7 +11,8 @@ namespace MATH
 	private:
 		Vec4 quat;
 	public:
-		Quaternion(float r, const Vec3& i);
+		Quaternion(float real, const Vec3& imaginary);
+		Quaternion(float x, float y, float z, float w);
 		Quaternion();
 		Quaternion(const Vec3& axis, float degrees);
 		Quaternion(const Vec4& v);

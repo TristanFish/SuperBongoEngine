@@ -20,8 +20,10 @@ KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_)
 void KinematicSteeringOutput::Update(float deltaTime, GameObject* aiObject_)	{
 
 	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
+
+		//rotation is done in the kinematic get steering functions, below line is old trial and error code:
+		//aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation);	// if this causes issues old code was:  transform.rotation += rotation * deltaTime;
 		
-		aiObject_->GetComponent<RigidBody3D>()->SetAngVelocity(rotation);	// if this causes issues old code was:  transform.rotation += rotation * deltaTime;
 		if (VMath::mag(velocity) > aiObject_->GetComponent<AIComponent>()->GetMaxSpeed()) {
 			velocity = VMath::normalize(velocity) * aiObject_->GetComponent<AIComponent>()->GetMaxSpeed();
 		}
@@ -38,16 +40,16 @@ KinematicSeek::KinematicSeek(GameObject* aiObject_, const Transform& target_)	{
 }
 
 KinematicSeek::~KinematicSeek()	{
-
+	
 }
 
-bool KinematicSeek::getSteering()	{
+KinematicSteeringOutput KinematicSeek::getSteering()	{
 	//Checks if aiObject has the required components to function
 	if(!aiObject->HasComponent<AIComponent>())	{
 		EngineLogger::Error(aiObject->GetName() + " does not have an AIComponent. KinematicSteering has failed", 
 			"Kinematic.cpp", __LINE__);
 
-		return false;
+		return KinematicSteeringOutput();
 	}
 
 	//change this to stack
@@ -61,12 +63,12 @@ bool KinematicSeek::getSteering()	{
 	result.velocity = VMath::normalize(result.velocity);
 	result.velocity = aiObject->GetComponent<AIComponent>()->GetMaxSpeed() * result.velocity;
 
-	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
-
-	result.rotation = Vec3(0.0f);
-	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
+	//rotate to target
+	aiObject->transform.SetRot(result.calculateOrientation(aiObject, result.velocity));
 	
-	return true;
+	result.rotation = Vec3(0.0f);
+	
+	return result;
 }
 #pragma endregion 
 
@@ -84,19 +86,23 @@ KinematicArrive::~KinematicArrive()	{
 
 }
 
-bool KinematicArrive::getSteering()	{
+KinematicSteeringOutput KinematicArrive::getSteering()	{
 	//Checks if aiObject has the required components to function
 	if (!aiObject->HasComponent<AIComponent>()) {
 		EngineLogger::Error(aiObject->GetName() + " does not have an AIComponent. KinmaticArrive has failed",
 			"Kinematic.cpp", __LINE__);
 
-		return false;
+		return KinematicSteeringOutput();
 	}
 	
 	KinematicSteeringOutput result = KinematicSteeringOutput();
 
 	//Get direction to target
 	result.velocity = target.GetPosition() - aiObject->transform.GetPosition();
+
+	//rotate to target
+	aiObject->transform.SetRot(result.calculateOrientation(aiObject, result.velocity));
+	
 	//check if in radius
 	if (VMath::mag(result.velocity) < radius)	{
 		//does not steer as it is in radius
@@ -105,17 +111,13 @@ bool KinematicArrive::getSteering()	{
 
 		aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 		
-		return false;
+		return KinematicSteeringOutput();
 	}
 	//move to target in timeToTarget
 	result.velocity = result.velocity / timeToTarget;
 
-	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
-	
 	result.rotation = Vec3(0.0f);
-	
-	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
-	
-	return true;
+
+	return result;
 }
 #pragma endregion

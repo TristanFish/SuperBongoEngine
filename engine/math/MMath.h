@@ -1,12 +1,13 @@
 #ifndef MMATH_H
 #define MMATH_H
 #include "Matrix.h"
-#include "Quaternion.h"
 
 ///  A class devoted to graphics related Math - OpenGL style
 
 namespace  MATH {
 
+	struct Quaternion;
+	
 	class MMath {
 	public:
 		static Matrix4 calcRotationMatrix(const Vec3& euler);
@@ -34,8 +35,9 @@ namespace  MATH {
 		static Matrix4 transpose(const Matrix4 &m);
 		static Matrix4 inverse(const Matrix4 &m);
 
-		static Matrix4 GetFromMat3( const Matrix3& m_);
+		static Matrix4 GetFromMat3(const Matrix3& m_);
 		static Matrix4 GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right);
+		static Quaternion ConvertMatToQuat(const Matrix4& mat);
 
 	};
 

@@ -26,7 +26,11 @@ namespace MATH {
 
 	#ifndef DEGREES_TO_RADIANS
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
-	#endif	
+	#endif
+
+	#ifndef RADIANS_TO_DEGREES
+	#define RADIANS_TO_DEGREES (180.0f / M_PI)
+	#endif
 
 
 

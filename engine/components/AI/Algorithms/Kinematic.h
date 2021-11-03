@@ -30,7 +30,7 @@ namespace Kinematic	{
 	public:
 		KinematicSeek(GameObject* aiObject_, const Transform& target_);
 		~KinematicSeek();
-		bool getSteering();
+		KinematicSteeringOutput getSteering();
 		
 	};
 
@@ -45,8 +45,9 @@ namespace Kinematic	{
 	public:
 		KinematicArrive(GameObject* aiObject_, const Transform& target_, const float radius_, const float timeToTarget_);
 		~KinematicArrive();
-		bool getSteering();
+		KinematicSteeringOutput getSteering();
 	};
+	
 }
 
 
