@@ -113,7 +113,7 @@ void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 
 void Renderer::AddLight(LightComponent* light)
 {
-	if(lights.size() >= 10)
+	if(lights.size() >= MAX_LIGHTS)
 	{
 		EngineLogger::Warning("Max number of lights reached, " 
 		 + light->gameObject->name + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
@@ -464,35 +464,106 @@ void Renderer::RenderGBufferResult()
 
 void Renderer::AttachLights() const
 {
-	std::vector<Vec3> positions;
-	std::vector<Vec3> ambs;
-	std::vector<Vec3> diffs;
-	std::vector<Vec3> specs;
-	std::vector<float> intensities;
+	//std::vector<Vec3> positions;
+	//std::vector<Vec3> direction;
+	//std::vector<Vec3> ambs;
+	//std::vector<Vec3> diffs;
+	//std::vector<Vec3> specs;
+	//std::vector<float> intensities;
 
-	positions.reserve(lights.size());
-	ambs.reserve(lights.size());
-	diffs.reserve(lights.size());
-	specs.reserve(lights.size());
-	intensities.reserve(lights.size());
+	//positions.reserve(lights.size());
+	//ambs.reserve(lights.size());
+	//diffs.reserve(lights.size());
+	//specs.reserve(lights.size());
+	//intensities.reserve(lights.size());
+
+	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
 	
 	for(size_t i = 0; i < lights.size(); i++)
 	{
-		positions.push_back(lights[i]->gameObject->transform.GetPosition());
-		ambs.push_back(lights[i]->ambColor);
-		diffs.push_back(lights[i]->diffColor);
-		specs.push_back(lights[i]->specColor);
-		intensities.push_back(lights[i]->intensity);
+		std::string arrayIndex = "lights[" + std::to_string(i) + "]";
+		std::string lightType = arrayIndex + ".lightType";
+		glUniform1i(glGetUniformLocation(resultShader.GetID(), lightType.c_str()), static_cast<int>(lights[i]->type));
+		switch (lights[i]->type)
+		{
+			case LightType::POINT:
+			{
+				std::string pos = arrayIndex + ".lightPos";
+				std::string amb = arrayIndex + ".lightAmb";
+				std::string diff = arrayIndex + ".lightDiff";
+				std::string spec = arrayIndex + ".lightSpec";
+				std::string intens = arrayIndex + ".lightIntens";
+				const Vec3 lightPos = lights[i]->gameObject->transform.GetPosition();
+				const Vec3 lightAmb = lights[i]->ambColor;
+				const Vec3 lightDiff = lights[i]->diffColor;
+				const Vec3 lightSpec = lights[i]->specColor;
+				
+				glUniform3f(glGetUniformLocation(resultShader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, lights[i]->attenConstant);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, lights[i]->attenLinear);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, lights[i]->attenQuadratic);
+				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->intensity);
+				break;
+			}
+			case LightType::SPOT:
+			{
+				std::string pos = arrayIndex + ".lightPos";
+				std::string dir = arrayIndex + ".lightDir";
+				std::string amb = arrayIndex + ".lightAmb";
+				std::string diff = arrayIndex + ".lightDiff";
+				std::string spec = arrayIndex + ".lightSpec";
+				std::string intens = arrayIndex + ".lightIntens";
+				const Vec3 lightPos = lights[i]->gameObject->transform.GetPosition();
+				const Vec3 lightDir = lights[i]->gameObject->transform.Forward();
+				const Vec3 lightAmb = lights[i]->ambColor;
+				const Vec3 lightDiff = lights[i]->diffColor;
+				const Vec3 lightSpec = lights[i]->specColor;
+				
+				glUniform3f(glGetUniformLocation(resultShader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, lights[i]->cutOff);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, lights[i]->attenConstant);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, lights[i]->attenLinear);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, lights[i]->attenQuadratic);
+				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->intensity);
+				break;
+			}
+			case LightType::DIRECTIONAL:
+			{
+				std::string dir = arrayIndex + ".lightDir";
+				std::string amb = arrayIndex + ".lightAmb";
+				std::string diff = arrayIndex + ".lightDiff";
+				std::string spec = arrayIndex + ".lightSpec";
+				std::string intens = arrayIndex + ".lightIntens";
+				const Vec3 lightDir = lights[i]->gameObject->transform.Forward();
+				const Vec3 lightAmb = lights[i]->ambColor;
+				const Vec3 lightDiff = lights[i]->diffColor;
+				const Vec3 lightSpec = lights[i]->specColor;
+				
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, 0.0f);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, 0.0f);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, 0.0f);
+				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, 0.0f);
+				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->intensity);
+				break;
+			}
+		}
 	}
 	
-	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
-	glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
-
-	
+	//for(size_t i = 0; i < lights.size(); i++)
+	//{
+	//	positions.push_back(lights[i]->gameObject->transform.GetPosition());
+	//	ambs.push_back(lights[i]->ambColor);
+	//	diffs.push_back(lights[i]->diffColor);
+	//	specs.push_back(lights[i]->specColor);
+	//	intensities.push_back(lights[i]->intensity);
+	//}
+	//
+	//resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
+	//glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
+	//glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
+	//glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
+	//glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
+	//glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const

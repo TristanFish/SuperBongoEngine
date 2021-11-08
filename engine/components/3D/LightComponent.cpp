@@ -13,6 +13,7 @@ void LightComponent::Init(GameObject* g)
 	diffColor = Vec3(1.0f);
 	specColor = Vec3(1.0f);
 	intensity = 1.0f;
+	cutOff = cos(12.5f * DEGREES_TO_RADIANS);
 }
 
 void LightComponent::OnSaveComponent(const std::string& saveName, std::string parentName)
@@ -32,7 +33,7 @@ void LightComponent::ImGuiRender()
 		static int currentIndex = 0;
 		if (ImGui::BeginCombo("LightTypes", lightTypeNameEnumPairs[static_cast<int>(type) - 1].typeName))
 		{
-			for (int i = 0; i < static_cast<int>(LightType::SPOT); i++)
+			for (int i = 0; i < static_cast<int>(LightType::DIRECTIONAL); i++)
 			{
 
 				static bool isSelected = (currentIndex == i);
@@ -48,6 +49,7 @@ void LightComponent::ImGuiRender()
 		}
 
 		ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 500.0f);
+		ImGui::DragFloat("Cut Off", &cutOff, 0.001f, -1.0f, 1.0f);
 		ImGui::ColorEdit3("Ambient Color", ambColor);
 		ImGui::ColorEdit3("Diffuse Color", diffColor);
 		ImGui::ColorEdit3("Specular Color", specColor);

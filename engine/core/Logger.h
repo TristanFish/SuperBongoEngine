@@ -1,12 +1,10 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <iostream>
 #include <string>
-#include <fstream>
 #include <functional>
 
-enum class MessageType : unsigned short
+enum class MessageType
 {
 	TYPE_NONE = 0,
 	TYPE_FATAL_ERROR,
@@ -19,13 +17,15 @@ enum class MessageType : unsigned short
 
 enum class MessageTag
 {
-	TYPE_NONE,
+	//TYPE_NONE is set to 7 
+	TYPE_NONE = 7,
 	TYPE_PHYSICS,
 	TYPE_SAVE,
 	TYPE_LOAD,
 	TYPE_NETWORK,
 	TYPE_GRAPHICS,
-	TYPE_AI
+	TYPE_AI,
+	TYPE_MATH
 };
 
 class EngineLogger
@@ -43,16 +43,16 @@ public:
 
 	static void OnCreate(const std::string& name_ = "EngineLog");
 	static void SetSeverity(MessageType type_);
-	static void Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
-	static void Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
-	static void Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
-	static void Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
-	static void FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Info(const std::string& message_, const std::string& fileName_, int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Trace(const std::string& message_, const std::string& fileName_, int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Warning(const std::string& message_, const std::string& fileName_, int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void Error(const std::string& message_, const std::string& fileName_, int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
+	static void FatalError(const std::string& message_, const std::string& fileName_, int line_, MessageTag tag = MessageTag::TYPE_NONE, bool sendToConsoleLog = true);
 
 	static std::string outputName;
 private:
 
-	static void Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog);
+	static void Log(MessageType type_, const std::string& message_, const std::string& fileName_, int line_, MessageTag tag, bool sendToConsoleLog);
 
 	static MessageType currentSev;
 	static std::function<void(const std::string&)> consoleCallback;

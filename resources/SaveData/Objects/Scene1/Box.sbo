@@ -1,9 +1,9 @@
 <Root>
     <Name Is="Box">
         <Transform>
-            <Position X="-82.900002" Y="15.7" Z="-85.300003"/>
+            <Position X="-63.299999" Y="15.7" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
-            <Scale X="0.1" Y="0.89999998" Z="4.9000001"/>
+            <Scale X="0.40000001" Y="5.1999998" Z="22.6"/>
         </Transform>
         <ObjectInfo>
             <Type ID="class Box"/>

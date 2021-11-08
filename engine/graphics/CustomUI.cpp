@@ -107,9 +107,9 @@ void PropertiesPanel::Render()
 	{
 		#pragma region GameObject
 		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
-		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText("GameObject Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			std::string newObjName = UIStatics::GetSelectedObject()->name;
+			const std::string newObjName = UIStatics::GetSelectedObject()->name;
 
 			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
 			SaveManager::SetSaveName(oldObjName, newObjName);

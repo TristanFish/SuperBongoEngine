@@ -16,7 +16,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
 	//transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
-	//transform.rotation.print();
+	//transform.rotation.Print();
 
 	canBeInstantiated = true;
 

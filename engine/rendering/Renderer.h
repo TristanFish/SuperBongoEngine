@@ -10,7 +10,7 @@
 #include "graphics/FrameBuffer.h"
 
 
-
+constexpr size_t MAX_LIGHTS = 20;
 
 
 class SkyBox;
@@ -82,13 +82,6 @@ private:
 
 	GLuint vao;
 	GLuint vbo;
-
-	//debugging Textures
-	Debug pos;
-	Debug norm;
-	Debug albedo;
-	Debug depth;
-	Debug stencil;
 
 	static inline SkyBox* skyBox;
 	//GLuint currentGTexture;

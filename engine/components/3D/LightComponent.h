@@ -7,7 +7,8 @@
 enum class LightType
 {
 	POINT = 1,
-	SPOT = 2,
+	SPOT,
+	DIRECTIONAL
 };
 
 struct LightTypePair
@@ -23,17 +24,22 @@ struct LightTypePair
 };
 
 static LightTypePair lightTypeNameEnumPairs[]{LightTypePair("Point", LightType::POINT),
-											  LightTypePair("Spot", LightType::SPOT) };
+											  LightTypePair("Spot", LightType::SPOT),
+											  LightTypePair("Directional", LightType::DIRECTIONAL)};
 
 class LightComponent : public Component
 {
 public:
 
-	LightType type;
-	float intensity;
 	MATH::Vec3 ambColor;
 	MATH::Vec3 diffColor;
 	MATH::Vec3 specColor;
+	LightType type;
+	float intensity;
+	float cutOff;
+	float attenConstant;
+	float attenLinear;
+	float attenQuadratic;
 	
 	// Inherited via Component
 	void Init(GameObject* g) override;

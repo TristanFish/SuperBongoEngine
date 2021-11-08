@@ -161,6 +161,7 @@ public:
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
 
+	unsigned int GetInstanceAmount() const { return instanceAmount; }
 	
 
 private:

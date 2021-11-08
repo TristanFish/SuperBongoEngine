@@ -16,7 +16,7 @@
 [INFO]: texture_10.jpg in: TextureManager.cpp on line: 16
 [INFO]: water_dudv.png in: TextureManager.cpp on line: 16
 [INFO]: =================Loading all models================= in: ModelManager.cpp on line: 12
-[INFO]: Cube.fbx in: ModelManager.cpp on line: 22
+[INFO]: Cube.obj in: ModelManager.cpp on line: 22
 [INFO]: Grass.fbx in: ModelManager.cpp on line: 22
 [INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 22
 [INFO]: ManyPolys.uvw in: ModelManager.cpp on line: 22
@@ -69,5 +69,5 @@
 [SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
 [SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
-[SAVE][INFO]: Player Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE][INFO]: Light_1 Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353
