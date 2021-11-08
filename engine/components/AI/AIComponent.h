@@ -3,8 +3,8 @@
 
 
 #include "components/Component.h"
-#include "components/AI/Algorithms/Kinematic.h"
-#include "components/AI/Algorithms/Dynamic.h"
+#include "components/AI/Algorithms/Steering/Kinematic.h"
+#include "components/AI/Algorithms/Steering/Dynamic.h"
 
 enum class AIType {
 	KinematicSteering, 
