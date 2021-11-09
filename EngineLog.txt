@@ -50,13 +50,12 @@
 [INFO]: Player added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Sphere added to scenegraph in: ECS.cpp on line: 154
 [INFO]: test added to scenegraph in: ECS.cpp on line: 154
+[INFO]: Mouse hit Sphere in: Scene.cpp on line: 97
 [SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Grass Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Light Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Plane-1 Already Exists in: SaveUtility.cpp on line: 60
@@ -69,6 +68,5 @@
 [SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
 [SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
-[SAVE][INFO]: Light Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: Light_1 Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353
