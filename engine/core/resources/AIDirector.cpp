@@ -15,8 +15,8 @@ AIDirector::~AIDirector()
 
 	for (auto Algorithm : UM_PathAlgorithms)
 	{
-		Algorithm.second = nullptr;
 		delete Algorithm.second;
+		Algorithm.second = nullptr;
 	}
 
 }

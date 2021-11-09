@@ -4,6 +4,7 @@
 
 
 #include "components/AI/Algorithms/Pathfinding/PathingAlgorithms.h"
+#include "components/AI/Algorithms/Pathfinding/DivisionAlgorithms.h"
 
 
 using namespace PathingAlgorithms;
@@ -29,6 +30,8 @@ public:
 	AIDirector();
 
 	~AIDirector();
+
+
 
 
 	void FindPath(Graph* traverableGraph, PathfindingAlgorithm Algorithm = PathfindingAlgorithm::ASTAR);

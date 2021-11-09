@@ -20,8 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Graph.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
+    <ClInclude Include="engine\core\resources\AIDirector.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
@@ -295,8 +302,15 @@
     <ClInclude Include="NameEnumPair.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Graph.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Dynamic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
+    <ClCompile Include="engine\core\resources\AIDirector.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />

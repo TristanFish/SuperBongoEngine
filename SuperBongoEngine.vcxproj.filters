@@ -959,6 +959,13 @@
     <ClInclude Include="NameEnumPair.h">
       <Filter>src\engine\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Graph.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
+    <ClInclude Include="engine\core\resources\AIDirector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1260,6 +1267,13 @@
     <ClCompile Include="engine\components\3D\LightComponent.cpp">
       <Filter>src\engine\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Graph.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Dynamic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
+    <ClCompile Include="engine\core\resources\AIDirector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -11,8 +11,8 @@ PathAlgorithm::PathAlgorithm() : V_CalculatedPath(std::vector<Node*>()), G_Curre
 
 PathAlgorithm::~PathAlgorithm()
 {
-	G_CurrentGraph = nullptr;
 	delete G_CurrentGraph;
+	G_CurrentGraph = nullptr;
 }
 
 

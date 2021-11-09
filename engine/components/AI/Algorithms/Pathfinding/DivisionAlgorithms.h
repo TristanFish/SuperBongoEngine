@@ -1,19 +1,47 @@
 #ifndef DIVISIONALGORITHMS_H
 #define DIVISIONALGORITHMS_H
 
+
+#include <vector>
+
+#include "math/Vector.h"
+#include "math/Ray.h"
+
+class Graph;
 namespace DivisionAlgorithms
 {
-    //http://www.cs.kent.edu/~dragan/ST-Spring2016/visibility%20graphs.pdf
-	//http://www.science.smith.edu/~istreinu/Teaching/Courses/274/Spring98/Projects/Philip/fp/algVisibility.htm
-	class BaseDivision
+	class BaseDivisionAlgo
 	{
-	private:
+		protected:
+
+		std::vector<MATH::Vec3> Verticies;
+
+		Ray IntersectRay;
 
 	public:
 
+		BaseDivisionAlgo();
+		virtual ~BaseDivisionAlgo();
+
+
+		virtual Graph* ConstructDivision() = 0;
+
 	};
 
+	class NaiveVisAlgo : public BaseDivisionAlgo
+	{
+	private:
 
+
+
+	public:
+
+		NaiveVisAlgo();
+		~NaiveVisAlgo();
+
+		virtual Graph* ConstructDivision() override;
+
+	};
 
 
 }
