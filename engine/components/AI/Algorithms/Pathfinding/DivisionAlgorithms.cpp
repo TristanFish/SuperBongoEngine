@@ -42,6 +42,8 @@ Graph* NaiveVisAlgo::ConstructDivision()
 
 
 	}
+
+	return nullptr;
 }
 
 #pragma endregion

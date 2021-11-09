@@ -966,6 +966,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
     <ClInclude Include="engine\core\resources\AIDirector.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">

@@ -300,6 +300,7 @@
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
     <ClInclude Include="game\scenes\SceneAi.h" />
     <ClInclude Include="NameEnumPair.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />

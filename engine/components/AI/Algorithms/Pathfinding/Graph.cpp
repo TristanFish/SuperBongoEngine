@@ -1,5 +1,7 @@
 #include "Graph.h"
 
+#include "Node.h"
+
 Graph::Graph() : V_Nodes(std::vector<Node*>())
 {
 
@@ -35,6 +37,8 @@ float Graph::GetCost(Node* current_Node, Node* next_Node)
 		}
 
 	}
+
+	return Cost;
 }
 
 std::vector<Node*> Graph::GetNeighbours(Node* N_Node)

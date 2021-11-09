@@ -1,8 +1,7 @@
 #ifndef PATHINGALGORITHMS_H
 #define PATHINGALGORITHMS_H
 
-#include "Graph.h"
-
+#include "Node.h"
 #include <queue>
 #include <set>
 #include <map>

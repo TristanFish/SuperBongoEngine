@@ -1,16 +1,24 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+
+
 #include <vector>
 #include "Vector.h"
+
+
+class Node;
 struct Connection
 {
+
+	
+public:
 	Node* N_ToNode;
 	Node* N_FromNode;
 	float F_Weight;
 
 
-	Connection(Node* ToNode, Node* FromNode, float Weight = 0.0f)
+	Connection(Node* ToNode,  Node* FromNode, float Weight = 0.0f)
 	{
 		N_ToNode = ToNode;
 		N_FromNode = FromNode;
@@ -22,48 +30,6 @@ struct Connection
 		N_ToNode = nullptr;
 		N_FromNode = nullptr;
 	}
-};
-
-struct Node
-{
-
-	std::vector<Connection> V_Connections;
-
-	float F_Priority;
-
-	MATH::Vec3 V_WorldPos;
-
-
-
-	Node(std::vector<Connection>& connections, float Priority = 0.0f)
-	{
-		V_Connections = connections;
-
-		F_Priority = Priority;
-	}
-
-	~Node()
-	{
-
-	}
-
-	inline void ConnectToNode(Node* toNode, float Weight = 0.0f)
-	{
-		V_Connections.push_back(Connection(toNode, this, Weight));
-	}
-
-	inline void AddConnection(Connection connection)
-	{
-		V_Connections.push_back(connection);
-	}
-
-	inline bool operator()(const Node& t1, const Node& t2)
-	{
-		return t1.F_Priority > t2.F_Priority;
-	}
-
-
-
 };
 
 
