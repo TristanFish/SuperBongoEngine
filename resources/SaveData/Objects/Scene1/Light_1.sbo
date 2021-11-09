@@ -1,13 +1,17 @@
 <Root>
     <Name Is="Light_1">
         <Transform>
-            <Position X="-37.900002" Y="17.700001" Z="-5.1999998"/>
-            <Rotation X="-180" Y="-88.099991" Z="-180"/>
+            <Position X="-37.700001" Y="12.8" Z="-3.9000001"/>
+            <Rotation X="0" Y="-29.399994" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
         <ObjectInfo>
             <Type ID="class LightObject"/>
         </ObjectInfo>
-        <Components/>
+        <Components>
+            <Renderer>
+                <MeshColorTint W="1" X="1" Y="1" Z="0"/>
+            </Renderer>
+        </Components>
     </Name>
 </Root>

@@ -46,10 +46,6 @@ Vec4 VMath::normalize(const Vec4& a)
 	else
 	{
 		result = a / magnitude;
-		result.x = a.x / magnitude;
-		result.y = a.y / magnitude;
-		result.z = a.z / magnitude;
-		result.w = a.w / magnitude;
 	}
 
 	return result;
@@ -96,7 +92,6 @@ Vec3 VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
 //zeroes out all other components
 Vec3 VMath::orthagonalize(const Vec3 &v)
 {
-	
 	if (abs(v.x) > abs(v.y))
 	{
 		if (abs(v.x) > abs(v.z))

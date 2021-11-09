@@ -15,11 +15,16 @@ uniform unsigned int activeLights = 0;
 
 uniform struct LightInfo
 {
-	vec4 lightAmb;		//4th component of Amb holds constant for attenuation
-	vec4 lightDiff;		//4th component of Diff holds linear for attenuation
-	vec4 lightSpec;		//4th component of Spec holds quadratic for attenuation
-	vec4 lightDir;		//4th component of lightDir holds cutoff for Spotlight
-	vec3 lightPos;		//4th component of lightPos holds lightType
+	//4th component of Amb holds constant for attenuation
+	vec4 lightAmb;	
+	//4th component of Diff holds linear for attenuation
+	vec4 lightDiff;	
+	//4th component of Spec holds quadratic for pointLight attenuation
+	vec4 lightSpec;	
+	//4th component of lightDir holds cutoff for Spotlight
+	vec4 lightDir;
+	vec3 lightPos;
+	//lightIntens holds outerCutOff for SpotLights
 	float lightIntens;
 	int lightType;		//What type of light it is, 1 = Point, 2 = Spot, 3 = Directional
 } 
@@ -28,29 +33,22 @@ lights[MAX_LIGHTS];
 vec4 RenderSpotLight(LightInfo l, vec3 norm, vec3 pos)
 {
 	vec3 lightDir = normalize(l.lightPos - pos);
-	float theta = dot(l.lightDir.xyz, normalize(-lightDir));
+	float theta = dot(lightDir, normalize(-l.lightDir.xyz));
+	float epsilon = l.lightDir.w - l.lightIntens;
+	float intensity = clamp((theta - l.lightIntens) / epsilon, 0.0, 1.0);
 
-	if(theta > l.lightDir.w)
-	{
-		float dist = length(l.lightPos - pos);
+	float diff = max(dot(norm, lightDir), 0.0);
 
-		float diff = max(dot(norm, lightDir), 0.0);
+	vec3 amb = l.lightAmb.xyz;
+	vec3 diffuse = intensity * l.lightDiff.xyz * diff;
 
-		vec3 amb = l.lightAmb.xyz;
-		vec3 diffuse = l.lightDiff.xyz * diff;
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+	vec3 specular = intensity * specVal * specCol;
 
-		vec3 specCol = l.lightSpec.xyz;
-		vec3 viewDir = normalize(camPos - pos);
-		vec3 reflectDir = reflect(-lightDir, norm);
-		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-		vec3 specular = l.lightIntens * specVal * specCol;
-
-		return vec4(diffuse + specular, 0.0);
-	}
-	else
-	{
-		return vec4(0.0, 0.0, 0.0, 0.0);
-	}
+	return vec4(amb + diffuse + specular, 0.0);
 }
 
 vec4 RenderPointLight(LightInfo l, vec3 norm, vec3 pos)
@@ -69,7 +67,8 @@ vec4 RenderPointLight(LightInfo l, vec3 norm, vec3 pos)
 	vec3 specCol = l.lightSpec.xyz;
 	vec3 specular = l.lightIntens * specVal * specCol;
 
-	float attenuation = l.lightIntens * clamp(10.0 / dist, 0.0, 1.0);
+	float attenuation = 1.0 / (l.lightAmb.w + l.lightDiff.w * dist + l.lightSpec.w * (dist * dist));
+	attenuation *= l.lightIntens;
 	amb *= attenuation;
 	diffuse *= attenuation;
 	specular *= attenuation;
@@ -92,7 +91,7 @@ vec4 RenderDirectionalLight(LightInfo l, vec3 norm, vec3 pos)
 	float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 	vec3 specular = l.lightIntens * specVal * specCol;
 
-	return vec4(diffuse + specular, 0.0);
+	return vec4(amb + diffuse + specular, 0.0);
 }
 
 void main()

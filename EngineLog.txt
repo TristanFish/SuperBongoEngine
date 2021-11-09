@@ -69,5 +69,6 @@
 [SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
 [SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE][INFO]: Light Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: Light_1 Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353

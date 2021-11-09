@@ -9,11 +9,17 @@ void LightComponent::Init(GameObject* g)
 {
 	gameObject = g;
 	type = LightType::POINT;
-	ambColor = Vec3(1.0f);
+	ambColor = Vec3(0.0f);
 	diffColor = Vec3(1.0f);
 	specColor = Vec3(1.0f);
 	intensity = 1.0f;
-	cutOff = cos(12.5f * DEGREES_TO_RADIANS);
+	cutOff = static_cast<float>(cos(12.5 * DEGREES_TO_RADIANS));
+	outerCutOff = static_cast<float>(cos(15.0 * DEGREES_TO_RADIANS));
+
+	attenConstant = 1.0f;
+	attenLinear = 0.049f;
+	attenQuadratic = 0.0f;
+	
 }
 
 void LightComponent::OnSaveComponent(const std::string& saveName, std::string parentName)
@@ -49,7 +55,28 @@ void LightComponent::ImGuiRender()
 		}
 
 		ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 500.0f);
-		ImGui::DragFloat("Cut Off", &cutOff, 0.001f, -1.0f, 1.0f);
+		
+		switch (type)
+		{
+			case LightType::POINT:
+			{
+				ImGui::DragFloat("Linear Attenuation", &attenLinear, 0.001f, 0.0f, 2.0f);
+				ImGui::DragFloat("Quadratic Attenuation", &attenQuadratic, 0.001f, 0.0f, 3.0f);
+				break;
+			}
+			case LightType::SPOT:
+			{
+				ImGui::DragFloat("Cut Off", &cutOff, 0.001f, outerCutOff, 1.0f);
+				ImGui::DragFloat("Outer Cut Off", &outerCutOff, 0.001f, -1.0f, cutOff);
+				break;
+			}
+			case LightType::DIRECTIONAL:
+			{
+			break;
+			}
+		}
+		
+		//ImGui::DragFloat3("Direction");
 		ImGui::ColorEdit3("Ambient Color", ambColor);
 		ImGui::ColorEdit3("Diffuse Color", diffColor);
 		ImGui::ColorEdit3("Specular Color", specColor);

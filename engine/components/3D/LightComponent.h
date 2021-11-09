@@ -27,6 +27,7 @@ static LightTypePair lightTypeNameEnumPairs[]{LightTypePair("Point", LightType::
 											  LightTypePair("Spot", LightType::SPOT),
 											  LightTypePair("Directional", LightType::DIRECTIONAL)};
 
+
 class LightComponent : public Component
 {
 public:
@@ -36,7 +37,10 @@ public:
 	MATH::Vec3 specColor;
 	LightType type;
 	float intensity;
+	
 	float cutOff;
+	float outerCutOff;
+
 	float attenConstant;
 	float attenLinear;
 	float attenQuadratic;
