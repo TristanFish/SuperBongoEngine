@@ -293,30 +293,24 @@ Matrix4 MMath::scale(const Vec3 &scale) {
 	return MMath::scale(scale.x, scale.y, scale.z);
 }
 
-///Tested Feb 1 2013 SSF
-Matrix4 MMath::lookAt(float eyeX, float eyeY, float eyeZ,
-			float atX, float atY, float atZ,
-			float upX, float upY, float upZ){
-
-	Vec3 at(atX,atY,atZ);
-	Vec3 up(upX,upY,upZ);
-	Vec3 eye(eyeX,eyeY,eyeZ);
+Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at, const Vec3& up){
 
 	Matrix4 result;
-
-	Vec3 forward = VMath::normalize(at - eye);
-	up = VMath::normalize(up);
-	Vec3 side = VMath::normalize( VMath::cross(forward,up));
-	up = VMath::cross(side,forward);
+	Vec3 modifiedUp = up;
+	
+	const Vec3 forward = VMath::normalize(at - eye);
+	modifiedUp = VMath::normalize(modifiedUp);
+	const Vec3 side = VMath::normalize( VMath::cross(forward,modifiedUp));
+	modifiedUp = VMath::cross(side,forward);
 
 	result[0] = side.x;
 	result[1] = side.y;
 	result[2] = side.z;
 	result[3] = 0.0;
 
-	result[4] = up.x;
-	result[5] = up.y;
-	result[6] = up.z;
+	result[4] = modifiedUp.x;
+	result[5] = modifiedUp.y;
+	result[6] = modifiedUp.z;
 	result[7] = 0.0;
 
 	result[8]  = -forward.x;
@@ -325,15 +319,11 @@ Matrix4 MMath::lookAt(float eyeX, float eyeY, float eyeZ,
 	result[11] = 0.0;
 	
 	result[12] = -VMath::dot(side,eye);	
-	result[13] = -VMath::dot(up,eye);
+	result[13] = -VMath::dot(modifiedUp,eye);
 	result[14] =  VMath::dot(forward,eye);
 	result[15] = 1.0;
 
 	return result;
-}
-
-Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at,  const Vec3& up){
-	return lookAt(eye.x, eye.y, eye.z, at.x, at.y, at.z, up.x, up.y, up.z);
 }
 
 /// Take the transpose of a matrix, swap row with columns 

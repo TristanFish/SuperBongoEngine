@@ -38,7 +38,9 @@ Quaternion::Quaternion(const Vec3& axis, float degrees)
 
 float Quaternion::Mag() const
 {
-	return VMath::mag(quat);
+	const float mag = sqrt(quat.w * quat.w + quat.x * quat.x + quat.y * quat.y + quat.z * quat.z);
+	
+	return mag;
 }
 
 Quaternion Quaternion::Normalized() const
@@ -55,11 +57,12 @@ Quaternion Quaternion::Conjugate() const
 
 Quaternion Quaternion::Inverse() const
 {
+	const float mag = Mag();
 	//the inverse is the conjugate divided by Magnitude squared
-	return Quaternion(Conjugate().quat / powf(Mag(), 2.0f));
+	return Quaternion(Conjugate().quat / (mag * mag));
 }
 
-Vec3 Quaternion::Rotate(const Vec3& vec)
+Vec3 Quaternion::Rotate(const Vec3& vec) const
 {
 	//create a quaternion with the real component of 0 and the imaginary component of the input vector
 	Quaternion p = Quaternion(0.0f, vec);
@@ -73,7 +76,7 @@ Vec4 Quaternion::GetQuat() const
 	return quat;
 }
 
-Matrix3 Quaternion::ConvertToMatrix()
+Matrix3 Quaternion::ConvertToMatrix() const
 {
 	Matrix3 m;
 
@@ -141,25 +144,32 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 	return e / DEGREES_TO_RADIANS;
 }
 
-Quaternion Quaternion::LookAt(const Vec3& eye, const Vec3& at, const Vec3& up)
+Quaternion Quaternion::LookAt(const Quaternion& currentOrientation, const Vec3& at, const Vec3& up)
 {
-	Vec3 forwardVector = VMath::normalize(at - eye);
-
-	float dot = VMath::dot(Vec3::Forward(), forwardVector);
+	const Vec3 direction = VMath::normalize(at);
 	
-	if(abs(dot - (-1.0f)) < 0.000001f)
-	{
-		return Quaternion(up, 180.0f);
+	const Vec3 aiZAxis = currentOrientation.Rotate(up);
+
+	//if its already facing
+	if (aiZAxis == direction) {
+		return currentOrientation;
 	}
-	if(abs(dot - (1.0f)) < 0.000001f)
-	{
-		return Quaternion();
+	else if(aiZAxis == direction * -1.0f)	{
+		return currentOrientation * -1.0f;
 	}
 
-	float rotAngle = acos(dot) * RADIANS_TO_DEGREES;
-	Vec3 rotAxis = VMath::cross(Vec3::Forward(), forwardVector);
-	rotAxis = VMath::normalize(rotAxis);
-	return Quaternion(rotAxis, rotAngle);
+	//Otherwise face it
+	Vec3 axis = VMath::cross(aiZAxis, direction);
+	const float axisMag = VMath::mag(axis);
+	const float angle = asin(axisMag);
+	axis = VMath::normalize(axis);
+	
+	const float sinAngle = sin(angle / 2.0f);
+
+	const Quaternion r(sinAngle * axis.x, sinAngle * axis.y, sinAngle * axis.z, cos(angle / 2.0f));
+	const Quaternion b = currentOrientation.Inverse();
+	
+	return b * r;
 }
 
 
@@ -172,14 +182,9 @@ Quaternion MATH::Quaternion::operator+=(const Vec3& v)
 	return *this;
 }
 
-Quaternion Quaternion::operator*(const float f) 
+Quaternion Quaternion::operator*(const float f) const
 {
-	quat.x *= f;
-	quat.y *= f;
-	quat.z *= f;
-	quat.w *= f;
-
-	return *this;
+	return Quaternion(quat.x * f, quat.y * f, quat.z * f, quat.w * f);
 }
 
 Quaternion MATH::Quaternion::operator+=(const Quaternion& q) 

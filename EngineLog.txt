@@ -28,6 +28,7 @@
 [SAVE][INFO]: .sbo Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: box2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: d not be instantiated Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
@@ -38,12 +39,7 @@
 [INFO]: AiObj added to objectList in: ECS.cpp on line: 168
 [INFO]: targetSphere added to objectList in: ECS.cpp on line: 168
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 257
+[ERROR]: Object could not be added to loadable objects map in: LoadUtility.cpp on line: 103
+[SAVE][INFO]: AiObj Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
+[SAVE][INFO]: targetSphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 42
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 278
-[SAVE][INFO]: d not be instantiated Successfully Added To The Save Queue in: SaveUtility.cpp on line: 64
-[SAVE][INFO]: AiObj Successfully Added To The Save Queue in: SaveUtility.cpp on line: 64
-[SAVE][INFO]: targetSphere Successfully Added To The Save Queue in: SaveUtility.cpp on line: 64
-[SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 312
-[SAVE][INFO]: targetSphere Compiled Successfully in: SaveUtility.cpp on line: 349
-[SAVE][INFO]: d not be instantiated Compiled Successfully in: SaveUtility.cpp on line: 349
-[SAVE][INFO]: AiObj Compiled Successfully in: SaveUtility.cpp on line: 349
-[SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 352
