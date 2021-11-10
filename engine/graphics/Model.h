@@ -33,9 +33,6 @@ public:
 	void DestroyModel();
 	
 private:
-	MATH::Vec4 color;
-
-	std::vector<Vertex> vertices;
 
 	 void ProcessNode(aiNode* node, const aiScene* scene);
 	 Mesh processMesh(aiMesh* mesh, const aiScene* scene);

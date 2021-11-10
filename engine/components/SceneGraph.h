@@ -68,7 +68,7 @@ public:
 
 	void AddRenderingComponents();
 
-	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
+	const std::unordered_map<std::string, GameObject*>& GetInstantiableObjects() const;
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
@@ -76,7 +76,7 @@ public:
 
 	 //! isObjectActive Getter
 	/*!Return's if there is already an object with a given name*/
-	 bool isObjectActive(std::string objName);
+	 bool isObjectActive(const std::string& objName);
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/

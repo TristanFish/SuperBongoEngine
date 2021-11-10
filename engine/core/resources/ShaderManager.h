@@ -5,7 +5,6 @@
 
 #include "glew/glew.h"
 
-
 struct ShaderGroup
 {
 	GLint vert;
@@ -25,7 +24,7 @@ namespace std {
 	template <>
 	struct hash<ShaderGroup>
 	{
-		std::size_t operator()(const ShaderGroup& sg) const
+		std::size_t operator()(const ShaderGroup& sg) const noexcept
 		{
 			using std::size_t;
       
@@ -38,7 +37,6 @@ namespace std {
 			return value;
 		}
 	};
-
 }
 
 class Shader;

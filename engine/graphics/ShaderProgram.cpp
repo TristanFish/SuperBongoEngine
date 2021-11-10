@@ -2,15 +2,34 @@
 
 #include "core/Logger.h"
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 ShaderProgram::ShaderProgram()
 {
 	programID = 0;
+}
+
+ShaderProgram::ShaderProgram(const ShaderProgram& sp)
+{
+	programID = sp.programID;
+}
+
+ShaderProgram::ShaderProgram(const ShaderProgram&& sp)
+{
+	programID = sp.programID;
+}
+
+ShaderProgram& ShaderProgram::operator=(const ShaderProgram&& sp)
+{
+	programID = sp.programID;
+	return *this;
 }
 
 bool ShaderProgram::operator==(const ShaderProgram& sp) const
 {
 	return programID == sp.programID;
 }
+
 
 void ShaderProgram::DeleteProgram()
 {
@@ -31,8 +50,20 @@ GLuint ShaderProgram::LinkShaders(const std::vector<GLint>& shaders)
 	{
 		glAttachShader(programID, shaders[i]);
 	}
-	
+
+	GLint status;
 	glLinkProgram(programID);
+	glGetProgramiv(programID, GL_LINK_STATUS, &status);
+	if(status == 0)
+	{
+		GLsizei errorLogSize = 0;
+		std::string errorLog;
+		glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &errorLogSize);
+		errorLog.resize(errorLogSize);
+		glGetProgramInfoLog(programID, errorLogSize, &errorLogSize, &errorLog[0]);
+		EngineLogger::Error(errorLog, "ShaderProgram.cpp", __LINE__);
+	}
+	
 	
 	return programID;
 }

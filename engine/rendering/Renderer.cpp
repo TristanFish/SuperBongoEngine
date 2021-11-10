@@ -91,7 +91,12 @@ void Renderer::SetupTextures()
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
 {
-	meshRenderers.emplace_back(mr);
+	const auto mrIt = std::find(meshRenderers.begin(), meshRenderers.end(), mr);
+	//if this meshrenderer doesn't already exist then add it
+	if(mrIt == meshRenderers.end())
+	{
+		meshRenderers.emplace_back(mr);
+	}
 }
 
 void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
@@ -114,7 +119,12 @@ void Renderer::AddLight(LightComponent* light)
 		 + light->gameObject->name + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 		return;
 	}
-	lights.emplace_back(light);
+	//if this meshrenderer doesn't already exist then add it
+	const auto lightIt = std::find(lights.begin(), lights.end(), light);
+	if(lightIt == lights.end())
+	{
+		lights.emplace_back(light);
+	}
 }
 
 void Renderer::DeleteLight(LightComponent* light)
@@ -124,8 +134,6 @@ void Renderer::DeleteLight(LightComponent* light)
 		if (*iter == light)
 		{
 			lights.erase(iter);
-			delete light;
-			light = nullptr;
 			break;
 		}
 	}
@@ -178,10 +186,6 @@ void Renderer::Render()
 
 		const Uint16 stencilMarker = meshRenderers[i]->renderFlags;
 
-		if (meshRenderers[i]->renderFlags & RenderProperties::RP_LIGHTING)
-		{
-			
-		}
 		if (meshRenderers[i]->renderFlags & RenderProperties::RP_CREATES_SHADOWS)
 		{
 			RenderShadowTexture(*meshRenderers[i]);
@@ -246,10 +250,10 @@ Renderer* Renderer::GetInstance()
 	return rendererInstance.get();
 }
 
-Renderer* Renderer::ResetInstance()
+void Renderer::ClearComponents()
 {
-	rendererInstance.reset(new Renderer);
-	return rendererInstance.get();
+	meshRenderers.clear();
+	lights.clear();
 }
 
 SkyBox* Renderer::GetSkyBox()
@@ -421,9 +425,6 @@ void Renderer::BindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
-
-
-
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -445,13 +446,13 @@ void Renderer::RenderGBufferResult()
 	gBufferRenderResult.Bind();
 	resultShader.RunShader();
 
+	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
 	BindGBufferTextures();
 
 	AttachLights();
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
-
 
 	UnbindGBufferTextures();
 	glUseProgram(0);

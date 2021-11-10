@@ -1,7 +1,7 @@
 #include "Bird.h"
 #include "components/Components.h"
 
-Bird::Bird(std::string name, MATH::Vec3 position) {
+Bird::Bird(const std::string& name, MATH::Vec3 position) {
 
 	AddComponent<MeshRenderer>()->LoadModel("PuffinBall.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");

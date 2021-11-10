@@ -56,17 +56,12 @@ void RigidBody3D::Update(const float deltaTime)
 	angularVel += angularAcc * deltaTime;
 	angularVel *= angularDrag;
 
-
 	// Rotation Handling 
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
 	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.rotation)) * (deltaTime / 2);
 
-
-
 	gameObject->transform.rotation += newRot;
 	gameObject->transform.rotation = gameObject->transform.rotation.Normalized();
-	// Rotation Handling 
-	
 }
 
 
@@ -84,12 +79,10 @@ void RigidBody3D::ImGuiRender()
 
 	if (opened)
 	{
-
 		UIStatics::DrawVec3("Velocity", vel, 100.0f);
 		UIStatics::DrawVec3("Acceleration", accel, 100.0f);
 		UIStatics::DrawVec3("Angular Vel", angularVel, 100.0f);
 		UIStatics::DrawVec3("Angular Accel", angularAcc, 100.0f);
-
 
 		ImGui::TreePop();
 	}

@@ -41,11 +41,11 @@ public:
 
 	static void DrawDebugGeometry(const std::vector<GameObject*>& objects);
 
-	void Render() ;
+	void Render();
 	void DestroyRenderer();
 
 	static Renderer* GetInstance();
-	static Renderer* ResetInstance();
+	void ClearComponents();
 
 	static SkyBox* GetSkyBox();
 	
@@ -55,6 +55,8 @@ public:
 
 	void Resize(const int size_x, const int size_y);
 
+	const CustomUI::Viewport& GetViewport() const { return viewport; }
+
 private:
 
 
@@ -62,7 +64,8 @@ private:
 
 	// Viewport 
 	/*! Handles all of the needed functions for the viewport */
-	 CustomUI::Viewport viewport;
+	CustomUI::Viewport viewport;
+	
 
 	ShaderProgram gBufferShader;
 	ShaderProgram resultShader;

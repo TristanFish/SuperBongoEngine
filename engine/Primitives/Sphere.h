@@ -9,14 +9,14 @@ class Sphere : public GameObject
 
 public:
 	Sphere();
-	Sphere(std::string name, MATH::Vec3 position);
+	Sphere(const std::string& name, MATH::Vec3 position);
 	~Sphere();
 
 
 	// Inherited via GameObject
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
-	Sphere* GetClone() const override { return new Sphere(this->name, this->transform.pos); };
+	Sphere* NewClone() const override { return new Sphere(this->name, this->transform.pos); };
 
 
 private:

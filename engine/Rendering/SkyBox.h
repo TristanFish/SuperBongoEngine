@@ -7,7 +7,7 @@
 #include "graphics/ShaderProgram.h"
 
 
-class SkyBox :  public GameObject
+class SkyBox
 {
     unsigned int skyboxVAO, skyboxVBO;
 	GLuint skyboxTextureID;
@@ -16,18 +16,9 @@ class SkyBox :  public GameObject
 
 	bool LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz);
 
-	//void AttachUniforms() const override;
-	//void Init(GameObject* g) override;
-	//! Update Function (Inherited from Gameobject)
 
-	//! Render Function (Inherited from Gameobject)
-
-	//! Handle Events Function (Inherited from Gameobject)
-	void HandleEvents(const SDL_Event& event) override {}
     MATH::Matrix4 Mat3ToMat4(MATH::Matrix3 _m) const;
 public:
-
-	void Update(const float deltaTime) override;
 	
 	GLuint GetSkyBoxTexture() const;
 	unsigned int GetVAO() const;
@@ -36,8 +27,6 @@ public:
 	~SkyBox();
 
 	void Render() const;
-
-	SkyBox* GetClone() const override { return new SkyBox(*this); };
 
 
 };

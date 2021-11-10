@@ -49,7 +49,7 @@ public:
 
 	//! Calculate Mouse Ray Function
 	/*! Does the final calculation and then updates the currentRay */
-	void CalaculateMouseRay();
+	void CalculateMouseRay();
 
 	//! Get Current Ray Getter
 	/*! Returns the current ray */

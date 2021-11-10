@@ -1,7 +1,18 @@
 <Root>
     <Name Is="Light">
         <Transform>
-            <Position X="-17.6" Y="21.200001" Z="18.700001"/>
+            <Position X="33.299999" Y="10.9" Z="21.6"/>
+            <Rotation X="0" Y="0" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+        </Transform>
+        <ObjectInfo>
+            <Type ID="class LightObject"/>
+        </ObjectInfo>
+        <Components/>
+    </Name>
+    <Name Is="Light">
+        <Transform>
+            <Position X="33.299999" Y="10.9" Z="21.6"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>

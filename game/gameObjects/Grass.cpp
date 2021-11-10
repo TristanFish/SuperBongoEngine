@@ -3,7 +3,7 @@
 using namespace MATH;
 
 
-Grass::Grass(std::string name, MATH::Vec3 position, unsigned int amount_)
+Grass::Grass(const std::string& name, Vec3 position, unsigned int amount_)
 {
 	AddComponent<MeshRenderer>()->LoadModel("GrassBunch1.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("GrassVert.glsl", "GrassFrag.glsl");

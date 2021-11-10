@@ -58,18 +58,17 @@ void AudioManager::InitAudioManager()
 		err.append((FMOD_ErrorString(result)));
 
 		EngineLogger::Error(err, "AudioManager.cpp", __LINE__);
-		exit(-1);
 	}
 
 	//This actually initializes FMOD, first parameter is just a common amount of channels on a modern device.
 	result = system->init(512, FMOD_INIT_3D_RIGHTHANDED, 0);
 	if (result != FMOD_OK) 
 	{
+		
 		std::string err = "FMOD did not init properly ";
 		err.append((FMOD_ErrorString(result)));
 
 		EngineLogger::Error(err, "AudioManager.cpp", __LINE__);
-		exit(-1);
 	}
 	//Always have to load before we create
 	LoadSounds();
@@ -162,6 +161,7 @@ AudioManager::~AudioManager()
 	system = nullptr;
 	G1 = nullptr;
 	C1 = nullptr;
+
 	
 }
 

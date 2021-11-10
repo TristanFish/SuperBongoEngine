@@ -7,7 +7,7 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(std::string name, MATH::Vec3 position)
+Sphere::Sphere(const std::string& name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Sphere.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");

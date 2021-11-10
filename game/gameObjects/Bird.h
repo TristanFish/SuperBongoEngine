@@ -9,9 +9,9 @@ class Bird : public GameObject
 {
 public:
 
-	Bird(std::string name, MATH::Vec3 position);
+	Bird(const std::string& name, MATH::Vec3 position);
 	
-	Bird* GetClone() const override { return new Bird(*this); };
+	Bird* NewClone() const override { return new Bird(*this); };
 
 
 	//! Base Grass Constructor

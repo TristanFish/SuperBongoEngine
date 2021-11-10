@@ -89,7 +89,6 @@ SkyBox::~SkyBox()
 }
 bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz)
 {
-	
 	glGenTextures(1, &skyboxTextureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	SDL_Surface* texSurface = IMG_Load(posx);
@@ -141,12 +140,6 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	return true;
-}
-
-
-void SkyBox::Update(const float deltaTime)
-{
-	
 }
 
 void SkyBox::Render() const

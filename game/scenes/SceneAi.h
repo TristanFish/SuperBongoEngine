@@ -7,9 +7,6 @@
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
 class SceneAi : public Scene
 {
-private:
-
-	Debug debug;
 public:
 	//! Scene Ai Constructor
 	SceneAi() = default;

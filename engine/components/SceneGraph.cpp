@@ -10,6 +10,7 @@
 
 #include "graphics/UIStatics.h"
 
+
 SceneGraph::~SceneGraph() 
 {
 	for (GameObject* g : gameObjects)
@@ -21,8 +22,14 @@ SceneGraph::~SceneGraph()
 		}
 	}
 
-	Renderer::GetInstance()->DestroyRenderer();
+	for (auto nameObjectPair : InstantiableObjects)
+	{
+		delete nameObjectPair.second;
+		nameObjectPair.second = nullptr;
+	}
 
+	InstantiableObjects.clear();
+	
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -32,15 +39,17 @@ void SceneGraph::Init()
 {
 	//osp = OctSpatialPartition(500);
 
-	Renderer::GetInstance()->Init();
-
-
-	for (auto obj : SaveManager::SaveableObjects)
+	
+	
+	for (const auto& obj : SaveManager::SaveableObjects)
 	{
-
-		if (obj.second->canBeInstantiated)
+		//if obj is not already in InstantiableObjects
+		if(InstantiableObjects.find(obj.first) == InstantiableObjects.end())
 		{
-			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
+			if (obj.second->canBeInstantiated)
+			{
+				InstantiableObjects.emplace(obj.first, obj.second->NewClone());
+			}
 		}
 	}
 }
@@ -79,7 +88,7 @@ void SceneGraph::Render() const
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
 {
-	for (auto g : gameObjects)
+	for (auto* g : gameObjects)
 	{
 		g->HandleEvents(event);
 	}
@@ -122,7 +131,7 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 
 void SceneGraph::AddRenderingComponents()
 {
-	for (auto go : gameObjects)
+	for (auto* go : gameObjects)
 	{
 		if (go->HasComponent<MeshRenderer>())
 		{
@@ -177,7 +186,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 {
 	if (go->HasComponent<RigidBody3D>())
 	{
-		
 		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
 		{
 			if (*iter == go->GetComponent<RigidBody3D>())
@@ -186,7 +194,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 				break;
 			}
 		}
-
 	}
 	if (go->HasComponent<MeshRenderer>())
 	{
@@ -214,14 +221,14 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 	UIStatics::SetSelectedObject(nullptr);
 }
 
-std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
+const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableObjects() const
 {
 	return InstantiableObjects;
 }
 
-bool SceneGraph::isObjectActive(std::string objName)
+bool SceneGraph::isObjectActive(const std::string& objName)
 {
-	for (auto obj : gameObjects)
+	for (auto* obj : gameObjects)
 	{
 		if (obj->name == objName)
 		{

@@ -29,7 +29,6 @@ bool SceneAi::OnCreate()
 void SceneAi::Update(const float deltaTime)
 {
 	Scene::Update(deltaTime);
-	Camera::getInstance()->Update(deltaTime);
 }
 
 void SceneAi::Render()

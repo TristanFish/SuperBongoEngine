@@ -297,7 +297,6 @@
     <ClInclude Include="engine\Utility\LoadUtility.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
     <ClInclude Include="game\scenes\SceneAi.h" />
-    <ClInclude Include="NameEnumPair.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +404,7 @@
     <None Include="external\include\assimp\vector3.inl" />
     <None Include="resources\shaders\2DTextureFrag.glsl" />
     <None Include="resources\shaders\2DTextureVert.glsl" />
+    <None Include="resources\shaders\2DUIntTextureFrag.glsl" />
     <None Include="resources\shaders\DefaultFrag.glsl" />
     <None Include="resources\shaders\DefaultVert.glsl" />
     <None Include="resources\shaders\FogFrag.glsl" />

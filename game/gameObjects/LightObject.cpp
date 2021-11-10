@@ -12,5 +12,5 @@ LightObject::LightObject(std::string name, Vec3 position)
 
 void LightObject::DrawDebugGeometry() const
 {
-	light.DrawCube(transform.pos, Vec3(2.0f), false, Vec4(1.0f, 1.0f, 0.0f, 1.0f));
+	light.DrawCube(transform.pos, Vec3(1.0f), false, Vec4(1.0f, 1.0f, 0.0f, 1.0f));
 }

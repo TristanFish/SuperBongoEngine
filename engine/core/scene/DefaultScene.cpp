@@ -6,16 +6,9 @@
 #include "core/resources/SaveManager.h"
 #include "core/Globals.h"
 
-#include "gameObjects/LightObject.h"
-#include "gameObjects/Bird.h"
-#include "gameObjects/Player.h"
-#include "gameObjects/Grass.h"
-
-#include "Primitives/PlaneObject.h"
 
 
-
-DefaultScene::DefaultScene(std::string Scene_Name_) 
+DefaultScene::DefaultScene(const std::string& Scene_Name_) 
 {
 	Scene_Name = Scene_Name_;
 }
@@ -27,17 +20,11 @@ DefaultScene::DefaultScene()
 
 bool DefaultScene::OnCreate()
 {
-	EngineLogger::Info(Scene_Name + " Created", "DefaultScene.cpp", __LINE__);
-
-
-	Globals::InitGlobals();
+	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
 
 	LoadMapData();
 
-
 	objectList->Init();
-
-
 
 	return true;
 }
@@ -45,7 +32,6 @@ bool DefaultScene::OnCreate()
 void DefaultScene::Update(const float deltaTime)
 {
 	Scene::Update(deltaTime);
-	Camera::getInstance()->Update(deltaTime);
 }
 
 void DefaultScene::Render()

@@ -1,23 +1,19 @@
 #include "Scene.h"
-#include "gameObjects/TestModel.h"
-#include "Primitives/PlaneObject.h"
-#include <math.h>
-#include "core/MouseRay.h"
-#include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+
+#include <imgui/imgui_internal.h>
+
 #include "core/Globals.h"
+#include "core/Logger.h"
+#include "core/MouseRay.h"
+#include "core/3D/Physics3D.h"
+#include "core/resources/SaveManager.h"
+#include "gameObjects/TestModel.h"
+#include "graphics/UIStatics.h"
+#include "Utility/LoadUtility.h"
 
-
-#include "imgui/imgui_stdlib.h"
-#include "imgui/imgui_internal.h"
 using namespace MATH;
 
-
-
-
-
-
-Scene::Scene() : objectList(std::make_shared<SceneGraph>()), Scene_Name("Scene_" + std::rand())
+Scene::Scene() : Scene_Name("Scene_" + std::to_string(std::rand())), objectList(std::make_shared<SceneGraph>())
 {
 	
 }
@@ -27,12 +23,18 @@ Scene::~Scene()
 
 }
 
+bool Scene::OnCreate()
+{
+	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
+	
+	objectList->Init();
+
+	return true;
+}
+
 bool Scene::PostCreate()
 {
-	
-
-	dockSpace.ConstructUserInterface();
-
+	objectList->PostInit();
 	return true;
 }
 
@@ -40,16 +42,11 @@ void Scene::Update(const float deltaTime)
 {
 	objectList->Update(deltaTime);
 	objectList->CheckCollisions();
-	dockSpace.Update(deltaTime);
+	Camera::getInstance()->Update(deltaTime);
 }
 
 void Scene::Render() 
 {
-	ImGui::NewFrame();
-	// Let's the use add game objects
-
-	dockSpace.Render();
-
 	objectList->Render();
 }
 
@@ -67,14 +64,14 @@ void Scene::OnMouseMove(MATH::Vec2 mouse)
 
 }
 
-void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
+void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 {
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
-		if (!dockSpace.IsMouseOverViewPort())
+		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
 			return;
 
-		mouseRay.CalaculateMouseRay();
+		mouseRay.CalculateMouseRay();
 
 		//GameObject* hitResult = objectList->osp.GetCollision(mouseRay);
 		GameObject* hitResult = nullptr;
@@ -103,18 +100,19 @@ void Scene::OnMousePressed(MATH::Vec2 mouse, int buttonType)
 				
 			}
 			hitResult->isObjectSelected = true;
+			UIStatics::SetSelectedObject(hitResult);
 		}
 	}
 }
 
-void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, std::string objName_, std::string objType) const
+void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const std::string& objName_, const std::string& objType) const
 {
 
 	for (auto obj : objectList->GetInstantiableObjects())
 	{
 		if (obj.first == objType)
 		{
-			GameObject* clone = obj.second->GetClone();
+			GameObject* clone = obj.second->NewClone();
 			clone->SetName(objName_);
 			clone->SetPos(pos_);
 			clone->SetRotation(rot_);
@@ -160,39 +158,24 @@ bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObjec
 
 void Scene::SaveMapData() const
 {
-
-
-
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
 	{
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
 	
-	
 	ElementInfo info = ElementInfo("Root");
-
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
 	info.Attributes.emplace(":", std::string(typeid(*this).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
-
-
-
 	info = ElementInfo("Root");
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
-
-
-
 	
 	info = ElementInfo("Objects");
 	
-
-	
-
-	
-	for (auto obj : objectList->GetGameObjects())
+	for (auto* obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);
 
@@ -200,9 +183,6 @@ void Scene::SaveMapData() const
 	}
 
 	SaveUtility::GetInstance()->CompileSaves();
-
-
-
 }
 
 void Scene::LoadMapData()
@@ -212,8 +192,6 @@ void Scene::LoadMapData()
 		if (!objectList->isObjectActive(elm.first))
 		{
 			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
-
 		}
 	}
-
 }

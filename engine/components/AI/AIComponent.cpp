@@ -2,6 +2,7 @@
 
 #include "components/GameObject.h"
 
+
 AIComponent::AIComponent()	{
 	maxSpeed = 1.0f;
 	maxAcceleration = 1.0f;

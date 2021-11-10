@@ -3,6 +3,8 @@
 #include <sstream>
 
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
 Shader::Shader()
 {
 	shaderID = 0;
@@ -15,6 +17,9 @@ Shader::Shader(const char* path)
 
 Shader::Shader(const Shader& s)
 {
+	shaderID = s.shaderID;
+	shaderType = s.shaderType;
+	
 	*this = s;
 }
 
@@ -38,7 +43,7 @@ GLuint Shader::CreateShader(const char* shaderPath)
 	shaderFile.open(shaderPath);
 	if(shaderFile.fail())
 	{
-		EngineLogger::Warning("Vertex shader " + std::string(shaderPath) + " could not be opened", "Shader.cpp", __LINE__);
+		EngineLogger::Warning("Shader " + std::string(shaderPath) + " could not be opened", "Shader.cpp", __LINE__);
 	}
 
 
@@ -65,7 +70,8 @@ GLuint Shader::CreateShader(const char* shaderPath)
 	else if(stringPath.find("Frag.glsl") != std::string::npos)
 	{
 		shaderType = GL_FRAGMENT_SHADER;
-	} else
+	}
+	else
 	{
 		EngineLogger::Warning("Shader type not found for shader: " + std::string(shaderPath) + " make sure filename follows conventions", "Shader.cpp", __LINE__);
 	}
@@ -86,9 +92,30 @@ GLuint Shader::CreateShader(const char* shaderPath)
 
 	//Making the shader
 	shaderID = glCreateShader(shaderType);
+
+	if(shaderID == 0)
+	{
+		EngineLogger::Error("Didn't create a new shader", "Shader.cpp", __LINE__);
+	}
+
 	glShaderSource(shaderID, 1, &sCode, 0);
 	glCompileShader(shaderID);
-
+	
+	//check for errors
+	GLint status;
+	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &status);
+	if(status == 0)
+	{
+		GLsizei errorLogSize = 0;
+		GLsizei titleLength;
+		std::string errorLog = shaderPath;
+		errorLog.append(": ");
+		titleLength = errorLog.length();
+		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &errorLogSize);
+		errorLog.resize( titleLength + errorLogSize );
+		glGetShaderInfoLog(shaderID, errorLogSize, &errorLogSize, &errorLog[titleLength]);
+		EngineLogger::Error(errorLog, "Shader.cpp", __LINE__);
+	}
 	
 	return shaderID;
 }
