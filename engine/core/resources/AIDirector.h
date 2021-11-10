@@ -15,6 +15,8 @@ enum class PathfindingAlgorithm
 	BREADTHFIRST = 1
 };
 
+
+
 class AIDirector
 {
 
@@ -23,7 +25,10 @@ private:
 
 	std::unordered_map<PathfindingAlgorithm,PathAlgorithm*> UM_PathAlgorithms;
 
+	std::vector<MATH::Vec3> GetPositiveVerticies() const;
 
+	static std::unique_ptr<AIDirector> directorInstance;
+	friend std::default_delete<AIDirector>;
 
 public:
 
@@ -31,6 +36,7 @@ public:
 
 	~AIDirector();
 
+	static AIDirector* GetInstance();
 
 
 

@@ -1,14 +1,14 @@
 #ifndef NODE_H
 #define NODE_H
 
+
 #include <vector>
 
-#include "Graph.h"
+#include "Edge.h"
 #include "math/Vector.h"
-
-struct Node
+class Node
 {
-
+public:
 	std::vector<Connection> V_Connections;
 
 	float F_Priority;
@@ -44,9 +44,9 @@ struct Node
 		V_Connections.push_back(connection);
 	}
 
-	inline bool operator()(const Node& t1, const Node& t2)
+	inline bool operator()(const Node* t1, const Node* t2)
 	{
-		return t1.F_Priority > t2.F_Priority;
+		return t1->F_Priority > t2->F_Priority;
 	}
 };
 

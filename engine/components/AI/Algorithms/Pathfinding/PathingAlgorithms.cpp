@@ -1,6 +1,6 @@
 #include "PathingAlgorithms.h"
 
-
+#include "Types/Graph.h"
 using namespace PathingAlgorithms;
 
 #pragma region Path Algorithm Base
@@ -79,7 +79,7 @@ void BreadthFirst::CalculatePath()
 
 #pragma region AStar Algorithm
 
-AStar::AStar() : PQ_Frontier(std::priority_queue<Node*, std::vector<Node*>, Node>()), M_CostsToReach(std::map<Node*, float>())
+AStar::AStar() : PQ_Frontier(std::priority_queue<Node*, std::vector<Node*>, Node>())//, M_CostsToReach(std::map<Node*, float>())
 {
 	
 }
@@ -95,7 +95,7 @@ void AStar::CalculatePath()
 	M_CostsToReach.emplace(G_CurrentGraph->GetNode(0), 0.0f);
 
 	
-
+	
 	while (!PQ_Frontier.empty())
 	{
 		Node* currentNode = PQ_Frontier.top();
@@ -111,9 +111,8 @@ void AStar::CalculatePath()
 
 			if (M_CostsToReach.find(nextNode) == M_CostsToReach.end() || newCost < M_CostsToReach[nextNode])
 			{
-				M_CostsToReach.emplace(nextNode);
-				M_CostsToReach[nextNode] = newCost;
-
+				M_CostsToReach.emplace(nextNode, newCost);
+				
 				float Priority = newCost + HeuristicFunc(nextNode);
 				nextNode->F_Priority = Priority;
 				PQ_Frontier.push(nextNode);
@@ -122,7 +121,7 @@ void AStar::CalculatePath()
 			}
 		}
 	}
-
+	
 }
 
 float AStar::HeuristicFunc(Node* node)
@@ -131,7 +130,7 @@ float AStar::HeuristicFunc(Node* node)
 	float dy = abs(node->V_WorldPos.y - N_Goal->V_WorldPos.y);
 	float dz = abs(node->V_WorldPos.z - N_Goal->V_WorldPos.z);
 
-	return 1.0 * sqrt(dx * dx + dy * dy + dz * dz);
+	return 1.0f * sqrt(dx * dx + dy * dy + dz * dz);
 }
 
 #pragma  endregion

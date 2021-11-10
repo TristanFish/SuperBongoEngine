@@ -1,11 +1,15 @@
 #ifndef PATHINGALGORITHMS_H
 #define PATHINGALGORITHMS_H
 
-#include "Node.h"
 #include <queue>
 #include <set>
 #include <map>
 #include <functional>
+
+
+#include "Types/Node.h"
+
+class Graph;
 namespace PathingAlgorithms
 {
 
