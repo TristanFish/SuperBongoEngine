@@ -246,6 +246,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 			}
 			ImGui::EndPopup();
@@ -323,6 +324,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 		{
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 			}
 			ImGui::EndPopup();

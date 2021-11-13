@@ -9,7 +9,7 @@
 class Node
 {
 public:
-	std::vector<Connection> V_Connections;
+	std::vector<Edge> V_Connections;
 
 	float F_Priority;
 
@@ -17,14 +17,17 @@ public:
 
 	Node()
 	{
-		V_Connections = std::vector<Connection>();
+		V_Connections = std::vector<Edge>();
 
 		F_Priority = 0.0f;
 	}
 
-	Node(std::vector<Connection>& connections, float Priority = 0.0f)
+	Node(const std::vector<Edge>& connections, float Priority = 0.0f)
 	{
 		V_Connections = connections;
+
+		for (auto connect : connections)
+			connect.N_FromNode = this;
 
 		F_Priority = Priority;
 	}
@@ -36,12 +39,13 @@ public:
 
 	inline void ConnectToNode(Node* toNode, float Weight = 0.0f)
 	{
-		V_Connections.push_back(Connection(toNode, this, Weight));
+		V_Connections.push_back(Edge(toNode, this, Weight));
 	}
 
-	inline void AddConnection(Connection connection)
+	inline void AddEdge(Edge connection)
 	{
 		V_Connections.push_back(connection);
+
 	}
 
 	inline bool operator()(const Node* t1, const Node* t2)

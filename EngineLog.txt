@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 76
+[INFO]: Logger Created in: CoreEngine.cpp on line: 79
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 42
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
@@ -43,31 +43,8 @@
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
 [INFO]: Box added to scenegraph in: ECS.cpp on line: 154
-[INFO]: Grass added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Light added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 154
 [INFO]: Player added to scenegraph in: ECS.cpp on line: 154
-[INFO]: Sphere added to scenegraph in: ECS.cpp on line: 154
 [INFO]: test added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Grass Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Light Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Plane-1 Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Player Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Sphere Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: test Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
-[SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
-[SAVE][INFO]: Player Compiled Successfully in: SaveUtility.cpp on line: 350
-[SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353

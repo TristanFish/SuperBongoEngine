@@ -162,7 +162,8 @@ void Scene::SaveMapData() const
 	{
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
-	
+
+
 	ElementInfo info = ElementInfo("Root");
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);

@@ -4,7 +4,7 @@
 
 
 class Node;
-class Connection
+class Edge
 {
 
 
@@ -14,8 +14,15 @@ public:
 	float F_Weight;
 
 
-	Connection(Node* ToNode, Node* FromNode, float Weight = 0.0f);
-	~Connection();
+	Edge(Node* ToNode, Node* FromNode= nullptr, float Weight = 0.0f);
+	~Edge();
+
+
+	inline const bool operator== (const Edge t2)
+	{
+		bool value = N_ToNode == t2.N_ToNode && N_FromNode == t2.N_FromNode;
+		return value;
+	}
 };
 
 #endif

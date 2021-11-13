@@ -111,6 +111,7 @@
     </Filter>
     <Filter Include="src\engine\components\AI\Steering">
       <UniqueIdentifier>{d7371d50-a760-445e-aaa3-bf7562efccb2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="resources\shaders">
       <UniqueIdentifier>{c52913d4-9d62-4cf0-b054-2a46ae3be6fa}</UniqueIdentifier>
     </Filter>
@@ -977,6 +978,8 @@
       <Filter>src\engine\components\AI\Steering</Filter>
     </ClInclude>
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1291,6 +1294,7 @@
       <Filter>src\engine\components\AI\Steering</Filter>
     </ClCompile>
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

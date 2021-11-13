@@ -19,6 +19,8 @@ Vec3 VMath::normalize(const Vec3 &a) {
 	return result;
 }
 
+
+
 Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n){
 	Vec3 result;
 	float scalar = 2.0f * dot(-v, n);
@@ -47,6 +49,22 @@ MATH::Vec4 VMath::normalize(const Vec4& a)
 	result.y = a.y / magnitude;
 	result.z = a.z / magnitude;
 	result.w = a.w / magnitude;
+	return result;
+}
+
+MATH::Vec2 VMath::normalize(const Vec2& a)
+{
+	float magnitude;
+	Vec2 result;
+	magnitude = float(sqrt(a.x * a.x + a.y * a.y));
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+	if (magnitude < VERY_SMALL) {
+		std::string errorMsg("Divide by nearly zero! ");
+		throw errorMsg;
+	}
+#endif
+	result.x = a.x / magnitude;
+	result.y = a.y / magnitude;
 	return result;
 }
 

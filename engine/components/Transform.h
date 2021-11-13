@@ -55,6 +55,9 @@ public:
 	/*! Returns the transforms scale */
 	MATH::Vec3& GetScale() { return scale; }
 
+
+	MATH::Quaternion GetRotationQuat() { return rotation; }
+
 	//!GetModelMatrix Getter
 	/*! Returns the transforms model matrix */
 	const MATH::Matrix4& GetModelMatrix() const { return modelMatrix; }

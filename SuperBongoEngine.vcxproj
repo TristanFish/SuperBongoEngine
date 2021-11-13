@@ -24,6 +24,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
@@ -298,6 +299,7 @@
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
     <ClInclude Include="game\scenes\SceneAi.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
@@ -391,6 +393,7 @@
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
     <ClCompile Include="game\scenes\SceneAi.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -513,7 +516,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

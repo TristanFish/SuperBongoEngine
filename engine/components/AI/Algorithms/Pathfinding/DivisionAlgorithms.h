@@ -4,7 +4,8 @@
 
 #include <vector>
 
-#include "math/Vector.h"
+#include "Types/Poly.h"
+
 #include "math/Ray.h"
 
 class Graph;
@@ -12,16 +13,16 @@ namespace DivisionAlgorithms
 {
 	class BaseDivisionAlgo
 	{
-		protected:
-
-		std::vector<MATH::Vec3> Verticies;
-
-		Ray IntersectRay;
+	protected:
+		std::vector<Poly> V_Polygons;
+		Ray R_IntersectRay;
 
 	public:
 
 		BaseDivisionAlgo();
 		virtual ~BaseDivisionAlgo();
+
+		void UpdatePolygons(const std::vector<Poly>& Polygons);
 
 
 		virtual Graph* ConstructDivision() = 0;
@@ -31,19 +32,17 @@ namespace DivisionAlgorithms
 	class NaiveVisAlgo : public BaseDivisionAlgo
 	{
 	private:
-
-
+	
 
 	public:
 
 		NaiveVisAlgo();
+		NaiveVisAlgo(std::vector<Poly> Verticies_);
 		~NaiveVisAlgo();
 
 		virtual Graph* ConstructDivision() override;
 
 	};
-
-
 }
 #endif
 

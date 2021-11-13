@@ -63,6 +63,10 @@ namespace MATH {
 			return (x != v.x || y != v.y);
 		}
 
+		inline const bool operator == (const Vec2& v) const {
+			return (x == v.x && y == v.y);
+		}
+
 		inline const Vec2 operator + (const Vec2& v) const
 		{
 			return Vec2(x + v.x, y + v.y);
@@ -101,6 +105,10 @@ namespace MATH {
 			set(x,y,z);
 		}
 		
+		inline Vec3(const Vec2&v) {
+			set(v.x, v.y, 0.0f);
+		}
+
 		/// A copy constructor
 		inline Vec3( const Vec3& v ) { 
 			set(v.x,v.y,v.z); 
@@ -115,7 +123,9 @@ namespace MATH {
 			set(v.x, v.y, v.z); 
 			return *this;
 		}
-		
+		inline const bool operator == (const Vec3& v) const {
+			return (x == v.x && y == v.y && z == v.z);
+		}
 		/// Now we can use the Vec3 like an array but we'll need two overloads
 		inline const float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
 			return *(&x + index); 
@@ -207,7 +217,7 @@ namespace MATH {
 		
 		static Vec3 Up()
 		{
-			return Vec3(0.0f,1.0f,1.0f);
+			return Vec3(0.0f,1.0f,0.0f);
 		}
 		
 		static Vec3 Right()

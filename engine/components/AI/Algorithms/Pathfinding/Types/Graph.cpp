@@ -27,9 +27,9 @@ Graph::~Graph()
 
 float Graph::GetCost(Node* current_Node, Node* next_Node)
 {
-	float Cost;
+	float Cost = 0.0f;
 
-	for (Connection connect : current_Node->V_Connections)
+	for (Edge connect : current_Node->V_Connections)
 	{
 		if (connect.N_ToNode == next_Node)
 		{
@@ -45,13 +45,37 @@ std::vector<Node*> Graph::GetNeighbours(Node* N_Node)
 {
 	std::vector<Node*> Neighbours;
 
-	for (Connection connect : N_Node->V_Connections)
+	for (Edge connect : N_Node->V_Connections)
 	{
 		Neighbours.push_back(connect.N_ToNode);
 
 	}
 
 	return Neighbours;
+}
+
+Node* Graph::GetNode(MATH::Vec2 WorldPos) const
+{
+	for (auto node : V_Nodes)
+	{
+		if (MATH::Vec2(node->V_WorldPos.x, node->V_WorldPos.z) == WorldPos)
+			return node;
+	}
+
+	return nullptr;
+}
+
+void Graph::AddNode(Node* N_Node)
+{
+	V_Nodes.push_back(N_Node);
+}
+
+void Graph::AddNodes(const std::vector<Node*>& V_NewNodes)
+{
+	for (auto node : V_NewNodes)
+	{
+		V_Nodes.push_back(node);
+	}
 }
 
 Node* Graph::GetNode(int nodeIndex) const

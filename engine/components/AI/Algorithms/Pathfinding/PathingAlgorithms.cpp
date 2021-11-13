@@ -128,9 +128,8 @@ float AStar::HeuristicFunc(Node* node)
 {
 	float dx = abs(node->V_WorldPos.x - N_Goal->V_WorldPos.x);
 	float dy = abs(node->V_WorldPos.y - N_Goal->V_WorldPos.y);
-	float dz = abs(node->V_WorldPos.z - N_Goal->V_WorldPos.z);
 
-	return 1.0f * sqrt(dx * dx + dy * dy + dz * dz);
+	return 1.0f * sqrt(dx * dx + dy * dy);
 }
 
 #pragma  endregion
