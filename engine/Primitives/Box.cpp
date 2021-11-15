@@ -1,6 +1,7 @@
 #include "Box.h"
 #include "components/Components.h"
 
+
 using namespace MATH;
 
 Box::Box()
@@ -11,6 +12,8 @@ Box::Box(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
+	AddComponent<NetworkableObject>();
+
 
 	AddComponent<RigidBody3D>();
 	this->name = name;

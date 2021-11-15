@@ -4,8 +4,10 @@
 #include <mutex>
 #include <vector>
 #include <enet/enet.h>
-
+#include "components/SceneGraph.h"
 #include "NetworkManager.h"
+
+class SceneGraph;
 
 class TempSemaphore
 {
@@ -82,6 +84,7 @@ public:
 	bool Connect(const char* addressString, unsigned int port) override;
 	void BroadcastPacket(const std::string& data) override;
 	void SendPacket(const std::string& data) override;
+	void SendPreserializedPacket(std::stringstream& ss) override;
 	void SendPacketToPeer(const std::string& data) override;
 	void Disconnect() override;
 	void Cleanup() override;

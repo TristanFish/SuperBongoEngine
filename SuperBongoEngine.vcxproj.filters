@@ -956,6 +956,9 @@
     <ClInclude Include="Colour.h">
       <Filter>src\engine\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="engine\components\NetworkableObject.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1256,6 +1259,9 @@
     </ClCompile>
     <ClCompile Include="engine\components\3D\LightComponent.cpp">
       <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\NetworkableObject.cpp">
+      <Filter>src\engine\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -62,6 +62,10 @@ public:
 	/*!Returns the first gameObject with a given name*/
 	GameObject* FindGameObject(const char* name);
 
+	//! GameObjectNetworkUpdate Function
+	/*!Finds and updates networkable game object based on data received from server*/
+	void GameObjectNetworkUpdate(const std::string& string);
+
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
 	GameObject& AddGameObject(GameObject* go);

@@ -110,6 +110,11 @@ GameObject* SceneGraph::FindGameObject(const char* name)
 	return nullptr;
 }
 
+void SceneGraph::GameObjectNetworkUpdate(const std::string& string)
+{
+
+}
+
 //Adds a gameObject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {

@@ -1,5 +1,6 @@
 #include "ENetNetworkManager.h"
 #include "core/Logger.h"
+#include"../Globals.h"
 
 #include <sstream>
 #include <cereal/archives/binary.hpp>
@@ -65,6 +66,7 @@ void ENetNetworkManager::PollNetworkEvents()
 			while(enet_host_service(user, &netEvent, 1000) > 0)
 			{
 				HandleServerEvents();
+				
 			}
 		}
 		while(initialized);
@@ -110,6 +112,7 @@ void ENetNetworkManager::HandleServerEvents()
 				string parsedData = ParseData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+				Globals::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
 				break;
 			}
 		default: ;
@@ -143,6 +146,8 @@ void ENetNetworkManager::HandleClientEvents()
 				string parsedData = ParseData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+
+				Globals::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
 				break;
 			}
 		default: ;
@@ -273,7 +278,7 @@ void ENetNetworkManager::SendPacket(const string& data)
 	int size = ss.rdbuf()->str().size();
 	//copy stringstream into char buffer
 	ss.read(buffer, size);
-
+	
 	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
 	if(!connectedPeers.empty())
 	{
@@ -286,6 +291,26 @@ void ENetNetworkManager::SendPacket(const string& data)
 		EngineLogger::Info("There are no connected peers to send a message to", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	}
 
+}
+
+void ENetNetworkManager::SendPreserializedPacket(std::stringstream& ss)
+{
+	char buffer[DEFAULT_BUFFER_LENGTH];
+	int size = ss.rdbuf()->str().size();
+	//copy stringstream into char buffer
+	ss.read(buffer, size);
+
+	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
+	if (!connectedPeers.empty())
+	{
+		//At the moment only sends data to the first connected peer
+		enet_peer_send(connectedPeers[0], 0, packet);
+		EngineLogger::Info("Packet containing \"" + ss.str() + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	}
+	else
+	{
+		EngineLogger::Info("There are no connected peers to send a message to", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	}
 }
 
 void ENetNetworkManager::SendPacketToPeer(const string& data)
