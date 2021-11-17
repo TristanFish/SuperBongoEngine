@@ -69,7 +69,7 @@ public:
 	OrientedBoundingBox OBB;
 	
 	MeshRenderer();
-	virtual ~MeshRenderer() = default;
+	virtual ~MeshRenderer();
 
 	bool LoadModel(const char* name);
 	//!Create Shader Function

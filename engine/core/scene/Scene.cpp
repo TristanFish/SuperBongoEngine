@@ -189,7 +189,7 @@ void Scene::LoadMapData()
 {
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
-		if (!objectList->isObjectActive(elm.first))
+		if (!objectList->FindGameObject(elm.first))
 		{
 			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
 		}

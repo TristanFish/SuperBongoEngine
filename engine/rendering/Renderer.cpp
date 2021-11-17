@@ -101,7 +101,9 @@ void Renderer::AddMeshRenderer(MeshRenderer* mr)
 
 void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 {
-	for (std::vector<MeshRenderer*>::iterator iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
+	if(meshRenderers.empty()) return;
+
+	for (auto iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
 	{
 		if (*iter == mr)
 		{
@@ -129,6 +131,8 @@ void Renderer::AddLight(LightComponent* light)
 
 void Renderer::DeleteLight(LightComponent* light)
 {
+	if(lights.empty()) return;
+
 	for (std::vector<LightComponent*>::iterator iter = lights.begin(); iter != lights.end(); iter++)
 	{
 		if (*iter == light)

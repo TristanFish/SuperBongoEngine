@@ -2,7 +2,7 @@
     <Name Is="Light">
         <Transform>
             <Position X="53.599998" Y="10.9" Z="6"/>
-            <Rotation X="0" Y="28.600006" Z="-180"/>
+            <Rotation X="0" Y="28.600006" Z="180"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
         <ObjectInfo>
@@ -13,7 +13,7 @@
     <Name Is="Light">
         <Transform>
             <Position X="53.599998" Y="10.9" Z="6"/>
-            <Rotation X="0" Y="28.600006" Z="-180"/>
+            <Rotation X="0" Y="28.600006" Z="180"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
         <ObjectInfo>

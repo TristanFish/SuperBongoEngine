@@ -84,7 +84,6 @@ void Game1::BuildScene()
 		CoreEngine::GetInstance()->OnDestroy();
 	}
 	currentScene->LoadMapData();
-	currentScene->objectList->AddRenderingComponents();
 	if(!currentScene->PostCreate())
 	{
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);

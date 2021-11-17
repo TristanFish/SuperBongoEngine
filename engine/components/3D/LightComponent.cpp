@@ -5,6 +5,11 @@
 using namespace MATH;
 
 
+LightComponent::~LightComponent()
+{
+	Renderer::GetInstance()->DeleteLight(this);
+}
+
 void LightComponent::Init(GameObject* g)
 {
 	gameObject = g;
@@ -20,6 +25,7 @@ void LightComponent::Init(GameObject* g)
 	attenLinear = 0.049f;
 	attenQuadratic = 0.0f;
 	
+	Renderer::GetInstance()->AddLight(this);
 }
 
 void LightComponent::OnSaveComponent(const std::string& saveName, std::string parentName)

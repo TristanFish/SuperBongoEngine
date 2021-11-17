@@ -69,7 +69,6 @@ Matrix3 Quaternion::ConvertToMatrix() const
 {
 	Matrix3 m;
 
-
 	m[0] = 1.0f - (2.0f * quat.y * quat.y) - (2.0f * quat.z * quat.z);
 	m[1] = (2.0f * quat.x * quat.y) - (2.0f * quat.w * quat.z);
 	m[2] = (2.0f * quat.x * quat.z) + (2.0f * quat.w * quat.y);

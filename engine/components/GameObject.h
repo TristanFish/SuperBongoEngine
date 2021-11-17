@@ -170,7 +170,7 @@ public:
 				return comp;
 			}
 		}
-		EngineLogger::Error("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
+		EngineLogger::Warning("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
 		return nullptr;
 	}
 
@@ -230,8 +230,6 @@ public:
 			iter++;
 		}
 	}
-
-
 
 	template <typename T>
 	T* AddChild(GameObject* go)

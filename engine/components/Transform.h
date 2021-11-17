@@ -51,6 +51,8 @@ public:
 	/*! Returns the transforms rotation inthe form of euler angles */
 	MATH::Vec3 GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
 
+	MATH::Quaternion GetQuaternion() const { return rotation; }
+
 	//!GetScale Getter
 	/*! Returns the transforms scale */
 	MATH::Vec3& GetScale() { return scale; }
