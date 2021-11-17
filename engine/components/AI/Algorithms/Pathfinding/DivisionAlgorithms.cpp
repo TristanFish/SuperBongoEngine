@@ -6,6 +6,8 @@
 #include "Types/Edge.h"
 #include "VMath.h"
 
+#include <map>
+
 using namespace DivisionAlgorithms;
 #pragma region Base Division Algorithm
 
@@ -49,14 +51,19 @@ Graph* NaiveVisAlgo::ConstructDivision()
 {
 	Graph* newGraph = new Graph();
 
+	// 
 	std::vector<MATH::Vec3> WorldVerticies;
+	std::vector<int> vertexTypeID;
 
 	for (int ni = 0; ni < V_Polygons.size(); ni++)
 	{
 		std::vector<Node*> Poly_Nodes = V_Polygons[ni].ConvertToNodes();
 
 		for (auto node : Poly_Nodes)
+		{
 			WorldVerticies.push_back(node->V_WorldPos);
+			vertexTypeID.push_back(ni);
+		}
 
 
 
@@ -73,38 +80,63 @@ Graph* NaiveVisAlgo::ConstructDivision()
 			for (int ng = 0; ng < WorldVerticies.size(); ng++)
 			{
 
-				if (WorldVerticies[ng] == Verticies[ni] || ng == WorldVerticies.size() - 1)
+				if (WorldVerticies[ng] == Verticies[ni])
 					continue;
 
 				R_IntersectRay.end = MATH::Vec3(WorldVerticies[ng].x, WorldVerticies[ng].z, 0.0f);
-				MATH::Vec2 v1 = MATH::Vec2(WorldVerticies[ng].x, WorldVerticies[ng].z);
 
 				bool IntersectsBefore = false;
+				int firstOfType = 0;
+				// Loops through all verticies again and makes sure the ray doesn't intersect their line segments
 				for (int vert = 0; vert < WorldVerticies.size(); vert++)
 				{
-					if (vert == WorldVerticies.size() - 1)
+
+					if (WorldVerticies[vert] == WorldVerticies[ng])
 					{
+						continue;
+					}
+					if(vert == WorldVerticies.size() - 1)
 						break;
+
+					int nextTypeIndex = vert + 1;
+
+					/* Make's sure that if we are at the end of a certain shape that it 
+					will set the next index to the first of that shape to make sure we fully loop around it.*/ 
+					if(vertexTypeID[vert + 1] != vertexTypeID[vert])
+					{
+						nextTypeIndex = firstOfType;
+
+						firstOfType = vert + 1;
 					}
 
+				
 					MATH::Vec2 p1 = MATH::Vec2(WorldVerticies[vert].x, WorldVerticies[vert].z);
-					MATH::Vec2 p2 = MATH::Vec2(WorldVerticies[vert +1].x, WorldVerticies[vert +1].z);
+					MATH::Vec2 p2 = MATH::Vec2(WorldVerticies[nextTypeIndex].x, WorldVerticies[nextTypeIndex].z);
 					IntersectsBefore = R_IntersectRay.IntersectsLineSegment(p1, p2);
 
-
-
+					
 					if (IntersectsBefore)
 						break;
 				}
 
+
+				// Add's a new edge to the from node with popper weight
 				if (!IntersectsBefore)
 				{
-					Node* N_ToNode = newGraph->GetNode(v1);
+					MATH::Vec2 ToPos = MATH::Vec2(WorldVerticies[ng].x, WorldVerticies[ng].z);
+
+
+					Node* N_ToNode = newGraph->GetNode(ToPos);
 					MATH::Vec2 FromPos = MATH::Vec2(Verticies[ni].x, Verticies[ni].z);
+
 					Node* N_FromNode = newGraph->GetNode(FromPos);
 
+					float Edge_Weight = MATH::VMath::mag(FromPos - ToPos);
 
-					N_FromNode->AddEdge(Edge(N_ToNode, N_FromNode));
+					Edge E_NewEdge = Edge(N_ToNode, N_FromNode);
+					E_NewEdge.F_Weight = Edge_Weight;
+
+					N_FromNode->AddEdge(E_NewEdge);
 				}
 
 			}

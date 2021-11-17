@@ -31,11 +31,14 @@ bool Ray::IntersectsLineSegment(const Vec2& p1, const Vec2& p2) const
 	Vec2 s = Vec2(end.x , end.y) - Vec2(origin.x, origin.y);
 
 
+
 	float d = r.x * s.y - r.y * s.x;
 
 	float u = ((origin.x - p1.x) * r.y - (origin.y - p1.y) * r.x) / d;
 	float t = ((origin.x - p1.x) * s.y - (origin.y - p1.y) * s.x) / d;
 
+
+	
 
 	if ((u > 0.0f && u <= 0.98f) && (t > 0.0f && t <= 0.98f))
 		return true;

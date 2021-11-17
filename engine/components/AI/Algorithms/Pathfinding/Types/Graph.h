@@ -27,12 +27,12 @@ public:
 	void AddNodes(const std::vector<Node*>& V_NewNodes);
 
 
+
+
 	float GetCost(Node* current_Node, Node* next_Node);
 	std::vector<Node*> GetNeighbours(Node* N_Node);
 
-
 	Node* GetNode(MATH::Vec2 WorldPos) const;
-
 	Node* GetNode(int nodeIndex) const;
 
 };

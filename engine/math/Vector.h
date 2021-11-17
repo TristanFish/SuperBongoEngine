@@ -237,6 +237,7 @@ namespace MATH {
 		inline operator const float* () const {
 			return static_cast<const float*>(&x);
 		}
+		
 
 		inline operator float* () {
 			return static_cast<float*>(&x);

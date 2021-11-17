@@ -13,16 +13,23 @@ class Graph;
 namespace PathingAlgorithms
 {
 
+	//! PathAlgorithm Abstract class
+	/*! Is used as a base for all our pathing algorithms and store's all of the basic information each algorithm uses*/
 	class PathAlgorithm
 	{
 
 	protected:
 
+		//! CalculatedPath vector
+		/*! Stores the path that the algorithm has created for later use.*/
 		std::vector<Node*> V_CalculatedPath;
 
+		//! CurrentGraph Pointer
+		/*! Stores a pointer to the current graph so it can be referenced throughout the algorithm*/
 		Graph* G_CurrentGraph;
 
-
+		//! N_Goal Pointer
+		/*! Stores a pointer to the algorithms goal node*/
 		Node* N_Goal;
 	public:
 
@@ -32,11 +39,22 @@ namespace PathingAlgorithms
 
 		virtual ~PathAlgorithm();
 
+		//! CalculatePath Pure virtual function
+		/*! Is the function that all other child classes will override to run their algorithm*/
 		virtual void CalculatePath() = 0;
 
-
-		void SetCurrentGraph(Graph* newGraph);
+		//! GetCalculatedPath Getter
+		/*! Returns the calculated path*/
 		std::vector<Node*> GetCalculatedPath() const;
+		
+		//! SetGoal Setter
+		/*! Set's the N_Goal variable so the algorithm can utilize it*/
+		void SetGoal(Node* NGoal);
+
+		//! SetCurrentGraph Setter
+		/*! Set's the G_CurrentGraph variable so the algorithm can utilize it*/
+		void SetCurrentGraph(Graph* newGraph);
+		
 	};
 
 

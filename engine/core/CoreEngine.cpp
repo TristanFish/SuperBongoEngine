@@ -11,6 +11,8 @@
 #include "core/Logger.h"
 #include "core/scene/Scene.h"
 
+#include "components/AI/Algorithms/Pathfinding/Types/Graph.h"
+
 #include "events/InputManager.h"
 #include "events/MouseEventDispatcher.h"
 #include "graphics/Window.h"
@@ -131,6 +133,9 @@ void CoreEngine::Run()
 		Update(Timer::GetDeltaTime());
 
 		AIDirector::GetInstance()->GenerateGraphFromMap();
+
+		Node* Target_Node = AIDirector::GetInstance()->GetRecentlyGenerated()->GetNode(6);
+		AIDirector::GetInstance()->FindPath(Target_Node);
 
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
 		const auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeAfterUpdate - timeBeforeUpdate);

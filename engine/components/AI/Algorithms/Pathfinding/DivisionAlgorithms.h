@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "Types/Poly.h"
-
 #include "math/Ray.h"
 
 class Graph;

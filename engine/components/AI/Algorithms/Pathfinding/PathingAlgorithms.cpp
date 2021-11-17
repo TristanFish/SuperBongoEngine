@@ -4,7 +4,7 @@
 using namespace PathingAlgorithms;
 
 #pragma region Path Algorithm Base
-PathAlgorithm::PathAlgorithm() : V_CalculatedPath(std::vector<Node*>()), G_CurrentGraph(nullptr)
+PathAlgorithm::PathAlgorithm() : V_CalculatedPath(std::vector<Node*>()), G_CurrentGraph(nullptr), N_Goal(nullptr)
 {
 
 }
@@ -24,6 +24,11 @@ void PathAlgorithm::SetCurrentGraph(Graph* newGraph)
 std::vector<Node*> PathAlgorithm::GetCalculatedPath() const
 {
 	return V_CalculatedPath;
+}
+
+void PathAlgorithm::SetGoal(Node* NGoal)
+{
+	N_Goal = NGoal;
 }
 
 #pragma endregion 
@@ -117,7 +122,11 @@ void AStar::CalculatePath()
 				nextNode->F_Priority = Priority;
 				PQ_Frontier.push(nextNode);
 
-				V_CalculatedPath.push_back(nextNode);
+				
+				if (std::find(V_CalculatedPath.begin(), V_CalculatedPath.end(), currentNode) == V_CalculatedPath.end())
+				{
+					V_CalculatedPath.push_back(currentNode);
+				}
 			}
 		}
 	}
@@ -128,8 +137,9 @@ float AStar::HeuristicFunc(Node* node)
 {
 	float dx = abs(node->V_WorldPos.x - N_Goal->V_WorldPos.x);
 	float dy = abs(node->V_WorldPos.y - N_Goal->V_WorldPos.y);
+	float dz = abs(node->V_WorldPos.z - N_Goal->V_WorldPos.z);
 
-	return 1.0f * sqrt(dx * dx + dy * dy);
+	return 1.0f * sqrt(dx * dx + dy * dy + + dz * dz);
 }
 
 #pragma  endregion
