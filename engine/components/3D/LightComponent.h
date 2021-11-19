@@ -11,6 +11,27 @@ enum class LightType
 	DIRECTIONAL
 };
 
+struct LightData
+{
+	MATH::Vec3 ambColor;
+	MATH::Vec3 diffColor;
+	MATH::Vec3 specColor;
+	LightType type;
+	float intensity;
+	
+	float cutOff;
+	float outerCutOff;
+
+	float attenConstant;
+	float attenLinear;
+	float attenQuadratic;
+
+	LightData() = default;
+
+	void SendLightDataToShader(const ShaderProgram& shader, const MATH::Vec3& pos, const MATH::Vec3& direct, const std::string& shaderString);
+
+};
+
 struct LightTypePair
 {
 	const char* typeName;
@@ -32,18 +53,7 @@ class LightComponent : public Component
 {
 public:
 
-	MATH::Vec3 ambColor;
-	MATH::Vec3 diffColor;
-	MATH::Vec3 specColor;
-	LightType type;
-	float intensity;
-	
-	float cutOff;
-	float outerCutOff;
-
-	float attenConstant;
-	float attenLinear;
-	float attenQuadratic;
+	LightData lightInfo;
 
 	virtual ~LightComponent();
 	
@@ -56,8 +66,5 @@ public:
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 
 	void ImGuiRender() override;
-private:
-
-	Debug lightCube;
 };
 #endif

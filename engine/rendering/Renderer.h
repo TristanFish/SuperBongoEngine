@@ -3,19 +3,17 @@
 
 #include <vector>
 
-
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/CustomUI.h"
 #include "graphics/FrameBuffer.h"
 
-
 constexpr size_t MAX_LIGHTS = 20;
-
 
 class SkyBox;
 class MeshRenderer;
 class LightComponent;
+
 class Renderer
 {
 public:
@@ -59,14 +57,10 @@ public:
 
 private:
 
-
-	
-
 	// Viewport 
 	/*! Handles all of the needed functions for the viewport */
 	CustomUI::Viewport viewport;
 	
-
 	ShaderProgram gBufferShader;
 	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;

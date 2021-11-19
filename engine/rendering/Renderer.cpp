@@ -50,9 +50,6 @@ void Renderer::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	glBindVertexArray(0);
-
-	
-	
 }
 
 void Renderer::SetupFrameBuffers()
@@ -468,79 +465,33 @@ void Renderer::RenderGBufferResult()
 
 void Renderer::AttachLights() const
 {
+	LightData defaultLight;
 
-	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
+	defaultLight.type = LightType::DIRECTIONAL;
+	defaultLight.ambColor = Vec3(0.2f);
+	defaultLight.diffColor = Vec3(0.0f);
+	defaultLight.specColor = Vec3(0.0f);
+	defaultLight.intensity = 1.0f;
+	defaultLight.cutOff = static_cast<float>(cos(12.5 * DEGREES_TO_RADIANS));
+	defaultLight.outerCutOff = static_cast<float>(cos(15.0 * DEGREES_TO_RADIANS));
+
+	defaultLight.attenConstant = 1.0f;
+	defaultLight.attenLinear = 0.049f;
+	defaultLight.attenQuadratic = 0.0f;
+
+	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size() + 1));
 	
-	for(size_t i = 0; i < lights.size(); i++)
+	for(size_t i = 0; i <= lights.size(); i++)
 	{
-		std::string arrayIndex = "lights[" + std::to_string(i) + "]";
-		std::string lightType = arrayIndex + ".lightType";
-		glUniform1i(glGetUniformLocation(resultShader.GetID(), lightType.c_str()), static_cast<int>(lights[i]->type));
-		switch (lights[i]->type)
+		std::string arrayIndex = "lights[" + std::to_string(i) + "].";
+		if(i == lights.size())
 		{
-			case LightType::POINT:
-			{
-				std::string pos = arrayIndex + ".lightPos";
-				std::string amb = arrayIndex + ".lightAmb";
-				std::string diff = arrayIndex + ".lightDiff";
-				std::string spec = arrayIndex + ".lightSpec";
-				std::string intens = arrayIndex + ".lightIntens";
-				const Vec3 lightPos = lights[i]->gameObject->transform.GetPosition();
-				const Vec3 lightAmb = lights[i]->ambColor;
-				const Vec3 lightDiff = lights[i]->diffColor;
-				const Vec3 lightSpec = lights[i]->specColor;
-				
-				glUniform3f(glGetUniformLocation(resultShader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, lights[i]->attenConstant);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, lights[i]->attenLinear);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, lights[i]->attenQuadratic);
-				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->intensity);
-				break;
-			}
-			case LightType::SPOT:
-			{
-				std::string pos = arrayIndex + ".lightPos";
-				std::string dir = arrayIndex + ".lightDir";
-				std::string amb = arrayIndex + ".lightAmb";
-				std::string diff = arrayIndex + ".lightDiff";
-				std::string spec = arrayIndex + ".lightSpec";
-				std::string intens = arrayIndex + ".lightIntens";
-				const Vec3 lightPos = lights[i]->gameObject->transform.GetPosition();
-				const Vec3 lightDir = lights[i]->gameObject->transform.Forward();
-				const Vec3 lightAmb = lights[i]->ambColor;
-				const Vec3 lightDiff = lights[i]->diffColor;
-				const Vec3 lightSpec = lights[i]->specColor;
-				
-				glUniform3f(glGetUniformLocation(resultShader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, lights[i]->cutOff);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, 0.0f);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, 0.0f);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, 0.0f);
-				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->outerCutOff);
-				break;
-			}
-			case LightType::DIRECTIONAL:
-			{
-				std::string dir = arrayIndex + ".lightDir";
-				std::string amb = arrayIndex + ".lightAmb";
-				std::string diff = arrayIndex + ".lightDiff";
-				std::string spec = arrayIndex + ".lightSpec";
-				std::string intens = arrayIndex + ".lightIntens";
-				const Vec3 lightDir = lights[i]->gameObject->transform.Forward();
-				const Vec3 lightAmb = lights[i]->ambColor;
-				const Vec3 lightDiff = lights[i]->diffColor;
-				const Vec3 lightSpec = lights[i]->specColor;
-				
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, 0.0f);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, 0.0f);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), diff.c_str()), lightDiff.x, lightDiff.y, lightDiff.z, 0.0f);
-				glUniform4f(glGetUniformLocation(resultShader.GetID(), spec.c_str()), lightSpec.x, lightSpec.y, lightSpec.z, 0.0f);
-				glUniform1f(glGetUniformLocation(resultShader.GetID(), intens.c_str()), lights[i]->intensity);
-				break;
-			}
+			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex);
+			break;
 		}
-	}
 
+		lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+	}
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const

@@ -247,6 +247,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			if (ImGui::MenuItem("Delete"))
 			{
 				Globals::s_SceneGraph->DeleteGameObject(go);
+				UIStatics::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}
@@ -324,6 +325,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			if (ImGui::MenuItem("Delete"))
 			{
 				Globals::s_SceneGraph->DeleteGameObject(go);
+				UIStatics::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}

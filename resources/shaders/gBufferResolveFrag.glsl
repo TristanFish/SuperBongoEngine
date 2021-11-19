@@ -32,40 +32,50 @@ lights[MAX_LIGHTS];
 
 vec4 RenderSpotLight(LightInfo l, vec3 norm, vec3 pos)
 {
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 amb = l.lightAmb.xyz;
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+
 	vec3 lightDir = normalize(l.lightPos - pos);
 	float theta = dot(lightDir, normalize(-l.lightDir.xyz));
 	float epsilon = l.lightDir.w - l.lightIntens;
 	float intensity = clamp((theta - l.lightIntens) / epsilon, 0.0, 1.0);
 
 	float diff = max(dot(norm, lightDir), 0.0);
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = intensity * specVal * specCol;
+	}
 
-	vec3 amb = l.lightAmb.xyz;
 	vec3 diffuse = intensity * l.lightDiff.xyz * diff;
-
-	vec3 specCol = l.lightSpec.xyz;
-	vec3 viewDir = normalize(camPos - pos);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = intensity * specVal * specCol;
 
 	return vec4(amb + diffuse + specular, 0.0);
 }
 
 vec4 RenderPointLight(LightInfo l, vec3 norm, vec3 pos)
 {
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 amb = l.lightAmb.xyz;
+
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+
 	vec3 lightDir = normalize(l.lightPos - pos);
 	float dist = length(l.lightPos - pos);
 
 	float diff = max(dot(norm, lightDir), 0.0);
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = l.lightIntens * specVal * specCol;
+	}
 
-	vec3 amb = l.lightAmb.xyz;
 	vec3 diffuse = l.lightDiff.xyz * diff;
 
-	vec3 viewDir = normalize(camPos - pos);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specCol = l.lightSpec.xyz;
-	vec3 specular = l.lightIntens * specVal * specCol;
 
 	float attenuation = 1.0 / (l.lightAmb.w + l.lightDiff.w * dist + l.lightSpec.w * (dist * dist));
 	attenuation *= l.lightIntens;
@@ -78,18 +88,23 @@ vec4 RenderPointLight(LightInfo l, vec3 norm, vec3 pos)
 
 vec4 RenderDirectionalLight(LightInfo l, vec3 norm, vec3 pos)
 {
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 viewDir = normalize(camPos - pos);
 	vec3 lightDir = normalize(-l.lightDir.xyz);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
 
 	float diff = max(dot(norm, lightDir), 0.0);
 
 	vec3 amb = l.lightAmb.xyz;
 	vec3 diffuse = l.lightDiff.xyz * diff;
 
-	vec3 specCol = l.lightSpec.xyz;
-	vec3 viewDir = normalize(camPos - pos);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = l.lightIntens * specVal * specCol;
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = l.lightIntens * specVal * specCol;
+	}
+
 
 	return vec4(amb + diffuse + specular, 0.0);
 }

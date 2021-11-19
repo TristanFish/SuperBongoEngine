@@ -197,17 +197,17 @@ namespace MATH
 
 		static Vec3 Forward()
 		{
-			return Vec3(0.0f,0.0f,1.0f);
+			return Vec3(0.0f, 0.0f, 1.0f);
 		}
 		
 		static Vec3 Up()
 		{
-			return Vec3(0.0f,1.0f,1.0f);
+			return Vec3(0.0f, 1.0f, 0.0f);
 		}
 		
 		static Vec3 Right()
 		{
-			return Vec3(1.0f,0.0f,0.0f);
+			return Vec3(1.0f, 0.0f, 0.0f);
 		}
 
 		

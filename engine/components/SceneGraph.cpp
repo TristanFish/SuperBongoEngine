@@ -177,8 +177,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 			break;
 		}
 	}
-
-	UIStatics::SetSelectedObject(nullptr);
 }
 
 const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableObjects() const

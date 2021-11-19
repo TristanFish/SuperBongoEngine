@@ -89,5 +89,4 @@ void Game1::BuildScene()
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
-
 }

@@ -225,7 +225,7 @@ void MeshRenderer::ImGuiRender()
 {
 	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
 	
-	bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
+	bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "MeshRenderer");
 
 	if (opened)
 	{

@@ -24,15 +24,15 @@
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
-[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 210
+[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 196
 [SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 237
+[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 215
 [INFO]: Scene: Scene_41 Created in: Scene1.cpp on line: 28
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -41,7 +41,7 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 263
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
 [ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
 [ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 111
 [ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 111
