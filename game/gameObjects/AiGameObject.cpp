@@ -4,14 +4,14 @@ AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	name = name_;
 	SetPos(position_);
 	mRenderer = AddComponent<MeshRenderer>();
-	mRenderer->LoadModel("Sphere.fbx");
+	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 	AddComponent<RigidBody3D>();
 
 	aiComponent = AddComponent<AIComponent>();
 	aiComponent->SetAIType(AIType::KinematicSteering);
-	aiComponent->SetMaxSpeed(15.0f);
+	aiComponent->SetMaxSpeed(5.0f);
 	aiComponent->SetMaxAcceleration(5.0f);
 
 	aiTarget = nullptr;
@@ -32,11 +32,12 @@ AiGameObject::~AiGameObject()	{
 void AiGameObject::Update(const float deltaTime)	{
 	if(aiTarget)	{
 		Kinematic::KinematicSeek kSeekAlgo = Kinematic::KinematicSeek(this, aiTarget->transform);
-		//steering is already being set by the algorithm
-		kSeekAlgo.getSteering();
-
+		Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
+		aiComponent->SetSteering(&steering);
+		
 		/*Kinematic::KinematicArrive kArriveAlgo = Kinematic::KinematicArrive(this, aiTarget->transform, 10.0f, 1.0f);
-		kArriveAlgo.getSteering();*/
+		Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
+		aiComponent->SetSteering(&steering);*/
 
 		/*Dynamic::DynamicSeek dSeekAlgo = Dynamic::DynamicSeek(this, aiTarget->transform);
 		dSeekAlgo.getSteering();*/

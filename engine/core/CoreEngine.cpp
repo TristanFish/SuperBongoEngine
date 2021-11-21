@@ -110,7 +110,7 @@ bool CoreEngine::Init()
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
 	LoadUtility::GetInstance()->LoadSceneSaves();
 	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
-	GetCurrentScene()->LoadMapData();
+	//temp GetCurrentScene()->LoadMapData();
 
 	isRunning = true;
 	return true;

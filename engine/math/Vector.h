@@ -26,7 +26,11 @@ namespace MATH {
 
 	#ifndef DEGREES_TO_RADIANS
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
-	#endif	
+	#endif
+
+	#ifndef RADIANS_TO_DEGREES
+	#define RADIANS_TO_DEGREES (180.0f / M_PI)
+	#endif
 
 
 
@@ -203,7 +207,7 @@ namespace MATH {
 		
 		static Vec3 Up()
 		{
-			return Vec3(0.0f,1.0f,1.0f);
+			return Vec3(0.0f,1.0f,0.0f);
 		}
 		
 		static Vec3 Right()

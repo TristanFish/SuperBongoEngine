@@ -1,35 +1,27 @@
 #include "SceneAi.h"
+
 #include "core/Logger.h"
-#include "core/resources/SaveManager.h"
 #include "core/Globals.h"
-
-
 #include "gameObjects/AiGameObject.h"
-
 #include "Primitives/Sphere.h"
-
-
 
 bool SceneAi::OnCreate()
 {
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
-
-
 	Globals::InitGlobals();
 	CustomUI::PerformanceMonitor::InitMonitor();
-
-
 
 	objectList->Init();
 
 	AiGameObject* mainAi = new AiGameObject("AiObj",Vec3(1.0f));
 	objectList->AddGameObject(mainAi);
 
-	Sphere* targetBox = new Sphere("targetSphereObj",Vec3(5.0f, 2.5f, 7.0f));
-	objectList->AddGameObject(targetBox);
+	Sphere* targetSphere = new Sphere("targetSphere",Vec3(15.0f, 2.5f, 7.0f));
+	objectList->AddGameObject(targetSphere);
+	
+	mainAi->aiTarget = targetSphere;
 
-	mainAi->aiTarget = targetBox;
 	
 	return true;
 }
