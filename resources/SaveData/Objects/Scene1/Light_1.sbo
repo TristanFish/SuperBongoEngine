@@ -1,12 +1,12 @@
 <Root>
-    <Name Is="Player">
+    <Name Is="Light_1">
         <Transform>
-            <Position X="-1332.6871" Y="1394.1686" Z="171.61951"/>
-            <Rotation X="0" Y="-90" Z="0"/>
+            <Position X="-4.8000002" Y="15.7" Z="45.099998"/>
+            <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Player"/>
+            <Type ID="class LightObject"/>
         </ObjectInfo>
         <Components/>
     </Name>

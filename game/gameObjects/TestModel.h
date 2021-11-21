@@ -17,7 +17,7 @@ public:
 	//! Secondary Test Model Constructor
 	/*! This is the main constructor that we will use and takes in a char* for our gameObject name 
 	and a Vec3 Position for where our object will be in world space*/
-	TestModel(std::string name, MATH::Vec3 position);
+	TestModel(const std::string& name, MATH::Vec3 position);
 
 	//! Test Model Destructor
 	~TestModel()
@@ -43,7 +43,7 @@ public:
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override {}
 
 
-	TestModel* GetClone() const override { return new TestModel(this->name, this->transform.pos); };
+	TestModel* NewClone() const override { return new TestModel(this->name, this->transform.pos); }
 private:
 
 	

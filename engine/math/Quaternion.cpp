@@ -65,7 +65,7 @@ Quaternion Quaternion::Inverse() const
 Vec3 Quaternion::Rotate(const Vec3& vec) const
 {
 	//create a quaternion with the real component of 0 and the imaginary component of the input vector
-	Quaternion p = Quaternion(0.0f, vec);
+	const Quaternion p = Quaternion(0.0f, vec);
 	//multiply by this quaternion then by our "Vector point" then by the conjugate of this quaternion
 	//then return the Vec4 of that resulting quaternion
 	return Vec3((*this * p * (*this).Conjugate()).quat);
@@ -98,12 +98,12 @@ Quaternion Quaternion::EulerToQuat(Vec3 v)
 	Quaternion q;
 
 	v *= DEGREES_TO_RADIANS;
-	float cosYaw = cos(v.z * 0.5f);
-	float sinYaw = sin(v.z * 0.5f);
-	float cosPit = cos(v.y * 0.5f);
-	float sinPit = sin(v.y * 0.5f);
-	float cosRol = cos(v.x * 0.5f);
-	float sinRol = sin(v.x * 0.5f);
+	const float cosYaw = cos(v.z * 0.5f);
+	const float sinYaw = sin(v.z * 0.5f);
+	const float cosPit = cos(v.y * 0.5f);
+	const float sinPit = sin(v.y * 0.5f);
+	const float cosRol = cos(v.x * 0.5f);
+	const float sinRol = sin(v.x * 0.5f);
 
 	q.quat.w = cosRol * cosPit * cosYaw + sinRol * sinPit * sinYaw;
 	q.quat.x = sinRol * cosPit * cosYaw - cosRol * sinPit * sinYaw;
@@ -123,12 +123,12 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 {
 	Vec3 e;
 
-	float sinPit_cosYaw = 2.0f * (q.quat.w * q.quat.x + q.quat.y * q.quat.z);
-	float cosPit_cosYaw = 1.0f - 2.0f * (q.quat.x * q.quat.x + q.quat.y * q.quat.y);
+	const float sinPit_cosYaw = 2.0f * (q.quat.w * q.quat.x + q.quat.y * q.quat.z);
+	const float cosPit_cosYaw = 1.0f - 2.0f * (q.quat.x * q.quat.x + q.quat.y * q.quat.y);
 
 	e.x = atan2(sinPit_cosYaw, cosPit_cosYaw);
 
-	float sinYaw = 2.0f * (q.quat.w * q.quat.y - q.quat.z * q.quat.x);
+	const float sinYaw = 2.0f * (q.quat.w * q.quat.y - q.quat.z * q.quat.x);
 	if (abs(sinYaw) >= 1.0f)
 	{
 		e.y = copysign(M_PI / 2.0f, sinYaw);
@@ -137,8 +137,8 @@ Vec3 MATH::Quaternion::QuatToEuler(Quaternion q)
 	{
 		e.y = asin(sinYaw);
 	}
-	float sinRol_cosYaw = 2.0f * (q.quat.w * q.quat.z + q.quat.x * q.quat.y);
-	float cosRol_cosYaw = 1.0f - 2.0f * (q.quat.y * q.quat.y + q.quat.z * q.quat.z);
+	const float sinRol_cosYaw = 2.0f * (q.quat.w * q.quat.z + q.quat.x * q.quat.y);
+	const float cosRol_cosYaw = 1.0f - 2.0f * (q.quat.y * q.quat.y + q.quat.z * q.quat.z);
 	e.z = atan2(sinRol_cosYaw, cosRol_cosYaw);
 
 	return e / DEGREES_TO_RADIANS;
@@ -202,13 +202,13 @@ Quaternion MATH::Quaternion::operator+(const Quaternion& q) const
 }
 
 
-Quaternion MATH::Quaternion::operator+(const float f) const
+Quaternion Quaternion::operator+(const float f) const
 {
 	return Quaternion(Vec4(quat.x + f, quat.y + f, quat.z + f, quat.w + f));
 }
 
 
-Quaternion& MATH::Quaternion::operator=(const Vec3& q)
+Quaternion& Quaternion::operator=(const Vec3& q)
 {
 	quat.x = q.x;
 	quat.y = q.y;
@@ -219,27 +219,21 @@ Quaternion& MATH::Quaternion::operator=(const Vec3& q)
 Quaternion Quaternion::operator*(const Quaternion& q) const
 {
 	//calculate the real component
-	float r = (quat.w * q.quat.w) - VMath::dot(quat, q.quat);
+	const float r = (quat.w * q.quat.w) - VMath::dot(quat, q.quat);
 	//calculate the imaginary component
-	Vec3 i = (quat.w * q.quat) + (q.quat.w * quat) + VMath::cross(quat, q.quat);
+	const Vec3 i = (quat.w * q.quat) + (q.quat.w * quat) + VMath::cross(quat, q.quat);
 	return Quaternion(r, i);
 }
 
-Quaternion MATH::Quaternion::operator*(const Vec4& v) const
+Quaternion Quaternion::operator*(const Vec4& v) const
 {
-	float r = (quat.w * v.w) - VMath::dot(quat, v);
-	Vec3 i = (quat.w * v) + (v.w * quat) + VMath::cross(quat, v);
+	const float r = (quat.w * v.w) - VMath::dot(quat, v);
+	const Vec3 i = (quat.w * v) + (v.w * quat) + VMath::cross(quat, v);
 
 	return Quaternion(r, i);
 }
 
-Quaternion& MATH::Quaternion::operator=(const Quaternion& q)
-{
-	quat = q.quat;
-	return *this;
-}
-
-Quaternion MATH::Quaternion::operator-() const
+Quaternion Quaternion::operator-() const
 {
 	Vec4 q = Vec4(-quat.x, -quat.y, -quat.z, -quat.w);
 	return Quaternion(q);

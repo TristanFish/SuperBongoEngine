@@ -24,8 +24,6 @@ public:
 
 	Mesh& operator = (const Mesh& m);
 	
-	void RenderRegular(const ShaderProgram& shader) const;
-	void RenderInstanced(const ShaderProgram& shader, const std::vector<Mesh>& meshes ,const unsigned int amount) const;
 	GLuint GetVAO() const { return vao; }
 private:
 	GLuint vao;

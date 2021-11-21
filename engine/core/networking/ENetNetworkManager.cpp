@@ -262,7 +262,7 @@ void ENetNetworkManager::BroadcastPacket(const string& data)
 	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
 	enet_host_broadcast(user, 0, packet);
 
-	EngineLogger::Info("Packet containing \"" + ss.rdbuf()->str() + "\" was sent to all clients", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	EngineLogger::Info("Packet containing \"" + data + "\" was sent to all clients", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 }
 
 void ENetNetworkManager::SendPacket(const string& data)
@@ -279,7 +279,11 @@ void ENetNetworkManager::SendPacket(const string& data)
 	{
 		//At the moment only sends data to the first connected peer
 		enet_peer_send(connectedPeers[0], 0, packet);
-		EngineLogger::Info("Packet containing \"" + ss.str() + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+		EngineLogger::Info("Packet containing \"" + data + "\" was sent to the first peer", "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	}
+	else
+	{
+		EngineLogger::Info("There are no connected peers to send a message to", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 	}
 
 }

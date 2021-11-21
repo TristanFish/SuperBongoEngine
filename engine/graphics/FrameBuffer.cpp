@@ -43,7 +43,7 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 		type = GL_UNSIGNED_SHORT;
 		break;
 	default:
-		EngineLogger::Error("FrameBuffer TextureType not recognized", "FrameBuffer.cpp", __LINE__);
+		EngineLogger::Error("FrameBuffer TextureType not recognized", "FrameBuffer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 		return;
 	}
 
@@ -51,7 +51,7 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 
 	if(texNum > 15 + GL_COLOR_ATTACHMENT0)
 	{
-		EngineLogger::Error("FrameBuffer has too many textures", "FrameBuffer.cpp", __LINE__);
+		EngineLogger::Error("FrameBuffer has too many textures", "FrameBuffer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 	}
 
 	glGenTextures(1, &tex.texture);
@@ -82,7 +82,7 @@ void FrameBuffer::FinalizeBuffer() const
 	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__);
+		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 	}
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);

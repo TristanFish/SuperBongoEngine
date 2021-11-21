@@ -7,7 +7,6 @@
 #include "SDL_events.h"
 #include <vector>
 
-
 class RigidBody3D;
 
 //! GameObject Class
@@ -57,7 +56,14 @@ public:
 	/*!Deletes any pointers/clears any vectors*/
 	virtual ~GameObject();
 
+	//!Init Function
+	/*!Initializes all components in the gameObject called whenever a gameobject is added to the sceneGraph*/
 	virtual void Init();
+
+	//!Begin Function
+	/*!Meant to be overriden, is called after all objects are added to the scenegraph
+	 * think of it as Unreal Engine BeginPlay() or Unity Start() */
+	virtual void PostInit() {}
 	
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/
@@ -71,7 +77,7 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual GameObject* GetClone() const = 0;
+	virtual GameObject* NewClone() const = 0;
 
 	//GetType function
 	/*!Returns the type of class that the owning class is*/
@@ -104,7 +110,7 @@ public:
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
 
 	/*!Sets the Name of this a gameObject*/
-	void SetName(std::string name_) { name = name_; }
+	void SetName(const std::string& name_) { name = name_; }
 
 
 	 GameObject* GetParent() const { return parent; }
@@ -117,9 +123,7 @@ public:
 
 	 int GetChildCount() const { return children.size(); }
 	
-
-
-	inline bool operator == (const GameObject* v) { return name == v->name; }
+	bool operator == (const GameObject* v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
@@ -135,6 +139,8 @@ public:
 
 	//!Template HasComponent boolean
 	/*!Checks if this gameObject has the specified component*/
+	
+	
 	template <typename T>
 	bool HasComponent()
 	{
@@ -174,10 +180,10 @@ public:
 		CheckIfTemplateTypeInheritsFromComponent<T>();
 		for(auto it = componentList.begin(); it != componentList.end(); ++it)
 		{
-			if(dynamic_cast<T*>(*it))
+			if(T* compType = dynamic_cast<T*>(*it))
 			{
 				EngineLogger::Warning("Component " + std::string((*it)->GetType()) + " already found in " + std::string(name), "ECS.h", __LINE__);
-				return nullptr;
+				return compType;
 			} 
 		}
 		componentList.emplace_back(new T());
@@ -192,7 +198,9 @@ public:
 		{
 			if(dynamic_cast<T*>(*it))
 			{
+				delete *it;
 				componentList.erase(it);
+				return;
 			}
 		}
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);

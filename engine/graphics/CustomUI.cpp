@@ -1,24 +1,23 @@
 #include "CustomUI.h"
-#include "windows.h"
-#include "psapi.h"
 
-#include "core/scene/DefaultScene.h"
-#include "core/Globals.h"
+#include <Windows.h>
+
+#include "psapi.h"
+#include "UIStatics.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
+#include "core/Globals.h"
 #include "core/Timer.h"
-#include "core/resources/TextureManager.h"
-
-#include "imgui/imgui_internal.h"
-#include "imgui/imgui_stdlib.h"
-
-#include "Utility/LoadUtility.h"
+#include "core/events/InputManager.h"
 #include "core/resources/SaveManager.h"
-#include "core/CoreEngine.h"
-
-#include "UIStatics.h"
+#include "core/resources/TextureManager.h"
+#include "core/scene/DefaultScene.h"
+#include "Utility/LoadUtility.h"
+#include "components/GameObject.h"
 
 using namespace CustomUI;
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 #pragma region NetworkPanel
 
@@ -53,8 +52,7 @@ void NetworkPanel::Render()
 		if(ImGui::Button("Client"))
 		{
 			SetNetworkRole(NetRole::CLIENT);
-		}
-		
+		}		
 	}
 	else if(!isConnected && role == NetRole::CLIENT)
 	{
@@ -120,7 +118,6 @@ void PropertiesPanel::Render()
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
 		
-		
 		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
 		if (opened)
 		{
@@ -128,6 +125,7 @@ void PropertiesPanel::Render()
 			UIStatics::DrawVec3("Position", selectedObject->transform.GetPosition(),80.0f);
 
 			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
+
 
 			{
 				//clamp the euler angles
@@ -162,7 +160,6 @@ void PropertiesPanel::Render()
 				selectedObject->transform.SetRot(rotation);
 			}
 			
-			
 			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScale(), 80.0f);
 
 			ImGui::TreePop();
@@ -181,45 +178,26 @@ void PropertiesPanel::Render()
 
 #pragma region HierarchyPanel
 
-HierarchyPanel::HierarchyPanel() : isActive(true)
-{
-
-}
+HierarchyPanel::HierarchyPanel() : isActive(true) {}
 
 HierarchyPanel::~HierarchyPanel()
 {
-
-	if (!gameobjects.empty())
-	{
-		for (auto obj : gameobjects)
-		{
-			obj = nullptr;
-		}
-		gameobjects.clear();
-
-	}
-
+	gameobjects.clear();
 }
 
 void HierarchyPanel::Construct()
 {
 	UpdateActiveObjects();
-
 	isActive = true;
-
 }
 
 void HierarchyPanel::Render() 
 {
-
 	ImGui::Begin("Object Hierarchy", &isActive, ImGuiWindowFlags_NoTitleBar);
-
-
 	
 	textFilter.Draw("##Obj Filter");
 
-	
-	for (int i = 0; i < gameobjects.size(); i++)
+	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
 		if (gameobjects[i]->GetParent() == nullptr)
 		{
@@ -228,31 +206,22 @@ void HierarchyPanel::Render()
 				GenerateTree(gameobjects[i], i);
 			}
 		}
-		
 	}
-
-
 	ImGui::End();
 }
 
 void HierarchyPanel::Reset()
 {
-
-
-	if (gameobjects.size() >= 1)
-	{
-		for (auto obj : gameobjects)
-		{
-			obj = nullptr;
-		}
-		gameobjects.clear();
-
-	}
+	gameobjects.clear();
 }
 
 void HierarchyPanel::Update(const float deltatime)
 {
-
+	if(InputManager::GetInstance()->GetKey(SDLK_DELETE))
+	{
+		Globals::s_SceneGraph->DeleteGameObject(UIStatics::GetSelectedObject());
+	}
+	
 	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
 	if (gameobjects.size() < size || gameobjects.size() > size)
 	{
@@ -262,19 +231,16 @@ void HierarchyPanel::Update(const float deltatime)
 
 void HierarchyPanel::GenerateTree(GameObject* go, int index) 
 {
-
 	ImGuiTreeNodeFlags tree_flags = ((UIStatics::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
 		((go->GetChildCount() == 0) ?  ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen : 0) 
 		| ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	if (go->GetChildCount() > 0)
 	{
-
 		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
 		
 		if (ImGui::BeginDragDropSource())
 		{
-
 			ImGui::SetDragDropPayload("Obj_Index", &index, sizeof(int));
 
 			ImGui::EndDragDropSource();
@@ -299,15 +265,12 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 		if (ImGui::BeginPopupContextItem())
 		{
-
 			if (go->GetParent())
 			{
 				if (ImGui::MenuItem("UnParent"))
 				{
 					go->GetParent()->RemoveChild(go);
-
 				}
-
 			}
 
 			if (ImGui::MenuItem("Delete"))
@@ -330,13 +293,10 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 				GenerateTree(obj, GetObjIndex(obj->GetName()));
 			}
 			ImGui::TreePop();
-
 		}
-
 	}
 	else 
 	{
-
 		ImGuiDragDropFlags dragDrop_flags = ImGuiDragDropFlags_None;
 
 		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
@@ -352,7 +312,6 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			ImGui::SetDragDropPayload("Obj_Index", &index, sizeof(int));
 			ImGui::Text("This is a drag and drop source");
 
-
 			ImGui::EndDragDropSource();
 		}
 
@@ -367,68 +326,58 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 				int objIndex = *(const int*)payload->Data;
 
 				GameObject* movedObj = gameobjects[objIndex];
-				
 
 				if (movedObj->GetParent() != nullptr)
 				{
 					movedObj->GetParent()->RemoveChild(movedObj);
 				}
-
 				go->AddChild(movedObj);
 			}
-
 			ImGui::EndDragDropTarget();
 		}
 
 		if (ImGui::BeginPopupContextItem())
 		{
-
 			if (go->GetParent())
 			{
 				if (ImGui::MenuItem("UnParent"))
 				{
 					go->GetParent()->RemoveChild(go);
-
 				}
 			}
-
 			ImGui::EndPopup();
-
 		}
 
 		if (ImGui::BeginPopupContextItem())
 		{
-
 			if (ImGui::MenuItem("Delete"))
 			{
 				Globals::s_SceneGraph->DeleteGameObject(go);
 			}
 			ImGui::EndPopup();
 		}
-		
-		
-
 	}
-
 }
 
 void HierarchyPanel::UpdateActiveObjects()
 {
-	for (auto obj : Globals::s_SceneGraph->GetGameObjects())
+	gameobjects.clear();
+	
+	for (auto* obj : Globals::s_SceneGraph->GetGameObjects())
 	{
 		std::vector<GameObject*>::iterator iter;
 		
 		iter = std::find(gameobjects.begin(), gameobjects.end(), obj);
 		if (iter == gameobjects.end())
 		{
-			gameobjects.push_back(obj);
+			gameobjects.emplace_back(obj);
 		}
 	}
 }
 
-int HierarchyPanel::GetObjIndex(std::string objName) const
+int HierarchyPanel::GetObjIndex(const std::string& objName) const
 {
-	for (int i = 0; i < gameobjects.size(); i++)
+	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
 		if (gameobjects[i]->name == objName)
 		{
@@ -436,19 +385,15 @@ int HierarchyPanel::GetObjIndex(std::string objName) const
 		}
 	}
 
-	
-
 	return -1;
 }
 
 #pragma endregion
 
-#pragma region PerformanceMonitor
+#pragma region PerformancePanel
 
-int PerformanceMonitor::FPSLimit = 60;
 float PerformanceMonitor::RenderLoopTime = 0.0f;
 float PerformanceMonitor::UpdateLoopTime = 0.0f;
-bool PerformanceMonitor::LimitFPS = false;
 
  
 // Varibables that are used to collect CPU data
@@ -456,15 +401,9 @@ ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
 int numProcessors;
 HANDLE self;
 
-PerformancePanel::PerformancePanel() : latestFPS(0)
-{
+PerformancePanel::PerformancePanel() : latestFPS(0) {}
 
-}
-
-PerformancePanel::~PerformancePanel()
-{
-
-}
+PerformancePanel::~PerformancePanel() {}
 
 void PerformancePanel::Update(const float deltatime)
 {
@@ -478,7 +417,7 @@ void PerformancePanel::Update(const float deltatime)
 		fpsValues.push_back(PerformanceMonitor::GetFPS());
 		fpsUpdateSpeed = initSpeed;
 
-		latestFPS = (int)PerformanceMonitor::GetFPS();
+		latestFPS = static_cast<int>(PerformanceMonitor::GetFPS());
 	}
 }
 
@@ -489,22 +428,20 @@ void PerformancePanel::Render()
 	ImGui::PlotLines("FPS", fpsValues.data(), fpsValues.size()); 	ImGui::SameLine();
 	ImGui::Text("%i", latestFPS);
 
-
-	ImGui::Checkbox("Limit FPS", &PerformanceMonitor::LimitFPS); ImGui::SameLine();
-	ImGui::InputInt("", &PerformanceMonitor::FPSLimit);
-
+	ImGui::Checkbox("Limit FPS", &CoreEngine::GetInstance()->limitfps); ImGui::SameLine();
+	ImGui::InputInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps));
+	//ImGui::SliderInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps), 0, 200);
+	
 	ImGui::Text("Render Loop Time %f ms", PerformanceMonitor::RenderLoopTime);
 	ImGui::Text("Update Loop Time %f ms", PerformanceMonitor::UpdateLoopTime);
 	ImGui::Text("Physical Memory Usage %i MB", PerformanceMonitor::GetMemoryUsage());
 	ImGui::Text("CPU Usage %f %%", PerformanceMonitor::GetCPUUsage());
-
 
 	ImGui::End();
 }
 
 void PerformanceMonitor::InitMonitor()
 {
-
 	// This code block is used to find the CPU usage
 	SYSTEM_INFO sysInfo;
 	FILETIME ftime, fsys, fuser;
@@ -523,24 +460,22 @@ void PerformanceMonitor::InitMonitor()
 
 void PerformanceMonitor::DebugFPS()
 {
-	std::cout << "FPS: " << 1/Timer::GetDeltaTime()  << std::endl;
+	std::cout << "FPS: " << 1.0f / Timer::GetDeltaTime()  << std::endl;
 }
 
 float PerformanceMonitor::GetFPS()
 {
-	return 1 / Timer::GetDeltaTime();
+	return 1.0f / Timer::GetDeltaTime();
 }
 
 int PerformanceMonitor::GetMemoryUsage()
 {
-
 	PROCESS_MEMORY_COUNTERS_EX pmc;
 	bool GetMem = GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
 
+	const int physicalMemUsed_Bytes = pmc.WorkingSetSize;
 
-	int physicalMemUsed_Bytes = pmc.WorkingSetSize;
-
-	int physicalMemUsed_MB = physicalMemUsed_Bytes / 1000000;
+	const int physicalMemUsed_MB = physicalMemUsed_Bytes / 1000000;
 
 	return physicalMemUsed_MB;
 }
@@ -557,9 +492,8 @@ double PerformanceMonitor::GetCPUUsage()
 	 GetProcessTimes(self, &ftime, &ftime, &fsys, &fuser);
 	 memcpy(&sys, &fsys, sizeof(FILETIME));
 	 memcpy(&user, &fuser, sizeof(FILETIME));
-	 percent = (sys.QuadPart - lastSysCPU.QuadPart) +
-		 (user.QuadPart - lastUserCPU.QuadPart);
-	 percent /= (now.QuadPart - lastCPU.QuadPart);
+	 percent = static_cast<double>((sys.QuadPart - lastSysCPU.QuadPart) + (user.QuadPart - lastUserCPU.QuadPart));
+	 percent /= static_cast<double>(now.QuadPart - lastCPU.QuadPart);
 	 percent /= numProcessors;
 	 lastCPU = now;
 	 lastUserCPU = user;
@@ -572,10 +506,9 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Albedo]"), aspectSize("[Free Aspect]"), mode(RenderMode::Albedo), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), mode(RenderMode::Result), isMouseHovered(false), isActive(true)
 {
-
-	modeMap.push_back("Lighting");
+	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
 	modeMap.push_back("Position");
 	modeMap.push_back("Normals");
@@ -591,23 +524,13 @@ Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f
 	aspectRatios.push_back("16:10");
 }
 
-Viewport::~Viewport()
-{
-	for (auto mode : modeMap)
-	{
-		mode = nullptr;
-	}
-
-	modeMap.clear();
-}
+Viewport::~Viewport() {}
 
 void Viewport::Render()
 {
-
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport",&isActive, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-
 
 	if (ImGui::BeginMenuBar())
 	{
@@ -616,24 +539,21 @@ void Viewport::Render()
 			if (ImGui::BeginListBox("##RenderModeList"))
 			{
 				int index = 0;
-				for (auto Mode : modeMap)
+				for (const auto* Mode : modeMap)
 				{
-					RenderMode loopMode = static_cast<RenderMode>(index);
+					const RenderMode loopMode = static_cast<RenderMode>(index);
 
-					bool is_selected = (mode == loopMode);
+					const bool is_selected = (mode == loopMode);
 					if (ImGui::Selectable(Mode, is_selected))
 					{
 						ImGui::CloseCurrentPopup();
 						mode = loopMode;
 						modeName = "[" + std::string(Mode) + "]";
-
 					}
-
 					index++;
 				}
 				ImGui::EndListBox();
 			}
-
 			ImGui::EndMenu();
 		}
 
@@ -642,11 +562,11 @@ void Viewport::Render()
 			if (ImGui::BeginListBox("##RenderModeList"))
 			{
 				int index = 0;
-				for (auto currentRatio : aspectRatios)
+				for (const auto* currentRatio : aspectRatios)
 				{
-					AspectRatio ratio = static_cast<AspectRatio>(index);
+					const AspectRatio ratio = static_cast<AspectRatio>(index);
 
-					bool is_selected = (activeRatio == ratio);
+					const bool is_selected = (activeRatio == ratio);
 					if (ImGui::Selectable(currentRatio, is_selected))
 					{
 						ImGui::CloseCurrentPopup();
@@ -654,15 +574,12 @@ void Viewport::Render()
 						aspectSize = "[" + std::string(currentRatio) + "]";
 
 					}
-
 					index++;
 				}
 				ImGui::EndListBox();
 			}
-
 			ImGui::EndMenu();
 		}
-		
 		ImGui::EndMenuBar();
 	}
 
@@ -673,20 +590,18 @@ void Viewport::Render()
 		cam->setAspectRatio(viewportSize.x / viewportSize.y);
 		cam->UpdatePerspectiveMatrix();
 		
-		Renderer::GetInstance()->Resize((int)viewportPanelSize.x, (int)viewportPanelSize.y);
+		Renderer::GetInstance()->Resize(static_cast<int>(viewportPanelSize.x), static_cast<int>(viewportPanelSize.y));
 	}
 
-	GLuint ID = Renderer::GetInstance()->GetModeTextureID();
+	const GLuint ID = Renderer::GetInstance()->GetModeTextureID();
 
 	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
 	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
 	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
 
-	if (viewport_Min != *(MATH::Vec2*)&vMin || viewport_Max != *(MATH::Vec2*)&vMax)
+	if (viewport_Min != *reinterpret_cast<MATH::Vec2*>(&vMin) || viewport_Max != *reinterpret_cast<MATH::Vec2*>(&vMax))
 	{
-		
-
 		vMin.x += ImGui::GetWindowPos().x;
 		vMin.y += ImGui::GetWindowPos().y;
 		vMax.x += ImGui::GetWindowPos().x;
@@ -694,21 +609,15 @@ void Viewport::Render()
 
 		viewport_Min = { vMin.x,vMin.y };
 		viewport_Max = { vMax.x,vMax.y };
-
 	}
 	
 	isMouseHovered = ImGui::IsMouseHoveringRect(vMin, vMax);
 
-	
-
 	if (ImGui::BeginDragDropTarget())
 	{		
-		const char* path;
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Object"))
 		{
-			path = (const char*)payload->Data;
-
-			std::filesystem::path objPath = path;
+			const std::filesystem::path objPath = static_cast<const char*>(payload->Data);
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
@@ -717,10 +626,8 @@ void Viewport::Render()
 		ImGui::EndDragDropTarget();
 	}
 
-
 	ImGui::End();
 	ImGui::PopStyleVar();
-
 }
 
 #pragma endregion 
@@ -738,8 +645,6 @@ ConsoleLog::ConsoleLog()
 	{
 		AddLog(content + "\n");
 	}
-	
-	
 }
 
 ConsoleLog::~ConsoleLog()
@@ -774,7 +679,7 @@ void ConsoleLog::Render()
 	}
 	
 	ImGui::SameLine();
-	bool copy = ImGui::Button("Copy");
+	const bool copy = ImGui::Button("Copy");
 	ImGui::SameLine();
 	filter.Draw("Filter", -100.0f);
 	ImGui::Separator();
@@ -821,31 +726,27 @@ void ConsoleLog::Render()
 
 DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSave(false),isDockSpaceOpen(true), isDockSpaceFullScreen(true)
 {
-
-	uiInterfaces.push_back(new ContentBrowser());
-	uiInterfaces.push_back(new HierarchyPanel());
-	uiInterfaces.push_back(new PerformancePanel());
-	uiInterfaces.push_back(new PropertiesPanel());
-	uiInterfaces.push_back(new ConsoleLog());
-	uiInterfaces.push_back(new NetworkPanel());
-
+	uiInterfaces.emplace_back(new ContentBrowser());
+	uiInterfaces.emplace_back(new HierarchyPanel());
+	uiInterfaces.emplace_back(new PerformancePanel());
+	uiInterfaces.emplace_back(new PropertiesPanel());
+	uiInterfaces.emplace_back(new ConsoleLog());
+	uiInterfaces.emplace_back(new NetworkPanel());
 }
 
 DockSpace::~DockSpace()
 {
-	for (auto panel : uiInterfaces)
+	for (auto* panel : uiInterfaces)
 	{
 		delete panel;
 		panel = nullptr;
 	}
-
 	uiInterfaces.clear();
 }
 
 void DockSpace::Update(const float deltatime)
 {
-	
-	for (auto panel : uiInterfaces)
+	for (auto* panel : uiInterfaces)
 	{
 		panel->Update(deltatime);
 	}
@@ -853,12 +754,13 @@ void DockSpace::Update(const float deltatime)
 
 void DockSpace::Render()
 {
+	ImGui::NewFrame();
 	GenerateDockSpace();
 }
 
 void DockSpace::Reset()
 {
-	for (auto panel : uiInterfaces)
+	for (auto* panel : uiInterfaces)
 	{
 		panel->Reset();
 	}
@@ -866,12 +768,12 @@ void DockSpace::Reset()
 
 void DockSpace::ConstructUserInterface()
 {
-
-	for (auto panel : uiInterfaces)
+	UIStatics::SetSelectedObject(nullptr);
+	
+	for (auto* panel : uiInterfaces)
 	{
 		panel->Construct();
 	}
-
 }
 
 void DockSpace::GenerateDockSpace()
@@ -909,7 +811,6 @@ void DockSpace::GenerateDockSpace()
 	// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
 
 	ImGui::Begin("DockSpace Demo", &isDockSpaceOpen, window_flags);
-
 
 	if (isDockSpaceFullScreen)
 		ImGui::PopStyleVar(2);
@@ -956,11 +857,8 @@ void DockSpace::GenerateDockSpace()
 					CoreEngine::GetInstance()->currentSceneNum = scenes.size() - 1;
 					SaveUtility::GetInstance()->CreateSave("Default",FileType::SCENE);
 				}
-
 				ImGui::EndMenu();
-
 			}
-
 			ImGui::Separator();
 
 			ImGui::EndMenu();
@@ -968,8 +866,7 @@ void DockSpace::GenerateDockSpace()
 		ImGui::EndMenuBar();
 	}
 
-
-	for (auto panel : uiInterfaces)
+	for (auto* panel : uiInterfaces)
 	{
 		panel->Render();
 	}
@@ -995,9 +892,7 @@ ContentBrowser::~ContentBrowser()
 
 void ContentBrowser::Render()
 {
-
 	ImGui::Begin("Content Browser");
-
 
 	GeneratePathNav();
 	ImGui::Dummy(ImVec2{ 0.0f,25.0f });
@@ -1010,11 +905,9 @@ void ContentBrowser::GenerateContent()
 {
 	float cellSize = ItemSize + ItemPadding;
 
-
 	float panelWidth = ImGui::GetContentRegionAvail().x;
 
 	int colCount = (int)(panelWidth / cellSize);
-
 
 	if (colCount < 1)
 	{
@@ -1022,35 +915,26 @@ void ContentBrowser::GenerateContent()
 	}
 
 	ImGui::Columns(colCount, 0, false);
-	for (int i = 0; i <  DirectoryItems.size(); i++)
+	for (size_t i = 0; i <  DirectoryItems.size(); i++)
 	{
 		GenerateItem(DirectoryItems[i]);
 	}
 
 	ImGui::Columns(1);
-
 }
 
 void ContentBrowser::GeneratePathNav()
 {
-
-
-
-	ImGui::Columns((int)DirectoryNames.size(), "Navigation", false);
-
+	ImGui::Columns(static_cast<int>(DirectoryNames.size()), "Navigation", false);
 
 	float spacing = 30.0f;
 
-
-
-	for (int i = 0; i < DirectoryNames.size(); i++ )
+	for (size_t i = 0; i < DirectoryNames.size(); i++ )
 	{
-
 		if (ImGui::Button(DirectoryNames[i].c_str(), ImVec2{ ImGui::GetColumnWidth(i) - spacing,0.0f }))
 		{
 			ChangeDirectory(DirectoryNames[i]);
 		}
-
 		
 		ImGui::SameLine();
 
@@ -1060,45 +944,31 @@ void ContentBrowser::GeneratePathNav()
 			ImGui::SameLine();
 		}
 
-		
-
 		ImGui::NextColumn();
 	}
-
 
 	if (DirectoryNames.size() > 1)
 	{
 		ImGui::Columns(1);
 	}
-
-
-
 }
 
-void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
+void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 {
 	std::filesystem::path path = entry.path();
 	std::string filename = entry.path().filename().string();
 
-
 	if (entry.is_directory())
 	{
-
-		ImGui::ImageButton((ImTextureID)TextureManager::GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });
-
-
-		
+		ImGui::ImageButton((ImTextureID)TextureManager::GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });	
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
 			CurrentDirectory /= path.filename();
 			GenDirectoryItems();
-			
 		}
 
 		ImGui::TextWrapped(filename.c_str());
-	
-		
 	}
 	else
 	{
@@ -1118,15 +988,13 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 		}
 		else if (fileType == ".jpg" | fileType == ".png")
 		{
-			iconTextureID = TextureManager::GetTexture(path.filename().string().c_str()).getTextureID();
+			iconTextureID = TextureManager::GetTexture(path.filename().string()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else
 		{
 			ImGui::Button(filename.c_str(), { ItemSize,ItemSize });
 		}
-
-		
 
 		if (ImGui::IsItemHovered())
 		{
@@ -1144,16 +1012,14 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 
 					ImGui::SetDragDropPayload("Content_Browser_Model", meshName.c_str(), meshName.size() * sizeof(const char*), ImGuiCond_Once);
 				}
-
 				ImGui::EndDragDropSource();
 			}
 
 			if (ImGui::IsMouseDoubleClicked(0))
 			{
-
 				if (path.extension().string() == ".scene")
 				{
-					for (int i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
+					for (size_t i = 0; i < CoreEngine::GetInstance()->gameInterface->Scenes.size(); i++)
 					{
 						Scene* scene = CoreEngine::GetInstance()->gameInterface->Scenes[i];
 
@@ -1162,44 +1028,30 @@ void ContentBrowser::GenerateItem(std::filesystem::directory_entry entry)
 						{
 							LoadUtility::GetInstance()->UnLoadSceneSaves();
 							CoreEngine::GetInstance()->currentSceneNum = i;
+							break;
 						}
 					}
 				}
-
 			}
-
 		}
-
-		
-
-		ImGui::TextWrapped(filename.c_str());
-
-
-		
+		ImGui::TextWrapped(filename.c_str());		
 	}
-
-	
-
 	ImGui::NextColumn();
 }
 
 void ContentBrowser::GenDirectoryItems()
 {
-
 	DirectoryItems.clear();
 	DirectoryNames.clear();
 
-
-	for (auto& entry : std::filesystem::directory_iterator(CurrentDirectory))
+	for (const auto& entry : std::filesystem::directory_iterator(CurrentDirectory))
 	{
 		DirectoryItems.push_back(entry);
 	}
 
-
 	// Loops through the directory and takes all of the folder names for later use.
 	std::filesystem::path path = CurrentDirectory;
 	std::string pathStr = CurrentDirectory.string() + "\\";
-
 
 	while (!pathStr.empty())
 	{
@@ -1209,11 +1061,9 @@ void ContentBrowser::GenDirectoryItems()
 
 		DirectoryNames.push_back(Name);
 	}
-
-
 }
 
-void ContentBrowser::ChangeDirectory(std::string dir)
+void ContentBrowser::ChangeDirectory(const std::string& dir)
 {
 	std::string oldDir = CurrentDirectory.string();
 	std::string dirString = CurrentDirectory.string();
@@ -1222,9 +1072,7 @@ void ContentBrowser::ChangeDirectory(std::string dir)
 	oldDir.erase(oldDir.find(dir), dir.length());
 	dirString.erase(dirString.find(oldDir), oldDir.length());
 
-
 	CurrentDirectory = dirString;
 	GenDirectoryItems();
 }
-
 #pragma endregion 

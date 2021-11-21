@@ -7,9 +7,6 @@
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
 class Scene1 : public Scene
 {
-private:
-
-	Debug debug;
 public:
 	//! Scene 1 Constructor
 	Scene1() = default;

@@ -24,7 +24,12 @@ void Timer::UpdateTimer()
 unsigned int Timer::SleepTime(const unsigned int fps)
 {
 
-	const unsigned int milliSecsPerFrame = MILLI_TO_SEC / fps;
+	if(fps <= 0)
+	{
+		return 0;
+	}
+	
+	const unsigned int milliSecsPerFrame = static_cast<unsigned int>(MILLI_TO_SEC) / fps;
 
 	if (milliSecsPerFrame == 0)
 	{

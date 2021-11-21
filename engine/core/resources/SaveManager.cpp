@@ -5,9 +5,7 @@ std::unordered_map<std::string, SaveFile> SaveManager::SaveFiles = std::unordere
 std::unordered_map<std::string, SaveFile> SaveManager::SaveQueue = std::unordered_map<std::string, SaveFile>();
 std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std::unordered_map<std::string, GameObject*>();
 
-
-
-
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
 {
@@ -43,15 +41,16 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 	SaveFiles.emplace(name, File);
 }
 
-void SaveManager::RemoveSave(const std::string saveName)
+void SaveManager::RemoveSave(const std::string& saveName)
 {
-	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
-	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
-
-	if (SaveFiles.size() < 1)
+	if (SaveFiles.empty())
 	{
 		return;
 	}
+
+	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
+	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
+
 
 
 	if (iter != SaveFiles.end())
@@ -84,7 +83,7 @@ SaveFile& SaveManager::GetSaveFile(const std::string saveName)
 	}
 }
 
-void SaveManager::SetSaveName(const std::string old_Name, const std::string new_Name)
+void SaveManager::SetSaveName(const std::string& old_Name, const std::string& new_Name)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(old_Name);
 	std::unordered_map<std::string, SaveFile>::iterator queueIter = SaveQueue.find(old_Name);
@@ -166,6 +165,17 @@ void SaveManager::SaveAll()
 void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 {
 	SaveQueue.emplace(name, File);
+}
+
+void SaveManager::DeleteSaveableObjects()
+{
+	for (auto pair : SaveableObjects)
+	{
+		delete pair.second;
+		pair.second = nullptr;
+	}
+
+	SaveableObjects.clear();
 }
 
 bool SaveManager::TransferToSaveQueue(const std::string& saveName)

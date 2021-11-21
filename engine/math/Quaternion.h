@@ -31,7 +31,7 @@ namespace MATH
 
 		Quaternion operator * (const Quaternion& q) const;
 
-		Quaternion& operator = (const Quaternion& q);
+		Quaternion& operator = (const Quaternion& q) = default;
 		Quaternion operator += (const Quaternion& q);
 		Quaternion operator + (const Quaternion& q) const;
 

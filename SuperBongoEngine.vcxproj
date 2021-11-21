@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Colour.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
@@ -390,26 +391,27 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
-    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
-    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
-    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
-    <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\FogFrag.glsl" />
-    <None Include="src\graphics\shaders\FogVert.glsl" />
-    <None Include="src\graphics\shaders\GrassFrag.glsl" />
-    <None Include="src\graphics\shaders\GrassVert.glsl" />
-    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
-    <None Include="src\graphics\shaders\InstanceVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
-    <None Include="src\graphics\shaders\RefractFrag.glsl" />
-    <None Include="src\graphics\shaders\RefractVert.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
-    <None Include="src\graphics\shaders\WaterFrag.glsl" />
-    <None Include="src\graphics\shaders\WaterVert.glsl" />
+    <None Include="resources\shaders\2DTextureFrag.glsl" />
+    <None Include="resources\shaders\2DTextureVert.glsl" />
+    <None Include="resources\shaders\2DUIntTextureFrag.glsl" />
+    <None Include="resources\shaders\DefaultFrag.glsl" />
+    <None Include="resources\shaders\DefaultVert.glsl" />
+    <None Include="resources\shaders\FogFrag.glsl" />
+    <None Include="resources\shaders\FogVert.glsl" />
+    <None Include="resources\shaders\gBufferResolveFrag.glsl" />
+    <None Include="resources\shaders\gBufferResolveVert.glsl" />
+    <None Include="resources\shaders\gBufferShaderFrag.glsl" />
+    <None Include="resources\shaders\gBufferShaderVert.glsl" />
+    <None Include="resources\shaders\GrassFrag.glsl" />
+    <None Include="resources\shaders\GrassVert.glsl" />
+    <None Include="resources\shaders\InstanceFrag.glsl" />
+    <None Include="resources\shaders\InstanceVert.glsl" />
+    <None Include="resources\shaders\RefractFrag.glsl" />
+    <None Include="resources\shaders\RefractVert.glsl" />
+    <None Include="resources\shaders\SkyBoxFrag.glsl" />
+    <None Include="resources\shaders\SkyBoxVert.glsl" />
+    <None Include="resources\shaders\WaterFrag.glsl" />
+    <None Include="resources\shaders\WaterVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

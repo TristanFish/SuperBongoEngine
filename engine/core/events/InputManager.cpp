@@ -3,9 +3,10 @@ std::unique_ptr<InputManager> InputManager::instance = nullptr;
 
 using namespace MATH;
 
+
 InputManager* InputManager::GetInstance()
 {
-	if (instance.get() == nullptr)
+	if (instance == nullptr)
 	{
 		instance.reset(new InputManager);
 	}
@@ -35,7 +36,7 @@ void InputManager::PollEvents(SDL_Event& event)
 	Uint32 mouseButton = SDL_GetMouseState(&mousex, &mousey);
 
 	mouse.prevPosition = mouse.position;
-	mouse.position = Vec2(mousex, mousey);
+	mouse.position = Vec2(static_cast<float>(mousex), static_cast<float>(mousey));
 	
 }
 

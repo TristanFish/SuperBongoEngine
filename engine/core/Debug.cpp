@@ -9,6 +9,7 @@ ShaderProgram Debug::objShader;
 
 using namespace MATH;
 
+
 Debug::~Debug()
 {
 	if (cubeVAO != 0)

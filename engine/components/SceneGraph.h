@@ -28,7 +28,9 @@ private:
 
 	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
-
+	//!
+	/*! tracks whether the scenegraph is past the */
+	bool sceneIsPostInit = false;
 	
 	
 
@@ -43,6 +45,10 @@ public:
 	/*! Initialized the renderer */
 	void Init();
 
+	//! PostInit Function
+	/*! Called after all objects have been added to the scenegraph (after the scene's OnCreate function)*/
+	void PostInit();
+	
 	//! Update Function
 	/*! Updates all of the gameobjects in the "gameObjects" vector */
 	void Update(const float deltaTime);
@@ -54,7 +60,7 @@ public:
 
 	//! FindGameObject Function
 	/*!Returns the first gameObject with a given name*/
-	GameObject& FindGameObject(const char* name);
+	GameObject* FindGameObject(const char* name);
 
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
@@ -62,7 +68,7 @@ public:
 
 	void AddRenderingComponents();
 
-	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
+	const std::unordered_map<std::string, GameObject*>& GetInstantiableObjects() const;
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
@@ -70,7 +76,7 @@ public:
 
 	 //! isObjectActive Getter
 	/*!Return's if there is already an object with a given name*/
-	 bool isObjectActive(std::string objName);
+	 bool isObjectActive(const std::string& objName);
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/

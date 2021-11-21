@@ -18,7 +18,7 @@ class AudioManager
 {
 public:
 	//Creating a new instance of this class will not work. The get function belows initializes the class.
-	//Call other functions found in Audio Manager but calling AudioManager::Get()."whatever function"
+	//Call other functions found in Audio Manager by calling AudioManager::Get()."whatever function"
 
 	static AudioManager* Get() {
 		static AudioManager s_AudioManager;

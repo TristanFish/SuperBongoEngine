@@ -1,17 +1,12 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <memory>
+
 #include "components/SceneGraph.h"
 #include "tinyxml2/tinyxml2.h"
-#include "primitives/Primitives.h"
 #include "core/MouseRay.h"
-#include "sdl/SDL.h"
 #include "Utility/SaveUtility.h"
-#include "Utility/LoadUtility.h"
-
-
-#include "graphics/CustomUI.h"
-#include <memory>
 
 
 
@@ -24,15 +19,12 @@ protected:
 	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
 	MouseRay mouseRay;
 
-	
-
-	CustomUI::DockSpace dockSpace;
 	std::string Scene_Name;
 
 
 	//! Create object with object ID function
 	/*! Used when we want to runtime spawn objects depending on the given ID */
-	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, std::string objName_, std::string objType) const;
+	void CreateObjWithID(const MATH::Vec3& pos_, const MATH::Vec3& rot_, const MATH::Vec3& scale_, const std::string& objName_, const std::string& objType) const;
 
 
 	//! Check Intersection function
@@ -46,7 +38,7 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	virtual bool OnCreate() = 0;
+	virtual bool OnCreate();
 	virtual bool PostCreate();
 	virtual void OnDestroy() = 0;
 	virtual void Update(const float deltaTime);
@@ -61,8 +53,8 @@ public:
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;
 
-	inline std::string& GetSceneName()  { return Scene_Name; }
-	inline void SetSceneName(std::string Name_) { Scene_Name = Name_; }
+	std::string& GetSceneName()  { return Scene_Name; }
+	void SetSceneName(const std::string& Name_) { Scene_Name = Name_; }
 
 };
 
