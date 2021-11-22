@@ -956,6 +956,7 @@
     <ClInclude Include="Colour.h">
       <Filter>src\engine\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\GJKDetection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1257,6 +1258,7 @@
     <ClCompile Include="engine\components\3D\LightComponent.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\3D\New3D\GJKDetection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

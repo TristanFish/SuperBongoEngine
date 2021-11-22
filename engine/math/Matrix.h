@@ -199,6 +199,24 @@ namespace  MATH {
 		inline Vec4 getRow(int index) {
 			return Vec4(m[0 + index], m[4 + index], m[8 + index], m[12 + index]);
 		}
+
+
+		//Added by Declan - return the determinant of the matrix (float)
+		//https://cdn.discordapp.com/attachments/723827969851916323/912154192183980042/unknown.png
+		inline float getDeterminant()	{
+
+			return m[0] * ((m[5] * m[10] * m[15]) + (m[5] * m[11] * m[13]) + (m[7] + m[9] + m[14])
+				- (m[7] * m[10] * m[13]) - (m[6] * m[9] * m[15]) - (m[5] * m[11] * m[14]))
+
+				- m[4] * ((m[1] * m[10] * m[15]) + (m[2] * m[11] * m[13]) + (m[3] + m[9] + m[14])
+					- (m[3] * m[10] * m[13]) - (m[2] * m[9] * m[15]) - (m[1] * m[11] * m[14]))
+
+				+ m[8] * ((m[1] * m[6] * m[15]) + (m[2] * m[7] * m[13]) + (m[3] + m[5] + m[14])
+					- (m[3] * m[6] * m[13]) - (m[2] * m[5] * m[15]) - (m[1] * m[7] * m[14]))
+
+				- m[12] * ((m[1] * m[6] * m[11]) + (m[2] * m[7] * m[9]) + (m[3] + m[5] + m[10])
+					- (m[3] * m[6] * m[9]) - (m[2] * m[5] * m[11]) - (m[1] * m[7] * m[10]));
+		}
 	};
 
 
