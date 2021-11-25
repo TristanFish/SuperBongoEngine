@@ -10,7 +10,7 @@ std::unique_ptr<SaveUtility> SaveUtility::utilityInstance = std::unique_ptr<Save
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
-void SaveUtility::HandleAttributes(SaveFile& save, ElementInfo& elm)
+void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 {
 	for (auto& atrib : elm.Attributes)
 	{
@@ -21,7 +21,7 @@ void SaveUtility::HandleAttributes(SaveFile& save, ElementInfo& elm)
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<float>(atrib.second));
 
 		else if (std::holds_alternative<double>(atrib.second))
-			elm.element->SetAttribute(atrib.first.c_str(), std::get<float>(atrib.second));
+			elm.element->SetAttribute(atrib.first.c_str(), std::get<double>(atrib.second));
 
 		else if (std::holds_alternative<std::string>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<std::string>(atrib.second).c_str());
@@ -53,7 +53,7 @@ SaveUtility* SaveUtility::GetInstance()
 }
 
 
-void SaveUtility::CreateSave(const std::string saveName, FileType type)
+void SaveUtility::CreateSave(const std::string& saveName, FileType type)
 {
 	if (SaveManager::SaveFiles.find(saveName) != SaveManager::SaveFiles.end())
 	{
@@ -67,7 +67,7 @@ void SaveUtility::CreateSave(const std::string saveName, FileType type)
 
 }
 
-void SaveUtility::CreateSave(const std::string saveName, const std::map<std::string, ElementInfo>& elements)
+void SaveUtility::CreateSave(const std::string& saveName, const std::map<std::string, ElementInfo>& elements)
 {
 	SaveFile tempFile = SaveFile(saveName);
 
@@ -76,18 +76,18 @@ void SaveUtility::CreateSave(const std::string saveName, const std::map<std::str
 	SaveManager::AddToSaveQueue(saveName, tempFile);
 }
 
-void SaveUtility::CreateSave(const std::string saveName, const SaveFile& save)
+void SaveUtility::CreateSave(const std::string& saveName, const SaveFile& save)
 {
 	SaveManager::AddToSaveQueue(saveName, save);
 
 }
 
-void SaveUtility::DeleteSave(const std::string saveName)
+void SaveUtility::DeleteSave(const std::string& saveName)
 {
 	SaveManager::RemoveSave(saveName);
 }
 
-void SaveUtility::OverwriteSave(const std::string saveName, const SaveFile& save)
+void SaveUtility::OverwriteSave(const std::string& saveName, const SaveFile& save)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 
@@ -117,7 +117,7 @@ void SaveUtility::OverwriteSave(const SaveFile& oldSave, const SaveFile& newSave
 
 }
 
-void SaveUtility::OverwriteSave(const std::string saveName, const std::map<std::string, ElementInfo>& elements)
+void SaveUtility::OverwriteSave(const std::string& saveName, const std::map<std::string, ElementInfo>& elements)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 
@@ -132,7 +132,7 @@ void SaveUtility::OverwriteSave(const std::string saveName, const std::map<std::
 	}
 }
 
-void SaveUtility::OverwriteElement(const std::string saveName, const std::string elmName, const ElementInfo& element)
+void SaveUtility::OverwriteElement(const std::string& saveName, const std::string& elmName, const ElementInfo& element)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 
@@ -146,7 +146,7 @@ void SaveUtility::OverwriteElement(const std::string saveName, const std::string
 	}
 }
 
-void SaveUtility::AddElement(const std::string saveName, const std::string elmName, const ElementInfo& element)
+void SaveUtility::AddElement(const std::string& saveName, const std::string& elmName, const ElementInfo& element)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
@@ -198,7 +198,7 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 	}
 }
 
-void SaveUtility::AddElement(const std::string saveName, const std::string elmName, const std::string parentName, tinyxml2::XMLElement* element)
+void SaveUtility::AddElement(const std::string& saveName, const std::string& elmName, const std::string& parentName, tinyxml2::XMLElement* element)
 {
 	ElementInfo elmInfo = ElementInfo();
 	elmInfo.element = element;
@@ -243,7 +243,7 @@ void SaveUtility::AddElement(const std::string saveName, const std::string elmNa
 
 
 
-void SaveUtility::RemoveElement(const std::string saveName, const std::string elmName)
+void SaveUtility::RemoveElement(const std::string& saveName, const std::string& elmName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
@@ -266,7 +266,7 @@ void SaveUtility::RemoveElement(const std::string saveName, const std::string el
 
 }
 
-void SaveUtility::RemoveAllElements(const std::string saveName)
+void SaveUtility::RemoveAllElements(const std::string& saveName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
 	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveManager::SaveQueue.find(saveName);
@@ -284,7 +284,7 @@ void SaveUtility::RemoveAllElements(const std::string saveName)
 	}
 }
 
-ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentName)
+ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& parentName)
 {
 
 	ElementInfo element = ElementInfo(parentName);
@@ -296,7 +296,7 @@ ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, std::string parentN
 	return element;
 }
 
-ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, std::string parentName)
+ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& parentName)
 {
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
@@ -356,7 +356,7 @@ void SaveUtility::CompileSaves()
 	SaveManager::SaveAll();
 }
 
-void SaveUtility::SaveObject(const std::string saveName, GameObject* obj)
+void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
 {
 	CreateSave(saveName, FileType::OBJECT);
 

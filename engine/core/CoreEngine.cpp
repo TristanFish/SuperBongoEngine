@@ -134,7 +134,7 @@ void CoreEngine::Run()
 
 		AIDirector::GetInstance()->GenerateGraphFromMap();
 
-		Node* Target_Node = AIDirector::GetInstance()->GetRecentlyGenerated()->GetNode(6);
+		Node* Target_Node = AIDirector::GetInstance()->GetRecentlyGenerated()->GetNode(7);
 		AIDirector::GetInstance()->FindPath(Target_Node);
 
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
