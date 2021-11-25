@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
+    <ClInclude Include="engine\components\3D\LineRenderer.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
@@ -294,6 +295,7 @@
     <ClInclude Include="game\scenes\SceneAi.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />

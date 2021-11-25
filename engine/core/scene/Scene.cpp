@@ -25,7 +25,7 @@ Scene::~Scene()
 
 bool Scene::OnCreate()
 {
-	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
+	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene.cpp", __LINE__);
 	
 	objectList->Init();
 

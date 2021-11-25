@@ -44,6 +44,19 @@ void Model::DestroyModel()
 	}
 }
 
+std::vector<Vertex> Model::GetVertices() const
+{
+	std::vector<Vertex> vertices;
+	vertices.reserve(500);
+	
+	for(const auto& mesh : meshes)
+	{
+		vertices.insert(vertices.end(), mesh.vertices.begin(), mesh.vertices.end());
+	}
+
+	return vertices;
+}
+
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
 	

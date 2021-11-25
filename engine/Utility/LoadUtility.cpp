@@ -301,7 +301,6 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 			for (int i = 0; i < 4; i++)
 			{
-
 				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
 			}
 		}

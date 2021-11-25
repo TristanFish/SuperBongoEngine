@@ -60,7 +60,7 @@ public:
 	// Inherited via Component
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override {}
-	void Render() const override {}
+	void Render() const {}
 	void HandleEvents(const SDL_Event& event) override {}
 
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;

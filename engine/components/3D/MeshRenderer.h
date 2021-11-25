@@ -86,7 +86,7 @@ public:
 
 	//!Render override Function
 	/*!Render the mesh & run the shader*/
-	void Render() const override;
+	void Render() const;
 
 	//!Render override Function
 	/*!Render the mesh & run the shader that the function is given*/

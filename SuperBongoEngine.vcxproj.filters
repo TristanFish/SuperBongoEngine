@@ -898,7 +898,6 @@
       <Filter>src\scenes</Filter>
     </ClInclude>
     <ClInclude Include="game\scenes\Scene2.h" />
-    <ClInclude Include="engine\components\Instancer.h" />
     <ClInclude Include="engine\core\MouseRay.h" />
     <ClInclude Include="engine\core\events\InputManager.h" />
     <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
@@ -954,6 +953,12 @@
       <Filter>src\engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="engine\components\Instancer.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Instancer.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\LineRenderer.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1199,7 +1204,6 @@
       <Filter>src\scenes</Filter>
     </ClCompile>
     <ClCompile Include="game\scenes\Scene2.cpp" />
-    <ClCompile Include="engine\components\Instancer.cpp" />
     <ClCompile Include="engine\core\MouseRay.cpp" />
     <ClCompile Include="engine\core\events\InputManager.cpp" />
     <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
@@ -1255,6 +1259,12 @@
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
     <ClCompile Include="engine\components\Instancer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\Instancer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\LineRenderer.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
   </ItemGroup>

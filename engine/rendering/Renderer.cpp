@@ -3,6 +3,8 @@
 #include "components/3D/LightComponent.h"
 #include "core/Globals.h"
 #include <sdl/SDL.h>
+
+#include "components/3D/lineRenderer.h"
 #include "Rendering/SkyBox.h"
 #include "math/Plane.h"
 #include "core/resources/ShaderManager.h"
@@ -140,6 +142,30 @@ void Renderer::DeleteLight(LightComponent* light)
 	}
 }
 
+void Renderer::AddLine(LineRenderer* line)
+{
+	const auto lineIt = std::find(lineRenderers.begin(), lineRenderers.end(), line);
+	//if this linerenderer doesn't already exist then add it
+	if(lineIt == lineRenderers.end())
+	{
+		lineRenderers.emplace_back(line);
+	}
+}
+
+void Renderer::DeleteLine(LineRenderer* line)
+{
+	if(lights.empty()) return;
+
+	for (std::vector<LineRenderer*>::iterator iter = lineRenderers.begin(); iter != lineRenderers.end(); iter++)
+	{
+		if (*iter == line)
+		{
+			lineRenderers.erase(iter);
+			break;
+		}
+	}
+}
+
 void Renderer::DrawDebugGeometry(const std::vector<GameObject*>& objects)
 {
 	#ifdef _DEBUG
@@ -157,10 +183,18 @@ void Renderer::Render()
 
 	DrawDebugGeometry(Globals::s_SceneGraph->GetGameObjects());
 
-	//loop through all meshrenderers
-	for (size_t i = 0; i < meshRenderers.size(); i++)
+	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{
-
+		lineRenderers[i]->RenderLine();
+	}
+	
+	//loop through all meshrenderers
+	for(size_t i = 0; i < meshRenderers.size(); i++)
+	{
+		if(!meshRenderers[i]->active)
+		{
+			continue;
+		}
 		//if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
 			//EngineLogger::Info(meshRenderers[i]->gameObject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
@@ -214,15 +248,12 @@ void Renderer::Render()
 		glUseProgram(0);
 	}
 	
-	
 	//Rebind the default framebuffer
 	defaultBuffer.Bind();
 	glEnable(GL_DEPTH_TEST);
 
-	RenderGBufferResult();
-
 	//Uses the gBufferResolve shader to render the result of the gBuffer
-
+	RenderGBufferResult();
 
 }
 
@@ -231,12 +262,10 @@ void Renderer::DestroyRenderer()
 	delete(skyBox);
 	skyBox = nullptr;
 
-	
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
-
 	
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);

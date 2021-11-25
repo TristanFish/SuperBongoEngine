@@ -28,10 +28,6 @@ public:
 	/*!Updates all of the components systems*/
 	virtual void Update(const float deltaTime) = 0;
 
-	//!Virtual Render Function
-	/*!Renders anything needed for the component*/
-	virtual void Render() const {}
-
 	//!Virtual HandleEvents Function
 	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
