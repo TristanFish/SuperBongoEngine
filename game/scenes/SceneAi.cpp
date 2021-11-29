@@ -47,61 +47,40 @@ bool SceneAi::OnCreate()
 
 	
 	{
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 35));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 35));
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 35));
-		mesh1Verts.emplace_back(Vec3(42.5, 17.5, 35));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 0));
-		mesh1Verts.emplace_back(Vec3(7.5, -17.5, 35));
-		mesh1Verts.emplace_back(Vec3(7.5, 17.5, 35));
+		mesh1Verts.emplace_back(Vec3(0.5f, 0.8f, 0.3f));
+		mesh1Verts.emplace_back(Vec3(0.0f));
+		mesh1Verts.emplace_back(Vec3(0.5f, 0.0f, 0.9f));
+		mesh1Verts.emplace_back(Vec3(1.0f, 0.0f, 0.0f));
+		
 	}
 
+	//original 2nd tetra from example 
+	/*{
+		mesh2Verts.emplace_back(Vec3(0.5f, 0.1f, 0.3f));
+		mesh2Verts.emplace_back(Vec3(0.0f, -0.7f, 0.0f));
+		mesh2Verts.emplace_back(Vec3(0.5f, -0.7f, 0.9f));
+		mesh2Verts.emplace_back(Vec3(1.0f, -0.7f, 0.0f));
+	}*/
+
+	//modified to be a bit more random shape
 	{
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-7.5, 17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 0));
-		mesh2Verts.emplace_back(Vec3(-42.5, -17.5, 35));
-		mesh2Verts.emplace_back(Vec3(-42.5, 17.5, 35));
+		mesh2Verts.emplace_back(Vec3(1.0f, 1.0f, 1.0f));
+		mesh2Verts.emplace_back(Vec3(0.0f, -1.0f, 1.0f));
+		mesh2Verts.emplace_back(Vec3(1.0f, -1.7f, 1.9f));
+		mesh2Verts.emplace_back(Vec3(1.0f, -1.7f, 0.0f));
 	}
-	
+	//mesh1 starts to the right
+	for (Vec3& point : mesh1Verts) {
+		point.x = point.x + 5.0f;
+	}
+	//mesh2 starts to the left
+	for (Vec3& point : mesh2Verts) {
+		point.x = point.x - 5.0f;
+	}
 
 	objectList->Init();
+
+	
 	
 	
 	return true;
@@ -117,6 +96,16 @@ void SceneAi::Update(const float deltaTime)	{
 		std::cout << "Collision true" << std::endl;
 	else
 		std::cout << "Collision false" << std::endl;
+
+	//moves left
+	for(Vec3& point : mesh1Verts)	{
+		point.x = point.x - 1.0f;
+	}
+	//moves right
+	for (Vec3& point : mesh2Verts) {
+		point.x = point.x + 1.0f;
+	}
+	
 	Scene::Update(deltaTime);
 }
 

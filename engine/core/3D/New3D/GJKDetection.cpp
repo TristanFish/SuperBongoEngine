@@ -9,7 +9,7 @@
 #pragma region 
 
 Simplex::Simplex()	{
-	simplexVertices.reserve(3);
+	simplexVertices.reserve(4);
 }
 
 Simplex::~Simplex()	{
@@ -35,30 +35,22 @@ Vec3 Simplex::getFarthestPointInDirection(std::vector<Vec3> verticesVector_ , Ve
 
 	//mesh needs to have vertices, if not, error.
 	assert(!verticesVector_.empty());
-
-	//create a Vector containing all the positions of the meshes Vertices. As we only care about their pos
-	//this Vector is only used in this function
-	std::vector<Vec3> Vertices;
-	for (auto& vertex : verticesVector_)	{
-		Vertices.push_back(vertex);
-	}
 	
 	int farthestIndex = 0;
-	float farthestDistance = VMath::dot(Vertices.front(), direction_);
+	float farthestDistance = VMath::dot(verticesVector_.front(), direction_);
 	float temp;
 
 	//check distance of every point, and see if they are the farthest
-	for (int i = 0; i < static_cast<int>(Vertices.size()); ++i) {
-		temp = VMath::dot(Vertices.at(i), direction_);
-		if(temp > farthestDistance)	{
+	for (int i = 0; i < static_cast<int>(verticesVector_.size()); ++i) {
+		temp = VMath::dot(verticesVector_.at(i), direction_);
+		if (temp > farthestDistance) {
 			farthestDistance = temp;
 			farthestIndex = i;
 		}
 	}
-	
-	
+
 	//returns the farthest point found
-	return Vertices.at(farthestIndex);
+	return verticesVector_.at(farthestIndex);
 }
 
 bool Simplex::containsOrigin(Vec3& direction_)	{
@@ -83,12 +75,14 @@ bool Simplex::containsOrigin(Vec3& direction_)	{
 
 		Vec3 triangleCenter = Vec3((a.x + b.x + c.x) / 3.0f, (a.y + b.y + c.y) / 3.0f, (a.z + b.z + c.z) / 3.0f);
 
+		//testing ao instead of triangle center
+
 		//if origin is in the direction of abNormal
-		if(VMath::dot(abNormal, triangleCenter) > 0.0f)	{
+		if(VMath::dot(abNormal, ao) > 0.0f)	{
 			//simplexVertices.pop_back(); // only delete if we are in 2D
 			direction_ = abNormal;
 		}
-		else if (VMath::dot(acNormal, triangleCenter) > 0.0f) {		//now with acNormal
+		else if (VMath::dot(acNormal, ao) > 0.0f) {		//now with acNormal
 				//simplexVertices.erase(simplexVertices.begin() + 1); //delete b | only delete if we are in 2D
 				direction_ = acNormal;
 		}
@@ -139,23 +133,37 @@ bool Simplex::containsOrigin(Vec3& direction_)	{
 		float det4 = mat4.getDeterminant();
 		bool sign4 = std::signbit(det4);
 
-		if(sign0 == sign1 == sign2 == sign3 == sign4)	{
+		if(sign0 == sign1 && sign0 == sign2 && sign0 == sign3 && sign0 == sign4)	{
 			//all sign match, so origin is inside the tetrahedron
 			return true;
 		}
+		// if det0 == 0, then there is no tetrahedron, there is an issue. This is temp fix until we can find a better one
+		else if(det0 == 0.0f)	{
+			EngineLogger::Error("simplex is degenerate, there is an issue. in: ", "GJKDetection.cpp", __LINE__);
+			return true;
+		}
+		//If any det is == 0.0f, then the plane is touching the point (so surface collision, no pen)
+		else if(det1 == 0.0f || det2 == 0.0f || det3 == 0.0f || det4 == 0.0f)	{
+			
+			return true;
+		}
+		//one of the signs is different than Sign0, find the first one and try the whole thing again with a different point.
 		else	{
 			if(sign1 != sign0)	{
 				simplexVertices.erase(simplexVertices.begin());
-				
+				return false;
 			}
 			if (sign2 != sign0) {
 				simplexVertices.erase(simplexVertices.begin() + 1);
+				return false;
 			}
 			if (sign3 != sign0) {
 				simplexVertices.erase(simplexVertices.begin() + 2);
+				return false;
 			}
 			if (sign4 != sign0) {
 				simplexVertices.erase(simplexVertices.begin() + 3);
+				return false;
 
 			}
 		}
@@ -172,9 +180,8 @@ bool Simplex::containsOrigin(Vec3& direction_)	{
 
 bool GJKDetection::GJKCollisionDetection(/*const Mesh& mesh1_, const Mesh& mesh2_*/std::vector<Vec3> verticesVector1_, std::vector<Vec3> verticesVector2_)	{
 
-	if(verticesVector1_.empty() || verticesVector2_.empty())	{
-		EngineLogger::Error("A mesh is missing its vertices in : ", "GJKDetection.cpp", __LINE__);
-		
+	if(verticesVector1_.empty() || verticesVector2_.empty() || verticesVector1_.size() < 4 || verticesVector2_.size() < 4)	{
+		EngineLogger::Error("A mesh is missing its vertices, or has less than 4 points in : ", "GJKDetection.cpp", __LINE__);
 		return false;
 	}
 	
@@ -192,26 +199,41 @@ bool GJKDetection::GJKCollisionDetection(/*const Mesh& mesh1_, const Mesh& mesh2
 	center2 /= verticesVector2_.size();
 
 	//direction can be arbitrary, we chose  the distance in-between each objects center
-	direction = center2 - center1; //this could be replaced with Origin2 - origin1 if we know origins of each mesh
+	direction = center2 - center1; 
 
+	//dont need to normalize, only doing this because the example math does
+	//direction = VMath::normalize(direction);
 
 	//first point
 	simplex.simplexVertices.push_back(simplex.Support(verticesVector1_, verticesVector2_, direction));
 
 	direction = -direction; //opposite direction for 2nd point
 
+	Vec3 lastDirection = Vec3(0.0f);
+	
 	while(true)	{
-		//adds a new point to simplex. On 2nd iteration this uses -direction, on the 3rd it uses new direction from containsOrigin
+		//adds a new point to simplex. It uses new direction from containsOrigin
 		simplex.simplexVertices.push_back(simplex.Support(verticesVector1_, verticesVector2_, direction));
-
-		if (VMath::dot(simplex.simplexVertices.back(), direction) <= 0.0f) {
+		
+		// make sure that the last point we added actually passed the origin
+		if (VMath::dot(simplex.simplexVertices.back(), direction) <= VERY_SMALL) { // or  <= 0.0f
+			// if the point added last was not past the origin in the direction of d
+			// then the Minkowski Sum cannot possibly contain the origin since
+			// the last point added is on the edge of the Minkowski Difference
 			simplex.simplexVertices.clear();
 			return false;
 		}
-		else if (simplex.containsOrigin(direction) && simplex.simplexVertices.size() == 4) { //this already checks if the simplex is big enough (4 points)
+		else if (simplex.containsOrigin(direction) && simplex.simplexVertices.size() == 4) { 
 			simplex.simplexVertices.clear();
 				return true;
 		}
-		
+		//there are times where it gets stuck in an infinite loop when it shoudnt be colliding, this prevents that.
+		else if (direction.x == lastDirection.x && direction.y == lastDirection.y && direction.z == lastDirection.z) {
+			//pretend like no collision
+			simplex.simplexVertices.clear();
+			return false;
+		}
+		lastDirection = direction;
 	}
+
 }
