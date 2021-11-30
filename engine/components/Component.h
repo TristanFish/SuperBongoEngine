@@ -45,6 +45,4 @@ public:
 	virtual ~Component() { gameObject = nullptr; }
 };
 
-
-
 #endif

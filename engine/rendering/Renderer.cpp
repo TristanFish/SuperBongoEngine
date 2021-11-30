@@ -185,7 +185,7 @@ void Renderer::Render()
 
 	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{
-		lineRenderers[i]->RenderLine();
+		if(lineRenderers[i]->active) lineRenderers[i]->RenderLine();
 	}
 	
 	//loop through all meshrenderers
@@ -494,6 +494,8 @@ void Renderer::RenderGBufferResult()
 
 void Renderer::AttachLights() const
 {
+	//Default lighting for every scene
+	//This'll be changed later when I figure out how to format it
 	LightData defaultLight;
 
 	defaultLight.type = LightType::DIRECTIONAL;
@@ -519,7 +521,10 @@ void Renderer::AttachLights() const
 			break;
 		}
 
-		lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+		if(lights[i]->active)
+		{
+			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+		}
 	}
 }
 

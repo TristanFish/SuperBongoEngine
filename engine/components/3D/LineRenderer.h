@@ -20,7 +20,7 @@ public:
 	void Update(const float deltaTime) override;
 	void ImGuiRender() override;
 	virtual ~LineRenderer() override;
-
+	
 	void AddPoints(const std::vector<MATH::Vec3>& pointsToAdd);
 	void AddPoint(const MATH::Vec3& pointToAdd);
 

@@ -2,6 +2,7 @@
 #include "rendering/Camera.h"
 #include "components/GameObject.h"
 #include "core/resources/ShaderManager.h"
+#include "graphics/UIStatics.h"
 
 LineRenderer::LineRenderer()
 {
@@ -25,7 +26,13 @@ void LineRenderer::Update(const float deltaTime)
 
 void LineRenderer::ImGuiRender()
 {
-	
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "Line Renderer");
+
+	if(opened)
+	{
+
+		ImGui::TreePop();
+	}
 }
 
 LineRenderer::~LineRenderer()
@@ -85,7 +92,7 @@ void LineRenderer::SetUpBuffers()
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(MATH::Vec3), &points[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(MATH::Vec3), &points[0], GL_DYNAMIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MATH::Vec3), reinterpret_cast<void*>(0));

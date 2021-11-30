@@ -296,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
+    <ClCompile Include="engine\components\Component.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />

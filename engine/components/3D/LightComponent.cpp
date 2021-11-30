@@ -36,19 +36,15 @@ void LightComponent::OnSaveComponent(const std::string& saveName, std::string pa
 
 void LightComponent::ImGuiRender()
 {
-	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "Light Settings");
 	
-	bool opened = ImGui::TreeNodeEx("LightSettings", tree_flags, "Light Settings");
-
 	if (opened)
 	{
-
 		static int currentIndex = 0;
 		if (ImGui::BeginCombo("LightTypes", lightTypeNameEnumPairs[static_cast<int>(lightInfo.type) - 1].typeName))
 		{
 			for (int i = 0; i < static_cast<int>(LightType::DIRECTIONAL); i++)
 			{
-
 				static bool isSelected = (currentIndex == i);
 
 				if (ImGui::Selectable(lightTypeNameEnumPairs[i].typeName, isSelected))

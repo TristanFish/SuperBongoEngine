@@ -1267,6 +1267,9 @@
     <ClCompile Include="engine\components\3D\LineRenderer.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\components\Component.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

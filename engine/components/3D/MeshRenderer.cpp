@@ -223,10 +223,8 @@ void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string paren
 
 void MeshRenderer::ImGuiRender()
 {
-	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "MeshRenderer");
 	
-	bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "MeshRenderer");
-
 	if (opened)
 	{
 		ImGui::ColorEdit4("Mesh Color", meshColorTint);

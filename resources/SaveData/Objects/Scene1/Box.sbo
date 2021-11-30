@@ -1,7 +1,7 @@
 <Root>
     <Name Is="Box">
         <Transform>
-            <Position X="-54.048" Y="15.7" Z="0"/>
+            <Position X="-53.194069" Y="15.7" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="0.40000001" Y="5.1999998" Z="22.6"/>
         </Transform>
