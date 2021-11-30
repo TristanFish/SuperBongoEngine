@@ -7,6 +7,7 @@ using namespace MATH;
 /// Return a normalized Vec3
 Vec3 VMath::normalize(const Vec3 &a) {
 	Vec3 result;
+
 	const float magnitude = static_cast<float>(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
 
 	if (magnitude < VERY_SMALL) {

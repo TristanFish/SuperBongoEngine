@@ -30,7 +30,8 @@ void LineRenderer::ImGuiRender()
 
 	if(opened)
 	{
-
+		ImGui::Checkbox("Looped", &looped);
+		ImGui::DragFloat("Line Width", &lineWidth, 0.2f, 0.0f, 10.0f);
 		ImGui::TreePop();
 	}
 }

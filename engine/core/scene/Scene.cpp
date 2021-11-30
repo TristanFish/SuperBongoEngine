@@ -13,7 +13,7 @@
 
 using namespace MATH;
 
-Scene::Scene() : Scene_Name("Scene_" + std::to_string(std::rand())), objectList(std::make_shared<SceneGraph>())
+Scene::Scene() : Scene_Name("Scene_"), objectList(std::make_shared<SceneGraph>())
 {
 	
 }

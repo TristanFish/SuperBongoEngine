@@ -2,6 +2,8 @@
 #include "MMath.h"
 
 #include "core/Logger.h"
+#include "Quaternion.h"
+
 using namespace MATH;
 
 
@@ -70,7 +72,56 @@ Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
 	return m;
 }
 
-Matrix4 MMath::GetFromMat3(const Matrix3& m_)
+Quaternion MMath::ConvertMatToQuat(const Matrix4& mat_)
+{
+	Quaternion q;
+	float s;
+	float x;
+	float y;
+	float z;
+	float w;
+	
+	Matrix3 mat = mat_;
+	float trace = mat[0] + mat[4] + mat[8];
+	if(trace > 0)
+	{
+		s = sqrt(trace + 1.0f) * 2;
+		w = 0.25f * s;
+		x = (mat[7] - mat[5]) / s;
+		y = (mat[2] - mat[6]) / s;
+		z = (mat[3] - mat[1]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else if((mat[0] > mat[4]) & (mat[0] > mat[8]))
+	{
+		s = sqrt(1.0f + mat[0] - mat[4] - mat[8]) * 2;
+		w = (mat[7] - mat[5]) / s;
+		x = 0.25f * s;
+		y = (mat[1] + mat[3]) / s;
+		z = (mat[2] + mat[6]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else if(mat[4] > mat[8])
+	{
+		s = sqrt(1.0f + mat[4] - mat[0] - mat[8]) * 2;
+		w = (mat[2] - mat[6]) / s;
+		x = (mat[1] + mat[3]) / s;
+		y = 0.25f * s;
+		z = (mat[5] + mat[7]) / s;
+		return Quaternion(x, y, z, w);
+	}
+	else
+	{
+		s = sqrt(1.0f + mat[8] - mat[0] - mat[4]) * 2;
+		w = (mat[3] - mat[1]) / s;
+		x = (mat[2] + mat[6]) / s;
+		y = (mat[5] + mat[7]) / s;
+		z = 0.25f * s;
+		return Quaternion(x, y, z, w);
+	}
+}
+
+MATH::Matrix4 MMath::GetFromMat3(const Matrix3& m_)
 {
 	Matrix4 m;
 
@@ -243,30 +294,24 @@ Matrix4 MMath::scale(const Vec3 &scale) {
 	return MMath::scale(scale.x, scale.y, scale.z);
 }
 
-///Tested Feb 1 2013 SSF
-Matrix4 MMath::lookAt(float eyeX, float eyeY, float eyeZ,
-			float atX, float atY, float atZ,
-			float upX, float upY, float upZ)
-{
-	const Vec3 at(atX,atY,atZ);
-	Vec3 up(upX,upY,upZ);
-	const Vec3 eye(eyeX,eyeY,eyeZ);
+Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at, const Vec3& up){
 
 	Matrix4 result;
-
+	Vec3 modifiedUp = up;
+	
 	const Vec3 forward = VMath::normalize(at - eye);
-	up = VMath::normalize(up);
-	const Vec3 side = VMath::normalize( VMath::cross(forward,up));
-	up = VMath::cross(side,forward);
+	modifiedUp = VMath::normalize(modifiedUp);
+	const Vec3 side = VMath::normalize( VMath::cross(forward,modifiedUp));
+	modifiedUp = VMath::cross(side,forward);
 
 	result[0] = side.x;
 	result[1] = side.y;
 	result[2] = side.z;
 	result[3] = 0.0;
 
-	result[4] = up.x;
-	result[5] = up.y;
-	result[6] = up.z;
+	result[4] = modifiedUp.x;
+	result[5] = modifiedUp.y;
+	result[6] = modifiedUp.z;
 	result[7] = 0.0;
 
 	result[8]  = -forward.x;
@@ -275,15 +320,11 @@ Matrix4 MMath::lookAt(float eyeX, float eyeY, float eyeZ,
 	result[11] = 0.0;
 	
 	result[12] = -VMath::dot(side,eye);	
-	result[13] = -VMath::dot(up,eye);
+	result[13] = -VMath::dot(modifiedUp,eye);
 	result[14] =  VMath::dot(forward,eye);
 	result[15] = 1.0;
 
 	return result;
-}
-
-Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at,  const Vec3& up){
-	return lookAt(eye.x, eye.y, eye.z, at.x, at.y, at.z, up.x, up.y, up.z);
 }
 
 /// Take the transpose of a matrix, swap row with columns 

@@ -36,9 +36,6 @@ bool Game1::OnCreate()
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
 
-
-		
-
 		return (create && postCreate);
 	}
 	EngineLogger::Error("Engine's scene is not initialized to 0", "Game1.cpp", __LINE__);

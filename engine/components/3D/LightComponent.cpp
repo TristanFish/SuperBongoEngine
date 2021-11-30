@@ -88,7 +88,7 @@ void LightComponent::ImGuiRender()
 	}
 }
 
-void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& position, const Vec3& direct, const std::string& shaderString)
+void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& position, const Vec3& direct, const std::string& shaderString) const
 {
 	std::string arrayIndex = shaderString;
 	std::string lightType = arrayIndex + "lightType";

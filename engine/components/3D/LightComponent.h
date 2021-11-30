@@ -28,7 +28,7 @@ struct LightData
 
 	LightData() = default;
 
-	void SendLightDataToShader(const ShaderProgram& shader, const MATH::Vec3& pos, const MATH::Vec3& direct, const std::string& shaderString);
+	void SendLightDataToShader(const ShaderProgram& shader, const MATH::Vec3& pos, const MATH::Vec3& direct, const std::string& shaderString) const;
 
 };
 

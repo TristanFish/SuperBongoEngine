@@ -284,6 +284,7 @@ void Renderer::ClearComponents()
 {
 	meshRenderers.clear();
 	lights.clear();
+	lineRenderers.clear();
 }
 
 SkyBox* Renderer::GetSkyBox()
