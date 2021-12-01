@@ -1,8 +1,9 @@
 #include "CollisionDetection.h"
 
-#include "BoundingBox.h"
-#include "Ray.h"
+#include "core/3D/Physics/BoundingBox.h"
 #include "core/CoreEngine.h"
+#include "core/Globals.h"
+#include "Ray.h"
 
 
 using namespace  MATH;
@@ -14,9 +15,9 @@ CollisionDetection::~CollisionDetection() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Ray Collisions
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-Ray CollisionDetection::MousePosToWorldRay(Vec2 mouseCoords_, float screenWidth_, float screenHeight_, Camera* camera_) {
-	Vec4 rayStartNDC((mouseCoords_.x / screenWidth_ - 0.5f) * 2.0f, (mouseCoords_.y / screenHeight_ - 0.5f) * 2.0f, -1.0f, 1.0f);
-	Vec4 rayEndNDC((mouseCoords_.x / screenWidth_ - 0.5f) * 2.0f, (mouseCoords_.y / screenHeight_ - 0.5f) * 2.0f, 0.0f, 1.0f);
+Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* camera_) {
+	Vec4 rayStartNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, -1.0f, 1.0f);
+	Vec4 rayEndNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, 0.0f, 1.0f);
 
 	Matrix4 inverse = MMath::inverse(camera_->getProjectionMatrix() * camera_->getViewMatrix());
 
@@ -32,12 +33,13 @@ Ray CollisionDetection::MousePosToWorldRay(Vec2 mouseCoords_, float screenWidth_
 	return Ray(Vec3(rayStartWorld), rayDirWorld);
 }
 
-bool CollisionDetection::RayObbIntersection(Ray* ray_, BoundingBox* box_) {
-	Matrix4 modelMatrixrix = box_->transform;
+bool CollisionDetection::RayOBBIntersection(Ray* ray_, BoundingBox* box_) {
+
+	Matrix4 modelMatrixrix = box_->GetTransform();
 	Vec3 rayOrigin = ray_->origin;
 	Vec3 rayDirection = ray_->direction;
-	Vec3 boxMin = box_->minVert;
-	Vec3 boxMax = box_->maxVert;
+	Vec3 boxMin = box_->GetMinVertex();
+	Vec3 boxMax = box_->GetMaxVertex();
 
 	float tMin = Camera::getInstance()->getNearPlane();
 	float tMax = Camera::getInstance()->getFarPlane();
@@ -134,6 +136,27 @@ bool CollisionDetection::RayObbIntersection(Ray* ray_, BoundingBox* box_) {
 
 	ray_->distance = tMin;
 	return true;
+}
+
+bool CollisionDetection::OBBIntersection(BoundingBox& Box1, BoundingBox& Box2)
+{
+	Vec3 minCorner = Box1.GetMinTransformedPoint();
+	Vec3 maxCorner = Box1.GetMaxTransformedPoint();
+
+	Vec3 otherMinCorner = Box2.GetMinTransformedPoint();
+	Vec3 otherMaxCorner = Box2.GetMaxTransformedPoint();
+
+
+	if ((minCorner.x <= otherMaxCorner.x && maxCorner.x >= otherMinCorner.x) &&
+		(minCorner.y <= otherMaxCorner.y && maxCorner.y >= otherMinCorner.y) &&
+		(minCorner.z <= otherMaxCorner.z && maxCorner.z >= otherMinCorner.z)) {
+
+		Box1.OnCollisionEnter(Box2);
+		Box2.OnCollisionEnter(Box1);
+		return true;
+	}
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

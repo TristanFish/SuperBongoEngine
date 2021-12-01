@@ -479,7 +479,7 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), mode(RenderMode::Result), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), isMouseHovered(false), isActive(true)
 {
 	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
@@ -516,11 +516,11 @@ void Viewport::Render()
 				{
 					const RenderMode loopMode = static_cast<RenderMode>(index);
 
-					const bool is_selected = (mode == loopMode);
+					const bool is_selected = (renderMode == loopMode);
 					if (ImGui::Selectable(Mode, is_selected))
 					{
 						ImGui::CloseCurrentPopup();
-						mode = loopMode;
+						renderMode = loopMode;
 						modeName = "[" + std::string(Mode) + "]";
 					}
 					index++;

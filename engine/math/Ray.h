@@ -2,7 +2,7 @@
 #define RAY_H
 #include "VMath.h"
 #include "Vector.h"
-#include "core/3D/New3D/CollisionDetection.h"
+#include "core/resources/CollisionDetection.h"
 #include <vector>
 
 
@@ -34,7 +34,7 @@ public:
 
 	inline bool isColliding(BoundingBox* box_) {
 		distance = -1.0f;
-		return CollisionDetection::RayObbIntersection(this, box_);
+		return CollisionDetection::RayOBBIntersection(this, box_);
 	}
 	
 	std::string ToString() const;

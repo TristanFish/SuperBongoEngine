@@ -5,8 +5,11 @@
 #include "core/Globals.h"
 #include "core/Logger.h"
 #include "core/MouseRay.h"
-#include "core/3D/Physics3D.h"
+#include "core/CoreEngine.h"
+#include "core/3D/OctSpatialPartition.h"
+#include "core/resources/CollisionDetection.h"
 #include "core/resources/SaveManager.h"
+
 #include "gameObjects/TestModel.h"
 #include "graphics/UIStatics.h"
 #include "Utility/LoadUtility.h"
@@ -66,6 +69,9 @@ void Scene::OnMouseMove(MATH::Vec2 mouse)
 
 void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 {
+	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
+		return;
+
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
 		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
@@ -73,24 +79,11 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 
 		mouseRay.CalculateMouseRay();
 
-		//GameObject* hitResult = objectList->osp.GetCollision(mouseRay);
 		GameObject* hitResult = nullptr;
 		float shortestDistance = FLT_MAX;
-		for (auto* obj : objectList->GetGameObjects())
-		{
-			if (obj->HasComponent<MeshRenderer>())
-			{
-				MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
-				if (Physics3D::RayOBBDetect(mouseRay, mr->OBB))//(CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
-				{
-					if (mouseRay.intersectionDist < shortestDistance)
-					{
-						hitResult = obj;
-						shortestDistance = mouseRay.intersectionDist;
-					}
-				}
-			}
-		}
+
+		hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
+
 
 		if (hitResult)
 		{
@@ -123,37 +116,6 @@ void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scal
 	}
 
 	EngineLogger::Warning(objType + " Could not be instantiated", "Scene.cpp", __LINE__);
-}
-
-bool Scene::CheckIntersection(const MouseRay& ray, const Vec3& origin, GameObject* obj) const
-{
-	Vec3 bounds[2];
-	bounds[0] = obj->GetComponent<MeshRenderer>()->GetMinVector();
-
-
-	bounds[1] = obj->GetComponent<MeshRenderer>()->GetMaxVector();
-
-
-	const float tx1 = ((bounds[0].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
-	const float tx2 = ((bounds[1].x - origin.x) + obj->transform.pos.x) * ray.invDir.x;
-
-	float tmin = std::min(tx1, tx2);
-	float tmax = std::max(tx1, tx2);
-
-	const float ty1 = ((bounds[0].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
-	const float ty2 = ((bounds[1].y - origin.y) + obj->transform.pos.y) * ray.invDir.y;
-
-	tmin = std::max(tmin, std::min(ty1, ty2));
-	tmax = std::min(tmax, std::max(ty1, ty2));
-
-	const float tz1 = ((bounds[0].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
-	const float tz2 = ((bounds[1].z - origin.z) + obj->transform.pos.z) * ray.invDir.z;
-
-	tmin = std::max(tmin, std::min(tz1, tz2));
-	tmax = std::min(tmax, std::max(tz1, tz2));
-
-
-	return tmax >= tmin;
 }
 
 void Scene::SaveMapData() const

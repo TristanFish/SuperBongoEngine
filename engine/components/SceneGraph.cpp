@@ -1,12 +1,15 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
+
 #include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+#include "core/3D/OctSpatialPartition.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
+#include "core/resources/CollisionDetection.h"
+#include "core/resources/SaveManager.h"
+
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
-#include "core/resources/SaveManager.h"
 
 #include "graphics/UIStatics.h"
 
@@ -28,6 +31,9 @@ SceneGraph::~SceneGraph()
 		nameObjectPair.second = nullptr;
 	}
 
+	delete ScenePartition;
+	ScenePartition = nullptr;
+
 	InstantiableObjects.clear();
 	
 	gameObjects.clear();
@@ -37,7 +43,7 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	//osp = OctSpatialPartition(500);
+	ScenePartition = new OctSpatialPartition(500);
 
 	
 	
@@ -137,7 +143,6 @@ void SceneGraph::AddRenderingComponents()
 		{
 			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
 			Renderer::GetInstance()->AddMeshRenderer(mr);
-			//osp.AddObject(mr);
 		}
 		if (go->HasComponent<LightComponent>())
 		{
@@ -173,7 +178,11 @@ void SceneGraph::LoadGameObject(GameObject* go)
 	{
 		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
 	}
-
+	if (go->HasComponent<RigidBody3D>())
+	{
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		ScenePartition->AddObject(rb->GetCollider());
+	}
 	
 
 	for (GameObject* child : go->children)
@@ -245,7 +254,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}
 	}
 }

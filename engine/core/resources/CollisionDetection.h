@@ -4,7 +4,7 @@
 #include "rendering/Camera.h"
 
 struct Ray;
-struct BoundingBox;
+class BoundingBox;
 
 class CollisionDetection {
 public:
@@ -17,10 +17,11 @@ public:
 	~CollisionDetection();
 
 	//Ray Collisions
-	static Ray MousePosToWorldRay(MATH::Vec2 mouseCoords_, float screenWidth_, float screenHeight_, Camera* camera_);
-	static bool RayObbIntersection(Ray* ray_, BoundingBox* box_);
+	static Ray MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* camera_);
+	static bool RayOBBIntersection(Ray* ray_, BoundingBox* box_);
 
-	//
+	static bool OBBIntersection(BoundingBox& Box1, BoundingBox& Box2);
+	
 };
 
 #endif

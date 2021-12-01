@@ -12,7 +12,7 @@ void AudioSourceComponent::Init(GameObject* g)
 	audioSystemRef = nullptr;
 
 	gameObject = g;
-	gameObjectPosition = g->transform.pos;
+	gameObjectPosition = g->transform.GetPosition();
 
 	audioSystemRef = AudioManager::Get()->system;
 	FMODGamePos =  AudioUtility::Vec3ToFMODVec(gameObjectPosition);

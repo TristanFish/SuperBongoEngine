@@ -33,9 +33,9 @@
     <ClInclude Include="engine\core\resources\AIDirector.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
+    <ClInclude Include="engine\core\3D\Physics\BoundingBox.h" />
+    <ClInclude Include="engine\core\resources\CollisionDetection.h" />
+    <ClInclude Include="engine\core\resources\CollisionHandler.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
@@ -166,7 +166,7 @@
     <ClInclude Include="game\gameObjects\Grass.h" />
     <ClInclude Include="engine\core\resources\ModelManager.h" />
     <ClInclude Include="engine\components\3D\LightComponent.h" />
-    <ClInclude Include="engine\components\3D\Collider3D.h" />
+    <ClInclude Include="engine\core\3D\Physics\Collider3D.h" />
     <ClInclude Include="engine\core\Globals.h" />
     <ClInclude Include="game\gameObjects\LightObject.h" />
     <ClInclude Include="engine\core\MouseRay.h" />
@@ -176,7 +176,7 @@
     <ClInclude Include="engine\rendering\Renderer.h" />
     <ClInclude Include="engine\components\3D\MeshRenderer.h" />
     <ClInclude Include="engine\components\3D\RigidBody3D.h" />
-    <ClInclude Include="engine\core\3D\Physics3D.h" />
+    <ClInclude Include="engine\core\3D\Physics\Physics3D.h" />
     <ClInclude Include="engine\rendering\Camera.h" />
     <ClInclude Include="game\gameObjects\Player.h" />
     <ClInclude Include="engine\components\2D\Collider.h" />
@@ -302,6 +302,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.cpp" />
@@ -314,8 +315,8 @@
     <ClCompile Include="engine\core\resources\AIDirector.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
+    <ClCompile Include="engine\core\resources\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\resources\CollisionHandler.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
@@ -365,7 +366,7 @@
     <ClCompile Include="engine\rendering\Renderer.cpp" />
     <ClCompile Include="engine\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="engine\components\3D\RigidBody3D.cpp" />
-    <ClCompile Include="engine\core\3D\Physics3D.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\Physics3D.cpp" />
     <ClCompile Include="engine\rendering\Camera.cpp" />
     <ClCompile Include="engine\core\2D\Physics2D.cpp" />
     <ClCompile Include="game\gameObjects\Player.cpp" />

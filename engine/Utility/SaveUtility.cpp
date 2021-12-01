@@ -10,6 +10,122 @@ std::unique_ptr<SaveUtility> SaveUtility::utilityInstance = std::unique_ptr<Save
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
+
+SaveUtility::SaveUtility()
+{
+
+}
+
+SaveUtility::~SaveUtility()
+{
+
+}
+
+SaveUtility* SaveUtility::GetInstance()
+{
+	if (utilityInstance == nullptr)
+	{
+		utilityInstance.reset(new SaveUtility);
+	}
+	return utilityInstance.get();
+}
+
+#pragma region Core Functions
+
+void SaveUtility::CompileSaves()
+{
+
+	EngineLogger::Info("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	for (auto& save : SaveManager::SaveQueue)
+	{
+		if (!save.second.HasBeenEdited)
+			continue;
+
+		for (auto& elmName : save.second.insertionOrder)
+		{
+			ElementInfo& elm = save.second.Elements[elmName];
+			if (elm.IsRootChild())
+			{
+				elm.element = save.second.Doc.NewElement(elmName.c_str());
+				save.second.rootNode->InsertFirstChild(elm.element);
+
+				HandleAttributes(save.second, elm);
+
+			}
+
+			else if (elmName != "Root")
+			{
+				elm.element = save.second.Doc.NewElement(elmName.c_str());
+
+				HandleAttributes(save.second, elm);
+
+				save.second.FindElement(elm.parentName).element->InsertEndChild(elm.element);
+			}
+		}
+
+		for (auto& elm : save.second.Elements)
+		{
+			if (elm.second.IsRootChild())
+			{
+				save.second.FindElement(elm.second.parentName).element->InsertEndChild(elm.second.element);
+			}
+		}
+		save.second.Save();
+
+		EngineLogger::Info(save.first + " Compiled Successfully", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	}
+
+	EngineLogger::Info("===========SAVES FINISHED COMPILING===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+
+
+	SaveManager::SaveAll();
+}
+
+void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
+{
+	CreateSave(saveName, FileType::OBJECT);
+
+
+
+	ElementInfo Name = ElementInfo("Root");
+	Name.Attributes.emplace("Is", std::string(obj->name));
+	AddElement(saveName, "Name", Name);
+
+
+
+	ElementInfo Transform = ElementInfo("Name");
+	AddElement(saveName, "Transform", Transform);
+
+
+
+	AddElement(saveName, "Position", CreateVec3(obj->transform.GetPosition(), "Transform"));
+	AddElement(saveName, "Rotation", CreateVec3(obj->transform.GetRotation(), "Transform"));
+	AddElement(saveName, "Scale", CreateVec3(obj->transform.GetScale(), "Transform"));
+
+
+	ElementInfo ObjectInfo = ElementInfo("Name");
+	AddElement(saveName, "ObjectInfo", ObjectInfo);
+
+
+	ElementInfo ObjectType = ElementInfo("ObjectInfo");
+	ObjectType.Attributes.emplace("ID", std::string(obj->GetType()));
+	AddElement(saveName, "Type", ObjectType);
+
+	ElementInfo Components = ElementInfo("Name");
+	AddElement(saveName, "Components", Components);
+
+	for (auto comp : obj->GetComponents())
+	{
+		comp->OnSaveComponent(saveName, "Components");
+	}
+
+
+}
+
+#pragma endregion 
+
+#pragma region Helper Functions
+
 void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 {
 	for (auto& atrib : elm.Attributes)
@@ -33,24 +149,31 @@ void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 	}
 }
 
-SaveUtility::SaveUtility()
+
+ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& parentName)
 {
 
-}
-
-SaveUtility::~SaveUtility()
-{
-
-}
-
-SaveUtility* SaveUtility::GetInstance()
-{
-	if (utilityInstance == nullptr)
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 3; i++)
 	{
-		utilityInstance.reset(new SaveUtility);
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
 	}
-	return utilityInstance.get();
+
+	return element;
 }
+
+ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& parentName)
+{
+	ElementInfo element = ElementInfo(parentName);
+	for (int i = 0; i < 4; i++)
+	{
+		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
+	}
+
+	return element;
+}
+
+#pragma endregion
 
 
 void SaveUtility::CreateSave(const std::string& saveName, FileType type)
@@ -67,19 +190,31 @@ void SaveUtility::CreateSave(const std::string& saveName, FileType type)
 
 }
 
-void SaveUtility::CreateSave(const std::string& saveName, const std::map<std::string, ElementInfo>& elements)
+void SaveUtility::CreateSave(const std::string& saveName, const std::map<std::string, ElementInfo>& elements, FileType type)
 {
-	SaveFile tempFile = SaveFile(saveName);
-
-	tempFile.Elements = elements;
-
-	SaveManager::AddToSaveQueue(saveName, tempFile);
+	if (SaveManager::SaveFiles.find(saveName) != SaveManager::SaveFiles.end())
+	{
+		EngineLogger::Warning(saveName + " Already Exists", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	}
+	else
+	{
+		SaveFile tempFile = SaveFile(saveName,type);
+		tempFile.Elements = elements;
+		SaveManager::AddToSaveQueue(saveName, tempFile);
+	}
+	
 }
 
 void SaveUtility::CreateSave(const std::string& saveName, const SaveFile& save)
 {
-	SaveManager::AddToSaveQueue(saveName, save);
-
+	if (SaveManager::SaveFiles.find(saveName) != SaveManager::SaveFiles.end())
+	{
+		EngineLogger::Warning(saveName + " Already Exists", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	}
+	else
+	{
+		SaveManager::AddToSaveQueue(saveName, save);
+	}
 }
 
 void SaveUtility::DeleteSave(const std::string& saveName)
@@ -191,9 +326,6 @@ void SaveUtility::AddElement(const std::string& saveName, const std::string& elm
 		}
 	}
 	else {
-
-
-
 		EngineLogger::Warning(saveName + " Was Not Located When Trying To Add An Element", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
 }
@@ -241,8 +373,6 @@ void SaveUtility::AddElement(const std::string& saveName, const std::string& elm
 	}
 }
 
-
-
 void SaveUtility::RemoveElement(const std::string& saveName, const std::string& elmName)
 {
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveManager::SaveFiles.find(saveName);
@@ -284,115 +414,5 @@ void SaveUtility::RemoveAllElements(const std::string& saveName)
 	}
 }
 
-ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& parentName)
-{
-
-	ElementInfo element = ElementInfo(parentName);
-	for (int i = 0; i < 3; i++)
-	{
-		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
-	}
-
-	return element;
-}
-
-ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& parentName)
-{
-	ElementInfo element = ElementInfo(parentName);
-	for (int i = 0; i < 4; i++)
-	{
-		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
-	}
-
-	return element;
-}
-
-void SaveUtility::CompileSaves()
-{
-
-	EngineLogger::Info("===========SAVES BEING COMPILED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
-	for (auto& save : SaveManager::SaveQueue)
-	{
-		if(!save.second.HasBeenEdited)
-			continue;
-
-		for (auto& elmName : save.second.insertionOrder)
-		{
-			ElementInfo &elm = save.second.Elements[elmName];
-			if (elm.IsRootChild())
-			{
-				elm.element = save.second.Doc.NewElement(elmName.c_str());
-				save.second.rootNode->InsertFirstChild(elm.element);
-
-				HandleAttributes(save.second, elm);
-				
-			}
-
-			else if (elmName != "Root")
-			{
-				elm.element = save.second.Doc.NewElement(elmName.c_str());
-
-				HandleAttributes(save.second, elm);
-
-				save.second.FindElement(elm.parentName).element->InsertEndChild(elm.element);
-			}
-		}
-
-		for (auto& elm : save.second.Elements)
-		{
-			if (elm.second.IsRootChild())
-			{
-				save.second.FindElement(elm.second.parentName).element->InsertEndChild(elm.second.element);
-			}
-		}
-		save.second.Save();
-
-		EngineLogger::Info(save.first + " Compiled Successfully", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
-	}
-
-	EngineLogger::Info("===========SAVES FINISHED COMPILING===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 
-	SaveManager::SaveAll();
-}
-
-void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
-{
-	CreateSave(saveName, FileType::OBJECT);
-
-	
-
-	ElementInfo Name = ElementInfo("Root");
-	Name.Attributes.emplace("Is", std::string(obj->name));
-	AddElement(saveName, "Name", Name);
-
-
-
-	ElementInfo Transform = ElementInfo("Name");
-	AddElement(saveName, "Transform", Transform);
-
-
-
-	AddElement(saveName, "Position", CreateVec3(obj->transform.pos,"Transform"));
-	AddElement(saveName, "Rotation", CreateVec3(MATH::Quaternion::QuatToEuler(obj->transform.rotation), "Transform"));
-	AddElement(saveName, "Scale", CreateVec3(obj->transform.scale, "Transform"));
-
-
-	ElementInfo ObjectInfo = ElementInfo("Name");
-	AddElement(saveName, "ObjectInfo", ObjectInfo);
-
-
-	ElementInfo ObjectType = ElementInfo("ObjectInfo");
-	ObjectType.Attributes.emplace("ID", std::string(obj->GetType()));
-	AddElement(saveName, "Type", ObjectType);
-
-	ElementInfo Components = ElementInfo("Name");
-	AddElement(saveName, "Components", Components);
-
-	for (auto comp : obj->GetComponents())
-	{
-		comp->OnSaveComponent(saveName,"Components");
-	}
-
-
-}

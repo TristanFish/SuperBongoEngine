@@ -21,7 +21,7 @@ void Instancer::Init(const unsigned int& amount_, GameObject* g)
 
 
 
-void Instancer::CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount)
+void Instancer::CalculateModelMatrices(Transform& transform, const unsigned int instanceAmount)
 {
 	modelMatrices.reserve(instanceAmount);
 	const float radius = 1.0;
@@ -38,9 +38,9 @@ void Instancer::CalculateModelMatrices(const Transform& transform, const unsigne
 		displacement = (rand() % static_cast<int>(2 * offset * 100)) / 100.0f - offset;
 		const float z = cos(angle) * radius + displacement;
 
-		NextPos = transform.pos + Vec3(x, 0.0f, z);
+		NextPos = transform.GetPosition() + Vec3(x, 0.0f, z);
 		
-		model = MMath::translate(NextPos) * transform.GetRotationMatrix() * MMath::scale(transform.scale);
+		model = MMath::translate(NextPos) * transform.GetRotationMatrix() * MMath::scale(transform.GetScale());
 		modelMatrices.emplace_back(model);
 	}
 }

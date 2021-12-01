@@ -46,7 +46,7 @@ Vec3 MouseRay::GetWorldCoords(Vec4 eyeCoords)
 
 void MouseRay::CalculateMouseRay()
 {
-	ray.origin = Camera::getInstance()->getPosition();
+	origin = Camera::getInstance()->getPosition();
 
 	const Vec2 mousePos = localMousePos;
 
@@ -57,7 +57,7 @@ void MouseRay::CalculateMouseRay()
 
 	const Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
-	ray.direction = worldRay;
+	direction = worldRay;
 
-	invDir = Vec3(1.0f / ray.direction.x, 1.0f / ray.direction.y, 1.0f / ray.direction.z);
+	invDir = Vec3(1.0f / direction.x, 1.0f / direction.y, 1.0f / direction.z);
 }

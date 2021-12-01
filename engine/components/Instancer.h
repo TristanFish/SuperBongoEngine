@@ -33,7 +33,7 @@ public:
 	/*! This function does all the positional calculations for the instances. 
 	- Takes in a object transform that allows us to get the objects model matrix 
 	- Also takes in a unsigned int instancedAmount for how many instances we want*/
-	virtual void CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount);
+	virtual void CalculateModelMatrices( Transform& transform, const unsigned int instanceAmount);
 private:
 
 	GLuint instanceBuffer;

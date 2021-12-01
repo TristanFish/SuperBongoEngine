@@ -462,7 +462,7 @@
     <ClInclude Include="engine\components\2D\Collider.h">
       <Filter>src\engine\components\2D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\3D\Collider3D.h">
+    <ClInclude Include="engine\core\3D\Physics\Collider3D.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
     <ClInclude Include="external\include\assimp\color4.h">
@@ -663,7 +663,7 @@
     <ClInclude Include="engine\core\2D\Physics2D.h">
       <Filter>src\engine\core\2D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\Physics3D.h">
+    <ClInclude Include="engine\core\3D\Physics\Physics3D.h">
       <Filter>src\engine\core\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Ray.h">
@@ -938,13 +938,13 @@
     <ClInclude Include="engine\Primitives\Tetrahedron.h">
       <Filter>src\engine\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h">
+    <ClInclude Include="engine\core\resources\CollisionHandler.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h">
+    <ClInclude Include="engine\core\3D\Physics\BoundingBox.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
+    <ClInclude Include="engine\core\resources\CollisionDetection.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
     <ClInclude Include="game\gameObjects\AiGameObject.h">
@@ -1117,7 +1117,7 @@
     <ClCompile Include="engine\core\2D\Physics2D.cpp">
       <Filter>src\engine\core\2D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\Physics3D.cpp">
+    <ClCompile Include="engine\core\3D\Physics\Physics3D.cpp">
       <Filter>src\engine\core\3D</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\Ray.cpp">
@@ -1257,10 +1257,10 @@
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp">
       <Filter>src\engine\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp">
+    <ClCompile Include="engine\core\resources\CollisionDetection.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp">
+    <ClCompile Include="engine\core\resources\CollisionHandler.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\networking\NetworkManager.cpp">
@@ -1295,6 +1295,7 @@
     </ClCompile>
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

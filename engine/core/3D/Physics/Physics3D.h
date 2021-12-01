@@ -26,7 +26,7 @@ private:
 	
 public:
 	static bool DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2);
-	static bool RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb);
+	//static bool RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb);
 
 };
 #endif

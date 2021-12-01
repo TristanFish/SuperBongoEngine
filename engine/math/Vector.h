@@ -186,6 +186,14 @@ namespace MATH {
 			return *this; 
 		}
 
+		/// Multiply a Vec3 by a scalar and assign it to itself
+		inline Vec3& operator *= (const Vec3& v) {
+			x *= v.x;
+			y *= v.y;
+			z *= v.z;
+			return *this;
+		}
+
 		/// Divide by a scalar - Watch for divide by zero issues
 		inline const Vec3 operator / ( const float s ) const {
 	#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 

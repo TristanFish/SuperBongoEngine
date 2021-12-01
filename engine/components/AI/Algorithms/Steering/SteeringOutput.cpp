@@ -39,10 +39,10 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 		EngineLogger::Error(aiObject_->GetName() + " does not have a Transform. steeringFace has failed",
 			"SteeringOutput.cpp", __LINE__);
 
-		return aiObject_->transform.rotation;
+		return aiObject_->transform.GetRotationQuat();
 	}
 
-	const Matrix4 lookAt = MMath::lookAt(aiObject_->transform.pos, aiObject_->transform.pos + direction_, aiObject_->transform.Up());
+	const Matrix4 lookAt = MMath::lookAt(aiObject_->transform.GetPosition(), aiObject_->transform.GetPosition() + direction_, aiObject_->transform.Up());
 
 	//The line below also works (rotation from the origin) but is less mathematically clear imo
 	//const Matrix4 lookAt = MMath::lookAt(Vec3(), direction_, aiObject_->transform.Up());
@@ -51,7 +51,7 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 	
 	Vec3 direction = VMath::normalize(direction_);
 	
-	Quaternion aiRotation = aiObject_->transform.rotation;
+	Quaternion aiRotation = aiObject_->transform.GetRotationQuat();
 
 	Vec3 zAxis = Vec3(0.0f, 0.0f, 1.0f);
 	

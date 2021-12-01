@@ -132,11 +132,7 @@ void CoreEngine::Run()
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
 
-		AIDirector::GetInstance()->GenerateGraphFromMap();
-
-		Node* Target_Node = AIDirector::GetInstance()->GetRecentlyGenerated()->GetNode(7);
-		AIDirector::GetInstance()->FindPath(Target_Node);
-
+	
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
 		const auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeAfterUpdate - timeBeforeUpdate);
 

@@ -1,21 +1,25 @@
 #include "OctSpatialPartition.h"
 
 #include "core/MouseRay.h"
-#include "core/3D/Physics3D.h"
-#include "components/ECS.h"
 #include "core/Logger.h"
+
+#include "components/ECS.h"
+
+#include "Physics/BoundingBox.h"
 
 int OctNode::childNum = 0;
 
 using namespace MATH;
 
-OctNode::OctNode(Vec3 position, float size, OctNode* parent) 
+OctNode::OctNode(Vec3 position, float size_, OctNode* parent) 
 {
-	this->size = size;
+	size = size_;
 
-	octBounds = new OrientedBoundingBox();
-	octBounds->minVert = position;
-	octBounds->maxVert = position + Vec3(size);
+	Matrix4 newMatrix = Matrix4();
+
+	octBounds = new BoundingBox(position + Vec3(size), position, newMatrix);
+
+
 
 	this->parent = parent;
 
@@ -53,29 +57,32 @@ void OctNode::Octify(int depth)
 	if(depth > 0 && this)
 	{
 		float half = size / 2.0f;
+
+		Vec3 minVert = octBounds->GetMinVertex();
+
 		children[static_cast<int>(OctChildren::OCT_TLF)] = 
-			new OctNode(Vec3(octBounds->minVert.x, octBounds->minVert.y + half, octBounds->minVert.z + half), half, this);
+			new OctNode(Vec3(minVert.x, minVert.y + half, minVert.z + half), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_BLF)] = 
-			new OctNode(Vec3(octBounds->minVert.x, octBounds->minVert.y, octBounds->minVert.z + half), half, this);
+			new OctNode(Vec3(minVert.x, minVert.y, minVert.z + half), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_TRF)] = 
-			new OctNode(Vec3(octBounds->minVert.x + half, octBounds->minVert.y + half, octBounds->minVert.z + half), half, this);
+			new OctNode(Vec3(minVert.x + half, minVert.y + half, minVert.z + half), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_BRF)] = 
-			new OctNode(Vec3(octBounds->minVert.x + half, octBounds->minVert.y, octBounds->minVert.z + half), half, this);
+			new OctNode(Vec3(minVert.x + half, minVert.y, minVert.z + half), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_TLR)] = 
-			new OctNode(Vec3(octBounds->minVert.x, octBounds->minVert.y + half, octBounds->minVert.z), half, this);
+			new OctNode(Vec3(minVert.x, minVert.y + half, minVert.z), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_BLR)] = 
-			new OctNode(Vec3(octBounds->minVert.x, octBounds->minVert.y, octBounds->minVert.z), half, this);
+			new OctNode(Vec3(minVert.x, minVert.y, minVert.z), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_TRR)] = 
-			new OctNode(Vec3(octBounds->minVert.x + half, octBounds->minVert.y + half, octBounds->minVert.z), half, this);
+			new OctNode(Vec3(minVert.x + half, minVert.y + half, minVert.z), half, this);
 
 		children[static_cast<int>(OctChildren::OCT_BRR)] = 
-			new OctNode(Vec3(octBounds->minVert.x + half, octBounds->minVert.y, octBounds->minVert.z), half, this);
+			new OctNode(Vec3(minVert.x + half, minVert.y, minVert.z), half, this);
 
 		
 		
@@ -101,7 +108,7 @@ OctNode* OctNode::GetChild(OctChildren childPos)
 	return children[static_cast<int>(childPos)];
 }
 
-void OctNode::AddCollisionObject(MeshRenderer* rb)
+void OctNode::AddCollisionObject(Collider3D* rb)
 {
 	objectList.push_back(rb);
 }
@@ -113,7 +120,12 @@ int OctNode::GetObjectCount() const
 
 bool OctNode::IsLeaf() const
 {
-	return children[0];
+	if(children[0] == nullptr)
+	{
+		return true;
+	}
+	
+	return false;
 }
 
 int OctNode::GetChildCount() const
@@ -125,12 +137,13 @@ int OctNode::GetChildCount() const
 	return CHILDREN_NUMBER;
 }
 
-OrientedBoundingBox* OctNode::GetBoundingBox() const
+
+BoundingBox* OctNode::GetBoundingBox() const
 {
 	return octBounds;
 }
 
-OctSpatialPartition::OctSpatialPartition()
+OctSpatialPartition::OctSpatialPartition() : root(nullptr)
 {
 	
 }
@@ -161,9 +174,9 @@ OctSpatialPartition::~OctSpatialPartition()
 	root = nullptr;
 }
 
-void OctSpatialPartition::AddObject(MeshRenderer* rb)
+void OctSpatialPartition::AddObject(Collider3D* collider)
 {
-	AddObjectToCell(root, rb);
+	AddObjectToCell(root, collider);
 }
 
 GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
@@ -186,12 +199,13 @@ GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
 		for(auto obj : cell->objectList)
 		{
 			
-			if (Physics3D::RayOBBDetect(ray, obj->OBB))//(CheckIntersection(mouseRay, mouseRay.GetCurrentRay().Origin, obj))
+			if (ray.isColliding(dynamic_cast<BoundingBox*>(obj)))
 			{
 				if(ray.intersectionDist < shortestDistance)
 				{
-					hitResult = obj->gameObject;
+					hitResult = obj->GetRBAttached()->gameObject;
 					shortestDistance = ray.intersectionDist;
+					break;
 				}
 			}
 		}
@@ -203,16 +217,23 @@ GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
 	return nullptr;
 }
 
-void OctSpatialPartition::AddObjectToCell(OctNode* cell, MeshRenderer* rb)
+void OctSpatialPartition::AddObjectToCell(OctNode* cell, Collider3D* collider)
 {
+
+
 	if(cell->IsLeaf())
 	{
-		
+		if (CollisionDetection::OBBIntersection(dynamic_cast<BoundingBox&>(*collider), *cell->octBounds))
+		{
+			cell->AddCollisionObject(collider);
+		}
 	}
-
-	for(OctNode* child : cell->children)
+	else
 	{
-		AddObjectToCell(child, rb);
+		for (OctNode* child : cell->children)
+		{
+			AddObjectToCell(child, collider);
+		}
 	}
 }
 
@@ -222,17 +243,18 @@ void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, MouseRay& ray)
 	//if this node is a leaf go up one step
 	if(cell->IsLeaf())
 	{
-		if (Physics3D::RayOBBDetect(ray, *cell->octBounds))
+		if (ray.isColliding(cell->octBounds))
 		{
 			rayInstersectionList.push_back(cell);
 		}
 	}
-
-	//for each child node in the current node check collsions with the ray
-	for (OctNode* child : cell->children)
+	else
 	{
-		PrepareCollisionQuery(child, ray);
+		//for each child node in the current node check collisions with the ray
+		for (OctNode* child : cell->children)
+		{
+			PrepareCollisionQuery(child, ray);
+		}
 	}
 }
-
 
