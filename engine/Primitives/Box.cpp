@@ -25,5 +25,6 @@ Box::~Box()
 
 void Box::OnCollisionEnter(Collider3D& otherBody)
 {
-	//std::cout << this->name << " Collided With: " << otherBody.gameObject->name << std::endl;
+	//EngineLogger::Info(this->name + " Collided With " + otherBody.GetRBAttached()->gameObject->name  , "Box.cpp", __LINE__, MessageTag::TYPE_NONE);
+
 }

@@ -32,7 +32,7 @@
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 134
 [INFO]: Scene: Scene_41 Created in: Scene1.cpp on line: 31
-[INFO]: ChildNodes: 8 in: OctSpatialPartition.cpp on line: 156
+[INFO]: ChildNodes: 8 in: OctSpatialPartition.cpp on line: 154
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 139
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -49,14 +49,3 @@
 [INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 159
 [INFO]: Player added to scenegraph in: ECS.cpp on line: 159
 [INFO]: test added to scenegraph in: ECS.cpp on line: 159
-[INFO]: Mouse hit test in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit test in: Scene.cpp on line: 90
-[INFO]: Mouse hit Box in: Scene.cpp on line: 90
-[INFO]: Mouse hit test in: Scene.cpp on line: 90

@@ -81,7 +81,7 @@ public:
 	//Getters and setters
 #pragma region getters/setters
 
-	inline Collider3D* GetCollider() { return collider; }
+	 Collider3D* GetCollider(); 
 
 	inline MATH::Vec3 GetPosition() const { return *pos; }
 	inline void SetPosition(const MATH::Vec3& p) const { *pos = p; }

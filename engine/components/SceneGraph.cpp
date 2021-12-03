@@ -166,7 +166,9 @@ void SceneGraph::LoadGameObject(GameObject* go)
 
 	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		rigidBodies.emplace_back(rb);
+		ScenePartition->AddObject(rb->GetCollider());
 	}
 	if (go->HasComponent<MeshRenderer>())
 	{
@@ -177,11 +179,6 @@ void SceneGraph::LoadGameObject(GameObject* go)
 	if (go->HasComponent<LightComponent>())
 	{
 		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
-	}
-	if (go->HasComponent<RigidBody3D>())
-	{
-		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
-		ScenePartition->AddObject(rb->GetCollider());
 	}
 	
 
@@ -254,7 +251,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			CollisionDetection::ColliderIntersection(rigidBodies[i]->GetCollider(), rigidBodies[j]->GetCollider());
 		}
 	}
 }

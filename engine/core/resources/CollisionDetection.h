@@ -5,7 +5,7 @@
 
 struct Ray;
 class BoundingBox;
-
+class Collider3D;
 class CollisionDetection {
 public:
 	CollisionDetection(const CollisionDetection&) = delete;
@@ -19,6 +19,9 @@ public:
 	//Ray Collisions
 	static Ray MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* camera_);
 	static bool RayOBBIntersection(Ray* ray_, BoundingBox* box_);
+
+
+	static void ColliderIntersection(Collider3D* Collider1, Collider3D* Collider2);
 
 	static bool OBBIntersection(BoundingBox& Box1, BoundingBox& Box2);
 	

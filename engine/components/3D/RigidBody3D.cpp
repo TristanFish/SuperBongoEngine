@@ -132,3 +132,13 @@ void RigidBody3D::setMoveable(bool b)
 {
 	collider->SetMoveable(b); 
 }
+
+Collider3D* RigidBody3D::GetCollider()
+{
+	BoundingBox* OBB = dynamic_cast<BoundingBox*>(collider);
+
+	OBB->SetTransform(gameObject->transform.GetModelMatrix());
+	OBB->UpdateModelBounds();
+
+	return collider;
+}

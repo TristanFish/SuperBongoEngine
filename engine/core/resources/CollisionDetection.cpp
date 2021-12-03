@@ -138,14 +138,24 @@ bool CollisionDetection::RayOBBIntersection(Ray* ray_, BoundingBox* box_) {
 	return true;
 }
 
+void CollisionDetection::ColliderIntersection(Collider3D* Collider1, Collider3D* Collider2)
+{
+	if (Collider1->GetColliderType() == ColliderType::OBB && Collider2->GetColliderType() == ColliderType::OBB)
+	{
+		OBBIntersection(dynamic_cast<BoundingBox&>(*Collider1), dynamic_cast<BoundingBox&>(*Collider2));
+	}
+}
+
 bool CollisionDetection::OBBIntersection(BoundingBox& Box1, BoundingBox& Box2)
 {
-	Vec3 minCorner = Box1.GetMinTransformedPoint();
-	Vec3 maxCorner = Box1.GetMaxTransformedPoint();
+	Vec3 minCorner = Box1.GetMinVertex();
+	Vec3 maxCorner = Box1.GetMaxVertex();
 
-	Vec3 otherMinCorner = Box2.GetMinTransformedPoint();
-	Vec3 otherMaxCorner = Box2.GetMaxTransformedPoint();
+	Vec3 otherMinCorner = Box2.GetMinVertex();
+	Vec3 otherMaxCorner = Box2.GetMaxVertex();
 
+
+	bool x = abs()
 
 	if ((minCorner.x <= otherMaxCorner.x && maxCorner.x >= otherMinCorner.x) &&
 		(minCorner.y <= otherMaxCorner.y && maxCorner.y >= otherMinCorner.y) &&

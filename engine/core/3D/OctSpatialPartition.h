@@ -45,6 +45,7 @@ public:
 
 private:
 	BoundingBox* octBounds;
+
 	OctNode* parent;
 	OctNode* children[CHILDREN_NUMBER];
 	std::vector<Collider3D*> objectList;

@@ -205,11 +205,16 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 
 	 Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
 
+	 model->p_max = ModelMatrix * model->p_max;
+	 model->p_min = ModelMatrix * model->p_min;
 
-	 BoundingBox* NewBox = new BoundingBox(ModelMatrix * model->p_max, ModelMatrix * model->p_min, ModelMatrix);
+	 BoundingBox* NewBox = new BoundingBox(model->p_max, model->p_min, ModelMatrix);
+
 
 	 return NewBox;
 }
+
+
 
 void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
 {

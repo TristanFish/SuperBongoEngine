@@ -97,27 +97,6 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 		}
 	}
 }
-
-void Scene::CreateObjWithID(const Vec3& pos_, const Vec3& rot_, const Vec3& scale_, const std::string& objName_, const std::string& objType) const
-{
-
-	for (auto obj : objectList->GetInstantiableObjects())
-	{
-		if (obj.first == objType)
-		{
-			GameObject* clone = obj.second->NewClone();
-			clone->SetName(objName_);
-			clone->SetPos(pos_);
-			clone->SetRotation(rot_);
-			clone->SetScale(scale_);
-			objectList->AddGameObject(clone);
-			return;
-		}
-	}
-
-	EngineLogger::Warning(objType + " Could not be instantiated", "Scene.cpp", __LINE__);
-}
-
 void Scene::SaveMapData() const
 {
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
