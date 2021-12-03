@@ -126,8 +126,37 @@ void PropertiesPanel::Render()
 
 			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
 
-			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f))
+
 			{
+				//clamp the euler angles
+				if(rotation.x > 180.0f)
+				{
+					rotation.x -= 360.0f;
+				}
+				if(rotation.x < -180.0f)
+				{
+					rotation.x += 360.0f;
+				}
+				if(rotation.y > 180.0f)
+				{
+					rotation.y -= 360.0f;
+				}
+				if(rotation.y < -180.0f)
+				{
+					rotation.y += 360.0f;
+				}
+				if(rotation.z > 180.0f)
+				{
+					rotation.z -= 360.0f;
+				}
+				if(rotation.z < -180.0f)
+				{
+					rotation.z += 360.0f;
+				}
+			}
+
+			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
+			
 				selectedObject->transform.SetRot(rotation);
 			}
 			

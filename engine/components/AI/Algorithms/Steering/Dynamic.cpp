@@ -69,7 +69,7 @@ DynamicSteeringOutput DynamicSeek::getSteering()	{
 	result.linearAccel = VMath::normalize(result.linearAccel);
 	result.linearAccel = aiObject->GetComponent<AIComponent>()->GetMaxAcceleration() * result.linearAccel;
 
-	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
+	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.rotation, target.GetPosition(), Vec3::Forward()));
 	
 	result.angularAccel = Vec3(0.0f);
 

@@ -28,9 +28,6 @@ namespace  MATH {
 									const float yMin_, const float yMax_,
 									const float zMin_, const float zMax_);
 		static Matrix4 unOrtho(const Matrix4 & ortho); 
-		static Matrix4 lookAt(const float eyeX_, const float eyeY_, const float eyeZ_,
-							const float atX_,  const float atY_,  const float atZ_,
-							const float upX_,  const float upY_,  const float upZ_);
 		static Matrix4 lookAt(const Vec3& eye, const Vec3& at, const Vec3& up);					
 		static Matrix4 transpose(const Matrix4 &m);
 		static Matrix4 inverse(const Matrix4 &m);

@@ -7,15 +7,15 @@ Vec3 VMath::normalize(const Vec3 &a) {
 	float magnitude;
 	Vec3 result;
 	magnitude = float(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
-#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+	
 	if (magnitude < VERY_SMALL) {
 		std::string errorMsg("Divide by nearly zero! ");
-		throw errorMsg;
+		result = Vec3();
 	}
-#endif
-	result.x = a.x / magnitude;
-	result.y = a.y / magnitude;
-	result.z = a.z / magnitude;
+	else
+	{		
+		result = a / magnitude;
+	}
 	return result;
 }
 
