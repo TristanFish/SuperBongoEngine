@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <cereal/archives/binary.hpp>
+#include <cereal/archives/json.hpp>
 #include <cereal/types/string.hpp>
 
 using namespace std;
@@ -164,6 +165,23 @@ std::string ENetNetworkManager::ParseData(unsigned char* data) const
 	//Cereal needs these open and close brackets to properly flush the Archive
 	{
 		cereal::BinaryInputArchive iArchive(ss);
+
+		iArchive(deserializedData);
+	}
+
+	return deserializedData;
+}
+
+std::string ENetNetworkManager::ParseJsonData(unsigned char* data) const
+{
+	//Copy data into this buffer so it can be turned from binary back into a string
+	char buffer[DEFAULT_BUFFER_LENGTH];
+	memcpy(buffer, data, netEvent.packet->dataLength);
+	stringstream ss(string(buffer, netEvent.packet->dataLength), stringstream::in | stringstream::out | stringstream::binary);
+	string deserializedData;
+	//Cereal needs these open and close brackets to properly flush the Archive
+	{
+		cereal::JSONInputArchive iArchive(ss);
 
 		iArchive(deserializedData);
 	}

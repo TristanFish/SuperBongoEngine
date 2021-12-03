@@ -31,7 +31,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& ar)
 	{
-		ar(name, position);
+		ar(cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
 	}
 
 	

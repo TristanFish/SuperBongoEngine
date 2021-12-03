@@ -1,6 +1,7 @@
 #include "NetworkableObject.h"
 #include "GameObject.h"
 #include "core/networking/ENetNetworkManager.h"
+#include "cereal/archives/json.hpp"
 #include <iostream>
 
 NetworkableObject::NetworkableObject()
@@ -23,21 +24,14 @@ void NetworkableObject::Init(GameObject* g)
 void NetworkableObject::Update(const float deltaTime)
 {
 	NetRole role = NetworkManager::GetInstance()->role;
-	std::stringstream posData;
 
-	posData << pos.x << ',';
-	posData << pos.y << ',';
-	posData << pos.z;
 
-	std::string str = posData.str();
 	std::stringstream ss;
 	{
-		cereal::BinaryOutputArchive oarchive(ss);
-
-		oarchive(str, name);		
+		cereal::JSONOutputArchive oarchive(ss);
+		oarchive(cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
 		NetworkManager::GetInstance();
 	}
-
 	if (role == NetRole::SERVER) {
 		NetworkManager::GetInstance()->SendPreserializedPacket(ss);
 	}
@@ -48,14 +42,13 @@ void NetworkableObject::Update(const float deltaTime)
 
 void NetworkableObject::RecievePositionData(std::stringstream ss)
 {
-	MATH::Vec3 tmp;
-	std::string name;
-	{
-		cereal::BinaryInputArchive iarchive(ss);
-		iarchive(name, tmp.x, tmp.y, tmp.z);
-		std::cout << name <<tmp.x << tmp.y << tmp.z << std::endl;
-	}
-	gameObject->SetPos(tmp);
+		{
+			std::string  string = ss.str();
+			std::stringstream os(string);
+			cereal::JSONInputArchive iarchive(os);
+			std::cout << os.str() << std::endl;
+		}
+	//gameObject->SetPos(tmp);
 
 	
 }
