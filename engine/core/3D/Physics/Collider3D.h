@@ -52,6 +52,28 @@ public:
 
 
 
+	inline bool IsType(ColliderType type, const std::vector<Collider3D*>& colliders = std::vector<Collider3D*>())
+	{
+		bool SameType = false;
+
+		if (Type != type)
+		{
+			return SameType;
+		}
+		SameType = true;
+
+		for (const auto& collider : colliders)
+		{
+			if (collider->Type != type)
+			{
+				SameType = false;
+				break;
+			}
+		}
+		return SameType;
+	}
+
+	inline bool operator==(const Collider3D& collider) { return Type == collider.Type; }
 
 
 	inline void SetTrigger(bool NewIsTrigger) { B_IsTrigger = NewIsTrigger; }

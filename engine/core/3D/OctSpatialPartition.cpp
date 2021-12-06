@@ -15,7 +15,7 @@ OctNode::OctNode(Vec3 position, float size_, OctNode* parent)
 {
 	size = size_;
 
-	octBounds = new BoundingBox(position + Vec3(size), position, Matrix4());
+	octBounds = new BoundingBox({ position, position + Vec3(size) }, Matrix4());
 
 
 
@@ -56,7 +56,7 @@ void OctNode::Octify(int depth)
 	{
 		float half = size / 2.0f;
 
-		const Vec3 minVert = octBounds->GetMinVertex();
+		const Vec3 minVert = octBounds->GetWorldVerticies()[0];
 
 		children[static_cast<int>(OctChildren::OCT_TLF)] = 
 			new OctNode(Vec3(minVert.x, minVert.y + half, minVert.z + half), half, this);

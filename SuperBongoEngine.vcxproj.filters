@@ -980,7 +980,9 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
-    <ClInclude Include="engine\core\3D\New3D\GJKDetection.h" />
+    <ClInclude Include="engine\core\3D\Physics\GJKDetection.h">
+      <Filter>src\engine\core\3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1297,7 +1299,9 @@
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
     <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\GJKDetection.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp">
+      <Filter>src\engine\core\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

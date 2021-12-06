@@ -205,12 +205,17 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 
 	 Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
 
-	 model->p_max = ModelMatrix * model->p_max;
-	 model->p_min = ModelMatrix * model->p_min;
 
-	 BoundingBox* NewBox = new BoundingBox(model->p_max, model->p_min, ModelMatrix);
+	 BoundingBox* NewBox = new BoundingBox({ model->p_min, model->p_max }, ModelMatrix);
 
 
+	 for (const Vertex& vert : model->GetVerticies())
+	 {
+		 if (vert.position != model->p_min || vert.position != model->p_max)
+		 {
+			 NewBox->AddWorldVertex(vert.position);
+		 }
+	 }
 	 return NewBox;
 }
 

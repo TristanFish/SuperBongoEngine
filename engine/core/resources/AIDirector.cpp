@@ -67,7 +67,7 @@ std::vector<Poly> AIDirector::GetPositiveVerticies() const
 
 			float Result = MATH::VMath::dot(RotNorm, MATH::Vec3::Up());
 			float ResultAngle = acos(Result) / (MATH::VMath::mag(RotNorm) * MATH::VMath::mag(MATH::Vec3::Up()));
-			ResultAngle *= 180.0f / 3.14159;
+			ResultAngle *= 180.0f / 3.14159f;
 
 			if (ResultAngle < 45.0f)
 			{

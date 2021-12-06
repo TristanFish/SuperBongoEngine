@@ -7,6 +7,11 @@ struct Ray;
 class BoundingBox;
 class Collider3D;
 class CollisionDetection {
+
+private:
+
+
+
 public:
 	CollisionDetection(const CollisionDetection&) = delete;
 	CollisionDetection(CollisionDetection&&) = delete;
@@ -24,6 +29,9 @@ public:
 	static void ColliderIntersection(Collider3D* Collider1, Collider3D* Collider2);
 
 	static bool OBBIntersection(BoundingBox& Box1, BoundingBox& Box2);
+
+
+
 	
 };
 

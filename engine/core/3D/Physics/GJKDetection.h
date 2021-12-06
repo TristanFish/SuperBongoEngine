@@ -20,11 +20,11 @@ public:
 	Simplex();
 	~Simplex();
 	
-	Vec3 Support(std::vector<Vec3> verticesVector1_, std::vector<Vec3> verticesVector2_, Vec3 direction_); //Mesh should be replaced once we rework PHY
+	Vec3 Support(const std::vector<Vec3>& verticesVector1_, const std::vector<Vec3>& verticesVector2_, Vec3 direction_); //Mesh should be replaced once we rework PHY
 
 	
 	//should be in the new 3d-phy-mesh class that will already have a mesh, so only arg would be direction_
-	Vec3 getFarthestPointInDirection(std::vector<Vec3> verticesVector_, Vec3 direction_);
+	Vec3 getFarthestPointInDirection(const std::vector<Vec3>& verticesVector_, Vec3 direction_);
 
 	//can change direction
 	bool containsOrigin(Vec3& direction_);
@@ -39,7 +39,10 @@ private:
 
 public:
 
-	bool GJKCollisionDetection(std::vector<Vec3> verticesVector1_, std::vector<Vec3> verticesVector2_);
+	GJKDetection();
+	~GJKDetection();
+
+	bool GJKCollisionDetection(const std::vector<Vec3>& verticesVector1_, const std::vector<Vec3>& verticesVector2_);
 	
 };
 
