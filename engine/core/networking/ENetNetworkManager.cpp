@@ -110,7 +110,7 @@ void ENetNetworkManager::HandleServerEvents()
 				//Receive is gonna need to be much more fleshed out
 				//Needs to track which client it's receiving from
 				//Needs to know what kind of data it's receiving
-				string parsedData = ParseData(netEvent.packet->data);
+				string parsedData = ParseJsonData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 				Globals::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
@@ -144,10 +144,11 @@ void ENetNetworkManager::HandleClientEvents()
 			}
 		case ENET_EVENT_TYPE_RECEIVE:
 			{
-				string parsedData = ParseData(netEvent.packet->data);
+				//string parsedData = ParseData(netEvent.packet->data);
+				
+				string parsedData = ParseJsonData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
-
 				Globals::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
 				break;
 			}
@@ -183,10 +184,10 @@ std::string ENetNetworkManager::ParseJsonData(unsigned char* data) const
 	{
 		cereal::JSONInputArchive iArchive(ss);
 
-		iArchive(deserializedData);
+		//iArchive(deserializedData);
 	}
 
-	return deserializedData;
+	return ss.str();
 }
 
 stringstream ENetNetworkManager::SerializeData(const string& data)

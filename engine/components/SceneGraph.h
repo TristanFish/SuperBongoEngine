@@ -64,7 +64,7 @@ public:
 
 	//! GameObjectNetworkUpdate Function
 	/*!Finds and updates networkable game object based on data received from server*/
-	void GameObjectNetworkUpdate(const std::string& string);
+	void GameObjectNetworkUpdate(std::string& string);
 
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/

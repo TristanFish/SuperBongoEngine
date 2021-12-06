@@ -7,6 +7,7 @@
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
+#include "NetworkableObject.h"
 
 #include "graphics/UIStatics.h"
 
@@ -110,8 +111,13 @@ GameObject* SceneGraph::FindGameObject(const char* name)
 	return nullptr;
 }
 
-void SceneGraph::GameObjectNetworkUpdate(const std::string& string)
+void SceneGraph::GameObjectNetworkUpdate(std::string& string)
 {
+	NetworkableObject* tmp = new NetworkableObject();
+	std::stringstream ss(string);
+	std::stringstream name = tmp->FindGameObjectName(string);
+	tmp = FindGameObject(name.str().c_str())->GetComponent<NetworkableObject>();
+	tmp->RecievePositionData(ss);
 
 }
 

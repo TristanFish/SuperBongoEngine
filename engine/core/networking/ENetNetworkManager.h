@@ -9,6 +9,11 @@
 
 class SceneGraph;
 
+enum class NetworkEventTypes : int
+{
+	POSITIONUPDATE = 1,
+	MESSAGE
+};
 class TempSemaphore
 {
 	std::mutex mutex;
@@ -77,6 +82,8 @@ public:
 	void HandleClientEvents();
 	//turns binary data into a string
 	std::string ParseData(unsigned char* data) const;
+	//
+	std::string ParseJsonData(unsigned char* data) const;
 	//turns string data into binary
 	std::stringstream SerializeData(const std::string& data);
 	

@@ -15,6 +15,7 @@ public:
 
 	MATH::Vec3 pos, scale, rot;
 	std::string name, position;
+	int networkEventType;
 
 	bool isActive;
 
@@ -26,16 +27,18 @@ public:
 	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
 
-	virtual void RecievePositionData(std::stringstream ss);
+	std::stringstream FindGameObjectName(std::string& s);
+	virtual void RecievePositionData(std::stringstream& ss);
 
 	template<class Archive>
 	void serialize(Archive& ar)
 	{
-		ar(cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
+		ar(cereal::make_nvp("NetworkType", networkEventType), cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
 	}
 
 	
 private:
+	
 	
 };
 #endif

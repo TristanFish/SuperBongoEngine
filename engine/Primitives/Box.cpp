@@ -12,10 +12,8 @@ Box::Box(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
-	AddComponent<NetworkableObject>();
-
-
 	AddComponent<RigidBody3D>();
+	AddComponent<NetworkableObject>();
 	this->name = name;
 	transform.SetPos(position);
 
