@@ -17,7 +17,7 @@ void Transform::Update(const float deltaTime)
 
 	if(parent != nullptr)
 	{
-		modelMatrix = modelMatrix * parent->modelMatrix;
+		modelMatrix = parent->modelMatrix * modelMatrix;
 	}
 }
 

@@ -43,6 +43,8 @@ void CoreEngine::Render()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 
+	ImGui::NewFrame();
+	
 	dockSpace->Render();
 	if (gameInterface)
 	{

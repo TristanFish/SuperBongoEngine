@@ -17,7 +17,7 @@ public:
 	// Inherited via GameObject
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
 
-	Tetrahedron* NewClone() const override { return new Tetrahedron(this->name, this->transform.pos); }
+	Tetrahedron* NewClone() const override { return new Tetrahedron(this->name, this->transform.GetPosition()); }
 
 
 private:

@@ -35,6 +35,7 @@ bool Game1::OnCreate()
 
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
+		Scenes.push_back(new SceneAi);
 
 		return (create && postCreate);
 	}

@@ -18,18 +18,16 @@ private:
 	//!rotationMatrix Matrix4
 	/*! The transforms Rotation Matrix */
 	MATH::Matrix4 rotationMatrix;
-	
+
 public:
 	Transform* parent;
 	
-
-
 	//!Standard Transform Vec3s
 	/*! Stores the main transform variables */
 	MATH::Vec3 pos, scale;
 
 	MATH::Quaternion rotation;
-
+	
 	//!Transform Constructor
 	/*! Initializes the rotational Matrix */
 	Transform();
@@ -45,7 +43,8 @@ public:
 
 	//!GetPosition Getter
 	/*! Returns the transforms position */
-	MATH::Vec3& GetPosition() { return pos; }
+	MATH::Vec3& GetPositionRef() { return pos; }
+	MATH::Vec3 GetPosition() const { return pos; }
 
 	//!GetRotation Getter
 	/*! Returns the transforms rotation inthe form of euler angles */
@@ -68,28 +67,24 @@ public:
 	void SetParent(Transform* parentTrans) { parent = parentTrans; }
 	
 	//!Forward Vec3
-	/*! Vector that always points in front of the object */
+	/*! Vector that always points in front of the transform */
 	MATH::Vec3 Forward() const;
 	//!Right Vec3
-	/*! Vector that always points to the right of the object */
+	/*! Vector that always points to the right of the transform */
 	MATH::Vec3 Right() const;
 
 	//!Up Vec3
-	/*! Vector that always points above the object */
+	/*! Vector that always points above the transform */
 	MATH::Vec3 Up() const;
 
-	//!SetPosition Setter
-	/*! Sets the position of the transform */
+
 	void SetPos(const MATH::Vec3& pos);
 
-	//!SetRotation Setter
-	/*! Sets the rotation of the transform */
+	//Sets rotation of the transform based on euler angles
 	void SetRot(const MATH::Vec3& rot);
-
+	//Sets rotation of the transform based on a quaternion
 	void SetRot(const MATH::Quaternion& rot);
 
-	//!SetScale Setter
-	/*! Sets the rotation of the transform */
 	void SetScale(const MATH::Vec3& scale);
 
 };

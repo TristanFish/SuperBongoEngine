@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 76
+[INFO]: Logger Created in: CoreEngine.cpp on line: 78
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 42
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
@@ -70,6 +70,208 @@
 [ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 111
 [ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 111
 [INFO]: test added to scenegraph in: ECS.cpp on line: 137
+[INFO]: Mouse hit Sphere in: Scene.cpp on line: 97
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: GAME306 Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Tet_1" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Tet_1" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Tet_1 added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Tet_2" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Tet_2" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Tet_2 added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: Tet_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Tet_2 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[INFO]: Scene: Scene_AI Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene_2 Created in: Scene.cpp on line: 28
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BlueBox" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BlueBox" was found. in: SceneGraph.cpp on line: 111
+[INFO]: BlueBox added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "RedBox" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "RedBox" was found. in: SceneGraph.cpp on line: 111
+[INFO]: RedBox added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene_3 Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BlueBox" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BlueBox" was found. in: SceneGraph.cpp on line: 111
+[INFO]: BlueBox added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: GAME306 Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: Tet_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Tet_2 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 28
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Mouse hit Sphere in: Scene.cpp on line: 97
+[INFO]: Mouse hit Sphere in: Scene.cpp on line: 97
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: Tet_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Tet_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: GAME306 Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: Tet_1 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: Tet_2 File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[INFO]: Scene: Scene_AI Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene_2 Created in: Scene.cpp on line: 28
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene_3 Created in: Scene1.cpp on line: 21
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 244
+[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 250
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 220
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 239
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 28
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
 [SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 59
@@ -77,8 +279,6 @@
 [SAVE][INFO]: Grass File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Light Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 59
-[SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 60
-[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Plane-1 Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: Player Already Exists in: SaveUtility.cpp on line: 60
@@ -87,7 +287,10 @@
 [SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][WARNING]: test Already Exists in: SaveUtility.cpp on line: 60
 [SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 59
+[SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 60
+[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 59
 [SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 313
 [SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: Light Compiled Successfully in: SaveUtility.cpp on line: 350
+[SAVE][INFO]: Sphere Compiled Successfully in: SaveUtility.cpp on line: 350
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 353

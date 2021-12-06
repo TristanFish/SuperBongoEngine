@@ -27,9 +27,6 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-
-
-
 public:
 
 	/*! Hold's the name of this gameObject*/
@@ -103,7 +100,7 @@ public:
 
 	//!SetScale Setter
 	/*!Sets the scale of this a gameObject*/
-	void SetScale(const MATH::Vec3& scale_) { transform.scale = scale_; }
+	void SetScale(const MATH::Vec3& scale_) { transform.SetScale(scale_); }
 
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/

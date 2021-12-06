@@ -18,7 +18,7 @@ Tetrahedron::Tetrahedron(const std::string& name, MATH::Vec3 position)
 	this->name = name;
 	transform.SetPos(position);
 
-	transform.scale = Vec3(25.0f, 25.0f, 25.0f);
+	transform.SetScale(Vec3(25.0f, 25.0f, 25.0f));
 
 	canBeInstantiated = true;
 }
