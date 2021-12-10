@@ -64,7 +64,7 @@ public:
 	//!Begin Function
 	/*!Meant to be overriden, is called after all objects are added to the scenegraph
 	 * think of it as Unreal Engine BeginPlay() or Unity Start() */
-	virtual void PostInit() {}
+	virtual void PostInit();
 	
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/

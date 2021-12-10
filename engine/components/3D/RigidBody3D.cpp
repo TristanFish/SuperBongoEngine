@@ -3,6 +3,7 @@
 #include "MMath.h"
 #include "core/Timer.h"
 #include "core/3D/Physics/BoundingBox.h"
+#include "core/3D/Physics/BoundingSphere.h"
 
 #include "components/3D/MeshRenderer.h"
 
@@ -28,9 +29,6 @@ void RigidBody3D::Init(GameObject *g)
 	pos = &g->transform.GetPosition();
 
 
-	collider = g->GetComponent<MeshRenderer>()->MakeBoundingBox();
-	SetColliderSize(g->transform.GetScale());
-	collider->RB_Attached = this;
 
 	
 	
@@ -108,6 +106,57 @@ void RigidBody3D::ApplyConstantTorque(const Vec3& torque)
 	angularAcc = torque / mass;
 }
 
+void RigidBody3D::ConstructCollider(ColliderType Collider_Type)
+{
+	Model* objModel = gameObject->GetComponent<MeshRenderer>()->GetModel();
+	Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
+
+
+#pragma region Change In Collider Type
+	// Used for when we change collider types and need to copy the EnterCallback
+	std::function<void(Collider3D&)> tempCollisionEnterCallback;
+	bool ColliderChanged = false;
+
+	if (collider && collider->Type != Collider_Type)
+	{
+		tempCollisionEnterCallback = collider->collisionEnterCallback;
+
+		delete collider;
+		collider = nullptr;
+
+		ColliderChanged = true;
+	}
+
+#pragma endregion
+
+	
+
+#pragma region Create New Collider
+
+	if (Collider_Type == ColliderType::OBB)
+	{
+		collider = new BoundingBox(ModelMatrix);
+		collider->SetModelVerticies(objModel->GetVerticies());
+		dynamic_cast<BoundingBox*>(collider)->UpdateWorldVerticies();
+	}
+	else if (Collider_Type == ColliderType::Sphere)
+	{
+		collider = new BoundingSphere(objModel->p_min, objModel->p_max);
+		collider->SetModelVerticies(objModel->GetVerticies());
+
+		dynamic_cast<BoundingSphere*>(collider)->CaclulateProperties(ModelMatrix);
+	}
+
+	if (ColliderChanged)
+	{
+		collider->AddCollisionFunction(tempCollisionEnterCallback);
+	}
+
+	collider->RB_Attached = this;
+
+#pragma endregion
+}
+
 void RigidBody3D::SetColliderSize(MATH::Vec3 s)
 {
 	collider->SetSize(s);
@@ -135,10 +184,24 @@ void RigidBody3D::setMoveable(bool b)
 
 Collider3D* RigidBody3D::GetCollider()
 {
-	BoundingBox* OBB = dynamic_cast<BoundingBox*>(collider);
+	Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
 
-	OBB->SetTransform(gameObject->transform.GetModelMatrix());
-	OBB->UpdateModelBounds();
+	Model* ObjModel = gameObject->GetComponent<MeshRenderer>()->GetModel();
+
+	if (collider->GetColliderType() == ColliderType::OBB)
+	{
+		BoundingBox* OBB = dynamic_cast<BoundingBox*>(collider);
+		OBB->SetTransform(ModelMatrix);
+		OBB->UpdateModelBounds();
+	}
+
+	else if (collider->GetColliderType() == ColliderType::Sphere)
+	{
+		BoundingSphere* OSphere = dynamic_cast<BoundingSphere*>(collider);
+		OSphere->CaclulateProperties(ModelMatrix);
+	}
+
+	
 
 	return collider;
 }

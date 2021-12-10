@@ -9,6 +9,7 @@
 #include "core/3D/OctSpatialPartition.h"
 #include "core/resources/CollisionDetection.h"
 #include "core/resources/SaveManager.h"
+#include "core/3D/Physics/BoundingBox.h"
 
 #include "gameObjects/TestModel.h"
 #include "graphics/UIStatics.h"
@@ -83,6 +84,8 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 		float shortestDistance = FLT_MAX;
 
 		hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
+
+		
 
 
 		if (hitResult)

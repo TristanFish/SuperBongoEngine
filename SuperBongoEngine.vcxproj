@@ -28,6 +28,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
+    <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
     <ClInclude Include="engine\core\3D\Physics\GJKDetection.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />

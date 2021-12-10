@@ -983,6 +983,7 @@
     <ClInclude Include="engine\core\3D\Physics\GJKDetection.h">
       <Filter>src\engine\core\3D</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">

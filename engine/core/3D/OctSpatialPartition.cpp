@@ -17,6 +17,7 @@ OctNode::OctNode(Vec3 position, float size_, OctNode* parent)
 
 	octBounds = new BoundingBox({ position, position + Vec3(size) }, Matrix4());
 
+	octBounds->SetColliderType(ColliderType::OCTNODE);
 
 
 	this->parent = parent;

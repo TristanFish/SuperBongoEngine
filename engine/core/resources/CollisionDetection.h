@@ -5,6 +5,7 @@
 
 struct Ray;
 class BoundingBox;
+class BoundingSphere;
 class Collider3D;
 class CollisionDetection {
 
@@ -29,7 +30,7 @@ public:
 	static void ColliderIntersection(Collider3D* Collider1, Collider3D* Collider2);
 
 	static bool OBBIntersection(BoundingBox& Box1, BoundingBox& Box2);
-
+	static bool SphereIntersection(BoundingSphere& Sphere1, BoundingSphere& Sphere2);
 
 
 	

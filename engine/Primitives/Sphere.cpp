@@ -11,8 +11,7 @@ Sphere::Sphere(const std::string& name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Sphere.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
-	//AddComponent<RigidBody3D>();
-	//GetComponent<RigidBody3D>()->ApplyConstantTorque(Vec3(0.0f, 20.0, 10.0));
+
 
 	this->name = name;
 	transform.SetPos(position);

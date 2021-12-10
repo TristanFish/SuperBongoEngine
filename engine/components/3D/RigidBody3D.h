@@ -70,6 +70,7 @@ public:
 	void ApplyConstantTorque(const MATH::Vec3& torque);
 
 
+	void ConstructCollider(ColliderType Collider_Type);
 	void SetColliderSize(MATH::Vec3 s);
 	void SetColliderType(ColliderType newType);
 	ColliderType GetColliderType();

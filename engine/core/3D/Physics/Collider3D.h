@@ -8,6 +8,7 @@
 #include <functional>
 
 #include "math/Vector.h"
+#include "graphics/Vertex.h"
 
 class RigidBody3D;
 
@@ -15,7 +16,8 @@ enum class ColliderType : char
 {
 	Sphere = 0b0001,
 	Plane = 0b0100,
-	OBB = 0b1000
+	OBB = 0b1000,
+	OCTNODE = 0b1100
 };
 
 inline constexpr ColliderType operator | (ColliderType x, ColliderType y)
@@ -40,6 +42,10 @@ protected:
 
 	std::function<void(Collider3D&)> collisionEnterCallback;
 	
+	//! Model_Verticies vector
+	/*! Stores all the verticies before being transfered to world space*/
+	std::vector<Vertex>* Model_Verticies;
+
 public:
 
 
@@ -80,14 +86,18 @@ public:
 	inline void SetMoveable(bool NewIsMoveable) { B_IsMoveable = NewIsMoveable; }
 	virtual inline void SetSize(const MATH::Vec3& NewSize) { V_Size = NewSize; }
 	inline void SetColliderType(ColliderType NewType) { Type = NewType; }
+	inline void SetModelVerticies(std::vector<Vertex>& New_Verticies) { Model_Verticies = &New_Verticies; }
+
 
 	inline bool IsTrigger() const { return B_IsTrigger; }
 	inline bool IsMoveable() const { return B_IsMoveable; }
 	inline MATH::Vec3 GetSize() const { return V_Size; }
 	inline ColliderType GetColliderType() const { return Type; }
-
 	inline class RigidBody3D* GetRBAttached() { return RB_Attached; }
 
+	//!  GetModelVerticies Getter
+	/*!  Returns the Model_Verticies vector by const ref*/
+	inline const std::vector<Vertex>* GetModelVerticies() { return Model_Verticies; }
 
 	friend class RigidBody3D;
 };

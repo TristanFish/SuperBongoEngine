@@ -11,7 +11,6 @@ Box::Box(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
-
 	AddComponent<RigidBody3D>();
 	this->name = name;
 	transform.SetPos(position);
@@ -21,6 +20,13 @@ Box::Box(const std::string& name, Vec3 position)
 
 Box::~Box()
 {
+}
+
+void Box::PostInit()
+{
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
+
+	GameObject::PostInit();
 }
 
 void Box::OnCollisionEnter(Collider3D& otherBody)
