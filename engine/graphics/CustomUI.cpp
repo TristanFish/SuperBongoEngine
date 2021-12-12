@@ -159,7 +159,7 @@ void PropertiesPanel::Render()
 				selectedObject->transform.SetRot(rotation);
 			}
 			
-			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScale(), 80.0f);
+			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScaleRef(), 80.0f);
 
 			ImGui::TreePop();
 		}
@@ -274,6 +274,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 				UIStatics::SetSelectedObject(nullptr);
 			}
@@ -352,6 +353,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 		{
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 				UIStatics::SetSelectedObject(nullptr);
 			}
@@ -507,7 +509,7 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), mode(RenderMode::Result), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), isMouseHovered(false), isActive(true)
 {
 	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
@@ -544,11 +546,11 @@ void Viewport::Render()
 				{
 					const RenderMode loopMode = static_cast<RenderMode>(index);
 
-					const bool is_selected = (mode == loopMode);
+					const bool is_selected = (renderMode == loopMode);
 					if (ImGui::Selectable(Mode, is_selected))
 					{
 						ImGui::CloseCurrentPopup();
-						mode = loopMode;
+						renderMode = loopMode;
 						modeName = "[" + std::string(Mode) + "]";
 					}
 					index++;

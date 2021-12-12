@@ -2,12 +2,13 @@
 #define GAMEOBJECT_H
 
 #include "core/Logger.h"
+#include "core/3D/Physics/Collider3D.h"
+
 #include "Transform.h"
 #include "Components.h"
 #include "SDL_events.h"
 #include <vector>
 
-class RigidBody3D;
 
 //! GameObject Class
 /*!Things should be inheriting from gameObject, gameobjects are placed into a manager
@@ -92,7 +93,7 @@ public:
 
 	//!GetModelMatrix Getter
 	/*!Returns the gameObject model matrix*/
-	const MATH::Matrix4& GetModelMatrix() const { return transform.GetModelMatrix(); }
+	 MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); }
 
 	//!SetPos Setter
 	/*!Sets the position of this a gameObject*/
@@ -123,7 +124,7 @@ public:
 	bool operator == (const GameObject* v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
+	virtual void OnCollisionEnter(Collider3D& otherCollider) {}
 	//This functor is used for Attaching uniforms
 	virtual void AttachUniforms() const {}
 

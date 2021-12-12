@@ -1,7 +1,7 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
 #include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+//#include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
 #include "../game/gameObjects/Grass.h"
@@ -190,7 +190,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}
 	}
 }

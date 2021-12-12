@@ -339,21 +339,13 @@ void Renderer::Resize(const int size_x, const int size_y)
 
 bool Renderer::IsMeshOnScreen(const MeshRenderer& mr)
 {
-	OrientedBoundingBox obb = mr.OBB;
+	//OrientedBoundingBox obb = mr.OBB;
 
 	Camera* cam = Camera::getInstance();
 	Matrix4 projViewMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 
 
-	Vec3 PVMPos = projViewMatrix * obb.transform.getColumn(3);
-	//vertices[0] = projViewMatrix * obb.transform * obb.maxVert;
-	//vertices[1] = projViewMatrix * obb.transform * obb.minVert;
-	//vertices[2] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.maxVert.z); //
-	//vertices[3] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.minVert.z); //
-	//vertices[4] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.maxVert.y, obb.minVert.z); //
-	//vertices[5] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.minVert.y, obb.maxVert.z); //
-	//vertices[6] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.maxVert.z); //
-	//vertices[7] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.minVert.z); //
+	Vec3 PVMPos;// = projViewMatrix * obb.transform.getColumn(3);
 
 	//Get frustum planes
 	Plane frustumPlanes[6];

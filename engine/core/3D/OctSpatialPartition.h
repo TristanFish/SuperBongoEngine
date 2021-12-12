@@ -7,12 +7,13 @@
 #include "core/MouseRay.h"
 
 
-
-struct OrientedBoundingBox;
-class MeshRenderer;
+class Collider3D;
 class GameObject;
+class BoundingBox;
 
 constexpr auto CHILDREN_NUMBER = 8;
+
+
 
 enum class OctChildren
 {
@@ -36,21 +37,23 @@ public:
 	void Octify(int depth);
 	OctNode* GetParent() const;
 	OctNode* GetChild(OctChildren childPos);
-	void AddCollisionObject(MeshRenderer* rb);
+	void AddCollisionObject(Collider3D* collider);
 	int GetObjectCount() const;
 	bool IsLeaf() const;
 	int GetChildCount() const;
-	OrientedBoundingBox* GetBoundingBox() const;
+	BoundingBox* GetBoundingBox() const;
 
 private:
-	friend class OctSpatialPartition;
-	OrientedBoundingBox* octBounds;
+	BoundingBox* octBounds;
+
 	OctNode* parent;
 	OctNode* children[CHILDREN_NUMBER];
-	std::vector<MeshRenderer*> objectList;
+	std::vector<Collider3D*> objectList;
 	float size;
 	static int childNum;
 	
+
+	friend class OctSpatialPartition;
 };
 
 class OctSpatialPartition
@@ -60,13 +63,13 @@ public:
 	OctSpatialPartition(float worldSize);
 	~OctSpatialPartition();
 
-	void AddObject(MeshRenderer* rb);
+	void AddObject(Collider3D* collider);
 	GameObject* GetCollision(MouseRay& ray);
 
 private:
 	OctNode* root;
 	std::vector<OctNode*> rayInstersectionList;
-	void AddObjectToCell(OctNode* cell, MeshRenderer* rb);
+	void AddObjectToCell(OctNode* cell, Collider3D* collider);
 	void PrepareCollisionQuery(OctNode* cell, MouseRay& ray);
 	
 };

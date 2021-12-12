@@ -293,6 +293,19 @@ std::string SaveFile::GetFileDestination() const
 	return destination;
 }
 
+void SaveFile::ClearSaveFile()
+{
+	if (!Elements.empty())
+	{
+		Elements.clear();
+	}
+
+	if (!insertionOrder.empty())
+	{
+		insertionOrder.clear();
+	}
+}
+
 void SaveFile::Save()
 {
 	std::string Destination = GetFileDestination();

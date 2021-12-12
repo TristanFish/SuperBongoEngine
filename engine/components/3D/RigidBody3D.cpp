@@ -2,23 +2,17 @@
 
 #include "MMath.h"
 #include "core/Timer.h"
+#include "core/3D/Physics/BoundingBox.h"
 
 #include "components/3D/MeshRenderer.h"
+
 #include "graphics/UIStatics.h"
 
 using namespace MATH;
 
-void RigidBody3D::OnCollisionEnter(RigidBody3D& otherBody)
-{
-	if(collisionEnterCallback != nullptr)
-	{
-		collisionEnterCallback(otherBody);
-	}
-}
 
-RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-                            angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), 
-                            collider(MATH::Vec3(),MATH::Vec3())
+RigidBody3D::RigidBody3D(): mass(1.0f), vel(Vec3()), accel(Vec3()), linearDrag(0.0f), rotInertia(0.0f),
+                            angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), collider(nullptr)
 {
 	
 }
@@ -26,26 +20,33 @@ RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), 
 RigidBody3D::~RigidBody3D()
 {
 	pos = nullptr;
+	if(collider)
+	{
+		delete collider;
+		collider = nullptr;
+	}
 }
 
 void RigidBody3D::Init(GameObject *g)
 {
 	gameObject = g;
-	pos = &g->transform.pos;
-	collider.minVertices = gameObject->GetComponent<MeshRenderer>()->GetMinVector();
-	collider.maxVertices = gameObject->GetComponent<MeshRenderer>()->GetMaxVector();
+	pos = &g->transform.GetPositionRef();
+
+
+	collider = g->GetComponent<MeshRenderer>()->MakeBoundingBox();
 	SetColliderSize(g->transform.GetScale());
+	collider->RB_Attached = this;
+
 	
+	
+
 	mass = 1.0f;
-	vel = MATH::Vec3();
-	accel = MATH::Vec3();
+	vel = Vec3();
+	accel = Vec3();
 
 	rotInertia = 2.0f;
-	angularVel = MATH::Vec3(0.0f);
-	//angularAcc = MATH::Vec3(0.0f, 0.0f, 0.0f);
-
-	//collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
-	//collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
+	angularVel = Vec3(0.0f);
+	angularAcc = Vec3(0.0f);
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -58,10 +59,10 @@ void RigidBody3D::Update(const float deltaTime)
 
 	// Rotation Handling 
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
-	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.rotation)) * (deltaTime / 2);
+	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
 
-	gameObject->transform.rotation += newRot;
-	gameObject->transform.rotation = gameObject->transform.rotation.Normalized();
+	gameObject->transform.GetRotationQuat() += newRot;
+	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
 }
 
 
@@ -107,4 +108,39 @@ void RigidBody3D::ApplyImpulseTorque(const Vec3& torque)
 void RigidBody3D::ApplyConstantTorque(const Vec3& torque)
 {
 	angularAcc = torque / mass;
+}
+
+void RigidBody3D::SetColliderSize(MATH::Vec3 s)
+{
+	collider->SetSize(s);
+}
+
+void RigidBody3D::SetColliderType(ColliderType newType)
+{
+	collider->SetColliderType(newType); 
+}
+
+ColliderType RigidBody3D::GetColliderType()
+{
+	return collider->GetColliderType(); 
+}
+
+bool RigidBody3D::isMoveable() const
+{
+	return collider->IsMoveable(); 
+}
+
+void RigidBody3D::setMoveable(bool b)
+{
+	collider->SetMoveable(b); 
+}
+
+Collider3D* RigidBody3D::GetCollider()
+{
+	BoundingBox* OBB = dynamic_cast<BoundingBox*>(collider);
+
+	OBB->SetTransform(gameObject->transform.GetModelMatrix());
+	OBB->UpdateModelBounds();
+
+	return collider;
 }

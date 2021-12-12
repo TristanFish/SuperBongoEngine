@@ -22,6 +22,13 @@ public:
 	Model();
 	Model(const std::string& path);
 
+	const MATH::Vec3 GetColor() { return MATH::Vec3(meshes[0].color); }
+	void SetColor(const MATH::Vec3 color_) { meshes[0].color = MATH::Vec4(color_.x,color_.y,color_.z, meshes[0].color.w); }
+
+	std::vector<Vertex> GetVerticies() const;
+
+	void CalculateMaxMins();
+
 	void LoadModel();
 	void DestroyModel();
 	std::vector<Vertex> GetVertices() const;

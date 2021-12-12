@@ -38,12 +38,12 @@ public:
 	//! Handle Events Function (Inherited from Gameobject)
 	void HandleEvents(const SDL_Event& event) override {}
 	 
-	//! On Collision Enter  Function (Inherited from RigidBody3D)
+	//! On Collision Enter  Function (Inherited from GameObject)
 	/*! Is used to check what object is being collided with */
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override {}
+	virtual void OnCollisionEnter(Collider3D& otherBody) override {}
 
 
-	TestModel* NewClone() const override { return new TestModel(this->name, this->transform.pos); }
+	TestModel* NewClone() const override { return new TestModel(this->name, this->transform.GetPosition()); }
 private:
 
 	

@@ -14,7 +14,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 	this->name = name;
 	transform.SetPos(position);
 
-	transform.scale =  Vec3(1.0f, 1.0f, 1.0f);
+	transform.SetRot(Vec3(1.0f, 1.0f, 1.0f));
 	//transform.rotation = Vec3(90.0f, 0.0f, 0.0f);
 	//transform.rotation.Print();
 
@@ -22,7 +22,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 }
 
-void PlaneObject::OnCollisionEnter(RigidBody3D& otherBody)
+void PlaneObject::OnCollisionEnter(Collider3D& otherBody)
 {
 	std::cout << "PlaneObject Collided with something" << std::endl;
 }

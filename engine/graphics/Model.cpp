@@ -14,6 +14,17 @@ Model::Model(const std::string& path)
 	isLoaded = false;
 }
 
+std::vector<Vertex> Model::GetVerticies() const
+{
+	std::vector<Vertex> combinedVerticies;
+
+	for (const auto& mesh : meshes)
+	{
+		combinedVerticies.insert(combinedVerticies.end(), mesh.vertices.begin(), mesh.vertices.end());
+	}
+	return combinedVerticies;
+}
+
 void Model::LoadModel()
 {
 	Assimp::Importer importer;

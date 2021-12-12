@@ -6,7 +6,7 @@
 #include "math/VMath.h"
 
 using namespace MATH;
-
+/*
 bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 {
 	/*
@@ -26,7 +26,7 @@ bool Physics3D::BoxBoxDetect(RigidBody3D& rb1, RigidBody3D& rb2)
 	{	
 		return true;
 	}
-	 */
+
 
 
 	return (abs(rb1.collider.minVertices.x) <= abs(rb2.collider.maxVertices.x) && abs(rb1.collider.maxVertices.x) >= abs(rb2.collider.minVertices.x)) &&
@@ -333,10 +333,8 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 		rb2.accel.y = 0.0f;
 		rb2.accel.z = 0.0f;
 	}
-	*/
-	//rb1.accel.Print();
-	rb1.OnCollisionEnter(rb2);
-	rb2.OnCollisionEnter(rb1);
+	
+	//rb1.accel.print();
 }
 
 void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
@@ -360,7 +358,7 @@ void Physics3D::BoxPlaneResolve(RigidBody3D& box, RigidBody3D& plane)
 		plane.accel.y = 0.0f;
 		plane.accel.z = 0.0f;
 	}
-	*/
+	
 	box.OnCollisionEnter(box);
 	plane.OnCollisionEnter(box);
 }
@@ -381,7 +379,7 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 		}
 		return false;
 		break;
-	case Collider3D::type::Sphere | Collider3D::type::AABB:
+	case ColliderType::Sphere | ColliderType::OBB:
 		if (SphereBoxDetect(rb1, rb2))
 		{
 			SphereBoxResolve(rb1, rb2);
@@ -415,3 +413,4 @@ bool Physics3D::DetectCollision(RigidBody3D& rb1, RigidBody3D& rb2)
 	return false;
 }
 
+*/

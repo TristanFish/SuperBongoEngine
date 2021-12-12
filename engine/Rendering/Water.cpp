@@ -10,7 +10,7 @@ Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 	mr->SetInstanceID(0);
 
 	this->name = name;
-	this->transform.pos = pos;
+	this->transform.SetPos(pos);
 	//reflectTex = new Texture("resources/textures/water_dudv.png");
 	//reflectTex->LoadImage();
 

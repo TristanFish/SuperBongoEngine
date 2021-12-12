@@ -27,7 +27,7 @@ Tetrahedron::~Tetrahedron()
 {
 }
 
-void Tetrahedron::OnCollisionEnter(RigidBody3D& otherBody)
+void Tetrahedron::OnCollisionEnter(Collider3D& otherBody)
 {
-	std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
+	//std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }
