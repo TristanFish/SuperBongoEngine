@@ -31,7 +31,6 @@ void NetworkableObject::Update(const float deltaTime)
 	{
 		cereal::JSONOutputArchive oarchive(ss);
 		oarchive(cereal::make_nvp("NetworkType", networkEventType), cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
-		
 	}
 
 	if (role == NetRole::SERVER) {
