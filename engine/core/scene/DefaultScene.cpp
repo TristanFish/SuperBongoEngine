@@ -1,9 +1,7 @@
-
 #include "DefaultScene.h"
 
 #include "core/MouseRay.h"
 #include "core/Logger.h"
-#include "core/resources/SaveManager.h"
 #include "core/Globals.h"
 
 

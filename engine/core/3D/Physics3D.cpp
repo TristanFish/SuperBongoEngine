@@ -334,7 +334,7 @@ void Physics3D::BoxBoxResolve(RigidBody3D& rb1, RigidBody3D& rb2)
 		rb2.accel.z = 0.0f;
 	}
 	*/
-	//rb1.accel.print();
+	//rb1.accel.Print();
 	rb1.OnCollisionEnter(rb2);
 	rb2.OnCollisionEnter(rb1);
 }

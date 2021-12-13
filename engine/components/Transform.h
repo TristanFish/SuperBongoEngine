@@ -48,8 +48,10 @@ public:
 	MATH::Vec3& GetPosition() { return pos; }
 
 	//!GetRotation Getter
-	/*! Returns the transforms rotation */
-	MATH::Vec3 GetRotation() { return MATH::Quaternion::QuatToEuler(rotation); }
+	/*! Returns the transforms rotation inthe form of euler angles */
+	MATH::Vec3 GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
+
+	MATH::Quaternion GetQuaternion() const { return rotation; }
 
 	//!GetScale Getter
 	/*! Returns the transforms scale */

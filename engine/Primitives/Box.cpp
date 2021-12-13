@@ -10,7 +10,7 @@ Box::Box()
 
 Box::Box(const std::string& name, Vec3 position)
 {
-	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
+	AddComponent<MeshRenderer>()->LoadModel("Cube.obj");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	AddComponent<RigidBody3D>();
 	AddComponent<NetworkableObject>();

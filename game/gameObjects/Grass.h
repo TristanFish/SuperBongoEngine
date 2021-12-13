@@ -7,10 +7,9 @@
 //! Grass class
 /*! This class is a gameObject that has a MeshRenderer and a Instancer 
  An Instancer allows this object to render multiple instances of its desired object*/
-class Grass : public GameObject, public Instancer
+class Grass : public GameObject
 {
 public:
-
 	unsigned int amount;
 	
 	//! Secondary Grass Constructor
@@ -23,7 +22,4 @@ public:
 	virtual ~Grass() = default;
 
 	Grass* NewClone() const override { return new Grass(this->name, this->transform.pos, amount); }
-
-	
 };
-

@@ -144,7 +144,7 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 
 void SkyBox::Render() const
 {
-	Matrix3 view = Camera::getInstance()->getViewMatrix();
+	const Matrix3 view = Camera::getInstance()->getViewMatrix();
 	viewConvert = Mat3ToMat4(view);
 	
 	glDepthFunc(GL_LEQUAL);
@@ -166,7 +166,7 @@ void SkyBox::Render() const
 	
 }
 
-Matrix4 SkyBox::Mat3ToMat4(Matrix3 _m) const
+Matrix4 SkyBox::Mat3ToMat4(const Matrix3& _m)
 {
 	Matrix4 m;
 	m[0] = _m[0];   m[4] = _m[3];   m[8] = _m[6];   m[12] = 0;

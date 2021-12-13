@@ -1,22 +1,15 @@
 #include "UIStatics.h"
 
+#include <memory>
+#include <iostream>
 #include <imgui/imgui_internal.h>
 
 #include "components/GameObject.h"
-#include "components/SceneGraph.h"
 #include "components/3D/MeshRenderer.h"
-#include "core/CoreEngine.h"
 #include "core/resources/TextureManager.h"
 #include "core/scene/Scene.h"
 
 GameObject* UIStatics::selectedObj = nullptr;
-
-
-UIStatics::~UIStatics()
-{
-
-}
-
 
 
 bool UIStatics::DrawVec3(const std::string& label, MATH::Vec3& value, const float columnWidth)
@@ -120,29 +113,41 @@ void UIStatics::DrawTextureSlot(const char* textureName, MeshRenderer* meshRende
 	}
 	ImGui::NextColumn();
 
-
-	
-
-
 	ImGui::SameLine(0.0f, 25.0f);
 
 	float offset = (size.x - ImGui::GetFont()->FontSize) / 4;
 	float yTextPos = ImGui::GetCursorPos().y + offset;
 	float xTexPos = ImGui::GetCursorPos().x;
 
-
 	ImGui::SetCursorPos({ xTexPos,yTextPos });
 	std::filesystem::path path = meshRenderer->GetModel()->modelPath;
 	ImGui::Text(path.stem().string().c_str());
 
-
 	ImGui::SetCursorPos({ xTexPos, yTextPos + (offset*2) });
 	ImGui::Text(path.string().c_str());
 
-
-
 	ImGui::Columns(1);
 
+}
+
+bool UIStatics::OpenComponentTreeNode(Component* comp, const char* name)
+{
+	const ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+	
+	const bool opened = ImGui::TreeNodeEx(name, tree_flags, name);
+
+	std::string state = "active";
+
+	if(!comp->active) state = "inactive";
+
+	ImGui::SameLine(0, -1);
+	
+	if(ImGui::Button(state.c_str()))
+	{
+		comp->active = !comp->active;
+	}
+	
+	return opened;
 }
 
 
