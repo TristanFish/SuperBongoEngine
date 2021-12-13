@@ -36,6 +36,9 @@ bool Game1::OnCreate()
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
 
+
+		
+
 		return (create && postCreate);
 	}
 	EngineLogger::Error("Engine's scene is not initialized to 0", "Game1.cpp", __LINE__);
@@ -81,9 +84,11 @@ void Game1::BuildScene()
 		CoreEngine::GetInstance()->OnDestroy();
 	}
 	currentScene->LoadMapData();
+	currentScene->objectList->AddRenderingComponents();
 	if(!currentScene->PostCreate())
 	{
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
+
 }

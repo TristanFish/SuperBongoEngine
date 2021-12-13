@@ -84,8 +84,9 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 	{
 		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
 	}
-	else 
-	{
+
+	else {
+
 		EngineLogger::Error("Object could not be added to loadable objects map" , "LoadUtility.cpp", __LINE__);
 		std::cout << classType << std::endl;
 	}
@@ -100,6 +101,8 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 	tinyxml2::XMLError eResult = SaveData.LoadFile(savePath.c_str());
 
 
+	
+
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
 		EngineLogger::Error("Couldn't load the Save File " + saveName, "LoadUtility.cpp", __LINE__);
@@ -107,12 +110,17 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 	tinyxml2::XMLNode* pRoot = SaveData.FirstChildElement("Root");
 
+
 	LoadRecursiveElements(pRoot->FirstChildElement(), file);
 	
+
+
 	if (extention == FileType::OBJECT)
 	{
 		std::string classType;
 		classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
+
+
 
 		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
 		{
@@ -126,6 +134,7 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 		file.SetHasBeenEdited(true);
 	}
 
+
 	SaveManager::AddToSaveFiles(saveName,SaveFile(file));
 }
 
@@ -136,6 +145,7 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 	int intValue = atrib->IntValue();
 
 	float floatValue = atrib->FloatValue();
+
 
 	if (atrib->QueryFloatValue(&floatValue) == tinyxml2::XMLError::XML_SUCCESS)
 	{
@@ -162,6 +172,7 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 
 FileType LoadUtility::GetFileExtention(const std::string& ext) const
 {
+
 	if (ext == ".scene")
 	{
 		return FileType::SCENE;
@@ -193,11 +204,16 @@ void LoadUtility::LoadExistingSaves()
 	std::string objDir = "Objects\\";
 	std::string sceneObjPath = (directory + objDir);
 
+
+
+
 	EngineLogger::Info("===========EXISTING SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	for (auto entry = std::filesystem::recursive_directory_iterator(directory); entry != std::filesystem::recursive_directory_iterator(); ++entry)
 	{
+
 		std::filesystem::path curPath = entry->path();
+
 
 		// Makes sure were not loading in any save files yet
 		if (curPath == (sceneObjPath + curPath.filename().string())  && entry->is_directory())
@@ -206,11 +222,17 @@ void LoadUtility::LoadExistingSaves()
 			continue;
 		}
 
+		
 		if (entry->is_regular_file())
 		{			
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
+			
 		}
+
 	}
+
+	
+
 
 	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
@@ -223,7 +245,9 @@ void LoadUtility::LoadSceneSaves()
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 	std::string sceneObjPath = (Globals::SAVE_DATA_PATH + objDir) + sceneName + "\\";
 
-	if (!std::filesystem::exists(sceneObjPath)) return;
+	if (!std::filesystem::exists(sceneObjPath))
+		return;
+
 
 	for (auto entry = std::filesystem::directory_iterator(sceneObjPath); entry != std::filesystem::directory_iterator(); ++entry)
 	{
@@ -237,6 +261,7 @@ void LoadUtility::LoadSceneSaves()
 	}
 
 	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+
 }
 
 void LoadUtility::UnLoadSceneSaves()
@@ -282,13 +307,16 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 		for (int i = 0; i < 3; i++)
 		{
+
 			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVector(i)]);
 			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVector(i)]);
 			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVector(i)]);
+
 		}
 
 		prevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
+
 
 		ElementInfo MeshColorElm;
 
@@ -301,9 +329,12 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 			for (int i = 0; i < 4; i++)
 			{
+
 				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
+
 			}
 		}
+
 
 		for (auto obj : SaveManager::SaveableObjects)
 		{
@@ -340,8 +371,10 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
 			if (typeid(*G_Interface->Scenes[s]).name() == classType)
 			{
 				G_Interface->Scenes[s]->SetSceneName(sceneFiles[i].GetFileName());
+				
 			}
 		}
+		
 	}
 
 	// Adds all scenes that use the DefaultScene Class

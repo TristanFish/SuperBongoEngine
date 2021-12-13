@@ -19,5 +19,6 @@ Grass::Grass(const std::string& name, Vec3 position, unsigned int amount_)
 
 	canBeInstantiated = true;
 
-	AddComponent<Instancer>();
+	
+	Instancer::Init(amount_, this);
 }

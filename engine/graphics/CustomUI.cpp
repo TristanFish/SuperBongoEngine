@@ -107,9 +107,9 @@ void PropertiesPanel::Render()
 	{
 		#pragma region GameObject
 		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
-		if (ImGui::InputText("GameObject Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			const std::string newObjName = UIStatics::GetSelectedObject()->name;
+			std::string newObjName = UIStatics::GetSelectedObject()->name;
 
 			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
 			SaveManager::SetSaveName(oldObjName, newObjName);
@@ -126,37 +126,8 @@ void PropertiesPanel::Render()
 
 			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
 
-
+			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f))
 			{
-				//clamp the euler angles
-				if(rotation.x > 180.0f)
-				{
-					rotation.x -= 360.0f;
-				}
-				if(rotation.x < -180.0f)
-				{
-					rotation.x += 360.0f;
-				}
-				if(rotation.y > 180.0f)
-				{
-					rotation.y -= 360.0f;
-				}
-				if(rotation.y < -180.0f)
-				{
-					rotation.y += 360.0f;
-				}
-				if(rotation.z > 180.0f)
-				{
-					rotation.z -= 360.0f;
-				}
-				if(rotation.z < -180.0f)
-				{
-					rotation.z += 360.0f;
-				}
-			}
-
-			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
-			
 				selectedObject->transform.SetRot(rotation);
 			}
 			
@@ -276,7 +247,6 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			if (ImGui::MenuItem("Delete"))
 			{
 				Globals::s_SceneGraph->DeleteGameObject(go);
-				UIStatics::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}
@@ -354,7 +324,6 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			if (ImGui::MenuItem("Delete"))
 			{
 				Globals::s_SceneGraph->DeleteGameObject(go);
-				UIStatics::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}

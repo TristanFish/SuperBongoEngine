@@ -1,58 +1,56 @@
 #include "VMath.h"
 
-#include "core/Logger.h"
-
 using namespace MATH;
  
 /// Return a normalized Vec3
 Vec3 VMath::normalize(const Vec3 &a) {
+	float magnitude;
 	Vec3 result;
-
-	const float magnitude = static_cast<float>(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
-
+	magnitude = float(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
 	if (magnitude < VERY_SMALL) {
-		EngineLogger::Warning("Divide by nearly zero", "VMATH.cpp", __LINE__, MessageTag::TYPE_MATH);
-		result = Vec3();
+		std::string errorMsg("Divide by nearly zero! ");
+		throw errorMsg;
 	}
-	else
-	{
-		result = a / magnitude;
-	}
-
+#endif
+	result.x = a.x / magnitude;
+	result.y = a.y / magnitude;
+	result.z = a.z / magnitude;
 	return result;
 }
 
-Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n)
-{
-	const float scalar = 2.0f * dot(-v, n);
-	const Vec3 temp = n * scalar;
-	const Vec3 result = temp - v;
-	return result;
+Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n){
+	Vec3 result;
+	float scalar = 2.0f * dot(-v, n);
+	Vec3 temp = n * scalar;
+	result = temp - v;
+	return temp;
 }
 
-float VMath::distance(const Vec3 &a, const Vec3 &b)
-{
-	return mag(a - b);
+float VMath::distance(const Vec3 &a, const Vec3 &b){
+	Vec3 r  = a - b;
+	return(mag(r));
 }
 
-Vec4 VMath::normalize(const Vec4& a)
+MATH::Vec4 VMath::normalize(const Vec4& a)
 {
+	float magnitude;
 	Vec4 result;
-	const float magnitude = static_cast<float>(sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w));
-	if (magnitude < VERY_SMALL) 
-	{
-		EngineLogger::Warning("Divide by nearly zero!", "VMATH.cpp", __LINE__, MessageTag::TYPE_MATH);
-		result = Vec4();
+	magnitude = float(sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w));
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+	if (magnitude < VERY_SMALL) {
+		std::string errorMsg("Divide by nearly zero! ");
+		throw errorMsg;
 	}
-	else
-	{
-		result = a / magnitude;
-	}
-
+#endif
+	result.x = a.x / magnitude;
+	result.y = a.y / magnitude;
+	result.z = a.z / magnitude;
+	result.w = a.w / magnitude;
 	return result;
 }
 
-Vec3 VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
+Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
 {
 	Vec3 clampedVector = clampedV;
 
@@ -91,58 +89,32 @@ Vec3 VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
 
 //returns a vector where the largest component of the input vector is now a unit length
 //zeroes out all other components
-Vec3 VMath::orthagonalize(const Vec3 &v)
+Vec3 MATH::VMath::orthagonalize(const Vec3 &v)
 {
+	
 	if (abs(v.x) > abs(v.y))
 	{
 		if (abs(v.x) > abs(v.z))
 		{
-			if(v.x > 0)
-			{
-				return Vec3::Right();
-			}
-			else
-			{
-				return -Vec3::Right();
-			}
+			return VMath::normalize(Vec3(v.x, 0.0f, 0.0f));
 		}
 		else
 		{
-			if(v.z > 0)
-			{
-				return Vec3::Forward();
-			}
-			else
-			{
-				return -Vec3::Forward();
-			}
+			return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
 		}
 	}
 	else
 	{
 		if (abs(v.y) > abs(v.z))
 		{
-			if(v.y > 0)
-			{
-				return Vec3::Up();
-			}
-			else
-			{
-				return -Vec3::Up();
-			}
+			return VMath::normalize(Vec3(0.0f, v.y, 0.0f));
 		}
 		else
 		{
-			if(v.z > 0)
-			{
-				return Vec3::Forward();
-			}
-			else
-			{
-				return -Vec3::Forward();
-			}
+			return VMath::normalize(Vec3(0.0f, 0.0f, v.z));
 		}
 	}
+	
 }
 
 Vec3 VMath::lerp(const Vec3 &v1, const Vec3 &v2, float t) {

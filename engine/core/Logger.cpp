@@ -1,14 +1,10 @@
 #include "Logger.h"
-#include <fstream>
-
-using namespace std;
 
 MessageType EngineLogger::currentSev = MessageType::TYPE_NONE;
-string EngineLogger::outputName;
-function<void(const string&)> EngineLogger::consoleCallback = nullptr;
+std::string EngineLogger::outputName = "";
+std::function<void(const std::string&)> EngineLogger::consoleCallback = nullptr;
 
-
-void EngineLogger::SetCallback(const function<void(const string&)>& func)
+void EngineLogger::SetCallback(const std::function<void(const std::string&)>& func)
 {
 	if(consoleCallback == nullptr)
 	{
@@ -16,12 +12,12 @@ void EngineLogger::SetCallback(const function<void(const string&)>& func)
 	}
 }
 
-void EngineLogger::OnCreate(const string& name_)
+void EngineLogger::OnCreate(const std::string& name_)
 {
 	outputName = name_ + ".txt";
-	fstream out;
+	std::fstream out;
 
-	out.open(outputName.c_str(), ios::out);
+	out.open(outputName.c_str(), std::ios::out);
 	out.close();
 	currentSev = MessageType::TYPE_INFO;
 }
@@ -31,64 +27,62 @@ void EngineLogger::SetSeverity(MessageType type_)
 	currentSev = type_;
 }
 
-string CreateTag(MessageTag tag)
+std::string CreateTag(MessageTag tag)
 {
 	switch (tag)
 	{
 	case MessageTag::TYPE_NONE: 
-		return "";
+		return std::string("");
 	case MessageTag::TYPE_PHYSICS:
-		return "[PHYSICS]";
+		return std::string("[PHYSICS]");
 	case MessageTag::TYPE_SAVE: 
-		return "[SAVE]";
+		return std::string("[SAVE]");
 	case MessageTag::TYPE_LOAD: 
-		return "[LOAD]";
+		return std::string("[LOAD]");
 	case MessageTag::TYPE_NETWORK: 
-		return "[NETWORK]";
+		return std::string("[NETWORK]");
 	case MessageTag::TYPE_GRAPHICS: 
-		return "[GRAPHICS]";
+		return std::string("[GRAPHICS]");
 	case MessageTag::TYPE_AI: 
-		return "[AI]";
-	case MessageTag::TYPE_MATH:
-		return "[MATH]";
+		return std::string("[AI]");
+	default: 
+		return std::string("");
 	}
-	return "";
 }
 
-void EngineLogger::Info(const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::Info(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	Log(MessageType::TYPE_INFO,  CreateTag(tag) + "[INFO]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Trace(const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::Trace(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	Log(MessageType::TYPE_TRACE, CreateTag(tag) + "[TRACE]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Warning(const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::Warning(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	Log(MessageType::TYPE_WARNING, CreateTag(tag) + "[WARNING]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Error(const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::Error(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	Log(MessageType::TYPE_ERROR, CreateTag(tag) + "[ERROR]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::FatalError(const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::FatalError(const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	Log(MessageType::TYPE_FATAL_ERROR, CreateTag(tag) + "[FATAL_ERROR]: " + message_, fileName_, line_, tag, sendToConsoleLog);
 }
 
-void EngineLogger::Log(const MessageType type_, const string& message_, const string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
+void EngineLogger::Log(const MessageType type_, const std::string& message_, const std::string& fileName_, const int line_, MessageTag tag, bool sendToConsoleLog)
 {
 	if (type_ <= currentSev && currentSev > MessageType::TYPE_NONE)
 	{
-		const string log = string(message_ + " in: " + fileName_ + " on line: " + to_string(line_) + "\n");
-		
-		//cout << log;
-		ofstream out;
-		out.open(outputName.c_str(), ios::app | ios::out);
+		const std::string log = std::string(message_ + " in: " + fileName_ + " on line: " + std::to_string(line_) + "\n");
+		//std::cout << log;
+		std::ofstream out;
+		out.open(outputName.c_str(), std::ios::app | std::ios::out);
 		if(consoleCallback != nullptr && sendToConsoleLog)
 		{
 			consoleCallback(log);

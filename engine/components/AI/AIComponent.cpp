@@ -53,11 +53,11 @@ void AIComponent::SetAIType(AIType aiType_)	{
 }
 
 void AIComponent::SetSteering(SteeringOutput* steering_)	{
-	if (Kinematic::KinematicSteeringOutput * kSteer = dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
-		kSteering = *kSteer;
+	if (Kinematic::KinematicSteeringOutput * steer = dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
+		kSteering = *steer;
 	}
-	else if (Dynamic::DynamicSteeringOutput * dSteer = dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
-		dSteering = *dSteer;
+	else if (Dynamic::DynamicSteeringOutput * steer = dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
+		dSteering = *steer;
 	}
 }
 

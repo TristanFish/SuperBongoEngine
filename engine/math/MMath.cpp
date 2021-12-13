@@ -1,20 +1,16 @@
 #include "VMath.h"
 #include "MMath.h"
-
-#include "core/Logger.h"
-#include "Quaternion.h"
-
 using namespace MATH;
 
 
-Matrix4 MMath::calcRotationMatrix(const Vec3& euler)
+Matrix4 MATH::MMath::calcRotationMatrix(const Vec3& euler)
 {
-	return	rotate(euler.x * DEGREES_TO_RADIANS, Vec3(1.0f, 0.0f, 0.0f)) *
-			rotate(euler.y * DEGREES_TO_RADIANS, Vec3(0.0f, 1.0f, 0.0f)) *
-		    rotate(euler.z * DEGREES_TO_RADIANS, Vec3(0.0f, 0.0f, 1.0f));
+	return	MMath::rotate(euler.x * DEGREES_TO_RADIANS, Vec3(1.0f, 0.0f, 0.0f)) *
+			MMath::rotate(euler.y * DEGREES_TO_RADIANS, Vec3(0.0f, 1.0f, 0.0f)) *
+		    MMath::rotate(euler.z * DEGREES_TO_RADIANS, Vec3(0.0f, 0.0f, 1.0f));
 }
 
-Vec3 MMath::calcEulerAngles(const Matrix4& rot)
+Vec3 MATH::MMath::calcEulerAngles(const Matrix4& rot)
 {
 	Vec3 euler;
 
@@ -61,7 +57,7 @@ Vec3 MMath::calcEulerAngles(const Matrix4& rot)
 	return euler;// * rad2deg;
 }
 
-Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
+MATH::Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
 {
 	Matrix4 m;
 	m[0] = right.x; m[1] = right.y;     m[2] = right.z; m[3] = 0;
@@ -69,56 +65,9 @@ Matrix4 MMath::GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right)
 	m[8] = forward.x; m[9] = forward.y; m[10] = forward.z; m[11] = 0;
 	m[12] = 0;      m[13] = 0;          m[14] = 0; m[15] = 1;
 
-	return m;
-}
 
-Quaternion MMath::ConvertMatToQuat(const Matrix4& mat_)
-{
-	Quaternion q;
-	float s;
-	float x;
-	float y;
-	float z;
-	float w;
 	
-	Matrix3 mat = mat_;
-	float trace = mat[0] + mat[4] + mat[8];
-	if(trace > 0)
-	{
-		s = sqrt(trace + 1.0f) * 2;
-		w = 0.25f * s;
-		x = (mat[7] - mat[5]) / s;
-		y = (mat[2] - mat[6]) / s;
-		z = (mat[3] - mat[1]) / s;
-		return Quaternion(x, y, z, w);
-	}
-	else if((mat[0] > mat[4]) & (mat[0] > mat[8]))
-	{
-		s = sqrt(1.0f + mat[0] - mat[4] - mat[8]) * 2;
-		w = (mat[7] - mat[5]) / s;
-		x = 0.25f * s;
-		y = (mat[1] + mat[3]) / s;
-		z = (mat[2] + mat[6]) / s;
-		return Quaternion(x, y, z, w);
-	}
-	else if(mat[4] > mat[8])
-	{
-		s = sqrt(1.0f + mat[4] - mat[0] - mat[8]) * 2;
-		w = (mat[2] - mat[6]) / s;
-		x = (mat[1] + mat[3]) / s;
-		y = 0.25f * s;
-		z = (mat[5] + mat[7]) / s;
-		return Quaternion(x, y, z, w);
-	}
-	else
-	{
-		s = sqrt(1.0f + mat[8] - mat[0] - mat[4]) * 2;
-		w = (mat[3] - mat[1]) / s;
-		x = (mat[2] + mat[6]) / s;
-		y = (mat[5] + mat[7]) / s;
-		z = 0.25f * s;
-		return Quaternion(x, y, z, w);
-	}
+	return m;
 }
 
 MATH::Matrix4 MMath::GetFromMat3(const Matrix3& m_)
@@ -294,24 +243,30 @@ Matrix4 MMath::scale(const Vec3 &scale) {
 	return MMath::scale(scale.x, scale.y, scale.z);
 }
 
-Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at, const Vec3& up){
+///Tested Feb 1 2013 SSF
+Matrix4 MMath::lookAt(float eyeX, float eyeY, float eyeZ,
+			float atX, float atY, float atZ,
+			float upX, float upY, float upZ){
+
+	Vec3 at(atX,atY,atZ);
+	Vec3 up(upX,upY,upZ);
+	Vec3 eye(eyeX,eyeY,eyeZ);
 
 	Matrix4 result;
-	Vec3 modifiedUp = up;
-	
-	const Vec3 forward = VMath::normalize(at - eye);
-	modifiedUp = VMath::normalize(modifiedUp);
-	const Vec3 side = VMath::normalize( VMath::cross(forward,modifiedUp));
-	modifiedUp = VMath::cross(side,forward);
+
+	Vec3 forward = VMath::normalize(at - eye);
+	up = VMath::normalize(up);
+	Vec3 side = VMath::normalize( VMath::cross(forward,up));
+	up = VMath::cross(side,forward);
 
 	result[0] = side.x;
 	result[1] = side.y;
 	result[2] = side.z;
 	result[3] = 0.0;
 
-	result[4] = modifiedUp.x;
-	result[5] = modifiedUp.y;
-	result[6] = modifiedUp.z;
+	result[4] = up.x;
+	result[5] = up.y;
+	result[6] = up.z;
 	result[7] = 0.0;
 
 	result[8]  = -forward.x;
@@ -320,11 +275,15 @@ Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at, const Vec3& up){
 	result[11] = 0.0;
 	
 	result[12] = -VMath::dot(side,eye);	
-	result[13] = -VMath::dot(modifiedUp,eye);
+	result[13] = -VMath::dot(up,eye);
 	result[14] =  VMath::dot(forward,eye);
 	result[15] = 1.0;
 
 	return result;
+}
+
+Matrix4 MMath::lookAt(const Vec3& eye, const Vec3& at,  const Vec3& up){
+	return lookAt(eye.x, eye.y, eye.z, at.x, at.y, at.z, up.x, up.y, up.z);
 }
 
 /// Take the transpose of a matrix, swap row with columns 
@@ -334,6 +293,7 @@ Matrix4 MMath::transpose(const Matrix4 &m){
 					   m[1], m[5], m[9], m[13],
 					   m[2], m[6], m[10],m[14],
 					   m[3], m[7], m[11],m[15]);
+
 }
 
 /// 2x2 inverse is easy, 3x3 is a pain, 4x4 no way, this is tough stuff
@@ -361,16 +321,13 @@ Matrix4 MMath::inverse(const Matrix4 &m) {
 
 		determinate = m[0] * inverseM[0] + m[1] * inverseM[4] + m[2] * inverseM[8] + m[3] * inverseM[12];
 		
-		if ( fabs(determinate) < VERY_SMALL ) 
-		{
-			EngineLogger::Error("Divide by nearly zero error", "MMath.cpp", __LINE__, MessageTag::TYPE_MATH);
-			determinate = 0;
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+		if ( fabs(determinate) < VERY_SMALL ) {
+			std::string errorMsg("Divide by nearly zero in MMath::inverse!");
+			throw errorMsg;
 		}
-		else
-		{
-			determinate = 1.0f / determinate;
-		}
-		
+#endif
+		determinate = 1.0f / determinate;
 		for (int i = 0; i < 16; i++){
 			inverseM[i] *= determinate;
 		}

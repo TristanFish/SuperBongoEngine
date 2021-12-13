@@ -24,7 +24,6 @@ public:
 
 	void LoadModel();
 	void DestroyModel();
-	std::vector<Vertex> GetVertices() const;
 	
 private:
 

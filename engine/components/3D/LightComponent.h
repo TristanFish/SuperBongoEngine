@@ -7,29 +7,7 @@
 enum class LightType
 {
 	POINT = 1,
-	SPOT,
-	DIRECTIONAL
-};
-
-struct LightData
-{
-	MATH::Vec3 ambColor;
-	MATH::Vec3 diffColor;
-	MATH::Vec3 specColor;
-	LightType type;
-	float intensity;
-	
-	float cutOff;
-	float outerCutOff;
-
-	float attenConstant;
-	float attenLinear;
-	float attenQuadratic;
-
-	LightData() = default;
-
-	void SendLightDataToShader(const ShaderProgram& shader, const MATH::Vec3& pos, const MATH::Vec3& direct, const std::string& shaderString) const;
-
+	SPOT = 2,
 };
 
 struct LightTypePair
@@ -45,26 +23,30 @@ struct LightTypePair
 };
 
 static LightTypePair lightTypeNameEnumPairs[]{LightTypePair("Point", LightType::POINT),
-											  LightTypePair("Spot", LightType::SPOT),
-											  LightTypePair("Directional", LightType::DIRECTIONAL)};
-
+											  LightTypePair("Spot", LightType::SPOT) };
 
 class LightComponent : public Component
 {
 public:
 
-	LightData lightInfo;
-
-	virtual ~LightComponent();
+	LightType type;
+	float intensity;
+	MATH::Vec3 ambColor;
+	MATH::Vec3 diffColor;
+	MATH::Vec3 specColor;
 	
 	// Inherited via Component
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override {}
-	void Render() const {}
+	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
+
 
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 
 	void ImGuiRender() override;
+private:
+
+	Debug lightCube;
 };
 #endif

@@ -10,6 +10,7 @@ class AudioSourceComponent : public Component
 	public:
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override;
+	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
 
 	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */

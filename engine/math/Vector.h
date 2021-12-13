@@ -10,8 +10,8 @@
 		/// There are notes at the bottom of this file you might want to read
 		///
 
-namespace MATH
-{
+namespace MATH {
+
 /// This is used in normalizing vectors. Dividing by zero is a well known
 /// problem but dividing by nearly zero is also a problem. 1.0x10-7 is very
 /// small in "float" percision. 
@@ -26,61 +26,56 @@ namespace MATH
 
 	#ifndef DEGREES_TO_RADIANS
 	#define DEGREES_TO_RADIANS (M_PI / 180.0f)
-	#endif
-
-	#ifndef RADIANS_TO_DEGREES
-	#define RADIANS_TO_DEGREES (180.0f / M_PI)
-	#endif
+	#endif	
 
 
 
-	struct Vec2
-	{
-		float x, y;
-	
-		Vec2()
+	struct Vec2 {
+		float  x, y;
+
+		inline Vec2()
 		{
 			x = 0.0f;
 			y = 0.0f;
 		}
 
-		Vec2(float _default)
+		inline Vec2(float _default)
 		{
 			x = _default;
 			y = _default;
 		}
 
-		Vec2(float _x, float _y)
+		inline Vec2(float _x, float _y)
 		{
 			x = _x;
 			y = _y;
 		}
 
-		Vec2 operator / (const Vec2& v) const {
+		inline const Vec2 operator / (const Vec2& v) const {
 			return Vec2(x / v.x, y / v.y);
 		}
 
-		bool operator != (const Vec2& v) const {
+		inline const bool operator != (const Vec2& v) const {
 			return (x != v.x || y != v.y);
 		}
 
-		Vec2 operator + (const Vec2& v) const
+		inline const Vec2 operator + (const Vec2& v) const
 		{
 			return Vec2(x + v.x, y + v.y);
 		}
-		Vec2 operator - (const Vec2& v) const
+		inline const Vec2 operator - (const Vec2& v) const
 		{
 			return Vec2(x - v.x, y - v.y);
 		}
 		
-		Vec2  operator * (const float s) const {
+		inline const Vec2  operator * (const float s) const {
 			return Vec2(s * x, s * y);
 		}
-		Vec2  operator / (const float s) const {
+		inline const Vec2  operator / (const float s) const {
 			return Vec2(x / s, y / s);
 		}
 
-		Vec2  operator - (const float s) const {
+		inline const Vec2  operator - (const float s) const {
 			return Vec2(s - x, s - y);
 		}
 	};
@@ -88,24 +83,23 @@ namespace MATH
 	struct Vec3 {
 		float  x,y,z;	///  Structures are default public
 
-		/// Here's a set of constructors
-		explicit Vec3(float s = 0.0f){
-			x = s;
-			y = s;
-			z = s;
+		/// Just a little utility to populate a vector
+		inline void set( float x_, float y_, float z_ ) {
+			x = x_; y = y_; z = z_; 
 		}
 
-		Vec3( float x, float y, float z ){
-			this->x = x;
-			this->y = y;
-			this->z = z;
+		/// Here's a set of constructors
+		inline explicit Vec3( float s = float(0.0) ){
+			set(s,s,s);
+		}
+
+		inline Vec3( float x, float y, float z ){
+			set(x,y,z);
 		}
 		
 		/// A copy constructor
-		Vec3( const Vec3& v ) {
-			x = v.x;
-			y = v.y;
-			z = v.z;
+		inline Vec3( const Vec3& v ) { 
+			set(v.x,v.y,v.z); 
 		}
 
 		///////////////////////////////////////////////////////////
@@ -113,24 +107,27 @@ namespace MATH
 		///////////////////////////////////////////////////////////
 
 		/// An assignment operator   
-		Vec3& operator = (const Vec3& v) = default;
+		inline Vec3& operator = (const Vec3& v){
+			set(v.x, v.y, v.z); 
+			return *this;
+		}
 		
 		/// Now we can use the Vec3 like an array but we'll need two overloads
-		float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
+		inline const float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
 			return *(&x + index); 
 		}
 
-		float& operator [] ( int index ) {	/// This one is for writing to the Vec3 as if where an array.  
+		inline float& operator [] ( int index ) {	/// This one is for writing to the Vec3 as if where an array.  
 			return *(&x + index);					/// See note 2 at the end of this file about lvalues and rvalues
 		}
 	
 		/// Add two Vec3s
-		Vec3 operator + ( const Vec3& v ) const { 
+		inline const Vec3 operator + ( const Vec3& v ) const { 
 			return Vec3( x + v.x, y + v.y, z + v.z ); 
 		}
 
 		/// Add a Vec3 to itself
-		Vec3& operator += ( const Vec3& v ){ 
+		inline Vec3& operator += ( const Vec3& v ){ 
 			x += v.x;  
 			y += v.y;  
 			z += v.z;  
@@ -138,17 +135,17 @@ namespace MATH
 		}
 
 		/// Take the negative of a Vec3
-		Vec3 operator - () const  { 
+		inline const Vec3 operator - () const  { 
 			return Vec3( -x, -y, -z ); 
 		}   
 
 		/// Subtract two Vec3s
-		Vec3 operator - ( const Vec3& v ) const { 
+		inline const Vec3 operator - ( const Vec3& v ) const { 
 			return Vec3(x - v.x, y - v.y, z - v.z ); 
 		}
 
 		/// Subtract a Vec 3 from itself
-		Vec3& operator -= ( const Vec3& v ){ 
+		inline Vec3& operator -= ( const Vec3& v ){ 
 			x -= v.x;  
 			y -= v.y;  
 			z -= v.z;  
@@ -156,19 +153,19 @@ namespace MATH
 		}
 
 		/// Multiply a Vec3 by a scalar
-		Vec3  operator * ( const float s ) const { 
+		inline const Vec3  operator * ( const float s ) const { 
 			return Vec3(s*x, s*y, s*z ); 
 		}
 		
 		/// Multiply a scalar by a Vec3   It's the scalar first then the Vec3
 		/// Overloaded and a friend, ouch! It's the only way to make it work with a scalar first.
 		/// Friends are tricky, look them up. 
-		friend Vec3 operator * ( const float s, const Vec3& v ) { 
+		inline friend Vec3 operator * ( const float s, const Vec3& v ) { 
 			return v * s; 
 		}
 
 		/// Multiply a Vec3 by a scalar and assign it to itself
-		Vec3& operator *= ( const float s ) { 
+		inline Vec3& operator *= ( const float s ) { 
 			x *= s; 
 			y *= s;  
 			z *= s;  
@@ -176,7 +173,7 @@ namespace MATH
 		}
 
 		/// Divide by a scalar - Watch for divide by zero issues
-		Vec3 operator / ( const float s ) const {
+		inline const Vec3 operator / ( const float s ) const {
 	#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
 		if ( fabs(s) < VERY_SMALL ) {
 			std::string errorMsg("Divide by nearly zero! ");
@@ -187,7 +184,7 @@ namespace MATH
 		return *this * r;
 		}
 
-		Vec3& operator /= ( const float s ) {
+		inline Vec3& operator /= ( const float s ) {
 #ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
 		if ( std::fabs(s) < VERY_SMALL ) {
 			std::string errorMsg("Divide by nearly zero! ");
@@ -201,33 +198,33 @@ namespace MATH
 
 		static Vec3 Forward()
 		{
-			return Vec3(0.0f, 0.0f, 1.0f);
+			return Vec3(0.0f,0.0f,1.0f);
 		}
 		
 		static Vec3 Up()
 		{
-			return Vec3(0.0f, 1.0f, 0.0f);
+			return Vec3(0.0f,1.0f,1.0f);
 		}
 		
 		static Vec3 Right()
 		{
-			return Vec3(1.0f, 0.0f, 0.0f);
+			return Vec3(1.0f,0.0f,0.0f);
 		}
 
 		
 		
-		void print() const { 
+		inline void print() { 
 			printf("%1.8f %1.8f %1.8f\n", x,y,z);		  
 		}
 
 		///
 		/// Type conversion operators 
 		///
-		operator const float* () const {
+		inline operator const float* () const {
 			return static_cast<const float*>(&x);
 		}
 
-		operator float* () {
+		inline operator float* () {
 			return static_cast<float*>(&x);
 		}
 
@@ -257,16 +254,16 @@ namespace MATH
 		float  w;
 
 		/// Here's a set of constructors
-		explicit Vec4( float s = 0.0f ){ x=s; y=s; z=s; w=s;}
-		Vec4( float _x, float _y, float _z, float _w){ x=_x; y=_y; z=_z; w=_w;} 
-		Vec4( const Vec4& v ) { 
+		inline explicit Vec4( float s = float(0.0) ){ x=s; y=s; z=s; w=s;}
+		inline Vec4( float _x, float _y, float _z, float _w){ x=_x; y=_y; z=_z; w=_w;} 
+		inline Vec4( const Vec4& v ) { 
 			x = v.x;  
 			y = v.y;  
 			z = v.z; 
 			w = v.w;
 		}
 
-		Vec4( const Vec3& v ) { 
+		inline Vec4( const Vec3& v ) { 
 			x = v.x;  
 			y = v.y;  
 			z = v.z; 
@@ -274,7 +271,7 @@ namespace MATH
 		}
 		
 		/// An assignment operator
-		Vec4& operator = (const Vec4& v){
+		inline Vec4& operator = (const Vec4& v){
 			x = v.x;  
 			y = v.y;  
 			z = v.z; 
@@ -283,20 +280,20 @@ namespace MATH
 		}
 
 		/// See Vec3 definition 
-		float& operator [] ( int index ) { 
+		inline float& operator [] ( int index ) { 
 			return *(&x + index); 
 		}
-		float operator [] ( int i ) const { 
+		inline const float operator [] ( int i ) const { 
 			return *(&x + i); 
 		}
 
 		/// See Vec3 definition 
-		Vec4 operator + ( const Vec4& v ) const { 
+		inline Vec4 operator + ( const Vec4& v ) const { 
 			return Vec4( x + v.x, y + v.y, z + v.z, w + v.w ); 
 		}
 
 		/// See Vec3 definition 
-		Vec4& operator += ( const Vec4& v ){ 
+		inline Vec4& operator += ( const Vec4& v ){ 
 			x += v.x;
 			y += v.y;
 			z += v.z;
@@ -305,17 +302,17 @@ namespace MATH
 		}
 
 		//// See Vec3 definition 
-		Vec4 operator - () const  { 
+		inline Vec4 operator - () const  { 
 			return Vec4( -x, -y, -z, -w );
 		}   
 
 		/// See Vec3 definition 
-		Vec4 operator - ( const Vec4& v ) const { 
+		inline Vec4 operator - ( const Vec4& v ) const { 
 			return Vec4( x - v.x, y - v.y, z - v.z, v.w - w);
 		}
 
 		/// See Vec3 definition 
-		Vec4& operator -= ( const Vec4& v ){ 
+		inline Vec4& operator -= ( const Vec4& v ){ 
 			x -= v.x;
 			y -= v.y;
 			z -= v.z;
@@ -324,12 +321,12 @@ namespace MATH
 		}
 
 		/// See Vec3 definition 
-		Vec4 operator * ( const float s ) const { 
+		inline Vec4 operator * ( const float s ) const { 
 			return Vec4( s*x, s*y, s*z, s*w);
 		}
 
 		/// See Vec3 definition 
-		Vec4& operator *= ( const float s ) { 
+		inline Vec4& operator *= ( const float s ) { 
 			x *= s;
 			y *= s;
 			z *= s;
@@ -338,13 +335,13 @@ namespace MATH
 		}
 
 		/// See Vec3 definition 
-		friend Vec4 operator * ( const float s, const Vec4& v ) { 
+		 friend Vec4 operator * ( const float s, const Vec4& v ) { 
 			 return v * s; 
-		}
+		 }
 
 
-		Vec4 operator / ( const float s ) const {
-#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+		inline Vec4 operator / ( const float s ) const {
+#ifdef DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
 		if ( std::fabs(s) < VERY_SMALL ) {
 			std::string errorMsg("Divide by nearly zero! ");
 			throw errorMsg;
@@ -354,7 +351,7 @@ namespace MATH
 		return *this * r;
 		}
 
-		Vec4& operator /= ( const float s ) {
+		inline Vec4& operator /= ( const float s ) {
 	#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
 		if ( std::fabs(s) < VERY_SMALL ) {
 			std::string errorMsg("Divide by nearly zero! ");
@@ -367,18 +364,18 @@ namespace MATH
 		return *this;
 		}
 
-		void Print() const { 
+		inline void print() { 
 			printf("%1.8f %1.8f %1.8f %1.8f\n", x,y,z,w);		  
 		}
 
 		///
 		/// Type conversion operators 
 		///
-		operator const float* () const { 
+		inline operator const float* () const { 
 			return static_cast<const float*>( &x );
 		}
 
-		operator float* () { 
+		inline operator float* () { 
 			return static_cast<float*>( &x );
 		}
 

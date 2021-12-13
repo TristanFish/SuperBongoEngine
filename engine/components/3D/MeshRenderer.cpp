@@ -11,11 +11,6 @@ using namespace MATH;
 
 MeshRenderer::MeshRenderer() : renderFlags(RP_LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
 
-MeshRenderer::~MeshRenderer()
-{
-	Renderer::GetInstance()->DeleteMeshRenderer(this);
-}
-
 bool MeshRenderer::LoadModel(const char* name)
 {
 	model = &ModelManager::GetModel(name);
@@ -42,7 +37,6 @@ void MeshRenderer::Init(GameObject* g)
 		OBB.minVert = model->p_min ;
 		OBB.transform = gameObject->transform.GetModelMatrix();
 	}
-	Renderer::GetInstance()->AddMeshRenderer(this);
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -67,7 +61,7 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-    const Matrix3 normMat = gameObject->transform.GetQuaternion().ConvertToMatrix();
+    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
 
 	if(instanceID == 0)
     {
@@ -223,8 +217,10 @@ void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string paren
 
 void MeshRenderer::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "MeshRenderer");
+	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
 	
+	bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
+
 	if (opened)
 	{
 		ImGui::ColorEdit4("Mesh Color", meshColorTint);

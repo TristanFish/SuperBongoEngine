@@ -5,9 +5,9 @@ using namespace MATH;
 TestModel::TestModel(const std::string& name, Vec3 position)
 {
 	mr = AddComponent<MeshRenderer>();
-	mr->LoadModel("Cube.obj");
+	mr->LoadModel("Cube.fbx");
 	mr->CreateShader("FogVert.glsl", "FogFrag.glsl");
-	mr->renderFlags = RP_OVERRIDE_RENDERER;
+	mr->renderFlags = RenderProperties::RP_OVERRIDE_RENDERER;
 
 	
 	this->name = name;

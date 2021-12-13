@@ -1,7 +1,7 @@
 <Root>
     <Name Is="Sphere">
         <Transform>
-            <Position X="-0.80000001" Y="13.6" Z="0"/>
+            <Position X="0" Y="16" Z="0"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="0.5" Y="0.5" Z="0.5"/>
         </Transform>

@@ -38,7 +38,7 @@ namespace Dynamic {
 		DynamicSeek(GameObject* aiObject_, const Transform& target_);
 		
 		//DynamicSeeking 
-		DynamicSteeringOutput getSteering();
+		bool getSteering();
 	};
 
 	class DynamicFlee	{
@@ -49,7 +49,7 @@ namespace Dynamic {
 		DynamicFlee(GameObject* aiObject_, const Transform& target_);
 
 		//DynamicFleeing 
-		DynamicSteeringOutput getSteering();
+		bool getSteering();
 	};
 
 	class DynamicArrive {
@@ -61,7 +61,7 @@ namespace Dynamic {
 		DynamicArrive(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicArriving
-		DynamicSteeringOutput getSteering();
+		bool getSteering();
 
 	};
 
@@ -74,7 +74,7 @@ namespace Dynamic {
 		DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicAlign
-		DynamicSteeringOutput getSteering();
+		bool getSteering();
 	};
 
 	//insert Dinamic Look where ur going
@@ -87,7 +87,7 @@ namespace Dynamic {
 	public:
 		DynamicObstacleAvoidance(GameObject* aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_);
 
-		DynamicSteeringOutput getSteering();
+		bool getSteering();
 
 	};
 	

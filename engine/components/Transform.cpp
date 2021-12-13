@@ -5,13 +5,23 @@
 using namespace MATH;
 
 
-Transform::Transform() : parent(nullptr), pos(Vec3()), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
+Transform::Transform() : parent(nullptr), pos(Vec3()), scale(Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
+{
+	
 
-Transform::Transform(const Vec3& pos_) : parent(nullptr), pos(pos_), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
+	//rotation = Quaternion(Vec3(0.0f, 0.0f, 1.0f), -90);
+}
+
+Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), scale(MATH::Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
+{
+	
+}
 
 void Transform::Update(const float deltaTime)
 {
+	
 	rotationMatrix =  MMath::GetFromMat3(rotation.ConvertToMatrix());
+
 
 	modelMatrix =  MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
 
@@ -23,17 +33,17 @@ void Transform::Update(const float deltaTime)
 
 Vec3 Transform::Forward() const
 {
-	return rotation.Rotate(Vec3::Forward());
+	return rotationMatrix * Vec3(0.0f, 0.0f, 1.0f);
 }
 
 Vec3 Transform::Right() const
 {
-	return rotation.Rotate(Vec3::Right());
+	return rotationMatrix * Vec3(1.0f, 0.0f, 0.0f);
 }
 
 Vec3 Transform::Up() const
 {
-	return rotation.Rotate(Vec3::Up());
+	return rotationMatrix * Vec3(0.0f, 1.0f, 0.0f);
 }
 
 void Transform::SetPos(const Vec3& pos)
