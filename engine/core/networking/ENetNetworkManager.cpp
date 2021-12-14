@@ -42,6 +42,8 @@ void ENetNetworkManager::Init()
 	}
 
 	EngineLogger::Info("ENet initialized successfully", "ENetNetworkingManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
+	//connectedPeers = std::vector<ENetPeer*>();
+	connectedPeers.reserve(2);
 	initialized = true;
 }
 
@@ -190,8 +192,7 @@ std::string ENetNetworkManager::ParseJsonData(unsigned char* data) const
 	return ss.str();
 }
 
-stringstream ENetNetworkManager::SerializeData(const string& data)
-{
+stringstream ENetNetworkManager::SerializeData(const string& data)	{
 	stringstream ss(stringstream::in | stringstream::out | stringstream::binary);
 	//Cereal needs these open and close brackets to properly flush the Archive
 	{
@@ -312,14 +313,14 @@ void ENetNetworkManager::SendPacket(const string& data)
 
 }
 
-void ENetNetworkManager::SendPreserializedPacket(std::stringstream& ss)
-{
+void ENetNetworkManager::SendPreserializedPacket(std::stringstream& ss)	{
 	char buffer[DEFAULT_BUFFER_LENGTH];
 	int size = ss.rdbuf()->str().size();
 	//copy stringstream into char buffer
 	ss.read(buffer, size);
 
 	ENetPacket* packet = enet_packet_create(buffer, size, ENET_PACKET_FLAG_RELIABLE);
+	
 	if (!connectedPeers.empty())
 	{
 		//At the moment only sends data to the first connected peer

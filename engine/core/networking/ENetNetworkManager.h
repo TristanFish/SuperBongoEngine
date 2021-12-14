@@ -55,7 +55,7 @@ public:
 	}
 };
 
-constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
+constexpr unsigned int DEFAULT_BUFFER_LENGTH = 1024;
 
 //At the moment there are a lot of hard coded values in the cpp of this class
 //because its only tested for connecting to yourself
