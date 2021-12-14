@@ -3,17 +3,22 @@
 
 #include "Component.h"
 #include <string>
-#include <cereal/archives/binary.hpp>
+#include <cereal/archives/json.hpp> //D changed this from binary.hpp to json since we use json, code ran like before change
 #include <cereal/types/string.hpp>
 #include <cereal/cereal.hpp>
 #include "VMath.h"
+#include "Transform.h"
 
-
-class NetworkableObject : public Component
-{
+class NetworkableObject : public Component	{
 public:
 
-	MATH::Vec3 pos, scale, rot;
+	MATH::Vec3 pos, scale;
+	MATH::Quaternion rot;
+
+	Transform transform;
+	
+	
+	
 	std::string name, position;
 	int networkEventType;
 
@@ -31,9 +36,20 @@ public:
 	virtual void RecievePositionData(std::stringstream& ss);
 
 	template<class Archive>
-	void serialize(Archive& ar)
-	{
-		ar(cereal::make_nvp("NetworkType", networkEventType), cereal::make_nvp("ObjectName", name), cereal::make_nvp("posx", pos.x), cereal::make_nvp("posy", pos.y), cereal::make_nvp("posz", pos.z));
+	void serialize(Archive& ar)	{
+		ar(cereal::make_nvp("NetworkType", networkEventType), 
+			cereal::make_nvp("ObjectName", name), 
+			cereal::make_nvp("posx", transform.pos.x),
+			cereal::make_nvp("posy", transform.pos.y),
+			cereal::make_nvp("posz", transform.pos.z),
+			cereal::make_nvp("rotx", transform.rotation.GetQuat().x),
+			cereal::make_nvp("roty", transform.rotation.GetQuat().y),
+			cereal::make_nvp("rotz", transform.rotation.GetQuat().z),
+			cereal::make_nvp("rotw", transform.rotation.GetQuat().w),
+			cereal::make_nvp("scalex", transform.scale.x),
+			cereal::make_nvp("scaley", transform.scale.y),
+			cereal::make_nvp("scalez", transform.scale.z)		
+			);
 	}
 
 	
