@@ -19,14 +19,7 @@ AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 }
 
 AiGameObject::~AiGameObject()	{
-	if(mRenderer)	{
-		delete mRenderer;
-		mRenderer = nullptr;
-	}
-	if(aiComponent)	{
-		delete aiComponent;
-		aiComponent = nullptr;
-	}
+
 }
 
 void AiGameObject::Update(const float deltaTime)	{
