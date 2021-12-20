@@ -22,7 +22,7 @@ public:
 	//! Base Grass Destructor
 	virtual ~Grass() = default;
 
-	Grass* NewClone() const override { return new Grass(this->name, this->transform.pos, amount); }
+	Grass* NewClone() const override { return new Grass(this->name, this->transform.GetPosition(), amount); }
 
 	
 };

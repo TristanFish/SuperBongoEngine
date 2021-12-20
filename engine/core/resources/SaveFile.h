@@ -151,6 +151,8 @@ private:
 	/*!Returns where the file will be saved to*/
 	std::string GetFileDestination() const;
 
+
+	
 public:
 
 	//! SaveFile Constructor
@@ -224,6 +226,7 @@ public:
 
 	 void ClearElements();
 
+	 void ClearSaveFile();
 
 	 inline std::string GetFileName() const { return FileName; }
 

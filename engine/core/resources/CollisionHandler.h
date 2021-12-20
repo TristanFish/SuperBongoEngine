@@ -5,7 +5,7 @@
 
 #include "core/3D/OctSpatialPartition.h"
 
-
+class Collider3D;
 class CollisionHandler {
 public:
 	CollisionHandler(const CollisionHandler&) = delete;
@@ -16,7 +16,7 @@ public:
 	static CollisionHandler* GetInstance();
 
 	void OnCreate(float worldSize_);
-	void AddObject(MeshRenderer* go_);
+	void AddObject(Collider3D* collider);
 	
 	//Was in Shaked's code
 	//void MouseUpdate(MATH::Vec2 mousePosition_, int buttonType_);
@@ -30,8 +30,8 @@ private:
 	static std::unique_ptr<CollisionHandler> collisionInstance;
 	friend std::default_delete<CollisionHandler>;
 
-	static std::vector<MeshRenderer*> prevCollisions;
-	static OctSpatialPartition* scenePartition;
+	 std::vector<Collider3D*> prevCollisions;
+	 OctSpatialPartition* scenePartition;
 };
 
 #endif

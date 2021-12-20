@@ -106,6 +106,12 @@
     <Filter Include="src\engine\components\AI">
       <UniqueIdentifier>{2664de0d-87a6-410a-9942-f20a223d29c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine\components\AI\Pathfinding">
+      <UniqueIdentifier>{ef19922e-2928-4706-b4ae-6a9a3f6fc782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components\AI\Steering">
+      <UniqueIdentifier>{d7371d50-a760-445e-aaa3-bf7562efccb2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="resources\shaders">
       <UniqueIdentifier>{c52913d4-9d62-4cf0-b054-2a46ae3be6fa}</UniqueIdentifier>
     </Filter>
@@ -456,7 +462,7 @@
     <ClInclude Include="engine\components\2D\Collider.h">
       <Filter>src\engine\components\2D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\3D\Collider3D.h">
+    <ClInclude Include="engine\core\3D\Physics\Collider3D.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
     <ClInclude Include="external\include\assimp\color4.h">
@@ -657,7 +663,7 @@
     <ClInclude Include="engine\core\2D\Physics2D.h">
       <Filter>src\engine\core\2D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\Physics3D.h">
+    <ClInclude Include="engine\core\3D\Physics\Physics3D.h">
       <Filter>src\engine\core\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Ray.h">
@@ -926,28 +932,19 @@
     <ClInclude Include="engine\components\AI\AIComponent.h">
       <Filter>src\engine\components\AI</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h">
-      <Filter>src\engine\components\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h">
-      <Filter>src\engine\components\AI</Filter>
-    </ClInclude>
     <ClInclude Include="game\scenes\SceneAi.h">
       <Filter>src\game\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h">
-      <Filter>src\engine\components\AI</Filter>
     </ClInclude>
     <ClInclude Include="engine\Primitives\Tetrahedron.h">
       <Filter>src\engine\primitives</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h">
+    <ClInclude Include="engine\core\resources\CollisionHandler.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h">
+    <ClInclude Include="engine\core\3D\Physics\BoundingBox.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
+    <ClInclude Include="engine\core\resources\CollisionDetection.h">
       <Filter>src\engine\components\3D</Filter>
     </ClInclude>
     <ClInclude Include="game\gameObjects\AiGameObject.h">
@@ -956,7 +953,37 @@
     <ClInclude Include="Colour.h">
       <Filter>src\engine\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\3D\New3D\GJKDetection.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.h">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.h">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\AIDirector.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
+    <ClInclude Include="engine\core\3D\Physics\GJKDetection.h">
+      <Filter>src\engine\core\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1094,7 +1121,7 @@
     <ClCompile Include="engine\core\2D\Physics2D.cpp">
       <Filter>src\engine\core\2D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\Physics3D.cpp">
+    <ClCompile Include="engine\core\3D\Physics\Physics3D.cpp">
       <Filter>src\engine\core\3D</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\Ray.cpp">
@@ -1228,25 +1255,16 @@
     <ClCompile Include="engine\components\AI\AIComponent.cpp">
       <Filter>src\engine\components\AI</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp">
-      <Filter>src\engine\components\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp">
-      <Filter>src\engine\components\AI</Filter>
-    </ClCompile>
     <ClCompile Include="game\scenes\SceneAi.cpp">
       <Filter>src\game\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp">
-      <Filter>src\engine\components\AI</Filter>
     </ClCompile>
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp">
       <Filter>src\engine\primitives</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp">
+    <ClCompile Include="engine\core\resources\CollisionDetection.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp">
+    <ClCompile Include="engine\core\resources\CollisionHandler.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\networking\NetworkManager.cpp">
@@ -1258,7 +1276,33 @@
     <ClCompile Include="engine\components\3D\LightComponent.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\3D\New3D\GJKDetection.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.cpp">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.cpp">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\AIDirector.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Dynamic.cpp">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp">
+      <Filter>src\engine\components\AI\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp">
+      <Filter>src\engine\core\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

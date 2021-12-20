@@ -39,7 +39,14 @@ namespace  MATH {
 			return *this;
 		}
 
-		
+		inline bool operator == (const Matrix4& m_) {
+			bool IsIdentical = false;
+			IsIdentical = this->m[0] == m_[0] && this->m[1] == m_[1] && this->m[2] == m_[2] && this->m[3] == m_[3] &&
+			this->m[4] == m_[4] && this->m[5] == m_[5] && this->m[6] == m_[6] && this->m[7] == m_[7] &&
+			this->m[8] == m_[8] && this->m[9] == m_[9] && this->m[10] == m_[10] && this->m[11] == m_[11] &&
+			this->m[12] == m_[12] && this->m[13] == m_[13] && this->m[14] == m_[14] && this->m[15] == m_[15];
+			return IsIdentical;
+		}
 		
 
 

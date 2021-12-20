@@ -3,6 +3,7 @@
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 #include "core/resources/TextureManager.h"
+#include "core/3D/Physics//BoundingBox.h"
 #include "graphics/UIStatics.h"
 
 #include "Utility/SaveUtility.h"
@@ -31,12 +32,7 @@ void MeshRenderer::Init(GameObject* g)
 {
 	gameObject = g;
 
-	if(model)
-	{
-		OBB.maxVert = model->p_max ;
-		OBB.minVert = model->p_min ;
-		OBB.transform = gameObject->transform.GetModelMatrix();
-	}
+	
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -44,7 +40,7 @@ void MeshRenderer::Update(const float deltaTime)
 	if(model)
 	{
 		//assume uniform scale
-		float scale = gameObject->transform.scale.x;
+		float scale = gameObject->transform.GetScale().x;
 		//if(scale >= 1.0f)
 		//{
 		//	
@@ -53,9 +49,9 @@ void MeshRenderer::Update(const float deltaTime)
 		//	scale /= 2.0f;
 		//}
 		
-		OBB.maxVert = model->p_max * scale;
-		OBB.minVert = model->p_min * scale;
-		OBB.transform = gameObject->transform.GetModelMatrix();
+		//OBB.maxVert = model->p_max * scale;
+		//OBB.minVert = model->p_min * scale;
+		//OBB.transform = gameObject->transform.GetModelMatrix();
 	}
 }
 
@@ -203,6 +199,10 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 		glBindVertexArray(0);
 	}
 }
+
+
+
+
 
 void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
 {

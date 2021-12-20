@@ -7,8 +7,8 @@ void AudioListenerComponent::Init(GameObject* g)
 	audioSystemRef = AudioManager::Get()->system;
 
 	//could just as easily be the camera
-	listenerPos = &g->transform.pos;
-	FMODForward = (FMOD_VECTOR*)&g->transform.rotation;
+	listenerPos = &g->transform.GetPosition();
+	FMODForward = (FMOD_VECTOR*)&g->transform.GetRotationQuat();
 	FMODUp = {0.0f, 1.0f , 0.0f};
 
 }

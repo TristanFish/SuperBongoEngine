@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "3D/MeshRenderer.h"
-#include "3D/RigidBody3D.h"
 
 #include <functional>
 
@@ -29,13 +28,20 @@ void GameObject::Init()
 	for (Component* comp : componentList)
 	{
 		comp->Init(this);
-		if(RigidBody3D* rbComp = dynamic_cast<RigidBody3D*>(comp))
-		{
-			rbComp->AddCollisionFunction(std::bind(&GameObject::OnCollisionEnter, this, std::placeholders::_1));
-		}
-		else if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
+		if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
 		{
 			mComp->AddUniformFunction(std::bind(&GameObject::AttachUniforms, this));
+		}
+	}
+}
+
+void GameObject::PostInit()
+{
+	for (Component* comp : componentList)
+	{
+		if (RigidBody3D* rbComp = dynamic_cast<RigidBody3D*>(comp))
+		{
+			rbComp->GetCollider()->AddCollisionFunction(std::bind(&GameObject::OnCollisionEnter, this, std::placeholders::_1));
 		}
 	}
 }

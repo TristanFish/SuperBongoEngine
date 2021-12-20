@@ -13,6 +13,6 @@ public:
 	// Inherited via GameObject
 	void DrawDebugGeometry() const override;
 
-	LightObject* NewClone() const override { return new LightObject(this->name, this->transform.pos); };
+	LightObject* NewClone() const override { return new LightObject(this->name, this->transform.GetPosition()); };
 
 };

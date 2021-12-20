@@ -1,7 +1,7 @@
 <Root>
     <Name Is="test">
         <Transform>
-            <Position X="-0.40000001" Y="44.5" Z="0"/>
+            <Position X="-1" Y="40.700001" Z="-77"/>
             <Rotation X="0" Y="0" Z="0"/>
             <Scale X="1" Y="1" Z="1"/>
         </Transform>

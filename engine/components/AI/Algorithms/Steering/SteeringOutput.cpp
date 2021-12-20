@@ -39,14 +39,14 @@ Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 dire
 		EngineLogger::Error(aiObject_->GetName() + " does not have a Transform. steeringFace has failed",
 			"SteeringOutput.cpp", __LINE__);
 
-		return aiObject_->transform.rotation;
+		return aiObject_->transform.GetRotationQuat();
 	}
 
 	//const Matrix4 lookAt = MMath::lookAt(Vec3(), direction_, aiObject_->transform.Up());
 	
 	//return MMath::ConvertMatToQuat(lookAt);
 
-	return Quaternion::LookAt(aiObject_->transform.rotation, direction_, Vec3::Forward());
+	return Quaternion::LookAt(aiObject_->transform.GetRotationQuat(), direction_, Vec3::Forward());
 }
 
 

@@ -63,6 +63,10 @@ namespace MATH {
 			return (x != v.x || y != v.y);
 		}
 
+		inline const bool operator == (const Vec2& v) const {
+			return (x == v.x && y == v.y);
+		}
+
 		inline const Vec2 operator + (const Vec2& v) const
 		{
 			return Vec2(x + v.x, y + v.y);
@@ -101,6 +105,10 @@ namespace MATH {
 			set(x,y,z);
 		}
 		
+		inline Vec3(const Vec2&v) {
+			set(v.x, v.y, 0.0f);
+		}
+
 		/// A copy constructor
 		inline Vec3( const Vec3& v ) { 
 			set(v.x,v.y,v.z); 
@@ -115,7 +123,9 @@ namespace MATH {
 			set(v.x, v.y, v.z); 
 			return *this;
 		}
-		
+		inline const bool operator == (const Vec3& v) const {
+			return (x == v.x && y == v.y && z == v.z);
+		}
 		/// Now we can use the Vec3 like an array but we'll need two overloads
 		inline const float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
 			return *(&x + index); 
@@ -176,6 +186,14 @@ namespace MATH {
 			return *this; 
 		}
 
+		/// Multiply a Vec3 by a scalar and assign it to itself
+		inline Vec3& operator *= (const Vec3& v) {
+			x *= v.x;
+			y *= v.y;
+			z *= v.z;
+			return *this;
+		}
+
 		/// Divide by a scalar - Watch for divide by zero issues
 		inline const Vec3 operator / ( const float s ) const {
 	#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
@@ -227,6 +245,7 @@ namespace MATH {
 		inline operator const float* () const {
 			return static_cast<const float*>(&x);
 		}
+		
 
 		inline operator float* () {
 			return static_cast<float*>(&x);

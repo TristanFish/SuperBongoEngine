@@ -7,7 +7,7 @@ std::unordered_map<std::string, GameObject*> SaveManager::SaveableObjects = std:
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
-std::vector<SaveFile> SaveManager::GetSavesOfType(FileType type)
+std::vector<SaveFile> SaveManager::GetSavesOfType(const FileType& type)
 {
 	std::vector<SaveFile> filesOfType;
 
@@ -43,11 +43,6 @@ void SaveManager::AddToSaveFiles(const std::string& name, const SaveFile& File)
 
 void SaveManager::RemoveSave(const std::string& saveName)
 {
-	if (SaveFiles.empty())
-	{
-		return;
-	}
-
 	std::unordered_map<std::string, SaveFile>::iterator iter = SaveFiles.find(saveName);
 	std::unordered_map<std::string, SaveFile>::iterator iterQueue = SaveQueue.find(saveName);
 
@@ -171,7 +166,6 @@ void SaveManager::DeleteSaveableObjects()
 {
 	for (auto pair : SaveableObjects)
 	{
-		delete pair.second;
 		pair.second = nullptr;
 	}
 

@@ -18,7 +18,7 @@ Simplex::~Simplex()	{
 	}
 }
 
-Vec3 Simplex::Support(std::vector<Vec3> verticesVector1_, std::vector<Vec3> verticesVector2_, Vec3 direction_)	{
+Vec3 Simplex::Support(const std::vector<Vec3>& verticesVector1_, const std::vector<Vec3>& verticesVector2_, Vec3 direction_)	{
 	//direction doesn't need to be normalized
 
 	Vec3 point1 = getFarthestPointInDirection(verticesVector1_, direction_); //should be farthest point in direction_
@@ -31,7 +31,7 @@ Vec3 Simplex::Support(std::vector<Vec3> verticesVector1_, std::vector<Vec3> vert
 }
 
 //code from comment by "l0k0" : https://www.gamedev.net/forums/topic/604497-farthest-point-in-a-direction/4825360/
-Vec3 Simplex::getFarthestPointInDirection(std::vector<Vec3> verticesVector_ , Vec3 direction_)	{
+Vec3 Simplex::getFarthestPointInDirection(const std::vector<Vec3>& verticesVector_ , Vec3 direction_)	{
 
 	//mesh needs to have vertices, if not, error.
 	assert(!verticesVector_.empty());
@@ -178,9 +178,19 @@ bool Simplex::containsOrigin(Vec3& direction_)	{
 
 
 
-bool GJKDetection::GJKCollisionDetection(/*const Mesh& mesh1_, const Mesh& mesh2_*/std::vector<Vec3> verticesVector1_, std::vector<Vec3> verticesVector2_)	{
+GJKDetection::GJKDetection() : simplex(Simplex()), direction(Vec3())
+{
 
-	if(verticesVector1_.empty() || verticesVector2_.empty() || verticesVector1_.size() < 4 || verticesVector2_.size() < 4)	{
+}
+
+GJKDetection::~GJKDetection()
+{
+
+}
+
+bool GJKDetection::GJKCollisionDetection(const std::vector<Vec3>& verticesVector1_, const std::vector<Vec3>& verticesVector2_)	{
+
+	if(verticesVector1_.size() < 4 || verticesVector2_.size() < 4)	{
 		EngineLogger::Error("A mesh is missing its vertices, or has less than 4 points in : ", "GJKDetection.cpp", __LINE__);
 		return false;
 	}
@@ -200,9 +210,6 @@ bool GJKDetection::GJKCollisionDetection(/*const Mesh& mesh1_, const Mesh& mesh2
 
 	//direction can be arbitrary, we chose  the distance in-between each objects center
 	direction = center2 - center1; 
-
-	//dont need to normalize, only doing this because the example math does
-	//direction = VMath::normalize(direction);
 
 	//first point
 	simplex.simplexVertices.push_back(simplex.Support(verticesVector1_, verticesVector2_, direction));
@@ -228,7 +235,7 @@ bool GJKDetection::GJKCollisionDetection(/*const Mesh& mesh1_, const Mesh& mesh2
 				return true;
 		}
 		//there are times where it gets stuck in an infinite loop when it shoudnt be colliding, this prevents that.
-		else if (direction.x == lastDirection.x && direction.y == lastDirection.y && direction.z == lastDirection.z) {
+		else if (direction == lastDirection) {
 			//pretend like no collision
 			simplex.simplexVertices.clear();
 			return false;

@@ -11,9 +11,9 @@ public:
 	PlaneObject(const std::string& name, MATH::Vec3 position);
 	~PlaneObject() override = default;
 	
-	void OnCollisionEnter(RigidBody3D& otherBody) override;
+	void OnCollisionEnter(Collider3D& otherBody) override;
 
-	PlaneObject* NewClone() const override { return new PlaneObject(this->name, this->transform.pos); };
+	PlaneObject* NewClone() const override { return new PlaneObject(this->name, this->transform.GetPosition()); };
 
 };
 

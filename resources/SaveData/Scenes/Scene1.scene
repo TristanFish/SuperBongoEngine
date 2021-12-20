@@ -1,9 +1,7 @@
 <Root>
     <Objects>
-        <Grass/>
         <Light/>
         <Box/>
-        <Sphere/>
         <test/>
         <Player/>
         <Plane-1/>

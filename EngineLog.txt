@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 76
+[INFO]: Logger Created in: CoreEngine.cpp on line: 81
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 42
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
@@ -24,14 +24,28 @@
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
 [INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
-[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 210
+[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 110
 [SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 237
-[INFO]: Scene Ai Created in: SceneAi.cpp on line: 12
-[INFO]: Box1 added to scenegraph in: ECS.cpp on line: 154
-[INFO]: Box2 added to scenegraph in: ECS.cpp on line: 154
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 242
+[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 134
+[INFO]: Scene: Scene_41 Created in: Scene1.cpp on line: 32
+[INFO]: ChildNodes: 8 in: OctSpatialPartition.cpp on line: 155
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 139
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 160
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 159
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 159
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 159
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 159
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 159
+[INFO]: test added to scenegraph in: ECS.cpp on line: 159
