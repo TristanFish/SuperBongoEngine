@@ -11,6 +11,9 @@ int OctNode::childNum = 0;
 
 using namespace MATH;
 
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
+
 OctNode::OctNode(Vec3 position, float size_, OctNode* parent) 
 {
 	size = size_;

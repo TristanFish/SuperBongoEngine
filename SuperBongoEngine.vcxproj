@@ -20,8 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
-    <ClInclude Include="DecisionTreeNode.h" />
     <ClInclude Include="engine\components\3D\LineRenderer.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.h" />
@@ -305,8 +306,9 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DecisionTreeNode.cpp" />
     <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.cpp" />
     <ClCompile Include="engine\components\Component.cpp" />
     <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />

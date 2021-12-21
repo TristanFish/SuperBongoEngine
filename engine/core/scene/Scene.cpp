@@ -72,30 +72,30 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-	if (buttonType == SDL_BUTTON_LEFT)
-	{
-		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
-			return;
+	//if (buttonType == SDL_BUTTON_LEFT)
+	//{
+	//	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+	//		return;
 
-		mouseRay.CalculateMouseRay();
+	//	mouseRay.CalculateMouseRay();
 
-		GameObject* hitResult = nullptr;
-		float shortestDistance = FLT_MAX;
+	//	GameObject* hitResult = nullptr;
+	//	float shortestDistance = FLT_MAX;
 
-		hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
+	//	hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
 
 
-		if (hitResult)
-		{
-			EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
-			if (!hitResult->isObjectSelected)
-			{
-				
-			}
-			hitResult->isObjectSelected = true;
-			UIStatics::SetSelectedObject(hitResult);
-		}
-	}
+	//	if (hitResult)
+	//	{
+	//		EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
+	//		if (!hitResult->isObjectSelected)
+	//		{
+	//			
+	//		}
+	//		hitResult->isObjectSelected = true;
+	//		UIStatics::SetSelectedObject(hitResult);
+	//	}
+	//}
 }
 void Scene::SaveMapData() const
 {

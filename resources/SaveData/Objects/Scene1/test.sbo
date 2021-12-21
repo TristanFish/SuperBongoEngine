@@ -14,4 +14,19 @@
             </Renderer>
         </Components>
     </Name>
+    <Name Is="test">
+        <Transform>
+            <Position X="0" Y="44.5" Z="0"/>
+            <Rotation X="0" Y="-2.3000054" Z="0"/>
+            <Scale X="4" Y="4" Z="4"/>
+        </Transform>
+        <ObjectInfo>
+            <Type ID="class Box"/>
+        </ObjectInfo>
+        <Components>
+            <Renderer>
+                <MeshColorTint W="1" X="1" Y="1" Z="1"/>
+            </Renderer>
+        </Components>
+    </Name>
 </Root>

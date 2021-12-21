@@ -163,6 +163,9 @@ void PropertiesPanel::Render()
 
 			ImGui::TreePop();
 		}
+		
+		selectedObject->ImguiRender();
+
 		#pragma endregion 
 
 		for(Component* comp : selectedObject->GetComponents())

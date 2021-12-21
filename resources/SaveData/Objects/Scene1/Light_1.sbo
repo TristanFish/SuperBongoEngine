@@ -14,4 +14,19 @@
             </Renderer>
         </Components>
     </Name>
+    <Name Is="Light_1">
+        <Transform>
+            <Position X="-40.799999" Y="12.8" Z="-3.9000001"/>
+            <Rotation X="0" Y="-29.399994" Z="0"/>
+            <Scale X="1" Y="1" Z="1"/>
+        </Transform>
+        <ObjectInfo>
+            <Type ID="class LightObject"/>
+        </ObjectInfo>
+        <Components>
+            <Renderer>
+                <MeshColorTint W="1" X="1" Y="1" Z="0"/>
+            </Renderer>
+        </Components>
+    </Name>
 </Root>
