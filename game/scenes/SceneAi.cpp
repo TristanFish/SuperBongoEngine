@@ -1,5 +1,7 @@
 #include "SceneAi.h"
 
+
+#include "Scene1.h"
 #include "core/Logger.h"
 #include "core/Globals.h"
 #include "gameObjects/AiGameObject.h"
@@ -12,8 +14,8 @@ bool SceneAi::OnCreate()
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
 	Globals::InitGlobals();
-	CustomUI::PerformanceMonitor::InitMonitor();
 
+	Scene::OnCreate();
 	
 	objectList->AddGameObject(mainAi);
 
@@ -80,7 +82,7 @@ bool SceneAi::OnCreate()
 	objectList->Init();
 
 	
-	
+	Scene1().OnCreate();
 	
 	return true;
 }

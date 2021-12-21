@@ -2,7 +2,7 @@
 #define SCENEAi_H
 
 #include "core/scene/Scene.h"
-#include "core/3D/New3D/GJKDetection.h"
+#include "core/3D/Physics/GJKDetection.h"
 #include "gameObjects/AiGameObject.h"
 #include "Primitives/Sphere.h"
 
@@ -13,7 +13,7 @@ class SceneAi : public Scene
 public:
 
 	AiGameObject* mainAi = new AiGameObject("AiObj", Vec3(1.0f));
-	Sphere* targetSphere = new Sphere("targetSphere", Vec3(15.0f, 2.5f, 7.0f));
+	Sphere* targetSphere = new Sphere("targetSphere", Vec3(10.0f, 2.5f, 7.0f));
 
 	//temp stuff
 
