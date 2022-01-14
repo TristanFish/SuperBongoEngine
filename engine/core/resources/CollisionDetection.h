@@ -23,7 +23,7 @@ public:
 	~CollisionDetection();
 
 	//Ray Collisions
-	static Ray MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* camera_);
+	static Ray MousePosToWorldRay(MATH::Vec2 mouseCoords_);
 	static bool RayOBBIntersection(Ray* ray_, BoundingBox* box_);
 
 

@@ -1,17 +1,17 @@
 <Root>
-    <Name Is="BlueBox">
+	<Identifiers S_Name="BlueBox">
         <Transform>
-            <Position X="0" Y="0" Z="0"/>
-            <Rotation X="0" Y="0" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
+            <Position F_X="0" F_Y="0" F_Z="0"/>
+            <Rotation F_X="0" F_Y="0" F_Z="0"/>
+            <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Box"/>
+            <Type S_ID="class Box"/>
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="0" Y="0.26194525" Z="1"/>
+                <MeshColorTint F_W="1" F_X="0" F_Y="0.26194525" F_Z="1"/>
             </Renderer>
         </Components>
-    </Name>
+    </Identifiers>
 </Root>

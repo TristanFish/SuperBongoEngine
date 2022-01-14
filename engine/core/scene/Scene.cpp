@@ -75,6 +75,7 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
+		/*
 		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
 			return;
 
@@ -83,9 +84,17 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 		GameObject* hitResult = nullptr;
 		float shortestDistance = FLT_MAX;
 
-		hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
+		//hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
 
 		
+		for (auto rigidBody : objectList->GetRigidBodies())
+		{
+			if (CollisionDetection::RayOBBIntersection(dynamic_cast<Ray*>(&mouseRay), dynamic_cast<BoundingBox*>(rigidBody->GetCollider())))
+			{
+				hitResult = rigidBody->gameObject;
+				break;
+			}
+		}
 
 
 		if (hitResult)
@@ -98,6 +107,7 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 			hitResult->isObjectSelected = true;
 			UIStatics::SetSelectedObject(hitResult);
 		}
+	*/
 	}
 }
 void Scene::SaveMapData() const
@@ -112,7 +122,7 @@ void Scene::SaveMapData() const
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
-	info.Attributes.emplace(":", std::string(typeid(*this).name()));
+	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
 	info = ElementInfo("Root");
@@ -122,9 +132,9 @@ void Scene::SaveMapData() const
 	
 	for (auto* obj : objectList->GetGameObjects())
 	{
-		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);
+		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
 
-		SaveUtility::GetInstance()->SaveObject(obj->name, obj);
+		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);
 	}
 
 	SaveUtility::GetInstance()->CompileSaves();

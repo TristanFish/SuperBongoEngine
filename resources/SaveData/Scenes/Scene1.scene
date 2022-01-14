@@ -8,6 +8,6 @@
         <Light_1/>
     </Objects>
     <SceneSettings>
-        <BaseClass: :="class Scene1"/>
+        <BaseClass: S_:="class Scene1"/>
     </SceneSettings>
 </Root>

@@ -6,6 +6,8 @@
 
 
 class SceneGraph;
+
+
 struct Globals
 {
 	static std::shared_ptr<SceneGraph> s_SceneGraph;
@@ -21,8 +23,9 @@ struct Globals
 
 
 
-	static std::string IntToVector(const int i);
+	static std::string IntToVectorWithPrefix(const char* typePrefix,const int i);
 
+	static std::string IntToVector(const int i);
 
 
 	static void InitGlobals();

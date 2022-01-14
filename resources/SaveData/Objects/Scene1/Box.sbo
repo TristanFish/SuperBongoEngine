@@ -1,17 +1,17 @@
 <Root>
-    <Name Is="Box">
+    <Identifiers S_Name="Box" U64_UniqueIdentifier="12239160663509437986">
         <Transform>
-            <Position X="-82.900002" Y="15.7" Z="-85.300003"/>
-            <Rotation X="0" Y="0" Z="0"/>
-            <Scale X="0.1" Y="0.89999998" Z="4.9000001"/>
+            <Position F_X="-53.194069" F_Y="15.7" F_Z="0"/>
+            <Rotation F_X="0" F_Y="0" F_Z="0"/>
+            <Scale F_X="0.2" F_Y="1" F_Z="5"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Box"/>
+            <Type S_ID="class Box"/>
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="0" Z="0"/>
+                <MeshColorTint F_W="1" F_X="1" F_Y="0" F_Z="0"/>
             </Renderer>
         </Components>
-    </Name>
+    </Identifiers>
 </Root>

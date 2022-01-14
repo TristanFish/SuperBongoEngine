@@ -43,7 +43,7 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	ScenePartition = new OctSpatialPartition(500);
+	//ScenePartition = new OctSpatialPartition(1500);
 
 	
 	

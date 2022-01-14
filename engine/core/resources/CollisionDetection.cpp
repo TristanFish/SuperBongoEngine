@@ -6,8 +6,9 @@
 #include "core/CoreEngine.h"
 #include "core/Globals.h"
 
-#include "Ray.h"
+#include "Rendering/Renderer.h"
 
+#include "Ray.h"
 
 using namespace  MATH;
 
@@ -18,11 +19,14 @@ CollisionDetection::~CollisionDetection() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Ray Collisions
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* camera_) {
+Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_) {
+
+	Vec2 viewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+
 	Vec4 rayStartNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, -1.0f, 1.0f);
 	Vec4 rayEndNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, 0.0f, 1.0f);
 
-	Matrix4 inverse = MMath::inverse(camera_->getProjectionMatrix() * camera_->getViewMatrix());
+	Matrix4 inverse = MMath::inverse(Camera::getInstance()->getProjectionMatrix() * Camera::getInstance()->getViewMatrix());
 
 	Vec4 rayStartWorld = inverse * rayStartNDC;
 	rayStartWorld /= rayStartWorld.w;
@@ -33,7 +37,7 @@ Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_, Camera* came
 	Vec3 rayDirWorld(rayEndWorld - rayStartWorld);
 	rayDirWorld = VMath::normalize(rayDirWorld);
 
-	return Ray(Vec3(rayStartWorld), rayDirWorld);
+	return Ray(rayDirWorld, Vec3(rayStartWorld));
 }
 
 bool CollisionDetection::RayOBBIntersection(Ray* ray_, BoundingBox* box_) {

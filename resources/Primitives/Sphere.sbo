@@ -1,12 +1,12 @@
 <Root>
-    <Name Is="Grass">
+    <Name Is="Sphere">
         <Transform>
-            <Position X="0" Y="1" Z="0"/>
-            <Rotation X="-90" Y="0" Z="0"/>
-            <Scale X="5" Y="5" Z="5"/>
+            <Position X="0" Y="16" Z="0"/>
+            <Rotation X="0" Y="0" Z="0"/>
+            <Scale X="0.5" Y="0.5" Z="0.5"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Grass"/>
+            <Type S_ID="class Sphere"/>
         </ObjectInfo>
         <Components>
             <Renderer>

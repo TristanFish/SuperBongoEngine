@@ -49,9 +49,9 @@ bool Physics2D::BoxBoxDetect(RigidBodyComponent& rb1, RigidBodyComponent& rb2)
 		(rb1.pos->y + rb1Halfy > rb2.pos->y - rb2Halfy))   //Check rb2 top edge with rb2 bottom edge
 	{
 		std::string inf = "Box Box collision between ";
-		inf.append(rb1.gameObject->name);
+		inf.append(rb1.gameObject->GetName());
 		inf.append(" and ");
-		inf.append(rb2.gameObject->name);
+		inf.append(rb2.gameObject->GetName());
 
 		EngineLogger::Info(inf, "Physics2D.cpp", __LINE__);
 		

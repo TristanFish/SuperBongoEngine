@@ -984,6 +984,7 @@
       <Filter>src\engine\core\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
+    <ClInclude Include="engine\core\UUniqueID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1303,6 +1304,7 @@
     <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp">
       <Filter>src\engine\core\3D</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\UUniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

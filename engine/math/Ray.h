@@ -24,6 +24,8 @@ public:
 		direction = ray_.direction;
 		end = ray_.end;
 		distance = 0.0f;
+
+		return *this;
 	}
 
 	~Ray() = default;

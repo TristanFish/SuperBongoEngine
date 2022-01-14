@@ -85,15 +85,16 @@ void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
 {
 	CreateSave(saveName, FileType::OBJECT);
 
+	SaveManager::GetSaveFile(saveName).ClearElements();
 
+	ElementInfo Identifiers = ElementInfo("Root");
+	Identifiers.Attributes.emplace("S_Name", obj->GetName());
+	Identifiers.Attributes.emplace("U64_UniqueIdentifier", obj->GetUUID());
+	AddElement(saveName, "Identifiers", Identifiers);
 
-	ElementInfo Name = ElementInfo("Root");
-	Name.Attributes.emplace("Is", std::string(obj->name));
-	AddElement(saveName, "Name", Name);
+	
 
-
-
-	ElementInfo Transform = ElementInfo("Name");
+	ElementInfo Transform = ElementInfo("Identifiers");
 	AddElement(saveName, "Transform", Transform);
 
 
@@ -103,15 +104,15 @@ void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
 	AddElement(saveName, "Scale", CreateVec3(obj->transform.GetScale(), "Transform"));
 
 
-	ElementInfo ObjectInfo = ElementInfo("Name");
+	ElementInfo ObjectInfo = ElementInfo("Identifiers");
 	AddElement(saveName, "ObjectInfo", ObjectInfo);
 
 
 	ElementInfo ObjectType = ElementInfo("ObjectInfo");
-	ObjectType.Attributes.emplace("ID", std::string(obj->GetType()));
+	ObjectType.Attributes.emplace("S_ID", std::string(obj->GetType()));
 	AddElement(saveName, "Type", ObjectType);
 
-	ElementInfo Components = ElementInfo("Name");
+	ElementInfo Components = ElementInfo("Identifiers");
 	AddElement(saveName, "Components", Components);
 
 	for (auto comp : obj->GetComponents())
@@ -132,6 +133,9 @@ void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 	{
 		if (std::holds_alternative<int>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<int>(atrib.second));
+
+		else if (std::holds_alternative<uint64_t>(atrib.second))
+			elm.element->SetAttribute(atrib.first.c_str(), std::get<uint64_t>(atrib.second));
 
 		else if (std::holds_alternative<float>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<float>(atrib.second));
@@ -156,7 +160,7 @@ ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 3; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
+		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F", i), value[i]);
 	}
 
 	return element;
@@ -167,7 +171,7 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVector(i), value[i]);
+		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F",i), value[i]);
 	}
 
 	return element;

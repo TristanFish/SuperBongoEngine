@@ -178,7 +178,7 @@ void OctSpatialPartition::AddObject(Collider3D* collider)
 	AddObjectToCell(root, collider);
 }
 
-GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
+GameObject* OctSpatialPartition::GetCollision(Ray& ray)
 {
 	if(rayInstersectionList.size() > 0)
 	{
@@ -200,12 +200,11 @@ GameObject* OctSpatialPartition::GetCollision(MouseRay& ray)
 			
 			if (ray.isColliding(dynamic_cast<BoundingBox*>(obj)))
 			{
-				if(ray.intersectionDist < shortestDistance)
-				{
-					hitResult = obj->GetRBAttached()->gameObject;
-					shortestDistance = ray.intersectionDist;
-					break;
-				}
+				
+				hitResult = obj->GetRBAttached()->gameObject;
+					//shortestDistance = ray.intersectionDist;
+				break;
+
 			}
 		}
 		if(hitResult != nullptr)
@@ -236,7 +235,7 @@ void OctSpatialPartition::AddObjectToCell(OctNode* cell, Collider3D* collider)
 	}
 }
 
-void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, MouseRay& ray)
+void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, Ray& ray)
 {
 
 	//if this node is a leaf go up one step
@@ -245,6 +244,8 @@ void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, MouseRay& ray)
 		if (ray.isColliding(cell->octBounds))
 		{
 			rayInstersectionList.push_back(cell);
+
+			AddParents(cell);
 		}
 	}
 	else
@@ -254,6 +255,16 @@ void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, MouseRay& ray)
 		{
 			PrepareCollisionQuery(child, ray);
 		}
+	}
+}
+
+void OctSpatialPartition::AddParents(OctNode* cell)
+{
+
+	if (cell->GetParent() != nullptr)
+	{
+		rayInstersectionList.push_back(cell->GetParent());
+		AddParents(cell->parent);
 	}
 }
 
