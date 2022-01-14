@@ -1,17 +1,17 @@
 <Root>
-    <Name Is="Plane-1">
+    <Identifiers S_Name="Plane-1" U64_UniqueIdentifier="2722588505784877441">
         <Transform>
-            <Position X="0.80000001" Y="-6.8000002" Z="0"/>
-            <Rotation X="90" Y="0" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
+            <Position F_X="0.80000001" F_Y="-6.8000002" F_Z="0"/>
+            <Rotation F_X="90" F_Y="0" F_Z="0"/>
+            <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class PlaneObject"/>
+            <Type S_ID="class PlaneObject"/>
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="1" Z="1"/>
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
             </Renderer>
         </Components>
-    </Name>
+    </Identifiers>
 </Root>

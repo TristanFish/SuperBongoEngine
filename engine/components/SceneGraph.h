@@ -1,7 +1,6 @@
 #ifndef SCENEGRAPH_H
 #define SCENEGRAPH_H
 
-#include "core/3D/OctSpatialPartition.h"
 #include "rendering/Renderer.h"
 #include "SDL_events.h"
 #include <vector>
@@ -11,6 +10,7 @@
 class RigidBody3D;
 class GameObject;
 class SaveFile;
+class OctSpatialPartition;
 //! SceneGraph Class
 /*!There'll be one manager per scene it holds an array of gameobjects to update/render etc.
 see how its used in scene1*/
@@ -28,8 +28,10 @@ private:
 
 	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
+	OctSpatialPartition* ScenePartition;
+
 	//!
-	/*! tracks whether the scenegraph is past the */
+	/*! tracks whether the scenegraph is past the init stage */
 	bool sceneIsPostInit = false;
 	
 	
@@ -76,14 +78,17 @@ public:
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	const std::vector<RigidBody3D*>& GetRigidBodies() const { return rigidBodies; }
+
+	OctSpatialPartition* GetScenePartition() const { return ScenePartition; }
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
 
-	void LoadGameObject(GameObject* go);
 
+	void LoadGameObject(GameObject* go);
 	void DeleteGameObject(GameObject* go);
 };
 

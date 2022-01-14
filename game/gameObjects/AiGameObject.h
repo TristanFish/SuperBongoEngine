@@ -16,7 +16,7 @@ public:
 
 	void Update(const float deltaTime) override;
 	
-	AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.pos); };
+	AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.GetPosition()); };
 };
 
 #endif

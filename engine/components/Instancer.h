@@ -35,6 +35,7 @@ private:
 	- Also takes in a unsigned int instancedAmount for how many instances we want*/
 	virtual void CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount);
 
+
 	//! Bind Buffers function
 	/*!  Binds the instance buffer and sends the model matrices to the shader. 
 	- Takes in a MeshRenderer to allow us to access the meshes vao buffer 

@@ -106,10 +106,11 @@ void PropertiesPanel::Render()
 	if (selectedObject)
 	{
 		#pragma region GameObject
-		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
-		if (ImGui::InputText("GameObject Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+
+		static std::string oldObjName = UIStatics::GetSelectedObject()->GetName();
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->GetName(), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			const std::string newObjName = UIStatics::GetSelectedObject()->name;
+			std::string newObjName = UIStatics::GetSelectedObject()->GetName();
 
 			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
 			SaveManager::SetSaveName(oldObjName, newObjName);
@@ -237,7 +238,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 	if (go->GetChildCount() > 0)
 	{
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
 		
 		if (ImGui::BeginDragDropSource())
 		{
@@ -275,6 +276,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 				UIStatics::SetSelectedObject(nullptr);
 			}
@@ -300,7 +302,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 	{
 		ImGuiDragDropFlags dragDrop_flags = ImGuiDragDropFlags_None;
 
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
 
 		if (ImGui::IsItemClicked())
 		{
@@ -353,6 +355,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 		{
 			if (ImGui::MenuItem("Delete"))
 			{
+				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
 				Globals::s_SceneGraph->DeleteGameObject(go);
 				UIStatics::SetSelectedObject(nullptr);
 			}
@@ -381,7 +384,7 @@ int HierarchyPanel::GetObjIndex(const std::string& objName) const
 {
 	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
-		if (gameobjects[i]->name == objName)
+		if (gameobjects[i]->GetName() == objName)
 		{
 			return i;
 		}
@@ -508,7 +511,7 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), mode(RenderMode::Result), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), isMouseHovered(false), isActive(true)
 {
 	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
@@ -545,11 +548,11 @@ void Viewport::Render()
 				{
 					const RenderMode loopMode = static_cast<RenderMode>(index);
 
-					const bool is_selected = (mode == loopMode);
+					const bool is_selected = (renderMode == loopMode);
 					if (ImGui::Selectable(Mode, is_selected))
 					{
 						ImGui::CloseCurrentPopup();
-						mode = loopMode;
+						renderMode = loopMode;
 						modeName = "[" + std::string(Mode) + "]";
 					}
 					index++;
@@ -623,7 +626,7 @@ void Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
-			LoadUtility::GetInstance()->LoadObject(file);
+			LoadUtility::GetInstance()->LoadObject(file, UUniqueID());
 		}
 		ImGui::EndDragDropTarget();
 	}

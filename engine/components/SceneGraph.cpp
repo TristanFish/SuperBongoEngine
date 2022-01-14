@@ -1,12 +1,15 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
+
 #include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+#include "core/3D/OctSpatialPartition.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
+#include "core/resources/CollisionDetection.h"
+#include "core/resources/SaveManager.h"
+
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
-#include "core/resources/SaveManager.h"
 
 #include "graphics/UIStatics.h"
 
@@ -28,6 +31,9 @@ SceneGraph::~SceneGraph()
 		nameObjectPair.second = nullptr;
 	}
 
+	delete ScenePartition;
+	ScenePartition = nullptr;
+
 	InstantiableObjects.clear();
 	
 	gameObjects.clear();
@@ -37,7 +43,7 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	//osp = OctSpatialPartition(500);
+	//ScenePartition = new OctSpatialPartition(1500);
 
 	for (const auto& obj : SaveManager::SaveableObjects)
 	{
@@ -129,6 +135,23 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	return *go;
 }
 
+
+void SceneGraph::AddRenderingComponents()
+{
+	for (auto* go : gameObjects)
+	{
+		if (go->HasComponent<MeshRenderer>())
+		{
+			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
+			Renderer::GetInstance()->AddMeshRenderer(mr);
+		}
+		if (go->HasComponent<LightComponent>())
+		{
+			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
+		}
+	}
+}
+
 void SceneGraph::LoadGameObject(GameObject* go)
 {
 	go->Init();
@@ -144,7 +167,9 @@ void SceneGraph::LoadGameObject(GameObject* go)
 
 	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		rigidBodies.emplace_back(rb);
+		ScenePartition->AddObject(rb->GetCollider());
 	}
 
 	for (GameObject* child : go->children)
@@ -190,7 +215,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			CollisionDetection::ColliderIntersection(rigidBodies[i]->GetCollider(), rigidBodies[j]->GetCollider());
 		}
 	}
 }

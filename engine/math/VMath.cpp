@@ -28,7 +28,7 @@ Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n)
 	const Vec3 temp = n * scalar;
 	const Vec3 result = temp - v;
 	return result;
-}
+
 
 float VMath::distance(const Vec3 &a, const Vec3 &b)
 {
@@ -52,7 +52,24 @@ Vec4 VMath::normalize(const Vec4& a)
 	return result;
 }
 
-Vec3 VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
+
+MATH::Vec2 VMath::normalize(const Vec2& a)
+{
+	float magnitude;
+	Vec2 result;
+	magnitude = float(sqrt(a.x * a.x + a.y * a.y));
+#ifdef _DEBUG  /// If in debug mode let's worry about divide by zero or nearly zero!!! 
+	if (magnitude < VERY_SMALL) {
+		std::string errorMsg("Divide by nearly zero! ");
+		throw errorMsg;
+	}
+#endif
+	result.x = a.x / magnitude;
+	result.y = a.y / magnitude;
+	return result;
+}
+
+Vec3 MATH::VMath::clamp(const Vec3& clampedV, const Vec3& minV, const Vec3& maxV)
 {
 	Vec3 clampedVector = clampedV;
 

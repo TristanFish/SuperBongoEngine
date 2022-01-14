@@ -19,16 +19,20 @@ private:
 	/*! The transforms Rotation Matrix */
 	MATH::Matrix4 rotationMatrix;
 	
-public:
-	Transform* parent;
-	
-
+	void UpdateMatricies();
 
 	//!Standard Transform Vec3s
 	/*! Stores the main transform variables */
 	MATH::Vec3 pos, scale;
 
 	MATH::Quaternion rotation;
+
+public:
+	Transform* parent;
+	
+
+
+
 
 	//!Transform Constructor
 	/*! Initializes the rotational Matrix */
@@ -46,20 +50,31 @@ public:
 	//!GetPosition Getter
 	/*! Returns the transforms position */
 	MATH::Vec3& GetPosition() { return pos; }
+	const MATH::Vec3& GetPosition() const { return pos; }
 
-	//!GetRotation Getter
-	/*! Returns the transforms rotation inthe form of euler angles */
-	MATH::Vec3 GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
+
+
 
 	MATH::Quaternion GetQuaternion() const { return rotation; }
+
+	/*! Returns the transforms rotation in the form of euler angles */
+	MATH::Vec3 GetRotation() { return MATH::Quaternion::QuatToEuler(rotation); }
+	const MATH::Vec3& GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
+
 
 	//!GetScale Getter
 	/*! Returns the transforms scale */
 	MATH::Vec3& GetScale() { return scale; }
+	const MATH::Vec3& GetScale() const { return scale; }
+
+
+	MATH::Quaternion& GetRotationQuat() { return rotation; }
+	const MATH::Quaternion& GetRotationQuat() const { return rotation; }
+
 
 	//!GetModelMatrix Getter
 	/*! Returns the transforms model matrix */
-	const MATH::Matrix4& GetModelMatrix() const { return modelMatrix; }
+	MATH::Matrix4& GetModelMatrix()  { return modelMatrix; }
 
 	//!GetRotationMatrix Getter
 	/*! Returns the transforms rotation matrix */
@@ -91,7 +106,6 @@ public:
 	//!SetScale Setter
 	/*! Sets the rotation of the transform */
 	void SetScale(const MATH::Vec3& scale);
-
 };
 
 #endif

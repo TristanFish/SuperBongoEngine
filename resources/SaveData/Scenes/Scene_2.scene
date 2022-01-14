@@ -4,6 +4,6 @@
         <RedBox/>
     </Objects>
     <SceneSettings>
-        <BaseClass: :="class Scene2"/>
+        <BaseClass: S_:="class Scene2"/>
     </SceneSettings>
 </Root>

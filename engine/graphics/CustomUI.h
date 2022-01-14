@@ -235,7 +235,7 @@ namespace CustomUI
 		void Render() override;
 
 
-		RenderMode GetRenderMode() const { return mode; }
+		RenderMode GetRenderMode() const { return renderMode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
@@ -256,7 +256,7 @@ namespace CustomUI
 		std::string modeName;
 		std::string aspectSize;
 
-		RenderMode mode;
+		RenderMode renderMode;
 		AspectRatio activeRatio;
 
 		std::vector<const char*> modeMap;
