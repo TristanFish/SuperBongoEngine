@@ -39,9 +39,7 @@ void MeshRenderer::Init(GameObject* g)
 
 	if(model)
 	{
-		OBB.maxVert = model->p_max ;
-		OBB.minVert = model->p_min ;
-		OBB.transform = gameObject->transform.GetModelMatrix();
+		
 	}
 	Renderer::GetInstance()->AddMeshRenderer(this);
 

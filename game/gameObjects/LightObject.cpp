@@ -6,7 +6,7 @@ using namespace MATH;
 LightObject::LightObject(const std::string& name, Vec3 position)
 {
 	this->name = name;
-	transform.pos = position;
+	transform.SetPos(position);
 	AddComponent<LightComponent>();
 	
 	MeshRenderer* mr = AddComponent<MeshRenderer>();

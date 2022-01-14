@@ -22,13 +22,13 @@ Vec3 VMath::normalize(const Vec3 &a) {
 	return result;
 }
 
-Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n)
+Vec3 VMath::reflect(const Vec3& v, const Vec3& n)
 {
 	const float scalar = 2.0f * dot(-v, n);
 	const Vec3 temp = n * scalar;
 	const Vec3 result = temp - v;
 	return result;
-
+}
 
 float VMath::distance(const Vec3 &a, const Vec3 &b)
 {

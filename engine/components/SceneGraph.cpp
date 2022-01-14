@@ -169,7 +169,7 @@ void SceneGraph::LoadGameObject(GameObject* go)
 	{
 		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
 		rigidBodies.emplace_back(rb);
-		ScenePartition->AddObject(rb->GetCollider());
+		//ScenePartition->AddObject(rb->GetCollider());
 	}
 
 	for (GameObject* child : go->children)

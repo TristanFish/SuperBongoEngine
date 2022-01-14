@@ -92,6 +92,12 @@ namespace MATH
 	struct Vec3 {
 		float  x,y,z;	///  Structures are default public
 
+
+
+		void set(float x_, float y_, float z_)
+		{
+			x = x_; y = y_; z = z_;
+		}
 		/// Here's a set of constructors
 		explicit Vec3(float s = 0.0f){
 			x = s;

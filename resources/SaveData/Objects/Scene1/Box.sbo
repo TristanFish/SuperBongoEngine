@@ -3,7 +3,7 @@
         <Transform>
             <Position F_X="-53.194069" F_Y="15.7" F_Z="0"/>
             <Rotation F_X="0" F_Y="0" F_Z="0"/>
-            <Scale F_X="0.2" F_Y="1" F_Z="5"/>
+            <Scale F_X="0.40000001" F_Y="5" F_Z="20"/>
         </Transform>
         <ObjectInfo>
             <Type S_ID="class Box"/>

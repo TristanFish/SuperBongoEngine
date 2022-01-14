@@ -16,7 +16,7 @@ void Instancer::Init(GameObject* g)
 
 	if(mr == nullptr)
 	{
-		EngineLogger::Warning("Gameobject: " + gameObject->name + " has no meshrenderer for its instancer, instancer will not initialize", "Instancer.cpp", __LINE__);
+		EngineLogger::Warning("Gameobject: " + gameObject->GetName() + " has no meshrenderer for its instancer, instancer will not initialize", "Instancer.cpp", __LINE__);
 		return;
 	}
 
@@ -30,7 +30,7 @@ void Instancer::Update(const float deltaTime)
 {
 }
 
-void Instancer::CalculateModelMatrices(Transform& transform, const unsigned int instanceAmount)
+void Instancer::CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount)
 {
 	modelMatrices.reserve(instanceAmount);
 	const float radius = 1.0;

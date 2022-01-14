@@ -2,7 +2,7 @@
 #define SCENEAi_H
 
 #include "core/scene/Scene.h"
-#include "core/3D/New3D/GJKDetection.h"
+#include "core/3D/Physics/GJKDetection.h"
 #include "gameObjects/AiGameObject.h"
 #include "Primitives/Sphere.h"
 

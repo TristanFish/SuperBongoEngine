@@ -8,6 +8,10 @@
         <ObjectInfo>
             <Type S_ID="class LightObject"/>
         </ObjectInfo>
-        <Components/>
+        <Components>
+            <Renderer>
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="0"/>
+            </Renderer>
+        </Components>
     </Identifiers>
 </Root>
