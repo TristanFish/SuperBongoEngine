@@ -62,7 +62,7 @@ public:
 
 	//! FindGameObject Function
 	/*!Returns the first gameObject with a given name*/
-	GameObject* FindGameObject(const char* name);
+	GameObject* FindGameObject(const std::string& name);
 
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
@@ -75,10 +75,6 @@ public:
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
 	 int GetNumObjects() const { return gameObjects.size(); }
-
-	 //! isObjectActive Getter
-	/*!Return's if there is already an object with a given name*/
-	 bool isObjectActive(const std::string& objName);
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/

@@ -58,6 +58,19 @@ void Model::DestroyModel()
 	}
 }
 
+std::vector<Vertex> Model::GetVertices() const
+{
+	std::vector<Vertex> vertices;
+	vertices.reserve(500);
+	
+	for(const auto& mesh : meshes)
+	{
+		vertices.insert(vertices.end(), mesh.vertices.begin(), mesh.vertices.end());
+	}
+
+	return vertices;
+}
+
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
 	
@@ -80,15 +93,24 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<Texture> textures;
 	std::vector<Vertex> vertices;
 
+	double unitScaleDouble = 1.0;
+
+	if(scene->mMetaData)
+	{
+		scene->mMetaData->Get("UnitScaleFactor", unitScaleDouble);
+	}
+
+	const float unitScale = 1.0f;// static_cast<float>(unitScaleDouble);
+	
 	if(meshes.empty())
 	{
-		p_min.x = mesh->mVertices[0].x;
-		p_min.y = mesh->mVertices[0].y;
-		p_min.z = mesh->mVertices[0].z;
-		
-		p_max.x = mesh->mVertices[0].x;
-		p_max.y = mesh->mVertices[0].y;
-		p_max.z = mesh->mVertices[0].z;
+		p_min.x = mesh->mVertices[0].x * unitScale;
+		p_min.y = mesh->mVertices[0].y * unitScale;
+		p_min.z = mesh->mVertices[0].z * unitScale;
+					
+		p_max.x = mesh->mVertices[0].x * unitScale;
+		p_max.y = mesh->mVertices[0].y * unitScale;
+		p_max.z = mesh->mVertices[0].z * unitScale;
 	}
 	
 	//Load vertices
@@ -97,9 +119,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		Vertex vertex;
 
 		MATH::Vec3 vec;
-		vec.x = mesh->mVertices[i].x;
-		vec.y = mesh->mVertices[i].y;
-		vec.z = mesh->mVertices[i].z;
+		vec.x = mesh->mVertices[i].x * unitScale;
+		vec.y = mesh->mVertices[i].y * unitScale;
+		vec.z = mesh->mVertices[i].z * unitScale;
 		vertex.position = vec;
 
 		p_min.x = std::min(p_min.x, vec.x);

@@ -62,7 +62,7 @@ public:
 	ShaderProgram shader;
 	
 	MeshRenderer();
-	virtual ~MeshRenderer() = default;
+	virtual ~MeshRenderer();
 
 	bool LoadModel(const char* name);
 	//!Create Shader Function
@@ -79,7 +79,7 @@ public:
 
 	//!Render override Function
 	/*!Render the mesh & run the shader*/
-	void Render() const override;
+	void Render() const;
 
 	//!Render override Function
 	/*!Render the mesh & run the shader that the function is given*/
@@ -147,6 +147,7 @@ public:
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
 
+	unsigned int GetInstanceAmount() const { return instanceAmount; }
 	
 
 private:

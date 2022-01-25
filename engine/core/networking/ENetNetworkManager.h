@@ -4,49 +4,11 @@
 #include <mutex>
 #include <vector>
 #include <enet/enet.h>
+#include <sstream>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/string.hpp>
 
 #include "NetworkManager.h"
-
-class TempSemaphore
-{
-	std::mutex mutex;
-	std::condition_variable condition;
-	short count = 0;
-
-public:
-	TempSemaphore(short count_)
-	{
-		count = count_;
-	}
-
-	void Release()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		count++;
-		condition.notify_one();
-	}
-
-	void Acquire()
-	{
-		std::unique_lock<decltype(mutex)> lock(mutex);
-		while(!count)
-		{
-			condition.wait(lock);
-		}
-		count--;
-	}
-
-	bool TryAcquire()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		if(count)
-		{
-			count--;
-			return true;
-		}
-		return false;
-	}
-};
 
 constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
 
@@ -76,7 +38,20 @@ public:
 	//turns binary data into a string
 	std::string ParseData(unsigned char* data) const;
 	//turns string data into binary
-	std::stringstream SerializeData(const std::string& data);
+	template<typename T>
+	std::stringstream SerializeData(const T& data)
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out | std::stringstream::binary);
+		//Cereal needs these open and close brackets to properly flush the Archive
+		{
+			cereal::BinaryOutputArchive oarchive(ss);
+
+			//puts "data" into the stringstream "ss" as binary data
+			oarchive(data);
+		}
+		return ss;
+	}
+
 	
 	void CreateHost(unsigned int port, unsigned int maxConnections) override;
 	bool Connect(const char* addressString, unsigned int port) override;

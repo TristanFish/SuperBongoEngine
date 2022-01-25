@@ -3,6 +3,7 @@
 
 #include "core/Logger.h"
 #include "core/3D/Physics/Collider3D.h"
+#include "core/UUniqueID.h"
 
 #include "Transform.h"
 #include "Components.h"
@@ -19,7 +20,12 @@ class GameObject
 
 
 protected:
-	friend class SceneGraph;
+
+	/*! Hold's the name of this gameObject*/
+	std::string name;
+
+	UUniqueID uuid;
+
 	//! Active boolean
 	/*! Controls if the gameObject is active or not*/
 	bool active = true;
@@ -30,16 +36,14 @@ protected:
 
 
 
-
+	friend class SceneGraph;
 public:
 
-	/*! Hold's the name of this gameObject*/
-	std::string name;
+
 
 	//!IsMenuActive boolean
 	/*! Controls if the gameObject's properties panel is active*/
 	bool isObjectSelected = false;
-
 
 	//!canBeInstantiated boolean
 	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
@@ -92,7 +96,11 @@ public:
 	/*!Sets the gameObject as active or not*/
 	void SetActive(const bool a) { active = a; }
 
-	std::string GetName() const { return std::string(name); }
+	std::string GetName() const { return name; }
+	std::string& GetName() { return name; }
+
+	uint64_t GetUUID() const { return uuid; }
+
 
 	//!GetModelMatrix Getter
 	/*!Returns the gameObject model matrix*/
@@ -113,6 +121,8 @@ public:
 	/*!Sets the Name of this a gameObject*/
 	void SetName(const std::string& name_) { name = name_; }
 
+
+	void SetUUID(const uint64_t& uuid_) { uuid = UUniqueID(uuid_); }
 
 	 GameObject* GetParent() const { return parent; }
 	
@@ -171,7 +181,7 @@ public:
 				return comp;
 			}
 		}
-		EngineLogger::Error("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
+		EngineLogger::Warning("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
 		return nullptr;
 	}
 
@@ -231,8 +241,6 @@ public:
 			iter++;
 		}
 	}
-
-
 
 	template <typename T>
 	T* AddChild(GameObject* go)

@@ -23,34 +23,35 @@ void Player::Update(const float deltaTime)
 	//Always update your inherited components and transform
 #pragma region Movement Controls
 
-	MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
+	//Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
 
-	//Movement controls
-	if (InputManager::GetInstance()->GetKey(SDLK_w))
-	{
-		moveDir += transform.Forward();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_s))
-	{
-		moveDir += -transform.Forward();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_a))
-	{
-		moveDir += -transform.Right();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_d))
-	{
-		moveDir += transform.Right();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_SPACE))
-	{
-		moveDir += transform.Up();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_LCTRL))
-	{
-		moveDir += -transform.Up();
-	}
-	transform.GetPosition() += moveDir * moveSpeed * deltaTime;
+	////Movement controls
+	//if (InputManager::GetInstance()->GetKey(SDLK_w))
+	//{
+	//	moveDir += transform.Forward();
+	//}
+	//if (InputManager::GetInstance()->GetKey(SDLK_s))
+	//{
+	//	moveDir += -transform.Forward();
+	//}
+	//if (InputManager::GetInstance()->GetKey(SDLK_a))
+	//{
+	//	moveDir += -transform.Right();
+	//}
+	//if (InputManager::GetInstance()->GetKey(SDLK_d))
+	//{
+	//	moveDir += transform.Right();
+	//}
+	//if (InputManager::GetInstance()->GetKey(SDLK_SPACE))
+	//{
+	//	moveDir += transform.Up();
+	//}
+	//if (InputManager::GetInstance()->GetKey(SDLK_LCTRL))
+	//{
+	//	moveDir += -transform.Up();
+	//}
+	//transform.pos += moveDir * moveSpeed * deltaTime;
+
 #pragma endregion
 
 }

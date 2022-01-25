@@ -35,6 +35,8 @@ public:
 	//! MouseRay Constructor
 	MouseRay() = default;
 
+	MouseRay(const MATH::Vec3& dir_, const MATH::Vec3& origin_);
+
 	//! MouseRay Destructor
 	~MouseRay() = default;
 

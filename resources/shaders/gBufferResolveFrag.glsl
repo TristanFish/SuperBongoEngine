@@ -1,5 +1,5 @@
 #version 450
-#define MAX_LIGHTS 10
+#define MAX_LIGHTS 20
 layout (location = 0) out vec4 fragColor;
 
 in vec2 vertUV;
@@ -12,11 +12,102 @@ uniform usampler2D stencilTexture;
 
 uniform vec3 camPos;
 uniform unsigned int activeLights = 0;
-uniform vec3 lightsPos[MAX_LIGHTS];
-uniform vec3 lightsAmb[MAX_LIGHTS];
-uniform vec3 lightsDiff[MAX_LIGHTS];
-uniform vec3 lightsSpec[MAX_LIGHTS];
-uniform float lightsIntens[MAX_LIGHTS];
+
+uniform struct LightInfo
+{
+	//4th component of Amb holds constant for attenuation
+	vec4 lightAmb;	
+	//4th component of Diff holds linear for attenuation
+	vec4 lightDiff;	
+	//4th component of Spec holds quadratic for pointLight attenuation
+	vec4 lightSpec;	
+	//4th component of lightDir holds cutoff for Spotlight
+	vec4 lightDir;
+	vec3 lightPos;
+	//lightIntens holds outerCutOff for SpotLights
+	float lightIntens;
+	int lightType;		//What type of light it is, 1 = Point, 2 = Spot, 3 = Directional
+} 
+lights[MAX_LIGHTS];
+
+vec4 RenderSpotLight(LightInfo l, vec3 norm, vec3 pos)
+{
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 amb = l.lightAmb.xyz;
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+
+	vec3 lightDir = normalize(l.lightPos - pos);
+	float theta = dot(lightDir, normalize(-l.lightDir.xyz));
+	float epsilon = l.lightDir.w - l.lightIntens;
+	float intensity = clamp((theta - l.lightIntens) / epsilon, 0.0, 1.0);
+
+	float diff = max(dot(norm, lightDir), 0.0);
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = intensity * specVal * specCol;
+	}
+
+	vec3 diffuse = intensity * l.lightDiff.xyz * diff;
+
+	return vec4(amb + diffuse + specular, 0.0);
+}
+
+vec4 RenderPointLight(LightInfo l, vec3 norm, vec3 pos)
+{
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 amb = l.lightAmb.xyz;
+
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+
+	vec3 lightDir = normalize(l.lightPos - pos);
+	float dist = length(l.lightPos - pos);
+
+	float diff = max(dot(norm, lightDir), 0.0);
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = l.lightIntens * specVal * specCol;
+	}
+
+	vec3 diffuse = l.lightDiff.xyz * diff;
+
+
+	float attenuation = 1.0 / (l.lightAmb.w + l.lightDiff.w * dist + l.lightSpec.w * (dist * dist));
+	attenuation *= l.lightIntens;
+	amb *= attenuation;
+	diffuse *= attenuation;
+	specular *= attenuation;
+
+	return vec4(amb + diffuse + specular, 0.0);
+}
+
+vec4 RenderDirectionalLight(LightInfo l, vec3 norm, vec3 pos)
+{
+	vec3 specCol = l.lightSpec.xyz;
+	vec3 viewDir = normalize(camPos - pos);
+	vec3 lightDir = normalize(-l.lightDir.xyz);
+	vec3 specular = vec3(0.0, 0.0, 0.0);
+
+	float diff = max(dot(norm, lightDir), 0.0);
+
+	vec3 amb = l.lightAmb.xyz;
+	vec3 diffuse = l.lightDiff.xyz * diff;
+
+	if(diff > 0.0)
+	{
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		specular = l.lightIntens * specVal * specCol;
+	}
+
+
+	return vec4(amb + diffuse + specular, 0.0);
+}
 
 void main()
 {
@@ -34,42 +125,28 @@ void main()
 	//	WATER				= 0b01000000 
 
 	vec4 lightCol = vec4(0.0, 0.0, 0.0, 0.0);
-	vec3 finalAmbient = vec3(0.0, 0.0, 0.0);
-	vec3 finalDiffuse = vec3(0.0, 0.0, 0.0);
-	vec3 finalSpecular = vec3(0.0, 0.0, 0.0);
+	vec4 currentCol = vec4(0.0, 0.0, 0.0, 1.0);
 
 	if(sten == 1)
 	{
 		for(int i = 0; i < activeLights; i++)
 		{
-			vec3 lightDir = normalize(lightsPos[i] - pos);
-			float dist = length(lightsPos[i] - pos);
-
-			float diff = max(dot(normal, lightDir), 0.0);
-
-			vec3 amb = lightsAmb[i];
-			vec3 diffuse = lightsDiff[i] * diff;
-
-			vec3 specCol = lightsSpec[i];
-			vec3 viewDir = normalize(camPos - pos);
-			vec3 reflectDir = reflect(-lightDir, normal);
-			float specVal = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-			vec3 specular = lightsIntens[i] * specVal * specCol;
-
-			float attenuation = lightsIntens[i] * clamp(10.0 / dist, 0.0, 1.0);
-			amb *= attenuation;
-			diffuse *= attenuation;
-			specular *= attenuation;
-
-			finalAmbient += amb;
-			finalDiffuse += diffuse;
-			finalSpecular += specular;
+			if(lights[i].lightType == 1)
+			{
+				currentCol += RenderPointLight(lights[i], normal, pos);
+			}
+			if(lights[i].lightType == 2)
+			{
+				currentCol += RenderSpotLight(lights[i], normal, pos);
+			}
+			if(lights[i].lightType == 3)
+			{
+				currentCol += RenderDirectionalLight(lights[i], normal, pos);
+			}
 		}
-		finalAmbient *= vec3(col);
-		finalDiffuse *= vec3(col);
-		finalSpecular *= vec3(col);
+		currentCol *= col;
 
-		lightCol = vec4(finalAmbient + finalDiffuse + finalSpecular, 1.0);
+		lightCol = vec4(currentCol);
 	}
 	else
 	{

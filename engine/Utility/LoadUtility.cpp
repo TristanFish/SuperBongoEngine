@@ -30,7 +30,7 @@ LoadUtility* LoadUtility::GetInstance()
 
 #pragma region Core Functions
 
-void LoadUtility::LoadObject(SaveFile& file)
+void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 {
 	if (file.GetFileType() == FileType::OBJECT)
 	{
@@ -38,8 +38,10 @@ void LoadUtility::LoadObject(SaveFile& file)
 		ElementInfo RotElm = file.FindElement("Rotation");
 		ElementInfo ScaleElm = file.FindElement("Scale");
 		ElementInfo TypeElm = file.FindElement("Type");
-		ElementInfo NameElm = file.FindElement("Name");
+		ElementInfo IdentifiersElm = file.FindElement("Identifiers");
 
+
+		
 		MATH::Vec3 Position;
 		MATH::Vec3 Rotation;
 		MATH::Vec3 Scale;
@@ -53,7 +55,13 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 		}
 
-		S_PrevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
+		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
+		
+		if (uuid == 0)
+		{
+			uuid = std::get<uint64_t>(IdentifiersElm.Attributes["UniqueIdentifier"]);
+		}
+
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
 
 
@@ -81,6 +89,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 			{
 				GameObject* clone = obj.second->NewClone();
 				clone->SetName(S_PrevLoadedObjName);
+				clone->SetUUID(uuid);
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
 				clone->SetScale(Scale);
@@ -171,6 +180,8 @@ void LoadUtility::UnLoadSceneSaves()
 
 	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
+
+
 
 #pragma endregion
 
@@ -297,29 +308,41 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttribute* atrib)
 {
-	bool boolValue = atrib->BoolValue();
+	std::string AtribName = atrib->Name();
 
-	int intValue = atrib->IntValue();
+	size_t LastOfTag = AtribName.find("_");
+	
+	//Get The Tag
+	std::string AtribType = AtribName.substr(0, LastOfTag);
+	
+	//Remove Tag From Name
+	AtribName = AtribName.substr(LastOfTag + 1, AtribName.length() - LastOfTag);
+	if (AtribType == "F")
+	{
+		info.Attributes.emplace(AtribName, atrib->FloatValue());
+	}
+	else if (AtribType == "S")
+	{
+		info.Attributes.emplace(AtribName, std::string(atrib->Value()));
+	}
+	else if (AtribType == "U64")
+	{
+		info.Attributes.emplace(AtribName, atrib->Unsigned64Value());
 
-	float floatValue = atrib->FloatValue();
+	}
+	else if (AtribType == "I")
+	{
+		info.Attributes.emplace(AtribName, atrib->IntValue());
 
+	}
+	else if (AtribType == "B")
+	{
+		info.Attributes.emplace(AtribName, atrib->BoolValue());
 
-	if (atrib->QueryFloatValue(&floatValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), floatValue);
 	}
-	else if (atrib->QueryIntValue(&intValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), intValue);
-	}
-	else if (atrib->Value() != "")
-	{
-		info.Attributes.emplace(atrib->Name(), std::string(atrib->Value()));
-	}
-	else if (atrib->QueryBoolValue(&boolValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), boolValue);
-	}
+
+	 
+
 	else
 	{
 		EngineLogger::Info("Attribute type unable to be queried", "LoadUtility.cpp", __LINE__);

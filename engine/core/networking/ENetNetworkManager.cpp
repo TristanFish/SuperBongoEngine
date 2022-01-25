@@ -108,6 +108,7 @@ void ENetNetworkManager::HandleServerEvents()
 				//Needs to track which client it's receiving from
 				//Needs to know what kind of data it's receiving
 				string parsedData = ParseData(netEvent.packet->data);
+				
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
 				break;
@@ -164,20 +165,6 @@ std::string ENetNetworkManager::ParseData(unsigned char* data) const
 	}
 
 	return deserializedData;
-}
-
-stringstream ENetNetworkManager::SerializeData(const string& data)
-{
-	stringstream ss(stringstream::in | stringstream::out | stringstream::binary);
-	//Cereal needs these open and close brackets to properly flush the Archive
-	{
-		cereal::BinaryOutputArchive oarchive(ss);
-
-		//puts "data" into the stringstream "ss" as binary data
-		oarchive(data);
-	}
-
-	return ss;
 }
 
 void ENetNetworkManager::CreateHost(unsigned int port, unsigned int maxConnections)

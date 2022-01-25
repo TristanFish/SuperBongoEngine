@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
+    <ClInclude Include="engine\components\3D\LineRenderer.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.h" />
@@ -302,8 +303,11 @@
     <ClInclude Include="game\scenes\SceneAi.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
+    <ClInclude Include="engine\core\UUniqueID.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
+    <ClCompile Include="engine\components\Component.cpp" />
     <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
@@ -398,6 +402,7 @@
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
     <ClCompile Include="game\scenes\SceneAi.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
+    <ClCompile Include="engine\core\UUniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

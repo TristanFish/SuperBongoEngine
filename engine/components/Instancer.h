@@ -11,40 +11,36 @@
 
 /*! Instancer class
 //! This class handles how we are going to render multiple instances of a gameObject given only one model*/
-class Instancer
+class Instancer : public Component
 {
-	
 public:
 
-	//! Initialization function
-	/*! This function calls all the needed functions for this class to work 
-	- This function takes in an const unsigned int that is used for how many instances we want to spawn 
-	- Also takes in a GameObject pointer is how we get the object's transform*/
-	void Init(const unsigned int& amount_, GameObject* g);
-
-
 	//! Base Instancer Constructor
-	Instancer();
+	Instancer() = default;
 	//! Base Instancer Destructor
 	virtual ~Instancer();
 	
+	void Init(GameObject* g) override;
+	void Update(const float deltaTime) override;
+	void HandleEvents(const SDL_Event& event) override {}
+
+private:
+
+	GLuint instanceBuffer;
+	std::vector<MATH::Matrix4> modelMatrices;
 
 	//! Calculate Model Matrices function
 	/*! This function does all the positional calculations for the instances. 
 	- Takes in a object transform that allows us to get the objects model matrix 
 	- Also takes in a unsigned int instancedAmount for how many instances we want*/
-	virtual void CalculateModelMatrices( Transform& transform, const unsigned int instanceAmount);
-private:
+	virtual void CalculateModelMatrices(const Transform& transform, const unsigned int instanceAmount);
 
-	GLuint instanceBuffer;
-	std::vector<MATH::Matrix4> modelMatrices;
 
 	//! Bind Buffers function
 	/*!  Binds the instance buffer and sends the model matrices to the shader. 
 	- Takes in a MeshRenderer to allow us to access the meshes vao buffer 
 	- Also takes in unsigned int so the function knows how many to render*/
 	void BindBuffers(const MeshRenderer& renderer, const unsigned int instanceAmount);
-
 };
 
 #endif

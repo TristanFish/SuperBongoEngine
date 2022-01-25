@@ -1,13 +1,13 @@
 <Root>
-    <Name Is="Player">
+    <Identifiers S_Name="Player" U64_UniqueIdentifier="495464777915673483">
         <Transform>
-            <Position X="-1510.9962" Y="1874.8667" Z="386.72171"/>
-            <Rotation X="0" Y="-89.980217" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
+            <Position F_X="-26.439999" F_Y="21.759998" F_Z="-0.00912946"/>
+            <Rotation F_X="0" F_Y="-89.980217" F_Z="0"/>
+            <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Player"/>
+            <Type S_ID="class Player"/>
         </ObjectInfo>
         <Components/>
-    </Name>
+    </Identifiers>
 </Root>

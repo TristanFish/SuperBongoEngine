@@ -12,7 +12,7 @@
 
 
 
-typedef std::variant<int, float,double,bool,std::string> Attribute;
+typedef std::variant<int,uint64_t,float,double,bool,std::string> Attribute;
 
 
 //! FileType enum class
@@ -141,7 +141,7 @@ private:
 
 	//! InitalizeFile Function
 	/*!Initializes the classes variables and calls any needed functions (Called In constructor)*/
-	void InitalizeFile();
+	void InitalizeFile(bool FirstInit);
 
 	//! GetFileType Function
 	/*!Returns what file type this SaveFile will be saved as when converting to xml*/

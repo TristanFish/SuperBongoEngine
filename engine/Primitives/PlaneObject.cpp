@@ -13,6 +13,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 	this->name = name;
 	transform.SetPos(position);
 
+
 	transform.SetRot(Vec3(1.0f, 1.0f, 1.0f));
 	
 

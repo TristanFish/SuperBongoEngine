@@ -67,10 +67,7 @@ void RigidBody3D::HandleEvents(const SDL_Event& event)
 
 void RigidBody3D::ImGuiRender()
 {
-	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
-	
-	bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
-
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "RigidBody3D");
 	if (opened)
 	{
 		UIStatics::DrawVec3("Velocity", vel, 100.0f);

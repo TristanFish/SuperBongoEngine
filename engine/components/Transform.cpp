@@ -5,17 +5,10 @@
 using namespace MATH;
 
 
+Transform::Transform() : parent(nullptr), pos(Vec3()), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
 
 
-Transform::Transform() : parent(nullptr), pos(Vec3()), scale(Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
-{
-	
-}
-
-Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), scale(MATH::Vec3(1.0f)), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0)))
-{
-	
-}
+Transform::Transform(const Vec3& pos_) : parent(nullptr), pos(pos_), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
 
 void Transform::Update(const float deltaTime)
 {
@@ -24,17 +17,17 @@ void Transform::Update(const float deltaTime)
 
 Vec3 Transform::Forward() const
 {
-	return rotationMatrix * Vec3(0.0f, 0.0f, 1.0f);
+	return rotation.Rotate(Vec3::Forward());
 }
 
 Vec3 Transform::Right() const
 {
-	return rotationMatrix * Vec3(1.0f, 0.0f, 0.0f);
+	return rotation.Rotate(Vec3::Right());
 }
 
 Vec3 Transform::Up() const
 {
-	return rotationMatrix * Vec3(0.0f, 1.0f, 0.0f);
+	return rotation.Rotate(Vec3::Up());
 }
 
 void Transform::SetPos(const Vec3& pos)

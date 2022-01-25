@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "math/Ray.h"
-#include "core/MouseRay.h"
 
 
 class Collider3D;
@@ -64,13 +63,15 @@ public:
 	~OctSpatialPartition();
 
 	void AddObject(Collider3D* collider);
-	GameObject* GetCollision(MouseRay& ray);
+	GameObject* GetCollision(Ray& ray);
 
 private:
 	OctNode* root;
 	std::vector<OctNode*> rayInstersectionList;
 	void AddObjectToCell(OctNode* cell, Collider3D* collider);
-	void PrepareCollisionQuery(OctNode* cell, MouseRay& ray);
+	void PrepareCollisionQuery(OctNode* cell, Ray& ray);
+
+	void AddParents(OctNode* cell);
 	
 };
 

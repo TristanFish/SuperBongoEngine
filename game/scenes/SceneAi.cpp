@@ -11,6 +11,7 @@
 
 bool SceneAi::OnCreate()
 {
+	Scene_Name = "Scene_AI";
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
 	Globals::InitGlobals();
