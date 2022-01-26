@@ -18,12 +18,37 @@ std::shared_ptr<SceneGraph> Globals::s_SceneGraph = nullptr;
 
 
 
+std::string Globals::IntToVectorWithPrefix(const char* typePrefix, const int i)
+{
+	
+		std::string Prefix = std::string(typePrefix) + "_";
+		switch (i)
+		{
+		case 0:
+			return  Prefix + "X";
+			break;
+
+		case 1:
+			return Prefix + "Y";
+			break;
+		case 2:
+			return Prefix + "Z";
+			break;
+		case 3:
+			return Prefix + "W";
+			break;
+		}
+
+	return "ERROR";
+}
+
+
 std::string Globals::IntToVector(const int i)
 {
 	switch (i)
 	{
 	case 0:
-		return "X";
+		return  "X";
 		break;
 
 	case 1:
@@ -36,10 +61,7 @@ std::string Globals::IntToVector(const int i)
 		return "W";
 		break;
 	}
-
-	return "ERROR";
 }
-
 
 void Globals::InitGlobals()
 {

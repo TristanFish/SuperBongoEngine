@@ -3,7 +3,7 @@
 
 #include "math/Vector.h"
 
-Collider3D::Collider3D() : B_IsMoveable(true), B_IsTrigger(false), V_Size(MATH::Vec3(1.0f,1.0f,1.0f)), Type(ColliderType::OBB), RB_Attached(nullptr)
+Collider3D::Collider3D() : B_IsMoveable(true), B_IsTrigger(false), V_Size(MATH::Vec3(1.0f,1.0f,1.0f)), Type(ColliderType::OBB), RB_Attached(nullptr), Model_Verticies(nullptr)
 {
 
 }
@@ -11,6 +11,7 @@ Collider3D::Collider3D() : B_IsMoveable(true), B_IsTrigger(false), V_Size(MATH::
 Collider3D::~Collider3D()
 {
 	RB_Attached = nullptr;
+	Model_Verticies = nullptr;
 }
 
 void Collider3D::OnCollisionEnter(Collider3D& otherCollider)

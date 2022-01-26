@@ -1,14 +1,13 @@
 <Root>
     <Objects>
-        <Light/>
         <Box/>
-        <test/>
-        <Player/>
-        <Plane-1/>
+        <Light/>
         <Light_1/>
-        <Sphere/>
+        <Plane-1/>
+        <Player/>
+        <test/>
     </Objects>
     <SceneSettings>
-        <BaseClass: :="class Scene1"/>
+        <BaseClass: S_:="class Scene1"/>
     </SceneSettings>
 </Root>

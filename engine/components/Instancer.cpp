@@ -16,7 +16,7 @@ void Instancer::Init(GameObject* g)
 
 	if(mr == nullptr)
 	{
-		EngineLogger::Warning("Gameobject: " + gameObject->name + " has no meshrenderer for its instancer, instancer will not initialize", "Instancer.cpp", __LINE__);
+		EngineLogger::Warning("Gameobject: " + gameObject->GetName() + " has no meshrenderer for its instancer, instancer will not initialize", "Instancer.cpp", __LINE__);
 		return;
 	}
 

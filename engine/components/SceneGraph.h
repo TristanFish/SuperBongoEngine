@@ -79,6 +79,7 @@ public:
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
 	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	const std::vector<RigidBody3D*>& GetRigidBodies() const { return rigidBodies; }
 
 	OctSpatialPartition* GetScenePartition() const { return ScenePartition; }
 

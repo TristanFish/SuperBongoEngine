@@ -15,9 +15,10 @@ void MouseRay::HandleEvents(const SDL_Event& event)
 Vec2 MouseRay::GetDeviceCoords(float x_, float y_)
 {
 	Vec2 mouse;
-	//Vec2 viewDim = Renderer::GetInstance()->GetViewportDimensions();
-	mouse.x = (2.0f * x_) / Globals::SCREEN_WIDTH - 1.0f;
-	mouse.y = (2.0f * y_) / Globals::SCREEN_HEIGHT - 1.0f;
+
+	Vec2 viewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+	mouse.x = (x_ / Globals::SCREEN_WIDTH - 0.5f) * 2.0f;
+	mouse.y = (y_ / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f;
 	mouse.y = -mouse.y;
 
 	return mouse;
@@ -44,6 +45,12 @@ Vec3 MouseRay::GetWorldCoords(Vec4 eyeCoords)
 	return mouseRay;
 }
 
+MouseRay::MouseRay(const Vec3& dir_, const Vec3& origin_)
+{
+	direction = dir_;
+	origin = origin_;
+}
+
 void MouseRay::CalculateMouseRay()
 {
 	origin = Camera::getInstance()->getPosition();
@@ -58,6 +65,7 @@ void MouseRay::CalculateMouseRay()
 	const Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
 	direction = worldRay;
+
 
 	invDir = Vec3(1.0f / direction.x, 1.0f / direction.y, 1.0f / direction.z);
 }

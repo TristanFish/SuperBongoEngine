@@ -1006,6 +1006,8 @@
     <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.h">
       <Filter>src\engine\components\AI\DecisionMaking</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
+    <ClInclude Include="engine\core\UUniqueID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1343,6 +1345,7 @@
     <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.cpp">
       <Filter>src\engine\components\AI\DecisionMaking</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\UUniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

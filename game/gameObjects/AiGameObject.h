@@ -8,6 +8,7 @@ class AiGameObject : public GameObject	{
 public:
 	MeshRenderer* mRenderer;
 	AIComponent* aiComponent;
+	RigidBody3D* bodyComponent;
 	
 	GameObject* aiTarget;
 

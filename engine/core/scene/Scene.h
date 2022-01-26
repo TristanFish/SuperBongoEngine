@@ -25,7 +25,6 @@ protected:
 
 public:
 	std::shared_ptr<SceneGraph> objectList;
-	// Used for saving and loading xml document information
 	Scene();
 	virtual ~Scene();
 

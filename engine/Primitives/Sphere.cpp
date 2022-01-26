@@ -23,6 +23,8 @@ Sphere::Sphere(const std::string& name, MATH::Vec3 position)
 	//AddComponent<RigidBody3D>();
 	//GetComponent<RigidBody3D>()->ApplyConstantTorque(Vec3(0.0f, 20.0, 10.0));
 	AddComponent<LineRenderer>()->AddPoints(vertices);
+	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
+
 
 	this->name = name;
 	transform.SetPos(position);

@@ -21,7 +21,7 @@ class GameObject
 
 protected:
 
-	/*! Holds the name of this gameObject*/
+	/*! Hold's the name of this gameObject*/
 	std::string name;
 
 	UUniqueID uuid;
@@ -34,8 +34,9 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-	friend class SceneGraph;
 
+
+	friend class SceneGraph;
 public:
 
 
@@ -81,8 +82,6 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual void ImguiRender() {}
-
 	virtual GameObject* NewClone() const = 0;
 
 	//GetType function
@@ -98,7 +97,7 @@ public:
 	void SetActive(const bool a) { active = a; }
 
 	std::string GetName() const { return name; }
-	std::string& GetNameRef() { return name; }
+	std::string& GetName() { return name; }
 
 	uint64_t GetUUID() const { return uuid; }
 
@@ -113,7 +112,7 @@ public:
 
 	//!SetScale Setter
 	/*!Sets the scale of this a gameObject*/
-	void SetScale(const MATH::Vec3& scale_) { transform.SetScale(scale_); }
+	void SetScale(const MATH::Vec3& scale_) { transform.GetScale() = scale_; }
 
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/

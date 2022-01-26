@@ -106,10 +106,11 @@ void PropertiesPanel::Render()
 	if (selectedObject)
 	{
 		#pragma region GameObject
-		static std::string oldObjName = UIStatics::GetSelectedObject()->name;
-		if (ImGui::InputText("GameObject Name", &UIStatics::GetSelectedObject()->name, ImGuiInputTextFlags_EnterReturnsTrue))
+
+		static std::string oldObjName = UIStatics::GetSelectedObject()->GetName();
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			const std::string newObjName = UIStatics::GetSelectedObject()->name;
+			std::string newObjName = UIStatics::GetSelectedObject()->GetName();
 
 			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
 			SaveManager::SetSaveName(oldObjName, newObjName);
@@ -239,7 +240,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 
 	if (go->GetChildCount() > 0)
 	{
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
 		
 		if (ImGui::BeginDragDropSource())
 		{
@@ -303,7 +304,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 	{
 		ImGuiDragDropFlags dragDrop_flags = ImGuiDragDropFlags_None;
 
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->name.c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
 
 		if (ImGui::IsItemClicked())
 		{
@@ -385,7 +386,7 @@ int HierarchyPanel::GetObjIndex(const std::string& objName) const
 {
 	for (size_t i = 0; i < gameobjects.size(); i++)
 	{
-		if (gameobjects[i]->name == objName)
+		if (gameobjects[i]->GetName() == objName)
 		{
 			return i;
 		}
@@ -627,7 +628,7 @@ void Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
-			LoadUtility::GetInstance()->LoadObject(file);
+			LoadUtility::GetInstance()->LoadObject(file, UUniqueID());
 		}
 		ImGui::EndDragDropTarget();
 	}

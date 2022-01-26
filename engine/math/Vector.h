@@ -92,6 +92,12 @@ namespace MATH
 	struct Vec3 {
 		float  x,y,z;	///  Structures are default public
 
+
+
+		void set(float x_, float y_, float z_)
+		{
+			x = x_; y = y_; z = z_;
+		}
 		/// Here's a set of constructors
 		explicit Vec3(float s = 0.0f){
 			x = s;
@@ -125,7 +131,7 @@ namespace MATH
 		/// An assignment operator   
 		Vec3& operator = (const Vec3& v) = default;
 		
-		inline const bool operator == (const Vec3& v) const {
+		const bool operator == (const Vec3& v) const {
 			return (x == v.x && y == v.y && z == v.z);
 		}
 

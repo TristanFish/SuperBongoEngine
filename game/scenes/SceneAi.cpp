@@ -1,5 +1,7 @@
 #include "SceneAi.h"
 
+
+#include "Scene1.h"
 #include "core/Logger.h"
 #include "core/Globals.h"
 #include "gameObjects/AiGameObject.h"
@@ -12,11 +14,9 @@ bool SceneAi::OnCreate()
 	Scene_Name = "Scene_AI";
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
-	//Globals::InitGlobals();
-	//CustomUI::PerformanceMonitor::InitMonitor();
 	AiGameObject* obj = new AiGameObject("ai object", Vec3());
-	//
 	objectList->AddGameObject(obj);
+	
 	///*AiGameObject* mainAi = new AiGameObject("AiObj",Vec3(1.0f));
 	//objectList->AddGameObject(mainAi);
 
@@ -82,14 +82,13 @@ bool SceneAi::OnCreate()
 	objectList->Init();
 
 	
-	
+	Scene1().OnCreate();
 	
 	return true;
 }
 
-void SceneAi::Update(const float deltaTime)	{
-
-
+void SceneAi::Update(const float deltaTime)	
+{
 	//GJKDetection gjkBoxDetection;
 	//collisionDetected = gjkBoxDetection.GJKCollisionDetection(mesh1Verts, mesh2Verts);
 	//

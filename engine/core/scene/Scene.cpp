@@ -53,14 +53,11 @@ void Scene::Render()
 	objectList->Render();
 }
 
-
 void Scene::HandleEvents(const SDL_Event& event)
 {
 	mouseRay.HandleEvents(event);
 	objectList->HandleEvents(event);
 }
-
-
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
 {
@@ -97,6 +94,7 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	//	}
 	//}
 }
+
 void Scene::SaveMapData() const
 {
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
@@ -104,12 +102,12 @@ void Scene::SaveMapData() const
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
 
-
+	SaveManager::GetSaveFile(Scene_Name).ClearElements();
 	ElementInfo info = ElementInfo("Root");
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
-	info.Attributes.emplace(":", std::string(typeid(*this).name()));
+	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
 	info = ElementInfo("Root");
@@ -119,9 +117,8 @@ void Scene::SaveMapData() const
 	
 	for (auto* obj : objectList->GetGameObjects())
 	{
-		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->name, info);
-
-		SaveUtility::GetInstance()->SaveObject(obj->name, obj);
+		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
+		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);
 	}
 
 	SaveUtility::GetInstance()->CompileSaves();

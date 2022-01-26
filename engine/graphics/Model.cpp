@@ -3,26 +3,20 @@
 #include "core/Logger.h"
 #include <assimp/postprocess.h>
 
-Model::Model()
+Model::Model() : Model_Verticies(std::vector<Vertex>())
 {
 	isLoaded = false;
 }
 
-Model::Model(const std::string& path)
+Model::Model(const std::string& path) : Model_Verticies(std::vector<Vertex>())
 {
 	modelPath = path;
 	isLoaded = false;
 }
 
-std::vector<Vertex> Model::GetVerticies() const
+std::vector<Vertex>& Model::GetVerticies() 
 {
-	std::vector<Vertex> combinedVerticies;
-
-	for (const auto& mesh : meshes)
-	{
-		combinedVerticies.insert(combinedVerticies.end(), mesh.vertices.begin(), mesh.vertices.end());
-	}
-	return combinedVerticies;
+	return Model_Verticies;
 }
 
 void Model::LoadModel()
@@ -44,6 +38,15 @@ void Model::LoadModel()
 	for (auto& mesh : meshes)
 	{
 		mesh.InitMesh();
+
+		// Copies over all the mesh verticies if it's not min/max
+		for (const Vertex& vertex : mesh.vertices)
+		{
+			if (vertex.position != p_min || vertex.position != p_max)
+			{
+				Model_Verticies.push_back(vertex);
+			}
+		}
 	}
 }
 
@@ -147,6 +150,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 		vertices.push_back(vertex);
 	}
+
+	Vertex minVert, maxVert;
+	minVert.position = p_min;
+	maxVert.position = p_max;
+
+	Model_Verticies.push_back(minVert);
+	Model_Verticies.push_back(maxVert);
 
 	//Load indices
 	for (size_t i = 0; i < mesh->mNumFaces; i++)

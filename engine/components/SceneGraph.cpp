@@ -37,7 +37,7 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	//osp = OctSpatialPartition(500);
+	//ScenePartition = new OctSpatialPartition(1500);
 
 	for (const auto& obj : SaveManager::SaveableObjects)
 	{
@@ -108,7 +108,7 @@ GameObject* SceneGraph::FindGameObject(const std::string& name)
 		}
 	}
 
-	EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
+	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
 	return nullptr;
 }
@@ -144,7 +144,9 @@ void SceneGraph::LoadGameObject(GameObject* go)
 
 	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		rigidBodies.emplace_back(rb);
+		//ScenePartition->AddObject(rb->GetCollider());
 	}
 
 	for (GameObject* child : go->children)

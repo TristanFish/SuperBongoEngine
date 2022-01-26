@@ -1,32 +1,17 @@
 <Root>
-    <Name Is="Light_1">
+    <Identifiers S_Name="Light_1" U64_UniqueIdentifier="8323860284252100551">
         <Transform>
-            <Position X="-40.799999" Y="12.8" Z="-3.9000001"/>
-            <Rotation X="0" Y="-29.399994" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
+            <Position F_X="-40.799999" F_Y="12.8" F_Z="-3.9000001"/>
+            <Rotation F_X="0" F_Y="-29.399994" F_Z="0"/>
+            <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class LightObject"/>
+            <Type S_ID="class LightObject"/>
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="1" Z="0"/>
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="0"/>
             </Renderer>
         </Components>
-    </Name>
-    <Name Is="Light_1">
-        <Transform>
-            <Position X="-40.799999" Y="12.8" Z="-3.9000001"/>
-            <Rotation X="0" Y="-29.399994" Z="0"/>
-            <Scale X="1" Y="1" Z="1"/>
-        </Transform>
-        <ObjectInfo>
-            <Type ID="class LightObject"/>
-        </ObjectInfo>
-        <Components>
-            <Renderer>
-                <MeshColorTint W="1" X="1" Y="1" Z="0"/>
-            </Renderer>
-        </Components>
-    </Name>
+    </Identifiers>
 </Root>

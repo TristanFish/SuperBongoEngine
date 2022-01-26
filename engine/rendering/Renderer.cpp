@@ -117,7 +117,7 @@ void Renderer::AddLight(LightComponent* light)
 	if(lights.size() >= MAX_LIGHTS)
 	{
 		EngineLogger::Warning("Max number of lights reached, " 
-		 + light->gameObject->name + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+		 + light->gameObject->GetName() + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 		return;
 	}
 	//if this meshrenderer doesn't already exist then add it

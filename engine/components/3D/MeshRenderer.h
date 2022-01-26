@@ -125,13 +125,6 @@ public:
 	 /*!Stores the color of the mesh*/
 	MATH::Vec4 meshColorTint;
 
-
-	// Currently just used in Scene for mouse picking (Will Be changed)
-	class BoundingBox* MakeBoundingBox();
-
-
-
-
 	 //!SetColorTint Setter
 	 /*!Set's the color of a mesh*/
 	 void SetColorTint(const MATH::Vec4 tint_) { meshColorTint = tint_; }

@@ -4,16 +4,22 @@
 AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	name = name_;
 	SetPos(position_);
+	
 	mRenderer = AddComponent<MeshRenderer>();
+	mRenderer->Init(this);
 	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
-	AddComponent<RigidBody3D>();
+	bodyComponent = AddComponent<RigidBody3D>();
+	bodyComponent->Init(this);
+	bodyComponent->ConstructCollider(ColliderType::OBB);
+	
 
 	aiComponent = AddComponent<AIComponent>();
 	aiComponent->SetAIType(AIType::KinematicSteering);
 	aiComponent->SetMaxSpeed(5.0f);
 	aiComponent->SetMaxAcceleration(5.0f);
+	componentList;
 
 	aiTarget = nullptr;
 
@@ -68,8 +74,8 @@ AiGameObject::~AiGameObject()
 	}
 }
 
-void AiGameObject::Update(const float deltaTime)	{
-
+void AiGameObject::Update(const float deltaTime)	
+{
 	if(InputManager::GetInstance()->GetKey(SDLK_y))
 	{
 		dTree->EvaluateDecisionTree();

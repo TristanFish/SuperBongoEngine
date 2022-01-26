@@ -30,7 +30,7 @@ LoadUtility* LoadUtility::GetInstance()
 
 #pragma region Core Functions
 
-void LoadUtility::LoadObject(SaveFile& file)
+void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 {
 	if (file.GetFileType() == FileType::OBJECT)
 	{
@@ -38,24 +38,27 @@ void LoadUtility::LoadObject(SaveFile& file)
 		ElementInfo RotElm = file.FindElement("Rotation");
 		ElementInfo ScaleElm = file.FindElement("Scale");
 		ElementInfo TypeElm = file.FindElement("Type");
-		ElementInfo NameElm = file.FindElement("Name");
-
+		ElementInfo IdentifiersElm = file.FindElement("Identifiers");
+		
 		MATH::Vec3 Position;
 		MATH::Vec3 Rotation;
 		MATH::Vec3 Scale;
 
 		for (int i = 0; i < 3; i++)
 		{
-
 			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVector(i)]);
 			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVector(i)]);
 			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVector(i)]);
-
 		}
 
-		S_PrevLoadedObjName = std::get<std::string>(NameElm.Attributes["Is"]);
-		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
+		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
+		
+		if (uuid == 0)
+		{
+			uuid = std::get<uint64_t>(IdentifiersElm.Attributes["UniqueIdentifier"]);
+		}
 
+		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
 
 		ElementInfo MeshColorElm;
 
@@ -68,12 +71,9 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 			for (int i = 0; i < 4; i++)
 			{
-
 				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
-
 			}
 		}
-
 
 		for (auto obj : SaveManager::SaveableObjects)
 		{
@@ -81,6 +81,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 			{
 				GameObject* clone = obj.second->NewClone();
 				clone->SetName(S_PrevLoadedObjName);
+				clone->SetUUID(uuid);
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
 				clone->SetScale(Scale);
@@ -105,15 +106,11 @@ void LoadUtility::LoadExistingSaves()
 	std::string sceneObjPath = (directory + objDir);
 
 
-
-
 	EngineLogger::Info("===========EXISTING SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	for (auto entry = std::filesystem::recursive_directory_iterator(directory); entry != std::filesystem::recursive_directory_iterator(); ++entry)
 	{
-
 		std::filesystem::path curPath = entry->path();
-
 
 		// Makes sure were not loading in any scene files yet
 		if (curPath == (sceneObjPath + curPath.filename().string()) && entry->is_directory())
@@ -122,13 +119,10 @@ void LoadUtility::LoadExistingSaves()
 			continue;
 		}
 
-
 		if (entry->is_regular_file())
 		{
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
-
 		}
-
 	}
 
 	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
@@ -145,20 +139,17 @@ void LoadUtility::LoadSceneSaves()
 	if (!std::filesystem::exists(sceneObjPath))
 		return;
 
-
 	for (auto entry = std::filesystem::directory_iterator(sceneObjPath); entry != std::filesystem::directory_iterator(); ++entry)
 	{
 		if (entry->is_regular_file())
 		{
 			std::filesystem::path curPath = entry->path();
 
-
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
 		}
 	}
 
 	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
-
 }
 
 void LoadUtility::UnLoadSceneSaves()
@@ -172,17 +163,16 @@ void LoadUtility::UnLoadSceneSaves()
 	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
+
+
 #pragma endregion
 
 #pragma region Helper Functions
 
 void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile& file)
 {
-
-
 	for (tinyxml2::XMLElement* Elem = element; Elem != nullptr; Elem = Elem->NextSiblingElement())
 	{
-
 		tinyxml2::XMLElement* tmpElement = Elem;
 		// LOOP THROUGH NEXT ELEMENT ALSO
 		ElementInfo info;
@@ -204,7 +194,6 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 void LoadUtility::AddObjectToMap(const char* classType) const
 {
-
 	if (classType == std::string("class Bird"))
 	{
 		SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3()));
@@ -241,9 +230,10 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 	{
 		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
 	}
+
 	else 
 	{
-		EngineLogger::Error("Object could not be added to loadable objects map" , "LoadUtility.cpp", __LINE__);
+		EngineLogger::Error("Object could not be added to loadable objects map", "LoadUtility.cpp", __LINE__);
 		std::cout << classType << std::endl;
 	}
 }
@@ -255,6 +245,7 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 	tinyxml2::XMLDoc SaveData;
 
 	tinyxml2::XMLError eResult = SaveData.LoadFile(savePath.c_str());
+
 
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
@@ -272,7 +263,6 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
 		{
-
 			AddObjectToMap(classType.c_str());
 		}
 	}
@@ -287,28 +277,36 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttribute* atrib)
 {
-	bool boolValue = atrib->BoolValue();
+	std::string AtribName = atrib->Name();
 
-	int intValue = atrib->IntValue();
+	size_t LastOfTag = AtribName.find("_");
+	
+	//Get The Tag
+	std::string AtribType = AtribName.substr(0, LastOfTag);
+	
+	//Remove Tag From Name
+	AtribName = AtribName.substr(LastOfTag + 1, AtribName.length() - LastOfTag);
+	if (AtribType == "F")
+	{
+		info.Attributes.emplace(AtribName, atrib->FloatValue());
+	}
+	else if (AtribType == "S")
+	{
+		info.Attributes.emplace(AtribName, std::string(atrib->Value()));
+	}
+	else if (AtribType == "U64")
+	{
+		info.Attributes.emplace(AtribName, atrib->Unsigned64Value());
+	}
+	else if (AtribType == "I")
+	{
+		info.Attributes.emplace(AtribName, atrib->IntValue());
+	}
+	else if (AtribType == "B")
+	{
+		info.Attributes.emplace(AtribName, atrib->BoolValue());
+	}
 
-	float floatValue = atrib->FloatValue();
-
-	if (atrib->QueryFloatValue(&floatValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), floatValue);
-	}
-	else if (atrib->QueryIntValue(&intValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), intValue);
-	}
-	else if (atrib->Value() != "")
-	{
-		info.Attributes.emplace(atrib->Name(), std::string(atrib->Value()));
-	}
-	else if (atrib->QueryBoolValue(&boolValue) == tinyxml2::XMLError::XML_SUCCESS)
-	{
-		info.Attributes.emplace(atrib->Name(), boolValue);
-	}
 	else
 	{
 		EngineLogger::Info("Attribute type unable to be queried", "LoadUtility.cpp", __LINE__);
@@ -347,8 +345,10 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
 			if (typeid(*G_Interface->Scenes[s]).name() == classType)
 			{
 				G_Interface->Scenes[s]->SetSceneName(sceneFiles[i].GetFileName());
+				
 			}
 		}
+		
 	}
 
 	// Adds all scenes that use the DefaultScene Class
