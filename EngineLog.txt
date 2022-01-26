@@ -29,4 +29,59 @@
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[ERROR]: Couldn't load the Save File Scene_AI in: LoadUtility.cpp on line: 261
+[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 134
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 31
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 139
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Grass Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Sphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 160
+[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Light" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Light" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Plane-1" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Plane-1" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Player" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Player" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Sphere" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "Sphere" was found. in: SceneGraph.cpp on line: 111
+[INFO]: Sphere added to scenegraph in: ECS.cpp on line: 137
+[ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 111
+[ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 111
+[INFO]: test added to scenegraph in: ECS.cpp on line: 137
+[SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Light Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Light_1 Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Plane-1 Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Player Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: Sphere Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: Sphere File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][WARNING]: test Already Exists in: SaveUtility.cpp on line: 183
+[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 54
+[SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 38
+[SAVE][INFO]: Scene1 Compiled Successfully in: SaveUtility.cpp on line: 75
+[SAVE][INFO]: Light Compiled Successfully in: SaveUtility.cpp on line: 75
+[SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 78
