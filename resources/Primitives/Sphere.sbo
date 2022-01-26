@@ -6,7 +6,7 @@
             <Scale X="0.5" Y="0.5" Z="0.5"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Sphere"/>
+            <Type S_ID="class Sphere"/>
         </ObjectInfo>
         <Components>
             <Renderer>

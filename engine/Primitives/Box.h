@@ -12,9 +12,10 @@ public:
 	~Box();
 
 
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
+	virtual void PostInit() override;
+	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-	Box* NewClone() const override { return new Box(this->name, this->transform.pos); };
+	Box* NewClone() const override { return new Box(this->name, this->transform.GetPosition()); };
 
 
 private:

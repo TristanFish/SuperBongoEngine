@@ -43,6 +43,8 @@ void CoreEngine::Render()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 
+	ImGui::NewFrame();
+	
 	dockSpace->Render();
 	if (gameInterface)
 	{
@@ -103,13 +105,14 @@ bool CoreEngine::Init()
 
 	}
 	Globals::InitGlobals();
+	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	
 	dockSpace = new CustomUI::DockSpace();
 	dockSpace->ConstructUserInterface();
 	CustomUI::PerformanceMonitor::InitMonitor();
 
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
 	LoadUtility::GetInstance()->LoadSceneSaves();
-	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	GetCurrentScene()->LoadMapData();
 
 	isRunning = true;

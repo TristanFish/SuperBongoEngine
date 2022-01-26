@@ -3,6 +3,7 @@
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 #include "core/resources/TextureManager.h"
+#include "core/3D/Physics//BoundingBox.h"
 #include "graphics/UIStatics.h"
 
 #include "Utility/SaveUtility.h"
@@ -10,6 +11,11 @@
 using namespace MATH;
 
 MeshRenderer::MeshRenderer() : renderFlags(RP_LIGHTING), meshColorTint(Vec4(1.0)), model(nullptr), instanceID(0)  { }
+
+MeshRenderer::~MeshRenderer()
+{
+	Renderer::GetInstance()->DeleteMeshRenderer(this);
+}
 
 bool MeshRenderer::LoadModel(const char* name)
 {
@@ -31,12 +37,7 @@ void MeshRenderer::Init(GameObject* g)
 {
 	gameObject = g;
 
-	if(model)
-	{
-		OBB.maxVert = model->p_max ;
-		OBB.minVert = model->p_min ;
-		OBB.transform = gameObject->transform.GetModelMatrix();
-	}
+	Renderer::GetInstance()->AddMeshRenderer(this);
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -44,7 +45,7 @@ void MeshRenderer::Update(const float deltaTime)
 	if(model)
 	{
 		//assume uniform scale
-		float scale = gameObject->transform.scale.x;
+		float scale = gameObject->transform.GetScale().x;
 		//if(scale >= 1.0f)
 		//{
 		//	
@@ -53,15 +54,15 @@ void MeshRenderer::Update(const float deltaTime)
 		//	scale /= 2.0f;
 		//}
 		
-		OBB.maxVert = model->p_max * scale;
-		OBB.minVert = model->p_min * scale;
-		OBB.transform = gameObject->transform.GetModelMatrix();
+		//OBB.maxVert = model->p_max * scale;
+		//OBB.minVert = model->p_min * scale;
+		//OBB.transform = gameObject->transform.GetModelMatrix();
 	}
 }
 
 void MeshRenderer::Render() const
 {
-    const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
+    const Matrix3 normMat = gameObject->transform.GetRotationQuat().ConvertToMatrix();
 
 	if(instanceID == 0)
     {
@@ -93,7 +94,7 @@ void MeshRenderer::Render() const
 
 void MeshRenderer::Render(const ShaderProgram& shader_) const
 {
-	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
+	const Matrix3 normMat = gameObject->transform.GetRotationQuat().ConvertToMatrix();
 	shader_.TakeUniform("meshColorTint", meshColorTint);
 	shader_.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader_.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
@@ -217,10 +218,8 @@ void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string paren
 
 void MeshRenderer::ImGuiRender()
 {
-	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "MeshRenderer");
 	
-	bool opened = ImGui::TreeNodeEx("MeshRenderer", tree_flags, "Renderer");
-
 	if (opened)
 	{
 		ImGui::ColorEdit4("Mesh Color", meshColorTint);

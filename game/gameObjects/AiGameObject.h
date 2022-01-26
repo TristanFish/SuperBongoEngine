@@ -8,15 +8,24 @@ class AiGameObject : public GameObject	{
 public:
 	MeshRenderer* mRenderer;
 	AIComponent* aiComponent;
+	RigidBody3D* bodyComponent;
 	
 	GameObject* aiTarget;
+
+	DecisionTree* dTree;
+
+	bool isSearching;
+	int range;
+	std::string input; 
 
 	AiGameObject(const std::string& name_, MATH::Vec3 position_);
 	~AiGameObject() override;
 
 	void Update(const float deltaTime) override;
+
+	void ImguiRender() override;
 	
-	AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.pos); };
+	AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.GetPosition()); };
 };
 
 #endif

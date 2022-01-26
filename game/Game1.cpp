@@ -28,13 +28,15 @@ bool Game1::OnCreate()
 {
 	if (CoreEngine::GetInstance()->GetCurrentScene() == 0)
 	{
-		currentScene = new Scene1(); //this should be Scene1. Change this only if you want to temp load a scene from code
+		currentScene = new Scene1(); 
+		//currentScene = new SceneAi();
 		currentSceneNum = 0;
 		bool create = currentScene->OnCreate();
 		bool postCreate = currentScene->PostCreate();
 
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
+		//Scenes.push_back(new SceneAi);
 
 
 		

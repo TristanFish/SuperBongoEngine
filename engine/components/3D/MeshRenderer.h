@@ -46,12 +46,7 @@ static RenderFlagPair RenderFlagNameEnumPairs[]{RenderFlagPair("None", RP_NONE),
 									RenderFlagPair("Water", RP_WATER),
 									RenderFlagPair("Overrides Default Renderer", RP_OVERRIDE_RENDERER)};
 
-struct OrientedBoundingBox
-{
-	MATH::Vec3 maxVert;
-	MATH::Vec3 minVert;
-	MATH::Matrix4 transform;
-};
+
 
 //!MeshRenderer Class
 /*!Allows any gameObject with this component to render a mesh*/
@@ -65,8 +60,6 @@ public:
 	//!Shader
 	/*!This is the corresponding shader used in this MeshRenderer*/
 	ShaderProgram shader;
-
-	OrientedBoundingBox OBB;
 	
 	MeshRenderer();
 	virtual ~MeshRenderer() = default;
@@ -128,14 +121,6 @@ public:
 		uaCallback = func;
 	}
 
-	//!GetMinVector Getter
-	/*!Returns the meshes minimum bounding vector*/
-	MATH::Vec3 GetMinVector() const  { return OBB.minVert; }
-
-	 //!GetMaxVector Getter
-	 /*!Returns the meshes maximum bounding vector*/
-	MATH::Vec3 GetMaxVector() const { return OBB.maxVert; }
-
 	 //!MeshColorTint Vec4
 	 /*!Stores the color of the mesh*/
 	MATH::Vec4 meshColorTint;
@@ -151,6 +136,7 @@ public:
 	//!SetInstanceID Setter
 	/*!Sets the instanceID variable*/
 	Model* GetModel() { return model; }
+
 
 	//!SetInstanceID Setter
 	/*!Sets the instanceID variable*/

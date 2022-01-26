@@ -1,7 +1,7 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
 #include "core/Logger.h"
-#include "core/3D/Physics3D.h"
+//#include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
 #include "../game/gameObjects/Grass.h"
@@ -38,7 +38,7 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	//osp = OctSpatialPartition(500);
+	//ScenePartition = new OctSpatialPartition(1500);
 
 	
 	
@@ -106,7 +106,7 @@ GameObject* SceneGraph::FindGameObject(const char* name)
 		}
 	}
 
-	EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
+	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
 	return nullptr;
 }
@@ -172,7 +172,9 @@ void SceneGraph::LoadGameObject(GameObject* go)
 
 	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		rigidBodies.emplace_back(rb);
+		//ScenePartition->AddObject(rb->GetCollider());
 	}
 	if (go->HasComponent<MeshRenderer>())
 	{
@@ -256,7 +258,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}
 	}
 }

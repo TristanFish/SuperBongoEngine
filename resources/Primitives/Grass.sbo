@@ -1,0 +1,17 @@
+<Root>
+	<Name Is="Grass">
+		<Transform>
+			<Position X="0" Y="1" Z="0"/>
+			<Rotation X="-90" Y="0" Z="0"/>
+			<Scale X="5" Y="5" Z="5"/>
+		</Transform>
+		<ObjectInfo>
+			<Type S_ID="class Grass"/>
+		</ObjectInfo>
+		<Components>
+			<Renderer>
+				<MeshColorTint W="1" X="1" Y="1" Z="1"/>
+			</Renderer>
+		</Components>
+	</Name>
+</Root>

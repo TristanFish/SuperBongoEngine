@@ -39,7 +39,14 @@ namespace  MATH {
 			return *this;
 		}
 
-		
+		inline bool operator == (const Matrix4& m_) {
+			bool IsIdentical = false;
+			IsIdentical = this->m[0] == m_[0] && this->m[1] == m_[1] && this->m[2] == m_[2] && this->m[3] == m_[3] &&
+			this->m[4] == m_[4] && this->m[5] == m_[5] && this->m[6] == m_[6] && this->m[7] == m_[7] &&
+			this->m[8] == m_[8] && this->m[9] == m_[9] && this->m[10] == m_[10] && this->m[11] == m_[11] &&
+			this->m[12] == m_[12] && this->m[13] == m_[13] && this->m[14] == m_[14] && this->m[15] == m_[15];
+			return IsIdentical;
+		}
 		
 
 
@@ -198,6 +205,24 @@ namespace  MATH {
 		}
 		inline Vec4 getRow(int index) {
 			return Vec4(m[0 + index], m[4 + index], m[8 + index], m[12 + index]);
+		}
+
+
+		//Added by Declan - return the determinant of the matrix (float)
+		//https://cdn.discordapp.com/attachments/723827969851916323/912154192183980042/unknown.png
+		inline float getDeterminant()	{
+
+			return m[0] * ((m[5] * m[10] * m[15]) + (m[5] * m[11] * m[13]) + (m[7] + m[9] + m[14])
+				- (m[7] * m[10] * m[13]) - (m[6] * m[9] * m[15]) - (m[5] * m[11] * m[14]))
+
+				- m[4] * ((m[1] * m[10] * m[15]) + (m[2] * m[11] * m[13]) + (m[3] + m[9] + m[14])
+					- (m[3] * m[10] * m[13]) - (m[2] * m[9] * m[15]) - (m[1] * m[11] * m[14]))
+
+				+ m[8] * ((m[1] * m[6] * m[15]) + (m[2] * m[7] * m[13]) + (m[3] + m[5] + m[14])
+					- (m[3] * m[6] * m[13]) - (m[2] * m[5] * m[15]) - (m[1] * m[7] * m[14]))
+
+				- m[12] * ((m[1] * m[6] * m[11]) + (m[2] * m[7] * m[9]) + (m[3] + m[5] + m[10])
+					- (m[3] * m[6] * m[9]) - (m[2] * m[5] * m[11]) - (m[1] * m[7] * m[10]));
 		}
 	};
 

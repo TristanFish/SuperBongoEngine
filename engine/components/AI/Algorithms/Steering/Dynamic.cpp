@@ -52,13 +52,13 @@ DynamicSeek::DynamicSeek(GameObject* aiObject_, const Transform& target_)	{
 	target = target_;
 }
 
-bool DynamicSeek::getSteering()	{
+DynamicSteeringOutput DynamicSeek::getSteering()	{
 	//Checks if aiObject has the required components to function
 	if (!aiObject->HasComponent<AIComponent>() || !aiObject->HasComponent<RigidBody3D>()) {
 		EngineLogger::Error(aiObject->GetName() + " does not have either an AIComponent or a RigidBody3D. DynamicSeek has failed",
 			"Dynamic.cpp", __LINE__);
-
-		return false;
+		
+		return DynamicSteeringOutput();
 	}
 
 	DynamicSteeringOutput result = DynamicSteeringOutput();
@@ -69,13 +69,11 @@ bool DynamicSeek::getSteering()	{
 	result.linearAccel = VMath::normalize(result.linearAccel);
 	result.linearAccel = aiObject->GetComponent<AIComponent>()->GetMaxAcceleration() * result.linearAccel;
 
-	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetPosition(), target.GetPosition(), aiObject->transform.Up()));
+	aiObject->transform.SetRot(Quaternion::LookAt(aiObject->transform.GetRotationQuat(), target.GetPosition(), Vec3::Forward()));
 	
 	result.angularAccel = Vec3(0.0f);
 
-	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
-
-	return true;
+	return result;
 }
 
 
@@ -88,13 +86,13 @@ DynamicFlee::DynamicFlee(GameObject* aiObject_, const Transform& target_)	{
 	target = target_;
 }
 
-bool DynamicFlee::getSteering()	{
+DynamicSteeringOutput DynamicFlee::getSteering()	{
 	//Checks if aiObject has the required components to function
 	if (!aiObject->HasComponent<AIComponent>() || !aiObject->HasComponent<RigidBody3D>()) {
 		EngineLogger::Error(aiObject->GetName() + " does not have either an AIComponent or a RigidBody3D. DynamicFlee has failed",
 			"Dynamic.cpp", __LINE__);
 
-		return false;
+		return DynamicSteeringOutput();
 	}
 
 	DynamicSteeringOutput result = DynamicSteeringOutput();
@@ -107,9 +105,7 @@ bool DynamicFlee::getSteering()	{
 
 	result.angularAccel = Vec3(0.0f);
 
-	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
-
-	return true;
+	return result;
 }
 #pragma endregion
 
@@ -122,13 +118,13 @@ DynamicArrive::DynamicArrive(GameObject* aiObject_, const Transform& target_, co
 	else timeToTarget = 0.1f;
 }
 
-bool DynamicArrive::getSteering()	{
+DynamicSteeringOutput DynamicArrive::getSteering()	{
 	//Checks if aiObject has the required components to function
 	if (!aiObject->HasComponent<AIComponent>() || !aiObject->HasComponent<RigidBody3D>()) {
 		EngineLogger::Error(aiObject->GetName() + " does not have either an AIComponent or a RigidBody3D. DynamicSeek has failed",
 			"Dynamic.cpp", __LINE__);
 
-		return false;
+		return DynamicSteeringOutput();
 	}
 
 	DynamicSteeringOutput result = DynamicSteeringOutput();
@@ -144,7 +140,7 @@ bool DynamicArrive::getSteering()	{
 
 		aiObject->GetComponent<AIComponent>()->SetSteering(&result);
 		
-		return false;
+		return DynamicSteeringOutput();
 	}
 
 	Vec3 desiredVelocity;
@@ -169,10 +165,7 @@ bool DynamicArrive::getSteering()	{
 	}
 	result.angularAccel = Vec3(0.0f);
 
-	//pass result to aiObject's AI
-	aiObject->GetComponent<AIComponent>()->SetSteering(&result);
-
-	return true;
+	return result;
 }
 
 DynamicAlign::DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
@@ -184,13 +177,13 @@ DynamicAlign::DynamicAlign(GameObject* aiObject_, const Transform& target_, cons
 	else timeToTarget = 0.1f;
 }
 
-bool DynamicAlign::getSteering()	{
+DynamicSteeringOutput DynamicAlign::getSteering()	{
 	//checks if aiObject has the required components
 	if (!aiObject->HasComponent<AIComponent>() || !aiObject->HasComponent<RigidBody3D>()) {
 		EngineLogger::Error(aiObject->GetName() + " does not have either an AIComponent or a RigidBody3D. DynamicSeek has failed",
 			"Dynamic.cpp", __LINE__);
 
-		return false;
+		return DynamicSteeringOutput();
 	}
 
 
@@ -217,7 +210,7 @@ bool DynamicAlign::getSteering()	{
 	//result.angularAccel = rotateSpeed - aiObject->transform.GetRotation();
 	//result.angularAccel ..............
 
-	return false;
+	return DynamicSteeringOutput();
 }
 
 
@@ -227,8 +220,8 @@ DynamicObstacleAvoidance::DynamicObstacleAvoidance(GameObject* aiObject_, const 
 	lookAhead = lookAhead_;
 }
 
-bool DynamicObstacleAvoidance::getSteering()	{
+DynamicSteeringOutput DynamicObstacleAvoidance::getSteering()	{
 	//this needs ray collision detection. The ray needs to auto check if a ray collides with anything (within a distance)
 
-	return false;
+	return DynamicSteeringOutput();
 }

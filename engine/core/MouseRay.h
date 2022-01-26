@@ -8,13 +8,10 @@
 //! MouseRay class
 /*! This class is used for taking in our mouse position on screen and converting it 
 into world coordinates */
-class MouseRay
+class MouseRay : public Ray
 {
 private:
 
-	//! Vector3 Current Ray
-	/*! Is the direction on the current ray */
-	Ray ray;
 	//! Vector2 Local Mouse Position
 	/*! Where the mouse is in local/screen coordinates */
 	MATH::Vec2 localMousePos;
@@ -38,6 +35,8 @@ public:
 	//! MouseRay Constructor
 	MouseRay() = default;
 
+	MouseRay(const MATH::Vec3& dir_, const MATH::Vec3& origin_);
+
 	//! MouseRay Destructor
 	~MouseRay() = default;
 
@@ -45,15 +44,9 @@ public:
 	/*! Is the inverse of the currentRay */
 	MATH::Vec3 invDir;
 
-	
-
 	//! Calculate Mouse Ray Function
 	/*! Does the final calculation and then updates the currentRay */
 	void CalculateMouseRay();
-
-	//! Get Current Ray Getter
-	/*! Returns the current ray */
-	Ray& GetCurrentRay() { return ray; }
 
 	//! Handle Events Function
 	/*! Used for getting the mouse position in local/screen space */

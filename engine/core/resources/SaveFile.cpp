@@ -21,7 +21,7 @@ SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), r
 	}
 	fileType = type;
 
-	InitalizeFile();
+	InitalizeFile(true);
 }
 
 
@@ -34,13 +34,13 @@ SaveFile::SaveFile(const std::string& FileName_, const std::map<std::string, Ele
 	Elements = Elements_;
 	Doc_.DeepCopy(&Doc);
 
-	InitalizeFile();
+	InitalizeFile(true);
 }
 
 SaveFile::SaveFile() : FileName("None"), Doc(), rootNode(Doc.NewElement("Root")), 
 insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
 {
-	InitalizeFile();
+	InitalizeFile(true);
 }
 
 SaveFile::SaveFile(const SaveFile& file)
@@ -133,9 +133,10 @@ bool SaveFile::operator==(const SaveFile& file) const
 	return file.FileName == FileName;
 }
 
-void SaveFile::InitalizeFile()
+void SaveFile::InitalizeFile(bool FirstInit)
 {
-	Doc.InsertFirstChild(rootNode);
+	if(FirstInit)
+		Doc.InsertFirstChild(rootNode);
 
 	ElementInfo info;
 	info.element = Doc.RootElement();
@@ -248,6 +249,8 @@ void SaveFile::ClearElements()
 {
 	Elements.clear();
 	insertionOrder.clear();
+
+	InitalizeFile(false);
 }
 
 std::string SaveFile::GetSaveFileType() const
@@ -291,6 +294,19 @@ std::string SaveFile::GetFileDestination() const
 	}
 
 	return destination;
+}
+
+void SaveFile::ClearSaveFile()
+{
+	if (!Elements.empty())
+	{
+		Elements.clear();
+	}
+
+	if (!insertionOrder.empty())
+	{
+		insertionOrder.clear();
+	}
 }
 
 void SaveFile::Save()
