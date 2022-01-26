@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 81
+[INFO]: Logger Created in: CoreEngine.cpp on line: 78
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 42
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
@@ -29,10 +29,9 @@
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: Scene_41 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 143
-[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 32
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 31
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 148
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -41,28 +40,12 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 169
-[ERROR]: No object named "BaseClass:" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Box" was found. in: SceneGraph.cpp on line: 117
-[INFO]: Box added to scenegraph in: ECS.cpp on line: 160
-[ERROR]: No object named "Light" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Light" was found. in: SceneGraph.cpp on line: 117
-[INFO]: Light added to scenegraph in: ECS.cpp on line: 160
-[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Light_1" was found. in: SceneGraph.cpp on line: 117
-[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 160
-[ERROR]: No object named "Objects" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Plane-1" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Plane-1" was found. in: SceneGraph.cpp on line: 117
-[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 160
-[ERROR]: No object named "Player" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "Player" was found. in: SceneGraph.cpp on line: 117
-[INFO]: Player added to scenegraph in: ECS.cpp on line: 160
-[ERROR]: No object named "Root" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "SceneSettings" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 117
-[ERROR]: No object named "test" was found. in: SceneGraph.cpp on line: 117
-[INFO]: test added to scenegraph in: ECS.cpp on line: 160
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 137
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 137
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 137
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 137
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 137
+[INFO]: test added to scenegraph in: ECS.cpp on line: 137
 [SAVE][INFO]: Scene1 File Has Been Deleted in: SaveManager.cpp on line: 54
 [SAVE][WARNING]: Box Already Exists in: SaveUtility.cpp on line: 187
 [SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 54
@@ -84,5 +67,4 @@
 [SAVE][INFO]: Light_1 Compiled Successfully in: SaveUtility.cpp on line: 75
 [SAVE][INFO]: Player Compiled Successfully in: SaveUtility.cpp on line: 75
 [SAVE][INFO]: test Compiled Successfully in: SaveUtility.cpp on line: 75
-
 [SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 78

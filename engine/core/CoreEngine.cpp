@@ -10,17 +10,12 @@
 #include "core/GameInterface.h"
 #include "core/Logger.h"
 #include "core/scene/Scene.h"
-
-#include "components/AI/Algorithms/Pathfinding/Types/Graph.h"
-
 #include "events/InputManager.h"
 #include "events/MouseEventDispatcher.h"
 #include "graphics/Window.h"
-
 #include "resources/ModelManager.h"
 #include "resources/ShaderManager.h"
 #include "resources/TextureManager.h"
-#include "resources/AIDirector.h"
 #include "Utility/LoadUtility.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -48,6 +43,8 @@ void CoreEngine::Render()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 
+	ImGui::NewFrame();
+	
 	dockSpace->Render();
 	if (gameInterface)
 	{
@@ -108,15 +105,15 @@ bool CoreEngine::Init()
 
 	}
 	Globals::InitGlobals();
+	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	
 	dockSpace = new CustomUI::DockSpace();
 	dockSpace->ConstructUserInterface();
 	CustomUI::PerformanceMonitor::InitMonitor();
 
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
 	LoadUtility::GetInstance()->LoadSceneSaves();
-	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
-	//GetCurrentScene()->LoadMapData();
-
+	GetCurrentScene()->LoadMapData();
 
 	isRunning = true;
 	return true;
@@ -131,8 +128,6 @@ void CoreEngine::Run()
 		const auto timeBeforeUpdate = std::chrono::high_resolution_clock::now();
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
-
-	
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
 		const auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeAfterUpdate - timeBeforeUpdate);
 

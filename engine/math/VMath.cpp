@@ -22,7 +22,7 @@ Vec3 VMath::normalize(const Vec3 &a) {
 	return result;
 }
 
-Vec3 VMath::reflect(const Vec3& v, const Vec3& n)
+Vec3 VMath::reflect(const Vec3 &v, const Vec3 &n)
 {
 	const float scalar = 2.0f * dot(-v, n);
 	const Vec3 temp = n * scalar;
@@ -51,7 +51,6 @@ Vec4 VMath::normalize(const Vec4& a)
 
 	return result;
 }
-
 
 MATH::Vec2 VMath::normalize(const Vec2& a)
 {

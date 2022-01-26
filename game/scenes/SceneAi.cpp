@@ -14,18 +14,17 @@ bool SceneAi::OnCreate()
 	Scene_Name = "Scene_AI";
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
-	Globals::InitGlobals();
-
-	Scene::OnCreate();
+	AiGameObject* obj = new AiGameObject("ai object", Vec3());
+	objectList->AddGameObject(obj);
 	
-	objectList->AddGameObject(mainAi);
+	///*AiGameObject* mainAi = new AiGameObject("AiObj",Vec3(1.0f));
+	//objectList->AddGameObject(mainAi);
 
-	objectList->AddGameObject(targetSphere);
-	
-	mainAi->aiTarget = targetSphere;
-
-
+	//Sphere* targetSphere = new Sphere("targetSphere",Vec3(15.0f, 2.5f, 7.0f));
+	//objectList->AddGameObject(targetSphere);
 	//
+	//mainAi->aiTarget = targetSphere;*/
+
 	////GJK Code test;
 	//Box* box1 = new Box("Box1", Vec3(25.0f, 0.0f, 0.0f));
 	//
@@ -88,12 +87,8 @@ bool SceneAi::OnCreate()
 	return true;
 }
 
-void SceneAi::Update(const float deltaTime)	{
-	
-	
-
-
-	
+void SceneAi::Update(const float deltaTime)	
+{
 	//GJKDetection gjkBoxDetection;
 	//collisionDetected = gjkBoxDetection.GJKCollisionDetection(mesh1Verts, mesh2Verts);
 	//

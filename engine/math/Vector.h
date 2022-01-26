@@ -111,8 +111,10 @@ namespace MATH
 			this->z = z;
 		}
 		
-		inline Vec3(const Vec2&v) {
-			set(v.x, v.y, 0.0f);
+		Vec3(const Vec2& v) {
+			x = v.x;
+			y = v.y;
+			z = 0.0f;
 		}
 
 		/// A copy constructor
@@ -127,14 +129,12 @@ namespace MATH
 		///////////////////////////////////////////////////////////
 
 		/// An assignment operator   
+		Vec3& operator = (const Vec3& v) = default;
 		
-		inline Vec3& operator = (const Vec3& v){
-			set(v.x, v.y, v.z); 
-			return *this;
-		}
-		inline const bool operator == (const Vec3& v) const {
+		const bool operator == (const Vec3& v) const {
 			return (x == v.x && y == v.y && z == v.z);
 		}
+
 		/// Now we can use the Vec3 like an array but we'll need two overloads
 		float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
 			return *(&x + index); 

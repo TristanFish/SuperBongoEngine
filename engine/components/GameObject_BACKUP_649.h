@@ -21,7 +21,7 @@ class GameObject
 
 protected:
 
-	/*! Holds the name of this gameObject*/
+	/*! Hold's the name of this gameObject*/
 	std::string name;
 
 	UUniqueID uuid;
@@ -34,8 +34,12 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-	friend class SceneGraph;
+<<<<<<< HEAD
+=======
 
+
+	friend class SceneGraph;
+>>>>>>> origin/master
 public:
 
 
@@ -98,7 +102,7 @@ public:
 	void SetActive(const bool a) { active = a; }
 
 	std::string GetName() const { return name; }
-	std::string& GetNameRef() { return name; }
+	std::string& GetName() { return name; }
 
 	uint64_t GetUUID() const { return uuid; }
 

@@ -115,6 +115,12 @@
     <Filter Include="resources\shaders">
       <UniqueIdentifier>{c52913d4-9d62-4cf0-b054-2a46ae3be6fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine\components\AI\Pathfinding\Types">
+      <UniqueIdentifier>{38e2da6e-5f4f-4a8d-9f3d-1aec00d22eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components\AI\DecisionMaking">
+      <UniqueIdentifier>{7b670a91-3cb6-440a-b1d0-3e6abe97cae3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\include\sdl\begin_code.h">
@@ -982,11 +988,23 @@
     <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h">
       <Filter>src\engine\components\AI\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
     <ClInclude Include="engine\core\3D\Physics\GJKDetection.h">
       <Filter>src\engine\core\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h">
+      <Filter>src\engine\components\AI\Pathfinding\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h">
+      <Filter>src\engine\components\AI\Pathfinding\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.h">
+      <Filter>src\engine\components\AI\DecisionMaking</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.h">
+      <Filter>src\engine\components\AI\DecisionMaking</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
     <ClInclude Include="engine\core\UUniqueID.h" />
@@ -1311,11 +1329,21 @@
     <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp">
       <Filter>src\engine\components\AI\Steering</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
     <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
     <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp">
       <Filter>src\engine\core\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp">
+      <Filter>src\engine\components\AI\Pathfinding\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp">
+      <Filter>src\engine\components\AI\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.cpp">
+      <Filter>src\engine\components\AI\DecisionMaking</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.cpp">
+      <Filter>src\engine\components\AI\DecisionMaking</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\UUniqueID.cpp" />
   </ItemGroup>

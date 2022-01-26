@@ -1,15 +1,12 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
-
 #include "core/Logger.h"
-#include "core/3D/OctSpatialPartition.h"
+//#include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
-#include "core/resources/CollisionDetection.h"
-#include "core/resources/SaveManager.h"
-
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
+#include "core/resources/SaveManager.h"
 
 #include "graphics/UIStatics.h"
 
@@ -30,9 +27,6 @@ SceneGraph::~SceneGraph()
 		delete nameObjectPair.second;
 		nameObjectPair.second = nullptr;
 	}
-
-	delete ScenePartition;
-	ScenePartition = nullptr;
 
 	InstantiableObjects.clear();
 	
@@ -114,7 +108,7 @@ GameObject* SceneGraph::FindGameObject(const std::string& name)
 		}
 	}
 
-	EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
+	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
 	return nullptr;
 }
@@ -133,23 +127,6 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 	}
 	
 	return *go;
-}
-
-
-void SceneGraph::AddRenderingComponents()
-{
-	for (auto* go : gameObjects)
-	{
-		if (go->HasComponent<MeshRenderer>())
-		{
-			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-			Renderer::GetInstance()->AddMeshRenderer(mr);
-		}
-		if (go->HasComponent<LightComponent>())
-		{
-			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
-		}
-	}
 }
 
 void SceneGraph::LoadGameObject(GameObject* go)
@@ -215,7 +192,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			CollisionDetection::ColliderIntersection(rigidBodies[i]->GetCollider(), rigidBodies[j]->GetCollider());
+			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}
 	}
 }

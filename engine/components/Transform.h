@@ -32,8 +32,6 @@ public:
 	
 
 
-
-
 	//!Transform Constructor
 	/*! Initializes the rotational Matrix */
 	Transform();
@@ -49,27 +47,21 @@ public:
 
 	//!GetPosition Getter
 	/*! Returns the transforms position */
-	MATH::Vec3& GetPosition() { return pos; }
-	const MATH::Vec3& GetPosition() const { return pos; }
+	MATH::Vec3& GetPositionRef() { return pos; }
+	MATH::Vec3 GetPosition() const { return pos; }
 
-
-
-
-	MATH::Quaternion GetQuaternion() const { return rotation; }
-
-	/*! Returns the transforms rotation in the form of euler angles */
-	MATH::Vec3 GetRotation() { return MATH::Quaternion::QuatToEuler(rotation); }
-	const MATH::Vec3& GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
-
+	//!GetRotation Getter
+	/*! Returns the transforms rotation inthe form of euler angles */
+	MATH::Vec3 GetRotation() const { return MATH::Quaternion::QuatToEuler(rotation); }
 
 	//!GetScale Getter
 	/*! Returns the transforms scale */
-	MATH::Vec3& GetScale() { return scale; }
-	const MATH::Vec3& GetScale() const { return scale; }
+	MATH::Vec3& GetScaleRef() { return scale; }
+	MATH::Vec3 GetScale() const { return scale; }
 
 
-	MATH::Quaternion& GetRotationQuat() { return rotation; }
-	const MATH::Quaternion& GetRotationQuat() const { return rotation; }
+	MATH::Quaternion& GetRotationQuatRef() { return rotation; }
+	MATH::Quaternion GetRotationQuat() const { return rotation; }
 
 
 	//!GetModelMatrix Getter
@@ -83,28 +75,24 @@ public:
 	void SetParent(Transform* parentTrans) { parent = parentTrans; }
 	
 	//!Forward Vec3
-	/*! Vector that always points in front of the object */
+	/*! Vector that always points in front of the transform */
 	MATH::Vec3 Forward() const;
 	//!Right Vec3
-	/*! Vector that always points to the right of the object */
+	/*! Vector that always points to the right of the transform */
 	MATH::Vec3 Right() const;
 
 	//!Up Vec3
-	/*! Vector that always points above the object */
+	/*! Vector that always points above the transform */
 	MATH::Vec3 Up() const;
 
-	//!SetPosition Setter
-	/*! Sets the position of the transform */
+
 	void SetPos(const MATH::Vec3& pos);
 
-	//!SetRotation Setter
-	/*! Sets the rotation of the transform */
+	//Sets rotation of the transform based on euler angles
 	void SetRot(const MATH::Vec3& rot);
-
+	//Sets rotation of the transform based on a quaternion
 	void SetRot(const MATH::Quaternion& rot);
 
-	//!SetScale Setter
-	/*! Sets the rotation of the transform */
 	void SetScale(const MATH::Vec3& scale);
 };
 
