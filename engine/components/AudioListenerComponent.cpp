@@ -3,7 +3,7 @@
 
 void AudioListenerComponent::Init(GameObject* g)
 {
-	gameobject = g;
+	gameObject = g;
 	audioSystemRef = AudioManager::Get()->system;
 
 	//could just as easily be the camera

@@ -2,6 +2,8 @@
 #define FRAMEBUFFER_H
 
 #include <vector>
+
+#include "Colour.h"
 #include "glew/glew.h"
 
 struct BufferTexture
@@ -21,6 +23,7 @@ struct BufferTexture
 	
 	BufferTexture(TexType type_)
 	{
+		texture = 0;
 		type = type_;
 	}
 
@@ -36,6 +39,7 @@ struct FrameBuffer
 	
 	GLuint bufferID;
 	std::vector<BufferTexture> attachedTextures;
+	Colour clearColor;
 
 	FrameBuffer() = default;
 
@@ -48,7 +52,7 @@ struct FrameBuffer
 	void Clear()
 	{
 		Bind();
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 

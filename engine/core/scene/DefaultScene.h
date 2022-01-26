@@ -7,13 +7,10 @@
 /*!  This class inherits from Scene and controls all events and object's in the first scene */
 class DefaultScene : public Scene
 {
-private:
-
-	Debug debug;
 public:
 	//! Scene 1 Constructor
 	DefaultScene();
-	DefaultScene(std::string Scene_Name);
+	DefaultScene(const std::string& Scene_Name);
 
 
 	//! Virtual overridden OnCreate Function

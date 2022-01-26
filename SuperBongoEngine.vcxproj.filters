@@ -16,34 +16,97 @@
     <Filter Include="src">
       <UniqueIdentifier>{14206e39-7229-469c-ae95-4aef47beb571}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\math">
-      <UniqueIdentifier>{4ff3d53d-4ef5-4606-a0b3-150eba022389}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\dll">
-      <UniqueIdentifier>{9e0916dd-0aae-44ba-82f9-543abcd3ba39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\custom">
-      <UniqueIdentifier>{66ce1c8e-3cb6-40f2-84ca-0caf839f8d96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\scenes">
-      <UniqueIdentifier>{bf2c8094-a278-49e2-bf7f-e79025b4a7cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\graphics">
-      <UniqueIdentifier>{b60bb5c0-816f-46bd-9c76-bf84a2b53a55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\components">
-      <UniqueIdentifier>{f0da421f-0277-44c5-b373-00d6bda46e48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="external\include\glew">
       <UniqueIdentifier>{8885e96b-8168-4f2f-ba4d-6f65fe6a1d1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ECS">
-      <UniqueIdentifier>{87d7b294-fbe5-4640-9e32-04ce723a19bc}</UniqueIdentifier>
+    <Filter Include="external\include\fmod">
+      <UniqueIdentifier>{bbc0cd27-2b97-4896-bb1f-ffe6a36ea043}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ECS\Components">
-      <UniqueIdentifier>{a3077d6c-be63-4f30-b50a-206b163697f0}</UniqueIdentifier>
+    <Filter Include="external\include\imgui">
+      <UniqueIdentifier>{f90fa5f9-b2d1-46b6-87cf-f876792ddfca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Shaders">
+    <Filter Include="external\include\tinyxml2">
+      <UniqueIdentifier>{4544c088-494e-4c02-9a5b-02192b1f0856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\include\assimp">
+      <UniqueIdentifier>{3a4c32da-ab2f-4455-a69a-801e1e80dd51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{3f97d26d-36a8-49ec-99f5-cbcaa6a7b4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components">
+      <UniqueIdentifier>{f0da421f-0277-44c5-b373-00d6bda46e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\audio">
+      <UniqueIdentifier>{af0b9458-b85f-4e5c-92ba-9df5e123937b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core">
+      <UniqueIdentifier>{8456aa8a-616f-454f-8ebb-173bdf78eb23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game">
+      <UniqueIdentifier>{c96cf6fb-66d1-4a1d-ae88-5c7b3bd85c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\math">
+      <UniqueIdentifier>{4ff3d53d-4ef5-4606-a0b3-150eba022389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game\gameObjects">
+      <UniqueIdentifier>{97e83925-50d4-4d5e-ae64-b0456b9ae6dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\primitives">
+      <UniqueIdentifier>{9db25d23-0991-4782-a2fb-841d1c1b046c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components\2D">
+      <UniqueIdentifier>{cf774d25-b92c-4fc0-9309-f82088f6418b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components\3D">
+      <UniqueIdentifier>{54a9ba90-324b-47b7-a7f7-8e08fbe54e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{4dcd80b2-c8bf-4ec2-96e6-9b231c3128e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\scene">
+      <UniqueIdentifier>{08dd6d56-1c0c-49fb-9482-b76158e7609f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game\scenes">
+      <UniqueIdentifier>{bf2c8094-a278-49e2-bf7f-e79025b4a7cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\events">
+      <UniqueIdentifier>{02097b71-ddf4-4b30-b282-c89c942c37fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\Utility">
+      <UniqueIdentifier>{e28ec212-8410-4890-a98a-232d89e9fff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\resources">
+      <UniqueIdentifier>{0e87a8c6-cabf-42b2-a80c-2c86d27a3191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\3D">
+      <UniqueIdentifier>{e1391489-b730-43e0-9bac-6f922a4c8862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\2D">
+      <UniqueIdentifier>{dcbdd685-ed95-4501-ab1d-99b190d4c712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\include\assimp\Compiler">
+      <UniqueIdentifier>{5e52a240-d9da-4df7-b37b-dee70db7bea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\rendering">
+      <UniqueIdentifier>{6e4eb30d-11fe-4272-8718-fdffd5465139}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\graphics">
+      <UniqueIdentifier>{b60bb5c0-816f-46bd-9c76-bf84a2b53a55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\include\assimp\port">
+      <UniqueIdentifier>{4dc45ecb-cf5a-457b-b01e-223713886d33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\include\assimp\port\AndroidJNI">
+      <UniqueIdentifier>{2198737d-a147-470e-9d40-e62e3099c0fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\core\networking">
+      <UniqueIdentifier>{3e49fee4-58fc-4678-a949-9ce63ebcda1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\components\AI">
+      <UniqueIdentifier>{2664de0d-87a6-410a-9942-f20a223d29c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders">
       <UniqueIdentifier>{c52913d4-9d62-4cf0-b054-2a46ae3be6fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -318,177 +381,521 @@
     <ClInclude Include="external\include\glew\wglew.h">
       <Filter>external\include\glew</Filter>
     </ClInclude>
-    <ClInclude Include="external\include\imgui\imconfig.h" />
-    <ClInclude Include="external\include\imgui\imgui.h" />
-    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h" />
-    <ClInclude Include="external\include\imgui\imgui_internal.h" />
-    <ClInclude Include="external\include\imgui\imstb_rectpack.h" />
-    <ClInclude Include="external\include\imgui\imstb_textedit.h" />
-    <ClInclude Include="external\include\imgui\imstb_truetype.h" />
-    <ClInclude Include="external\include\fmod\fmod.h" />
-    <ClInclude Include="external\include\fmod\fmod.hpp" />
-    <ClInclude Include="external\include\fmod\fmod_codec.h" />
-    <ClInclude Include="external\include\fmod\fmod_common.h" />
-    <ClInclude Include="external\include\fmod\fmod_dsp.h" />
-    <ClInclude Include="external\include\fmod\fmod_dsp_effects.h" />
-    <ClInclude Include="external\include\fmod\fmod_errors.h" />
-    <ClInclude Include="external\include\fmod\fmod_output.h" />
-    <ClInclude Include="external\include\assimp\Compiler\poppack1.h" />
-    <ClInclude Include="external\include\assimp\Compiler\pstdint.h" />
-    <ClInclude Include="external\include\assimp\Compiler\pushpack1.h" />
-    <ClInclude Include="external\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
-    <ClInclude Include="external\include\assimp\aabb.h" />
-    <ClInclude Include="external\include\assimp\ai_assert.h" />
-    <ClInclude Include="external\include\assimp\anim.h" />
-    <ClInclude Include="external\include\assimp\BaseImporter.h" />
-    <ClInclude Include="external\include\assimp\Bitmap.h" />
-    <ClInclude Include="external\include\assimp\BlobIOSystem.h" />
-    <ClInclude Include="external\include\assimp\ByteSwapper.h" />
-    <ClInclude Include="external\include\assimp\camera.h" />
-    <ClInclude Include="external\include\assimp\cexport.h" />
-    <ClInclude Include="external\include\assimp\cfileio.h" />
-    <ClInclude Include="external\include\assimp\cimport.h" />
-    <ClInclude Include="external\include\assimp\color4.h" />
-    <ClInclude Include="external\include\assimp\config.h" />
-    <ClInclude Include="external\include\assimp\CreateAnimMesh.h" />
-    <ClInclude Include="external\include\assimp\DefaultIOStream.h" />
-    <ClInclude Include="external\include\assimp\DefaultIOSystem.h" />
-    <ClInclude Include="external\include\assimp\DefaultLogger.hpp" />
-    <ClInclude Include="external\include\assimp\Defines.h" />
-    <ClInclude Include="external\include\assimp\defs.h" />
-    <ClInclude Include="external\include\assimp\Exceptional.h" />
-    <ClInclude Include="external\include\assimp\Exporter.hpp" />
-    <ClInclude Include="external\include\assimp\fast_atof.h" />
-    <ClInclude Include="external\include\assimp\GenericProperty.h" />
-    <ClInclude Include="external\include\assimp\Hash.h" />
-    <ClInclude Include="external\include\assimp\Importer.hpp" />
-    <ClInclude Include="external\include\assimp\importerdesc.h" />
-    <ClInclude Include="external\include\assimp\IOStream.hpp" />
-    <ClInclude Include="external\include\assimp\IOStreamBuffer.h" />
-    <ClInclude Include="external\include\assimp\IOSystem.hpp" />
-    <ClInclude Include="external\include\assimp\irrXMLWrapper.h" />
-    <ClInclude Include="external\include\assimp\light.h" />
-    <ClInclude Include="external\include\assimp\LineSplitter.h" />
-    <ClInclude Include="external\include\assimp\LogAux.h" />
-    <ClInclude Include="external\include\assimp\Logger.hpp" />
-    <ClInclude Include="external\include\assimp\LogStream.hpp" />
-    <ClInclude Include="external\include\assimp\Macros.h" />
-    <ClInclude Include="external\include\assimp\material.h" />
-    <ClInclude Include="external\include\assimp\MathFunctions.h" />
-    <ClInclude Include="external\include\assimp\matrix3x3.h" />
-    <ClInclude Include="external\include\assimp\matrix4x4.h" />
-    <ClInclude Include="external\include\assimp\MemoryIOWrapper.h" />
-    <ClInclude Include="external\include\assimp\mesh.h" />
-    <ClInclude Include="external\include\assimp\metadata.h" />
-    <ClInclude Include="external\include\assimp\NullLogger.hpp" />
-    <ClInclude Include="external\include\assimp\ParsingUtils.h" />
-    <ClInclude Include="external\include\assimp\pbrmaterial.h" />
-    <ClInclude Include="external\include\assimp\postprocess.h" />
-    <ClInclude Include="external\include\assimp\Profiler.h" />
-    <ClInclude Include="external\include\assimp\ProgressHandler.hpp" />
-    <ClInclude Include="external\include\assimp\qnan.h" />
-    <ClInclude Include="external\include\assimp\quaternion.h" />
-    <ClInclude Include="external\include\assimp\RemoveComments.h" />
-    <ClInclude Include="external\include\assimp\scene.h" />
-    <ClInclude Include="external\include\assimp\SceneCombiner.h" />
-    <ClInclude Include="external\include\assimp\SGSpatialSort.h" />
-    <ClInclude Include="external\include\assimp\SkeletonMeshBuilder.h" />
-    <ClInclude Include="external\include\assimp\SmoothingGroups.h" />
-    <ClInclude Include="external\include\assimp\SpatialSort.h" />
-    <ClInclude Include="external\include\assimp\StandardShapes.h" />
-    <ClInclude Include="external\include\assimp\StreamReader.h" />
-    <ClInclude Include="external\include\assimp\StreamWriter.h" />
-    <ClInclude Include="external\include\assimp\StringComparison.h" />
-    <ClInclude Include="external\include\assimp\StringUtils.h" />
-    <ClInclude Include="external\include\assimp\Subdivision.h" />
-    <ClInclude Include="external\include\assimp\texture.h" />
-    <ClInclude Include="external\include\assimp\TinyFormatter.h" />
-    <ClInclude Include="external\include\assimp\types.h" />
-    <ClInclude Include="external\include\assimp\vector2.h" />
-    <ClInclude Include="external\include\assimp\vector3.h" />
-    <ClInclude Include="external\include\assimp\version.h" />
-    <ClInclude Include="external\include\assimp\Vertex.h" />
-    <ClInclude Include="external\include\assimp\XMLTools.h" />
-    <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h" />
-    <ClInclude Include="external\include\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="game\Game1.h" />
-    <ClInclude Include="engine\audio\AudioManager.h" />
-    <ClInclude Include="engine\audio\AudioUtility.h" />
-    <ClInclude Include="engine\audio\SoundAttributes.h" />
-    <ClInclude Include="engine\components\2D\Collider.h" />
-    <ClInclude Include="engine\components\2D\RigidBodyComponent.h" />
-    <ClInclude Include="engine\components\2D\SpriteComponent.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\components\3D\Collider3D.h" />
-    <ClInclude Include="engine\components\3D\LightComponent.h" />
-    <ClInclude Include="engine\components\3D\MeshRenderer.h" />
-    <ClInclude Include="engine\components\3D\RigidBody3D.h" />
-    <ClInclude Include="engine\components\AudioListenerComponent.h" />
-    <ClInclude Include="engine\components\AudioSourceComponent.h" />
-    <ClInclude Include="engine\components\Components.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\components\ECS.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\components\Transform.h">
-      <Filter>src\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\core\2D\Physics2D.h" />
-    <ClInclude Include="engine\core\3D\Physics3D.h" />
-    <ClInclude Include="engine\core\CoreEngine.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\core\Debug.h" />
-    <ClInclude Include="engine\core\GameInterface.h" />
-    <ClInclude Include="engine\core\Globals.h" />
-    <ClInclude Include="engine\core\Logger.h" />
-    <ClInclude Include="engine\core\Timer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\graphics\CustomUI.h" />
-    <ClInclude Include="engine\graphics\Mesh.h" />
-    <ClInclude Include="engine\graphics\Model.h" />
-    <ClInclude Include="engine\graphics\Shader.h" />
-    <ClInclude Include="engine\graphics\ShaderProgram.h" />
-    <ClInclude Include="engine\graphics\Texture.h">
-      <Filter>src\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\graphics\Vertex.h" />
     <ClInclude Include="engine\graphics\Window.h">
-      <Filter>src\graphics</Filter>
+      <Filter>src\engine\graphics</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\Matrix.h">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\MMath.h">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
     </ClInclude>
-    <ClInclude Include="engine\math\Plane.h" />
-    <ClInclude Include="engine\math\Quaternion.h" />
-    <ClInclude Include="engine\math\Ray.h" />
     <ClInclude Include="engine\math\Vector.h">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
     </ClInclude>
     <ClInclude Include="engine\math\VMath.h">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
     </ClInclude>
-    <ClInclude Include="engine\primitives\Box.h" />
-    <ClInclude Include="engine\primitives\PlaneObject.h" />
-    <ClInclude Include="engine\primitives\Primitives.h" />
-    <ClInclude Include="engine\primitives\Sphere.h" />
-    <ClInclude Include="engine\rendering\Camera.h" />
-    <ClInclude Include="engine\rendering\SkyBox.h" />
-    <ClInclude Include="engine\rendering\Water.h" />
-    <ClInclude Include="game\gameObjects\Bird.h" />
-    <ClInclude Include="game\gameObjects\Grass.h" />
-    <ClInclude Include="game\gameObjects\LightObject.h" />
-    <ClInclude Include="game\gameObjects\Player.h" />
-    <ClInclude Include="game\gameObjects\TestModel.h" />
+    <ClInclude Include="game\scenes\Scene1.h">
+      <Filter>src\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\CoreEngine.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Timer.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\AudioManager.h">
+      <Filter>src\engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\aabb.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\ai_assert.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\anim.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AudioSourceComponent.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\AudioUtility.h">
+      <Filter>src\engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\BaseImporter.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\Bird.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Bitmap.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\BlobIOSystem.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\primitives\Box.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\ByteSwapper.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\camera.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\cimport.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\cexport.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\cfileio.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\2D\Collider.h">
+      <Filter>src\engine\components\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\Collider3D.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\color4.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Component.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\CreateAnimMesh.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\config.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\CustomUI.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Debug.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\DefaultIOStream.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\DefaultIOSystem.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\DefaultLogger.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\scene\DefaultScene.h">
+      <Filter>src\engine\core\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Defines.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\defs.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Exceptional.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Exporter.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\fast_atof.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod.hpp">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_codec.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_common.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_dsp.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_dsp_effects.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_errors.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\fmod\fmod_output.h">
+      <Filter>external\include\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\FrameBuffer.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Game1.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\GameInterface.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\GameObject.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\GenericProperty.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\Grass.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Hash.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imconfig.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui_impl_sdl.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui_internal.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imgui_stdlib.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imstb_truetype.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imstb_rectpack.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\imgui\imstb_textedit.h">
+      <Filter>external\include\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\XMLTools.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\ZipArchiveIOSystem.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Globals.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\events\InputManager.h">
+      <Filter>src\engine\core\events</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\importerdesc.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Importer.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Instancer.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\irrXMLWrapper.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\IOStream.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\IOStreamBuffer.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\IOSystem.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\LightComponent.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\LightObject.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Utility\LoadUtility.h">
+      <Filter>src\engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\Logger.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Mesh.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\MeshRenderer.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Model.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\ShaderManager.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\TextureManager.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\ModelManager.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\events\MouseEventDispatcher.h">
+      <Filter>src\engine\core\events</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\events\MouseEventListener.h">
+      <Filter>src\engine\core\events</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\MouseRay.h">
+      <Filter>src\engine\core</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\OctSpatialPartition.h">
+      <Filter>src\engine\core\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\2D\Physics2D.h">
+      <Filter>src\engine\core\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\Physics3D.h">
+      <Filter>src\engine\core\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Ray.h">
+      <Filter>src\engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Quaternion.h">
+      <Filter>src\engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Plane.h">
+      <Filter>src\engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\pbrmaterial.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\LineSplitter.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\LogAux.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Logger.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\LogStream.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Macros.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\material.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\MathFunctions.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\matrix3x3.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\matrix4x4.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\MemoryIOWrapper.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\mesh.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\metadata.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\NullLogger.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\ParsingUtils.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\light.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\primitives\PlaneObject.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\primitives\Primitives.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\Player.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\SaveManager.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\resources\SaveFile.h">
+      <Filter>src\engine\core\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Utility\SaveUtility.h">
+      <Filter>src\engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\ShaderProgram.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Shader.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Renderer.h">
+      <Filter>src\engine\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\RigidBody3D.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\2D\RigidBodyComponent.h">
+      <Filter>src\engine\components\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="game\scenes\Scene2.h">
+      <Filter>src\game\scenes</Filter>
+    </ClInclude>
     <ClInclude Include="engine\core\scene\Scene.h">
-      <Filter>src\scenes</Filter>
+      <Filter>src\engine\core\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\SceneGraph.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\SkyBox.h">
+      <Filter>src\engine\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Camera.h">
+      <Filter>src\engine\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\primitives\Sphere.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\TestModel.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\audio\SoundAttributes.h">
+      <Filter>src\engine\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\tinyxml2\tinyxml2.h">
+      <Filter>external\include\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\UIStatics.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Vertex.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Water.h">
+      <Filter>src\engine\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\graphics\Texture.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Vertex.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\qnan.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\quaternion.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\RemoveComments.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\scene.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\SceneCombiner.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\SGSpatialSort.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\SkeletonMeshBuilder.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\SmoothingGroups.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\SpatialSort.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\StandardShapes.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\StreamReader.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\StreamWriter.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\StringComparison.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\StringUtils.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Subdivision.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\texture.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\TinyFormatter.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\types.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\vector2.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\vector3.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\version.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\ProgressHandler.hpp">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\postprocess.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Profiler.h">
+      <Filter>external\include\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Compiler\poppack1.h">
+      <Filter>external\include\assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Compiler\pstdint.h">
+      <Filter>external\include\assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\Compiler\pushpack1.h">
+      <Filter>external\include\assimp\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\2D\SpriteComponent.h">
+      <Filter>src\engine\components\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Transform.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Components.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\ECS.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\assimp\port\AndroidJNI\AndroidJNIIOSystem.h">
+      <Filter>external\include\assimp\port\AndroidJNI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AudioListenerComponent.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\networking\ENetNetworkManager.h">
+      <Filter>src\engine\core\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\networking\NetworkManager.h">
+      <Filter>src\engine\core\networking</Filter>
     </ClInclude>
     <ClInclude Include="game\scenes\Scene1.h">
       <Filter>src\scenes</Filter>
@@ -516,60 +923,268 @@
     <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\graphics\FrameBuffer.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
-    <ClInclude Include="engine\Primitives\Tetrahedron.h" />
+    <ClInclude Include="engine\components\AI\AIComponent.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="game\scenes\SceneAi.h">
+      <Filter>src\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h">
+      <Filter>src\engine\components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Primitives\Tetrahedron.h">
+      <Filter>src\engine\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gameObjects\AiGameObject.h">
+      <Filter>src\game\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Colour.h">
+      <Filter>src\engine\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\NetworkableObject.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="external\include\imgui\imgui.cpp" />
-    <ClCompile Include="external\include\imgui\imgui_demo.cpp" />
-    <ClCompile Include="external\include\imgui\imgui_draw.cpp" />
-    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp" />
-    <ClCompile Include="external\include\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="external\include\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="game\Game1.cpp" />
-    <ClCompile Include="engine\audio\AudioManager.cpp" />
-    <ClCompile Include="engine\audio\AudioUtility.cpp" />
-    <ClCompile Include="engine\audio\SoundAttributes.cpp" />
-    <ClCompile Include="engine\components\2D\RigidBodyComponent.cpp" />
-    <ClCompile Include="engine\components\2D\SpriteComponent.cpp" />
-    <ClCompile Include="engine\components\3D\LightComponent.cpp" />
-    <ClCompile Include="engine\components\3D\MeshRenderer.cpp" />
-    <ClCompile Include="engine\components\3D\RigidBody3D.cpp" />
-    <ClCompile Include="engine\components\AudioListenerComponent.cpp" />
-    <ClCompile Include="engine\components\AudioSourceComponent.cpp" />
-    <ClCompile Include="engine\components\Transform.cpp" />
-    <ClCompile Include="engine\core\2D\Physics2D.cpp" />
-    <ClCompile Include="engine\core\3D\Physics3D.cpp" />
-    <ClCompile Include="engine\core\CoreEngine.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\core\Debug.cpp" />
-    <ClCompile Include="engine\core\Logger.cpp" />
-    <ClCompile Include="engine\core\Main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\core\Timer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\graphics\CustomUI.cpp" />
-    <ClCompile Include="engine\graphics\Mesh.cpp" />
-    <ClCompile Include="engine\graphics\Model.cpp" />
-    <ClCompile Include="engine\graphics\Shader.cpp" />
-    <ClCompile Include="engine\graphics\ShaderProgram.cpp" />
-    <ClCompile Include="engine\graphics\Texture.cpp">
-      <Filter>src\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="engine\graphics\Window.cpp">
-      <Filter>src\graphics</Filter>
+      <Filter>src\engine\graphics</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\MMath.cpp">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
     </ClCompile>
-    <ClCompile Include="engine\math\Plane.cpp" />
-    <ClCompile Include="engine\math\Quaternion.cpp" />
-    <ClCompile Include="engine\math\Ray.cpp" />
     <ClCompile Include="engine\math\Vector.cpp">
-      <Filter>src\math</Filter>
+      <Filter>src\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\VMath.cpp">
+      <Filter>src\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="game\scenes\Scene1.cpp">
+      <Filter>src\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\CoreEngine.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Main.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Timer.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\AudioManager.cpp">
+      <Filter>src\engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AudioSourceComponent.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\AudioUtility.cpp">
+      <Filter>src\engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\Bird.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\primitives\Box.cpp">
+      <Filter>src\engine\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\CustomUI.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Debug.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\scene\DefaultScene.cpp">
+      <Filter>src\engine\core\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\FrameBuffer.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Game1.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\GameObject.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\Grass.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_widgets.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_demo.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_draw.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_impl_opengl3.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_impl_sdl.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_stdlib.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\imgui\imgui_tables.cpp">
+      <Filter>external\include\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Globals.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\events\InputManager.cpp">
+      <Filter>src\engine\core\events</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\Instancer.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\LightObject.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Utility\LoadUtility.cpp">
+      <Filter>src\engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\Logger.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Mesh.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\MeshRenderer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Model.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\ShaderManager.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\TextureManager.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\ModelManager.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp">
+      <Filter>src\engine\core\events</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\events\MouseEventListener.cpp">
+      <Filter>src\engine\core\events</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\MouseRay.cpp">
+      <Filter>src\engine\core</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp">
+      <Filter>src\engine\core\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\2D\Physics2D.cpp">
+      <Filter>src\engine\core\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\Physics3D.cpp">
+      <Filter>src\engine\core\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\Ray.cpp">
+      <Filter>src\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\Quaternion.cpp">
+      <Filter>src\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\Plane.cpp">
+      <Filter>src\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\primitives\PlaneObject.cpp">
+      <Filter>src\engine\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\Player.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\SaveFile.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\resources\SaveManager.cpp">
+      <Filter>src\engine\core\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Utility\SaveUtility.cpp">
+      <Filter>src\engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Shader.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\ShaderProgram.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\Renderer.cpp">
+      <Filter>src\engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\RigidBody3D.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\2D\RigidBodyComponent.cpp">
+      <Filter>src\engine\components\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="game\scenes\Scene2.cpp">
+      <Filter>src\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\scene\Scene.cpp">
+      <Filter>src\engine\core\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\SceneGraph.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\SkyBox.cpp">
+      <Filter>src\engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\Camera.cpp">
+      <Filter>src\engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\primitives\Sphere.cpp">
+      <Filter>src\engine\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\TestModel.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\audio\SoundAttributes.cpp">
+      <Filter>src\engine\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\2D\SpriteComponent.cpp">
+      <Filter>src\engine\components\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\tinyxml2\tinyxml2.cpp">
+      <Filter>external\include\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\UIStatics.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\Transform.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\Water.cpp">
+      <Filter>src\engine\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\graphics\Texture.cpp">
+      <Filter>src\engine\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AudioListenerComponent.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp">
+      <Filter>src\engine\core\networking</Filter>
     </ClCompile>
     <ClCompile Include="engine\math\VMath.cpp">
       <Filter>src\math</Filter>
@@ -612,88 +1227,132 @@
     <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\graphics\FrameBuffer.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
-    <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
+    <ClCompile Include="engine\components\AI\AIComponent.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="game\scenes\SceneAi.cpp">
+      <Filter>src\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp">
+      <Filter>src\engine\components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Primitives\Tetrahedron.cpp">
+      <Filter>src\engine\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\networking\NetworkManager.cpp">
+      <Filter>src\engine\core\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gameObjects\AiGameObject.cpp">
+      <Filter>src\game\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\LightComponent.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\NetworkableObject.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="external\dll\glew32.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libFLAC-8.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libfreetype-6.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libjpeg-9.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libmikmod-2.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libmodplug-1.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libogg-0.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libpng16-16.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libtiff-5.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libvorbis-0.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libvorbisfile-3.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\libwebp-4.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\SDL2.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\SDL2_image.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\smpeg2.dll">
-      <Filter>external\dll</Filter>
-    </None>
-    <None Include="external\dll\zlib1.dll">
-      <Filter>external\dll</Filter>
-    </None>
     <None Include=".gitignore" />
-    <None Include="external\dll\assimp-vc142-mtd.dll" />
-    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
-    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
-    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
-    <None Include="src\graphics\shaders\InstanceVert.glsl" />
-    <None Include="src\graphics\shaders\GrassFrag.glsl" />
-    <None Include="src\graphics\shaders\GrassVert.glsl" />
-    <None Include="src\graphics\shaders\FogFrag.glsl" />
-    <None Include="src\graphics\shaders\FogVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
-    <None Include="external\dll\fmodL.dll" />
-    <None Include="external\include\assimp\color4.inl" />
-    <None Include="external\include\assimp\material.inl" />
-    <None Include="external\include\assimp\matrix3x3.inl" />
-    <None Include="external\include\assimp\matrix4x4.inl" />
-    <None Include="external\include\assimp\quaternion.inl" />
-    <None Include="external\include\assimp\SmoothingGroups.inl" />
-    <None Include="external\include\assimp\vector2.inl" />
-    <None Include="external\include\assimp\vector3.inl" />
-    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
-    <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\RefractFrag.glsl" />
-    <None Include="src\graphics\shaders\RefractVert.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
-    <None Include="src\graphics\shaders\WaterFrag.glsl" />
-    <None Include="src\graphics\shaders\WaterVert.glsl" />
+    <None Include="external\include\assimp\color4.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\material.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\matrix3x3.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\matrix4x4.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\quaternion.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\SmoothingGroups.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\vector2.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="external\include\assimp\vector3.inl">
+      <Filter>external\include\assimp</Filter>
+    </None>
+    <None Include="resources\shaders\2DTextureFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\2DTextureVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\DefaultFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\DefaultVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\FogFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\FogVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferResolveFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferResolveVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferShaderFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\gBufferShaderVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\GrassFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\GrassVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\InstanceFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\InstanceVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\RefractFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\RefractVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\SkyBoxFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\SkyBoxVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\WaterFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\WaterVert.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\2DUIntTextureFrag.glsl">
+      <Filter>resources\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\glew32.lib">
@@ -714,7 +1373,11 @@
     <Library Include="external\lib\SDL2test.lib">
       <Filter>external\lib</Filter>
     </Library>
-    <Library Include="external\lib\assimp-vc142-mtd.lib" />
-    <Library Include="external\lib\fmodL_vc.lib" />
+    <Library Include="external\lib\assimp-vc142-mtd.lib">
+      <Filter>external\lib</Filter>
+    </Library>
+    <Library Include="external\lib\fmodL_vc.lib">
+      <Filter>external\lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>

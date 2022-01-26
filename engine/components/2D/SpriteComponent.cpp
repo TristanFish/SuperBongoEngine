@@ -30,7 +30,7 @@ void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPat
 
 void SpriteComponent::Init(GameObject *g)
 {
-	gameobject = g;
+	gameObject = g;
 	texture = new Texture();
 
 	float vertices[] = {
@@ -91,7 +91,7 @@ void SpriteComponent::Render() const
 	//setup uniforms
 	shader.TakeUniform("viewMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getViewMatrix());
-	shader.TakeUniform("modelMatrix", gameobject->transform.GetModelMatrix());
+	shader.TakeUniform("modelMatrix", gameObject->transform.GetModelMatrix());
 
 	//bind texture
 	glBindTexture(GL_TEXTURE_2D, texture->getTextureID());

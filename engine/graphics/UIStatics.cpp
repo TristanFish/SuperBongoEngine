@@ -1,20 +1,15 @@
 #include "UIStatics.h"
 
+#include <imgui/imgui_internal.h>
+
 #include "components/GameObject.h"
 #include "components/SceneGraph.h"
-
+#include "components/3D/MeshRenderer.h"
 #include "core/CoreEngine.h"
+#include "core/resources/TextureManager.h"
 #include "core/scene/Scene.h"
 
-#include "core/resources/TextureManager.h"
-
-#include "imgui/imgui_internal.h"
-
-#include "components/3D/MeshRenderer.h"
-
 GameObject* UIStatics::selectedObj = nullptr;
-
-
 
 
 UIStatics::~UIStatics()
@@ -24,7 +19,7 @@ UIStatics::~UIStatics()
 
 
 
-bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float columnWidth)
+bool UIStatics::DrawVec3(const std::string& label, MATH::Vec3& value, const float columnWidth)
 {
 	bool returnb = false;
 
@@ -49,7 +44,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopStyleColor();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &value.x, 0.1))
+	if (ImGui::DragFloat("##X", &value.x, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -63,7 +58,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &value.y, 0.1))
+	if (ImGui::DragFloat("##Y", &value.y, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -75,7 +70,7 @@ bool UIStatics::DrawVec3(const std::string label, MATH::Vec3& value, const float
 	ImGui::PopStyleColor();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Z", &value.z, 0.1))
+	if (ImGui::DragFloat("##Z", &value.z, 0.1f))
 		returnb = true;
 	ImGui::PopItemWidth();
 
@@ -98,7 +93,7 @@ void UIStatics::DrawTextureSlot(const char* textureName, MeshRenderer* meshRende
 
 
 	ImGui::Columns(2, "TextureColumns", false);
-	ImGui::SetColumnWidth(0, size.x * 1.25);
+	ImGui::SetColumnWidth(0, size.x * 1.25f);
 
 
 

@@ -3,8 +3,12 @@
 
 #include <filesystem>
 #include <unordered_map>
+#include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
+#include <imgui/imgui_stdlib.h>
+
+#include "core/networking/NetworkManager.h"
 #include "math/Vector.h"
-#include "imgui/imgui.h"
 
 class GameObject;
 
@@ -39,15 +43,6 @@ namespace CustomUI
 		/*!  Returns percent of CPU usage the application is using  */
 		static double GetCPUUsage();
 
-
-		//! Frames Per Second Integer
-		/*!  This variable stores the user inputed FPS limit  */
-		static int FPSLimit;
-
-		//! Limit Frames Per Second boolean
-		/*!  This variable toggles if the FPSLimit variable is used  */
-		static bool LimitFPS;
-
 		//! Render Loop Time Float
 		/*!  This variable contains how faster our application is rendering in milliseconds */
 		static float RenderLoopTime;
@@ -58,22 +53,36 @@ namespace CustomUI
 	};
 
 
-	class UIInterface {
-
+	class UIInterface
+	{
 	public:
 
+		virtual ~UIInterface() = default;
+		
 		virtual void Render() = 0;
-		virtual void Update(const float deltatime) {};
-		virtual void Construct() {};
-		virtual void Reset() {};
-	private:
-
+		virtual void Update(const float deltatime) {}
+		virtual void Construct() {}
+		virtual void Reset() {}
 	};
 
+	class NetworkPanel : public UIInterface
+	{
+	public:
+		NetRole role;
+		bool roleIsSet = false;
+		bool isConnected = false;
+		
+		
+		void SetNetworkRole(NetRole role);
+		void Disconnect();
+		
+		void Render() override;
+		
+	};
 	
 
 	//! Properties panel Class
-	/*!  This class creates & Renders the Properties Panel UI for each gameobject */
+	/*!  This class creates & Renders the Properties Panel UI for each gameObject */
 	class PropertiesPanel : public UIInterface
 	{
 	public:
@@ -84,7 +93,7 @@ namespace CustomUI
 
 		//! Properties panel Destructor
 		/*! Destroys all pointer's that this class uses */
-		~PropertiesPanel();
+		virtual ~PropertiesPanel();
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
@@ -97,9 +106,6 @@ namespace CustomUI
 		//! isActive bool
 		/*! Hold's if the properties panel is being rendered or not */
 		bool isActive;
-
-
-		std::vector<const char*> lightTypes;
 	};
 
 
@@ -111,7 +117,7 @@ namespace CustomUI
 	private:
 		//! FPS Update Speed float
 		/*! Controls how fast we want to add a new float into the fpsValues Vector */
-		 float fpsUpdateSpeed = 0.5f;
+		 float fpsUpdateSpeed = 0.1f;
 
 		 //! Initial Speed float
 		/*! Is used to reset the "fpsUpdateSpeed" variable once it get to 0 */
@@ -126,7 +132,7 @@ namespace CustomUI
 		int latestFPS = 0;
 	public:
 		PerformancePanel();
-		~PerformancePanel();
+		virtual ~PerformancePanel();
 
 
 		//! Update Function
@@ -138,6 +144,8 @@ namespace CustomUI
 		void Render() override;
 	};
 
+
+	
 	//! Hierarchy panel Class
 	/*!  This class creates & Renders the hierarchy Panel UI */
 	class HierarchyPanel : public UIInterface
@@ -146,7 +154,7 @@ namespace CustomUI
 
 		HierarchyPanel();
 
-		~HierarchyPanel();
+		virtual ~HierarchyPanel();
 
 		//! ConstructHierarchy Function
 		/*! Copies over the passed in vector of gameobjects */
@@ -167,7 +175,7 @@ namespace CustomUI
 		bool isActive;
 
 		//! gameobjects vector
-		/*! Hold's all of the gameobjects in the hierarchy */
+		/*! Holds all of the gameobjects in the hierarchy */
 		std::vector<GameObject*> gameobjects;
 
 		//! textFilter ImGuiTextFilter
@@ -177,22 +185,22 @@ namespace CustomUI
 	private:
 
 		//! GenerateTree Function
-		/*! Generates the gameobject tree for rendering*/
+		/*! Generates the gameObject tree for rendering*/
 		void GenerateTree(GameObject* go, int index);
 
 
 		void UpdateActiveObjects();
 
 		//! GetObjIndex Function
-		/*! Returns the index of the gameobject with a given name from the gameobjects vector*/
-		int GetObjIndex(std::string objName) const;
+		/*! Returns the index of the gameObject with a given name from the gameobjects vector*/
+		int GetObjIndex(const std::string& objName) const;
 
 	};
 
 	
 	enum class RenderMode : unsigned int
 	{
-		Lighting = 0,
+		Result = 0,
 		Albedo = 1,
 		Position = 2,
 		Normals = 3,
@@ -201,6 +209,16 @@ namespace CustomUI
 		
 	};
 
+	enum class AspectRatio : unsigned int
+	{
+		FREE_ASPECT,
+		THREE_TWO,
+		FOUR_THREE,
+		FIVE_THREE,
+		FIVE_FOUR,
+		SIXTEEN_NINE,
+		SIXTEEN_TEN
+	};
 
 	//! Viewport panel Class
 	/*!  This class creates & Renders the Viewport Panel UI */
@@ -210,35 +228,39 @@ namespace CustomUI
 	public:
 
 		Viewport();
-		~Viewport();
+		virtual ~Viewport();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
 		void Render() override;
 
 
-		inline RenderMode GetRenderMode() const { return mode; };
+		RenderMode GetRenderMode() const { return mode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
-		inline bool GetIsMouseHovered() const { return isMouseHovered; }
+		bool GetIsMouseHovered() const { return isMouseHovered; }
 
+		MATH::Vec2 GetViewportSize() const { return viewportSize; }
+		MATH::Vec2 GetViewportMin() const { return viewport_Min; }
+		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
+	
 	private:
-
+		//! viewportSize Vec2 
+		/*! Stores the viewports size */
+		MATH::Vec2 viewportSize;
 		//! viewport_Min/Max Vec2s 
 		/*! Stores the viewport min/max positons on the screen */
 		MATH::Vec2 viewport_Min, viewport_Max;
 
-
-		//! viewportSize Vec2 
-		/*! Stores the viewports size */
-		MATH::Vec2 viewportSize;
-
 		std::string modeName;
+		std::string aspectSize;
 
 		RenderMode mode;
+		AspectRatio activeRatio;
 
 		std::vector<const char*> modeMap;
+		std::vector<const char*> aspectRatios;
 
 		//! isMouseHovered bool 
 		/*! Stores if the mouse is hovering over the viewport or not */
@@ -258,7 +280,7 @@ namespace CustomUI
 	public:
 
 		ContentBrowser();
-		~ContentBrowser();
+		virtual ~ContentBrowser();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
@@ -295,7 +317,7 @@ namespace CustomUI
 
 		//! GenerateItem Function
 		/*! Generates a specefic item in the content browser*/
-		void GenerateItem(std::filesystem::directory_entry entry);
+		void GenerateItem(const std::filesystem::directory_entry& entry);
 
 		//! GenDirectoryItems Function
 		/*! Used to refresh all the items being displayed when the directory is changed*/
@@ -307,10 +329,31 @@ namespace CustomUI
 
 		//! ChangeDirectory Function
 		/*! Changes the current directory to whatever directory name is passed in e.g. CurrentDir = (Objects/Primitives/Cubes), PassedInDir = (Primitives), NewDir = (Objects/Primitives)*/
-		void ChangeDirectory(std::string dir);
+		void ChangeDirectory(const std::string& dir);
 
 	};
 
+	//! Console Log Class
+	/*!  This class shows the console output in-editor*/
+	class ConsoleLog : public UIInterface
+	{
+	public:
+
+		ImGuiTextBuffer text;
+		ImGuiTextFilter filter;
+		ImVector<int> lineOffsets;
+		bool scrollToBottom;
+		
+		ConsoleLog();
+		virtual ~ConsoleLog();
+
+		void AddLog(const std::string& message);
+
+		void Render() override;
+
+		void Clear() { text.clear(); lineOffsets.clear(); }
+	};
+	
 	//! DockSpace Class
 	/*! This class initializes and renders all of the needed ImGui interfaces*/
 	class DockSpace : public UIInterface {
@@ -319,7 +362,7 @@ namespace CustomUI
 
 		DockSpace();
 
-		~DockSpace();
+		virtual ~DockSpace();
 
 
 		//! Update Function
@@ -335,11 +378,6 @@ namespace CustomUI
 		//! ConstructHierarchy Function
 		/*! Calls the hierarchy panels Construct Hierarchy function to initialize all of the gameobjects  */
 		void ConstructUserInterface();
-
-
-		//! IsMouseOverViewPort Function
-		/*! Calls the viewports panels IsMouseOverViewPort function */
-		inline bool IsMouseOverViewPort() { return false; }
 
 	private:
 

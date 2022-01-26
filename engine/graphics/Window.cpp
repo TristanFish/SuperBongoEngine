@@ -1,11 +1,14 @@
 #include "Window.h"
-#include "core/Logger.h"
-#include <glew/glew.h>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl3.h"
 
-Window::Window() : window(nullptr),height(0),width(0)
+#include <glew/glew.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_opengl3.h>
+#include <imgui/imgui_impl_sdl.h>
+
+#include "core/Logger.h"
+
+
+Window::Window() : width(0),height(0),window(nullptr)
 {
 }
 
@@ -29,7 +32,7 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 
 	
-	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
 
 	if (window == nullptr)
 	{

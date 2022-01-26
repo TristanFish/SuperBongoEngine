@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by SDL_OpenGL_Platformer.rc
+// Used by SuperBongoEngine.rc
 
 // Next default values for new objects
 // 

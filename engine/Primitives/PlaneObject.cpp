@@ -4,7 +4,7 @@ using namespace MATH;
 
 
 
-PlaneObject::PlaneObject(std::string name, Vec3 position)
+PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Plane.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");

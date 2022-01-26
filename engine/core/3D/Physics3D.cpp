@@ -90,7 +90,7 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 	extents += box.GetPosition() * -1;
 	Vec3 centre = box.collider.minVertices + extents;
 
-	Vec3 pNormal =  plane.gameobject->transform.Up() / 2;
+	Vec3 pNormal =  plane.gameObject->transform.Up() / 2;
 
 	float r = (pNormal.x * extents.x) + (pNormal.y * extents.y) + (pNormal.z * extents.z);
 
@@ -108,9 +108,9 @@ bool Physics3D::BoxPlaneDetect(RigidBody3D& box, RigidBody3D& plane)
 	}
 
 	std::string inf = "Box Pane collision between ";
-	inf.append(box.gameobject->name);
+	inf.append(box.gameObject->name);
 	inf.append(" and ");
-	inf.append(plane.gameobject->name);
+	inf.append(plane.gameObject->name);
 
 	EngineLogger::Info(inf, "Physics3D.cpp", __LINE__);
 	return true;
@@ -132,11 +132,11 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	
 	Vec3 worldPos(modelMatrix.getColumn(3));
-	Vec3 delta = worldPos - ray.GetCurrentRay().Origin;
+	Vec3 delta = worldPos - ray.GetCurrentRay().origin;
 
 	Vec3 xAxis(modelMatrix.getColumn(0));
 	float dotDelta = VMath::dot(xAxis, delta);
-	float dotDir = VMath::dot(ray.GetCurrentRay().Direction, xAxis);
+	float dotDir = VMath::dot(ray.GetCurrentRay().direction, xAxis);
 
 	if(fabs(dotDir) > 0.001f)
 	{
@@ -175,7 +175,7 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	Vec3 yAxis(modelMatrix.getColumn(1));
 	dotDelta = VMath::dot(yAxis, delta);
-	dotDir = VMath::dot(ray.GetCurrentRay().Direction, yAxis);
+	dotDir = VMath::dot(ray.GetCurrentRay().direction, yAxis);
 	
 	if(fabs(dotDir) > 0.001f)
 	{
@@ -214,7 +214,7 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 
 	Vec3 zAxis(modelMatrix.getColumn(2));
 	dotDelta = VMath::dot(zAxis, delta);
-	dotDir = VMath::dot(ray.GetCurrentRay().Direction, zAxis);
+	dotDir = VMath::dot(ray.GetCurrentRay().direction, zAxis);
 	
 	if(fabs(dotDir) > 0.001f)
 	{
@@ -269,7 +269,7 @@ MATH::Vec3 Physics3D::CircleBoxClosestEdge(RigidBody3D& sphere, RigidBody3D& box
 	Vec3 distance = closestContactPoint - *sphere.pos;
 
 
-	Vec3 normal = box.gameobject->transform.rotation.ConvertToMatrix() * VMath::orthagonalize(clamped);
+	Vec3 normal = box.gameObject->transform.rotation.ConvertToMatrix() * VMath::orthagonalize(clamped);
 	//normal.z = VMath::mag(distance);
 
 	return normal;

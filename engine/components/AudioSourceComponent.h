@@ -8,7 +8,6 @@
 class AudioSourceComponent : public Component
 {
 	public:
-	public:
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override;
 	void Render() const override {}

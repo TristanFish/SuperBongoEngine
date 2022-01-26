@@ -14,29 +14,6 @@ Model::Model(const std::string& path)
 	isLoaded = false;
 }
 
-void Model::CalculateMaxMins()
-{
-	p_min.x = vertices[0].position.x;
-	p_min.y = vertices[0].position.y;
-	p_min.z = vertices[0].position.z;
-
-	p_max.x = vertices[0].position.x;
-	p_max.y = vertices[0].position.y;
-	p_max.z = vertices[0].position.z;
-
-	// Loops Through verticies and gives us the min and max verticies and put's them into a vector
-	for (size_t i = 1; i < vertices.size(); i++)
-	{
-		p_min.x = std::min(p_min.x, vertices[i].position.x);
-		p_min.y = std::min(p_min.y, vertices[i].position.y);
-		p_min.z = std::min(p_min.z, vertices[i].position.z);
-
-		p_max.x = std::max(p_max.x, vertices[i].position.x);
-		p_max.y = std::max(p_max.y, vertices[i].position.y);
-		p_max.z = std::max(p_max.z, vertices[i].position.z);
-	}
-}
-
 void Model::LoadModel()
 {
 	Assimp::Importer importer;
@@ -69,6 +46,8 @@ void Model::DestroyModel()
 
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
+	
+	
 	for (size_t i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -85,7 +64,19 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<GLuint> indices;
 	std::vector<Texture> textures;
+	std::vector<Vertex> vertices;
 
+	if(meshes.empty())
+	{
+		p_min.x = mesh->mVertices[0].x;
+		p_min.y = mesh->mVertices[0].y;
+		p_min.z = mesh->mVertices[0].z;
+		
+		p_max.x = mesh->mVertices[0].x;
+		p_max.y = mesh->mVertices[0].y;
+		p_max.z = mesh->mVertices[0].z;
+	}
+	
 	//Load vertices
 	for (size_t i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -96,6 +87,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		vec.y = mesh->mVertices[i].y;
 		vec.z = mesh->mVertices[i].z;
 		vertex.position = vec;
+
+		p_min.x = std::min(p_min.x, vec.x);
+		p_min.y = std::min(p_min.y, vec.y);
+		p_min.z = std::min(p_min.z, vec.z);
+
+		p_max.x = std::max(p_max.x, vec.x);
+		p_max.y = std::max(p_max.y, vec.y);
+		p_max.z = std::max(p_max.z, vec.z);
 
 		vec.x = mesh->mNormals[i].x;
 		vec.y = mesh->mNormals[i].y;
@@ -151,9 +150,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	MATH::Vec4 color = MATH::Vec4(col.r, col.g, col.b, col.a);
-
-	 CalculateMaxMins();
-
 
 	return Mesh(vertices, indices, textures, color);
 }

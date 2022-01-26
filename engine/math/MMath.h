@@ -1,6 +1,7 @@
 #ifndef MMATH_H
 #define MMATH_H
 #include "Matrix.h"
+#include "Quaternion.h"
 
 ///  A class devoted to graphics related Math - OpenGL style
 

@@ -3,6 +3,9 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <cereal/types/polymorphic.hpp>
+#include <cereal/archives/json.hpp>
+
 
 /// Used for passing exceptions 
 		///
@@ -196,6 +199,23 @@ namespace MATH {
 		return *this;
 		}
 
+		static Vec3 Forward()
+		{
+			return Vec3(0.0f,0.0f,1.0f);
+		}
+		
+		static Vec3 Up()
+		{
+			return Vec3(0.0f,1.0f,1.0f);
+		}
+		
+		static Vec3 Right()
+		{
+			return Vec3(1.0f,0.0f,0.0f);
+		}
+
+		
+		
 		inline void print() { 
 			printf("%1.8f %1.8f %1.8f\n", x,y,z);		  
 		}
@@ -223,8 +243,17 @@ namespace MATH {
 			return s;
 		}
 
+		//D serialize Vec3
+		template<class Archive>
+		void serialize(Archive& archive) {
+			archive(cereal::make_nvp("X" , x), cereal::make_nvp("Y", y), cereal::make_nvp("Z", z));
+		}
+		
+		
+
 	};
 	std::ostream& operator<< (std::ostream& out, const Vec3& v);
+
 
 		/// Vec4 definitions
 		/// I am intentionally creating a Vec4 from a Vec3 so I can pass a Vec4 into a Subroutine that wants a Vec3
@@ -362,8 +391,15 @@ namespace MATH {
 			return static_cast<float*>( &x );
 		}
 
+		//D serialize Vec4
+		template<class Archive>
+		void serialize(Archive& archive) {
+			archive(cereal::make_nvp("X", x), cereal::make_nvp("Y", y), cereal::make_nvp("Z", z), cereal::make_nvp("W", w));
+		}
+
 	};
 }
+
 
 #endif
 

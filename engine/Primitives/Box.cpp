@@ -1,18 +1,19 @@
 #include "Box.h"
 #include "components/Components.h"
 
+
 using namespace MATH;
 
 Box::Box()
 {
 }
 
-Box::Box(std::string name, MATH::Vec3 position)
+Box::Box(const std::string& name, Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
-
 	AddComponent<RigidBody3D>();
+	AddComponent<NetworkableObject>();
 	this->name = name;
 	transform.SetPos(position);
 
@@ -27,5 +28,5 @@ Box::~Box()
 
 void Box::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	//std::cout << this->name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	//std::cout << this->name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }

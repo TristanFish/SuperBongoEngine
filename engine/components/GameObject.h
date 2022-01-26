@@ -7,11 +7,10 @@
 #include "SDL_events.h"
 #include <vector>
 
-
 class RigidBody3D;
 
 //! GameObject Class
-/*!Things should be inheriting from gameobject, gameobjects are placed into a manager
+/*!Things should be inheriting from gameObject, gameobjects are placed into a manager
 Update, render and handleEvents need to be defined per class that inherits from it.
 Check Player.h to see how to create gameobjects*/
 class GameObject
@@ -21,7 +20,7 @@ class GameObject
 protected:
 	friend class SceneGraph;
 	//! Active boolean
-	/*! Controls if the gameobject is active or not*/
+	/*! Controls if the gameObject is active or not*/
 	bool active = true;
 
 	GameObject* parent;
@@ -33,11 +32,11 @@ protected:
 
 public:
 
-	/*! Hold's the name of this gameobject*/
+	/*! Hold's the name of this gameObject*/
 	std::string name;
 
 	//!IsMenuActive boolean
-	/*! Controls if the gameobject's properties panel is active*/
+	/*! Controls if the gameObject's properties panel is active*/
 	bool isObjectSelected = false;
 
 
@@ -57,7 +56,14 @@ public:
 	/*!Deletes any pointers/clears any vectors*/
 	virtual ~GameObject();
 
+	//!Init Function
+	/*!Initializes all components in the gameObject called whenever a gameobject is added to the sceneGraph*/
 	virtual void Init();
+
+	//!Begin Function
+	/*!Meant to be overriden, is called after all objects are added to the scenegraph
+	 * think of it as Unreal Engine BeginPlay() or Unity Start() */
+	virtual void PostInit() {}
 	
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/
@@ -71,55 +77,55 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual GameObject* GetClone() const = 0;
+	virtual GameObject* NewClone() const = 0;
 
 	//GetType function
 	/*!Returns the type of class that the owning class is*/
 	inline const char* GetType() const { return typeid(*this).name(); }
 
 	//!isActive Getter
-	/*!Returns if the gameobject is active or not*/
+	/*!Returns if the gameObject is active or not*/
 	bool isActive()const { return active; }
 
 	//!isActive Setter
-	/*!Sets the gameobject as active or not*/
+	/*!Sets the gameObject as active or not*/
 	void SetActive(const bool a) { active = a; }
 
 	std::string GetName() const { return std::string(name); }
 
 	//!GetModelMatrix Getter
-	/*!Returns the gameobject model matrix*/
+	/*!Returns the gameObject model matrix*/
 	const MATH::Matrix4& GetModelMatrix() const { return transform.GetModelMatrix(); }
 
 	//!SetPos Setter
-	/*!Sets the position of this a gameobject*/
+	/*!Sets the position of this a gameObject*/
 	void SetPos(const MATH::Vec3& pos_) {  transform.SetPos(pos_); }
 
 	//!SetScale Setter
-	/*!Sets the scale of this a gameobject*/
+	/*!Sets the scale of this a gameObject*/
 	void SetScale(const MATH::Vec3& scale_) { transform.scale = scale_; }
 
 	//!SetRotation Setter
-	/*!Sets the rotation of this a gameobject*/
+	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
+	//D we were missing a quat version
+	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
-	/*!Sets the Name of this a gameobject*/
-	void SetName(std::string name_) { name = name_; }
+	/*!Sets the Name of this a gameObject*/
+	void SetName(const std::string& name_) { name = name_; }
 
 
-	inline GameObject* GetParent() const { return parent; }
+	 GameObject* GetParent() const { return parent; }
 	
-	inline GameObject* GetChild(int i) const { return children[i]; }
+	 GameObject* GetChild(int i) const { return children[i]; }
 
-	inline std::vector<GameObject*>& GetChildren() { return children; }
+	 std::vector<GameObject*>& GetChildren() { return children; }
 
-	inline std::vector<Component*> GetComponents() const { return componentList; }
+	 const std::vector<Component*>& GetComponents() const { return componentList; }
 
-	inline int GetChildCount() const { return children.size(); }
+	 int GetChildCount() const { return children.size(); }
 	
-
-
-	inline bool operator == (const GameObject* v) { return name == v->name; }
+	bool operator == (const GameObject* v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
@@ -129,12 +135,14 @@ public:
 private:
 
 	template <typename T>
-	void CheckIfTemplateTypeInheritsFromComponent() const { static_assert(std::is_base_of<Component, T>::value, "Non Component type was used in a component based gameobject function"); }
+	void CheckIfTemplateTypeInheritsFromComponent() const { static_assert(std::is_base_of<Component, T>::value, "Non Component type was used in a component based gameObject function"); }
 
 public:
 
 	//!Template HasComponent boolean
-	/*!Checks if this gameobject has the specified component*/
+	/*!Checks if this gameObject has the specified component*/
+	
+	
 	template <typename T>
 	bool HasComponent()
 	{
@@ -151,7 +159,7 @@ public:
 	}
 
 	//!Template GetComponent function
-	/*!Returns a component of type "T" if this gameobject has it*/
+	/*!Returns a component of type "T" if this gameObject has it*/
 	template <typename T>
 	T* GetComponent()
 	{
@@ -174,10 +182,10 @@ public:
 		CheckIfTemplateTypeInheritsFromComponent<T>();
 		for(auto it = componentList.begin(); it != componentList.end(); ++it)
 		{
-			if(dynamic_cast<T*>(*it))
+			if(T* compType = dynamic_cast<T*>(*it))
 			{
 				EngineLogger::Warning("Component " + std::string((*it)->GetType()) + " already found in " + std::string(name), "ECS.h", __LINE__);
-				return nullptr;
+				return compType;
 			} 
 		}
 		componentList.emplace_back(new T());
@@ -192,7 +200,9 @@ public:
 		{
 			if(dynamic_cast<T*>(*it))
 			{
+				delete *it;
 				componentList.erase(it);
+				return;
 			}
 		}
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);

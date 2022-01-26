@@ -89,7 +89,6 @@ SkyBox::~SkyBox()
 }
 bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz)
 {
-	
 	glGenTextures(1, &skyboxTextureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	SDL_Surface* texSurface = IMG_Load(posx);
@@ -143,12 +142,6 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 	return true;
 }
 
-
-void SkyBox::Update(const float deltaTime)
-{
-	
-}
-
 void SkyBox::Render() const
 {
 	Matrix3 view = Camera::getInstance()->getViewMatrix();
@@ -167,6 +160,7 @@ void SkyBox::Render() const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	//glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	

@@ -14,13 +14,18 @@ class ShaderProgram
 	friend class ShaderManager;
 	
 	GLuint programID;
-	std::vector<std::string> shaders;
 	GLuint LinkShaders(const std::vector<GLint>& shaders);
 	
 
 public:
 
 	ShaderProgram();
+	~ShaderProgram() = default;
+	ShaderProgram(const ShaderProgram& sp);
+	ShaderProgram(const ShaderProgram&& sp);
+	ShaderProgram& operator =(const ShaderProgram& sp) = default;
+	ShaderProgram& operator =(const ShaderProgram&& sp);
+	
 	bool operator==(const ShaderProgram& sp) const;
 	
 	void DeleteProgram();

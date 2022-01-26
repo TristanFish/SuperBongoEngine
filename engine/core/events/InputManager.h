@@ -9,7 +9,7 @@
 
 
 
-enum MouseButton : Uint8
+enum class MouseButton : Uint8
 {
 	MBUTTON_NONE = 0,
 	MBUTTON_LEFT = 1,
@@ -45,7 +45,7 @@ public:
 	MATH::Vec2 GetCurrentPosition() const { return position; }
 	MATH::Vec2 GetDeltaPosition() const { return position - prevPosition; }
 	
-	bool GetButton(MouseButton buttonToCheck) const {return (buttonsPressed & buttonToCheck); }
+	bool GetButton(MouseButton buttonToCheck) const {return buttonsPressed & static_cast<Uint8>(buttonToCheck); }
 	
 
 	

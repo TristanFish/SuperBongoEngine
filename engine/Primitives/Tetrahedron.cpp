@@ -8,7 +8,7 @@ Tetrahedron::Tetrahedron()
 {
 }
 
-Tetrahedron::Tetrahedron(std::string name, MATH::Vec3 position)
+Tetrahedron::Tetrahedron(const std::string& name, MATH::Vec3 position)
 {
 	AddComponent<MeshRenderer>()->LoadModel("Tetrahedron.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
@@ -29,5 +29,5 @@ Tetrahedron::~Tetrahedron()
 
 void Tetrahedron::OnCollisionEnter(RigidBody3D& otherBody)
 {
-	std::cout << name << " Collided With: " << otherBody.gameobject->name << std::endl;
+	std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }
