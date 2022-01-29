@@ -3,6 +3,9 @@
 
 #include "math/MMath.h"
 #include "math/Quaternion.h"
+
+//#include <cereal/archives/json.hpp> - is already included through quat->Vec
+
 //! Transform Class
 /*! 
 Not quite a component but similar enough to be in the same folder path
@@ -94,6 +97,12 @@ public:
 	void SetRot(const MATH::Quaternion& rot);
 
 	void SetScale(const MATH::Vec3& scale);
+
+	//Serialize the main parts of Transform
+	template<class Archive>
+	void serialize(Archive& archive) {
+		archive(cereal::make_nvp("pos", pos), cereal::make_nvp("rotation", rotation), cereal::make_nvp("scale", scale));
+	}
 };
 
 #endif

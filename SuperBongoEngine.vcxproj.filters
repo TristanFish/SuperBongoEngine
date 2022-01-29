@@ -1008,6 +1008,9 @@
     </ClInclude>
     <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
     <ClInclude Include="engine\core\UUniqueID.h" />
+    <ClInclude Include="engine\components\NetworkableObject.h">
+      <Filter>src\engine\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\graphics\Window.cpp">
@@ -1346,6 +1349,9 @@
       <Filter>src\engine\components\AI\DecisionMaking</Filter>
     </ClCompile>
     <ClCompile Include="engine\core\UUniqueID.cpp" />
+    <ClCompile Include="engine\components\NetworkableObject.cpp">
+      <Filter>src\engine\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

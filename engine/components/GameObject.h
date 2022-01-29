@@ -118,6 +118,8 @@ public:
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
+	//D we were missing a quat version
+	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
 	/*!Sets the Name of this a gameObject*/
 	void SetName(const std::string& name_) { name = name_; }

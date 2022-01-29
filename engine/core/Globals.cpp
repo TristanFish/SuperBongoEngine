@@ -63,6 +63,11 @@ std::string Globals::IntToVector(const int i)
 	}
 }
 
+SceneGraph* Globals::GetSceneGraph()
+{
+	return s_SceneGraph.get();
+}
+
 void Globals::InitGlobals()
 {
 	s_SceneGraph = std::shared_ptr(CoreEngine::GetInstance()->GetCurrentScene()->objectList);

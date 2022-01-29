@@ -31,6 +31,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
+    <ClInclude Include="engine\components\NetworkableObject.h" />
     <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
     <ClInclude Include="engine\core\3D\Physics\GJKDetection.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
@@ -312,6 +313,7 @@
     <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.cpp" />
     <ClCompile Include="engine\components\Component.cpp" />
+    <ClCompile Include="engine\components\NetworkableObject.cpp" />
     <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />

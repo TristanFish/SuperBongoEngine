@@ -113,6 +113,16 @@ GameObject* SceneGraph::FindGameObject(const std::string& name)
 	return nullptr;
 }
 
+void SceneGraph::GameObjectNetworkUpdate(std::string& string)
+{
+	NetworkableObject tmp = NetworkableObject();
+	std::stringstream ss(string);
+	std::stringstream name = tmp.FindGameObjectName(string);
+	tmp = *FindGameObject(name.str().c_str())->GetComponent<NetworkableObject>();
+	tmp.RecievePositionData(ss);
+
+}
+
 //Adds a gameObject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
