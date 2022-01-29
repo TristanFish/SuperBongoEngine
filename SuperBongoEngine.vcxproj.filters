@@ -609,9 +609,6 @@
     <ClInclude Include="external\include\assimp\Importer.hpp">
       <Filter>external\include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\Instancer.h">
-      <Filter>src\engine\components</Filter>
-    </ClInclude>
     <ClInclude Include="external\include\assimp\irrXMLWrapper.h">
       <Filter>external\include\assimp</Filter>
     </ClInclude>
@@ -913,7 +910,6 @@
       <Filter>src\scenes</Filter>
     </ClInclude>
     <ClInclude Include="game\scenes\Scene2.h" />
-    <ClInclude Include="engine\components\Instancer.h" />
     <ClInclude Include="engine\core\MouseRay.h" />
     <ClInclude Include="engine\core\events\InputManager.h" />
     <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
@@ -959,8 +955,14 @@
     <ClInclude Include="Colour.h">
       <Filter>src\engine\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\NetworkableObject.h">
-      <Filter>src\engine\components</Filter>
+    <ClInclude Include="engine\components\Instancer.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\Instancer.h">
+      <Filter>src\engine\components\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\components\3D\LineRenderer.h">
+      <Filter>src\engine\components\3D</Filter>
     </ClInclude>
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h">
       <Filter>src\engine\components\AI\Pathfinding</Filter>
@@ -1097,9 +1099,6 @@
     </ClCompile>
     <ClCompile Include="engine\core\events\InputManager.cpp">
       <Filter>src\engine\core\events</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\components\Instancer.cpp">
-      <Filter>src\engine\components</Filter>
     </ClCompile>
     <ClCompile Include="game\gameObjects\LightObject.cpp">
       <Filter>src\game\gameObjects</Filter>
@@ -1252,7 +1251,6 @@
       <Filter>src\scenes</Filter>
     </ClCompile>
     <ClCompile Include="game\scenes\Scene2.cpp" />
-    <ClCompile Include="engine\components\Instancer.cpp" />
     <ClCompile Include="engine\core\MouseRay.cpp" />
     <ClCompile Include="engine\core\events\InputManager.cpp" />
     <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
@@ -1298,7 +1296,16 @@
     <ClCompile Include="engine\components\3D\LightComponent.cpp">
       <Filter>src\engine\components\3D</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\NetworkableObject.cpp">
+    <ClCompile Include="engine\components\Instancer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\Instancer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\3D\LineRenderer.cpp">
+      <Filter>src\engine\components\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\components\Component.cpp">
       <Filter>src\engine\components</Filter>
     </ClCompile>
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp">

@@ -32,7 +32,6 @@ private:
 	//!moveSpeed float
 	/*! Holds how fast the player will fly while in scene mode */
 	const float moveSpeed;
-
 	//!turnSpeed float
 	/*! Holds how fast the player will turn */
 	const float turnSpeed;

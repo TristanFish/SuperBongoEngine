@@ -7,7 +7,6 @@
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
-#include "NetworkableObject.h"
 
 #include "graphics/UIStatics.h"
 
@@ -40,8 +39,6 @@ void SceneGraph::Init()
 {
 	//ScenePartition = new OctSpatialPartition(1500);
 
-	
-	
 	for (const auto& obj : SaveManager::SaveableObjects)
 	{
 		//if obj is not already in InstantiableObjects
@@ -52,6 +49,11 @@ void SceneGraph::Init()
 				InstantiableObjects.emplace(obj.first, obj.second->NewClone());
 			}
 		}
+	}
+
+	for(auto& go : gameObjects)
+	{
+		go->Init();
 	}
 }
 
@@ -96,7 +98,7 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 }
 
 //Finds THE FIRST gameObject with the given name
-GameObject* SceneGraph::FindGameObject(const char* name)
+GameObject* SceneGraph::FindGameObject(const std::string& name)
 {
 	for (auto* g : gameObjects)
 	{
@@ -111,50 +113,20 @@ GameObject* SceneGraph::FindGameObject(const char* name)
 	return nullptr;
 }
 
-void SceneGraph::GameObjectNetworkUpdate(std::string& string)
-{
-	NetworkableObject tmp = NetworkableObject();
-	std::stringstream ss(string);
-	std::stringstream name = tmp.FindGameObjectName(string);
-	tmp = *FindGameObject(name.str().c_str())->GetComponent<NetworkableObject>();
-	tmp.RecievePositionData(ss);
-
-}
-
 //Adds a gameObject with a name and position
 GameObject& SceneGraph::AddGameObject(GameObject* go)
 {
-
-	if (!isObjectActive(go->name))
+	if (!FindGameObject(go->name.c_str()))
 	{
 		LoadGameObject(go);
 	}
 	else
 	{
 		go->name += "_" + std::to_string(1);
-
 		LoadGameObject(go);
 	}
 	
-	
 	return *go;
-}
-
-void SceneGraph::AddRenderingComponents()
-{
-	for (auto* go : gameObjects)
-	{
-		if (go->HasComponent<MeshRenderer>())
-		{
-			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-			Renderer::GetInstance()->AddMeshRenderer(mr);
-			//osp.AddObject(mr);
-		}
-		if (go->HasComponent<LightComponent>())
-		{
-			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
-		}
-	}
 }
 
 void SceneGraph::LoadGameObject(GameObject* go)
@@ -176,18 +148,6 @@ void SceneGraph::LoadGameObject(GameObject* go)
 		rigidBodies.emplace_back(rb);
 		//ScenePartition->AddObject(rb->GetCollider());
 	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		Renderer::GetInstance()->AddMeshRenderer(mr);
-		//osp.AddObject(mr);
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
-	}
-
-	
 
 	for (GameObject* child : go->children)
 	{
@@ -208,17 +168,6 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 			}
 		}
 	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		Renderer::GetInstance()->DeleteMeshRenderer(mr);
-		
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		Renderer::GetInstance()->DeleteLight(go->GetComponent<LightComponent>());
-	}
-
 
 	for (std::vector<GameObject*>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
 	{
@@ -230,26 +179,11 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 			break;
 		}
 	}
-
-	UIStatics::SetSelectedObject(nullptr);
 }
 
 const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableObjects() const
 {
 	return InstantiableObjects;
-}
-
-bool SceneGraph::isObjectActive(const std::string& objName)
-{
-	for (auto* obj : gameObjects)
-	{
-		if (obj->name == objName)
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void SceneGraph::CheckCollisions()

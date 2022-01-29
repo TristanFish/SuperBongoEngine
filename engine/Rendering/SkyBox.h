@@ -17,7 +17,7 @@ class SkyBox
 	bool LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz);
 
 
-    MATH::Matrix4 Mat3ToMat4(MATH::Matrix3 _m) const;
+    static MATH::Matrix4 Mat3ToMat4(const MATH::Matrix3& _m);
 public:
 	
 	GLuint GetSkyBoxTexture() const;

@@ -7,6 +7,7 @@
 
 bool Scene1::OnCreate()
 {
+	Scene_Name = "Scene1";
 	return Scene::OnCreate();
 }
 

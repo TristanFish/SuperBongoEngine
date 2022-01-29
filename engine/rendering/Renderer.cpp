@@ -3,6 +3,8 @@
 #include "components/3D/LightComponent.h"
 #include "core/Globals.h"
 #include <sdl/SDL.h>
+
+#include "components/3D/lineRenderer.h"
 #include "Rendering/SkyBox.h"
 #include "math/Plane.h"
 #include "core/resources/ShaderManager.h"
@@ -50,9 +52,6 @@ void Renderer::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	glBindVertexArray(0);
-
-	
-	
 }
 
 void Renderer::SetupFrameBuffers()
@@ -101,7 +100,9 @@ void Renderer::AddMeshRenderer(MeshRenderer* mr)
 
 void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 {
-	for (std::vector<MeshRenderer*>::iterator iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
+	if(meshRenderers.empty()) return;
+
+	for (auto iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
 	{
 		if (*iter == mr)
 		{
@@ -113,7 +114,7 @@ void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 
 void Renderer::AddLight(LightComponent* light)
 {
-	if(lights.size() >= 10)
+	if(lights.size() >= MAX_LIGHTS)
 	{
 		EngineLogger::Warning("Max number of lights reached, " 
 		 + light->gameObject->GetName() + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
@@ -129,11 +130,37 @@ void Renderer::AddLight(LightComponent* light)
 
 void Renderer::DeleteLight(LightComponent* light)
 {
+	if(lights.empty()) return;
+
 	for (std::vector<LightComponent*>::iterator iter = lights.begin(); iter != lights.end(); iter++)
 	{
 		if (*iter == light)
 		{
 			lights.erase(iter);
+			break;
+		}
+	}
+}
+
+void Renderer::AddLine(LineRenderer* line)
+{
+	const auto lineIt = std::find(lineRenderers.begin(), lineRenderers.end(), line);
+	//if this linerenderer doesn't already exist then add it
+	if(lineIt == lineRenderers.end())
+	{
+		lineRenderers.emplace_back(line);
+	}
+}
+
+void Renderer::DeleteLine(LineRenderer* line)
+{
+	if(lights.empty()) return;
+
+	for (std::vector<LineRenderer*>::iterator iter = lineRenderers.begin(); iter != lineRenderers.end(); iter++)
+	{
+		if (*iter == line)
+		{
+			lineRenderers.erase(iter);
 			break;
 		}
 	}
@@ -156,10 +183,18 @@ void Renderer::Render()
 
 	DrawDebugGeometry(Globals::s_SceneGraph->GetGameObjects());
 
-	//loop through all meshrenderers
-	for (size_t i = 0; i < meshRenderers.size(); i++)
+	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{
-
+		if(lineRenderers[i]->active) lineRenderers[i]->RenderLine();
+	}
+	
+	//loop through all meshrenderers
+	for(size_t i = 0; i < meshRenderers.size(); i++)
+	{
+		if(!meshRenderers[i]->active)
+		{
+			continue;
+		}
 		//if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
 			//EngineLogger::Info(meshRenderers[i]->gameObject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
@@ -213,15 +248,12 @@ void Renderer::Render()
 		glUseProgram(0);
 	}
 	
-	
 	//Rebind the default framebuffer
 	defaultBuffer.Bind();
 	glEnable(GL_DEPTH_TEST);
 
-	RenderGBufferResult();
-
 	//Uses the gBufferResolve shader to render the result of the gBuffer
-
+	RenderGBufferResult();
 
 }
 
@@ -230,12 +262,10 @@ void Renderer::DestroyRenderer()
 	delete(skyBox);
 	skyBox = nullptr;
 
-	
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
-
 	
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
@@ -254,6 +284,7 @@ void Renderer::ClearComponents()
 {
 	meshRenderers.clear();
 	lights.clear();
+	lineRenderers.clear();
 }
 
 SkyBox* Renderer::GetSkyBox()
@@ -456,35 +487,38 @@ void Renderer::RenderGBufferResult()
 
 void Renderer::AttachLights() const
 {
-	std::vector<Vec3> positions;
-	std::vector<Vec3> ambs;
-	std::vector<Vec3> diffs;
-	std::vector<Vec3> specs;
-	std::vector<float> intensities;
+	//Default lighting for every scene
+	//This'll be changed later when I figure out how to format it
+	LightData defaultLight;
 
-	positions.reserve(lights.size());
-	ambs.reserve(lights.size());
-	diffs.reserve(lights.size());
-	specs.reserve(lights.size());
-	intensities.reserve(lights.size());
+	defaultLight.type = LightType::DIRECTIONAL;
+	defaultLight.ambColor = Vec3(0.2f);
+	defaultLight.diffColor = Vec3(0.0f);
+	defaultLight.specColor = Vec3(0.0f);
+	defaultLight.intensity = 1.0f;
+	defaultLight.cutOff = static_cast<float>(cos(12.5 * DEGREES_TO_RADIANS));
+	defaultLight.outerCutOff = static_cast<float>(cos(15.0 * DEGREES_TO_RADIANS));
+
+	defaultLight.attenConstant = 1.0f;
+	defaultLight.attenLinear = 0.049f;
+	defaultLight.attenQuadratic = 0.0f;
+
+	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size() + 1));
 	
-	for(size_t i = 0; i < lights.size(); i++)
+	for(size_t i = 0; i <= lights.size(); i++)
 	{
-		positions.push_back(lights[i]->gameObject->transform.GetPosition());
-		ambs.push_back(lights[i]->ambColor);
-		diffs.push_back(lights[i]->diffColor);
-		specs.push_back(lights[i]->specColor);
-		intensities.push_back(lights[i]->intensity);
-	}
-	
-	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size()));
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
-	glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
+		std::string arrayIndex = "lights[" + std::to_string(i) + "].";
+		if(i == lights.size())
+		{
+			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex);
+			break;
+		}
 
-	
+		if(lights[i]->active)
+		{
+			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+		}
+	}
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const

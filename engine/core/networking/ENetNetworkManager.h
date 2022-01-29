@@ -4,58 +4,13 @@
 #include <mutex>
 #include <vector>
 #include <enet/enet.h>
-#include "components/SceneGraph.h"
+#include <sstream>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/string.hpp>
+
 #include "NetworkManager.h"
 
-class SceneGraph;
-
-enum class NetworkEventTypes : int
-{
-	POSITIONUPDATE = 1,
-	MESSAGE
-};
-class TempSemaphore
-{
-	std::mutex mutex;
-	std::condition_variable condition;
-	short count = 0;
-
-public:
-	TempSemaphore(short count_)
-	{
-		count = count_;
-	}
-
-	void Release()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		count++;
-		condition.notify_one();
-	}
-
-	void Acquire()
-	{
-		std::unique_lock<decltype(mutex)> lock(mutex);
-		while(!count)
-		{
-			condition.wait(lock);
-		}
-		count--;
-	}
-
-	bool TryAcquire()
-	{
-		std::lock_guard<decltype(mutex)> lock(mutex);
-		if(count)
-		{
-			count--;
-			return true;
-		}
-		return false;
-	}
-};
-
-constexpr unsigned int DEFAULT_BUFFER_LENGTH = 1024;
+constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
 
 //At the moment there are a lot of hard coded values in the cpp of this class
 //because its only tested for connecting to yourself
@@ -82,16 +37,26 @@ public:
 	void HandleClientEvents();
 	//turns binary data into a string
 	std::string ParseData(unsigned char* data) const;
-	//
-	std::string ParseJsonData(unsigned char* data) const;
 	//turns string data into binary
-	std::stringstream SerializeData(const std::string& data);
+	template<typename T>
+	std::stringstream SerializeData(const T& data)
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out | std::stringstream::binary);
+		//Cereal needs these open and close brackets to properly flush the Archive
+		{
+			cereal::BinaryOutputArchive oarchive(ss);
+
+			//puts "data" into the stringstream "ss" as binary data
+			oarchive(data);
+		}
+		return ss;
+	}
+
 	
 	void CreateHost(unsigned int port, unsigned int maxConnections) override;
 	bool Connect(const char* addressString, unsigned int port) override;
 	void BroadcastPacket(const std::string& data) override;
 	void SendPacket(const std::string& data) override;
-	void SendPreserializedPacket(std::stringstream& ss) override;
 	void SendPacketToPeer(const std::string& data) override;
 	void Disconnect() override;
 	void Cleanup() override;

@@ -118,8 +118,6 @@ public:
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
-	//D we were missing a quat version
-	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
 	/*!Sets the Name of this a gameObject*/
 	void SetName(const std::string& name_) { name = name_; }
@@ -184,7 +182,7 @@ public:
 				return comp;
 			}
 		}
-		EngineLogger::Error("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
+		EngineLogger::Warning("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
 		return nullptr;
 	}
 
@@ -244,8 +242,6 @@ public:
 			iter++;
 		}
 	}
-
-
 
 	template <typename T>
 	T* AddChild(GameObject* go)

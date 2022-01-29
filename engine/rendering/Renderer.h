@@ -3,24 +3,24 @@
 
 #include <vector>
 
-
 #include "core/Debug.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/CustomUI.h"
 #include "graphics/FrameBuffer.h"
 
-
-
-
+constexpr size_t MAX_LIGHTS = 20;
 
 class SkyBox;
 class MeshRenderer;
 class LightComponent;
+class LineRenderer;
+
 class Renderer
 {
 public:
 	std::vector<MeshRenderer*> meshRenderers;
 	std::vector<LightComponent*> lights;
+	std::vector<LineRenderer*> lineRenderers;
 	
 	//framebuffers
 	FrameBuffer defaultBuffer;
@@ -31,13 +31,15 @@ public:
 	void SetupFrameBuffers();
 	void SetupTextures();
 
-	void BindDefaultBuffer() { defaultBuffer.Bind(); }
+	void BindDefaultBuffer() const { defaultBuffer.Bind(); }
 	void ClearDefaultBuffer() { defaultBuffer.Clear(); }
 	
 	void AddMeshRenderer(MeshRenderer* mr);
 	void DeleteMeshRenderer(MeshRenderer* mr);
 	void AddLight(LightComponent* light);
 	void DeleteLight(LightComponent* light);
+	void AddLine(LineRenderer* line);
+	void DeleteLine(LineRenderer* line);
 
 	static void DrawDebugGeometry(const std::vector<GameObject*>& objects);
 
@@ -59,14 +61,10 @@ public:
 
 private:
 
-
-	
-
 	// Viewport 
 	/*! Handles all of the needed functions for the viewport */
 	CustomUI::Viewport viewport;
 	
-
 	ShaderProgram gBufferShader;
 	ShaderProgram resultShader;
 	GLuint depthRenderBuffer;
@@ -83,13 +81,6 @@ private:
 	GLuint vao;
 	GLuint vbo;
 
-	//debugging Textures
-	Debug pos;
-	Debug norm;
-	Debug albedo;
-	Debug depth;
-	Debug stencil;
-
 	static inline SkyBox* skyBox;
 	//GLuint currentGTexture;
 
@@ -102,7 +93,7 @@ private:
 	void BindGBufferTextures() const;
 	void UnbindGBufferTextures() const;
 
-	void RenderGBufferResult() ;
+	void RenderGBufferResult();
 
 
 	//Attaches the most important lights to this object's shader

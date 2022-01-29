@@ -16,7 +16,7 @@
 
 using namespace MATH;
 
-Scene::Scene() : Scene_Name("Scene_" + std::to_string(std::rand())), objectList(std::make_shared<SceneGraph>())
+Scene::Scene() : Scene_Name("Scene_"), objectList(std::make_shared<SceneGraph>())
 {
 	
 }
@@ -28,7 +28,7 @@ Scene::~Scene()
 
 bool Scene::OnCreate()
 {
-	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
+	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene.cpp", __LINE__);
 	
 	objectList->Init();
 
@@ -128,7 +128,7 @@ void Scene::LoadMapData()
 {
 	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
 	{
-		if (!objectList->isObjectActive(elm.first))
+		if (!objectList->FindGameObject(elm.first))
 		{
 			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
 		}

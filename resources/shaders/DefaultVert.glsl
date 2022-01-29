@@ -12,7 +12,6 @@ uniform mat4 modelMatrix;
 
 void main()
 {
-
 	vertNormal = inNormal;
 	vertUV = inUV;
 

@@ -10,6 +10,5 @@
 #include "3D/LightComponent.h"
 #include "AudioSourceComponent.h"
 #include "AudioListenerComponent.h"
-#include "NetworkableObject.h"
 
 #endif
