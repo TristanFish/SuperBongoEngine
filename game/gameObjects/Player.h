@@ -11,7 +11,7 @@ public:
 
 	//!Alternate Player Constructor
 	/*! Initialzes the variables in player */
-	Player(std::string name, const MATH::Vec3& pos);
+	Player(const std::string& name, const MATH::Vec3& pos);
 
 	//!Virtual Player Destructor
 	/*! Destroys any of the players pointers/vectors */

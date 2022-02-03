@@ -45,6 +45,12 @@ namespace MATH
 		Quaternion operator += (const Vec3& v);
 
 		Quaternion operator - () const;
+
+		//D serialize Vec4
+		template<class Archive>
+		void serialize(Archive& archive) {
+			archive(cereal::make_nvp("Quaternion", quat));
+		}
 	};
 
 	std::ostream& operator<<(std::ostream& out, const Quaternion& q);

@@ -3,6 +3,9 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <cereal/types/polymorphic.hpp>
+#include <cereal/archives/json.hpp>
+
 
 /// Used for passing exceptions 
 		///
@@ -111,8 +114,10 @@ namespace MATH
 			this->z = z;
 		}
 		
-		inline Vec3(const Vec2&v) {
-			set(v.x, v.y, 0.0f);
+		Vec3(const Vec2& v) {
+			x = v.x;
+			y = v.y;
+			z = 0.0f;
 		}
 
 		/// A copy constructor
@@ -127,14 +132,12 @@ namespace MATH
 		///////////////////////////////////////////////////////////
 
 		/// An assignment operator   
+		Vec3& operator = (const Vec3& v) = default;
 		
-		inline Vec3& operator = (const Vec3& v){
-			set(v.x, v.y, v.z); 
-			return *this;
-		}
-		inline const bool operator == (const Vec3& v) const {
+		const bool operator == (const Vec3& v) const {
 			return (x == v.x && y == v.y && z == v.z);
 		}
+
 		/// Now we can use the Vec3 like an array but we'll need two overloads
 		float operator [] ( int index) const {  /// This one is for reading the Vec3 as if where an array
 			return *(&x + index); 
@@ -272,8 +275,17 @@ namespace MATH
 			return s;
 		}
 
+		//D serialize Vec3
+		template<class Archive>
+		void serialize(Archive& archive) {
+			archive(cereal::make_nvp("X" , x), cereal::make_nvp("Y", y), cereal::make_nvp("Z", z));
+		}
+		
+		
+
 	};
 	std::ostream& operator<< (std::ostream& out, const Vec3& v);
+
 
 		/// Vec4 definitions
 		/// I am intentionally creating a Vec4 from a Vec3 so I can pass a Vec4 into a Subroutine that wants a Vec3
@@ -411,8 +423,15 @@ namespace MATH
 			return static_cast<float*>( &x );
 		}
 
+		//D serialize Vec4
+		template<class Archive>
+		void serialize(Archive& archive) {
+			archive(cereal::make_nvp("X", x), cereal::make_nvp("Y", y), cereal::make_nvp("Z", z), cereal::make_nvp("W", w));
+		}
+
 	};
 }
+
 
 #endif
 

@@ -5,11 +5,13 @@
 #include "components/Component.h"
 #include "components/AI/Algorithms/Steering/Kinematic.h"
 #include "components/AI/Algorithms/Steering/Dynamic.h"
+#include "components/AI/Algorithms/DecisionMaking/DecisionTreeNode.h"
 
 enum class AIType {
 	KinematicSteering, 
 	DynamicSteering
 };
+
 
 class AIComponent :	public Component	{
 private:
@@ -20,6 +22,8 @@ private:
 
 	//AIComponent is of type KinematicSteering by default
 	AIType aiType;
+
+	
 
 public:
 	AIComponent();

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <filesystem>
 #include <memory>
+#include "components/SceneGraph.h"
 
 
 class SceneGraph;
@@ -27,6 +28,7 @@ struct Globals
 
 	static std::string IntToVector(const int i);
 
+	static SceneGraph* GetSceneGraph();
 
 	static void InitGlobals();
 	

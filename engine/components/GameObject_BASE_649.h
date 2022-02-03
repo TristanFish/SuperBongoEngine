@@ -3,7 +3,6 @@
 
 #include "core/Logger.h"
 #include "core/3D/Physics/Collider3D.h"
-#include "core/UUniqueID.h"
 
 #include "Transform.h"
 #include "Components.h"
@@ -20,12 +19,7 @@ class GameObject
 
 
 protected:
-
-	/*! Holds the name of this gameObject*/
-	std::string name;
-
-	UUniqueID uuid;
-
+	friend class SceneGraph;
 	//! Active boolean
 	/*! Controls if the gameObject is active or not*/
 	bool active = true;
@@ -34,15 +28,18 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-	friend class SceneGraph;
+
+
 
 public:
 
-
+	/*! Hold's the name of this gameObject*/
+	std::string name;
 
 	//!IsMenuActive boolean
 	/*! Controls if the gameObject's properties panel is active*/
 	bool isObjectSelected = false;
+
 
 	//!canBeInstantiated boolean
 	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
@@ -67,7 +64,7 @@ public:
 	//!Begin Function
 	/*!Meant to be overriden, is called after all objects are added to the scenegraph
 	 * think of it as Unreal Engine BeginPlay() or Unity Start() */
-	virtual void PostInit();
+	virtual void PostInit() {}
 	
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/
@@ -80,8 +77,6 @@ public:
 	//!Virtual DrawDebugGeometry Function
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
-
-	virtual void ImguiRender() {}
 
 	virtual GameObject* NewClone() const = 0;
 
@@ -97,11 +92,7 @@ public:
 	/*!Sets the gameObject as active or not*/
 	void SetActive(const bool a) { active = a; }
 
-	std::string GetName() const { return name; }
-	std::string& GetNameRef() { return name; }
-
-	uint64_t GetUUID() const { return uuid; }
-
+	std::string GetName() const { return std::string(name); }
 
 	//!GetModelMatrix Getter
 	/*!Returns the gameObject model matrix*/
@@ -113,19 +104,15 @@ public:
 
 	//!SetScale Setter
 	/*!Sets the scale of this a gameObject*/
-	void SetScale(const MATH::Vec3& scale_) { transform.SetScale(scale_); }
+	void SetScale(const MATH::Vec3& scale_) { transform.GetScale() = scale_; }
 
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
-	//D we were missing a quat version
-	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
 	/*!Sets the Name of this a gameObject*/
 	void SetName(const std::string& name_) { name = name_; }
 
-
-	void SetUUID(const uint64_t& uuid_) { uuid = UUniqueID(uuid_); }
 
 	 GameObject* GetParent() const { return parent; }
 	

@@ -1,5 +1,8 @@
 #include "Globals.h"
 
+#include <memory>
+
+
 #include "components/SceneGraph.h"
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
@@ -60,9 +63,14 @@ std::string Globals::IntToVector(const int i)
 	}
 }
 
+SceneGraph* Globals::GetSceneGraph()
+{
+	return s_SceneGraph.get();
+}
+
 void Globals::InitGlobals()
 {
-	s_SceneGraph = CoreEngine::GetInstance()->GetCurrentScene()->objectList;
+	s_SceneGraph = std::shared_ptr(CoreEngine::GetInstance()->GetCurrentScene()->objectList);
 
 	SCENE_NAME = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 }

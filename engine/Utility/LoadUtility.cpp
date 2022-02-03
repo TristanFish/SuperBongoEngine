@@ -39,8 +39,6 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 		ElementInfo ScaleElm = file.FindElement("Scale");
 		ElementInfo TypeElm = file.FindElement("Type");
 		ElementInfo IdentifiersElm = file.FindElement("Identifiers");
-
-
 		
 		MATH::Vec3 Position;
 		MATH::Vec3 Rotation;
@@ -48,11 +46,9 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 
 		for (int i = 0; i < 3; i++)
 		{
-
 			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVector(i)]);
 			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVector(i)]);
 			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVector(i)]);
-
 		}
 
 		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
@@ -63,7 +59,6 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 		}
 
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
-
 
 		ElementInfo MeshColorElm;
 
@@ -76,12 +71,9 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 
 			for (int i = 0; i < 4; i++)
 			{
-
 				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
-
 			}
 		}
-
 
 		for (auto obj : SaveManager::SaveableObjects)
 		{
@@ -114,15 +106,11 @@ void LoadUtility::LoadExistingSaves()
 	std::string sceneObjPath = (directory + objDir);
 
 
-
-
 	EngineLogger::Info("===========EXISTING SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	for (auto entry = std::filesystem::recursive_directory_iterator(directory); entry != std::filesystem::recursive_directory_iterator(); ++entry)
 	{
-
 		std::filesystem::path curPath = entry->path();
-
 
 		// Makes sure were not loading in any scene files yet
 		if (curPath == (sceneObjPath + curPath.filename().string()) && entry->is_directory())
@@ -131,13 +119,10 @@ void LoadUtility::LoadExistingSaves()
 			continue;
 		}
 
-
 		if (entry->is_regular_file())
 		{
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
-
 		}
-
 	}
 
 	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
@@ -154,20 +139,17 @@ void LoadUtility::LoadSceneSaves()
 	if (!std::filesystem::exists(sceneObjPath))
 		return;
 
-
 	for (auto entry = std::filesystem::directory_iterator(sceneObjPath); entry != std::filesystem::directory_iterator(); ++entry)
 	{
 		if (entry->is_regular_file())
 		{
 			std::filesystem::path curPath = entry->path();
 
-
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
 		}
 	}
 
 	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
-
 }
 
 void LoadUtility::UnLoadSceneSaves()
@@ -189,11 +171,8 @@ void LoadUtility::UnLoadSceneSaves()
 
 void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile& file)
 {
-
-
 	for (tinyxml2::XMLElement* Elem = element; Elem != nullptr; Elem = Elem->NextSiblingElement())
 	{
-
 		tinyxml2::XMLElement* tmpElement = Elem;
 		// LOOP THROUGH NEXT ELEMENT ALSO
 		ElementInfo info;
@@ -215,7 +194,6 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 void LoadUtility::AddObjectToMap(const char* classType) const
 {
-
 	if (classType == std::string("class Bird"))
 	{
 		SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3()));
@@ -253,8 +231,8 @@ void LoadUtility::AddObjectToMap(const char* classType) const
 		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
 	}
 
-	else {
-
+	else 
+	{
 		EngineLogger::Error("Object could not be added to loadable objects map", "LoadUtility.cpp", __LINE__);
 		std::cout << classType << std::endl;
 	}
@@ -269,8 +247,6 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 	tinyxml2::XMLError eResult = SaveData.LoadFile(savePath.c_str());
 
 
-
-
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
 		EngineLogger::Error("Couldn't load the Save File " + saveName, "LoadUtility.cpp", __LINE__);
@@ -278,21 +254,15 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 	tinyxml2::XMLNode* pRoot = SaveData.FirstChildElement("Root");
 
-
 	LoadRecursiveElements(pRoot->FirstChildElement(), file);
-
-
 
 	if (extention == FileType::OBJECT)
 	{
 		std::string classType;
 		classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
 
-
-
 		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
 		{
-
 			AddObjectToMap(classType.c_str());
 		}
 	}
@@ -301,7 +271,6 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 	{
 		file.SetHasBeenEdited(true);
 	}
-
 
 	SaveManager::AddToSaveFiles(saveName, SaveFile(file));
 }
@@ -328,20 +297,15 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 	else if (AtribType == "U64")
 	{
 		info.Attributes.emplace(AtribName, atrib->Unsigned64Value());
-
 	}
 	else if (AtribType == "I")
 	{
 		info.Attributes.emplace(AtribName, atrib->IntValue());
-
 	}
 	else if (AtribType == "B")
 	{
 		info.Attributes.emplace(AtribName, atrib->BoolValue());
-
 	}
-
-	 
 
 	else
 	{
@@ -351,7 +315,6 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 
 FileType LoadUtility::GetFileExtention(const std::string& ext) const
 {
-
 	if (ext == ".scene")
 	{
 		return FileType::SCENE;

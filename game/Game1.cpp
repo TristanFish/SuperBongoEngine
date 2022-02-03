@@ -28,14 +28,15 @@ bool Game1::OnCreate()
 {
 	if (CoreEngine::GetInstance()->GetCurrentScene() == 0)
 	{
-		//currentScene = new Scene1(); 
-		currentScene = new SceneAi();
+		currentScene = new Scene1(); 
+		//currentScene = new SceneAi();
 		currentSceneNum = 0;
 		bool create = currentScene->OnCreate();
 		bool postCreate = currentScene->PostCreate();
 
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
+		//Scenes.push_back(new SceneAi);
 
 		return (create && postCreate);
 	}

@@ -7,13 +7,13 @@
 using namespace MATH;
 
 
-Player::Player(std::string name_, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
+Player::Player(const std::string& name_, const MATH::Vec3& pos) :  moveSpeed(20.0f), turnSpeed(80.0f)
 {
 	AddComponent<AudioListenerComponent>();
 	
 	name = name_;
 	transform = Transform(pos);
-	//transform.rotation.EulerToQuat(Vec3(0.0, -90.0f, 0.0f));
+	transform.SetRot(Quaternion::EulerToQuat(Vec3(0.0, -90.0f, 0.0f)));
 }
 
 
@@ -51,7 +51,6 @@ void Player::Update(const float deltaTime)
 	//	moveDir += -transform.Up();
 	//}
 	//transform.pos += moveDir * moveSpeed * deltaTime;
-
 #pragma endregion
 
 }

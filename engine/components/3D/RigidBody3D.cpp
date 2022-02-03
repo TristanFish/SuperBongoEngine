@@ -12,7 +12,7 @@
 using namespace MATH;
 
 
-RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
+RigidBody3D::RigidBody3D(): mass(1.0f), vel(Vec3()), accel(Vec3()), linearDrag(0.0f), rotInertia(0.0f),
                             angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), collider(nullptr)
 {
 	
@@ -21,12 +21,17 @@ RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), 
 RigidBody3D::~RigidBody3D()
 {
 	pos = nullptr;
+	if(collider)
+	{
+		delete collider;
+		collider = nullptr;
+	}
 }
 
 void RigidBody3D::Init(GameObject *g)
 {
 	gameObject = g;
-	pos = &g->transform.GetPosition();
+	pos = &g->transform.GetPositionRef();
 
 
 
@@ -34,12 +39,12 @@ void RigidBody3D::Init(GameObject *g)
 	
 
 	mass = 1.0f;
-	vel = MATH::Vec3();
-	accel = MATH::Vec3();
+	vel = Vec3();
+	accel = Vec3();
 
 	rotInertia = 2.0f;
-	angularVel = MATH::Vec3(0.0f);
-	angularAcc = MATH::Vec3(0.0f);
+	angularVel = Vec3(0.0f);
+	angularAcc = Vec3(0.0f);
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -52,7 +57,7 @@ void RigidBody3D::Update(const float deltaTime)
 
 	// Rotation Handling 
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
-	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
+	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
 
 	gameObject->transform.GetRotationQuat() += newRot;
 	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());

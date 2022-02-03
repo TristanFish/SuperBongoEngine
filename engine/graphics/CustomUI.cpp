@@ -108,7 +108,7 @@ void PropertiesPanel::Render()
 		#pragma region GameObject
 
 		static std::string oldObjName = UIStatics::GetSelectedObject()->GetName();
-		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->GetName(), ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			std::string newObjName = UIStatics::GetSelectedObject()->GetName();
 
@@ -123,10 +123,9 @@ void PropertiesPanel::Render()
 		if (opened)
 		{
 			// Change the standard transform components 
-			UIStatics::DrawVec3("Position", selectedObject->transform.GetPosition(),80.0f);
+			UIStatics::DrawVec3("Position", selectedObject->transform.GetPositionRef(), 80.0f);
 
 			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
-
 
 			{
 				//clamp the euler angles
@@ -161,10 +160,13 @@ void PropertiesPanel::Render()
 				selectedObject->transform.SetRot(rotation);
 			}
 			
-			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScale(), 80.0f);
+			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScaleRef(), 80.0f);
 
 			ImGui::TreePop();
 		}
+		
+		selectedObject->ImguiRender();
+
 		#pragma endregion 
 
 		for(Component* comp : selectedObject->GetComponents())
@@ -759,7 +761,6 @@ void DockSpace::Update(const float deltatime)
 
 void DockSpace::Render()
 {
-	ImGui::NewFrame();
 	GenerateDockSpace();
 }
 
@@ -986,7 +987,7 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
-		else if (fileType == ".fbx")
+		else if (fileType == ".fbx" || fileType == ".obj")
 		{
 			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
@@ -1011,7 +1012,7 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 				{
 					ImGui::SetDragDropPayload("Content_Browser_Object", fileDir.c_str(), fileDir.size() * sizeof(const char*), ImGuiCond_Once);
 				}
-				else if (path.extension().string() == ".fbx")
+				else if (path.extension().string() == ".fbx" || path.extension().string() == ".obj")
 				{
 					std::string meshName = path.filename().string();
 

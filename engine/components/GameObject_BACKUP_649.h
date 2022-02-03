@@ -21,7 +21,7 @@ class GameObject
 
 protected:
 
-	/*! Holds the name of this gameObject*/
+	/*! Hold's the name of this gameObject*/
 	std::string name;
 
 	UUniqueID uuid;
@@ -34,8 +34,12 @@ protected:
 	std::vector<GameObject*> children;
 	std::vector<Component*> componentList;
 
-	friend class SceneGraph;
+<<<<<<< HEAD
+=======
 
+
+	friend class SceneGraph;
+>>>>>>> origin/master
 public:
 
 
@@ -98,7 +102,7 @@ public:
 	void SetActive(const bool a) { active = a; }
 
 	std::string GetName() const { return name; }
-	std::string& GetNameRef() { return name; }
+	std::string& GetName() { return name; }
 
 	uint64_t GetUUID() const { return uuid; }
 
@@ -118,8 +122,6 @@ public:
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
-	//D we were missing a quat version
-	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
 	/*!Sets the Name of this a gameObject*/
 	void SetName(const std::string& name_) { name = name_; }

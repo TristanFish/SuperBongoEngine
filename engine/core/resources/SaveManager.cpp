@@ -166,6 +166,7 @@ void SaveManager::DeleteSaveableObjects()
 {
 	for (auto pair : SaveableObjects)
 	{
+		delete pair.second;
 		pair.second = nullptr;
 	}
 

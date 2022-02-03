@@ -9,7 +9,6 @@
 #include "core/3D/OctSpatialPartition.h"
 #include "core/resources/CollisionDetection.h"
 #include "core/resources/SaveManager.h"
-#include "core/3D/Physics/BoundingBox.h"
 
 #include "gameObjects/TestModel.h"
 #include "graphics/UIStatics.h"
@@ -54,14 +53,11 @@ void Scene::Render()
 	objectList->Render();
 }
 
-
 void Scene::HandleEvents(const SDL_Event& event)
 {
 	mouseRay.HandleEvents(event);
 	objectList->HandleEvents(event);
 }
-
-
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
 {
@@ -73,43 +69,32 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-	if (buttonType == SDL_BUTTON_LEFT)
-	{
-		/*
-		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
-			return;
+	//if (buttonType == SDL_BUTTON_LEFT)
+	//{
+	//	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+	//		return;
 
-		mouseRay.CalculateMouseRay();
+	//	mouseRay.CalculateMouseRay();
 
-		GameObject* hitResult = nullptr;
-		float shortestDistance = FLT_MAX;
+	//	GameObject* hitResult = nullptr;
+	//	float shortestDistance = FLT_MAX;
 
-		//hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
-
-		
-		for (auto rigidBody : objectList->GetRigidBodies())
-		{
-			if (CollisionDetection::RayOBBIntersection(dynamic_cast<Ray*>(&mouseRay), dynamic_cast<BoundingBox*>(rigidBody->GetCollider())))
-			{
-				hitResult = rigidBody->gameObject;
-				break;
-			}
-		}
+	//	hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
 
 
-		if (hitResult)
-		{
-			EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
-			if (!hitResult->isObjectSelected)
-			{
-				
-			}
-			hitResult->isObjectSelected = true;
-			UIStatics::SetSelectedObject(hitResult);
-		}
-	*/
-	}
+	//	if (hitResult)
+	//	{
+	//		EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
+	//		if (!hitResult->isObjectSelected)
+	//		{
+	//			
+	//		}
+	//		hitResult->isObjectSelected = true;
+	//		UIStatics::SetSelectedObject(hitResult);
+	//	}
+	//}
 }
+
 void Scene::SaveMapData() const
 {
 	if (!SaveManager::TransferToSaveQueue(Scene_Name))
@@ -117,7 +102,7 @@ void Scene::SaveMapData() const
 		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
 	}
 
-
+	SaveManager::GetSaveFile(Scene_Name).ClearElements();
 	ElementInfo info = ElementInfo("Root");
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
@@ -133,7 +118,6 @@ void Scene::SaveMapData() const
 	for (auto* obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
-
 		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);
 	}
 

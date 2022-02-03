@@ -16,7 +16,7 @@ RigidBodyComponent::~RigidBodyComponent()
 void RigidBodyComponent::Init(GameObject *g)
 {
 	gameObject = g;
-	pos = &g->transform.GetPosition();
+	pos = &g->transform.GetPositionRef();
 	setColliderSize(g->transform.GetScale());
 
 	mass = 1.0f;

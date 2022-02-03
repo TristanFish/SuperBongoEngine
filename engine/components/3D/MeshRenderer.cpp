@@ -37,12 +37,7 @@ void MeshRenderer::Init(GameObject* g)
 {
 	gameObject = g;
 
-	if(model)
-	{
-		
-	}
 	Renderer::GetInstance()->AddMeshRenderer(this);
-
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -67,7 +62,7 @@ void MeshRenderer::Update(const float deltaTime)
 
 void MeshRenderer::Render() const
 {
-    const Matrix3 normMat = gameObject->transform.GetQuaternion().ConvertToMatrix();
+    const Matrix3 normMat = gameObject->transform.GetRotationQuat().ConvertToMatrix();
 
 	if(instanceID == 0)
     {
@@ -99,7 +94,7 @@ void MeshRenderer::Render() const
 
 void MeshRenderer::Render(const ShaderProgram& shader_) const
 {
-	const Matrix3 normMat = MMath::transpose(MMath::inverse(gameObject->GetModelMatrix()));
+	const Matrix3 normMat = gameObject->transform.GetRotationQuat().ConvertToMatrix();
 	shader_.TakeUniform("meshColorTint", meshColorTint);
 	shader_.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
 	shader_.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
@@ -209,10 +204,6 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 		glBindVertexArray(0);
 	}
 }
-
-
-
-
 
 void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
 {
