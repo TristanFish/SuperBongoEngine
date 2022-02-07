@@ -40,9 +40,9 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 152
-[INFO]: Box added to scenegraph in: ECS.cpp on line: 147
-[INFO]: Light added to scenegraph in: ECS.cpp on line: 147
-[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 147
-[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 147
-[INFO]: Player added to scenegraph in: ECS.cpp on line: 147
-[INFO]: test added to scenegraph in: ECS.cpp on line: 147
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 130
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 130
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 130
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 130
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 130
+[INFO]: test added to scenegraph in: ECS.cpp on line: 130

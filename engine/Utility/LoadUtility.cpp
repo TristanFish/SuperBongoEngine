@@ -258,8 +258,8 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 	if (extention == FileType::OBJECT)
 	{
-		std::string classType;
-		classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
+		std::string classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
+
 
 		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
 		{

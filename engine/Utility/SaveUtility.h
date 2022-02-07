@@ -95,7 +95,7 @@ public:
 
 	//! SaveObject function 
 	/*! Save's all of a gameobjects information as ElementInfo's and adds them to the save file*/
-	void SaveObject(const std::string& saveName, GameObject* obj);
+	void SaveObject(const std::string& saveName, std::shared_ptr<GameObject> obj);
 };
 
 #endif

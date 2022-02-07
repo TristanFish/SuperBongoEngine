@@ -39,7 +39,7 @@ public:
 
 	//! SaveableObjects unordered_map
 	/*! Stores all of our gameobject types than can be saved to a file */
-	static std::unordered_map<std::string, GameObject*> SaveableObjects;
+	static std::unordered_map<std::string, std::shared_ptr<GameObject>> SaveableObjects;
 
 	//! GetSavesOfType function
 	/*! Returns a list of SaveFiles with a specific type */

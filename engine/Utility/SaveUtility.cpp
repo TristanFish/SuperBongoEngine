@@ -81,7 +81,7 @@ void SaveUtility::CompileSaves()
 	SaveManager::SaveAll();
 }
 
-void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
+void SaveUtility::SaveObject(const std::string& saveName, std::shared_ptr<GameObject> obj)
 {
 	CreateSave(saveName, FileType::OBJECT);
 

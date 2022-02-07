@@ -20,17 +20,17 @@ public:
 	/*! Will Draw a textured image that can be used to change a mesh/texture on drag drop if meshRenderer is overridden */
 	static void DrawTextureSlot( const char* textureName, MeshRenderer* meshRenderer = nullptr, const float spacing = 15.0f, const MATH::Vec2& size = MATH::Vec2(64.0f, 64.0f));
 
-	static void SetSelectedObject(GameObject* go) { selectedObj = go; }
+	static void SetSelectedObject(std::shared_ptr<GameObject> go) { selectedObj = go; }
 
 	static bool OpenComponentTreeNode(Component* comp, const char* name);
 
-	static GameObject* GetSelectedObject() { return selectedObj; }
+	static std::shared_ptr<GameObject> GetSelectedObject() { return selectedObj; }
 
 private:
 
 	//! static GameObject Pointer
 	/*! Hold's the object that was selected last */
-	static GameObject* selectedObj;
+	static std::shared_ptr<GameObject> selectedObj;
 };
 
 #endif

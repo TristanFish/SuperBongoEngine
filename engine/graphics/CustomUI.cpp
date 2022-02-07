@@ -99,7 +99,7 @@ PropertiesPanel::~PropertiesPanel()
 
 void PropertiesPanel::Render() 
 {
-	GameObject* selectedObject = UIStatics::GetSelectedObject();
+	std::shared_ptr<GameObject> selectedObject = UIStatics::GetSelectedObject();
 
 	ImGui::Begin("Properties",&isActive);
 
@@ -119,7 +119,7 @@ void PropertiesPanel::Render()
 
 		ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
 		
-		bool opened = ImGui::TreeNodeEx((void*)selectedObject, tree_flags, "Transform");
+		bool opened = ImGui::TreeNodeEx((void*)selectedObject.get(), tree_flags, "Transform");
 		if (opened)
 		{
 			// Change the standard transform components 
@@ -232,7 +232,7 @@ void HierarchyPanel::Update(const float deltatime)
 	}
 }
 
-void HierarchyPanel::GenerateTree(GameObject* go, int index) 
+void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index) 
 {
 	ImGuiTreeNodeFlags tree_flags = ((UIStatics::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
 		((go->GetChildCount() == 0) ?  ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen : 0) 
@@ -259,7 +259,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			{
 				int objIndex = *(const int*)payload->Data;
 
-				GameObject* movedObj = gameobjects[objIndex];
+				std::shared_ptr<GameObject> movedObj = gameobjects[objIndex];
 
 				go->AddChild(movedObj);
 			}
@@ -330,7 +330,7 @@ void HierarchyPanel::GenerateTree(GameObject* go, int index)
 			{
 				int objIndex = *(const int*)payload->Data;
 
-				GameObject* movedObj = gameobjects[objIndex];
+				std::shared_ptr<GameObject> movedObj = gameobjects[objIndex];
 
 				if (movedObj->GetParent() != nullptr)
 				{
@@ -370,9 +370,9 @@ void HierarchyPanel::UpdateActiveObjects()
 {
 	gameobjects.clear();
 	
-	for (auto* obj : Globals::s_SceneGraph->GetGameObjects())
+	for (const auto& obj : Globals::s_SceneGraph->GetGameObjects())
 	{
-		std::vector<GameObject*>::iterator iter;
+		std::vector<std::shared_ptr<GameObject>>::iterator iter;
 		
 		iter = std::find(gameobjects.begin(), gameobjects.end(), obj);
 		if (iter == gameobjects.end())

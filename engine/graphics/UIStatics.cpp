@@ -9,7 +9,7 @@
 #include "core/resources/TextureManager.h"
 #include "core/scene/Scene.h"
 
-GameObject* UIStatics::selectedObj = nullptr;
+std::shared_ptr<GameObject> UIStatics::selectedObj = nullptr;
 
 
 bool UIStatics::DrawVec3(const std::string& label, MATH::Vec3& value, const float columnWidth)

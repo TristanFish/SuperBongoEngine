@@ -115,7 +115,7 @@ void Scene::SaveMapData() const
 	
 	info = ElementInfo("Objects");
 	
-	for (auto* obj : objectList->GetGameObjects())
+	for (const auto& obj : objectList->GetGameObjects())
 	{
 		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
 		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);

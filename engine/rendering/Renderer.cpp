@@ -166,7 +166,7 @@ void Renderer::DeleteLine(LineRenderer* line)
 	}
 }
 
-void Renderer::DrawDebugGeometry(const std::vector<GameObject*>& objects)
+void Renderer::DrawDebugGeometry(const std::vector<std::shared_ptr<GameObject>>& objects)
 {
 	#ifdef _DEBUG
 	for (auto* g : objects)

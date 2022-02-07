@@ -176,7 +176,7 @@ namespace CustomUI
 
 		//! gameobjects vector
 		/*! Holds all of the gameobjects in the hierarchy */
-		std::vector<GameObject*> gameobjects;
+		std::vector<std::shared_ptr<GameObject>> gameobjects;
 
 		//! textFilter ImGuiTextFilter
 		/*! Is used to filter through objects in the hierarchy via the search bar*/
@@ -186,7 +186,7 @@ namespace CustomUI
 
 		//! GenerateTree Function
 		/*! Generates the gameObject tree for rendering*/
-		void GenerateTree(GameObject* go, int index);
+		void GenerateTree(std::shared_ptr<GameObject> go, int index);
 
 
 		void UpdateActiveObjects();
