@@ -86,7 +86,7 @@ void Renderer::SetupTextures()
 	normTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
-	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
+	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_SHORT);
 	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
 	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
@@ -477,8 +477,13 @@ void Renderer::UnbindGBufferTextures() const
 void Renderer::RenderGBufferResult() 
 {
 	gBufferRenderResult.Bind();
-	resultShader.RunShader();
+	ImVec2 mousePos = ImGui::GetMousePos();
+	int PixelData = gBufferRenderResult.ReadPixel(1, (int)mousePos.x, (int)mousePos.y);
+	std::cout << PixelData << std::endl;
 
+
+	resultShader.RunShader();
+	
 	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
 	BindGBufferTextures();
 
@@ -487,10 +492,10 @@ void Renderer::RenderGBufferResult()
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
-	ImVec2 POS = ImGui::GetMousePos();
 
-	int PixelData = gBufferRenderResult.ReadPixel(1, (int)POS.x, (int)POS.y);
-	std::cout << PixelData << std::endl;
+	
+	
+	
 
 	UnbindGBufferTextures();
 	glUseProgram(0);
