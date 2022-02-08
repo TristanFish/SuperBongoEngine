@@ -25,7 +25,7 @@ public:
 	/*! Controls how the player will navigate the world */
 	void HandleEvents(const SDL_Event& event) override;
 
-	Player* NewClone() const override { return new Player(this->name, this->transform.GetPosition()); };
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Player>(this->name, this->transform.GetPosition()); }
 
 private:
 

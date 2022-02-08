@@ -43,7 +43,9 @@ public:
 	virtual void OnCollisionEnter(Collider3D& otherBody) override {}
 
 
-	TestModel* NewClone() const override { return new TestModel(this->name, this->transform.GetPosition()); }
+
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<TestModel>(this->name, this->transform.GetPosition()); }
+
 private:
 
 	

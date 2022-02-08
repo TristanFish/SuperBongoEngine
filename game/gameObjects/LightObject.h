@@ -12,6 +12,6 @@ public:
 	// Inherited via GameObject
 	void DrawDebugGeometry() const override;
 
-	LightObject* NewClone() const override { return new LightObject(this->name, this->transform.GetPosition()); };
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<LightObject>(this->name, this->transform.GetPosition()); }
 
 };

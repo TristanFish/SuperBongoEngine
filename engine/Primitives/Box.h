@@ -15,8 +15,8 @@ public:
 	virtual void PostInit() override;
 	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-	Box* NewClone() const override { return new Box(this->name, this->transform.GetPosition()); };
 
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Box>(this->name, this->transform.GetPosition()); }
 
 private:
 };

@@ -21,5 +21,5 @@ public:
 	//! Base Grass Destructor
 	virtual ~Grass() = default;
 
-	Grass* NewClone() const override { return new Grass(this->name, this->transform.GetPosition(), amount); }	
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Grass>(this->name, this->transform.GetPosition(), amount); }
 };

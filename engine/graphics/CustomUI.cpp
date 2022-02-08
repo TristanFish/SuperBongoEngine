@@ -240,7 +240,7 @@ void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index)
 
 	if (go->GetChildCount() > 0)
 	{
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)go->GetUUID(), tree_flags, go->GetName().c_str());
 		
 		if (ImGui::BeginDragDropSource())
 		{
@@ -304,7 +304,7 @@ void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index)
 	{
 		ImGuiDragDropFlags dragDrop_flags = ImGuiDragDropFlags_None;
 
-		bool nodeOpened = ImGui::TreeNodeEx((void*)(uint32_t)go, tree_flags, go->GetName().c_str());
+		bool nodeOpened = ImGui::TreeNodeEx((void*)go->GetUUID(), tree_flags, go->GetName().c_str());
 
 		if (ImGui::IsItemClicked())
 		{

@@ -79,7 +79,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 		{
 			if (TypeName == obj.first)
 			{
-				GameObject* clone = obj.second->NewClone();
+				std::shared_ptr<GameObject> clone = obj.second->NewClone();
 				clone->SetName(S_PrevLoadedObjName);
 				clone->SetUUID(uuid);
 				clone->SetPos(Position);
