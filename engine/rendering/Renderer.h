@@ -77,6 +77,7 @@ private:
 	BufferTexture posTexture;
 	BufferTexture normTexture;
 	BufferTexture albedoTexture;
+	BufferTexture uniqueIDTexture;
 
 	GLuint vao;
 	GLuint vbo;

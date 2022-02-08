@@ -600,6 +600,8 @@ void Viewport::Render()
 		Renderer::GetInstance()->Resize(static_cast<int>(viewportPanelSize.x), static_cast<int>(viewportPanelSize.y));
 	}
 
+
+
 	const GLuint ID = Renderer::GetInstance()->GetModeTextureID();
 
 	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
@@ -617,8 +619,31 @@ void Viewport::Render()
 		viewport_Min = { vMin.x,vMin.y };
 		viewport_Max = { vMax.x,vMax.y };
 	}
-	
+
 	isMouseHovered = ImGui::IsMouseHoveringRect(vMin, vMax);
+
+	
+	ImVec2 mousePos = ImGui::GetMousePos();
+
+	mousePos.x -= vMin.x;
+	mousePos.y -= vMin.y;
+	mousePos.y = viewportSize.y - mousePos.y;
+
+	int MouseX = (int)mousePos.x;
+	int MouseY = (int)mousePos.y;
+
+	if (MouseX >= 0 && MouseY >= 0 && MouseX < (int)viewportSize.x && MouseY < (int)viewportSize.y)
+	{
+		
+
+		isMouseHovered = true;
+	}
+	else
+	{
+		isMouseHovered = false;
+	}
+
+
 
 	if (ImGui::BeginDragDropTarget())
 	{		

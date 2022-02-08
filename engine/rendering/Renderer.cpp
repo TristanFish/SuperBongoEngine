@@ -71,10 +71,12 @@ void Renderer::SetupFrameBuffers()
 	gBuffer.AttachTexture(posTexture);
 	gBuffer.AttachTexture(depthTexture);
 	gBuffer.AttachTexture(stencilTexture);
+
 	gBuffer.FinalizeBuffer();
 
 	gBufferRenderResult.InitFrameBuffer();
 	gBufferRenderResult.AttachTexture(gBufferTexture);
+	gBufferRenderResult.AttachTexture(uniqueIDTexture);
 	gBufferRenderResult.FinalizeBuffer();
 }
 
@@ -85,6 +87,7 @@ void Renderer::SetupTextures()
 	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
 	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
+	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
 	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
 
@@ -448,6 +451,11 @@ void Renderer::BindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
+
+	glActiveTexture(GL_TEXTURE5);
+	glUniform1i(glGetUniformLocation(resultShader.GetID(), "uniqueIDTexture"), 5);
+	glBindTexture(GL_TEXTURE_2D, uniqueIDTexture.texture);
+
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -461,6 +469,8 @@ void Renderer::UnbindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE5);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -476,6 +486,11 @@ void Renderer::RenderGBufferResult()
 	glBindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+
+	ImVec2 POS = ImGui::GetMousePos();
+
+	int PixelData = gBufferRenderResult.ReadPixel(1, (int)POS.x, (int)POS.y);
+	std::cout << PixelData << std::endl;
 
 	UnbindGBufferTextures();
 	glUseProgram(0);

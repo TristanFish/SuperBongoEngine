@@ -57,6 +57,8 @@ struct FrameBuffer
 	}
 
 	void DeleteFramebuffer();
+
+	int ReadPixel(uint32_t attachmentIndex, int x, int y);
 	
 };
 

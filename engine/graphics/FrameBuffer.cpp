@@ -99,3 +99,14 @@ void FrameBuffer::DeleteFramebuffer()
 
 	attachedTextures.clear();
 }
+
+int FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+{
+	if (attachmentIndex < attachedTextures.size())
+	{
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		int pixelData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_SHORT, &pixelData);
+		return pixelData;
+	}
+}
