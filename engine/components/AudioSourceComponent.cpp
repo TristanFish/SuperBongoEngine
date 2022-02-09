@@ -1,6 +1,8 @@
 #include "AudioSourceComponent.h"
 #include "GameObject.h"
 #include "core/Logger.h"
+#include "graphics/UIStatics.h"
+#include "Utility/SaveUtility.h"
 
 
 void AudioSourceComponent::Init(GameObject* g)
@@ -22,9 +24,27 @@ void AudioSourceComponent::Init(GameObject* g)
 
 void AudioSourceComponent::Update(const float deltaTime)
 {
-//Set a check here to see if sound is ready to play? Then update position
 }
 
+
+void AudioSourceComponent::ImGuiRender()
+{
+	const bool opened = UIStatics::OpenComponentTreeNode(this, "AudioSource");
+
+	if (opened) {
+		UIStatics::DrawSoundSlot("texture_02.jpg", this);
+	}
+	ImGui::TreePop();
+}
+
+void AudioSourceComponent::OnSaveComponent(const std::string& saveName, std::string parentName)
+{
+	ElementInfo audioSrc = ElementInfo(parentName);
+	SaveUtility::GetInstance()->AddElement(saveName, "AudioSource", audioSrc);
+
+	ElementInfo volumeLevel = SaveUtility::GetInstance()->CreateFloat(volume, "AudioSource");
+	SaveUtility::GetInstance()->AddElement(saveName, "Volume Level", volumeLevel);
+}
 
 void AudioSourceComponent::PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef)
 {

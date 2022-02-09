@@ -177,6 +177,13 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& 
 	return element;
 }
 
+ElementInfo SaveUtility::CreateFloat(const float value, const std::string& parentName)
+{
+	ElementInfo element = ElementInfo(parentName);
+	element.Attributes.emplace(Globals::FloatToPrefixFloat("F", value), value);
+	return element;
+}
+
 #pragma endregion
 
 

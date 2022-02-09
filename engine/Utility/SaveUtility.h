@@ -92,6 +92,10 @@ public:
 	/*! Returns an ElementInfo with all Vec4 values as attributes*/
 	ElementInfo CreateVec4(const MATH::Vec4& value, const std::string& parentName);
 
+	//! CreateVec4 function 
+	/*! Returns an ElementInfo with a float value as an attribute*/
+	ElementInfo CreateFloat(const float value, const std::string& parentName);
+
 
 	//! SaveObject function 
 	/*! Save's all of a gameobjects information as ElementInfo's and adds them to the save file*/

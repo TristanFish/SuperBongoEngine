@@ -7,6 +7,7 @@ class GameObject;
 class SceneGraph;
 class MeshRenderer;
 class Component;
+class AudioSourceComponent;
 
 class UIStatics
 {
@@ -19,6 +20,8 @@ public:
 	//!DrawTextureSlot Function
 	/*! Will Draw a textured image that can be used to change a mesh/texture on drag drop if meshRenderer is overridden */
 	static void DrawTextureSlot( const char* textureName, MeshRenderer* meshRenderer = nullptr, const float spacing = 15.0f, const MATH::Vec2& size = MATH::Vec2(64.0f, 64.0f));
+
+	static void DrawSoundSlot(const char* textureName, AudioSourceComponent* audioSrc = nullptr, const float spacing = 15.0f, const MATH::Vec2& size = MATH::Vec2(64.0f, 64.0f));
 
 	static void SetSelectedObject(GameObject* go) { selectedObj = go; }
 

@@ -130,6 +130,54 @@ void UIStatics::DrawTextureSlot(const char* textureName, MeshRenderer* meshRende
 
 }
 
+void UIStatics::DrawSoundSlot(const char* textureName, AudioSourceComponent* audioSrc, const float spacing, const MATH::Vec2& size)
+{
+	GLuint textureID = TextureManager::GetTexture(textureName).getTextureID();
+
+	float textWidth = ImGui::CalcTextSize("Audio Clip").x;
+	ImGui::SetCursorPos({ (ImGui::GetWindowSize().x - textWidth) / 2 ,ImGui::GetCursorPos().y });
+	ImGui::Text("AudioClip");
+
+	ImGui::Dummy(ImVec2{ 0.0f,spacing });
+
+	ImGui::ImageButton((ImTextureID)textureID, ImVec2{ size.x,size.y });
+	std::string soundName;
+	if (ImGui::BeginDragDropTarget())
+	{
+
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Model"))
+		{
+
+			const char* name = (const char*)payload->Data;
+
+			if (audioSrc == nullptr)
+				return;
+			soundName = name;
+			audioSrc->LoadSound(name);
+		}
+
+
+		ImGui::EndDragDropTarget();
+	}
+	//ImGui::NextColumn();
+
+	ImGui::SameLine(0.0f, 25.0f);
+
+	float offset = (size.x - ImGui::GetFont()->FontSize) / 4;
+	float yTextPos = ImGui::GetCursorPos().y + offset;
+	float xTexPos = ImGui::GetCursorPos().x;
+
+	ImGui::SetCursorPos({ xTexPos,yTextPos });
+	//std::filesystem::path path = meshRenderer->GetModel()->modelPath;
+	ImGui::Text(soundName.c_str());
+
+	ImGui::SetCursorPos({ xTexPos, yTextPos + (offset * 2) });
+	//ImGui::Text(path.string().c_str());
+
+	ImGui::Columns(1);
+}
+
+
 bool UIStatics::OpenComponentTreeNode(Component* comp, const char* name)
 {
 	const ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;

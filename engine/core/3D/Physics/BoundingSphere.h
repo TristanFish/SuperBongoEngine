@@ -4,6 +4,7 @@
 
 #include "VMath.h"
 #include "MMath.h"
+#include <algorithm>
 
 #include "Collider3D.h"
 

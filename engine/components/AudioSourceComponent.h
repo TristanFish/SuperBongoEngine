@@ -12,6 +12,8 @@ class AudioSourceComponent : public Component
 	void Update(const float deltaTime) override;
 	void HandleEvents(const SDL_Event& event) override {}
 
+	void ImGuiRender() override;
+	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */
 	void PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef);
 
@@ -27,7 +29,7 @@ private:
 	void SetAudioPosition();
 	
 	SoundAttributes soundAtts;
-	
+	float volume;
 	FMOD::System* audioSystemRef;
 
 	FMOD_VECTOR FMODGamePos;

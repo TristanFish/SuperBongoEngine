@@ -162,8 +162,6 @@ void MeshRenderer::RenderMesh(const Mesh& mesh, const ShaderProgram& shader) con
 // Used for instance rendering 
 void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const ShaderProgram& shader, unsigned int amount) const
 {
-
-
 	for(size_t meshCount = 0; meshCount < meshes.size(); meshCount++)
 	{
 		unsigned int diffN = 1;

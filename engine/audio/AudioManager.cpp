@@ -161,7 +161,6 @@ AudioManager::~AudioManager()
 	system = nullptr;
 	G1 = nullptr;
 	C1 = nullptr;
-
 	
 }
 

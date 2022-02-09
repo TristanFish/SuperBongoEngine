@@ -12,6 +12,9 @@
             <Renderer>
                 <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
             </Renderer>
+            <AudioSource>
+                <Volume Level F_0.000000="0"/>
+            </AudioSource>
         </Components>
     </Identifiers>
 </Root>

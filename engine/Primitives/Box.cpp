@@ -12,6 +12,7 @@ Box::Box(const std::string& name, Vec3 position)
 	AddComponent<MeshRenderer>()->LoadModel("Cube.obj");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	AddComponent<RigidBody3D>();
+	AddComponent<AudioSourceComponent>();
 	this->name = name;
 	transform.SetPos(position);
 

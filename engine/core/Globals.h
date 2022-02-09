@@ -27,6 +27,8 @@ struct Globals
 	static std::string IntToVectorWithPrefix(const char* typePrefix,const int i);
 
 	static std::string IntToVector(const int i);
+	
+	static std::string FloatToPrefixFloat(const char* typePrefix, const float f);
 
 	static SceneGraph* GetSceneGraph();
 

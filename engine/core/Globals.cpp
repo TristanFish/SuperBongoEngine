@@ -63,6 +63,13 @@ std::string Globals::IntToVector(const int i)
 	}
 }
 
+std::string Globals::FloatToPrefixFloat(const char* typePrefix, const float f)
+{
+	std::string prefix = std::string(typePrefix) + "_" + "db";
+	return prefix;
+
+}
+
 SceneGraph* Globals::GetSceneGraph()
 {
 	return s_SceneGraph.get();
