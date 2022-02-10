@@ -11,7 +11,7 @@ void BufferTexture::DeleteTexture()
 void FrameBuffer::InitFrameBuffer()
 {
 	glGenFramebuffers(1, &bufferID);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, bufferID);
+	glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
 }
 
 void FrameBuffer::AttachTexture(BufferTexture& tex)
@@ -59,12 +59,14 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 		EngineLogger::Error("FrameBuffer has too many textures", "FrameBuffer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 	}
 
+	MATH::Vec2 ViewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+
 	glGenTextures(1, &tex.texture);
 	glBindTexture(GL_TEXTURE_2D, tex.texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, intFormat, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, format, type, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, bufferID);
+	glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, texNum, GL_TEXTURE_2D, tex.texture, 0);
 
 	attachedTextures.push_back(tex);
@@ -72,7 +74,7 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 
 void FrameBuffer::FinalizeBuffer() const
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, bufferID);
+	glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
 	
 	GLenum ca[15];
 	for(size_t i = 0; i < attachedTextures.size(); i++)
@@ -90,7 +92,14 @@ void FrameBuffer::FinalizeBuffer() const
 		EngineLogger::Error("FrameBuffer not complete", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 	}
 
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void FrameBuffer::Clear()
+{
+	
+	glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void FrameBuffer::DeleteFramebuffer()
@@ -107,6 +116,7 @@ void FrameBuffer::DeleteFramebuffer()
 
 int FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 {
+	Bind();
 	if (attachmentIndex < attachedTextures.size())
 	{
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
@@ -116,4 +126,5 @@ int FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 		return pix_value;
 
 	}
+	UnBind();
 }

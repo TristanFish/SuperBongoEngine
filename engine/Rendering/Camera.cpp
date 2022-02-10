@@ -14,13 +14,13 @@ Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0
 {
 	
 	position.z = 100.0f;
-	aspect = static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT);
+
+	MATH::Vec2 ViewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+	aspect = static_cast<float>(829) / static_cast<float>(552);
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
 	perspecProjMatrix = MMath::perspective(zoom, aspect, nearPlane, farPlane);
 	
-	int viewport[4];
 
-	glGetIntegerv(GL_VIEWPORT, viewport);
 
 	rotation.x = 3.14f;
 	rotation.y = 1.57f;
@@ -31,7 +31,7 @@ Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0
 	direction = VMath::normalize(direction);
 	rotationMatrix = MMath::lookAt(Vec3(), direction, Vec3(0.0f, 1.0f, 0.0f));
 
-	invNDC = MMath::inverse(MMath::viewportNDC(viewport[2], viewport[3]));
+	invNDC = MMath::inverse(MMath::viewportNDC(829, 552));
 	viewMatrix = MMath::inverse(MMath::translate(position) * rotationMatrix);
 }
 

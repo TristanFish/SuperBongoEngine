@@ -598,6 +598,7 @@ void Viewport::Render()
 		cam->UpdatePerspectiveMatrix();
 		
 		Renderer::GetInstance()->Resize(static_cast<int>(viewportPanelSize.x), static_cast<int>(viewportPanelSize.y));
+
 	}
 
 
@@ -609,12 +610,15 @@ void Viewport::Render()
 	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
 	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
 
+	ImVec2 Pos = ImGui::GetWindowPos();
+	viewport_Position = *reinterpret_cast<MATH::Vec2*>(&Pos);
+
 	if (viewport_Min != *reinterpret_cast<MATH::Vec2*>(&vMin) || viewport_Max != *reinterpret_cast<MATH::Vec2*>(&vMax))
 	{
-		vMin.x += ImGui::GetWindowPos().x;
-		vMin.y += ImGui::GetWindowPos().y;
-		vMax.x += ImGui::GetWindowPos().x;
-		vMax.y += ImGui::GetWindowPos().y;
+		vMin.x += viewport_Position.x;
+		vMin.y += viewport_Position.y;
+		vMax.x += viewport_Position.x;
+		vMax.y += viewport_Position.y;
 
 		viewport_Min = { vMin.x,vMin.y };
 		viewport_Max = { vMax.x,vMax.y };
@@ -633,7 +637,7 @@ void Viewport::Render()
 
 	if (MouseX >= 0 && MouseY >= 0 && MouseX < (int)viewportSize.x && MouseY < (int)viewportSize.y)
 	{
-		int PixelData = Renderer::GetInstance()->gBufferRenderResult.ReadPixel(1, MouseX, MouseY);
+		int PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, MouseX, MouseY);
 
 		std::cout << PixelData << std::endl;
 

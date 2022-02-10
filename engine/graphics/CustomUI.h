@@ -245,6 +245,7 @@ namespace CustomUI
 		MATH::Vec2 GetViewportMin() const { return viewport_Min; }
 		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
 	
+		MATH::Vec2 GetViewportPosition() const { return viewport_Position; }
 	private:
 		//! viewportSize Vec2 
 		/*! Stores the viewports size */
@@ -252,6 +253,9 @@ namespace CustomUI
 		//! viewport_Min/Max Vec2s 
 		/*! Stores the viewport min/max positons on the screen */
 		MATH::Vec2 viewport_Min, viewport_Max;
+
+		MATH::Vec2 viewport_Position;
+
 
 		std::string modeName;
 		std::string aspectSize;

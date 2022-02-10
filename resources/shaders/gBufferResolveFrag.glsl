@@ -1,7 +1,6 @@
 #version 450
 #define MAX_LIGHTS 20
 layout (location = 0) out vec4 fragColor;
-layout (location = 1) out int gUniqueID;
 
 in vec2 vertUV;
 
@@ -10,7 +9,6 @@ uniform sampler2D normTexture;
 uniform sampler2D posTexture;
 uniform sampler2D depthTexture;
 uniform usampler2D stencilTexture;
-uniform sampler2D uniqueIDTexture;
 
 uniform vec3 camPos;
 uniform unsigned int activeLights = 0;
@@ -156,6 +154,5 @@ void main()
 	}
 
 	fragColor = lightCol;
-	gUniqueID = 50;
 
 }

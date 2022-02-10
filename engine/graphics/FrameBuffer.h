@@ -50,13 +50,9 @@ struct FrameBuffer
 	void FinalizeBuffer() const;
 
 	GLuint GetFrameBuffer() const { return bufferID; }
-	void Bind() const { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, bufferID); }
-	void UnBind() const { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); }
-	void Clear()
-	{
-		glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	}
+	void Bind() const { glBindFramebuffer(GL_FRAMEBUFFER, bufferID); }
+	void UnBind() const { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
+	void Clear();
 
 	void DeleteFramebuffer();
 

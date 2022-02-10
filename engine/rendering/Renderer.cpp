@@ -71,12 +71,12 @@ void Renderer::SetupFrameBuffers()
 	gBuffer.AttachTexture(posTexture);
 	gBuffer.AttachTexture(depthTexture);
 	gBuffer.AttachTexture(stencilTexture);
+	gBuffer.AttachTexture(uniqueIDTexture);
 
 	gBuffer.FinalizeBuffer();
 
 	gBufferRenderResult.InitFrameBuffer();
 	gBufferRenderResult.AttachTexture(gBufferTexture);
-	gBufferRenderResult.AttachTexture(uniqueIDTexture);
 	gBufferRenderResult.FinalizeBuffer();
 }
 
@@ -333,7 +333,7 @@ void Renderer::Resize(const int size_x, const int size_y)
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
 
-
+	SetupTextures();
 	SetupFrameBuffers();
 	
 	//Set frame buffer back to default
@@ -452,9 +452,6 @@ void Renderer::BindGBufferTextures() const
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
 
-	glActiveTexture(GL_TEXTURE5);
-	glUniform1i(glGetUniformLocation(resultShader.GetID(), "uniqueIDTexture"), 5);
-	glBindTexture(GL_TEXTURE_2D, uniqueIDTexture.texture);
 
 }
 
@@ -469,8 +466,6 @@ void Renderer::UnbindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE4);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glActiveTexture(GL_TEXTURE5);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

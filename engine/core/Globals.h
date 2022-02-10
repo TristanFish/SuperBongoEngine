@@ -16,7 +16,8 @@ struct Globals
 
 	static const int SCREEN_WIDTH = 1536;
 	static const int SCREEN_HEIGHT = 864;
-	
+
+
 	static std::string SCENE_NAME;
 
 	static std::string ENGINE_PATH;
