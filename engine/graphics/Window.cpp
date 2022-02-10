@@ -78,7 +78,7 @@ bool Window::OnCreate(const char* name, int w, int h)
 	glViewport(0, 0, width, height);
 
 	glEnable              ( GL_DEBUG_OUTPUT );
-	//glDebugMessageCallback( MessageCallback, 0 );
+	glDebugMessageCallback( MessageCallback, 0 );
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();

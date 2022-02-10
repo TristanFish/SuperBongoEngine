@@ -29,6 +29,5 @@ void main()
 	gDepth = gl_FragCoord.z;
 	gStencil = stencilMarker;
 
-
 	gAlbedo += (texture(diffuseTex1, vertUV) + meshColor) * meshColorTint;
 }

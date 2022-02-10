@@ -620,7 +620,6 @@ void Viewport::Render()
 		viewport_Max = { vMax.x,vMax.y };
 	}
 
-	isMouseHovered = ImGui::IsMouseHoveringRect(vMin, vMax);
 
 	
 	ImVec2 mousePos = ImGui::GetMousePos();
@@ -634,7 +633,9 @@ void Viewport::Render()
 
 	if (MouseX >= 0 && MouseY >= 0 && MouseX < (int)viewportSize.x && MouseY < (int)viewportSize.y)
 	{
-		
+		int PixelData = Renderer::GetInstance()->gBufferRenderResult.ReadPixel(1, MouseX, MouseY);
+
+		std::cout << PixelData << std::endl;
 
 		isMouseHovered = true;
 	}

@@ -42,17 +42,17 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 		format = GL_RED_INTEGER;
 		type = GL_UNSIGNED_SHORT;
 		break;
-	case BufferTexture::TexType::ONE_COMP_UNSIGNED_INT:
-		intFormat = GL_R32UI;
+	case BufferTexture::TexType::ONE_COMP_SIGNED_INT:
+		intFormat = GL_R32I;
 		format = GL_RED_INTEGER;
-		type = GL_UNSIGNED_INT;
+		type = GL_INT;
 		break;
 	default:
 		EngineLogger::Error("FrameBuffer TextureType not recognized", "FrameBuffer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
 		return;
 	}
 
-	const uint32_t texNum = attachedTextures.size() + GL_COLOR_ATTACHMENT0;
+	const uint32_t texNum = +GL_COLOR_ATTACHMENT0 + attachedTextures.size();
 
 	if(texNum > 15 + GL_COLOR_ATTACHMENT0)
 	{
@@ -109,9 +109,11 @@ int FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 {
 	if (attachmentIndex < attachedTextures.size())
 	{
-		glReadBuffer(GL_COLOR_ATTACHMENT1);
-		int pixelData;
-		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
-		return pixelData;
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		int pix_value;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pix_value);
+		
+		return pix_value;
+
 	}
 }

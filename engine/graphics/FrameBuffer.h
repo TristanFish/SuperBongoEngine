@@ -14,7 +14,7 @@ struct BufferTexture
 		THREE_COMP_SIGNED_COLOUR,
 		ONE_COMP_SIGNED_COLOUR,
 		ONE_COMP_UNSIGNED_SHORT,
-		ONE_COMP_UNSIGNED_INT
+		ONE_COMP_SIGNED_INT
 
 	};
 
@@ -51,9 +51,9 @@ struct FrameBuffer
 
 	GLuint GetFrameBuffer() const { return bufferID; }
 	void Bind() const { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, bufferID); }
+	void UnBind() const { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); }
 	void Clear()
 	{
-		Bind();
 		glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
