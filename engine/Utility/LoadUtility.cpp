@@ -55,7 +55,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 		
 		if (uuid == 0)
 		{
-			uuid = std::get<uint64_t>(IdentifiersElm.Attributes["UniqueIdentifier"]);
+			uuid = std::get<uint32_t>(IdentifiersElm.Attributes["UniqueIdentifier"]);
 		}
 
 		std::string TypeName = std::get<std::string>(TypeElm.Attributes["ID"]);
@@ -81,7 +81,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 			{
 				std::shared_ptr<GameObject> clone = obj.second->NewClone();
 				clone->SetName(S_PrevLoadedObjName);
-				clone->SetUUID(uuid);
+				clone->SetUUID(static_cast<uint32_t>(uuid));
 				clone->SetPos(Position);
 				clone->SetRotation(Rotation);
 				clone->SetScale(Scale);
@@ -296,7 +296,9 @@ void LoadUtility::QueryAtributeValue(ElementInfo& info, const tinyxml2::XMLAttri
 	}
 	else if (AtribType == "U64")
 	{
-		info.Attributes.emplace(AtribName, atrib->Unsigned64Value());
+		uint32_t cast = static_cast<uint32_t>(atrib->Unsigned64Value());
+
+		info.Attributes.emplace(AtribName, cast);
 	}
 	else if (AtribType == "I")
 	{

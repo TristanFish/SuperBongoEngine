@@ -63,6 +63,10 @@ public:
 	/*!Returns the first gameObject with a given name*/
 	std::shared_ptr<GameObject> FindGameObject(const std::string& name);
 
+	//! FindGameObject Function
+	/*!Returns the first gameObject with a given name*/
+	std::shared_ptr<GameObject> FindGameObject(const uint32_t& uuid);
+
 	//! GameObjectNetworkUpdate Function
 	/*!Finds and updates networkable game object based on data received from server*/
 	void GameObjectNetworkUpdate(std::string& string);

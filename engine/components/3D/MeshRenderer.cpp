@@ -38,6 +38,7 @@ void MeshRenderer::Init(GameObject* g)
 	gameObject = g;
 
 	Renderer::GetInstance()->AddMeshRenderer(this);
+
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -100,6 +101,7 @@ void MeshRenderer::Render(const ShaderProgram& shader_) const
 	shader_.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
 	shader_.TakeUniform("normalMatrix", normMat);
 	shader_.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
+	shader_.TakeUniform("uniqueID", gameObject->GetUUID());
 
 	for (auto& m : model->meshes)
 	{

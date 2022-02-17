@@ -12,7 +12,7 @@
 
 
 
-typedef std::variant<int,uint64_t,float,double,bool,std::string> Attribute;
+typedef std::variant<int,uint32_t,float,double,bool,std::string> Attribute;
 
 
 //! FileType enum class

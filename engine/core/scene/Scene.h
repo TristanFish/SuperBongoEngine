@@ -15,10 +15,6 @@
 class Scene : public MouseEventListener
 {
 protected:
-	//! MouseRay
-	/*! Converts mouse position on screen to world space to allow us to do mouse picking  */
-	MouseRay mouseRay;
-
 	std::string Scene_Name;
 
 

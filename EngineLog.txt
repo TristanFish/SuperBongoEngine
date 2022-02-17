@@ -31,7 +31,9 @@
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 128
-[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 31
+[GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
+[GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 33
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 133
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -40,9 +42,9 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 152
-[INFO]: Box added to scenegraph in: ECS.cpp on line: 122
-[INFO]: Light added to scenegraph in: ECS.cpp on line: 122
-[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 122
-[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 122
-[INFO]: Player added to scenegraph in: ECS.cpp on line: 122
-[INFO]: test added to scenegraph in: ECS.cpp on line: 122
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 135
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 135
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 135
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 135
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 135
+[INFO]: test added to scenegraph in: ECS.cpp on line: 135

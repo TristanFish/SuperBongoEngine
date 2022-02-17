@@ -14,7 +14,7 @@ struct BufferTexture
 		THREE_COMP_SIGNED_COLOUR,
 		ONE_COMP_SIGNED_COLOUR,
 		ONE_COMP_UNSIGNED_SHORT,
-		ONE_COMP_SIGNED_INT
+		ONE_COMP_UNSIGNED_INT
 
 	};
 
@@ -56,7 +56,7 @@ struct FrameBuffer
 
 	void DeleteFramebuffer();
 
-	int ReadPixel(uint32_t attachmentIndex, int x, int y);
+	uint32_t ReadPixel(uint32_t attachmentIndex, int x, int y);
 	
 };
 

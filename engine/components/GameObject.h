@@ -101,7 +101,7 @@ public:
 	std::string GetName() const { return name; }
 	std::string& GetNameRef() { return name; }
 
-	uint64_t GetUUID() const { return uuid; }
+	uint32_t GetUUID() const { return uuid; }
 
 
 	//!GetModelMatrix Getter
@@ -126,7 +126,7 @@ public:
 	void SetName(const std::string& name_) { name = name_; }
 
 
-	void SetUUID(const uint64_t& uuid_) { uuid = UUniqueID(uuid_); }
+	void SetUUID(const uint32_t& uuid_) { uuid = UUniqueID(uuid_); }
 
 	 std::shared_ptr<GameObject> GetParent() const { return parent; }
 	

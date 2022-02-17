@@ -632,15 +632,11 @@ void Viewport::Render()
 	mousePos.y -= vMin.y;
 	mousePos.y = viewportSize.y - mousePos.y;
 
-	int MouseX = (int)mousePos.x;
-	int MouseY = (int)mousePos.y;
+	 MouseX = (int)mousePos.x;
+	 MouseY = (int)mousePos.y;
 
 	if (MouseX >= 0 && MouseY >= 0 && MouseX < (int)viewportSize.x && MouseY < (int)viewportSize.y)
 	{
-		int PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, MouseX, MouseY);
-
-		std::cout << PixelData << std::endl;
-
 		isMouseHovered = true;
 	}
 	else

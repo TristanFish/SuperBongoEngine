@@ -40,6 +40,7 @@ public:
 	void TakeUniform(const std::string &name, const float f) const;
 	void TakeUniform(const std::string &name, const int i) const;
 	void TakeUniform(const std::string &name, const Uint16 i) const;
+	void TakeUniform(const std::string& name, const uint32_t i) const;
 
 	GLuint GetID() const { return programID; }
 };

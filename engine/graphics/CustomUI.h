@@ -246,6 +246,10 @@ namespace CustomUI
 		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
 	
 		MATH::Vec2 GetViewportPosition() const { return viewport_Position; }
+
+		int GetMousePosX() const { return MouseX; }
+		int GetMousePosY() const { return MouseY; }
+
 	private:
 		//! viewportSize Vec2 
 		/*! Stores the viewports size */
@@ -256,6 +260,7 @@ namespace CustomUI
 
 		MATH::Vec2 viewport_Position;
 
+		int MouseX, MouseY;
 
 		std::string modeName;
 		std::string aspectSize;

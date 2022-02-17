@@ -61,10 +61,10 @@ void Renderer::SetupFrameBuffers()
 	defaultBuffer.clearColor = Colour(1.0f, 0.0f, 0.0f, 1.0f);
 	
 	gBuffer.InitFrameBuffer();
-	//Attach depthRenderBuffer
+	//Attach depthRenderBuffer`
 	glGenRenderbuffers(1, &depthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewport.GetViewportSize().x, viewport.GetViewportSize().y);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 	gBuffer.AttachTexture(albedoTexture);
 	gBuffer.AttachTexture(normTexture);
@@ -87,7 +87,7 @@ void Renderer::SetupTextures()
 	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
 	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_SHORT);
-	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_INT);
+	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
 	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
 

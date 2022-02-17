@@ -3,24 +3,25 @@
 #include "core/Logger.h"
 #include <assimp/postprocess.h>
 
-Model::Model() : Model_Verticies(std::vector<Vertex>())
+Model::Model() 
 {
 	isLoaded = false;
 }
 
-Model::Model(const std::string& path) : Model_Verticies(std::vector<Vertex>())
+Model::Model(const std::string& path)
 {
 	modelPath = path;
 	isLoaded = false;
 }
-
-std::vector<Vertex>& Model::GetVerticies() 
+std::vector<Vertex>& Model::GetVerticies()
 {
 	return Model_Verticies;
 }
 
+
 void Model::LoadModel()
 {
+
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_OptimizeMeshes);
 
@@ -71,6 +72,8 @@ std::vector<Vertex> Model::GetVertices() const
 	return vertices;
 }
 
+
+
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
 	
@@ -102,16 +105,17 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
 	const float unitScale = 1.0f;// static_cast<float>(unitScaleDouble);
 	
-	if(meshes.empty())
+	if (meshes.empty())
 	{
 		p_min.x = mesh->mVertices[0].x * unitScale;
 		p_min.y = mesh->mVertices[0].y * unitScale;
 		p_min.z = mesh->mVertices[0].z * unitScale;
-					
+
 		p_max.x = mesh->mVertices[0].x * unitScale;
 		p_max.y = mesh->mVertices[0].y * unitScale;
 		p_max.z = mesh->mVertices[0].z * unitScale;
 	}
+	
 	
 	//Load vertices
 	for (size_t i = 0; i < mesh->mNumVertices; i++)
@@ -131,11 +135,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		p_max.x = std::max(p_max.x, vec.x);
 		p_max.y = std::max(p_max.y, vec.y);
 		p_max.z = std::max(p_max.z, vec.z);
+	
 
 		vec.x = mesh->mNormals[i].x;
 		vec.y = mesh->mNormals[i].y;
 		vec.z = mesh->mNormals[i].z;
 		vertex.normal = vec;
+
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -157,6 +163,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
 	Model_Verticies.push_back(minVert);
 	Model_Verticies.push_back(maxVert);
+
 
 	//Load indices
 	for (size_t i = 0; i < mesh->mNumFaces; i++)
@@ -218,3 +225,6 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 	}
 	return textures;
 }
+
+
+

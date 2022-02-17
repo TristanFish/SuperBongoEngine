@@ -134,8 +134,8 @@ void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 		if (std::holds_alternative<int>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<int>(atrib.second));
 
-		else if (std::holds_alternative<uint64_t>(atrib.second))
-			elm.element->SetAttribute(atrib.first.c_str(), std::get<uint64_t>(atrib.second));
+		else if (std::holds_alternative<uint32_t>(atrib.second))
+			elm.element->SetAttribute(atrib.first.c_str(), std::get<uint32_t>(atrib.second));
 
 		else if (std::holds_alternative<float>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<float>(atrib.second));

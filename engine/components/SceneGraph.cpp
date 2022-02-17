@@ -89,6 +89,19 @@ std::shared_ptr<GameObject> SceneGraph::FindGameObject(const std::string& name)
 	return nullptr;
 }
 
+std::shared_ptr<GameObject> SceneGraph::FindGameObject(const uint32_t& uuid)
+{
+	for (const auto& g : gameObjects)
+	{
+		if (g->GetUUID() == uuid)
+		{
+			return g;
+		}
+	}
+
+	return nullptr;
+}
+
 void SceneGraph::GameObjectNetworkUpdate(std::string& string)
 {
 	NetworkableObject tmp = NetworkableObject();

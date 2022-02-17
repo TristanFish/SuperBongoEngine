@@ -42,10 +42,10 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 		format = GL_RED_INTEGER;
 		type = GL_UNSIGNED_SHORT;
 		break;
-	case BufferTexture::TexType::ONE_COMP_SIGNED_INT:
-		intFormat = GL_R32I;
+	case BufferTexture::TexType::ONE_COMP_UNSIGNED_INT:
+		intFormat = GL_R32UI;
 		format = GL_RED_INTEGER;
-		type = GL_INT;
+		type = GL_UNSIGNED_INT;
 		break;
 	default:
 		EngineLogger::Error("FrameBuffer TextureType not recognized", "FrameBuffer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
@@ -63,7 +63,7 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 
 	glGenTextures(1, &tex.texture);
 	glBindTexture(GL_TEXTURE_2D, tex.texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, intFormat, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT, 0, format, type, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, intFormat, ViewportSize.x, ViewportSize.y, 0, format, type, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
@@ -97,7 +97,9 @@ void FrameBuffer::FinalizeBuffer() const
 
 void FrameBuffer::Clear()
 {
-	
+	MATH::Vec2 ViewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+
+	glViewport(0, 0, ViewportSize.x, ViewportSize.y);
 	glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
@@ -114,14 +116,14 @@ void FrameBuffer::DeleteFramebuffer()
 	attachedTextures.clear();
 }
 
-int FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+uint32_t FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 {
 	Bind();
 	if (attachmentIndex < attachedTextures.size())
 	{
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
-		int pix_value;
-		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pix_value);
+		uint32_t pix_value = 0; 
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &pix_value);
 		
 		return pix_value;
 

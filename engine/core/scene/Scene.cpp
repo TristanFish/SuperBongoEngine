@@ -14,6 +14,8 @@
 #include "graphics/UIStatics.h"
 #include "Utility/LoadUtility.h"
 
+#include "Rendering/Renderer.h"
+
 using namespace MATH;
 
 Scene::Scene() : Scene_Name("Scene_"), objectList(std::make_shared<SceneGraph>())
@@ -55,8 +57,14 @@ void Scene::Render()
 
 void Scene::HandleEvents(const SDL_Event& event)
 {
-	mouseRay.HandleEvents(event);
 	objectList->HandleEvents(event);
+
+
+	
+
+	
+
+
 }
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
@@ -93,6 +101,31 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	//		UIStatics::SetSelectedObject(hitResult);
 	//	}
 	//}
+
+	if (buttonType == SDL_BUTTON_LEFT)
+	{
+		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+			return;
+
+
+		int XPos = Renderer::GetInstance()->GetViewport().GetMousePosX();
+
+		int YPos = Renderer::GetInstance()->GetViewport().GetMousePosY();
+
+
+		uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
+		
+
+		std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
+
+		if (SelectedObj != nullptr)
+		{
+			SelectedObj->isObjectSelected = true;
+			UIStatics::SetSelectedObject(SelectedObj);
+		}
+		
+	}
+
 }
 
 void Scene::SaveMapData() const
