@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <iostream>
-#include <imgui/imgui_internal.h>
+
 
 #include "components/GameObject.h"
 #include "components/3D/MeshRenderer.h"
@@ -10,6 +10,7 @@
 #include "core/scene/Scene.h"
 
 std::shared_ptr<GameObject> UIStatics::selectedObj = nullptr;
+int UIStatics::GizmoType = -1;
 
 
 bool UIStatics::DrawVec3(const std::string& label, MATH::Vec3& value, const float columnWidth)

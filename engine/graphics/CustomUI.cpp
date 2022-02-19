@@ -1,6 +1,8 @@
 #include "CustomUI.h"
 
 #include <Windows.h>
+#include <ImGuizmo/ImGuizmo.h>
+
 
 #include "psapi.h"
 #include "UIStatics.h"
@@ -539,6 +541,9 @@ void Viewport::Render()
 	ImGui::Begin("Viewport",&isActive, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 
+
+#pragma region Render Mode/Aspect Ratio
+
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu(std::string("Mode " + modeName).c_str()))
@@ -589,6 +594,8 @@ void Viewport::Render()
 		}
 		ImGui::EndMenuBar();
 	}
+#pragma endregion
+
 
 	if (viewportSize != *reinterpret_cast<MATH::Vec2*>(&viewportPanelSize))
 	{
@@ -607,29 +614,14 @@ void Viewport::Render()
 
 	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
-	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-
-	ImVec2 Pos = ImGui::GetWindowPos();
-	viewport_Position = *reinterpret_cast<MATH::Vec2*>(&Pos);
-
-	if (viewport_Min != *reinterpret_cast<MATH::Vec2*>(&vMin) || viewport_Max != *reinterpret_cast<MATH::Vec2*>(&vMax))
-	{
-		vMin.x += viewport_Position.x;
-		vMin.y += viewport_Position.y;
-		vMax.x += viewport_Position.x;
-		vMax.y += viewport_Position.y;
-
-		viewport_Min = { vMin.x,vMin.y };
-		viewport_Max = { vMax.x,vMax.y };
-	}
-
+	
+	UpdateViewportPosition();
 
 	
 	ImVec2 mousePos = ImGui::GetMousePos();
 
-	mousePos.x -= vMin.x;
-	mousePos.y -= vMin.y;
+	mousePos.x -= viewport_Min.x;
+	mousePos.y -= viewport_Min.y;
 	mousePos.y = viewportSize.y - mousePos.y;
 
 	 MouseX = (int)mousePos.x;
@@ -659,8 +651,73 @@ void Viewport::Render()
 		ImGui::EndDragDropTarget();
 	}
 
+
+	std::shared_ptr<GameObject> SelectedObject = UIStatics::GetSelectedObject();
+
+	if (SelectedObject && UIStatics::GizmoType != -1)
+	{
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::SetDrawlist();
+
+		ImGuizmo::SetRect(viewport_Position.x, viewport_Position.y, viewportSize.x, viewportSize.y);
+
+		MATH::Matrix4 cameraProjection = Camera::getInstance()->getProjectionMatrix();
+		MATH::Matrix4 cameraView = Camera::getInstance()->getViewMatrix();
+
+
+		MATH::Matrix4 ObjectTransform = SelectedObject->transform.GetModelMatrix();
+
+		ImGuizmo::Manipulate(cameraView, cameraProjection, (ImGuizmo::OPERATION)UIStatics::GizmoType, ImGuizmo::LOCAL, ObjectTransform);
+
+		if (ImGuizmo::IsUsing())
+		{
+			MATH::Vec3 position, scale;
+			MATH::Quaternion rotQuaternion;
+			MATH::MMath::DecomposeTransform(ObjectTransform, position, rotQuaternion, scale);
+
+
+			switch ((ImGuizmo::OPERATION)UIStatics::GizmoType)
+			{
+			case ImGuizmo::OPERATION::TRANSLATE:
+				SelectedObject->transform.SetPos(position);
+				break;
+			case ImGuizmo::OPERATION::SCALE:
+				SelectedObject->transform.SetScale(scale);
+				break;
+			case ImGuizmo::OPERATION::ROTATE:
+
+				SelectedObject->transform.GetRotationQuatRef() += rotQuaternion;
+				SelectedObject->transform.SetRot(SelectedObject->transform.GetRotationQuat().Normalized());
+				break;
+			}
+
+		
+
+		}
+	}
+
 	ImGui::End();
 	ImGui::PopStyleVar();
+}
+
+void Viewport::UpdateViewportPosition()
+{
+	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+	ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+
+	ImVec2 Pos = ImGui::GetWindowPos();
+	viewport_Position = *reinterpret_cast<MATH::Vec2*>(&Pos);
+
+	if (viewport_Min != *reinterpret_cast<MATH::Vec2*>(&vMin) || viewport_Max != *reinterpret_cast<MATH::Vec2*>(&vMax))
+	{
+		vMin.x += viewport_Position.x;
+		vMin.y += viewport_Position.y;
+		vMax.x += viewport_Position.x;
+		vMax.y += viewport_Position.y;
+
+		viewport_Min = { vMin.x,vMin.y };
+		viewport_Max = { vMax.x,vMax.y };
+	}
 }
 
 #pragma endregion 

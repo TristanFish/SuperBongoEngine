@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include <imgui/imgui_internal.h>
+#include <ImGuizmo/ImGuizmo.h>
 
 #include "core/Globals.h"
 #include "core/Logger.h"
@@ -60,7 +61,22 @@ void Scene::HandleEvents(const SDL_Event& event)
 	objectList->HandleEvents(event);
 
 
-	
+	if (event.type == SDL_KEYDOWN)
+	{
+		switch (event.key.keysym.sym) {
+		case SDLK_q:
+			UIStatics::GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		case SDLK_r:
+			UIStatics::GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		case SDLK_e:
+			UIStatics::GizmoType = ImGuizmo::OPERATION::SCALE;
+
+			break;
+			// etc
+		}
+	}
 
 	
 
@@ -77,30 +93,6 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-	//if (buttonType == SDL_BUTTON_LEFT)
-	//{
-	//	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
-	//		return;
-
-	//	mouseRay.CalculateMouseRay();
-
-	//	GameObject* hitResult = nullptr;
-	//	float shortestDistance = FLT_MAX;
-
-	//	hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
-
-
-	//	if (hitResult)
-	//	{
-	//		EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
-	//		if (!hitResult->isObjectSelected)
-	//		{
-	//			
-	//		}
-	//		hitResult->isObjectSelected = true;
-	//		UIStatics::SetSelectedObject(hitResult);
-	//	}
-	//}
 
 	if (buttonType == SDL_BUTTON_LEFT)
 	{

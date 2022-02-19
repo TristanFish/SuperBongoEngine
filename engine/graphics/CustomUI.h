@@ -242,8 +242,6 @@ namespace CustomUI
 		bool GetIsMouseHovered() const { return isMouseHovered; }
 
 		MATH::Vec2 GetViewportSize() const { return viewportSize; }
-		MATH::Vec2 GetViewportMin() const { return viewport_Min; }
-		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
 	
 		MATH::Vec2 GetViewportPosition() const { return viewport_Position; }
 
@@ -277,6 +275,8 @@ namespace CustomUI
 
 		bool isActive;
 
+
+		void UpdateViewportPosition();
 
 	};
 

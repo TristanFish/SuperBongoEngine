@@ -8,9 +8,11 @@ namespace MATH
 {
 	struct Quaternion
 	{
-	private:
+	public:
+
 		Vec4 quat;
 	public:
+
 		Quaternion(float real, const Vec3& imaginary);
 		Quaternion(float x, float y, float z, float w);
 		Quaternion();

@@ -36,6 +36,12 @@ namespace  MATH {
 		static Matrix4 GetRotationMat4(Vec3 forward, Vec3 up, Vec3 right);
 		static Quaternion ConvertMatToQuat(const Matrix4& mat);
 
+
+		static bool epsilonEqual(const float& x, const float& y, const float& epsilon);
+		static bool epsilonNotEqual(const float& x, const float& y, const float& epsilon);
+
+		static bool DecomposeTransform(const Matrix4& transform, Vec3& outTransform, Quaternion& outQuaternion, Vec3& outScale);
+
 	};
 
 }

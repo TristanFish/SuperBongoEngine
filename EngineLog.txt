@@ -1,4 +1,4 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 78
+[INFO]: Logger Created in: CoreEngine.cpp on line: 84
 [NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 44
 [INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
 [INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
@@ -33,7 +33,7 @@
 [SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 128
 [GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
 [GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
-[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 33
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 34
 [SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 133
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40

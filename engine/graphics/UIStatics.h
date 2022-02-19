@@ -1,7 +1,10 @@
 #ifndef UISTATICS_H
 #define UISTATICS_H
 
+
+
 #include "math/Vector.h"
+
 
 class GameObject;
 class SceneGraph;
@@ -26,11 +29,16 @@ public:
 
 	static std::shared_ptr<GameObject> GetSelectedObject() { return selectedObj; }
 
+
+	static int GizmoType;
+
 private:
 
 	//! static GameObject Pointer
 	/*! Hold's the object that was selected last */
 	static std::shared_ptr<GameObject> selectedObj;
+
+
 };
 
 #endif

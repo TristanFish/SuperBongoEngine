@@ -59,7 +59,7 @@ void RigidBody3D::Update(const float deltaTime)
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
 	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
 
-	gameObject->transform.GetRotationQuat() += newRot;
+	gameObject->transform.GetRotationQuatRef() += newRot;
 	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
 }
 

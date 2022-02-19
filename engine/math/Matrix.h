@@ -174,6 +174,8 @@ namespace  MATH {
 			return *(m + index);
 		}
 
+
+
 		inline  Vec3 operator* (const Vec3& v) const {
 			float x = v.x * m[0] + v.y * m[4] + v.z * m[8] + 1.0f * m[12];
 			float y = v.x * m[1] + v.y * m[5] + v.z * m[9] + 1.0f * m[13];
@@ -196,6 +198,8 @@ namespace  MATH {
 		}
 
 
+		/// This one is for writing to the structure as if where an array 
+		/// it returns a lvalue
 		
 
 		/// These are a few esoteric funtions 
@@ -207,6 +211,14 @@ namespace  MATH {
 			return Vec4(m[0 + index], m[4 + index], m[8 + index], m[12 + index]);
 		}
 
+
+		inline void setRow(Vec4 newRow,int index) {
+
+			m[0 + index] = newRow.x;
+			m[4 + index] = newRow.y;
+			m[8 + index] = newRow.z;
+			m[12 + index] = newRow.w;
+		}
 
 		//Added by Declan - return the determinant of the matrix (float)
 		//https://cdn.discordapp.com/attachments/723827969851916323/912154192183980042/unknown.png

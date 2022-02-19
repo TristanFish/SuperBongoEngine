@@ -3,6 +3,9 @@
 #include <Windows.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <imgui/imgui_impl_sdl.h>
+
+#include <ImGuizmo/ImGuizmo.h>
+
 #include <sdl/SDL.h>
 
 #include "Globals.h"
@@ -44,6 +47,9 @@ void CoreEngine::Render()
 	ImGui_ImplSDL2_NewFrame();
 
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
+
+	
 	
 	dockSpace->Render();
 	if (gameInterface)
