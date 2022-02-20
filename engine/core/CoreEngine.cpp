@@ -16,9 +16,12 @@
 #include "events/InputManager.h"
 #include "events/MouseEventDispatcher.h"
 #include "graphics/Window.h"
+
 #include "resources/ModelManager.h"
 #include "resources/ShaderManager.h"
 #include "resources/TextureManager.h"
+
+#include "components/GameObject.h"
 #include "Utility/LoadUtility.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -84,7 +87,7 @@ bool CoreEngine::Init()
 	EngineLogger::Info("Logger Created", "CoreEngine.cpp", __LINE__);
 	
 	window = new Window();
-	if (!window->OnCreate("Super Bongo Engine", Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT))
+	if (!window->OnCreate("Super Bongo Engine", Globals::Engine::SCREEN_WIDTH, Globals::Engine::SCREEN_HEIGHT))
 	{
 		EngineLogger::FatalError("Window failed to initialize", "CoreEngine.cpp", __LINE__);
 		OnDestroy();
@@ -110,8 +113,8 @@ bool CoreEngine::Init()
 		}
 
 	}
-	Globals::InitGlobals();
-	Globals::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	Globals::Engine::InitGlobals();
+	Globals::Engine::SCENE_NAME = GetCurrentScene()->GetSceneName();
 	
 	dockSpace = new CustomUI::DockSpace();
 	dockSpace->ConstructUserInterface();
@@ -119,7 +122,7 @@ bool CoreEngine::Init()
 
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
 	LoadUtility::GetInstance()->LoadSceneSaves();
-	GetCurrentScene()->LoadMapData();
+	LoadSceneData();
 
 	isRunning = true;
 	return true;
@@ -152,7 +155,7 @@ void CoreEngine::Run()
 		}
 	}
 
-	gameInterface->currentScene->SaveMapData();
+	SaveSceneData();
 	OnDestroy();
 }
 
@@ -187,10 +190,20 @@ void CoreEngine::HandleEvents()
 			case SDL_SCANCODE_P:
 				ReloadCurrentScene();
 				break;
+			case SDL_SCANCODE_Q:
+				Globals::Editor::GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;
+			case SDL_SCANCODE_R:
+				Globals::Editor::GizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;
+			case SDL_SCANCODE_E:
+				Globals::Editor::GizmoType = ImGuizmo::OPERATION::SCALE;
+				break;
 			default:
 				break;
 			}
 		}
+
 		
 		if (gameInterface)
 		{
@@ -225,6 +238,48 @@ void CoreEngine::OnDestroy()
 	SaveManager::DeleteSaveableObjects();
 
 	SDL_Quit();
+}
+
+void CoreEngine::SaveSceneData() const
+{
+	std::string Scene_Name = gameInterface->currentScene->GetSceneName();
+
+	if (!SaveManager::TransferToSaveQueue(Scene_Name))
+	{
+		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
+	}
+
+	SaveManager::GetSaveFile(Scene_Name).ClearElements();
+	ElementInfo info = ElementInfo("Root");
+
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
+	info = ElementInfo("SceneSettings");
+	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
+
+	info = ElementInfo("Root");
+	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
+
+	info = ElementInfo("Objects");
+
+	for (const auto& obj : Globals::Engine::s_SceneGraph->GetGameObjects())
+	{
+		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
+		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);
+	}
+
+	SaveUtility::GetInstance()->CompileSaves();
+}
+
+void CoreEngine::LoadSceneData()
+{
+	for (auto elm : SaveManager::GetSaveFile(gameInterface->currentScene->GetSceneName()).GetElements())
+	{
+		if (!Globals::Engine::s_SceneGraph->FindGameObject(elm.first))
+		{
+			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
+		}
+	}
 }
 
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)

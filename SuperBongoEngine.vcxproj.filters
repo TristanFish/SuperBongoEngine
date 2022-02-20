@@ -27,7 +27,6 @@
     <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
-    <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\math\Plane.cpp" />
     <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
     <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
@@ -132,7 +131,6 @@
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
-    <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\math\Plane.h" />
     <ClInclude Include="engine\core\events\MouseEventListener.h" />
     <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />

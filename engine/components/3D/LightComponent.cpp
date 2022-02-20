@@ -1,8 +1,8 @@
 #include "LightComponent.h"
 
-#include "graphics/UIStatics.h"
 #include "Utility/SaveUtility.h"
 #include "graphics/ShaderProgram.h"
+#include "core/Globals.h"
 
 using namespace MATH;
 
@@ -36,7 +36,7 @@ void LightComponent::OnSaveComponent(const std::string& saveName, std::string pa
 
 void LightComponent::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "Light Settings");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "Light Settings");
 	
 	if (opened)
 	{

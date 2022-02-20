@@ -23,8 +23,8 @@ Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_) {
 
 	Vec2 viewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
 
-	Vec4 rayStartNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, -1.0f, 1.0f);
-	Vec4 rayEndNDC((mouseCoords_.x / Globals::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f, 0.0f, 1.0f);
+	Vec4 rayStartNDC((mouseCoords_.x / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f, -1.0f, 1.0f);
+	Vec4 rayEndNDC((mouseCoords_.x / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f, 0.0f, 1.0f);
 
 	Matrix4 inverse = MMath::inverse(Camera::getInstance()->getProjectionMatrix() * Camera::getInstance()->getViewMatrix());
 

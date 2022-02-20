@@ -5,7 +5,6 @@
 
 
 #include "psapi.h"
-#include "UIStatics.h"
 #include "core/CoreEngine.h"
 #include "core/GameInterface.h"
 #include "core/Globals.h"
@@ -101,7 +100,7 @@ PropertiesPanel::~PropertiesPanel()
 
 void PropertiesPanel::Render() 
 {
-	std::shared_ptr<GameObject> selectedObject = UIStatics::GetSelectedObject();
+	std::shared_ptr<GameObject> selectedObject = Globals::Editor::GetSelectedObject();
 
 	ImGui::Begin("Properties",&isActive);
 
@@ -109,12 +108,12 @@ void PropertiesPanel::Render()
 	{
 		#pragma region GameObject
 
-		static std::string oldObjName = UIStatics::GetSelectedObject()->GetName();
-		if (ImGui::InputText("Mesh Name", &UIStatics::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
+		static std::string oldObjName = Globals::Editor::GetSelectedObject()->GetName();
+		if (ImGui::InputText("Mesh Name", &Globals::Editor::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			std::string newObjName = UIStatics::GetSelectedObject()->GetName();
+			std::string newObjName = Globals::Editor::GetSelectedObject()->GetName();
 
-			SaveManager::GetSaveFile(Globals::SCENE_NAME).SetElementName(oldObjName, newObjName);
+			SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME).SetElementName(oldObjName, newObjName);
 			SaveManager::SetSaveName(oldObjName, newObjName);
 
 		}
@@ -125,7 +124,7 @@ void PropertiesPanel::Render()
 		if (opened)
 		{
 			// Change the standard transform components 
-			UIStatics::DrawVec3("Position", selectedObject->transform.GetPositionRef(), 80.0f);
+			Globals::Editor::DrawVec3("Position", selectedObject->transform.GetPositionRef(), 80.0f);
 
 			static MATH::Vec3 rotation = selectedObject->transform.GetRotation();
 
@@ -157,12 +156,12 @@ void PropertiesPanel::Render()
 				}
 			}
 
-			if(UIStatics::DrawVec3("Rotation", rotation, 80.0f)){
+			if(Globals::Editor::DrawVec3("Rotation", rotation, 80.0f)){
 			
 				selectedObject->transform.SetRot(rotation);
 			}
 			
-			UIStatics::DrawVec3("Scale", selectedObject->transform.GetScaleRef(), 80.0f);
+			Globals::Editor::DrawVec3("Scale", selectedObject->transform.GetScaleRef(), 80.0f);
 
 			ImGui::TreePop();
 		}
@@ -224,10 +223,10 @@ void HierarchyPanel::Update(const float deltatime)
 {
 	if(InputManager::GetInstance()->GetKey(SDLK_DELETE))
 	{
-		Globals::s_SceneGraph->DeleteGameObject(UIStatics::GetSelectedObject());
+		Globals::Engine::s_SceneGraph->DeleteGameObject(Globals::Editor::GetSelectedObject());
 	}
 	
-	size_t size = Globals::s_SceneGraph->GetGameObjects().size();
+	size_t size = Globals::Engine::s_SceneGraph->GetGameObjects().size();
 	if (gameobjects.size() < size || gameobjects.size() > size)
 	{
 		UpdateActiveObjects();
@@ -236,7 +235,7 @@ void HierarchyPanel::Update(const float deltatime)
 
 void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index) 
 {
-	ImGuiTreeNodeFlags tree_flags = ((UIStatics::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
+	ImGuiTreeNodeFlags tree_flags = ((Globals::Editor::GetSelectedObject() == go) ? ImGuiTreeNodeFlags_Selected : 0) |
 		((go->GetChildCount() == 0) ?  ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen : 0) 
 		| ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
@@ -280,16 +279,16 @@ void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index)
 
 			if (ImGui::MenuItem("Delete"))
 			{
-				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
-				Globals::s_SceneGraph->DeleteGameObject(go);
-				UIStatics::SetSelectedObject(nullptr);
+				SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME).RemoveElement(go->GetName());
+				Globals::Engine::s_SceneGraph->DeleteGameObject(go);
+				Globals::Editor::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}
 
 		if (ImGui::IsItemClicked())
 		{
-			UIStatics::SetSelectedObject(go);
+			Globals::Editor::SetSelectedObject(go);
 			go->isObjectSelected = true;
 		}
 	
@@ -310,7 +309,7 @@ void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index)
 
 		if (ImGui::IsItemClicked())
 		{
-			UIStatics::SetSelectedObject(go);
+			Globals::Editor::SetSelectedObject(go);
 			go->isObjectSelected = true;
 		}
 
@@ -359,9 +358,9 @@ void HierarchyPanel::GenerateTree(std::shared_ptr<GameObject> go, int index)
 		{
 			if (ImGui::MenuItem("Delete"))
 			{
-				SaveManager::GetSaveFile(Globals::SCENE_NAME).RemoveElement(go->GetName());
-				Globals::s_SceneGraph->DeleteGameObject(go);
-				UIStatics::SetSelectedObject(nullptr);
+				SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME).RemoveElement(go->GetName());
+				Globals::Engine::s_SceneGraph->DeleteGameObject(go);
+				Globals::Editor::SetSelectedObject(nullptr);
 			}
 			ImGui::EndPopup();
 		}
@@ -372,7 +371,7 @@ void HierarchyPanel::UpdateActiveObjects()
 {
 	gameobjects.clear();
 	
-	for (const auto& obj : Globals::s_SceneGraph->GetGameObjects())
+	for (const auto& obj : Globals::Engine::s_SceneGraph->GetGameObjects())
 	{
 		std::vector<std::shared_ptr<GameObject>>::iterator iter;
 		
@@ -646,15 +645,15 @@ void Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
-			LoadUtility::GetInstance()->LoadObject(file, UUniqueID());
+			LoadUtility::GetInstance()->LoadObject(file);
 		}
 		ImGui::EndDragDropTarget();
 	}
 
 
-	std::shared_ptr<GameObject> SelectedObject = UIStatics::GetSelectedObject();
+	std::shared_ptr<GameObject> SelectedObject = Globals::Editor::GetSelectedObject();
 
-	if (SelectedObject && UIStatics::GizmoType != -1)
+	if (SelectedObject && Globals::Editor::GizmoType != -1)
 	{
 		ImGuizmo::SetOrthographic(false);
 		ImGuizmo::SetDrawlist();
@@ -667,7 +666,7 @@ void Viewport::Render()
 
 		MATH::Matrix4 ObjectTransform = SelectedObject->transform.GetModelMatrix();
 
-		ImGuizmo::Manipulate(cameraView, cameraProjection, (ImGuizmo::OPERATION)UIStatics::GizmoType, ImGuizmo::LOCAL, ObjectTransform);
+		ImGuizmo::Manipulate(cameraView, cameraProjection, (ImGuizmo::OPERATION)Globals::Editor::GizmoType, ImGuizmo::LOCAL, ObjectTransform);
 
 		if (ImGuizmo::IsUsing())
 		{
@@ -676,7 +675,7 @@ void Viewport::Render()
 			MATH::MMath::DecomposeTransform(ObjectTransform, position, rotQuaternion, scale);
 
 
-			switch ((ImGuizmo::OPERATION)UIStatics::GizmoType)
+			switch ((ImGuizmo::OPERATION)Globals::Editor::GizmoType)
 			{
 			case ImGuizmo::OPERATION::TRANSLATE:
 				SelectedObject->transform.SetPos(position);
@@ -685,7 +684,6 @@ void Viewport::Render()
 				SelectedObject->transform.SetScale(scale);
 				break;
 			case ImGuizmo::OPERATION::ROTATE:
-
 				SelectedObject->transform.GetRotationQuatRef() += rotQuaternion;
 				SelectedObject->transform.SetRot(SelectedObject->transform.GetRotationQuat().Normalized());
 				break;
@@ -857,7 +855,7 @@ void DockSpace::Reset()
 
 void DockSpace::ConstructUserInterface()
 {
-	UIStatics::SetSelectedObject(nullptr);
+	Globals::Editor::SetSelectedObject(nullptr);
 	
 	for (auto* panel : uiInterfaces)
 	{
@@ -906,7 +904,7 @@ void DockSpace::GenerateDockSpace()
 
 	if (isQueuedForSave)
 	{
-		CoreEngine::GetInstance()->GetCurrentScene()->SaveMapData();
+		CoreEngine::GetInstance()->SaveSceneData();
 		isQueuedForSave = false;
 	}
 
@@ -934,7 +932,7 @@ void DockSpace::GenerateDockSpace()
 				 std::string newSceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 				if (ImGui::InputText("##SceneName", &newSceneName, ImGuiInputTextFlags_EnterReturnsTrue))
 				{
-					Globals::SCENE_NAME = newSceneName;
+					Globals::Engine::SCENE_NAME = newSceneName;
 					CoreEngine::GetInstance()->GetCurrentScene()->SetSceneName(newSceneName);
 					SaveManager::SetSaveName(oldSceneName, newSceneName);
 				}

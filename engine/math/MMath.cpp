@@ -410,53 +410,13 @@ bool MMath::DecomposeTransform(const Matrix4& transform, Vec3& outTransform, Qua
 	}
 
 	outScale.x = VMath::mag(Row[0]);
-	//Row[0] = VMath::normalize(Row[0]); 
 	outScale.y = VMath::mag(Row[1]);
-	//Row[1] = VMath::normalize(Row[1]);
 	outScale.z = VMath::mag(Row[2]);
-	//Row[2] = VMath::normalize(Row[2]);
 
 
-	float tr = Row[0][0] + Row[1][1] + Row[2][2];
 
 
-	if (tr > 0.0f)
-	{
-		float s = sqrt(tr + 1.0f) * 2;
-
-		outQuaternion.quat.w = 0.25 * s;
-		outQuaternion.quat.x = (Row[2][1] - Row[1][2]) / s;
-		outQuaternion.quat.y = (Row[0][2] - Row[2][0]) / s;
-		outQuaternion.quat.z = (Row[1][0] - Row[0][1]) / s;
-	}
-	else if ((Row[0][0] > Row[1][1]) && (Row[0][0] > Row[2][2]))
-	{
-		float s = sqrt(1.0f + Row[0][0] - Row[1][1] - Row[2][2]) * 2;
-
-		outQuaternion.quat.w = (Row[2][1] - Row[1][2]) / s;
-		outQuaternion.quat.x = 0.25 * s;
-		outQuaternion.quat.y = (Row[0][1] - Row[1][0]) / s;
-		outQuaternion.quat.z = (Row[0][2] - Row[2][0]) / s;
-	}
-	else if (Row[1][1] > Row[2][2])
-	{
-		float s = sqrt(1.0f + Row[1][1] - Row[0][0]- Row[2][2]) * 2;
-
-		outQuaternion.quat.w = (Row[0][2] - Row[2][0]) / s;
-		outQuaternion.quat.x = (Row[0][1] - Row[1][0]) / s;
-		outQuaternion.quat.y = 0.25 * s;
-		outQuaternion.quat.z = (Row[1][2] - Row[2][1]) / s;
-	}
-
-	else
-	{
-		float s = sqrt(1.0f + Row[2][2] - Row[0][0] - Row[1][1]) * 2;
-
-		outQuaternion.quat.w = (Row[1][0] - Row[0][1]) / s;
-		outQuaternion.quat.x = (Row[0][2] - Row[2][0]) / s;
-		outQuaternion.quat.y = (Row[1][2] - Row[2][1]) / s;
-		outQuaternion.quat.z = 0.25 * s;
-	}
+	outQuaternion = ConvertMatToQuat(transform);
 
 	return true;
 }

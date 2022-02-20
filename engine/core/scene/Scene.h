@@ -31,8 +31,7 @@ public:
 	virtual void Render();
 	virtual void HandleEvents(const SDL_Event& event);
 	virtual void Reset() = 0;
-	virtual void SaveMapData() const;
-	virtual void LoadMapData();
+	
 
 
 

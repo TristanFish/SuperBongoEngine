@@ -184,7 +184,7 @@ void Renderer::Render()
 	//Skybox here
 	skyBox->Render();
 
-	DrawDebugGeometry(Globals::s_SceneGraph->GetGameObjects());
+	DrawDebugGeometry(Globals::Engine::s_SceneGraph->GetGameObjects());
 
 	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{

@@ -13,8 +13,22 @@ UUniqueID::UUniqueID() : m_UUID(s_UniformDistribution(s_Engine))
 	
 }
 
+UUniqueID::UUniqueID(bool GenerateID)
+{
+	m_UUID = 0;
+	if (GenerateID)
+	{
+		m_UUID = s_UniformDistribution(s_Engine);
+	}
+	
+}
+
 UUniqueID::UUniqueID(uint32_t uuid) : m_UUID(uuid)
 {
-
-
+	if (uuid == 0)
+	{
+		m_UUID = s_UniformDistribution(s_Engine);
+	}
 }
+
+

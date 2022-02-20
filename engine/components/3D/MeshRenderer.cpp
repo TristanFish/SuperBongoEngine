@@ -4,7 +4,7 @@
 #include "core/resources/ShaderManager.h"
 #include "core/resources/TextureManager.h"
 #include "core/3D/Physics//BoundingBox.h"
-#include "graphics/UIStatics.h"
+#include "core/Globals.h"
 
 #include "Utility/SaveUtility.h"
 
@@ -220,7 +220,7 @@ void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string paren
 
 void MeshRenderer::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "MeshRenderer");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "MeshRenderer");
 	
 	if (opened)
 	{
@@ -257,7 +257,7 @@ void MeshRenderer::ImGuiRender()
 			}
 			ImGui::EndCombo();
 		}
-		UIStatics::DrawTextureSlot("texture_09.jpg", this,5.0f);
+		Globals::Editor::DrawTextureSlot("texture_09.jpg", this,5.0f);
 
 		ImGui::TreePop();
 	}

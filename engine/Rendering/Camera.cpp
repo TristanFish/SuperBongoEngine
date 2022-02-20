@@ -15,7 +15,7 @@ Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0
 	
 	position.z = 100.0f;
 
-	aspect = static_cast<float>(Globals::SCREEN_WIDTH) / static_cast<float>(Globals::SCREEN_HEIGHT);
+	aspect = static_cast<float>(Globals::Engine::SCREEN_WIDTH) / static_cast<float>(Globals::Engine::SCREEN_HEIGHT);
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
 	perspecProjMatrix = MMath::perspective(zoom, aspect, nearPlane, farPlane);
 	

@@ -7,7 +7,7 @@
 
 #include "components/3D/MeshRenderer.h"
 
-#include "graphics/UIStatics.h"
+#include "core/Globals.h"
 
 using namespace MATH;
 
@@ -72,13 +72,13 @@ void RigidBody3D::HandleEvents(const SDL_Event& event)
 
 void RigidBody3D::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "RigidBody3D");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "RigidBody3D");
 	if (opened)
 	{
-		UIStatics::DrawVec3("Velocity", vel, 100.0f);
-		UIStatics::DrawVec3("Acceleration", accel, 100.0f);
-		UIStatics::DrawVec3("Angular Vel", angularVel, 100.0f);
-		UIStatics::DrawVec3("Angular Accel", angularAcc, 100.0f);
+		Globals::Editor::DrawVec3("Velocity", vel, 100.0f);
+		Globals::Editor::DrawVec3("Acceleration", accel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Vel", angularVel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Accel", angularAcc, 100.0f);
 
 		ImGui::TreePop();
 	}

@@ -224,7 +224,7 @@ public:
 	std::shared_ptr<GameObject> AddChild(std::shared_ptr<GameObject> go)
 	{
 		children.emplace_back(go);
-		go->parent = Globals::GetSceneGraph()->FindGameObject(name);
+		go->parent = Globals::Engine::GetSceneGraph()->FindGameObject(name);
 		go->transform.SetParent(&this->transform);
 		return go;
 	}

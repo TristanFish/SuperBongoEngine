@@ -30,7 +30,7 @@ LoadUtility* LoadUtility::GetInstance()
 
 #pragma region Core Functions
 
-void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
+void LoadUtility::LoadObject(SaveFile& file)
 {
 	if (file.GetFileType() == FileType::OBJECT)
 	{
@@ -43,17 +43,19 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 		MATH::Vec3 Position;
 		MATH::Vec3 Rotation;
 		MATH::Vec3 Scale;
+		UUniqueID uuid = UUniqueID(false);
 
 		for (int i = 0; i < 3; i++)
 		{
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::IntToVector(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::IntToVector(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::IntToVector(i)]);
+			Position[i] = std::get<float>(PosElm.Attributes[Globals::Engine::IntToVector(i)]);
+			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::Engine::IntToVector(i)]);
+			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::Engine::IntToVector(i)]);
 		}
 
 		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
 		
-		if (uuid == 0)
+
+		if (!InitalizeAttribute<uint32_t>("UniqueIdentifier", IdentifiersElm))
 		{
 			uuid = std::get<uint32_t>(IdentifiersElm.Attributes["UniqueIdentifier"]);
 		}
@@ -71,7 +73,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 
 			for (int i = 0; i < 4; i++)
 			{
-				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::IntToVector(i)]);
+				MeshColor[i] = std::get<float>(MeshColorElm.Attributes[Globals::Engine::IntToVector(i)]);
 			}
 		}
 
@@ -91,7 +93,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 					clone->GetComponent<MeshRenderer>()->SetColorTint(MeshColor);
 				}
 
-				Globals::s_SceneGraph->AddGameObject(clone);
+				Globals::Engine::s_SceneGraph->AddGameObject(clone);
 
 				break;
 			}
@@ -101,7 +103,7 @@ void LoadUtility::LoadObject(SaveFile& file, UUniqueID uuid)
 
 void LoadUtility::LoadExistingSaves()
 {
-	std::string directory = Globals::SAVE_DATA_PATH;
+	std::string directory = Globals::Engine::SAVE_DATA_PATH;
 	std::string objDir = "Objects\\";
 	std::string sceneObjPath = (directory + objDir);
 
@@ -134,7 +136,7 @@ void LoadUtility::LoadSceneSaves()
 
 	std::string objDir = "Objects\\";
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
-	std::string sceneObjPath = (Globals::SAVE_DATA_PATH + objDir) + sceneName + "\\";
+	std::string sceneObjPath = (Globals::Engine::SAVE_DATA_PATH + objDir) + sceneName + "\\";
 
 	if (!std::filesystem::exists(sceneObjPath))
 		return;
@@ -155,7 +157,7 @@ void LoadUtility::LoadSceneSaves()
 void LoadUtility::UnLoadSceneSaves()
 {
 	EngineLogger::Info("===========OLD SCENE SAVES BEING UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
-	for (auto elm : SaveManager::GetSaveFile(Globals::SCENE_NAME).GetElements())
+	for (auto elm : SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME).GetElements())
 	{
 		SaveManager::RemoveSave(elm.first);
 	}

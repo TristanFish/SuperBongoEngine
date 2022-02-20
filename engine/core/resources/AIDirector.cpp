@@ -54,7 +54,7 @@ std::vector<Poly> AIDirector::GetPositiveVerticies() const
 {
 	std::vector<Poly> positivePolygons;
 
-	for (const auto& obj : Globals::s_SceneGraph->GetGameObjects())
+	for (const auto& obj : Globals::Engine::s_SceneGraph->GetGameObjects())
 	{
 		if (!obj->HasComponent<MeshRenderer>())
 			continue;

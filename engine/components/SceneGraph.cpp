@@ -8,7 +8,6 @@
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
 
-#include "graphics/UIStatics.h"
 
 
 SceneGraph::~SceneGraph() 

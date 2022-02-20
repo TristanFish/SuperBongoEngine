@@ -2,7 +2,6 @@
 #include "rendering/Camera.h"
 #include "components/GameObject.h"
 #include "core/resources/ShaderManager.h"
-#include "graphics/UIStatics.h"
 
 LineRenderer::LineRenderer()
 {
@@ -26,7 +25,7 @@ void LineRenderer::Update(const float deltaTime)
 
 void LineRenderer::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "Line Renderer");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "Line Renderer");
 
 	if(opened)
 	{

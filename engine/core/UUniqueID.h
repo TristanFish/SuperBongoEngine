@@ -7,6 +7,8 @@ class UUniqueID
 {
 public:
 	UUniqueID();
+	UUniqueID(bool GenerateID);
+
 	UUniqueID(uint32_t uuid);
 
 

@@ -160,7 +160,7 @@ ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 3; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F", i), value[i]);
+		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
 	}
 
 	return element;
@@ -171,7 +171,7 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F",i), value[i]);
+		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F",i), value[i]);
 	}
 
 	return element;
