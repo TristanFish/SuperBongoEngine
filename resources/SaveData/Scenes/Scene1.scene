@@ -8,6 +8,6 @@
         <test/>
     </Objects>
     <SceneSettings>
-        <BaseClass: S_:="class CoreEngine"/>
+        <BaseClass: S_:="class Scene1"/>
     </SceneSettings>
 </Root>
