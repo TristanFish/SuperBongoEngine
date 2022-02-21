@@ -48,28 +48,3 @@
 [INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 134
 [INFO]: Player added to scenegraph in: ECS.cpp on line: 134
 [INFO]: test added to scenegraph in: ECS.cpp on line: 134
-[SAVE][INFO]: ===========OLD SCENE SAVES BEING UNLOADED=========== in: SaveUtility.cpp on line: 159
-[SAVE][INFO]: Box File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: Light File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: Light_1 File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: Plane-1 File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: Player File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: test File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: ===========OLD SCENE SAVES SUCCESFULLY UNLOADED=========== in: SaveUtility.cpp on line: 165
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 135
-[SAVE][INFO]: BlueBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: RedBox Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 154
-[INFO]: Scene: Scene_2 Created in: Scene.cpp on line: 27
-[INFO]: BlueBox added to scenegraph in: ECS.cpp on line: 134
-[INFO]: RedBox added to scenegraph in: ECS.cpp on line: 134
-[SAVE][INFO]: Scene_2 File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][WARNING]: BlueBox Already Exists in: SaveUtility.cpp on line: 187
-[SAVE][INFO]: BlueBox File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][WARNING]: RedBox Already Exists in: SaveUtility.cpp on line: 187
-[SAVE][INFO]: RedBox File Has Been Deleted in: SaveManager.cpp on line: 54
-[SAVE][INFO]: ===========SAVES BEING COMPILED=========== in: SaveUtility.cpp on line: 38
-[SAVE][INFO]: BlueBox Compiled Successfully in: SaveUtility.cpp on line: 75
-[SAVE][INFO]: Scene_2 Compiled Successfully in: SaveUtility.cpp on line: 75
-[SAVE][INFO]: RedBox Compiled Successfully in: SaveUtility.cpp on line: 75
-[SAVE][INFO]: ===========SAVES FINISHED COMPILING=========== in: SaveUtility.cpp on line: 78
