@@ -10,8 +10,9 @@ class Bird : public GameObject
 public:
 
 	Bird(const std::string& name, MATH::Vec3 position);
-	
-	Bird* NewClone() const override { return new Bird(*this); };
+	~Bird() = default;
+
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Bird>(this->name, this->transform.GetPosition()); };
 
 
 	//! Base Grass Constructor
@@ -24,7 +25,6 @@ private:
 	the number of instances we want to render*/
 
 	//! Base Grass Destructor
-	~Bird() = default;
 
 	Debug frame;
 

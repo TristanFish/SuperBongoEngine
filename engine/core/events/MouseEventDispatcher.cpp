@@ -108,7 +108,7 @@ void MouseEventDispatcher::UpdateMousePosition()
 
 	SDL_GetMouseState(&x, &y);
 
-	y = Globals::SCREEN_HEIGHT - y;
+	y = Globals::Engine::SCREEN_HEIGHT - y;
 
 	if(firstUpdate)
 	{

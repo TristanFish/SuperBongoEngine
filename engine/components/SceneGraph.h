@@ -20,13 +20,12 @@ private:
 
 	//! Vector of GameObject pointers 
 	/*! Holds all of the gameobjects in our scene*/
-	std::vector<GameObject*> gameObjects;
+	std::vector<std::shared_ptr<GameObject>> gameObjects;
 
 	//! Vector of RgidBody3D pointers 
 	/*! Holds all of the rigidbodies in our scene*/
 	std::vector<RigidBody3D*> rigidBodies;
 
-	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
 	OctSpatialPartition* ScenePartition;
 
@@ -62,7 +61,11 @@ public:
 
 	//! FindGameObject Function
 	/*!Returns the first gameObject with a given name*/
-	GameObject* FindGameObject(const std::string& name);
+	std::shared_ptr<GameObject> FindGameObject(const std::string& name);
+
+	//! FindGameObject Function
+	/*!Returns the first gameObject with a given name*/
+	std::shared_ptr<GameObject> FindGameObject(const uint32_t& uuid);
 
 	//! GameObjectNetworkUpdate Function
 	/*!Finds and updates networkable game object based on data received from server*/
@@ -70,10 +73,9 @@ public:
 
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
-	GameObject& AddGameObject(GameObject* go);
+	const std::shared_ptr<GameObject> AddGameObject(std::shared_ptr<GameObject> go);
 
 
-	const std::unordered_map<std::string, GameObject*>& GetInstantiableObjects() const;
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
@@ -83,7 +85,7 @@ public:
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	const std::vector<std::shared_ptr<GameObject>>& GetGameObjects() const { return gameObjects; }
 	const std::vector<RigidBody3D*>& GetRigidBodies() const { return rigidBodies; }
 
 	OctSpatialPartition* GetScenePartition() const { return ScenePartition; }
@@ -93,8 +95,8 @@ public:
 	void CheckCollisions();
 
 
-	void LoadGameObject(GameObject* go);
-	void DeleteGameObject(GameObject* go);
+	void LoadGameObject(std::shared_ptr<GameObject> go);
+	void DeleteGameObject(std::shared_ptr <GameObject> go);
 };
 
 #endif

@@ -17,8 +17,8 @@ Vec2 MouseRay::GetDeviceCoords(float x_, float y_)
 	Vec2 mouse;
 
 	Vec2 viewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
-	mouse.x = (x_ / Globals::SCREEN_WIDTH - 0.5f) * 2.0f;
-	mouse.y = (y_ / Globals::SCREEN_HEIGHT - 0.5f) * 2.0f;
+	mouse.x = (x_ / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f;
+	mouse.y = (y_ / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f;
 	mouse.y = -mouse.y;
 
 	return mouse;

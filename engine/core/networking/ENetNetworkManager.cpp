@@ -115,7 +115,7 @@ void ENetNetworkManager::HandleServerEvents()
 				string parsedData = ParseJsonData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
-				Globals::GetSceneGraph()->GameObjectNetworkUpdate(parsedData);
+				Globals::Engine::GetSceneGraph()->GameObjectNetworkUpdate(parsedData);
 				break;
 			}
 		default: ;
@@ -151,7 +151,7 @@ void ENetNetworkManager::HandleClientEvents()
 				string parsedData = ParseJsonData(netEvent.packet->data);
 				EngineLogger::Info("Received packet containing \"" + parsedData + "\"", 
 								  "ENetNetworkManager.cpp", __LINE__, MessageTag::TYPE_NETWORK);
-				Globals::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
+				Globals::Engine::s_SceneGraph->GameObjectNetworkUpdate(parsedData);
 				break;
 			}
 		default: ;

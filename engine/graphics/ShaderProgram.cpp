@@ -149,3 +149,14 @@ void ShaderProgram::TakeUniform(const std::string& name, const Uint16 i) const
 	}
 	glUniform1ui(location, i);
 }
+
+void ShaderProgram::TakeUniform(const std::string& name, const uint32_t i) const
+{
+	const GLint location = glGetUniformLocation(programID, name.c_str());
+	if (location < 0)
+	{
+		EngineLogger::Warning("Uniform ID: " + name + " not found or unused", "Shader.cpp", __LINE__);
+		return;
+	}
+	glUniform1ui(location, i);
+}

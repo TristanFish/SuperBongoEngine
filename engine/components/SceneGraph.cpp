@@ -8,27 +8,12 @@
 #include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
 
-#include "graphics/UIStatics.h"
 
 
 SceneGraph::~SceneGraph() 
 {
-	for (GameObject* g : gameObjects)
-	{
-		if (g)
-		{
-			delete g;
-			g = nullptr;
-		}
-	}
+	
 
-	for (auto nameObjectPair : InstantiableObjects)
-	{
-		delete nameObjectPair.second;
-		nameObjectPair.second = nullptr;
-	}
-
-	InstantiableObjects.clear();
 	
 	gameObjects.clear();
 
@@ -39,19 +24,9 @@ void SceneGraph::Init()
 {
 	//ScenePartition = new OctSpatialPartition(1500);
 
-	for (const auto& obj : SaveManager::SaveableObjects)
-	{
-		//if obj is not already in InstantiableObjects
-		if(InstantiableObjects.find(obj.first) == InstantiableObjects.end())
-		{
-			if (obj.second->canBeInstantiated)
-			{
-				InstantiableObjects.emplace(obj.first, obj.second->NewClone());
-			}
-		}
-	}
+	
 
-	for(auto& go : gameObjects)
+	for(const auto& go : gameObjects)
 	{
 		go->Init();
 	}
@@ -59,7 +34,7 @@ void SceneGraph::Init()
 
 void SceneGraph::PostInit()
 {
-	for(GameObject* go : gameObjects)
+	for(const auto& go : gameObjects)
 	{
 		go->PostInit();
 	}
@@ -68,7 +43,7 @@ void SceneGraph::PostInit()
 
 void SceneGraph::Update(const float deltaTime)
 {
-	for (auto* g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		if (g->isActive())
 		{
@@ -91,16 +66,16 @@ void SceneGraph::Render() const
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
 {
-	for (auto* g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		g->HandleEvents(event);
 	}
 }
 
 //Finds THE FIRST gameObject with the given name
-GameObject* SceneGraph::FindGameObject(const std::string& name)
+std::shared_ptr<GameObject> SceneGraph::FindGameObject(const std::string& name)
 {
-	for (auto* g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		if (g->name == name)
 		{
@@ -109,6 +84,19 @@ GameObject* SceneGraph::FindGameObject(const std::string& name)
 	}
 
 	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
+
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> SceneGraph::FindGameObject(const uint32_t& uuid)
+{
+	for (const auto& g : gameObjects)
+	{
+		if (g->GetUUID() == uuid)
+		{
+			return g;
+		}
+	}
 
 	return nullptr;
 }
@@ -124,7 +112,7 @@ void SceneGraph::GameObjectNetworkUpdate(std::string& string)
 }
 
 //Adds a gameObject with a name and position
-GameObject& SceneGraph::AddGameObject(GameObject* go)
+const std::shared_ptr<GameObject> SceneGraph::AddGameObject(std::shared_ptr<GameObject> go)
 {
 	if (!FindGameObject(go->name.c_str()))
 	{
@@ -136,13 +124,12 @@ GameObject& SceneGraph::AddGameObject(GameObject* go)
 		LoadGameObject(go);
 	}
 	
-	return *go;
+	return go;
 }
 
-void SceneGraph::LoadGameObject(GameObject* go)
+void SceneGraph::LoadGameObject(std::shared_ptr<GameObject> go)
 {
 	go->Init();
-
 	gameObjects.emplace_back(go);
 	EngineLogger::Info(std::string(go->name) + " added to scenegraph", "ECS.cpp", __LINE__);
 
@@ -159,13 +146,13 @@ void SceneGraph::LoadGameObject(GameObject* go)
 		//ScenePartition->AddObject(rb->GetCollider());
 	}
 
-	for (GameObject* child : go->children)
+	for (std::shared_ptr<GameObject> child : go->children)
 	{
 		AddGameObject(child);
 	}
 }
 
-void SceneGraph::DeleteGameObject(GameObject* go)
+void SceneGraph::DeleteGameObject(std::shared_ptr<GameObject> go)
 {
 	if (go->HasComponent<RigidBody3D>())
 	{
@@ -179,22 +166,18 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 		}
 	}
 
-	for (std::vector<GameObject*>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
+	for (std::vector<std::shared_ptr<GameObject>>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
 	{
 		if (*iter == go)
 		{
+			go.reset();
 			gameObjects.erase(iter);
-			delete go;
-			go = nullptr;
 			break;
 		}
 	}
 }
 
-const std::unordered_map<std::string, GameObject*>& SceneGraph::GetInstantiableObjects() const
-{
-	return InstantiableObjects;
-}
+
 
 void SceneGraph::CheckCollisions()
 {

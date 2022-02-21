@@ -12,7 +12,7 @@
 
 
 
-typedef std::variant<int,uint64_t,float,double,bool,std::string> Attribute;
+typedef std::variant<int,uint32_t,float,double,bool,std::string> Attribute;
 
 
 //! FileType enum class
@@ -90,10 +90,13 @@ struct ElementInfo
 	/*!Returns if the parent name is empty or not.*/
 	bool HasParent() const { return parentName.empty(); }
 
+	bool HasAttribute(const std::string& AtribName) const { return Attributes.find(AtribName) != Attributes.end(); }
 
 	//! IsRootChild Function
 	/*!Returns if the parent name is equal to "Root"*/
 	bool IsRootChild() const { return parentName == "Root"; }
+
+
 };
 
 

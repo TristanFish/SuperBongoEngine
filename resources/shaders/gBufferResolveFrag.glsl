@@ -154,4 +154,5 @@ void main()
 	}
 
 	fragColor = lightCol;
+
 }

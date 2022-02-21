@@ -4,6 +4,7 @@
 #include "core/Logger.h"
 #include "core/3D/Physics/Collider3D.h"
 #include "core/UUniqueID.h"
+#include "core/Globals.h"
 
 #include "Transform.h"
 #include "Components.h"
@@ -30,8 +31,8 @@ protected:
 	/*! Controls if the gameObject is active or not*/
 	bool active = true;
 
-	GameObject* parent;
-	std::vector<GameObject*> children;
+	std::shared_ptr<GameObject> parent;
+	std::vector<std::shared_ptr<GameObject>> children;
 	std::vector<Component*> componentList;
 
 	friend class SceneGraph;
@@ -83,7 +84,7 @@ public:
 
 	virtual void ImguiRender() {}
 
-	virtual GameObject* NewClone() const = 0;
+	virtual std::shared_ptr<GameObject> NewClone() const = 0;
 
 	//GetType function
 	/*!Returns the type of class that the owning class is*/
@@ -100,7 +101,7 @@ public:
 	std::string GetName() const { return name; }
 	std::string& GetNameRef() { return name; }
 
-	uint64_t GetUUID() const { return uuid; }
+	uint32_t GetUUID() const { return uuid; }
 
 
 	//!GetModelMatrix Getter
@@ -125,19 +126,19 @@ public:
 	void SetName(const std::string& name_) { name = name_; }
 
 
-	void SetUUID(const uint64_t& uuid_) { uuid = UUniqueID(uuid_); }
+	void SetUUID(const uint32_t& uuid_) { uuid = UUniqueID(uuid_); }
 
-	 GameObject* GetParent() const { return parent; }
+	 std::shared_ptr<GameObject> GetParent() const { return parent; }
 	
-	 GameObject* GetChild(int i) const { return children[i]; }
+	 std::shared_ptr<GameObject> GetChild(int i) const { return children[i]; }
 
-	 std::vector<GameObject*>& GetChildren() { return children; }
+	 std::vector<std::shared_ptr<GameObject>>& GetChildren() { return children; }
 
 	 const std::vector<Component*>& GetComponents() const { return componentList; }
 
 	 int GetChildCount() const { return children.size(); }
 	
-	bool operator == (const GameObject* v) const { return name == v->name; }
+	bool operator == (const std::shared_ptr<GameObject> v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
 	virtual void OnCollisionEnter(Collider3D& otherCollider) {}
@@ -220,17 +221,17 @@ public:
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);
 	}
 
-	GameObject* AddChild(GameObject* go)
+	std::shared_ptr<GameObject> AddChild(std::shared_ptr<GameObject> go)
 	{
 		children.emplace_back(go);
-		go->parent = this;
+		go->parent = Globals::Engine::GetSceneGraph()->FindGameObject(name);
 		go->transform.SetParent(&this->transform);
 		return go;
 	}
 
-	void RemoveChild(GameObject* go)
+	void RemoveChild(std::shared_ptr<GameObject> go)
 	{
-		std::vector<GameObject*>::iterator iter = children.begin();
+		std::vector<std::shared_ptr<GameObject>>::iterator iter = children.begin();
 
 		while (iter != children.end())
 		{
@@ -246,7 +247,7 @@ public:
 	}
 
 	template <typename T>
-	T* AddChild(GameObject* go)
+	T* AddChild(std::shared_ptr<GameObject> go)
 	{
 		children.emplace_back(go);
 		go->parent = this;

@@ -2,7 +2,7 @@
 #define LOADUTILITY_H
 
 #include "core/UUniqueID.h"
-#include "core//resources/SaveManager.h"
+#include "core/resources/SaveManager.h"
 
 
 #include <memory>
@@ -41,6 +41,10 @@ private:
 	//! GetFileExtention function 
 	/*! Return's the file extention enum that goes with the passed in string*/
 	FileType GetFileExtention(const std::string& ext) const;
+
+
+
+	
 public:
 
 	LoadUtility() = default;
@@ -63,11 +67,27 @@ public:
 
 	//! LoadObject function 
 	/*! Load's a game object into the engine with the information from the savefile*/
-	void LoadObject(SaveFile& file, UUniqueID uuid = UUniqueID(0));
+	void LoadObject(SaveFile& file);
 
 	//! LoadDefaultScenes function 
 	/*! Loads in the non c++ created scenes into the engine*/
 	void LoadDefaultScenes(class GameInterface* G_Interface) const;
+
+
+	template<typename AtribType>
+	bool InitalizeAttribute(const std::string Atrib_Name, ElementInfo& Element)
+	{
+		if (!Element.HasAttribute(Atrib_Name))
+		{
+			AtribType Atrib = 0;
+			Element.Attributes.emplace(Atrib_Name, Atrib);
+
+			return true;
+		}
+
+		return false;
+	}
+
 };
 
 #endif

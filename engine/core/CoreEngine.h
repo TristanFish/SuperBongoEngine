@@ -45,8 +45,12 @@ public:
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;
 
+
 	void ReloadCurrentScene();
 	void OnDestroy();
+	
+	void SaveSceneData() const;
+	void LoadSceneData();
 
 private:
 	CoreEngine();

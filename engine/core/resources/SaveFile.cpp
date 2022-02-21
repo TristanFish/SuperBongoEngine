@@ -276,7 +276,7 @@ std::string SaveFile::GetFileDestination() const
 	std::string sceneName;
 
 	sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
-	destination = Globals::SAVE_DATA_PATH;
+	destination = Globals::Engine::SAVE_DATA_PATH;
 	switch (fileType)
 	{
 
@@ -313,12 +313,12 @@ void SaveFile::Save()
 {
 	std::string Destination = GetFileDestination();
 
-	SaveFile& save = SaveManager::GetSaveFile(Globals::SCENE_NAME);
+	SaveFile& save = SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME);
 
 	if (save.FileName != save.prevFileName)
 	{
-		std::filesystem::path oldPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
-		std::filesystem::path newPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
+		std::filesystem::path oldPath = Globals::Engine::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
+		std::filesystem::path newPath = Globals::Engine::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
 
 		if (std::filesystem::exists(oldPath))
 		{

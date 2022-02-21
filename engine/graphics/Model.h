@@ -33,12 +33,16 @@ public:
 	void LoadModel();
 	void DestroyModel();
 	std::vector<Vertex> GetVertices() const;
+
 	
-private:
+ private:
+
 
 	 void ProcessNode(aiNode* node, const aiScene* scene);
 	 Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	 std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName);
+
+
 };
 
 #endif

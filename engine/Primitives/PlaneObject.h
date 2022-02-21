@@ -13,7 +13,7 @@ public:
 	
 	void OnCollisionEnter(Collider3D& otherBody) override;
 
-	PlaneObject* NewClone() const override { return new PlaneObject(this->name, this->transform.GetPosition()); };
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<PlaneObject>(this->name, this->transform.GetPosition()); }
 
 };
 

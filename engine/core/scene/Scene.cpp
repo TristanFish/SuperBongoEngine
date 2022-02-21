@@ -1,18 +1,14 @@
 #include "Scene.h"
 
-#include <imgui/imgui_internal.h>
 
-#include "core/Globals.h"
 #include "core/Logger.h"
-#include "core/MouseRay.h"
 #include "core/CoreEngine.h"
-#include "core/3D/OctSpatialPartition.h"
 #include "core/resources/CollisionDetection.h"
-#include "core/resources/SaveManager.h"
 
-#include "gameObjects/TestModel.h"
-#include "graphics/UIStatics.h"
-#include "Utility/LoadUtility.h"
+
+#include "components/GameObject.h"
+
+#include "Rendering/Renderer.h"
 
 using namespace MATH;
 
@@ -55,8 +51,13 @@ void Scene::Render()
 
 void Scene::HandleEvents(const SDL_Event& event)
 {
-	mouseRay.HandleEvents(event);
 	objectList->HandleEvents(event);
+
+
+
+	
+
+
 }
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
@@ -69,68 +70,29 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-	//if (buttonType == SDL_BUTTON_LEFT)
-	//{
-	//	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
-	//		return;
 
-	//	mouseRay.CalculateMouseRay();
-
-	//	GameObject* hitResult = nullptr;
-	//	float shortestDistance = FLT_MAX;
-
-	//	hitResult = objectList->GetScenePartition()->GetCollision(mouseRay);
-
-
-	//	if (hitResult)
-	//	{
-	//		EngineLogger::Info("Mouse hit " + std::string(hitResult->name), "Scene.cpp", __LINE__);
-	//		if (!hitResult->isObjectSelected)
-	//		{
-	//			
-	//		}
-	//		hitResult->isObjectSelected = true;
-	//		UIStatics::SetSelectedObject(hitResult);
-	//	}
-	//}
-}
-
-void Scene::SaveMapData() const
-{
-	if (!SaveManager::TransferToSaveQueue(Scene_Name))
+	if (buttonType == SDL_BUTTON_LEFT)
 	{
-		SaveUtility::GetInstance()->CreateSave(Scene_Name, FileType::SCENE);
-	}
+		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+			return;
 
-	SaveManager::GetSaveFile(Scene_Name).ClearElements();
-	ElementInfo info = ElementInfo("Root");
 
-	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
-	info = ElementInfo("SceneSettings");
-	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
-	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
+		int XPos = Renderer::GetInstance()->GetViewport().GetMousePosX();
 
-	info = ElementInfo("Root");
-	SaveUtility::GetInstance()->AddElement(Scene_Name, "Objects", info);
-	
-	info = ElementInfo("Objects");
-	
-	for (auto* obj : objectList->GetGameObjects())
-	{
-		SaveUtility::GetInstance()->AddElement(Scene_Name, obj->GetName(), info);
-		SaveUtility::GetInstance()->SaveObject(obj->GetName(), obj);
-	}
+		int YPos = Renderer::GetInstance()->GetViewport().GetMousePosY();
 
-	SaveUtility::GetInstance()->CompileSaves();
-}
 
-void Scene::LoadMapData()
-{
-	for (auto elm : SaveManager::GetSaveFile(Scene_Name).GetElements())
-	{
-		if (!objectList->FindGameObject(elm.first))
+		uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
+		
+
+		std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
+
+		if (SelectedObj != nullptr)
 		{
-			LoadUtility::GetInstance()->LoadObject(SaveManager::GetSaveFile(elm.first));
+			SelectedObj->isObjectSelected = true;
+			Globals::Editor::SetSelectedObject(SelectedObj);
 		}
+		
 	}
+
 }

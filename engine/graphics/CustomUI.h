@@ -176,7 +176,7 @@ namespace CustomUI
 
 		//! gameobjects vector
 		/*! Holds all of the gameobjects in the hierarchy */
-		std::vector<GameObject*> gameobjects;
+		std::vector<std::shared_ptr<GameObject>> gameobjects;
 
 		//! textFilter ImGuiTextFilter
 		/*! Is used to filter through objects in the hierarchy via the search bar*/
@@ -186,7 +186,7 @@ namespace CustomUI
 
 		//! GenerateTree Function
 		/*! Generates the gameObject tree for rendering*/
-		void GenerateTree(GameObject* go, int index);
+		void GenerateTree(std::shared_ptr<GameObject> go, int index);
 
 
 		void UpdateActiveObjects();
@@ -242,9 +242,12 @@ namespace CustomUI
 		bool GetIsMouseHovered() const { return isMouseHovered; }
 
 		MATH::Vec2 GetViewportSize() const { return viewportSize; }
-		MATH::Vec2 GetViewportMin() const { return viewport_Min; }
-		MATH::Vec2 GetViewportMax() const { return viewport_Max; }
 	
+		MATH::Vec2 GetViewportPosition() const { return viewport_Position; }
+
+		int GetMousePosX() const { return MouseX; }
+		int GetMousePosY() const { return MouseY; }
+
 	private:
 		//! viewportSize Vec2 
 		/*! Stores the viewports size */
@@ -252,6 +255,10 @@ namespace CustomUI
 		//! viewport_Min/Max Vec2s 
 		/*! Stores the viewport min/max positons on the screen */
 		MATH::Vec2 viewport_Min, viewport_Max;
+
+		MATH::Vec2 viewport_Position;
+
+		int MouseX, MouseY;
 
 		std::string modeName;
 		std::string aspectSize;
@@ -268,6 +275,8 @@ namespace CustomUI
 
 		bool isActive;
 
+
+		void UpdateViewportPosition();
 
 	};
 

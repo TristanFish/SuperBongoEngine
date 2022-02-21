@@ -17,7 +17,7 @@ public:
 	// Inherited via GameObject
 	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-	Tetrahedron* NewClone() const override { return new Tetrahedron(this->name, this->transform.GetPosition()); }
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Tetrahedron>(this->name, this->transform.GetPosition()); }
 
 
 private:

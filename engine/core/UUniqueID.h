@@ -7,12 +7,14 @@ class UUniqueID
 {
 public:
 	UUniqueID();
-	UUniqueID(uint64_t uuid);
+	UUniqueID(bool GenerateID);
+
+	UUniqueID(uint32_t uuid);
 
 
-	operator uint64_t() const { return m_UUID; }
+	operator uint32_t() const { return m_UUID; }
 private:
-	uint64_t m_UUID;
+	uint32_t m_UUID;
 
 	
 };
@@ -24,7 +26,7 @@ namespace std
 	{
 		std::size_t operator()(const UUniqueID& uuid) const
 		{
-			return  hash<uint64_t>()((uint64_t)uuid);
+			return  hash<uint32_t>()((uint32_t)uuid);
 		}
 	};
 }

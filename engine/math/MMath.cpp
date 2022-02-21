@@ -376,3 +376,58 @@ Matrix4 MMath::inverse(const Matrix4 &m) {
 		}
 		return inverseM;
 }
+
+
+
+
+bool MMath::DecomposeTransform(const Matrix4& transform, Vec3& outTransform, Quaternion& outQuaternion, Vec3& outScale)
+{
+
+
+	Matrix4 TransformMatrix(transform);
+
+	if (epsilonEqual(TransformMatrix.getColumn(3)[3], 0.0f, 0.1f))
+		return false;
+
+	if (epsilonNotEqual(TransformMatrix.getColumn(0)[3], 0.0, 0.1) || epsilonNotEqual(TransformMatrix.getColumn(1)[3], 0.0, 0.1) || epsilonNotEqual(TransformMatrix.getColumn(2)[3], 0.0, 0.1))
+	{
+		TransformMatrix[12] = TransformMatrix[13] = TransformMatrix[14] = 0.0f;
+		TransformMatrix[15] = 1.0f;
+	}
+
+	outTransform = MATH::Vec3(TransformMatrix.getColumn(3));
+	TransformMatrix[12] = TransformMatrix[13] = TransformMatrix[14] = 0.0f;
+	
+
+	Vec3 Row[3], Pdum3;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			Row[i][j] = TransformMatrix.getColumn(i)[j];
+		}
+	}
+
+	outScale.x = VMath::mag(Row[0]);
+	outScale.y = VMath::mag(Row[1]);
+	outScale.z = VMath::mag(Row[2]);
+
+
+
+
+	outQuaternion = ConvertMatToQuat(transform);
+
+	return true;
+}
+
+bool MMath::epsilonEqual(const float& x, const float& y, const float& epsilon)
+{
+	return (x - y) < epsilon;
+}
+
+bool MMath::epsilonNotEqual(const float& x, const float& y, const float& epsilon)
+{
+	return (x - y) >= epsilon;
+
+}

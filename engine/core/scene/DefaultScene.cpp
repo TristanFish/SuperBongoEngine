@@ -1,9 +1,9 @@
 #include "DefaultScene.h"
 
-#include "core/MouseRay.h"
 #include "core/Logger.h"
-#include "core/Globals.h"
 
+
+#include "core/CoreEngine.h"
 
 
 DefaultScene::DefaultScene(const std::string& Scene_Name_) 
@@ -20,7 +20,7 @@ bool DefaultScene::OnCreate()
 {
 	EngineLogger::Info("Scene: " + Scene_Name + " Created", "Scene1.cpp", __LINE__);
 
-	LoadMapData();
+	CoreEngine::GetInstance()->LoadSceneData();
 
 	objectList->Init();
 

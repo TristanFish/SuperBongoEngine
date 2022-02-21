@@ -4,7 +4,7 @@
 #include "core/resources/ShaderManager.h"
 #include "core/resources/TextureManager.h"
 #include "core/3D/Physics//BoundingBox.h"
-#include "graphics/UIStatics.h"
+#include "core/Globals.h"
 
 #include "Utility/SaveUtility.h"
 
@@ -38,6 +38,7 @@ void MeshRenderer::Init(GameObject* g)
 	gameObject = g;
 
 	Renderer::GetInstance()->AddMeshRenderer(this);
+
 }
 
 void MeshRenderer::Update(const float deltaTime)
@@ -100,6 +101,7 @@ void MeshRenderer::Render(const ShaderProgram& shader_) const
 	shader_.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
 	shader_.TakeUniform("normalMatrix", normMat);
 	shader_.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
+	shader_.TakeUniform("uniqueID", gameObject->GetUUID());
 
 	for (auto& m : model->meshes)
 	{
@@ -218,7 +220,7 @@ void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string paren
 
 void MeshRenderer::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "MeshRenderer");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "MeshRenderer");
 	
 	if (opened)
 	{
@@ -255,7 +257,7 @@ void MeshRenderer::ImGuiRender()
 			}
 			ImGui::EndCombo();
 		}
-		UIStatics::DrawTextureSlot("texture_09.jpg", this,5.0f);
+		Globals::Editor::DrawTextureSlot("texture_09.jpg", this,5.0f);
 
 		ImGui::TreePop();
 	}

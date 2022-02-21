@@ -37,6 +37,8 @@ namespace MATH {
 			return(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
 		}
 
+		
+
 		inline static float mag(const Vec2& a) {
 			return(sqrt(a.x * a.x + a.y * a.y));
 		}

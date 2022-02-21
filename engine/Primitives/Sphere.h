@@ -16,8 +16,8 @@ public:
 	// Inherited via GameObject
 	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-	Sphere* NewClone() const override { return new Sphere(this->name, this->transform.GetPosition()); };
 
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Sphere>(this->name, this->transform.GetPosition()); }
 
 private:
 };

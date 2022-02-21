@@ -41,7 +41,7 @@ public:
 	void AddLine(LineRenderer* line);
 	void DeleteLine(LineRenderer* line);
 
-	static void DrawDebugGeometry(const std::vector<GameObject*>& objects);
+	static void DrawDebugGeometry(const std::vector<std::shared_ptr<GameObject>>& objects);
 
 	void Render();
 	void DestroyRenderer();
@@ -77,6 +77,7 @@ private:
 	BufferTexture posTexture;
 	BufferTexture normTexture;
 	BufferTexture albedoTexture;
+	BufferTexture uniqueIDTexture;
 
 	GLuint vao;
 	GLuint vbo;

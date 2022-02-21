@@ -71,6 +71,11 @@ public:
 	/*! Returns the transforms model matrix */
 	MATH::Matrix4& GetModelMatrix()  { return modelMatrix; }
 
+
+	//!GetModelMatrix Getter
+	/*! Returns the transforms model matrix */
+	void SetModelMatrixRow(MATH::Vec4 newRow, int index) { modelMatrix.setRow(newRow,index); }
+
 	//!GetRotationMatrix Getter
 	/*! Returns the transforms rotation matrix */
 	const MATH::Matrix4& GetRotationMatrix() const { return rotationMatrix; }

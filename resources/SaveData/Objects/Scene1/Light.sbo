@@ -1,8 +1,8 @@
 <Root>
-    <Identifiers S_Name="Light" U64_UniqueIdentifier="981376090287247115">
+    <Identifiers S_Name="Light" U64_UniqueIdentifier="3298955019">
         <Transform>
             <Position F_X="17.4" F_Y="10.9" F_Z="6"/>
-            <Rotation F_X="0" F_Y="28.600006" F_Z="-180"/>
+            <Rotation F_X="0" F_Y="28.600006" F_Z="180"/>
             <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>

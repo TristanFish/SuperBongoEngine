@@ -61,16 +61,18 @@ void Renderer::SetupFrameBuffers()
 	defaultBuffer.clearColor = Colour(1.0f, 0.0f, 0.0f, 1.0f);
 	
 	gBuffer.InitFrameBuffer();
-	//Attach depthRenderBuffer
+	//Attach depthRenderBuffer`
 	glGenRenderbuffers(1, &depthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewport.GetViewportSize().x, viewport.GetViewportSize().y);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 	gBuffer.AttachTexture(albedoTexture);
 	gBuffer.AttachTexture(normTexture);
 	gBuffer.AttachTexture(posTexture);
 	gBuffer.AttachTexture(depthTexture);
 	gBuffer.AttachTexture(stencilTexture);
+	gBuffer.AttachTexture(uniqueIDTexture);
+
 	gBuffer.FinalizeBuffer();
 
 	gBufferRenderResult.InitFrameBuffer();
@@ -84,7 +86,8 @@ void Renderer::SetupTextures()
 	normTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
-	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
+	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_SHORT);
+	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
 	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
 
@@ -166,10 +169,10 @@ void Renderer::DeleteLine(LineRenderer* line)
 	}
 }
 
-void Renderer::DrawDebugGeometry(const std::vector<GameObject*>& objects)
+void Renderer::DrawDebugGeometry(const std::vector<std::shared_ptr<GameObject>>& objects)
 {
 	#ifdef _DEBUG
-	for (auto* g : objects)
+	for (const auto& g : objects)
 	{
 		g->DrawDebugGeometry();
 	}
@@ -181,7 +184,7 @@ void Renderer::Render()
 	//Skybox here
 	skyBox->Render();
 
-	DrawDebugGeometry(Globals::s_SceneGraph->GetGameObjects());
+	DrawDebugGeometry(Globals::Engine::s_SceneGraph->GetGameObjects());
 
 	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{
@@ -330,7 +333,7 @@ void Renderer::Resize(const int size_x, const int size_y)
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
 
-
+	SetupTextures();
 	SetupFrameBuffers();
 	
 	//Set frame buffer back to default
@@ -448,6 +451,8 @@ void Renderer::BindGBufferTextures() const
 	glActiveTexture(GL_TEXTURE4);
 	glUniform1i(glGetUniformLocation(resultShader.GetID(), "stencilTexture"), 4);
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
+
+
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -466,9 +471,14 @@ void Renderer::UnbindGBufferTextures() const
 
 void Renderer::RenderGBufferResult() 
 {
-	gBufferRenderResult.Bind();
-	resultShader.RunShader();
 
+
+	gBufferRenderResult.Bind();
+	
+
+
+	resultShader.RunShader();
+	
 	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
 	BindGBufferTextures();
 
@@ -477,12 +487,20 @@ void Renderer::RenderGBufferResult()
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
+	viewport.Render();
+
+
+
 	UnbindGBufferTextures();
 	glUseProgram(0);
 
-	defaultBuffer.Clear();
 
-	viewport.Render();
+	defaultBuffer.Bind();
+	//defaultBuffer.Clear();
+
+
+
+
 }
 
 void Renderer::AttachLights() const

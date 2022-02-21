@@ -81,7 +81,7 @@ void SaveUtility::CompileSaves()
 	SaveManager::SaveAll();
 }
 
-void SaveUtility::SaveObject(const std::string& saveName, GameObject* obj)
+void SaveUtility::SaveObject(const std::string& saveName, std::shared_ptr<GameObject> obj)
 {
 	CreateSave(saveName, FileType::OBJECT);
 
@@ -134,8 +134,8 @@ void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 		if (std::holds_alternative<int>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<int>(atrib.second));
 
-		else if (std::holds_alternative<uint64_t>(atrib.second))
-			elm.element->SetAttribute(atrib.first.c_str(), std::get<uint64_t>(atrib.second));
+		else if (std::holds_alternative<uint32_t>(atrib.second))
+			elm.element->SetAttribute(atrib.first.c_str(), std::get<uint32_t>(atrib.second));
 
 		else if (std::holds_alternative<float>(atrib.second))
 			elm.element->SetAttribute(atrib.first.c_str(), std::get<float>(atrib.second));
@@ -160,7 +160,7 @@ ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 3; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F", i), value[i]);
+		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
 	}
 
 	return element;
@@ -171,7 +171,7 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
 	{
-		element.Attributes.emplace(Globals::IntToVectorWithPrefix("F",i), value[i]);
+		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F",i), value[i]);
 	}
 
 	return element;

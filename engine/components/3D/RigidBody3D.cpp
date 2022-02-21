@@ -7,7 +7,7 @@
 
 #include "components/3D/MeshRenderer.h"
 
-#include "graphics/UIStatics.h"
+#include "core/Globals.h"
 
 using namespace MATH;
 
@@ -59,7 +59,7 @@ void RigidBody3D::Update(const float deltaTime)
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
 	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
 
-	gameObject->transform.GetRotationQuat() += newRot;
+	gameObject->transform.GetRotationQuatRef() += newRot;
 	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
 }
 
@@ -72,13 +72,13 @@ void RigidBody3D::HandleEvents(const SDL_Event& event)
 
 void RigidBody3D::ImGuiRender()
 {
-	const bool opened = UIStatics::OpenComponentTreeNode(this, "RigidBody3D");
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "RigidBody3D");
 	if (opened)
 	{
-		UIStatics::DrawVec3("Velocity", vel, 100.0f);
-		UIStatics::DrawVec3("Acceleration", accel, 100.0f);
-		UIStatics::DrawVec3("Angular Vel", angularVel, 100.0f);
-		UIStatics::DrawVec3("Angular Accel", angularAcc, 100.0f);
+		Globals::Editor::DrawVec3("Velocity", vel, 100.0f);
+		Globals::Editor::DrawVec3("Acceleration", accel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Vel", angularVel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Accel", angularAcc, 100.0f);
 
 		ImGui::TreePop();
 	}

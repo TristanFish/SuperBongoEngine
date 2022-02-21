@@ -14,7 +14,7 @@ bool SceneAi::OnCreate()
 	Scene_Name = "Scene_AI";
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
-	AiGameObject* obj = new AiGameObject("ai object", Vec3());
+	std::shared_ptr<AiGameObject> obj = std::make_shared<AiGameObject>("ai object", Vec3());
 	objectList->AddGameObject(obj);
 	
 	///*AiGameObject* mainAi = new AiGameObject("AiObj",Vec3(1.0f));

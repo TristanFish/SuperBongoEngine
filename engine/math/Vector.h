@@ -127,6 +127,7 @@ namespace MATH
 			z = v.z;
 		}
 
+		
 		///////////////////////////////////////////////////////////
 		/// Operator overloads (see note 1 at the end of this file)
 		///////////////////////////////////////////////////////////
@@ -322,6 +323,9 @@ namespace MATH
 			w = v.w;
 			return *this;
 		}
+
+		
+
 
 		/// See Vec3 definition 
 		float& operator [] ( int index ) { 

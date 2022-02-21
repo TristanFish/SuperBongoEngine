@@ -8,13 +8,13 @@ out vec3 eyeDir;
 out vec3 vertPos;
 out vec3 vertNormal;
 out vec2 vertUV;
-
+out unsigned int uuid;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
-
+uniform uint uniqueID;
 
 void main()
 {
@@ -22,6 +22,6 @@ void main()
 	vertNormal = normalMatrix * inNormal;
 	vertUV = inUV;
 	vertPos = vec3(modelMatrix * vec4(inPosition, 1.0));
-
+	uuid = uniqueID; 
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(inPosition, 1.0);
 }
