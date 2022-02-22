@@ -363,6 +363,14 @@ namespace CustomUI
 		void Clear() { text.clear(); lineOffsets.clear(); }
 	};
 	
+	class Toolbar : public UIInterface
+	{
+	public:
+
+		// Inherited via UIInterface
+		virtual void Render() override;
+	};
+
 	//! DockSpace Class
 	/*! This class initializes and renders all of the needed ImGui interfaces*/
 	class DockSpace : public UIInterface {

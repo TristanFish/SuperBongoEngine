@@ -583,7 +583,6 @@ void Viewport::Render()
 						ImGui::CloseCurrentPopup();
 						activeRatio = ratio;
 						aspectSize = "[" + std::string(currentRatio) + "]";
-
 					}
 					index++;
 				}
@@ -604,21 +603,15 @@ void Viewport::Render()
 		cam->UpdatePerspectiveMatrix();
 		
 		Renderer::GetInstance()->Resize(static_cast<int>(viewportPanelSize.x), static_cast<int>(viewportPanelSize.y));
-
 	}
-
-
 
 	const GLuint ID = Renderer::GetInstance()->GetModeTextureID();
 
 	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
-
 	
 	UpdateViewportPosition();
-
 	
 	ImVec2 mousePos = ImGui::GetMousePos();
-
 	mousePos.x -= viewport_Min.x;
 	mousePos.y -= viewport_Min.y;
 	mousePos.y = viewportSize.y - mousePos.y;
@@ -635,8 +628,6 @@ void Viewport::Render()
 		isMouseHovered = false;
 	}
 
-
-
 	if (ImGui::BeginDragDropTarget())
 	{		
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Object"))
@@ -650,7 +641,6 @@ void Viewport::Render()
 		ImGui::EndDragDropTarget();
 	}
 
-
 	std::shared_ptr<GameObject> SelectedObject = Globals::Editor::GetSelectedObject();
 
 	if (SelectedObject && Globals::Editor::GizmoType != -1)
@@ -663,7 +653,6 @@ void Viewport::Render()
 		MATH::Matrix4 cameraProjection = Camera::getInstance()->getProjectionMatrix();
 		MATH::Matrix4 cameraView = Camera::getInstance()->getViewMatrix();
 
-
 		MATH::Matrix4 ObjectTransform = SelectedObject->transform.GetModelMatrix();
 
 		ImGuizmo::Manipulate(cameraView, cameraProjection, (ImGuizmo::OPERATION)Globals::Editor::GizmoType, ImGuizmo::LOCAL, ObjectTransform);
@@ -673,7 +662,6 @@ void Viewport::Render()
 			MATH::Vec3 position, scale;
 			MATH::Quaternion rotQuaternion;
 			MATH::MMath::DecomposeTransform(ObjectTransform, position, rotQuaternion, scale);
-
 
 			switch ((ImGuizmo::OPERATION)Globals::Editor::GizmoType)
 			{
@@ -688,9 +676,6 @@ void Viewport::Render()
 				SelectedObject->transform.SetRot(SelectedObject->transform.GetRotationQuat().Normalized());
 				break;
 			}
-
-		
-
 		}
 	}
 
@@ -820,6 +805,7 @@ DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSav
 	uiInterfaces.emplace_back(new PropertiesPanel());
 	uiInterfaces.emplace_back(new ConsoleLog());
 	uiInterfaces.emplace_back(new NetworkPanel());
+	uiInterfaces.emplace_back(new Toolbar());
 }
 
 DockSpace::~DockSpace()
@@ -916,7 +902,6 @@ void DockSpace::GenerateDockSpace()
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
 	}
 	
-	
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -957,7 +942,6 @@ void DockSpace::GenerateDockSpace()
 	{
 		panel->Render();
 	}
-
 	ImGui::End();
 }
 
@@ -1163,3 +1147,31 @@ void ContentBrowser::ChangeDirectory(const std::string& dir)
 	GenDirectoryItems();
 }
 #pragma endregion 
+
+void CustomUI::Toolbar::Render()
+{
+	ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+	
+	if(!CoreEngine::GetInstance()->GetIsGameRunning())
+	{
+		if(ImGui::Button("Play"))
+		{
+			CoreEngine::GetInstance()->SetIsGameRunning(true);
+			EngineLogger::Info("Play pressed", "CustomUI.cpp", __LINE__);
+		}
+	} 
+	else
+	{
+		if(ImGui::Button("Pause"))
+		{
+			CoreEngine::GetInstance()->SetIsGameRunning(false);
+			EngineLogger::Info("Pause pressed", "CustomUI.cpp", __LINE__);
+		}
+		ImGui::SameLine();
+		if(ImGui::Button("Stop"))
+		{
+			EngineLogger::Info("Stop pressed", "CustomUI.cpp", __LINE__);
+		}
+	}
+	ImGui::End();
+}

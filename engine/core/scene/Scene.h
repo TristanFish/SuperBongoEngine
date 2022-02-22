@@ -31,9 +31,6 @@ public:
 	virtual void Render();
 	virtual void HandleEvents(const SDL_Event& event);
 	virtual void Reset() = 0;
-	
-
-
 
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;

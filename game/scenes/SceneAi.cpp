@@ -82,8 +82,6 @@ bool SceneAi::OnCreate()
 	objectList->Init();
 
 	
-	Scene1().OnCreate();
-	
 	return true;
 }
 

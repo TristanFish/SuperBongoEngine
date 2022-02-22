@@ -25,7 +25,7 @@
 #include "Utility/LoadUtility.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), isRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
+CoreEngine::CoreEngine(): window(nullptr), isEngineRunning(false), isGameRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
 {
 
 }
@@ -39,7 +39,10 @@ void CoreEngine::Update(const float deltaTime_)
 	dockSpace->Update(deltaTime_);
 	if (gameInterface)
 	{
-		gameInterface->Update(deltaTime_);
+		if(isGameRunning)
+		{
+			gameInterface->Update(deltaTime_);
+		}
 	}
 	HandleEvents();
 }
@@ -125,7 +128,7 @@ bool CoreEngine::Init()
 	dockSpace->ConstructUserInterface();
 	CustomUI::PerformanceMonitor::InitMonitor();
 
-	isRunning = true;
+	isEngineRunning = true;
 	return true;
 }
 
@@ -133,7 +136,7 @@ void CoreEngine::Run()
 {
 	Timer::UpdateTimer();
 
-	while (isRunning)
+	while (isEngineRunning)
 	{
 		const auto timeBeforeUpdate = std::chrono::high_resolution_clock::now();
 		Timer::UpdateTimer();
@@ -156,18 +159,11 @@ void CoreEngine::Run()
 		}
 	}
 
-	SaveSceneData();
+	if(!isGameRunning)
+	{
+		SaveSceneData();
+	}
 	OnDestroy();
-}
-
-bool CoreEngine::GetIsRunning() const
-{
-	return isRunning;
-}
-
-void CoreEngine::SetIsRunning(bool isRunning_)
-{
-	isRunning = isRunning_;
 }
 
 void CoreEngine::HandleEvents()
@@ -181,7 +177,7 @@ void CoreEngine::HandleEvents()
 		
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
-			isRunning = false;
+			isEngineRunning = false;
 			return;
 		}
 
@@ -190,7 +186,7 @@ void CoreEngine::HandleEvents()
 			switch (event.key.keysym.scancode)
 			{
 			case SDL_SCANCODE_ESCAPE:
-				isRunning = false;
+				isEngineRunning = false;
 				EngineLogger::Info("Closing Game", "CoreEngine.cpp", __LINE__);
 				return;
 			case SDL_SCANCODE_P:
@@ -291,6 +287,19 @@ void CoreEngine::LoadSceneData()
 void CoreEngine::SetGameInterface(Game* gameInterface_)
 {
 	gameInterface = gameInterface_;
+}
+
+void CoreEngine::PlayScene()
+{
+}
+
+void CoreEngine::PauseScene()
+{
+}
+
+void CoreEngine::StopScene()
+{
+	gameInterface->currentScene->Reset();
 }
 
 int CoreEngine::GetCurrentSceneNum() const

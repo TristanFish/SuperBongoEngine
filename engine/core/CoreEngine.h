@@ -16,7 +16,8 @@ class CoreEngine
 private:
 	Window* window;
 
-	bool isRunning;
+	bool isEngineRunning;
+	bool isGameRunning;
 
 	static std::unique_ptr<CoreEngine> engineInstance;
 	friend std::default_delete<CoreEngine>;
@@ -38,10 +39,13 @@ public:
 
 	bool Init();
 	void Run();
-	bool GetIsRunning() const;
-	void SetIsRunning(bool isRunning_);
 
 	void SetGameInterface(Game* gameInterface_);
+	bool GetIsGameRunning() const { return isGameRunning; }
+	void SetIsGameRunning(bool status) { isGameRunning = status; };
+	void PlayScene();
+	void PauseScene();
+	void StopScene();
 
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;

@@ -49,7 +49,7 @@ void Game::Update(const float deltaTime_)
 		if(!BuildScene())
 		{
 			EngineLogger::FatalError("Scene Building failed closing engine", "Game1.cpp", __LINE__);
-			CoreEngine::GetInstance()->SetIsRunning(false);
+			CoreEngine::GetInstance()->SetIsGameRunning(false);
 			return;
 		}
 	}

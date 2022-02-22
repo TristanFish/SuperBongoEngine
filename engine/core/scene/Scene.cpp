@@ -60,6 +60,11 @@ void Scene::HandleEvents(const SDL_Event& event)
 
 }
 
+void Scene::Reset()
+{
+
+}
+
 void Scene::OnMouseMove(MATH::Vec2 mouse)
 {
 
