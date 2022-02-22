@@ -3,25 +3,19 @@
 
 #include "core/GameInterface.h"
 
-class Game1 final : public GameInterface
+class Game1 final : public Game
 {
 private:
 	int currentSceneNum;
 
-	void BuildScene();
 
 public:
 
 	Game1();
 	~Game1();
 
-	// Inherited via GameInterface
+	// Inherited via Game
 	bool OnCreate() override;
-	void OnDestroy() override;
-	void Update(const float deltaTime_) override;
-	void Render() override;
-	void HandleEvents(const SDL_Event& event) override;
-
 };
 
 

@@ -337,7 +337,7 @@ FileType LoadUtility::GetFileExtention(const std::string& ext) const
 #pragma endregion
 
 
-void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
+void LoadUtility::LoadDefaultScenes(Game* G_Interface) const
 {
 	std::vector<SaveFile> sceneFiles = SaveManager::GetSavesOfType(FileType::SCENE);
 	

@@ -8,7 +8,7 @@ namespace CustomUI {
 }
 
 class Window;
-class GameInterface;
+class Game;
 class Scene;
 class CoreEngine
 {
@@ -26,7 +26,7 @@ public:
 	unsigned int fps;
 	bool limitfps = true;
 	int currentSceneNum;
-	GameInterface* gameInterface;
+	Game* gameInterface;
 	CustomUI::DockSpace* dockSpace;
 	
 	static CoreEngine* GetInstance();
@@ -39,8 +39,9 @@ public:
 	bool Init();
 	void Run();
 	bool GetIsRunning() const;
+	void SetIsRunning(bool isRunning_);
 
-	void SetGameInterface(GameInterface* gameInterface_);
+	void SetGameInterface(Game* gameInterface_);
 
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;

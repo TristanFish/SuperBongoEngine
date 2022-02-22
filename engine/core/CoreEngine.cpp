@@ -96,12 +96,16 @@ bool CoreEngine::Init()
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
 
-
 	NetworkManager::GetInstance()->Init();
 	TextureManager::LoadAllTextures();
 	ModelManager::LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	Renderer::GetInstance()->Init();
+
+	Globals::Engine::InitGlobals();
+
+	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
+	LoadUtility::GetInstance()->LoadSceneSaves();
 	
 	if (gameInterface)
 	{
@@ -111,18 +115,15 @@ bool CoreEngine::Init()
 			OnDestroy();
 			return false;
 		}
-
 	}
-	Globals::Engine::InitGlobals();
-	Globals::Engine::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	else
+	{
+		return false;
+	}
 	
 	dockSpace = new CustomUI::DockSpace();
 	dockSpace->ConstructUserInterface();
 	CustomUI::PerformanceMonitor::InitMonitor();
-
-	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
-	LoadUtility::GetInstance()->LoadSceneSaves();
-	LoadSceneData();
 
 	isRunning = true;
 	return true;
@@ -162,6 +163,11 @@ void CoreEngine::Run()
 bool CoreEngine::GetIsRunning() const
 {
 	return isRunning;
+}
+
+void CoreEngine::SetIsRunning(bool isRunning_)
+{
+	isRunning = isRunning_;
 }
 
 void CoreEngine::HandleEvents()
@@ -282,7 +288,7 @@ void CoreEngine::LoadSceneData()
 	}
 }
 
-void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
+void CoreEngine::SetGameInterface(Game* gameInterface_)
 {
 	gameInterface = gameInterface_;
 }

@@ -323,6 +323,7 @@
     <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
     <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp" />
+    <ClCompile Include="engine\core\GameInterface.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="engine\core\resources\AIDirector.cpp" />

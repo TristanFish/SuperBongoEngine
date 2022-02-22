@@ -71,7 +71,7 @@ public:
 
 	//! LoadDefaultScenes function 
 	/*! Loads in the non c++ created scenes into the engine*/
-	void LoadDefaultScenes(class GameInterface* G_Interface) const;
+	void LoadDefaultScenes(class Game* G_Interface) const;
 
 
 	template<typename AtribType>
