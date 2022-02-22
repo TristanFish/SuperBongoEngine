@@ -25,7 +25,7 @@
 #include "Utility/LoadUtility.h"
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), isEngineRunning(false), isGameRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
+CoreEngine::CoreEngine(): window(nullptr), isEngineRunning(false), isGameRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr), dockSpace(nullptr)
 {
 
 }

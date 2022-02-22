@@ -64,7 +64,7 @@ void Renderer::SetupFrameBuffers()
 	//Attach depthRenderBuffer`
 	glGenRenderbuffers(1, &depthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewport.GetViewportSize().x, viewport.GetViewportSize().y);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(viewport.GetViewportSize().x), static_cast<GLsizei>(viewport.GetViewportSize().y));
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 	gBuffer.AttachTexture(albedoTexture);
 	gBuffer.AttachTexture(normTexture);

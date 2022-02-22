@@ -514,7 +514,9 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f), 
+					   modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), 
+					   isMouseHovered(false), isActive(true), MouseX(0), MouseY(0), activeRatio(AspectRatio::FREE_ASPECT)
 {
 	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
@@ -707,7 +709,7 @@ void Viewport::UpdateViewportPosition()
 
 #pragma region ConsoleLog
 
-ConsoleLog::ConsoleLog()
+ConsoleLog::ConsoleLog() : scrollToBottom(true)
 {
 	EngineLogger::SetCallback(std::bind(&ConsoleLog::AddLog, this, std::placeholders::_1));
 

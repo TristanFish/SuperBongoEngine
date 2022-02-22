@@ -68,7 +68,7 @@ namespace CustomUI
 	class NetworkPanel : public UIInterface
 	{
 	public:
-		NetRole role;
+		NetRole role = NetRole::CLIENT;
 		bool roleIsSet = false;
 		bool isConnected = false;
 		
