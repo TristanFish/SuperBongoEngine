@@ -4,6 +4,7 @@
 #include "components/ECS.h"
 
 class AIComponent;
+class DecisionTree;
 class AiGameObject : public GameObject	{
 public:
 	MeshRenderer* mRenderer;
