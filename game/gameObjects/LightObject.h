@@ -6,13 +6,12 @@
 class LightObject : public GameObject, public LightComponent
 {
 public:
-	Debug light;
 
-	LightObject(std::string name, MATH::Vec3 position);
+	LightObject(const std::string& name, MATH::Vec3 position);
 	~LightObject() override = default;
 	// Inherited via GameObject
 	void DrawDebugGeometry() const override;
 
-	LightObject* GetClone() const override { return new LightObject(this->name, this->transform.pos); };
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<LightObject>(this->name, this->transform.GetPosition()); }
 
 };

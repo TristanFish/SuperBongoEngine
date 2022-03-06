@@ -1,17 +1,17 @@
 <Root>
-    <Name Is="Tet_2">
+	<Identifiers S_Name="Tet_2">
         <Transform>
-            <Position X="0" Y="30.6" Z="-85.300003"/>
-            <Rotation X="-7.0064975e-06" Y="34.078629" Z="-5.8471023e-06"/>
-            <Scale X="25" Y="25" Z="25"/>
+            <Position F_X="0" F_Y="15.7" F_Z="-85.300003"/>
+            <Rotation F_X="180" F_Y="-60.431385" F_Z="180"/>
+            <Scale F_X="25" F_Y="25" F_Z="25"/>
         </Transform>
         <ObjectInfo>
-            <Type ID="class Tetrahedron"/>
+            <Type S_ID="class Tetrahedron"/>
         </ObjectInfo>
         <Components>
             <Renderer>
-                <MeshColorTint W="1" X="1" Y="0" Z="0"/>
+                <MeshColorTint F_W="1" F_X="1" F_Y="0" F_Z="0"/>
             </Renderer>
         </Components>
-    </Name>
+    </Identifiers>
 </Root>

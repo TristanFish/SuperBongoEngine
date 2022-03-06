@@ -50,6 +50,8 @@ public:
 	//Send a packet to the first available peer
 	virtual void SendPacket(const std::string& data) = 0;
 
+	virtual void SendPreserializedPacket(std::stringstream& ss) = 0;
+
 	virtual void SendPacketToPeer(const std::string& data) = 0;
 	//Disconnects the client if it is connected to a server
 	virtual void Disconnect() = 0;

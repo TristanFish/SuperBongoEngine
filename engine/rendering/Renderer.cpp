@@ -1,12 +1,18 @@
 #include "Renderer.h"
 #include "components/3D/MeshRenderer.h"
 #include "components/3D/LightComponent.h"
+#include "components/3D/lineRenderer.h"
+
+#include "components/GameObject.h"
+#include "core/Logger.h"
+
 #include "core/Globals.h"
-#include "core/Debug.h"
+#include "core/resources/ShaderManager.h"
+
 #include <sdl/SDL.h>
+
 #include "Rendering/SkyBox.h"
 #include "math/Plane.h"
-#include "core/resources/ShaderManager.h"
 
 
 std::unique_ptr<Renderer> Renderer::rendererInstance = std::unique_ptr<Renderer>();
@@ -51,24 +57,27 @@ void Renderer::Init()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	glBindVertexArray(0);
-
-	
-	
 }
 
 void Renderer::SetupFrameBuffers()
 {
+	//Setup default buffer
+	defaultBuffer.bufferID = 0;
+	defaultBuffer.clearColor = Colour(1.0f, 0.0f, 0.0f, 1.0f);
+	
 	gBuffer.InitFrameBuffer();
-	//Attach depthRenderBuffer
+	//Attach depthRenderBuffer`
 	glGenRenderbuffers(1, &depthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewport.GetViewportSize().x, viewport.GetViewportSize().y);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 	gBuffer.AttachTexture(albedoTexture);
 	gBuffer.AttachTexture(normTexture);
 	gBuffer.AttachTexture(posTexture);
 	gBuffer.AttachTexture(depthTexture);
 	gBuffer.AttachTexture(stencilTexture);
+	gBuffer.AttachTexture(uniqueIDTexture);
+
 	gBuffer.FinalizeBuffer();
 
 	gBufferRenderResult.InitFrameBuffer();
@@ -82,18 +91,26 @@ void Renderer::SetupTextures()
 	normTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	posTexture = BufferTexture(BufferTexture::TexType::THREE_COMP_SIGNED_COLOUR);
 	depthTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_SIGNED_COLOUR);
-	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
+	stencilTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_SHORT);
+	uniqueIDTexture = BufferTexture(BufferTexture::TexType::ONE_COMP_UNSIGNED_INT);
 	gBufferTexture = BufferTexture(BufferTexture::TexType::FOUR_COMP_SIGNED_COLOUR);
 }
 
 void Renderer::AddMeshRenderer(MeshRenderer* mr)
 {
-	meshRenderers.emplace_back(mr);
+	const auto mrIt = std::find(meshRenderers.begin(), meshRenderers.end(), mr);
+	//if this meshrenderer doesn't already exist then add it
+	if(mrIt == meshRenderers.end())
+	{
+		meshRenderers.emplace_back(mr);
+	}
 }
 
 void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 {
-	for (std::vector<MeshRenderer*>::iterator iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
+	if(meshRenderers.empty()) return;
+
+	for (auto iter = meshRenderers.begin(); iter != meshRenderers.end(); iter++)
 	{
 		if (*iter == mr)
 		{
@@ -105,34 +122,87 @@ void Renderer::DeleteMeshRenderer(MeshRenderer* mr)
 
 void Renderer::AddLight(LightComponent* light)
 {
-	lights.emplace_back(light);
+	if(lights.size() >= MAX_LIGHTS)
+	{
+		EngineLogger::Warning("Max number of lights reached, " 
+		 + light->gameObject->GetName() + " not added to the renderer", "Renderer.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+		return;
+	}
+	//if this meshrenderer doesn't already exist then add it
+	const auto lightIt = std::find(lights.begin(), lights.end(), light);
+	if(lightIt == lights.end())
+	{
+		lights.emplace_back(light);
+	}
 }
 
 void Renderer::DeleteLight(LightComponent* light)
 {
+	if(lights.empty()) return;
+
 	for (std::vector<LightComponent*>::iterator iter = lights.begin(); iter != lights.end(); iter++)
 	{
 		if (*iter == light)
 		{
 			lights.erase(iter);
-			delete light;
-			light = nullptr;
 			break;
 		}
 	}
+}
+
+void Renderer::AddLine(LineRenderer* line)
+{
+	const auto lineIt = std::find(lineRenderers.begin(), lineRenderers.end(), line);
+	//if this linerenderer doesn't already exist then add it
+	if(lineIt == lineRenderers.end())
+	{
+		lineRenderers.emplace_back(line);
+	}
+}
+
+void Renderer::DeleteLine(LineRenderer* line)
+{
+	if(lights.empty()) return;
+
+	for (std::vector<LineRenderer*>::iterator iter = lineRenderers.begin(); iter != lineRenderers.end(); iter++)
+	{
+		if (*iter == line)
+		{
+			lineRenderers.erase(iter);
+			break;
+		}
+	}
+}
+
+void Renderer::DrawDebugGeometry(const std::vector<std::shared_ptr<GameObject>>& objects)
+{
+	#ifdef _DEBUG
+	for (const auto& g : objects)
+	{
+		g->DrawDebugGeometry();
+	}
+#endif // DEBUG
 }
 
 void Renderer::Render() 
 {
 	//Skybox here
 	skyBox->Render();
-	
-	
 
-	//loop through all meshrenderers
-	for (size_t i = 0; i < meshRenderers.size(); i++)
+	DrawDebugGeometry(Globals::Engine::s_SceneGraph->GetGameObjects());
+
+	for(size_t i = 0; i < lineRenderers.size(); i++)
 	{
-
+		if(lineRenderers[i]->active) lineRenderers[i]->RenderLine();
+	}
+	
+	//loop through all meshrenderers
+	for(size_t i = 0; i < meshRenderers.size(); i++)
+	{
+		if(!meshRenderers[i]->active)
+		{
+			continue;
+		}
 		//if(!IsMeshOnScreen(*meshRenderers[i]))
 		{
 			//EngineLogger::Info(meshRenderers[i]->gameObject->GetName() + " was frustum culled", "Renderer.cpp", __LINE__);
@@ -159,10 +229,6 @@ void Renderer::Render()
 
 		const Uint16 stencilMarker = meshRenderers[i]->renderFlags;
 
-		if (meshRenderers[i]->renderFlags & RenderProperties::RP_LIGHTING)
-		{
-			
-		}
 		if (meshRenderers[i]->renderFlags & RenderProperties::RP_CREATES_SHADOWS)
 		{
 			RenderShadowTexture(*meshRenderers[i]);
@@ -190,20 +256,12 @@ void Renderer::Render()
 		glUseProgram(0);
 	}
 	
-	
 	//Rebind the default framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	defaultBuffer.Bind();
 	glEnable(GL_DEPTH_TEST);
 
-	//pos.DrawTextureToScreen(gBufferTexture, -1.0f, -0.5f, 0.0f, -0.5f);
-	//norm.DrawTextureToScreen(normTexture, -1.0f, -0.5f, 0.5f, 0.0f);
-	//albedo.DrawTextureToScreen(albedoTexture, -1.0f, -0.5f, -0.5f, -1.0f);
-	//depth.DrawTextureToScreen(depthTexture, -1.0f, -0.5f, 1.0f, 0.5f);
-	//stencil.DrawTextureToScreen(stencilTexture, 0.0f, 1.0f, 1.0f, 0.0f);
-	RenderGBufferResult();
-
 	//Uses the gBufferResolve shader to render the result of the gBuffer
-
+	RenderGBufferResult();
 
 }
 
@@ -212,12 +270,10 @@ void Renderer::DestroyRenderer()
 	delete(skyBox);
 	skyBox = nullptr;
 
-	
 	glDeleteRenderbuffers(1, &depthRenderBuffer);
 
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
-
 	
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
@@ -232,10 +288,11 @@ Renderer* Renderer::GetInstance()
 	return rendererInstance.get();
 }
 
-Renderer* Renderer::ResetInstance()
+void Renderer::ClearComponents()
 {
-	rendererInstance.reset(new Renderer);
-	return rendererInstance.get();
+	meshRenderers.clear();
+	lights.clear();
+	lineRenderers.clear();
 }
 
 SkyBox* Renderer::GetSkyBox()
@@ -248,7 +305,7 @@ GLuint Renderer::GetModeTextureID() const
 {
 	switch (viewport.GetRenderMode())
 	{
-	case CustomUI::RenderMode::Lighting:
+	case CustomUI::RenderMode::Result:
 		return gBufferTexture.texture;
 		break;
 	case CustomUI::RenderMode::Albedo:
@@ -281,7 +338,7 @@ void Renderer::Resize(const int size_x, const int size_y)
 	gBuffer.DeleteFramebuffer();
 	gBufferRenderResult.DeleteFramebuffer();
 
-
+	SetupTextures();
 	SetupFrameBuffers();
 	
 	//Set frame buffer back to default
@@ -290,21 +347,13 @@ void Renderer::Resize(const int size_x, const int size_y)
 
 bool Renderer::IsMeshOnScreen(const MeshRenderer& mr)
 {
-	OrientedBoundingBox obb = mr.OBB;
+	//OrientedBoundingBox obb = mr.OBB;
 
 	Camera* cam = Camera::getInstance();
 	Matrix4 projViewMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 
 
-	Vec3 PVMPos = projViewMatrix * obb.transform.getColumn(3);
-	//vertices[0] = projViewMatrix * obb.transform * obb.maxVert;
-	//vertices[1] = projViewMatrix * obb.transform * obb.minVert;
-	//vertices[2] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.maxVert.z); //
-	//vertices[3] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.minVert.y, obb.minVert.z); //
-	//vertices[4] = projViewMatrix * obb.transform * Vec3(obb.maxVert.x, obb.maxVert.y, obb.minVert.z); //
-	//vertices[5] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.minVert.y, obb.maxVert.z); //
-	//vertices[6] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.maxVert.z); //
-	//vertices[7] = projViewMatrix * obb.transform * Vec3(obb.minVert.x, obb.maxVert.y, obb.minVert.z); //
+	Vec3 PVMPos;// = projViewMatrix * obb.transform.getColumn(3);
 
 	//Get frustum planes
 	Plane frustumPlanes[6];
@@ -409,7 +458,6 @@ void Renderer::BindGBufferTextures() const
 	glBindTexture(GL_TEXTURE_2D, stencilTexture.texture);
 
 
-
 }
 
 void Renderer::UnbindGBufferTextures() const
@@ -428,57 +476,72 @@ void Renderer::UnbindGBufferTextures() const
 
 void Renderer::RenderGBufferResult() 
 {
-	resultShader.RunShader();
 
+
+	gBufferRenderResult.Bind();
+	
+
+
+	resultShader.RunShader();
+	
+	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
 	BindGBufferTextures();
 
 	AttachLights();
 	glBindVertexArray(vao);
-	viewport.Render();
-	//glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 
-	UnbindGBufferTextures();
+	viewport.Render();
 
+
+
+	UnbindGBufferTextures();
 	glUseProgram(0);
+
+
+	defaultBuffer.Bind();
+	//defaultBuffer.Clear();
+
+
+
+
 }
 
 void Renderer::AttachLights() const
 {
-//	for (size_t i = 0; i < lights.size(); i++)
-//	{
-//		std::string lightNum = "[" + std::to_string(i) + "]";
-//		
-//		resultShader.TakeUniform("lightsPos" + lightNum, lights[i]->gameObject->transform.GetPosition());
-//		resultShader.TakeUniform("lightsAmb" + lightNum, lights[i]->ambColor);
-//		resultShader.TakeUniform("lightsDiff" + lightNum, lights[i]->diffColor);
-//		resultShader.TakeUniform("lightsSpec" + lightNum, lights[i]->specColor);
-//		resultShader.TakeUniform("lightsIntens" + lightNum, lights[i]->intensity);
-//		//resultShader.TakeUniform("activeLights", static_cast<int>(lights.size()));
-//	}
+	//Default lighting for every scene
+	//This'll be changed later when I figure out how to format it
+	LightData defaultLight;
 
-	std::vector<Vec3> positions;
-	std::vector<Vec3> ambs;
-	std::vector<Vec3> diffs;
-	std::vector<Vec3> specs;
-	std::vector<float> intensities;
+	defaultLight.type = LightType::DIRECTIONAL;
+	defaultLight.ambColor = Vec3(0.2f);
+	defaultLight.diffColor = Vec3(0.0f);
+	defaultLight.specColor = Vec3(0.0f);
+	defaultLight.intensity = 1.0f;
+	defaultLight.cutOff = static_cast<float>(cos(12.5 * DEGREES_TO_RADIANS));
+	defaultLight.outerCutOff = static_cast<float>(cos(15.0 * DEGREES_TO_RADIANS));
 
-	for(size_t i = 0; i < lights.size(); i++)
-	{
-		positions.push_back(lights[i]->gameObject->transform.GetPosition());
-		ambs.push_back(lights[i]->ambColor);
-		diffs.push_back(lights[i]->diffColor);
-		specs.push_back(lights[i]->specColor);
-		intensities.push_back(lights[i]->intensity);
-	}
+	defaultLight.attenConstant = 1.0f;
+	defaultLight.attenLinear = 0.049f;
+	defaultLight.attenQuadratic = 0.0f;
 
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsPos"), lights.size(), *positions.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsAmb"), lights.size(), *ambs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsDiff"), lights.size(), *diffs.data());
-	glUniform3fv(glGetUniformLocation(resultShader.GetID(), "lightsSpec"), lights.size(), *specs.data());
-	glUniform1fv(glGetUniformLocation(resultShader.GetID(), "lightsIntens"), lights.size(), intensities.data());
-
+	resultShader.TakeUniform("activeLights", static_cast<uint16_t>(lights.size() + 1));
 	
+	for(size_t i = 0; i <= lights.size(); i++)
+	{
+		std::string arrayIndex = "lights[" + std::to_string(i) + "].";
+		if(i == lights.size())
+		{
+			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex);
+			break;
+		}
+
+		if(lights[i]->active)
+		{
+			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+		}
+	}
 }
 
 void Renderer::RenderShadowTexture(const MeshRenderer& mr) const

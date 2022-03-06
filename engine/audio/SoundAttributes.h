@@ -1,7 +1,6 @@
 #ifndef SOUNDATTRIBUTES_H
 #define SOUNDATTRIBUTES_H
 
-#include <vector>
 
 #include <fmod/fmod.h>
 #include <fmod/fmod.hpp>

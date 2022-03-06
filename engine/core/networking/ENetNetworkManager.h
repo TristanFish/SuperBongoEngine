@@ -4,11 +4,13 @@
 #include <mutex>
 #include <vector>
 #include <enet/enet.h>
+#include <sstream>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/string.hpp>
 
 #include "NetworkManager.h"
 
-
-constexpr unsigned int DEFAULT_BUFFER_LENGTH = 512;
+constexpr unsigned int DEFAULT_BUFFER_LENGTH = 1024;
 
 //At the moment there are a lot of hard coded values in the cpp of this class
 //because its only tested for connecting to yourself
@@ -35,6 +37,8 @@ public:
 	void HandleClientEvents();
 	//turns binary data into a string
 	std::string ParseData(unsigned char* data) const;
+	//
+	std::string ParseJsonData(unsigned char* data) const;
 	//turns string data into binary
 	std::stringstream SerializeData(const std::string& data);
 	
@@ -42,6 +46,7 @@ public:
 	bool Connect(const char* addressString, unsigned int port) override;
 	void BroadcastPacket(const std::string& data) override;
 	void SendPacket(const std::string& data) override;
+	void SendPreserializedPacket(std::stringstream& ss);
 	void SendPacketToPeer(const std::string& data) override;
 	void Disconnect() override;
 	void Cleanup() override;

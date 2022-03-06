@@ -7,16 +7,13 @@ Box::Box()
 {
 }
 
-Box::Box(std::string name, MATH::Vec3 position)
+Box::Box(const std::string& name, Vec3 position)
 {
-	AddComponent<MeshRenderer>()->LoadModel("Cube.fbx");
+	AddComponent<MeshRenderer>()->LoadModel("Cube.obj");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
-
 	AddComponent<RigidBody3D>();
 	this->name = name;
 	transform.SetPos(position);
-
-	transform.scale = Vec3(1.0f, 1.0f, 1.0f);
 
 	canBeInstantiated = true;
 }
@@ -25,7 +22,15 @@ Box::~Box()
 {
 }
 
-void Box::OnCollisionEnter(RigidBody3D& otherBody)
+void Box::PostInit()
 {
-	//std::cout << this->name << " Collided With: " << otherBody.gameObject->name << std::endl;
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
+
+	GameObject::PostInit();
+}
+
+void Box::OnCollisionEnter(Collider3D& otherBody)
+{
+	//EngineLogger::Info(this->name + " Collided With " + otherBody.GetRBAttached()->gameObject->name  , "Box.cpp", __LINE__, MessageTag::TYPE_NONE);
+
 }

@@ -1,7 +1,6 @@
 #ifndef SCENEGRAPH_H
 #define SCENEGRAPH_H
 
-#include "core/3D/OctSpatialPartition.h"
 #include "rendering/Renderer.h"
 #include "SDL_events.h"
 #include <vector>
@@ -11,6 +10,7 @@
 class RigidBody3D;
 class GameObject;
 class SaveFile;
+class OctSpatialPartition;
 //! SceneGraph Class
 /*!There'll be one manager per scene it holds an array of gameobjects to update/render etc.
 see how its used in scene1*/
@@ -20,15 +20,18 @@ private:
 
 	//! Vector of GameObject pointers 
 	/*! Holds all of the gameobjects in our scene*/
-	std::vector<GameObject*> gameObjects;
+	std::vector<std::shared_ptr<GameObject>> gameObjects;
 
 	//! Vector of RgidBody3D pointers 
 	/*! Holds all of the rigidbodies in our scene*/
 	std::vector<RigidBody3D*> rigidBodies;
 
-	std::unordered_map<std::string, GameObject*>  InstantiableObjects;
 
+	OctSpatialPartition* ScenePartition;
 
+	//!
+	/*! tracks whether the scenegraph is past the init stage */
+	bool sceneIsPostInit = false;
 	
 	
 
@@ -43,6 +46,10 @@ public:
 	/*! Initialized the renderer */
 	void Init();
 
+	//! PostInit Function
+	/*! Called after all objects have been added to the scenegraph (after the scene's OnCreate function)*/
+	void PostInit();
+	
 	//! Update Function
 	/*! Updates all of the gameobjects in the "gameObjects" vector */
 	void Update(const float deltaTime);
@@ -54,35 +61,42 @@ public:
 
 	//! FindGameObject Function
 	/*!Returns the first gameObject with a given name*/
-	GameObject& FindGameObject(const char* name);
+	std::shared_ptr<GameObject> FindGameObject(const std::string& name);
+
+	//! FindGameObject Function
+	/*!Returns the first gameObject with a given name*/
+	std::shared_ptr<GameObject> FindGameObject(const uint32_t& uuid);
+
+	//! GameObjectNetworkUpdate Function
+	/*!Finds and updates networkable game object based on data received from server*/
+	void GameObjectNetworkUpdate(std::string& string);
 
 	//! AddGameObject Function
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
-	GameObject& AddGameObject(GameObject* go);
+	const std::shared_ptr<GameObject> AddGameObject(std::shared_ptr<GameObject> go);
 
-	void AddRenderingComponents();
 
-	std::unordered_map<std::string, GameObject*> GetInstantiableObjects();
 
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
 	 int GetNumObjects() const { return gameObjects.size(); }
 
-	 //! isObjectActive Getter
-	/*!Return's if there is already an object with a given name*/
-	 bool isObjectActive(std::string objName);
+
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
-	 const std::vector<GameObject*>& GetGameObjects() const { return gameObjects; }
+	const std::vector<std::shared_ptr<GameObject>>& GetGameObjects() const { return gameObjects; }
+	const std::vector<RigidBody3D*>& GetRigidBodies() const { return rigidBodies; }
+
+	OctSpatialPartition* GetScenePartition() const { return ScenePartition; }
 
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
 
-	void LoadGameObject(GameObject* go);
 
-	void DeleteGameObject(GameObject* go);
+	void LoadGameObject(std::shared_ptr<GameObject> go);
+	void DeleteGameObject(std::shared_ptr <GameObject> go);
 };
 
 #endif

@@ -1,6 +1,6 @@
 <Root>
     <Objects/>
     <SceneSettings>
-        <BaseClass: :="class DefaultScene"/>
+        <BaseClass: S_:="class DefaultScene"/>
     </SceneSettings>
 </Root>

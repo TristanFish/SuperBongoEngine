@@ -3,7 +3,7 @@
 using namespace MATH;
 
 
-Grass::Grass(std::string name, MATH::Vec3 position, unsigned int amount_)
+Grass::Grass(const std::string& name, Vec3 position, unsigned int amount_)
 {
 	AddComponent<MeshRenderer>()->LoadModel("GrassBunch1.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("GrassVert.glsl", "GrassFrag.glsl");
@@ -15,10 +15,9 @@ Grass::Grass(std::string name, MATH::Vec3 position, unsigned int amount_)
 	this->name = name;
 	transform.SetPos(position);
 	transform.SetRot(Vec3(-90.0f, 0.0f, 0.0f));
-	transform.scale = Vec3(5.0f);
+	transform.SetScale(Vec3(5.0f));
 
 	canBeInstantiated = true;
 
-	
-	Instancer::Init(amount_, this);
+	AddComponent<Instancer>();
 }

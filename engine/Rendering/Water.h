@@ -1,9 +1,9 @@
 #pragma once
 
-#include "components/Components.h"
+#include "components/GameObject.h"
+
 #include "glew/glew.h"
-#include "Rendering/SkyBox.h"
-#include "core/Globals.h"
+
 #include "core/Debug.h"
 
 class SkyBox;

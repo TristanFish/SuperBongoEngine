@@ -19,24 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\core\Concurency\Task.h" />
-    <ClInclude Include="engine\core\Concurency\Thread.h" />
-    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
+    <ClInclude Include="Colour.h" />
+    <ClInclude Include="engine\components\3D\LineRenderer.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Poly.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Dynamic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\Kinematic.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Steering\SteeringOutput.h" />
+    <ClInclude Include="engine\components\NetworkableObject.h" />
+    <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
+    <ClInclude Include="engine\core\3D\Physics\GJKDetection.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
+    <ClInclude Include="engine\core\resources\AIDirector.h" />
+    <ClInclude Include="external\include\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Dynamic.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\SteeringOutput.h" />
-    <ClInclude Include="engine\core\3D\New3D\BoundingBox.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionDetection.h" />
-    <ClInclude Include="engine\core\3D\New3D\CollisionHandler.h" />
+    <ClInclude Include="engine\core\3D\Physics\BoundingBox.h" />
+    <ClInclude Include="engine\core\resources\CollisionDetection.h" />
+    <ClInclude Include="engine\core\resources\CollisionHandler.h" />
     <ClInclude Include="engine\core\scene\DefaultScene.h" />
     <ClInclude Include="engine\components\Component.h" />
     <ClInclude Include="engine\components\GameObject.h" />
     <ClInclude Include="engine\components\SceneGraph.h" />
     <ClInclude Include="engine\core\3D\OctSpatialPartition.h" />
-    <ClInclude Include="engine\graphics\UIStatics.h" />
     <ClInclude Include="engine\math\Plane.h" />
     <ClInclude Include="engine\core\events\MouseEventListener.h" />
     <ClInclude Include="engine\core\events\MouseEventDispatcher.h" />
@@ -161,7 +172,7 @@
     <ClInclude Include="game\gameObjects\Grass.h" />
     <ClInclude Include="engine\core\resources\ModelManager.h" />
     <ClInclude Include="engine\components\3D\LightComponent.h" />
-    <ClInclude Include="engine\components\3D\Collider3D.h" />
+    <ClInclude Include="engine\core\3D\Physics\Collider3D.h" />
     <ClInclude Include="engine\core\Globals.h" />
     <ClInclude Include="game\gameObjects\LightObject.h" />
     <ClInclude Include="engine\core\MouseRay.h" />
@@ -171,7 +182,7 @@
     <ClInclude Include="engine\rendering\Renderer.h" />
     <ClInclude Include="engine\components\3D\MeshRenderer.h" />
     <ClInclude Include="engine\components\3D\RigidBody3D.h" />
-    <ClInclude Include="engine\core\3D\Physics3D.h" />
+    <ClInclude Include="engine\core\3D\Physics\Physics3D.h" />
     <ClInclude Include="engine\rendering\Camera.h" />
     <ClInclude Include="game\gameObjects\Player.h" />
     <ClInclude Include="engine\components\2D\Collider.h" />
@@ -291,28 +302,40 @@
     <ClInclude Include="engine\core\resources\SaveFile.h" />
     <ClInclude Include="engine\Utility\SaveUtility.h" />
     <ClInclude Include="engine\Utility\LoadUtility.h" />
-    <ClInclude Include="engine\components\AI\Algorithms\Kinematic.h" />
     <ClInclude Include="engine\Primitives\Tetrahedron.h" />
     <ClInclude Include="game\scenes\SceneAi.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
+    <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
+    <ClInclude Include="engine\core\UUniqueID.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\core\Concurency\Task.cpp" />
-    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
-    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
+    <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\DecisionTreeNode.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\DecisionMaking\StateMachine.cpp" />
+    <ClCompile Include="engine\components\Component.cpp" />
+    <ClCompile Include="engine\components\NetworkableObject.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\Collider3D.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\DivisionAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Edge.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\Types\Graph.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\PathingAlgorithms.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Dynamic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
+    <ClCompile Include="engine\core\resources\AIDirector.cpp" />
+    <ClCompile Include="external\include\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\Dynamic.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\SteeringOutput.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionDetection.cpp" />
-    <ClCompile Include="engine\core\3D\New3D\CollisionHandler.cpp" />
+    <ClCompile Include="engine\core\resources\CollisionDetection.cpp" />
+    <ClCompile Include="engine\core\resources\CollisionHandler.cpp" />
     <ClCompile Include="engine\core\scene\DefaultScene.cpp" />
     <ClCompile Include="engine\components\GameObject.cpp" />
     <ClCompile Include="engine\components\SceneGraph.cpp" />
     <ClCompile Include="engine\core\3D\OctSpatialPartition.cpp" />
     <ClCompile Include="engine\core\Globals.cpp" />
-    <ClCompile Include="engine\graphics\UIStatics.cpp" />
     <ClCompile Include="engine\math\Plane.cpp" />
     <ClCompile Include="engine\core\events\MouseEventListener.cpp" />
     <ClCompile Include="engine\core\events\MouseEventDispatcher.cpp" />
@@ -356,7 +379,7 @@
     <ClCompile Include="engine\rendering\Renderer.cpp" />
     <ClCompile Include="engine\components\3D\MeshRenderer.cpp" />
     <ClCompile Include="engine\components\3D\RigidBody3D.cpp" />
-    <ClCompile Include="engine\core\3D\Physics3D.cpp" />
+    <ClCompile Include="engine\core\3D\Physics\Physics3D.cpp" />
     <ClCompile Include="engine\rendering\Camera.cpp" />
     <ClCompile Include="engine\core\2D\Physics2D.cpp" />
     <ClCompile Include="game\gameObjects\Player.cpp" />
@@ -382,9 +405,10 @@
     <ClCompile Include="engine\core\resources\SaveFile.cpp" />
     <ClCompile Include="engine\Utility\SaveUtility.cpp" />
     <ClCompile Include="engine\Utility\LoadUtility.cpp" />
-    <ClCompile Include="engine\components\AI\Algorithms\Kinematic.cpp" />
     <ClCompile Include="engine\Primitives\Tetrahedron.cpp" />
     <ClCompile Include="game\scenes\SceneAi.cpp" />
+    <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
+    <ClCompile Include="engine\core\UUniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -396,26 +420,27 @@
     <None Include="external\include\assimp\SmoothingGroups.inl" />
     <None Include="external\include\assimp\vector2.inl" />
     <None Include="external\include\assimp\vector3.inl" />
-    <None Include="src\graphics\shaders\2DTextureFrag.glsl" />
-    <None Include="src\graphics\shaders\2DTextureVert.glsl" />
-    <None Include="src\graphics\shaders\DefaultFrag.glsl" />
-    <None Include="src\graphics\shaders\DefaultVert.glsl" />
-    <None Include="src\graphics\shaders\FogFrag.glsl" />
-    <None Include="src\graphics\shaders\FogVert.glsl" />
-    <None Include="src\graphics\shaders\GrassFrag.glsl" />
-    <None Include="src\graphics\shaders\GrassVert.glsl" />
-    <None Include="src\graphics\shaders\InstanceFrag.glsl" />
-    <None Include="src\graphics\shaders\InstanceVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferResolveVert.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderFrag.glsl" />
-    <None Include="src\graphics\shaders\gBufferShaderVert.glsl" />
-    <None Include="src\graphics\shaders\RefractFrag.glsl" />
-    <None Include="src\graphics\shaders\RefractVert.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxFrag.glsl" />
-    <None Include="src\graphics\shaders\SkyBoxVert.glsl" />
-    <None Include="src\graphics\shaders\WaterFrag.glsl" />
-    <None Include="src\graphics\shaders\WaterVert.glsl" />
+    <None Include="resources\shaders\2DTextureFrag.glsl" />
+    <None Include="resources\shaders\2DTextureVert.glsl" />
+    <None Include="resources\shaders\2DUIntTextureFrag.glsl" />
+    <None Include="resources\shaders\DefaultFrag.glsl" />
+    <None Include="resources\shaders\DefaultVert.glsl" />
+    <None Include="resources\shaders\FogFrag.glsl" />
+    <None Include="resources\shaders\FogVert.glsl" />
+    <None Include="resources\shaders\gBufferResolveFrag.glsl" />
+    <None Include="resources\shaders\gBufferResolveVert.glsl" />
+    <None Include="resources\shaders\gBufferShaderFrag.glsl" />
+    <None Include="resources\shaders\gBufferShaderVert.glsl" />
+    <None Include="resources\shaders\GrassFrag.glsl" />
+    <None Include="resources\shaders\GrassVert.glsl" />
+    <None Include="resources\shaders\InstanceFrag.glsl" />
+    <None Include="resources\shaders\InstanceVert.glsl" />
+    <None Include="resources\shaders\RefractFrag.glsl" />
+    <None Include="resources\shaders\RefractVert.glsl" />
+    <None Include="resources\shaders\SkyBoxFrag.glsl" />
+    <None Include="resources\shaders\SkyBoxVert.glsl" />
+    <None Include="resources\shaders\WaterFrag.glsl" />
+    <None Include="resources\shaders\WaterVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />
@@ -482,6 +507,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <PublicIncludeDirectories>$(SolutionDir)external\include\ImGuizmo\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -506,8 +532,15 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /s/y  $(ProjectDir)external\dll  $(OutDir)</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -515,12 +548,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Solutiondir)external\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir)external\include\;$(Solutiondir)engine\;$(Solutiondir)src\scenes;$(Solutiondir)game\;$(Solutiondir)engine\math;$(Solutiondir)external\include\sdl</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\dll\;$(SolutionDir)external\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>enet.lib;winmm.lib;ws2_32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

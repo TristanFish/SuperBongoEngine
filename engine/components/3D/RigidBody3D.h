@@ -2,10 +2,14 @@
 #define RIGIDBODY_H
 
 #include <functional>
-#include "components/ECS.h"
-#include "math/Vector.h"
-#include "components/3D/Collider3D.h"
 
+
+#include "core/3D/Physics/Collider3D.h"
+
+#include "components/Component.h"
+
+
+class GameObject;
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
 class RigidBody3D : public Component	{
@@ -38,7 +42,7 @@ private:
 
 	//! Collider3D Collider
 	/*! Every RigidBody3D has a collider that allows it to collide with objects */
-	Collider3D collider;
+	 Collider3D* collider;
 
 
 	//! Friend class Physics3D
@@ -47,19 +51,6 @@ private:
 
 	
 public:
-	std::function<void(RigidBody3D&)> collisionEnterCallback;
-	
-	void OnCollisionEnter(RigidBody3D& otherBody);
-	
-	
-
-	void AddCollisionFunction(const std::function<void(RigidBody3D&)> &func)
-	{
-		collisionEnterCallback = func;
-	}
-
-	
-
 	//! RigidBody3D Constructor
 	RigidBody3D();
 
@@ -81,18 +72,19 @@ public:
 	void ApplyConstantTorque(const MATH::Vec3& torque);
 
 
-	inline void SetColliderSize(MATH::Vec3 s) { collider.size = s; }
-	inline void SetColliderType(Collider3D::type newShape) { collider.colliderType = newShape; }
-	inline Collider3D::type GetColliderShape() { return collider.colliderType; }
+	void ConstructCollider(ColliderType Collider_Type);
+	void SetColliderSize(MATH::Vec3 s);
+	void SetColliderType(ColliderType newType);
+	ColliderType GetColliderType();
 
-	inline bool isMoveable() const { return collider.isMoveable; }
-	inline void setMoveable(bool b) { collider.isMoveable = b; }
+	bool isMoveable() const;
+	void setMoveable(bool b);
 
 	
 	//Getters and setters
 #pragma region getters/setters
 
-	inline Collider3D GetCollider() { return collider; }
+	 Collider3D* GetCollider(); 
 
 	inline MATH::Vec3 GetPosition() const { return *pos; }
 	inline void SetPosition(const MATH::Vec3& p) const { *pos = p; }

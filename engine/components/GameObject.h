@@ -1,14 +1,16 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "core/3D/Physics/Collider3D.h"
+#include "core/UUniqueID.h"
+#include "core/Globals.h"
 #include "core/Logger.h"
+
 #include "Transform.h"
 #include "Components.h"
 #include "SDL_events.h"
 #include <vector>
 
-
-class RigidBody3D;
 
 //! GameObject Class
 /*!Things should be inheriting from gameObject, gameobjects are placed into a manager
@@ -19,27 +21,29 @@ class GameObject
 
 
 protected:
-	friend class SceneGraph;
+
+	/*! Holds the name of this gameObject*/
+	std::string name;
+
+	UUniqueID uuid;
+
 	//! Active boolean
 	/*! Controls if the gameObject is active or not*/
 	bool active = true;
 
-	GameObject* parent;
-	std::vector<GameObject*> children;
+	std::shared_ptr<GameObject> parent;
+	std::vector<std::shared_ptr<GameObject>> children;
 	std::vector<Component*> componentList;
 
-
-
+	friend class SceneGraph;
 
 public:
 
-	/*! Hold's the name of this gameObject*/
-	std::string name;
+
 
 	//!IsMenuActive boolean
 	/*! Controls if the gameObject's properties panel is active*/
 	bool isObjectSelected = false;
-
 
 	//!canBeInstantiated boolean
 	/*! Control's if the object can be spawned and will show up in the spawn able objects GUI list*/
@@ -57,7 +61,14 @@ public:
 	/*!Deletes any pointers/clears any vectors*/
 	virtual ~GameObject();
 
+	//!Init Function
+	/*!Initializes all components in the gameObject called whenever a gameobject is added to the sceneGraph*/
 	virtual void Init();
+
+	//!Begin Function
+	/*!Meant to be overriden, is called after all objects are added to the scenegraph
+	 * think of it as Unreal Engine BeginPlay() or Unity Start() */
+	virtual void PostInit();
 	
 	//!Virtual Update Function
 	/*!Updates the Gameobject position/rotation/translation*/
@@ -71,7 +82,9 @@ public:
 	/*!Draws the geometry of the object in wireframe*/
 	virtual void DrawDebugGeometry() const {}
 
-	virtual GameObject* GetClone() const = 0;
+	virtual void ImguiRender() {}
+
+	virtual std::shared_ptr<GameObject> NewClone() const = 0;
 
 	//GetType function
 	/*!Returns the type of class that the owning class is*/
@@ -85,11 +98,15 @@ public:
 	/*!Sets the gameObject as active or not*/
 	void SetActive(const bool a) { active = a; }
 
-	std::string GetName() const { return std::string(name); }
+	std::string GetName() const { return name; }
+	std::string& GetNameRef() { return name; }
+
+	uint32_t GetUUID() const { return uuid; }
+
 
 	//!GetModelMatrix Getter
 	/*!Returns the gameObject model matrix*/
-	const MATH::Matrix4& GetModelMatrix() const { return transform.GetModelMatrix(); }
+	 MATH::Matrix4& GetModelMatrix() { return transform.GetModelMatrix(); }
 
 	//!SetPos Setter
 	/*!Sets the position of this a gameObject*/
@@ -97,32 +114,34 @@ public:
 
 	//!SetScale Setter
 	/*!Sets the scale of this a gameObject*/
-	void SetScale(const MATH::Vec3& scale_) { transform.scale = scale_; }
+	void SetScale(const MATH::Vec3& scale_) { transform.SetScale(scale_); }
 
 	//!SetRotation Setter
 	/*!Sets the rotation of this a gameObject*/
 	void SetRotation(const MATH::Vec3& rotation_) { transform.SetRot(rotation_); }
+	//D we were missing a quat version
+	void SetRotation(const MATH::Quaternion& quat_) { transform.SetRot(quat_); }
 
 	/*!Sets the Name of this a gameObject*/
-	void SetName(std::string name_) { name = name_; }
+	void SetName(const std::string& name_) { name = name_; }
 
 
-	 GameObject* GetParent() const { return parent; }
+	void SetUUID(const uint32_t& uuid_) { uuid = UUniqueID(uuid_); }
+
+	 std::shared_ptr<GameObject> GetParent() const { return parent; }
 	
-	 GameObject* GetChild(int i) const { return children[i]; }
+	 std::shared_ptr<GameObject> GetChild(int i) const { return children[i]; }
 
-	 std::vector<GameObject*>& GetChildren() { return children; }
+	 std::vector<std::shared_ptr<GameObject>>& GetChildren() { return children; }
 
 	 const std::vector<Component*>& GetComponents() const { return componentList; }
 
 	 int GetChildCount() const { return children.size(); }
 	
-
-
-	inline bool operator == (const GameObject* v) { return name == v->name; }
+	bool operator == (const std::shared_ptr<GameObject> v) const { return name == v->name; }
 
 	//This functor is used for OnCollisionEnter functions for gameobjects
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) {}
+	virtual void OnCollisionEnter(Collider3D& otherCollider) {}
 	//This functor is used for Attaching uniforms
 	virtual void AttachUniforms() const {}
 
@@ -135,6 +154,8 @@ public:
 
 	//!Template HasComponent boolean
 	/*!Checks if this gameObject has the specified component*/
+	
+	
 	template <typename T>
 	bool HasComponent()
 	{
@@ -164,7 +185,7 @@ public:
 				return comp;
 			}
 		}
-		EngineLogger::Error("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
+		EngineLogger::Warning("Component " + std::string(typeid(T).name()) + " not found in " + std::string(name), "ECS.h", __LINE__);
 		return nullptr;
 	}
 
@@ -174,10 +195,10 @@ public:
 		CheckIfTemplateTypeInheritsFromComponent<T>();
 		for(auto it = componentList.begin(); it != componentList.end(); ++it)
 		{
-			if(dynamic_cast<T*>(*it))
+			if(T* compType = dynamic_cast<T*>(*it))
 			{
 				EngineLogger::Warning("Component " + std::string((*it)->GetType()) + " already found in " + std::string(name), "ECS.h", __LINE__);
-				return nullptr;
+				return compType;
 			} 
 		}
 		componentList.emplace_back(new T());
@@ -192,23 +213,25 @@ public:
 		{
 			if(dynamic_cast<T*>(*it))
 			{
+				delete *it;
 				componentList.erase(it);
+				return;
 			}
 		}
 		EngineLogger::Info("No component of type " + std::string(typeid(T).name()) + " found in " + std::string(name), "ECS.h", __LINE__);
 	}
 
-	GameObject* AddChild(GameObject* go)
+	std::shared_ptr<GameObject> AddChild(std::shared_ptr<GameObject> go)
 	{
 		children.emplace_back(go);
-		go->parent = this;
+		go->parent = Globals::Engine::GetSceneGraph()->FindGameObject(name);
 		go->transform.SetParent(&this->transform);
 		return go;
 	}
 
-	void RemoveChild(GameObject* go)
+	void RemoveChild(std::shared_ptr<GameObject> go)
 	{
-		std::vector<GameObject*>::iterator iter = children.begin();
+		std::vector<std::shared_ptr<GameObject>>::iterator iter = children.begin();
 
 		while (iter != children.end())
 		{
@@ -223,10 +246,8 @@ public:
 		}
 	}
 
-
-
 	template <typename T>
-	T* AddChild(GameObject* go)
+	T* AddChild(std::shared_ptr<GameObject> go)
 	{
 		children.emplace_back(go);
 		go->parent = this;

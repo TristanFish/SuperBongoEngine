@@ -2,23 +2,20 @@
 
 #include "MMath.h"
 #include "core/Timer.h"
+#include "core/3D/Physics/BoundingBox.h"
+#include "core/3D/Physics/BoundingSphere.h"
 
 #include "components/3D/MeshRenderer.h"
-#include "graphics/UIStatics.h"
+#include "components/GameObject.h"
+#include "components/SceneGraph.h"
+
+#include "core/Globals.h"
 
 using namespace MATH;
 
-void RigidBody3D::OnCollisionEnter(RigidBody3D& otherBody)
-{
-	if(collisionEnterCallback != nullptr)
-	{
-		collisionEnterCallback(otherBody);
-	}
-}
 
-RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), linearDrag(0.0f), rotInertia(0.0f),
-                            angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), 
-                            collider(MATH::Vec3(),MATH::Vec3())
+RigidBody3D::RigidBody3D(): mass(1.0f), vel(Vec3()), accel(Vec3()), linearDrag(0.0f), rotInertia(0.0f),
+                            angularVel(Vec3()), angularAcc(0.0f), angularDrag(0.95f), collider(nullptr)
 {
 	
 }
@@ -26,26 +23,30 @@ RigidBody3D::RigidBody3D(): mass(1.0f), vel(MATH::Vec3()), accel(MATH::Vec3()), 
 RigidBody3D::~RigidBody3D()
 {
 	pos = nullptr;
+	if(collider)
+	{
+		delete collider;
+		collider = nullptr;
+	}
 }
 
 void RigidBody3D::Init(GameObject *g)
 {
 	gameObject = g;
-	pos = &g->transform.pos;
-	collider.minVertices = gameObject->GetComponent<MeshRenderer>()->GetMinVector();
-	collider.maxVertices = gameObject->GetComponent<MeshRenderer>()->GetMaxVector();
-	SetColliderSize(g->transform.GetScale());
+	pos = &g->transform.GetPositionRef();
+
+
+
 	
+	
+
 	mass = 1.0f;
-	vel = MATH::Vec3();
-	accel = MATH::Vec3();
+	vel = Vec3();
+	accel = Vec3();
 
 	rotInertia = 2.0f;
-	angularVel = MATH::Vec3(0.0f);
-	//angularAcc = MATH::Vec3(0.0f, 0.0f, 0.0f);
-
-	//collider.maxVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.maxVertices));
-	//collider.minVertices = ((MMath::calcRotationMatrix(gameobject->transform.rotation) * collider.minVertices));
+	angularVel = Vec3(0.0f);
+	angularAcc = Vec3(0.0f);
 }
 
 void RigidBody3D::Update(const float deltaTime)
@@ -56,17 +57,12 @@ void RigidBody3D::Update(const float deltaTime)
 	angularVel += angularAcc * deltaTime;
 	angularVel *= angularDrag;
 
-
 	// Rotation Handling 
 	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
-	Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.rotation)) * (deltaTime / 2);
+	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
 
-
-
-	gameObject->transform.rotation += newRot;
-	gameObject->transform.rotation = gameObject->transform.rotation.Normalized();
-	// Rotation Handling 
-	
+	gameObject->transform.GetRotationQuatRef() += newRot;
+	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
 }
 
 
@@ -78,18 +74,13 @@ void RigidBody3D::HandleEvents(const SDL_Event& event)
 
 void RigidBody3D::ImGuiRender()
 {
-	ImGuiTreeNodeFlags tree_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen;
-	
-	bool opened = ImGui::TreeNodeEx("RigidBody", tree_flags, "RigidBody3D");
-
+	const bool opened = Globals::Editor::OpenComponentTreeNode(this, "RigidBody3D");
 	if (opened)
 	{
-
-		UIStatics::DrawVec3("Velocity", vel, 100.0f);
-		UIStatics::DrawVec3("Acceleration", accel, 100.0f);
-		UIStatics::DrawVec3("Angular Vel", angularVel, 100.0f);
-		UIStatics::DrawVec3("Angular Accel", angularAcc, 100.0f);
-
+		Globals::Editor::DrawVec3("Velocity", vel, 100.0f);
+		Globals::Editor::DrawVec3("Acceleration", accel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Vel", angularVel, 100.0f);
+		Globals::Editor::DrawVec3("Angular Accel", angularAcc, 100.0f);
 
 		ImGui::TreePop();
 	}
@@ -117,4 +108,104 @@ void RigidBody3D::ApplyImpulseTorque(const Vec3& torque)
 void RigidBody3D::ApplyConstantTorque(const Vec3& torque)
 {
 	angularAcc = torque / mass;
+}
+
+void RigidBody3D::ConstructCollider(ColliderType Collider_Type)
+{
+	Model* objModel = gameObject->GetComponent<MeshRenderer>()->GetModel();
+	Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
+
+
+#pragma region Change In Collider Type
+	// Used for when we change collider types and need to copy the EnterCallback
+	std::function<void(Collider3D&)> tempCollisionEnterCallback;
+	bool ColliderChanged = false;
+
+	if (collider && collider->Type != Collider_Type)
+	{
+		tempCollisionEnterCallback = collider->collisionEnterCallback;
+
+		delete collider;
+		collider = nullptr;
+
+		ColliderChanged = true;
+	}
+
+#pragma endregion
+
+	
+
+#pragma region Create New Collider
+
+	if (Collider_Type == ColliderType::OBB)
+	{
+		collider = new BoundingBox(ModelMatrix);
+		collider->SetModelVerticies(objModel->GetVerticies());
+		dynamic_cast<BoundingBox*>(collider)->UpdateWorldVerticies();
+	}
+	else if (Collider_Type == ColliderType::Sphere)
+	{
+		collider = new BoundingSphere(objModel->p_min, objModel->p_max);
+		collider->SetModelVerticies(objModel->GetVerticies());
+
+		dynamic_cast<BoundingSphere*>(collider)->CaclulateProperties(ModelMatrix);
+	}
+
+	if (ColliderChanged)
+	{
+		collider->AddCollisionFunction(tempCollisionEnterCallback);
+	}
+
+	collider->RB_Attached = this;
+
+#pragma endregion
+}
+
+void RigidBody3D::SetColliderSize(MATH::Vec3 s)
+{
+	collider->SetSize(s);
+}
+
+void RigidBody3D::SetColliderType(ColliderType newType)
+{
+	collider->SetColliderType(newType); 
+}
+
+ColliderType RigidBody3D::GetColliderType()
+{
+	return collider->GetColliderType(); 
+}
+
+bool RigidBody3D::isMoveable() const
+{
+	return collider->IsMoveable(); 
+}
+
+void RigidBody3D::setMoveable(bool b)
+{
+	collider->SetMoveable(b); 
+}
+
+Collider3D* RigidBody3D::GetCollider()
+{
+	Matrix4 ModelMatrix = gameObject->transform.GetModelMatrix();
+
+	Model* ObjModel = gameObject->GetComponent<MeshRenderer>()->GetModel();
+
+	if (collider->GetColliderType() == ColliderType::OBB)
+	{
+		BoundingBox* OBB = dynamic_cast<BoundingBox*>(collider);
+		OBB->SetTransform(ModelMatrix);
+		OBB->UpdateModelBounds();
+	}
+
+	else if (collider->GetColliderType() == ColliderType::Sphere)
+	{
+		BoundingSphere* OSphere = dynamic_cast<BoundingSphere*>(collider);
+		OSphere->CaclulateProperties(ModelMatrix);
+	}
+
+	
+
+	return collider;
 }

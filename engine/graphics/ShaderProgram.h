@@ -14,13 +14,18 @@ class ShaderProgram
 	friend class ShaderManager;
 	
 	GLuint programID;
-	std::vector<std::string> shaders;
 	GLuint LinkShaders(const std::vector<GLint>& shaders);
 	
 
 public:
 
 	ShaderProgram();
+	~ShaderProgram() = default;
+	ShaderProgram(const ShaderProgram& sp);
+	ShaderProgram(const ShaderProgram&& sp);
+	ShaderProgram& operator =(const ShaderProgram& sp) = default;
+	ShaderProgram& operator =(const ShaderProgram&& sp);
+	
 	bool operator==(const ShaderProgram& sp) const;
 	
 	void DeleteProgram();
@@ -35,6 +40,7 @@ public:
 	void TakeUniform(const std::string &name, const float f) const;
 	void TakeUniform(const std::string &name, const int i) const;
 	void TakeUniform(const std::string &name, const Uint16 i) const;
+	void TakeUniform(const std::string& name, const uint32_t i) const;
 
 	GLuint GetID() const { return programID; }
 };

@@ -3,6 +3,10 @@
 #include <memory>
 
 
+namespace CustomUI {
+	class DockSpace;
+}
+
 class Window;
 class GameInterface;
 class Scene;
@@ -12,7 +16,6 @@ class CoreEngine
 private:
 	Window* window;
 
-	unsigned int fps;
 	bool isRunning;
 
 	static std::unique_ptr<CoreEngine> engineInstance;
@@ -20,8 +23,11 @@ private:
 
 
 public:
+	unsigned int fps;
+	bool limitfps = true;
 	int currentSceneNum;
 	GameInterface* gameInterface;
+	CustomUI::DockSpace* dockSpace;
 	
 	static CoreEngine* GetInstance();
 
@@ -39,19 +45,20 @@ public:
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;
 
-	Window* GetWindow() const;
 
 	void ReloadCurrentScene();
 	void OnDestroy();
+	
+	void SaveSceneData() const;
+	void LoadSceneData();
 
-
-	void PrintTest(int i);
 private:
 	CoreEngine();
 	~CoreEngine();
 	void Update(const float deltaTime_);
 	void Render();
 	void HandleEvents();
+
 
 
 };

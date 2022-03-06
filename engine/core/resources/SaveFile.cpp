@@ -5,11 +5,13 @@
 
 #include <utility>
 
+#include "SaveManager.h"
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 
-
-SaveFile::SaveFile(const std::string FileName_, const FileType type) : Doc(), Elements(std::map<std::string, ElementInfo>()),
-rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
+SaveFile::SaveFile(const std::string& FileName_, const FileType type) : Doc(), rootNode(Doc.NewElement("Root")),
+                                                                        insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
 {
 	FileName = FileName_;
 
@@ -19,28 +21,26 @@ rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), Ha
 	}
 	fileType = type;
 
-	InitalizeFile();
+	InitalizeFile(true);
 }
 
 
 
-SaveFile::SaveFile(std::string FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_) : 
+SaveFile::SaveFile(const std::string& FileName_, const std::map<std::string, ElementInfo>& Elements_, tinyxml2::XMLDoc& Doc_) : 
 	rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
 {
 	FileName = FileName_;
-	prevFileName = FileName.data();
+	prevFileName = FileName_;
 	Elements = Elements_;
 	Doc_.DeepCopy(&Doc);
 
-	InitalizeFile();
-
-	
+	InitalizeFile(true);
 }
 
-SaveFile::SaveFile() : Doc(), Elements(std::map<std::string, ElementInfo>()), FileName("None"), 
-rootNode(Doc.NewElement("Root")), insertionOrder(std::vector<std::string>()), HasBeenEdited(false)
+SaveFile::SaveFile() : FileName("None"), Doc(), rootNode(Doc.NewElement("Root")), 
+insertionOrder(std::vector<std::string>()), Elements(std::map<std::string, ElementInfo>()), HasBeenEdited(false)
 {
-	InitalizeFile();
+	InitalizeFile(true);
 }
 
 SaveFile::SaveFile(const SaveFile& file)
@@ -58,7 +58,7 @@ SaveFile::SaveFile(const SaveFile& file)
 
 
 
-ElementInfo& SaveFile::FindElement(std::string elmName)
+ElementInfo& SaveFile::FindElement(const std::string& elmName)
 {
 	std::map<std::string, ElementInfo>::iterator iter = Elements.find(elmName);
 
@@ -72,9 +72,9 @@ ElementInfo& SaveFile::FindElement(std::string elmName)
 	}
 }
 
-bool SaveFile::HasElement(const std::string elmName)
+bool SaveFile::HasElement(const std::string& elmName) const
 {
-	std::map<std::string, ElementInfo>::iterator iter = Elements.find(elmName);
+	std::map<std::string, ElementInfo>::const_iterator iter = Elements.find(elmName);
 
 	if (iter != Elements.end())
 	{
@@ -83,7 +83,7 @@ bool SaveFile::HasElement(const std::string elmName)
 	return false;
 }
 
-Attribute& SaveFile::FindAttribute(std::string elmName, std::string atrbName)
+Attribute& SaveFile::FindAttribute(const std::string& elmName, const std::string& atrbName)
 {
 
 	std::map<std::string, ElementInfo>::iterator elmIter = Elements.find(elmName);
@@ -110,12 +110,12 @@ Attribute& SaveFile::FindAttribute(std::string elmName, std::string atrbName)
 
 SaveFile::~SaveFile()
 {
-	if (Elements.size() > 0)
+	if (!Elements.empty())
 	{
 		Elements.clear();
 	}
 
-	if (insertionOrder.size() > 0)
+	if (!insertionOrder.empty())
 	{
 		insertionOrder.clear();
 	}
@@ -128,14 +128,15 @@ SaveFile SaveFile::operator=(const SaveFile& file)
 	return SaveFile(FileName, Elements, Doc);
 }
 
-bool SaveFile::operator==(const SaveFile& file)
+bool SaveFile::operator==(const SaveFile& file) const
 {
 	return file.FileName == FileName;
 }
 
-void SaveFile::InitalizeFile()
+void SaveFile::InitalizeFile(bool FirstInit)
 {
-	Doc.InsertFirstChild(rootNode);
+	if(FirstInit)
+		Doc.InsertFirstChild(rootNode);
 
 	ElementInfo info;
 	info.element = Doc.RootElement();
@@ -145,73 +146,63 @@ void SaveFile::InitalizeFile()
 }
 
 
-void SaveFile::AddElement(const std::string name,  ElementInfo element)
+void SaveFile::AddElement(const std::string& name,  ElementInfo element)
 {
 	Elements.emplace(name, element);
 	insertionOrder.emplace(insertionOrder.end(), name);
 }
 
-void SaveFile::AddElements(const std::map<std::string, ElementInfo> elements)
+void SaveFile::AddElements(const std::map<std::string, ElementInfo>& elements)
 {
-	for (auto element : elements)
+	for (const auto& element : elements)
 	{
 		Elements.emplace(element.first, element.second);
 		insertionOrder.emplace(insertionOrder.end(), element.first);
-
 	}
 }
 
-void SaveFile::AddAttribute(const std::string elmName, const std::string atribName, Attribute value)
+void SaveFile::AddAttribute(const std::string& elmName, const std::string& atribName, Attribute value)
 {
 	std::map<std::string, ElementInfo>::iterator iter = Elements.begin();
 
 	while (iter != Elements.end())
 	{
-
 		if (iter->first == elmName)
 		{
 			iter->second.Attributes.emplace(atribName, value);
 			break;
 		}
-
 		iter++;
 	}
 }
 
 
 
-void SaveFile::AddAttributes(const std::string elmName, std::map<std::string, Attribute> attributes)
+void SaveFile::AddAttributes(const std::string& elmName, const std::map<std::string, Attribute>& attributes)
 {
 	std::map<std::string, ElementInfo>::iterator iter = Elements.begin();
 
 	while (iter != Elements.end())
 	{
-
 		if (iter->first == elmName)
-		{
-			
-			for (auto Attribs : attributes)
+		{	
+			for (const auto& Attribs : attributes)
 			{
 				iter->second.Attributes.emplace(Attribs.first, Attribs.second);
 			}
 			break;
 		}
-
 		iter++;
 	}
 }
 
-void SaveFile::SetElementName(const std::string o_ElmName, const std::string n_ElmName)
+void SaveFile::SetElementName(const std::string& o_ElmName, const std::string& n_ElmName)
 {
 	std::map<std::string, ElementInfo>::iterator iter = Elements.find(o_ElmName);
-
-
-
 	std::vector<std::string>::iterator insertIter = insertionOrder.begin();
 
 	if (iter != Elements.end())
 	{
-		
 		auto value = std::move(iter->second);
 		Elements.erase(iter);
 		Elements.insert({ n_ElmName, std::move(value) });
@@ -224,29 +215,24 @@ void SaveFile::SetElementName(const std::string o_ElmName, const std::string n_E
 			*insertIter = n_ElmName;
 			break;
 		}
-
 		insertIter++;
 	}
-	
 }
 
-void SaveFile::RemoveElement(const std::string name)
+void SaveFile::RemoveElement(const std::string& name)
 {
 	std::map<std::string, ElementInfo>::iterator iter = Elements.begin();
 	std::vector<std::string>::iterator insertIter = insertionOrder.begin();
 
 	while (iter != Elements.end())
 	{
-
 		if (iter->first == name)
 		{
 			Elements.erase(iter);
 			break;
 		}
-
 		iter++;
 	}
-
 
 	while (insertIter != insertionOrder.end())
 	{
@@ -255,7 +241,6 @@ void SaveFile::RemoveElement(const std::string name)
 			insertionOrder.erase(insertIter);
 			break;
 		}
-
 		insertIter++;
 	}
 }
@@ -264,9 +249,11 @@ void SaveFile::ClearElements()
 {
 	Elements.clear();
 	insertionOrder.clear();
+
+	InitalizeFile(false);
 }
 
-std::string SaveFile::GetSaveFileType()
+std::string SaveFile::GetSaveFileType() const
 {
 	switch (fileType)
 	{
@@ -283,13 +270,13 @@ std::string SaveFile::GetSaveFileType()
 	return ".error";
 }
 
-std::string SaveFile::GetFileDestination()
+std::string SaveFile::GetFileDestination() const
 {
 	std::string destination;
 	std::string sceneName;
 
 	sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName() + "\\";
-	destination = Globals::SAVE_DATA_PATH;
+	destination = Globals::Engine::SAVE_DATA_PATH;
 	switch (fileType)
 	{
 
@@ -309,16 +296,29 @@ std::string SaveFile::GetFileDestination()
 	return destination;
 }
 
+void SaveFile::ClearSaveFile()
+{
+	if (!Elements.empty())
+	{
+		Elements.clear();
+	}
+
+	if (!insertionOrder.empty())
+	{
+		insertionOrder.clear();
+	}
+}
+
 void SaveFile::Save()
 {
 	std::string Destination = GetFileDestination();
 
-	SaveFile& save = SaveManager::GetSaveFile(Globals::SCENE_NAME);
+	SaveFile& save = SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME);
 
 	if (save.FileName != save.prevFileName)
 	{
-		std::filesystem::path oldPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
-		std::filesystem::path newPath = Globals::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
+		std::filesystem::path oldPath = Globals::Engine::SAVE_DATA_PATH + ("Objects\\" + save.prevFileName);
+		std::filesystem::path newPath = Globals::Engine::SAVE_DATA_PATH + ("Objects\\" + save.FileName);
 
 		if (std::filesystem::exists(oldPath))
 		{
@@ -330,15 +330,11 @@ void SaveFile::Save()
 		std::filesystem::create_directory(Destination);
 	}
 
-
-	
-
 	if (FileName != prevFileName)
 	{
 		std::filesystem::path oldObjPath = Destination + prevFileName + GetSaveFileType();
 		std::filesystem::remove(oldObjPath);
 	}
-
 
 	const tinyxml2::XMLError eResult = Doc.SaveFile((Destination + FileName + GetSaveFileType()).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)

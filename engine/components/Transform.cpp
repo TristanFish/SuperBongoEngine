@@ -5,63 +5,64 @@
 using namespace MATH;
 
 
-Transform::Transform() : parent(nullptr), pos(MATH::Vec3()), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
-{
-	
+Transform::Transform() : parent(nullptr), pos(Vec3()), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
 
-	//rotation = Quaternion(Vec3(0.0f, 0.0f, 1.0f), -90);
-}
-
-Transform::Transform(const MATH::Vec3& pos_) : parent(nullptr), pos(pos_), rotation(MATH::Quaternion(1, Vec3(0.0, 0.0, 0.0))), scale(MATH::Vec3(1.0f))
-{
-	
-}
+Transform::Transform(const Vec3& pos_) : parent(nullptr), pos(pos_), scale(Vec3(1.0f)), rotation(Quaternion(1, Vec3(0.0, 0.0, 0.0))) {}
 
 void Transform::Update(const float deltaTime)
 {
-	
-	rotationMatrix =  MMath::GetFromMat3(rotation.ConvertToMatrix());
-
-
-	modelMatrix =  MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
-
-	if(parent != nullptr)
-	{
-		modelMatrix = modelMatrix * parent->modelMatrix;
-	}
+	UpdateMatricies();
 }
 
-MATH::Vec3 Transform::Forward() const
+Vec3 Transform::Forward() const
 {
-	return rotationMatrix * MATH::Vec3(0.0f, 0.0f, -1.0f);
+	return rotation.Rotate(Vec3::Forward());
 }
 
-MATH::Vec3 Transform::Right() const
+Vec3 Transform::Right() const
 {
-	return rotationMatrix * MATH::Vec3(1.0f, 0.0f, 0.0f);
+	return rotation.Rotate(Vec3::Right());
 }
 
-MATH::Vec3 Transform::Up() const
+Vec3 Transform::Up() const
 {
-	return rotationMatrix * MATH::Vec3(0.0f, 1.0f, 0.0f);
+	return rotation.Rotate(Vec3::Up());
 }
 
-void Transform::SetPos(const MATH::Vec3& pos)
+void Transform::SetPos(const Vec3& pos)
 {
 	this->pos = pos;
+	UpdateMatricies();
 }
 
-void Transform::SetRot(const MATH::Vec3& rot)
+void Transform::SetRot(const Vec3& rot)
 {
-	rotation = MATH::Quaternion::EulerToQuat(rot);
+	rotation = Quaternion::EulerToQuat(rot);
+	UpdateMatricies();
+
 }
 
 void Transform::SetRot(const Quaternion& rot)
 {
 	rotation = rot;
+	UpdateMatricies();
 }
 
-void Transform::SetScale(const MATH::Vec3& scale)
+void Transform::SetScale(const Vec3& scale)
 {
 	this->scale = scale;
+	UpdateMatricies();
+}
+
+void Transform::UpdateMatricies()
+{
+	rotationMatrix = MMath::GetFromMat3(rotation.ConvertToMatrix());
+
+
+	modelMatrix = MMath::translate(pos) * rotationMatrix * MMath::scale(scale);
+
+	if (parent != nullptr)
+	{
+		modelMatrix = modelMatrix * parent->modelMatrix;
+	}
 }

@@ -22,7 +22,7 @@ void TextureManager::LoadAllTextures()
 {
 	using namespace std::filesystem;
 	EngineLogger::Info("=================Loading all textures=================", "TextureManager.cpp", __LINE__);
-	for (const auto& folder : std::filesystem::recursive_directory_iterator("resources/textures"))
+	for (const auto& folder : recursive_directory_iterator("resources/textures"))
 	{
 		textures[folder.path().filename().string()] = Texture(relative(folder.path()).string());
 		EngineLogger::Info(folder.path().filename().string(), "TextureManager.cpp", __LINE__);

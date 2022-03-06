@@ -1,7 +1,12 @@
 #include "SkyBox.h"
+
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 #include "core/Logger.h"
+
+#include "Rendering/Camera.h"
+
+#include "sdl/SDL_image.h"
 
 using namespace MATH;
 
@@ -89,7 +94,6 @@ SkyBox::~SkyBox()
 }
 bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, const char* negy, const char* posz, const char* negz)
 {
-	
 	glGenTextures(1, &skyboxTextureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	SDL_Surface* texSurface = IMG_Load(posx);
@@ -143,15 +147,9 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 	return true;
 }
 
-
-void SkyBox::Update(const float deltaTime)
-{
-	
-}
-
 void SkyBox::Render() const
 {
-	Matrix3 view = Camera::getInstance()->getViewMatrix();
+	const Matrix3 view = Camera::getInstance()->getViewMatrix();
 	viewConvert = Mat3ToMat4(view);
 	
 	glDepthFunc(GL_LEQUAL);
@@ -167,12 +165,13 @@ void SkyBox::Render() const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTextureID);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	//glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	
 }
 
-Matrix4 SkyBox::Mat3ToMat4(Matrix3 _m) const
+Matrix4 SkyBox::Mat3ToMat4(const Matrix3& _m)
 {
 	Matrix4 m;
 	m[0] = _m[0];   m[4] = _m[3];   m[8] = _m[6];   m[12] = 0;

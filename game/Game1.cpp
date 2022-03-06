@@ -1,10 +1,13 @@
 #include "Game1.h"
 #include "core/CoreEngine.h"
+#include "core/Globals.h"
 #include "scenes/Scene1.h"
 #include "scenes/Scene2.h"
 #include "core/scene/DefaultScene.h"
 
 #include "scenes/SceneAi.h"
+#include "Utility/LoadUtility.h"
+
 
 Game1::Game1() : currentSceneNum(0)
 {
@@ -14,7 +17,7 @@ Game1::Game1() : currentSceneNum(0)
 
 Game1::~Game1()
 {
-	for (auto scene : Scenes)
+	for (auto* scene : Scenes)
 	{
 		delete scene;
 		scene = nullptr;
@@ -25,16 +28,15 @@ bool Game1::OnCreate()
 {
 	if (CoreEngine::GetInstance()->GetCurrentScene() == 0)
 	{
-		currentScene = new Scene1(); //this should be Scene1. Change this only if you want to temp load a scene from code
+		currentScene = new Scene1(); 
+		//currentScene = new SceneAi();
 		currentSceneNum = 0;
 		bool create = currentScene->OnCreate();
 		bool postCreate = currentScene->PostCreate();
 
 		Scenes.push_back(currentScene);
 		Scenes.push_back(new Scene2);
-
-
-		
+		//Scenes.push_back(new SceneAi);
 
 		return (create && postCreate);
 	}
@@ -68,29 +70,22 @@ void Game1::HandleEvents(const SDL_Event& event)
 
 void Game1::BuildScene() 
 {
-	//delete currentScene;
-	currentScene = nullptr;
-
-
 	currentScene = Scenes[CoreEngine::GetInstance()->GetCurrentSceneNum()];
-	
-
 	currentSceneNum = CoreEngine::GetInstance()->GetCurrentSceneNum();
 	
-	Renderer::ResetInstance();
+	Renderer::GetInstance()->ClearComponents();
 	
 	LoadUtility::GetInstance()->LoadSceneSaves();
+	Globals::Engine::InitGlobals();
 	if (!currentScene->OnCreate())
 	{
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
-	currentScene->LoadMapData();
-	currentScene->objectList->AddRenderingComponents();
+	CoreEngine::GetInstance()->LoadSceneData();
 	if(!currentScene->PostCreate())
 	{
 		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
 		CoreEngine::GetInstance()->OnDestroy();
 	}
-
 }

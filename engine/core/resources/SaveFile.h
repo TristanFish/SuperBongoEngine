@@ -12,7 +12,7 @@
 
 
 
-typedef std::variant<int, float,double,bool,std::string> Attribute;
+typedef std::variant<int,uint32_t,float,double,bool,std::string> Attribute;
 
 
 //! FileType enum class
@@ -39,42 +39,40 @@ struct ElementInfo
 
 
 	//! Attributes map
-	/*! Hold's all of the attributes that an element can have. For instance the element could be "Position" and the attributes could be X,Y,Z */
+	/*! Holds all of the attributes that an element can have. For instance the element could be "Position" and the attributes could be X,Y,Z */
 	std::map<std::string, Attribute> Attributes;
 
 	//! Standard Constructor
 	/*!Initializes the structs variables. */
-	inline ElementInfo() : parentName(""), element(nullptr), Attributes(std::map<std::string, Attribute>())
+	ElementInfo() : element(nullptr), parentName(""), Attributes(std::map<std::string, Attribute>())
 	{
 	
 	}
 
 	//! Alternate Constructor
 	/*!Initializes the structs variables. and sets the parent name to the passed in string*/
-	inline ElementInfo(std::string parentName_) : element(nullptr), Attributes(std::map<std::string, Attribute>())
+	ElementInfo(const std::string& parentName_) : element(nullptr), Attributes(std::map<std::string, Attribute>())
 	{
 		parentName = parentName_;
 	}
 
 	//! Standard Destructor
 	/*!Destroys any of the needed pointers and clears the attributes*/
-	inline ~ElementInfo()
+	~ElementInfo()
 	{
 		element = nullptr;
 
-		if (Attributes.size() > 0)
+		if (!Attributes.empty())
 		{
 			Attributes.clear();
 		}
 	}
 
-	inline bool operator != (const ElementInfo & elm)
+	bool operator != (const ElementInfo & elm)
 	{
-
-
-		for (auto m_atrib : Attributes)
+		for (const auto& m_atrib : Attributes)
 		{
-			for (auto s_atrib : elm.Attributes)
+			for (const auto& s_atrib : elm.Attributes)
 			{
 				if (m_atrib.first == s_atrib.first)
 				{
@@ -85,23 +83,25 @@ struct ElementInfo
 				}
 			}
 		}
-
-			return false;
+		return false;
 	}
 
 	//! HasParent Function
 	/*!Returns if the parent name is empty or not.*/
-	inline bool HasParent() { return parentName.empty(); }
+	bool HasParent() const { return parentName.empty(); }
 
+	bool HasAttribute(const std::string& AtribName) const { return Attributes.find(AtribName) != Attributes.end(); }
 
 	//! IsRootChild Function
 	/*!Returns if the parent name is equal to "Root"*/
-	inline bool IsRootChild() { return parentName == "Root"; }
+	bool IsRootChild() const { return parentName == "Root"; }
+
+
 };
 
 
 //! SaveFile Class
-/*!Hold's all of the needed variables and functions to allow us to save all this classes data to an xml file*/
+/*!Holds all of the needed variables and functions to allow us to save all this classes data to an xml file*/
 class SaveFile {
 
 private:
@@ -109,11 +109,11 @@ private:
 
 
 	//! string FileName 
-	/*!Holds's the name of the file. This is mostly used for saving*/
+	/*!Holds the name of the file. This is mostly used for saving*/
 	std::string FileName;
 
 	//! string PreviousFileName 
-	/*!Hold's the file name when the application started*/
+	/*!Holds the file name when the application started*/
 	std::string prevFileName;
 
 	//!XMLDoc Doc
@@ -121,15 +121,15 @@ private:
 	tinyxml2::XMLDoc Doc;
 
 	//!XMLNode RootNode
-	/*!Hold's a pointer to the first node in every xml document*/
+	/*!Holds a pointer to the first node in every xml document*/
 	tinyxml2::XMLNode* rootNode;
 
 	//! vector Insertion Order
-	/*!Hold's the order in which elements are inserted. This is used in the compile saves function in "SaveUtility" so we can loop though all the elements correctly*/
+	/*!Holds the order in which elements are inserted. This is used in the compile saves function in "SaveUtility" so we can loop though all the elements correctly*/
 	std::vector<std::string> insertionOrder;
 
 	//! map Elements
-	/*!Hold's all of the elements that are contained in the xml file*/
+	/*!Holds all of the elements that are contained in the xml file*/
 	std::map<std::string,  ElementInfo> Elements;
 	
 	//! FileType
@@ -144,16 +144,18 @@ private:
 
 	//! InitalizeFile Function
 	/*!Initializes the classes variables and calls any needed functions (Called In constructor)*/
-	void InitalizeFile();
+	void InitalizeFile(bool FirstInit);
 
 	//! GetFileType Function
 	/*!Returns what file type this SaveFile will be saved as when converting to xml*/
-	std::string GetSaveFileType();
+	std::string GetSaveFileType() const;
 
 	//! GetFileDestination Function
 	/*!Returns where the file will be saved to*/
-	std::string GetFileDestination();
+	std::string GetFileDestination() const;
 
+
+	
 public:
 
 	//! SaveFile Constructor
@@ -162,14 +164,14 @@ public:
 
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename and type*/
-	SaveFile(const std::string FileName_,const FileType type = FileType::DEFAULT);
+	SaveFile(const std::string& FileName_, FileType type = FileType::DEFAULT);
 
 	//! SaveFile Alternate Constructor
 	/*!Initializes the save file variables and sets the filename all its elements and the Doc*/
-	SaveFile(std::string FileName_, std::map<std::string, ElementInfo> Elements_, tinyxml2::XMLDoc& Doc_);
+	SaveFile(const std::string& FileName_, const std::map<std::string, ElementInfo>& Elements_, tinyxml2::XMLDoc& Doc_);
 
 	//! SaveFile Copy Constructor
-	/*!Copy's the given save file's variables to this save file*/
+	/*!Copies the given save file's variables to this save file*/
 	SaveFile(const SaveFile& file);
 
 	//! SaveFile Destructor
@@ -177,12 +179,12 @@ public:
 
 
 	//! SaveFile Equals operator
-	/*!Copy's the given save file's variables to this save file*/
+	/*!Copies the given save file's variables to this save file*/
 	SaveFile operator =(const SaveFile& file);
 
 	//! SaveFile Equals Equals operator
 	/*!Returns true if the save files are equal to each other*/
-	bool operator ==(const SaveFile& file);
+	bool operator ==(const SaveFile& file) const;
 
 
 	//! Save Function
@@ -191,44 +193,45 @@ public:
 
 	//! FindElement Function
 	/*!Returns the address to an element with a given name*/
-	ElementInfo& FindElement(std::string elmName);
+	ElementInfo& FindElement(const std::string& elmName);
 
 	//! HasElement Function
-	/*!Return's if this savefile contains the element with a given name*/
-	bool HasElement(const std::string elmName);
+	/*!Returns if this savefile contains the element with a given name*/
+	bool HasElement(const std::string& elmName) const;
 
-	inline bool GetHasBeenEdited() { return HasBeenEdited; }
+	inline bool GetHasBeenEdited() const { return HasBeenEdited; }
 
 	inline void SetHasBeenEdited(bool HasBeenEdited_) { HasBeenEdited = HasBeenEdited_; }
 
 	//! FindElement Function
 	/*!Returns the address to an element with a given name*/
-	Attribute& FindAttribute(std::string elmName, std::string atrbName);
+	Attribute& FindAttribute(const std::string& elmName, const std::string& atrbName);
 
 	//! AddElement Function
 	/*!Adds an element to the save file*/
-	 void AddElement(const std::string name, const ElementInfo element);
+	 void AddElement(const std::string& name, ElementInfo element);
 
 	 //! AddElements Function
 	/*!Adds elements to the save file*/
-	 void AddElements(const std::map<std::string, ElementInfo> elements);
+	 void AddElements(const std::map<std::string, ElementInfo>& elements);
 
 	 //! AddAttribute Function
 	/*!Adds a attribute to a given element*/
-	 void AddAttribute(const std::string elmName, const std::string atribName, Attribute value);
+	 void AddAttribute(const std::string& elmName, const std::string& atribName, Attribute value);
 
 	 //! AddAttributes Function
 	 /*!Adds attributes to a given element*/
-	 void AddAttributes(const std::string elmName, std::map<std::string, Attribute> attributes);
+	 void AddAttributes(const std::string& elmName, const std::map<std::string, Attribute>& attributes);
 
-	 void SetElementName(const std::string o_ElmName, const std::string n_ElmName);
+	 void SetElementName(const std::string& o_ElmName, const std::string& n_ElmName);
 
-	 void RemoveElement(const std::string name);
+	 void RemoveElement(const std::string& name);
 
 	 void ClearElements();
 
+	 void ClearSaveFile();
 
-	 inline std::string GetFileName() { return FileName; }
+	 inline std::string GetFileName() const { return FileName; }
 
 	 inline void SetFileName(const std::string& newName) { FileName = newName; }
 

@@ -1,13 +1,15 @@
 #include "Window.h"
-#include "core/Logger.h"
-#include <glew/glew.h>
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl3.h"
 
-#include <windows.h>
-#include <winbase.h>
-Window::Window() : window(nullptr),height(0),width(0)
+#include <glew/glew.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_opengl3.h>
+#include <imgui/imgui_impl_sdl.h>
+
+
+#include "core/Logger.h"
+
+
+Window::Window() : width(0),height(0),window(nullptr)
 {
 }
 
@@ -16,8 +18,23 @@ Window::~Window()
 	OnDestroy();
 }
 
+void GLAPIENTRY MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLchar* message,
+                 const void* userParam )
+{
+  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+}
+
 bool Window::OnCreate(const char* name, int w, int h)
 {
+
+
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_EVENTS) < 0)
 	{
 		EngineLogger::Error("SDL_Init went wrong", "window.cpp", __LINE__);
@@ -29,7 +46,7 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 
 	
-	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
 
 	if (window == nullptr)
 	{
@@ -43,9 +60,6 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 	context = SDL_GL_CreateContext(window);
 	
-
-	
-
 	int major,minor;
 	glGetIntegerv(GL_MAJOR_VERSION, &major); 
 	
@@ -64,6 +78,9 @@ bool Window::OnCreate(const char* name, int w, int h)
 	}
 	glViewport(0, 0, width, height);
 
+	glEnable              ( GL_DEBUG_OUTPUT );
+	glDebugMessageCallback( MessageCallback, 0 );
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -72,8 +89,19 @@ bool Window::OnCreate(const char* name, int w, int h)
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 															  // Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
+
+
+
+	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(window, context);
@@ -108,8 +136,6 @@ SDL_Window* Window::GetWindow() const
 {
 	return window;
 }
-
-
 
 void Window::SetAttributes(int major, int minor)
 {

@@ -2,6 +2,7 @@
 
 #include "components/GameObject.h"
 
+
 AIComponent::AIComponent()	{
 	maxSpeed = 1.0f;
 	maxAcceleration = 1.0f;
@@ -52,11 +53,11 @@ void AIComponent::SetAIType(AIType aiType_)	{
 }
 
 void AIComponent::SetSteering(SteeringOutput* steering_)	{
-	if (Kinematic::KinematicSteeringOutput * steer = dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
-		kSteering = *steer;
+	if (Kinematic::KinematicSteeringOutput * kSteer = dynamic_cast<Kinematic::KinematicSteeringOutput*>(steering_)) {
+		kSteering = *kSteer;
 	}
-	else if (Dynamic::DynamicSteeringOutput * steer = dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
-		dSteering = *steer;
+	else if (Dynamic::DynamicSteeringOutput * dSteer = dynamic_cast<Dynamic::DynamicSteeringOutput*>(steering_)) {
+		dSteering = *dSteer;
 	}
 }
 

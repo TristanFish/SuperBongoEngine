@@ -2,12 +2,12 @@
 
 using namespace MATH;
 
-TestModel::TestModel(std::string name, Vec3 position)
+TestModel::TestModel(const std::string& name, Vec3 position)
 {
 	mr = AddComponent<MeshRenderer>();
-	mr->LoadModel("Cube.fbx");
+	mr->LoadModel("Cube.obj");
 	mr->CreateShader("FogVert.glsl", "FogFrag.glsl");
-	mr->renderFlags = RenderProperties::RP_OVERRIDE_RENDERER;
+	mr->renderFlags = RP_OVERRIDE_RENDERER;
 
 	
 	this->name = name;

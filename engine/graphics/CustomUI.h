@@ -3,9 +3,12 @@
 
 #include <filesystem>
 #include <unordered_map>
-#include "math/Vector.h"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
+#include <imgui/imgui_stdlib.h>
+
 #include "core/networking/NetworkManager.h"
+#include "math/Vector.h"
 
 class GameObject;
 
@@ -40,15 +43,6 @@ namespace CustomUI
 		/*!  Returns percent of CPU usage the application is using  */
 		static double GetCPUUsage();
 
-
-		//! Frames Per Second Integer
-		/*!  This variable stores the user inputed FPS limit  */
-		static int FPSLimit;
-
-		//! Limit Frames Per Second boolean
-		/*!  This variable toggles if the FPSLimit variable is used  */
-		static bool LimitFPS;
-
 		//! Render Loop Time Float
 		/*!  This variable contains how faster our application is rendering in milliseconds */
 		static float RenderLoopTime;
@@ -59,16 +53,16 @@ namespace CustomUI
 	};
 
 
-	class UIInterface {
-
+	class UIInterface
+	{
 	public:
 
+		virtual ~UIInterface() = default;
+		
 		virtual void Render() = 0;
-		virtual void Update(const float deltatime) {};
-		virtual void Construct() {};
-		virtual void Reset() {};
-	private:
-
+		virtual void Update(const float deltatime) {}
+		virtual void Construct() {}
+		virtual void Reset() {}
 	};
 
 	class NetworkPanel : public UIInterface
@@ -99,7 +93,7 @@ namespace CustomUI
 
 		//! Properties panel Destructor
 		/*! Destroys all pointer's that this class uses */
-		~PropertiesPanel();
+		virtual ~PropertiesPanel();
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
@@ -123,7 +117,7 @@ namespace CustomUI
 	private:
 		//! FPS Update Speed float
 		/*! Controls how fast we want to add a new float into the fpsValues Vector */
-		 float fpsUpdateSpeed = 0.5f;
+		 float fpsUpdateSpeed = 0.1f;
 
 		 //! Initial Speed float
 		/*! Is used to reset the "fpsUpdateSpeed" variable once it get to 0 */
@@ -138,7 +132,7 @@ namespace CustomUI
 		int latestFPS = 0;
 	public:
 		PerformancePanel();
-		~PerformancePanel();
+		virtual ~PerformancePanel();
 
 
 		//! Update Function
@@ -150,6 +144,8 @@ namespace CustomUI
 		void Render() override;
 	};
 
+
+	
 	//! Hierarchy panel Class
 	/*!  This class creates & Renders the hierarchy Panel UI */
 	class HierarchyPanel : public UIInterface
@@ -158,7 +154,7 @@ namespace CustomUI
 
 		HierarchyPanel();
 
-		~HierarchyPanel();
+		virtual ~HierarchyPanel();
 
 		//! ConstructHierarchy Function
 		/*! Copies over the passed in vector of gameobjects */
@@ -179,8 +175,8 @@ namespace CustomUI
 		bool isActive;
 
 		//! gameobjects vector
-		/*! Hold's all of the gameobjects in the hierarchy */
-		std::vector<GameObject*> gameobjects;
+		/*! Holds all of the gameobjects in the hierarchy */
+		std::vector<std::shared_ptr<GameObject>> gameobjects;
 
 		//! textFilter ImGuiTextFilter
 		/*! Is used to filter through objects in the hierarchy via the search bar*/
@@ -190,21 +186,21 @@ namespace CustomUI
 
 		//! GenerateTree Function
 		/*! Generates the gameObject tree for rendering*/
-		void GenerateTree(GameObject* go, int index);
+		void GenerateTree(std::shared_ptr<GameObject> go, int index);
 
 
 		void UpdateActiveObjects();
 
 		//! GetObjIndex Function
 		/*! Returns the index of the gameObject with a given name from the gameobjects vector*/
-		int GetObjIndex(std::string objName) const;
+		int GetObjIndex(const std::string& objName) const;
 
 	};
 
 	
 	enum class RenderMode : unsigned int
 	{
-		Lighting = 0,
+		Result = 0,
 		Albedo = 1,
 		Position = 2,
 		Normals = 3,
@@ -232,34 +228,42 @@ namespace CustomUI
 	public:
 
 		Viewport();
-		~Viewport();
+		virtual ~Viewport();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
 		void Render() override;
 
 
-		inline RenderMode GetRenderMode() const { return mode; }
+		RenderMode GetRenderMode() const { return renderMode; }
 
 		//! GetIsMouseHovered Function
 		/*! Return's the bool isMouseHovered */
-		inline bool GetIsMouseHovered() const { return isMouseHovered; }
+		bool GetIsMouseHovered() const { return isMouseHovered; }
+
+		MATH::Vec2 GetViewportSize() const { return viewportSize; }
+	
+		MATH::Vec2 GetViewportPosition() const { return viewport_Position; }
+
+		int GetMousePosX() const { return MouseX; }
+		int GetMousePosY() const { return MouseY; }
 
 	private:
-
+		//! viewportSize Vec2 
+		/*! Stores the viewports size */
+		MATH::Vec2 viewportSize;
 		//! viewport_Min/Max Vec2s 
 		/*! Stores the viewport min/max positons on the screen */
 		MATH::Vec2 viewport_Min, viewport_Max;
 
+		MATH::Vec2 viewport_Position;
 
-		//! viewportSize Vec2 
-		/*! Stores the viewports size */
-		MATH::Vec2 viewportSize;
+		int MouseX, MouseY;
 
 		std::string modeName;
 		std::string aspectSize;
 
-		RenderMode mode;
+		RenderMode renderMode;
 		AspectRatio activeRatio;
 
 		std::vector<const char*> modeMap;
@@ -272,6 +276,8 @@ namespace CustomUI
 		bool isActive;
 
 
+		void UpdateViewportPosition();
+
 	};
 
 	
@@ -283,7 +289,7 @@ namespace CustomUI
 	public:
 
 		ContentBrowser();
-		~ContentBrowser();
+		virtual ~ContentBrowser();
 
 		//! Render Function
 		/*! Renders all of the supplied IMGui panels */
@@ -320,7 +326,7 @@ namespace CustomUI
 
 		//! GenerateItem Function
 		/*! Generates a specefic item in the content browser*/
-		void GenerateItem(std::filesystem::directory_entry entry);
+		void GenerateItem(const std::filesystem::directory_entry& entry);
 
 		//! GenDirectoryItems Function
 		/*! Used to refresh all the items being displayed when the directory is changed*/
@@ -332,7 +338,7 @@ namespace CustomUI
 
 		//! ChangeDirectory Function
 		/*! Changes the current directory to whatever directory name is passed in e.g. CurrentDir = (Objects/Primitives/Cubes), PassedInDir = (Primitives), NewDir = (Objects/Primitives)*/
-		void ChangeDirectory(std::string dir);
+		void ChangeDirectory(const std::string& dir);
 
 	};
 
@@ -365,7 +371,7 @@ namespace CustomUI
 
 		DockSpace();
 
-		~DockSpace();
+		virtual ~DockSpace();
 
 
 		//! Update Function
@@ -381,11 +387,6 @@ namespace CustomUI
 		//! ConstructHierarchy Function
 		/*! Calls the hierarchy panels Construct Hierarchy function to initialize all of the gameobjects  */
 		void ConstructUserInterface();
-
-
-		//! IsMouseOverViewPort Function
-		/*! Calls the viewports panels IsMouseOverViewPort function */
-		inline bool IsMouseOverViewPort() { return false; }
 
 	private:
 

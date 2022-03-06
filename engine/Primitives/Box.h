@@ -8,14 +8,15 @@ class Box : public GameObject
 
 public:
 	Box();
-	Box(std::string name, MATH::Vec3 position);
+	Box(const std::string& name, MATH::Vec3 position);
 	~Box();
 
 
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
+	virtual void PostInit() override;
+	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-	Box* GetClone() const override { return new Box(this->name, this->transform.pos); };
 
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Box>(this->name, this->transform.GetPosition()); }
 
 private:
 };

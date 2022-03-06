@@ -3,7 +3,7 @@
 #include "core/Logger.h"
 #include <assimp/postprocess.h>
 
-Model::Model()
+Model::Model() 
 {
 	isLoaded = false;
 }
@@ -13,32 +13,15 @@ Model::Model(const std::string& path)
 	modelPath = path;
 	isLoaded = false;
 }
-
-void Model::CalculateMaxMins()
+std::vector<Vertex>& Model::GetVerticies()
 {
-	p_min.x = vertices[0].position.x;
-	p_min.y = vertices[0].position.y;
-	p_min.z = vertices[0].position.z;
-
-	p_max.x = vertices[0].position.x;
-	p_max.y = vertices[0].position.y;
-	p_max.z = vertices[0].position.z;
-
-	// Loops Through verticies and gives us the min and max verticies and put's them into a vector
-	for (size_t i = 1; i < vertices.size(); i++)
-	{
-		p_min.x = std::min(p_min.x, vertices[i].position.x);
-		p_min.y = std::min(p_min.y, vertices[i].position.y);
-		p_min.z = std::min(p_min.z, vertices[i].position.z);
-
-		p_max.x = std::max(p_max.x, vertices[i].position.x);
-		p_max.y = std::max(p_max.y, vertices[i].position.y);
-		p_max.z = std::max(p_max.z, vertices[i].position.z);
-	}
+	return Model_Verticies;
 }
+
 
 void Model::LoadModel()
 {
+
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices | aiProcess_OptimizeMeshes);
 
@@ -56,6 +39,15 @@ void Model::LoadModel()
 	for (auto& mesh : meshes)
 	{
 		mesh.InitMesh();
+
+		// Copies over all the mesh verticies if it's not min/max
+		for (const Vertex& vertex : mesh.vertices)
+		{
+			if (vertex.position != p_min || vertex.position != p_max)
+			{
+				Model_Verticies.push_back(vertex);
+			}
+		}
 	}
 }
 
@@ -67,8 +59,25 @@ void Model::DestroyModel()
 	}
 }
 
+std::vector<Vertex> Model::GetVertices() const
+{
+	std::vector<Vertex> vertices;
+	vertices.reserve(500);
+	
+	for(const auto& mesh : meshes)
+	{
+		vertices.insert(vertices.end(), mesh.vertices.begin(), mesh.vertices.end());
+	}
+
+	return vertices;
+}
+
+
+
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
+	
+	
 	for (size_t i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -85,22 +94,54 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<GLuint> indices;
 	std::vector<Texture> textures;
+	std::vector<Vertex> vertices;
 
+	double unitScaleDouble = 1.0;
+
+	if(scene->mMetaData)
+	{
+		scene->mMetaData->Get("UnitScaleFactor", unitScaleDouble);
+	}
+
+	const float unitScale = 1.0f;// static_cast<float>(unitScaleDouble);
+	
+	if (meshes.empty())
+	{
+		p_min.x = mesh->mVertices[0].x * unitScale;
+		p_min.y = mesh->mVertices[0].y * unitScale;
+		p_min.z = mesh->mVertices[0].z * unitScale;
+
+		p_max.x = mesh->mVertices[0].x * unitScale;
+		p_max.y = mesh->mVertices[0].y * unitScale;
+		p_max.z = mesh->mVertices[0].z * unitScale;
+	}
+	
+	
 	//Load vertices
 	for (size_t i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
 
 		MATH::Vec3 vec;
-		vec.x = mesh->mVertices[i].x;
-		vec.y = mesh->mVertices[i].y;
-		vec.z = mesh->mVertices[i].z;
+		vec.x = mesh->mVertices[i].x * unitScale;
+		vec.y = mesh->mVertices[i].y * unitScale;
+		vec.z = mesh->mVertices[i].z * unitScale;
 		vertex.position = vec;
+
+		p_min.x = std::min(p_min.x, vec.x);
+		p_min.y = std::min(p_min.y, vec.y);
+		p_min.z = std::min(p_min.z, vec.z);
+
+		p_max.x = std::max(p_max.x, vec.x);
+		p_max.y = std::max(p_max.y, vec.y);
+		p_max.z = std::max(p_max.z, vec.z);
+	
 
 		vec.x = mesh->mNormals[i].x;
 		vec.y = mesh->mNormals[i].y;
 		vec.z = mesh->mNormals[i].z;
 		vertex.normal = vec;
+
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -115,6 +156,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		}
 		vertices.push_back(vertex);
 	}
+
+	Vertex minVert, maxVert;
+	minVert.position = p_min;
+	maxVert.position = p_max;
+
+	Model_Verticies.push_back(minVert);
+	Model_Verticies.push_back(maxVert);
+
 
 	//Load indices
 	for (size_t i = 0; i < mesh->mNumFaces; i++)
@@ -152,9 +201,6 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
 	MATH::Vec4 color = MATH::Vec4(col.r, col.g, col.b, col.a);
 
-	 CalculateMaxMins();
-
-
 	return Mesh(vertices, indices, textures, color);
 }
 
@@ -179,3 +225,6 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType 
 	}
 	return textures;
 }
+
+
+

@@ -1,12 +1,13 @@
 #ifndef MESHRENDERER_H
 #define MESHRENDERER_H
 
-#include "graphics/Model.h"
-#include "graphics/ShaderProgram.h"
-#include "components/ECS.h"
 #include <functional>
 
+#include "graphics/Model.h"
+#include "graphics/ShaderProgram.h"
+#include "components/Component.h"
 
+class GameObject;
 enum RenderProperties : unsigned short
 {
 	RP_NONE					= 0b00000000,
@@ -45,12 +46,7 @@ static RenderFlagPair RenderFlagNameEnumPairs[]{RenderFlagPair("None", RP_NONE),
 									RenderFlagPair("Water", RP_WATER),
 									RenderFlagPair("Overrides Default Renderer", RP_OVERRIDE_RENDERER)};
 
-struct OrientedBoundingBox
-{
-	MATH::Vec3 maxVert;
-	MATH::Vec3 minVert;
-	MATH::Matrix4 transform;
-};
+
 
 //!MeshRenderer Class
 /*!Allows any gameObject with this component to render a mesh*/
@@ -64,11 +60,9 @@ public:
 	//!Shader
 	/*!This is the corresponding shader used in this MeshRenderer*/
 	ShaderProgram shader;
-
-	OrientedBoundingBox OBB;
 	
 	MeshRenderer();
-	virtual ~MeshRenderer() = default;
+	virtual ~MeshRenderer();
 
 	bool LoadModel(const char* name);
 	//!Create Shader Function
@@ -85,11 +79,11 @@ public:
 
 	//!Render override Function
 	/*!Render the mesh & run the shader*/
-	void Render() const override;
+	void Render() const;
 
 	//!Render override Function
 	/*!Render the mesh & run the shader that the function is given*/
-	void Render(const ShaderProgram& shader) const;
+	void Render(const ShaderProgram& shader_) const;
 
 	//!HandleEvents override Function
 	/*!Handles any events needed for the MeshRenderer*/
@@ -113,6 +107,10 @@ private:
 			uaCallback();
 		}
 	}
+
+	void RenderMesh(const Mesh& mesh, const ShaderProgram& shader) const;
+	void RenderInstancedMesh(const std::vector<Mesh>& meshes, const ShaderProgram& shader, unsigned int amount) const;
+
 public:
 	
 	typedef std::function<void ()> UniformAttachCallback;
@@ -122,14 +120,6 @@ public:
 	{
 		uaCallback = func;
 	}
-
-	//!GetMinVector Getter
-	/*!Returns the meshes minimum bounding vector*/
-	MATH::Vec3 GetMinVector() const  { return OBB.minVert; }
-
-	 //!GetMaxVector Getter
-	 /*!Returns the meshes maximum bounding vector*/
-	MATH::Vec3 GetMaxVector() const { return OBB.maxVert; }
 
 	 //!MeshColorTint Vec4
 	 /*!Stores the color of the mesh*/
@@ -147,6 +137,7 @@ public:
 	/*!Sets the instanceID variable*/
 	Model* GetModel() { return model; }
 
+
 	//!SetInstanceID Setter
 	/*!Sets the instanceID variable*/
 	void SetInstanceID(const int id)  { instanceID = id; }
@@ -156,6 +147,7 @@ public:
 	void SetInstanceAmount(const unsigned int amount) { instanceAmount = amount; }
 
 
+	unsigned int GetInstanceAmount() const { return instanceAmount; }
 	
 
 private:

@@ -1,28 +1,21 @@
 #include "SceneGraph.h"
 #include "GameObject.h"
+
 #include "core/Logger.h"
-#include "core/3D/Physics3D.h"
 #include "core/Globals.h"
 #include "core/resources/SaveFile.h"
-#include "../game/gameObjects/Grass.h"
-#include "../game/gameObjects/LightObject.h"
 #include "core/resources/SaveManager.h"
 
-#include "graphics/UIStatics.h"
+#include "../game/gameObjects/Grass.h"
+#include "../game/gameObjects/LightObject.h"
+
+
 
 SceneGraph::~SceneGraph() 
 {
-	for (GameObject* g : gameObjects)
-	{
-		if (g)
-		{
-			delete g;
-			g = nullptr;
-		}
-	}
+	
 
-	Renderer::GetInstance()->DestroyRenderer();
-
+	
 	gameObjects.clear();
 
 	rigidBodies.clear();
@@ -30,24 +23,28 @@ SceneGraph::~SceneGraph()
 
 void SceneGraph::Init() 
 {
-	//osp = OctSpatialPartition(500);
+	//ScenePartition = new OctSpatialPartition(1500);
 
-	Renderer::GetInstance()->Init();
+	
 
-
-	for (auto obj : SaveManager::SaveableObjects)
+	for(const auto& go : gameObjects)
 	{
-
-		if (obj.second->canBeInstantiated)
-		{
-			InstantiableObjects.emplace(obj.first, obj.second->GetClone());
-		}
+		go->Init();
 	}
+}
+
+void SceneGraph::PostInit()
+{
+	for(const auto& go : gameObjects)
+	{
+		go->PostInit();
+	}
+	sceneIsPostInit = true;
 }
 
 void SceneGraph::Update(const float deltaTime)
 {
-	for (auto* g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		if (g->isActive())
 		{
@@ -58,126 +55,108 @@ void SceneGraph::Update(const float deltaTime)
 void SceneGraph::Render() const
 {
 	//Clear the default framebuffer
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Renderer::GetInstance()->defaultBuffer.Bind();
+	Renderer::GetInstance()->defaultBuffer.Clear();
 	//Bind the gbuffer and clear it
 	Renderer::GetInstance()->gBuffer.Bind();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Renderer::GetInstance()->gBuffer.Clear();
 	glEnable(GL_DEPTH_TEST);
-
-
-#ifdef _DEBUG
-	for (auto* g : gameObjects)
-	{
-		g->DrawDebugGeometry();
-	}
-#endif // DEBUG
 
 	Renderer::GetInstance()->Render();
 }
 
 void SceneGraph::HandleEvents(const SDL_Event& event)
 {
-	for (auto g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		g->HandleEvents(event);
 	}
 }
 
 //Finds THE FIRST gameObject with the given name
-GameObject& SceneGraph::FindGameObject(const char* name)
+std::shared_ptr<GameObject> SceneGraph::FindGameObject(const std::string& name)
 {
-	for (auto* g : gameObjects)
+	for (const auto& g : gameObjects)
 	{
 		if (g->name == name)
 		{
-			return *g;
+			return g;
 		}
 	}
 
-	std::cerr << "No object named \"" << name << "\" was found. Messing things up so that you know something went wrong" << std::endl;
+	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
-	for (auto* g : gameObjects)
+	return nullptr;
+}
+
+std::shared_ptr<GameObject> SceneGraph::FindGameObject(const uint32_t& uuid)
+{
+	for (const auto& g : gameObjects)
 	{
-		g->transform.SetPos(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
-		g->transform.SetScale(MATH::Vec3(static_cast<float>(rand() % 100), static_cast<float>(rand() % 100), static_cast<float>(rand() % 100)));
+		if (g->GetUUID() == uuid)
+		{
+			return g;
+		}
 	}
 
-	return *gameObjects[0];
+	return nullptr;
+}
+
+void SceneGraph::GameObjectNetworkUpdate(std::string& string)
+{
+	NetworkableObject tmp = NetworkableObject();
+	std::stringstream ss(string);
+	std::stringstream name = tmp.FindGameObjectName(string);
+	tmp = *FindGameObject(name.str().c_str())->GetComponent<NetworkableObject>();
+	tmp.RecievePositionData(ss);
+
 }
 
 //Adds a gameObject with a name and position
-GameObject& SceneGraph::AddGameObject(GameObject* go)
+const std::shared_ptr<GameObject> SceneGraph::AddGameObject(std::shared_ptr<GameObject> go)
 {
-
-	if (!isObjectActive(go->name))
+	if (!FindGameObject(go->name.c_str()))
 	{
 		LoadGameObject(go);
 	}
 	else
 	{
 		go->name += "_" + std::to_string(1);
-
 		LoadGameObject(go);
 	}
 	
-	
-	return *go;
+	return go;
 }
 
-void SceneGraph::AddRenderingComponents()
-{
-	for (auto go : gameObjects)
-	{
-		if (go->HasComponent<MeshRenderer>())
-		{
-			MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-			Renderer::GetInstance()->AddMeshRenderer(mr);
-			//osp.AddObject(mr);
-		}
-		if (go->HasComponent<LightComponent>())
-		{
-			Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
-		}
-	}
-}
-
-void SceneGraph::LoadGameObject(GameObject* go)
+void SceneGraph::LoadGameObject(std::shared_ptr<GameObject> go)
 {
 	go->Init();
-
 	gameObjects.emplace_back(go);
+	EngineLogger::Info(std::string(go->name) + " added to scenegraph", "ECS.cpp", __LINE__);
+
+	if(sceneIsPostInit)
+	{
+		//if the scene has already finished its OnCreate function make sure to call PostInit
+		go->PostInit();
+	}
 
 	if (go->HasComponent<RigidBody3D>())
 	{
-		rigidBodies.emplace_back(go->GetComponent<RigidBody3D>());
-	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		Renderer::GetInstance()->AddMeshRenderer(mr);
-		//osp.AddObject(mr);
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		Renderer::GetInstance()->AddLight(go->GetComponent<LightComponent>());
+		RigidBody3D* rb = go->GetComponent<RigidBody3D>();
+		rigidBodies.emplace_back(rb);
+		//ScenePartition->AddObject(rb->GetCollider());
 	}
 
-	EngineLogger::Info(std::string(go->name) + " added to objectList", "ECS.cpp", __LINE__);
-
-	for (GameObject* child : go->children)
+	for (std::shared_ptr<GameObject> child : go->children)
 	{
 		AddGameObject(child);
 	}
 }
 
-void SceneGraph::DeleteGameObject(GameObject* go)
+void SceneGraph::DeleteGameObject(std::shared_ptr<GameObject> go)
 {
 	if (go->HasComponent<RigidBody3D>())
 	{
-		
 		for (std::vector<RigidBody3D*>::iterator iter = rigidBodies.begin(); iter != rigidBodies.end(); iter++)
 		{
 			if (*iter == go->GetComponent<RigidBody3D>())
@@ -186,51 +165,20 @@ void SceneGraph::DeleteGameObject(GameObject* go)
 				break;
 			}
 		}
-
-	}
-	if (go->HasComponent<MeshRenderer>())
-	{
-		MeshRenderer* mr = go->GetComponent<MeshRenderer>();
-		Renderer::GetInstance()->DeleteMeshRenderer(mr);
-		
-	}
-	if (go->HasComponent<LightComponent>())
-	{
-		Renderer::GetInstance()->DeleteLight(go->GetComponent<LightComponent>());
 	}
 
-
-	for (std::vector<GameObject*>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
+	for (std::vector<std::shared_ptr<GameObject>>::iterator iter = gameObjects.begin(); iter != gameObjects.end(); iter++)
 	{
 		if (*iter == go)
 		{
+			go.reset();
 			gameObjects.erase(iter);
-			delete go;
-			go = nullptr;
 			break;
 		}
 	}
-
-	UIStatics::SetSelectedObject(nullptr);
 }
 
-std::unordered_map<std::string, GameObject*> SceneGraph::GetInstantiableObjects()
-{
-	return InstantiableObjects;
-}
 
-bool SceneGraph::isObjectActive(std::string objName)
-{
-	for (auto obj : gameObjects)
-	{
-		if (obj->name == objName)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
 
 void SceneGraph::CheckCollisions()
 {
@@ -238,7 +186,7 @@ void SceneGraph::CheckCollisions()
 	{
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
-			Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
+			//Physics3D::DetectCollision(*rigidBodies[i], *rigidBodies[j]);
 		}
 	}
 }

@@ -2,10 +2,12 @@
 #include "graphics/Shader.h"
 #include "graphics/ShaderProgram.h"
 
-std::unordered_map<const char*, Shader> ShaderManager::shaders;
+std::unordered_map<const char*, Shader> ShaderManager::shaders = std::unordered_map<const char*, Shader>();
 std::unordered_map<ShaderGroup, ShaderProgram> ShaderManager::programs = std::unordered_map<ShaderGroup, ShaderProgram>();
 
 const std::string ShaderManager::shaderPath = "resources/shaders/";
+
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 
 ShaderGroup::ShaderGroup()
@@ -21,25 +23,20 @@ ShaderGroup::ShaderGroup()
 bool ShaderGroup::operator==(const ShaderGroup& s) const
 {
 	if(vert != s.vert)
-	{
 		return false;
-	}
-	else if(tessCont != s.tessCont)
-	{
+
+	if(tessCont != s.tessCont)
 		return false;
-	}
-	else if(tessEval != s.tessEval)
-	{
+	
+	if(tessEval != s.tessEval)
 		return false;
-	}
-	else if(geom != s.geom)
-	{
+	
+	if(geom != s.geom)
 		return false;
-	}
-	else if(frag != s.frag)
-	{
+	
+	if(frag != s.frag)
 		return false;
-	}
+	
 	return true;
 }
 
@@ -101,8 +98,6 @@ const ShaderProgram& ShaderManager::GetShaders(const char* vert, const char* fra
 
 		ShaderProgram resultProgram;
 		resultProgram.LinkShaders(shaderIDs);
-		resultProgram.shaders.emplace_back(vert);
-		resultProgram.shaders.emplace_back(frag);
 		programs[shadersToLink] = resultProgram;
 
 		return  programs[shadersToLink];

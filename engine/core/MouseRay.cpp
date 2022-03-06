@@ -1,7 +1,9 @@
 // ReSharper disable CppMemberFunctionMayBeStatic
 #include "MouseRay.h"
 #include "core/Globals.h"
+#include "rendering/Renderer.h"
 
+using namespace MATH;
 
 void MouseRay::HandleEvents(const SDL_Event& event)
 {
@@ -10,52 +12,60 @@ void MouseRay::HandleEvents(const SDL_Event& event)
 }
 
 
-MATH::Vec2 MouseRay::GetDeviceCoords(float x_, float y_)
+Vec2 MouseRay::GetDeviceCoords(float x_, float y_)
 {
-	MATH::Vec2 mouse;
-	mouse.x = (2.0f * x_) / Globals::SCREEN_WIDTH - 1.0f;
-	mouse.y = (2.0f * y_) / Globals::SCREEN_HEIGHT - 1.0f;
+	Vec2 mouse;
+
+	Vec2 viewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
+	mouse.x = (x_ / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f;
+	mouse.y = (y_ / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f;
 	mouse.y = -mouse.y;
 
 	return mouse;
 }
 
-MATH::Vec4 MouseRay::GetEyeCoords(MATH::Vec4 clipCoords)
+Vec4 MouseRay::GetEyeCoords(Vec4 clipCoords)
 {
-	const MATH::Matrix4 invertProj = MATH::MMath::inverse(Camera::getInstance()->getProjectionMatrix());
+	const Matrix4 invertProj = MMath::inverse(Camera::getInstance()->getProjectionMatrix());
 
-	const MATH::Vec4 eyeCoords = invertProj * clipCoords;
+	const Vec4 eyeCoords = invertProj * clipCoords;
 
-	return MATH::Vec4(eyeCoords.x,eyeCoords.y, -1.0f, 0.0f);
+	return Vec4(eyeCoords.x,eyeCoords.y, -1.0f, 0.0f);
 }
 
-MATH::Vec3 MouseRay::GetWorldCoords(MATH::Vec4 eyeCoords)
+Vec3 MouseRay::GetWorldCoords(Vec4 eyeCoords)
 {
-	const MATH::Matrix4 invertView = MATH::MMath::inverse(Camera::getInstance()->getViewMatrix());
+	const Matrix4 invertView = MMath::inverse(Camera::getInstance()->getViewMatrix());
 
-	const MATH::Vec4 rayWorld = invertView * eyeCoords;
+	const Vec4 rayWorld = invertView * eyeCoords;
 
-	MATH::Vec3 mouseRay = MATH::Vec3(rayWorld.x, rayWorld.y, rayWorld.z);
+	Vec3 mouseRay = Vec3(rayWorld.x, rayWorld.y, rayWorld.z);
 
-	mouseRay = MATH::VMath::normalize(mouseRay);
+	mouseRay = VMath::normalize(mouseRay);
 	return mouseRay;
 }
 
-void MouseRay::CalaculateMouseRay()
+MouseRay::MouseRay(const Vec3& dir_, const Vec3& origin_)
 {
-	ray.origin = Camera::getInstance()->getPosition();
+	direction = dir_;
+	origin = origin_;
+}
 
-	const MATH::Vec2 mousePos = localMousePos;
+void MouseRay::CalculateMouseRay()
+{
+	origin = Camera::getInstance()->getPosition();
 
-	const MATH::Vec2 normCoords = GetDeviceCoords(mousePos.x, mousePos.y);
+	const Vec2 mousePos = localMousePos;
 
-	const MATH::Vec4 clipCoords = MATH::Vec4(normCoords.x, normCoords.y, -1.0f, 1.0f);
-	const MATH::Vec4 eyeCorrds = GetEyeCoords(clipCoords);
+	const Vec2 normCoords = GetDeviceCoords(mousePos.x, mousePos.y);
 
-	const MATH::Vec3 worldRay = GetWorldCoords(eyeCorrds);
+	const Vec4 clipCoords = Vec4(normCoords.x, normCoords.y, -1.0f, 1.0f);
+	const Vec4 eyeCorrds = GetEyeCoords(clipCoords);
 
-	ray.direction = worldRay;
+	const Vec3 worldRay = GetWorldCoords(eyeCorrds);
 
-	invDir = MATH::Vec3(1.0f / ray.direction.x, 1.0f / ray.direction.y, 1.0f / ray.direction.z);
+	direction = worldRay;
 
+
+	invDir = Vec3(1.0f / direction.x, 1.0f / direction.y, 1.0f / direction.z);
 }

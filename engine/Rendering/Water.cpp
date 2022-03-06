@@ -1,6 +1,9 @@
 #include "Water.h"
 #include "core/Timer.h"
+#include "core/Globals.h"
 
+#include "Rendering/Camera.h"
+#include "SkyBox.h"
 Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 
 	mr = AddComponent<MeshRenderer>();
@@ -10,7 +13,7 @@ Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 	mr->SetInstanceID(0);
 
 	this->name = name;
-	this->transform.pos = pos;
+	this->transform.SetPos(pos);
 	//reflectTex = new Texture("resources/textures/water_dudv.png");
 	//reflectTex->LoadImage();
 
@@ -44,14 +47,14 @@ void Water::BindReflectionFrameBuffer() const
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, reflectionFrameBuffer);
-	glViewport(0, 0, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glViewport(0, 0, Globals::Engine::SCREEN_WIDTH, Globals::Engine::SCREEN_HEIGHT);
 }
 
 void Water::BindRefractionFrameBuffer() const
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, refractionFrameBuffer);
-	glViewport(0, 0, Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT);
+	glViewport(0, 0, Globals::Engine::SCREEN_WIDTH, Globals::Engine::SCREEN_HEIGHT);
 }
 
 void Water::CreateReflectionFrameBuffer()
@@ -130,7 +133,7 @@ void Water::initRefractionFB()
 void Water::UnbindCurrentFB() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0,Globals::SCREEN_WIDTH ,Globals::SCREEN_HEIGHT);
+	glViewport(0, 0, Globals::Engine::SCREEN_WIDTH , Globals::Engine::SCREEN_HEIGHT);
 }
 
 

@@ -1,17 +1,17 @@
 #ifndef AUDIOSOURCECOMPONENT_H
 #define AUDIOSOURCECOMPONENT_H
 
-#include "components/ECS.h"
 #include "audio/AudioManager.h"
 #include "audio/SoundAttributes.h"
 
+#include "Component.h"
+
+class GameObject;
 class AudioSourceComponent : public Component
 {
 	public:
-	public:
 	void Init(GameObject* g) override;
 	void Update(const float deltaTime) override;
-	void Render() const override {}
 	void HandleEvents(const SDL_Event& event) override {}
 
 	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */

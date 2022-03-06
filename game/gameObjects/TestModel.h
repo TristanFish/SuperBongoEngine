@@ -17,7 +17,7 @@ public:
 	//! Secondary Test Model Constructor
 	/*! This is the main constructor that we will use and takes in a char* for our gameObject name 
 	and a Vec3 Position for where our object will be in world space*/
-	TestModel(std::string name, MATH::Vec3 position);
+	TestModel(const std::string& name, MATH::Vec3 position);
 
 	//! Test Model Destructor
 	~TestModel()
@@ -38,12 +38,14 @@ public:
 	//! Handle Events Function (Inherited from Gameobject)
 	void HandleEvents(const SDL_Event& event) override {}
 	 
-	//! On Collision Enter  Function (Inherited from RigidBody3D)
+	//! On Collision Enter  Function (Inherited from GameObject)
 	/*! Is used to check what object is being collided with */
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override {}
+	virtual void OnCollisionEnter(Collider3D& otherBody) override {}
 
 
-	TestModel* GetClone() const override { return new TestModel(this->name, this->transform.pos); };
+
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<TestModel>(this->name, this->transform.GetPosition()); }
+
 private:
 
 	

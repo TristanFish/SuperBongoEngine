@@ -10,15 +10,14 @@ class Tetrahedron : public GameObject
 
 public:
 	Tetrahedron();
-	Tetrahedron(std::string name, MATH::Vec3 position);
+	Tetrahedron(const std::string& name, MATH::Vec3 position);
 	~Tetrahedron();
 
 
 	// Inherited via GameObject
-	virtual void OnCollisionEnter(RigidBody3D& otherBody) override;
+	virtual void OnCollisionEnter(Collider3D& otherBody) override;
 
-
-	Tetrahedron* GetClone() const override { return new Tetrahedron(this->name, this->transform.pos); }
+	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<Tetrahedron>(this->name, this->transform.GetPosition()); }
 
 
 private:

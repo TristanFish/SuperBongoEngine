@@ -11,12 +11,17 @@ namespace MATH {
 	class VMath {
 
 	public:
+
+
 		/// Calculate the dot product between Vec3s a & b 
 		inline static float dot(const Vec3 &a, const Vec3 &b){
 			return(a.x * b.x + a.y * b.y + a.z * b.z);
 		}
 
-		
+		inline static float dot(const Vec2& a, const Vec2& b) {
+			return(a.x * b.x + a.y * b.y);
+		}
+
 		/// Calulate the cross product
 		inline static const Vec3 cross(const Vec3 &a, const Vec3 &b){
 			return Vec3(a.y * b.z - a.z * b.y,
@@ -24,8 +29,18 @@ namespace MATH {
 						a.x * b.y - a.y * b.x);
 		}
 
+		inline static const float cross(const Vec2 &a, const Vec2 &b){
+			return (a.x * b.y - a.y * b.x);
+		}
+
 		inline static float mag(const Vec3 &a) {
 			return(sqrt(a.x * a.x + a.y * a.y + a.z * a.z));
+		}
+
+		
+
+		inline static float mag(const Vec2& a) {
+			return(sqrt(a.x * a.x + a.y * a.y));
 		}
 
 		///  Angle-Axis rotation
@@ -40,6 +55,9 @@ namespace MATH {
 		/// Return a normalized Vec3
 		static Vec3 normalize(const Vec3 &a);
 	
+		/// Return a normalized Vec3
+		static Vec2 normalize(const Vec2& a);
+
 		/// Return a normalized Vec3
 		static Vec4 normalize(const Vec4& a);
 
