@@ -2,6 +2,8 @@
 #include <iostream>
 #include "core/Logger.h"
 
+#include "sdl/SDL.h"
+#include "sdl/SDL_image.h"
 Texture::Texture()
 {
 	textureID = 0;

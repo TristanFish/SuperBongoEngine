@@ -1,8 +1,6 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include "components/GameObject.h"
-#include "Rendering/Camera.h"
 #include "glew/glew.h"
 #include "graphics/ShaderProgram.h"
 

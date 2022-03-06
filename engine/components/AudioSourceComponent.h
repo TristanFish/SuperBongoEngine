@@ -1,10 +1,12 @@
 #ifndef AUDIOSOURCECOMPONENT_H
 #define AUDIOSOURCECOMPONENT_H
 
-#include "components/ECS.h"
 #include "audio/AudioManager.h"
 #include "audio/SoundAttributes.h"
 
+#include "Component.h"
+
+class GameObject;
 class AudioSourceComponent : public Component
 {
 	public:

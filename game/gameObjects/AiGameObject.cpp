@@ -1,5 +1,6 @@
 #include "AiGameObject.h"
 #include "core/events/InputManager.h"
+#include "components/AI/AIComponent.h"
 
 AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	name = name_;

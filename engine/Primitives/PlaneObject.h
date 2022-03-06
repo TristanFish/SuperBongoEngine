@@ -1,8 +1,9 @@
 #ifndef PLANEOBJECT_H
 #define PLANEOBJECT_H
 
-#include "components/ECS.h"
-#include "components/Components.h"
+
+
+#include "components/GameObject.h"
 
 class PlaneObject : public GameObject
 {

@@ -1,7 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "components/Components.h"
+
+#include "components/GameObject.h"
 
 //! Player Class
 /*! This class controls how the user interact with the objects in the scene */

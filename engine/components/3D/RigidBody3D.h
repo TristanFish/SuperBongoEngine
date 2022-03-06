@@ -2,12 +2,14 @@
 #define RIGIDBODY_H
 
 #include <functional>
-#include "components/ECS.h"
-#include "math/Vector.h"
+
 
 #include "core/3D/Physics/Collider3D.h"
 
+#include "components/Component.h"
 
+
+class GameObject;
 //! RigidBody3D Class
 /*! Is a component and handles almost all of the needed math for the physics of our engine */
 class RigidBody3D : public Component	{
@@ -40,7 +42,7 @@ private:
 
 	//! Collider3D Collider
 	/*! Every RigidBody3D has a collider that allows it to collide with objects */
-	class Collider3D* collider;
+	 Collider3D* collider;
 
 
 	//! Friend class Physics3D

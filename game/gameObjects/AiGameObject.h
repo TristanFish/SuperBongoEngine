@@ -2,8 +2,8 @@
 #define AIGAMEOBJECT_H
 
 #include "components/ECS.h"
-#include "components/AI/AIComponent.h"
 
+class AIComponent;
 class AiGameObject : public GameObject	{
 public:
 	MeshRenderer* mRenderer;

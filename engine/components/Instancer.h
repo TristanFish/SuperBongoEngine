@@ -2,12 +2,11 @@
 #define INSTANCER_H
 
 #include "3D/MeshRenderer.h"
-#include "components/GameObject.h"
 #include "glew/glew.h"
 
-//
-//This class is going to be turned into a component
-//
+#include "Transform.h"
+
+class GameObject;
 
 /*! Instancer class
 //! This class handles how we are going to render multiple instances of a gameObject given only one model*/

@@ -1,10 +1,10 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include "core/Logger.h"
 #include "core/3D/Physics/Collider3D.h"
 #include "core/UUniqueID.h"
 #include "core/Globals.h"
+#include "core/Logger.h"
 
 #include "Transform.h"
 #include "Components.h"

@@ -5,6 +5,9 @@
 #include <functional>
 
 
+
+#include "3D/RigidBody3D.h"
+
 GameObject::GameObject(): parent(nullptr), name("Default")
 {
 }

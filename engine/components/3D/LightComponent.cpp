@@ -1,8 +1,15 @@
 #include "LightComponent.h"
 
+
 #include "Utility/SaveUtility.h"
+
 #include "graphics/ShaderProgram.h"
+
 #include "core/Globals.h"
+
+
+#include "components/GameObject.h"
+#include "components/SceneGraph.h"
 
 using namespace MATH;
 

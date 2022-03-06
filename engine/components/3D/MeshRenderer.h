@@ -5,9 +5,9 @@
 
 #include "graphics/Model.h"
 #include "graphics/ShaderProgram.h"
-#include "components/ECS.h"
+#include "components/Component.h"
 
-
+class GameObject;
 enum RenderProperties : unsigned short
 {
 	RP_NONE					= 0b00000000,

@@ -1,11 +1,10 @@
 #pragma once
 
 #include <vector>
-
 #include "Vector.h"
 #include "components/Component.h"
-#include "graphics/ShaderProgram.h"
 
+#include "glew/glew.h"
 class LineRenderer : public Component
 {
 public:

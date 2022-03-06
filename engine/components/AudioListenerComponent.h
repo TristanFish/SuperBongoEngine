@@ -1,12 +1,14 @@
 #ifndef AUDIOLISTENERCOMPONENT_H
 #define AUDIOLISTENERCOMPONENT_H
 
-#include "components/ECS.h"
-#include "audio/AudioManager.h"
 #include <fmod/fmod.h>
 #include <fmod/fmod.hpp>
 
+#include "audio/AudioManager.h"
 
+#include "Component.h"
+
+class GameObject;
 class AudioListenerComponent : public Component
 {
 	//This class could probably be a singleton like the audio manager but in case we ever want to have any split screen support we wont do that

@@ -1,7 +1,12 @@
 #include "lineRenderer.h"
+
 #include "rendering/Camera.h"
+
 #include "components/GameObject.h"
+
 #include "core/resources/ShaderManager.h"
+
+#include "graphics/ShaderProgram.h"
 
 LineRenderer::LineRenderer()
 {

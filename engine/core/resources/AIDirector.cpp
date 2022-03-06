@@ -4,9 +4,10 @@
 #include "math/VMath.h"
 
 #include "core/Globals.h"
+
 #include "components/SceneGraph.h"
 #include "components/3D/MeshRenderer.h"
-
+#include "components/GameObject.h"
 
 
 

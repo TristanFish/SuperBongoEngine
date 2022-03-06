@@ -1,13 +1,18 @@
 #include "Renderer.h"
 #include "components/3D/MeshRenderer.h"
 #include "components/3D/LightComponent.h"
+#include "components/3D/lineRenderer.h"
+
+#include "components/GameObject.h"
+#include "core/Logger.h"
+
 #include "core/Globals.h"
+#include "core/resources/ShaderManager.h"
+
 #include <sdl/SDL.h>
 
-#include "components/3D/lineRenderer.h"
 #include "Rendering/SkyBox.h"
 #include "math/Plane.h"
-#include "core/resources/ShaderManager.h"
 
 
 std::unique_ptr<Renderer> Renderer::rendererInstance = std::unique_ptr<Renderer>();
