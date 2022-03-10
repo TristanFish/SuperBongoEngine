@@ -56,6 +56,7 @@ private:
 	CoreEngine();
 	~CoreEngine();
 	void Update(const float deltaTime_);
+	void UpdatePhysics(const float deltaTime_);
 	void Render();
 	void HandleEvents();
 

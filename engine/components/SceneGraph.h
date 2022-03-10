@@ -54,6 +54,10 @@ public:
 	/*! Updates all of the gameobjects in the "gameObjects" vector */
 	void Update(const float deltaTime);
 
+	//! Update Physics Function
+	/*! Updates all of the physics body's & collisions */
+	void UpdatePhysics(const float deltaTime);
+
 	//! Render Function
 	/*! Renders all of the gameobjects using the renderer */
 	void Render() const;

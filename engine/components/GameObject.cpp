@@ -53,7 +53,12 @@ void GameObject::Update(const float deltaTime)	{
 	transform.Update(deltaTime);
 	for(Component* comp : componentList)	{
 		if(comp->active)	{
-			comp->Update(deltaTime);
+
+			if (dynamic_cast<RigidBody3D*>(comp) == nullptr)
+			{
+				comp->Update(deltaTime);
+			}
+
 		}
 	}
 }

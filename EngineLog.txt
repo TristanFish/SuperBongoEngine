@@ -1,29 +1,29 @@
-[INFO]: Logger Created in: CoreEngine.cpp on line: 87
-[NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 44
-[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 12
-[INFO]: BallPlayer.png in: TextureManager.cpp on line: 16
-[INFO]: Fire.png in: TextureManager.cpp on line: 16
-[INFO]: FolderIcon.png in: TextureManager.cpp on line: 16
-[INFO]: Grass.jpg in: TextureManager.cpp on line: 16
-[INFO]: Hazard.png in: TextureManager.cpp on line: 16
-[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 16
-[INFO]: pufflet.bmp in: TextureManager.cpp on line: 16
-[INFO]: ReSize.png in: TextureManager.cpp on line: 16
-[INFO]: test.JPG in: TextureManager.cpp on line: 16
-[INFO]: texture_02.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_08.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_09.jpg in: TextureManager.cpp on line: 16
-[INFO]: texture_10.jpg in: TextureManager.cpp on line: 16
-[INFO]: water_dudv.png in: TextureManager.cpp on line: 16
-[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 12
-[INFO]: Cube.obj in: ModelManager.cpp on line: 22
-[INFO]: Grass.fbx in: ModelManager.cpp on line: 22
-[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 22
-[INFO]: ManyPolys.uvw in: ModelManager.cpp on line: 22
-[INFO]: Plane.fbx in: ModelManager.cpp on line: 22
-[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 22
-[INFO]: Sphere.fbx in: ModelManager.cpp on line: 22
-[INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 22
+[INFO]: Logger Created in: CoreEngine.cpp on line: 102
+[NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 45
+[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 24
+[INFO]: BallPlayer.png in: TextureManager.cpp on line: 28
+[INFO]: Fire.png in: TextureManager.cpp on line: 28
+[INFO]: FolderIcon.png in: TextureManager.cpp on line: 28
+[INFO]: Grass.jpg in: TextureManager.cpp on line: 28
+[INFO]: Hazard.png in: TextureManager.cpp on line: 28
+[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 28
+[INFO]: pufflet.bmp in: TextureManager.cpp on line: 28
+[INFO]: ReSize.png in: TextureManager.cpp on line: 28
+[INFO]: test.JPG in: TextureManager.cpp on line: 28
+[INFO]: texture_02.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_08.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_09.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_10.jpg in: TextureManager.cpp on line: 28
+[INFO]: water_dudv.png in: TextureManager.cpp on line: 28
+[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 13
+[INFO]: Cube.obj in: ModelManager.cpp on line: 23
+[INFO]: Grass.fbx in: ModelManager.cpp on line: 23
+[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 23
+[INFO]: ManyPolys.uvw in: ModelManager.cpp on line: 23
+[INFO]: Plane.fbx in: ModelManager.cpp on line: 23
+[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 23
+[INFO]: Sphere.fbx in: ModelManager.cpp on line: 23
+[INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 23
 [SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 111
 [SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
@@ -42,9 +42,9 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 154
-[INFO]: Box added to scenegraph in: ECS.cpp on line: 135
-[INFO]: Light added to scenegraph in: ECS.cpp on line: 135
-[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 135
-[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 135
-[INFO]: Player added to scenegraph in: ECS.cpp on line: 135
-[INFO]: test added to scenegraph in: ECS.cpp on line: 135
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 153
+[INFO]: test added to scenegraph in: ECS.cpp on line: 153

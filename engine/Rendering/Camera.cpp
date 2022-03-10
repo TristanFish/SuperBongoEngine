@@ -114,6 +114,9 @@ void Camera::OnMouseReleased(MATH::Vec2 mouse, int buttonType)
 
 void Camera::OnMouseScroll(int y)
 {
+	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+		return;
+
 	zoom -= y;
 
 	if(zoom < 5.0f)
@@ -131,6 +134,10 @@ void Camera::OnMouseScroll(int y)
 
 void Camera::OnMouseMove(MATH::Vec2 mouse)
 {
+	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+		return;
+
+
 	if (mouseDown == false)
 	{
 		return;

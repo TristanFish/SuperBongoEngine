@@ -10,7 +10,7 @@ ThreadHandler::ThreadHandler()
 		V_Threads.push_back(std::make_shared<Thread>());
 	}
 
-	V_Threads.push_back(std::make_shared<Thread>(EThreadPriority::THREAD_PRIORITYHIGHEST,EThreadType::TH_RENDERER));
+	V_Threads.push_back(std::make_shared<Thread>(EThreadPriority::THREAD_PRIORITYHIGHEST,EThreadType::TH_UPDATER));
 }
 
 ThreadHandler::~ThreadHandler()

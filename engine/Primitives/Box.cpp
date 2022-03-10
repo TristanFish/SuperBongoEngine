@@ -31,6 +31,5 @@ void Box::PostInit()
 
 void Box::OnCollisionEnter(Collider3D& otherBody)
 {
-	//EngineLogger::Info(this->name + " Collided With " + otherBody.GetRBAttached()->gameObject->name  , "Box.cpp", __LINE__, MessageTag::TYPE_NONE);
-
+	EngineLogger::Info(this->name + " Collided With " + otherBody.GetRBAttached()->gameObject->GetName(), "Box.cpp", __LINE__, MessageTag::TYPE_NONE);
 }

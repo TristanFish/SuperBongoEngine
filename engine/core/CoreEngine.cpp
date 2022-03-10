@@ -13,8 +13,10 @@
 #include "core/GameInterface.h"
 #include "core/Logger.h"
 #include "core/scene/Scene.h"
+
 #include "events/InputManager.h"
 #include "events/MouseEventDispatcher.h"
+
 #include "graphics/Window.h"
 
 #include "resources/ModelManager.h"
@@ -23,6 +25,10 @@
 
 #include "components/GameObject.h"
 #include "Utility/LoadUtility.h"
+
+#include "core/Concurency/Task.h"
+#include "core/Concurency/ThreadHandler.h"
+
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
 CoreEngine::CoreEngine(): window(nullptr), isRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
@@ -42,6 +48,15 @@ void CoreEngine::Update(const float deltaTime_)
 		gameInterface->Update(deltaTime_);
 	}
 	HandleEvents();
+}
+
+void CoreEngine::UpdatePhysics(const float deltaTime_)
+{
+	// Update This At Later Date
+	if (Globals::Engine::s_SceneGraph)
+	{
+		Globals::Engine::s_SceneGraph->UpdatePhysics(deltaTime_);
+	}
 }
 
 void CoreEngine::Render()
@@ -98,8 +113,8 @@ bool CoreEngine::Init()
 
 
 	NetworkManager::GetInstance()->Init();
-	TextureManager::LoadAllTextures();
-	ModelManager::LoadAllModels();
+	TextureManager::GetInstance()->LoadAllTextures();
+	ModelManager::GetInstance()->LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	Renderer::GetInstance()->Init();
 	
@@ -137,6 +152,10 @@ void CoreEngine::Run()
 		const auto timeBeforeUpdate = std::chrono::high_resolution_clock::now();
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
+
+		UpdatePhysics(Timer::GetDeltaTime());
+
+
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
 		const auto executeTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeAfterUpdate - timeBeforeUpdate);
 
@@ -231,8 +250,8 @@ void CoreEngine::OnDestroy()
 	}
 	Renderer::GetInstance()->DestroyRenderer();
 	Camera::removeInstance();
-	TextureManager::DeleteAllTextures();
-	ModelManager::DestroyAllModels();
+	TextureManager::GetInstance()->DeleteAllTextures();
+	ModelManager::GetInstance()->DestroyAllModels();
 	InputManager::RemoveInstance();
 	ShaderManager::DestroyAllShaders();
 	SaveManager::DeleteSaveableObjects();

@@ -22,7 +22,7 @@ MeshRenderer::~MeshRenderer()
 
 bool MeshRenderer::LoadModel(const char* name)
 {
-	model = &ModelManager::GetModel(name);
+	model = &ModelManager::GetInstance()->GetModel(name);
 
 	if(model)
 	{

@@ -1047,7 +1047,7 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 	if (entry.is_directory())
 	{
-		ImGui::ImageButton((ImTextureID)TextureManager::GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });	
+		ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -1065,17 +1065,17 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 		if (fileType == ".sbo")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".fbx" || fileType == ".obj")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".jpg" | fileType == ".png")
 		{
-			iconTextureID = TextureManager::GetTexture(path.filename().string()).getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture(path.filename().string()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else
