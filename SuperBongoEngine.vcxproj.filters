@@ -399,6 +399,7 @@
     <ClInclude Include="engine\core\Concurency\Thread.h" />
     <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
     <ClInclude Include="engine\components\PlayerController.h" />
+    <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

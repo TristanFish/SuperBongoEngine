@@ -1,17 +1,12 @@
 #include "LoadUtility.h"
 #include "core/Globals.h"
-#include "../game/gameObjects/Bird.h"
-#include "../game/gameObjects/Grass.h"
-#include "../game/gameObjects/LightObject.h"
-#include "../game/gameObjects/Player.h"
-#include "../game/gameObjects/TestModel.h"
+#include "ReflectionIncludes.h"
 
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
 #include "core/scene/DefaultScene.h"
 #include "core/GameInterface.h"
 
-#include "Primitives/Primitives.h"
 #include <filesystem>
 
 
@@ -196,48 +191,58 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 void LoadUtility::AddObjectToMap(const char* classType) const
 {
-	if (classType == std::string("class Bird"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Grass"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Grass("None", MATH::Vec3(), 10));
-	}
-	else if (classType == std::string("class LightObject"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new LightObject("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Player"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Player("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class TestModel"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new TestModel("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Box"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Box("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class PlaneObject"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new PlaneObject("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Sphere"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Sphere("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Tetrahedron"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
-	}
 
-	else 
-	{
-		EngineLogger::Error("Object could not be added to loadable objects map", "LoadUtility.cpp", __LINE__);
-		std::cout << classType << std::endl;
-	}
+if (classType == std::string("class AiGameObject")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new AiGameObject("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Bird")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Grass")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Grass("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class LightObject")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new LightObject("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Player")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Player("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class TestModel")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new TestModel("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Box")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Box("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class PlaneObject")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new PlaneObject("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Sphere")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Sphere("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class Tetrahedron")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3())); 
+ } 
+
+
 }
 
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)

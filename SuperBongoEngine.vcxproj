@@ -40,6 +40,7 @@
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="engine\core\resources\AIDirector.h" />
+    <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
     <ClInclude Include="external\include\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
@@ -516,6 +517,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <PublicIncludeDirectories>$(SolutionDir)external\include\ImGuizmo\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <CustomBuildBeforeTargets>Run</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -549,6 +551,13 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>$(ProjectDir)ReflectionGenerator\bin\Debug\net6.0\ReflectionGenerator.exe</Command>
+    </PreLinkEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
