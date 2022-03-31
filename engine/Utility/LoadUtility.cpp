@@ -245,6 +245,17 @@ if (classType == std::string("class Tetrahedron"))
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
 {
 	SaveFile file = SaveFile(saveName, extention);

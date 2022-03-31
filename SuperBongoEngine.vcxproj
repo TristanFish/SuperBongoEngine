@@ -552,7 +552,7 @@
       </Command>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>$(ProjectDir)ReflectionGenerator\bin\Debug\net6.0\ReflectionGenerator.exe</Command>
+      <Command>$(ProjectDir)ReflectionGenerator\bin\Debug\net5.0\ReflectionGenerator.exe</Command>
     </PreLinkEvent>
     <CustomBuildStep>
       <Command>
