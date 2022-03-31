@@ -121,8 +121,8 @@ namespace PreCompileTest
 
             UtilityLines.RemoveAt(EmptySpaceIndex);
             UtilityLines.Insert(EmptySpaceIndex, "#include " + "\"" + IncludesFileName + "\"");
-            UtilityLines.Insert(StartRemoveIndex + 1, CombinedFunctions + "\n}");
-
+            UtilityLines.Insert(StartRemoveIndex , CombinedFunctions + "\n} ");
+            //UtilityLines.Insert(StartRemoveIndex + 2, "");
             
         
 

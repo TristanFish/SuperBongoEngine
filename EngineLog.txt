@@ -24,24 +24,24 @@
 [INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 23
 [INFO]: Sphere.fbx in: ModelManager.cpp on line: 23
 [INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 23
-[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 111
+[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 105
 [SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 130
+[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 124
 [GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
 [GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
 [INFO]: Scene: Scene1 Created in: Scene.cpp on line: 27
-[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 135
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 129
 [SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
-[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 154
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 148
 [INFO]: Box added to scenegraph in: ECS.cpp on line: 153
 [INFO]: Light added to scenegraph in: ECS.cpp on line: 153
 [INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 153

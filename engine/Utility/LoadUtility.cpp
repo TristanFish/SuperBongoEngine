@@ -89,7 +89,6 @@ void LoadUtility::LoadObject(SaveFile& file)
 				}
 
 				Globals::Engine::s_SceneGraph->AddGameObject(clone);
-
 				break;
 			}
 		}
@@ -191,7 +190,6 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 void LoadUtility::AddObjectToMap(const char* classType) const
 {
-
 if (classType == std::string("class AiGameObject")) 
  { 
  SaveManager::SaveableObjects.emplace(classType, new AiGameObject("None", MATH::Vec3())); 
@@ -215,6 +213,11 @@ if (classType == std::string("class LightObject"))
 if (classType == std::string("class Player")) 
  { 
  SaveManager::SaveableObjects.emplace(classType, new Player("None", MATH::Vec3())); 
+ } 
+
+if (classType == std::string("class PlayerController")) 
+ { 
+ SaveManager::SaveableObjects.emplace(classType, new PlayerController("None", MATH::Vec3())); 
  } 
 
 if (classType == std::string("class TestModel")) 
@@ -243,8 +246,7 @@ if (classType == std::string("class Tetrahedron"))
  } 
 
 
-}
-
+} 
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
 {
 	SaveFile file = SaveFile(saveName, extention);
