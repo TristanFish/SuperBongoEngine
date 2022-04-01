@@ -72,7 +72,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 			}
 		}
 
-		for (auto obj : SaveManager::SaveableObjects)
+		for (auto obj : SaveManager::LoadableObjects)
 		{
 			if (TypeName == obj.first)
 			{
@@ -120,6 +120,8 @@ void LoadUtility::LoadExistingSaves()
 			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
 		}
 	}
+
+	AddLoadableObjects();
 
 	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
@@ -188,63 +190,30 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 	}
 }
 
-void LoadUtility::AddObjectToMap(const char* classType) const
+void LoadUtility::AddLoadableObjects() const
 {
-if (classType == std::string("class AiGameObject")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new AiGameObject("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Bird")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Grass")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Grass("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class LightObject")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new LightObject("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Player")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Player("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class PlayerController")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new PlayerController("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class TestModel")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new TestModel("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Box")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Box("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class PlaneObject")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new PlaneObject("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Sphere")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Sphere("None", MATH::Vec3())); 
- } 
-
-if (classType == std::string("class Tetrahedron")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3())); 
- } 
-
+ 
+ SaveManager::LoadableObjects.emplace("class AiGameObject", new AiGameObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Bird", new Bird("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Grass", new Grass("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class LightObject", new LightObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Player", new Player("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class PlayerController", new PlayerController("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class TestModel", new TestModel("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Box", new Box("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class PlaneObject", new PlaneObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Sphere", new Sphere("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Tetrahedron", new Tetrahedron("None", MATH::Vec3())); 
 
 } 
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
@@ -265,16 +234,6 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 	LoadRecursiveElements(pRoot->FirstChildElement(), file);
 
-	if (extention == FileType::OBJECT)
-	{
-		std::string classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
-
-
-		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
-		{
-			AddObjectToMap(classType.c_str());
-		}
-	}
 
 	if (extention == FileType::SCENE)
 	{

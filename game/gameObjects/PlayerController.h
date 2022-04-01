@@ -1,7 +1,7 @@
 #ifndef PLAYERCONTROLLER_H
 #define PLAYERCONTROLLER_H
 
-#include "GameObject.h"
+#include "../engine/components/GameObject.h"
 
 
 class PlayerController : public GameObject

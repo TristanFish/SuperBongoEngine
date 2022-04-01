@@ -3,6 +3,7 @@
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
 #include "../game/gameObjects/Player.h"
+#include "../game/gameObjects/PlayerController.h"
 #include "../game/gameObjects/TestModel.h"
 #include "../engine/Primitives/Box.h"
 #include "../engine/Primitives/PlaneObject.h"

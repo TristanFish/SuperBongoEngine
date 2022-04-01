@@ -75,7 +75,7 @@ namespace PreCompileTest
                     EmptySpaceIndex = LineNum;
                 }
 
-                if(UtilityLines[LineNum].Contains("LoadUtility::AddObjectToMap"))
+                if(UtilityLines[LineNum].Contains("LoadUtility::AddLoadableObjects"))
                 {
                    StartRemoveIndex = LineNum + 2;
                    FoundFunction = true;
@@ -111,7 +111,7 @@ namespace PreCompileTest
             string CombinedFunctions = "";
             for(int NameIndex = 0; NameIndex < ClassNames.Count; NameIndex++)
             {
-                string TemplateArray = "if (classType == std::string(\"class " + ClassNames[NameIndex] + "\")) \n { \n SaveManager::SaveableObjects.emplace(classType, new "   + ClassNames[NameIndex] + "(\"None\", MATH::Vec3())); \n } \n\n" ;
+                string TemplateArray = " \n SaveManager::LoadableObjects.emplace(" + "\"" +"class " + ClassNames[NameIndex] + "\"" + ", new " + ClassNames[NameIndex] + "(\"None\", MATH::Vec3())); \n" ;
 
                 CombinedFunctions += TemplateArray;
                 
@@ -123,7 +123,7 @@ namespace PreCompileTest
             UtilityLines.RemoveAt(EmptySpaceIndex);
             UtilityLines.Insert(EmptySpaceIndex, "#include " + "\"" + IncludesFileName + "\"");
             UtilityLines.Insert(StartRemoveIndex , CombinedFunctions + "\n} ");
-            //UtilityLines.Insert(StartRemoveIndex + 2, "");
+           
             
         
 

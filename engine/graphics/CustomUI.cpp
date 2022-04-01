@@ -981,9 +981,34 @@ void ContentBrowser::Render()
 {
 	ImGui::Begin("Content Browser");
 
+	
+	if(ImGui::IsWindowHovered())
+	{
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+		{
+			ImGui::OpenPopup("Content Dropdown");
+		}
+
+	}
+	
+
+
+
 	GeneratePathNav();
 	ImGui::Dummy(ImVec2{ 0.0f,25.0f });
 	GenerateContent();
+
+	if (ImGui::BeginPopup("Content Dropdown"))
+	{
+		if (ImGui::BeginMenu("Create Object"))
+		{
+			if (ImGui::MenuItem("New")) {}
+			ImGui::EndMenu();
+		}
+		ImGui::EndPopup();
+	}
+		
+		
 
 	ImGui::End();
 }

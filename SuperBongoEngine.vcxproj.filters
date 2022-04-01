@@ -104,7 +104,7 @@
     <ClCompile Include="engine\core\Concurency\Task.cpp" />
     <ClCompile Include="engine\core\Concurency\Thread.cpp" />
     <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
-    <ClCompile Include="engine\components\PlayerController.cpp" />
+    <ClCompile Include="game\gameObjects\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
@@ -398,7 +398,7 @@
     <ClInclude Include="engine\core\Concurency\Task.h" />
     <ClInclude Include="engine\core\Concurency\Thread.h" />
     <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
-    <ClInclude Include="engine\components\PlayerController.h" />
+    <ClInclude Include="game\gameObjects\PlayerController.h" />
     <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
   </ItemGroup>
   <ItemGroup>

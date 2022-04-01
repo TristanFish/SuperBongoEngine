@@ -32,7 +32,7 @@ private:
 
 	//! AddObjectToMap function 
 	/*! Add's to the SaveAbleObjects unordered_map depending on what class type is passed in*/
-	void AddObjectToMap(const char* classType) const;
+	void AddLoadableObjects() const;
 
 	//! QueryAtributeValue function 
 	/*! Will check what type the XMLAttribute contains and then load it into hte ElementInfo*/

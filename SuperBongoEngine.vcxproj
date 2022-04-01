@@ -311,7 +311,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
     <ClInclude Include="engine\core\UUniqueID.h" />
-    <ClInclude Include="engine\components\PlayerController.h" />
+    <ClInclude Include="game\gameObjects\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
@@ -417,7 +417,7 @@
     <ClCompile Include="game\scenes\SceneAi.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
     <ClCompile Include="engine\core\UUniqueID.cpp" />
-    <ClCompile Include="engine\components\PlayerController.cpp" />
+    <ClCompile Include="game\gameObjects\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -552,7 +552,8 @@
       </Command>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>$(ProjectDir)ReflectionGenerator\bin\Debug\net5.0\ReflectionGenerator.exe</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
     <CustomBuildStep>
       <Command>
