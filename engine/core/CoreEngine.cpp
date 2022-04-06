@@ -273,7 +273,7 @@ void CoreEngine::SaveSceneData() const
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
-	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
+	info.Attributes.emplace("S_:", std::string(typeid(GetCurrentScene()).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
 	info = ElementInfo("Root");

@@ -1,14 +1,14 @@
 <Root>
     <Objects>
+        <AwesomeSphere/>
         <Box/>
         <Light/>
         <Light_1/>
         <Plane-1/>
         <Player/>
         <test/>
-        <AwesomeSphere/>
     </Objects>
     <SceneSettings>
-        <BaseClass: S_:="class CoreEngine"/>
+        <BaseClass: S_:="class Scene *"/>
     </SceneSettings>
 </Root>
