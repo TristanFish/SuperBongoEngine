@@ -1233,11 +1233,13 @@ void CustomUI::Toolbar::Render()
 {
 	ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 	
+	float size = ImGui::GetWindowHeight() - 4.0f;
+	ImGui::SameLine((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 	if(!CoreEngine::GetInstance()->GetIsGameRunning())
 	{
-		if(ImGui::Button("Play"))
+		if(ImGui::Button("Play", ImVec2(size, size)))
 		{
-			CoreEngine::GetInstance()->SetIsGameRunning(true);
+			CoreEngine::GetInstance()->PlayScene();
 			EngineLogger::Info("Play pressed", "CustomUI.cpp", __LINE__);
 		}
 	} 
@@ -1245,12 +1247,13 @@ void CustomUI::Toolbar::Render()
 	{
 		if(ImGui::Button("Pause"))
 		{
-			CoreEngine::GetInstance()->SetIsGameRunning(false);
+			CoreEngine::GetInstance()->PauseScene();
 			EngineLogger::Info("Pause pressed", "CustomUI.cpp", __LINE__);
 		}
 		ImGui::SameLine();
 		if(ImGui::Button("Stop"))
 		{
+			CoreEngine::GetInstance()->StopScene();
 			EngineLogger::Info("Stop pressed", "CustomUI.cpp", __LINE__);
 		}
 	}

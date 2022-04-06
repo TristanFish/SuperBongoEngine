@@ -230,6 +230,7 @@ void LoadUtility::AddLoadableObjects() const
  SaveManager::LoadableObjects.emplace("class Tetrahedron", new Tetrahedron("None", MATH::Vec3())); 
 
 } 
+
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
 {
 	SaveFile file = SaveFile(saveName, extention);

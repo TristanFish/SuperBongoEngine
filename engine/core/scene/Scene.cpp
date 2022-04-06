@@ -52,17 +52,6 @@ void Scene::Render()
 void Scene::HandleEvents(const SDL_Event& event)
 {
 	objectList->HandleEvents(event);
-
-
-
-	
-
-
-}
-
-void Scene::Reset()
-{
-
 }
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
@@ -74,7 +63,6 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 {
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
-
 
 	if (buttonType == SDL_BUTTON_LEFT)
 	{
@@ -88,7 +76,7 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 
 
 		uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
-		
+		std::cout << PixelData << std::endl;
 
 		std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
 

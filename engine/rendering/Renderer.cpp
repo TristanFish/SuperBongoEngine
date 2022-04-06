@@ -533,13 +533,13 @@ void Renderer::AttachLights() const
 		std::string arrayIndex = "lights[" + std::to_string(i) + "].";
 		if(i == lights.size())
 		{
-			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex);
+			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex, true);
 			break;
 		}
 
 		if(lights[i]->active)
 		{
-			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
+			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex, lights[i]->active);
 		}
 	}
 }

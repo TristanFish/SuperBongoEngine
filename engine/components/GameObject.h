@@ -74,6 +74,14 @@ public:
 	/*!Updates the Gameobject position/rotation/translation*/
 	virtual void Update(const float deltaTime);
 
+private:
+
+	//!UpdateTransform Function
+	/*!Updates only the gameobject's transform*/
+	void UpdateTransform();
+
+public:
+
 	//!Virtual HandleEvents Function
 	/*!Handles and Keyboard/Mouse events*/
 	virtual void HandleEvents(const SDL_Event& event);

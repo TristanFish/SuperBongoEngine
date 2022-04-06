@@ -43,12 +43,9 @@ CoreEngine::~CoreEngine()
 void CoreEngine::Update(const float deltaTime_)
 {
 	dockSpace->Update(deltaTime_);
-	if (gameInterface)
+	if(gameInterface)
 	{
-		if(isGameRunning)
-		{
-			gameInterface->Update(deltaTime_);
-		}
+		gameInterface->Update(deltaTime_);
 	}
 	HandleEvents();
 }
@@ -311,15 +308,18 @@ void CoreEngine::SetGameInterface(Game* gameInterface_)
 
 void CoreEngine::PlayScene()
 {
+	isGameRunning = true;
 }
 
 void CoreEngine::PauseScene()
 {
+	isGameRunning = false;
 }
 
 void CoreEngine::StopScene()
 {
-	gameInterface->currentScene->Reset();
+	isGameRunning = false;
+	gameInterface->BuildScene();
 }
 
 int CoreEngine::GetCurrentSceneNum() const

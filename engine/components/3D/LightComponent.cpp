@@ -95,11 +95,20 @@ void LightComponent::ImGuiRender()
 	}
 }
 
-void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& position, const Vec3& direct, const std::string& shaderString) const
+void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& position, const Vec3& direct, const std::string& shaderString, bool isActive) const
 {
 	std::string arrayIndex = shaderString;
 	std::string lightType = arrayIndex + "lightType";
 	glUniform1i(glGetUniformLocation(shader.GetID(), lightType.c_str()), static_cast<int>(type));
+
+	Vec3 lightPos;
+	Vec3 lightAmb;
+	Vec3 lightDiff;
+	Vec3 lightSpec;
+	Vec3 lightDir;
+
+	float activeMultiplier = (isActive) ? 1.0f : 0.0f;
+
 	switch (type)
 	{
 		case LightType::POINT:
@@ -109,10 +118,10 @@ void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& p
 			std::string diff = arrayIndex + "lightDiff";
 			std::string spec = arrayIndex + "lightSpec";
 			std::string intens = arrayIndex + "lightIntens";
-			const Vec3 lightPos = position;
-			const Vec3 lightAmb = ambColor;
-			const Vec3 lightDiff = diffColor;
-			const Vec3 lightSpec = specColor;
+			lightPos = position * activeMultiplier;
+			lightAmb = ambColor * activeMultiplier;
+			lightDiff = diffColor * activeMultiplier;
+			lightSpec = specColor * activeMultiplier;
 			
 			glUniform3f(glGetUniformLocation(shader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
 			glUniform4f(glGetUniformLocation(shader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, attenConstant);
@@ -129,11 +138,11 @@ void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& p
 			std::string diff = arrayIndex + "lightDiff";
 			std::string spec = arrayIndex + "lightSpec";
 			std::string intens = arrayIndex + "lightIntens";
-			const Vec3 lightPos = position;
-			const Vec3 lightDir = direct;
-			const Vec3 lightAmb = ambColor;
-			const Vec3 lightDiff = diffColor;
-			const Vec3 lightSpec = specColor;
+			lightPos = position * activeMultiplier;
+			lightDir = direct * activeMultiplier;
+			lightAmb = ambColor * activeMultiplier;
+			lightDiff = diffColor * activeMultiplier;
+			lightSpec = specColor * activeMultiplier;
 			
 			glUniform3f(glGetUniformLocation(shader.GetID(), pos.c_str()), lightPos.x, lightPos.y, lightPos.z);
 			glUniform4f(glGetUniformLocation(shader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, cutOff);
@@ -150,10 +159,10 @@ void LightData::SendLightDataToShader(const ShaderProgram& shader, const Vec3& p
 			std::string diff = arrayIndex + "lightDiff";
 			std::string spec = arrayIndex + "lightSpec";
 			std::string intens = arrayIndex + "lightIntens";
-			const Vec3 lightDir = direct;
-			const Vec3 lightAmb = ambColor;
-			const Vec3 lightDiff = diffColor;
-			const Vec3 lightSpec = specColor;
+			lightDir = direct * activeMultiplier;
+			lightAmb = ambColor * activeMultiplier;
+			lightDiff = diffColor * activeMultiplier;
+			lightSpec = specColor * activeMultiplier;
 			
 			glUniform4f(glGetUniformLocation(shader.GetID(), dir.c_str()), lightDir.x, lightDir.y, lightDir.z, 0.0f);
 			glUniform4f(glGetUniformLocation(shader.GetID(), amb.c_str()), lightAmb.x, lightAmb.y, lightAmb.z, 0.0f);

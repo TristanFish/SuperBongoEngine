@@ -43,19 +43,19 @@ public:
 	void SetGameInterface(Game* gameInterface_);
 	bool GetIsGameRunning() const { return isGameRunning; }
 	void SetIsGameRunning(bool status) { isGameRunning = status; };
-	void PlayScene();
-	void PauseScene();
-	void StopScene();
 
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;
-
 
 	void ReloadCurrentScene();
 	void OnDestroy();
 	
 	void SaveSceneData() const;
 	void LoadSceneData();
+
+	void PlayScene();
+	void PauseScene();
+	void StopScene();
 
 private:
 	CoreEngine();
@@ -64,6 +64,7 @@ private:
 	void UpdatePhysics(const float deltaTime_);
 	void Render();
 	void HandleEvents();
+
 
 
 
