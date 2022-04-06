@@ -9,9 +9,13 @@
 #include "Primitives/Box.h"
 
 
-bool SceneAi::OnCreate()
+SceneAi::SceneAi()
 {
 	Scene_Name = "Scene_AI";
+}
+
+bool SceneAi::OnCreate()
+{
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
 	std::shared_ptr<AiGameObject> obj = std::make_shared<AiGameObject>("ai object", Vec3());

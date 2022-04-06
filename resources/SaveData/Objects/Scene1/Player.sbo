@@ -8,6 +8,10 @@
         <ObjectInfo>
             <Type S_ID="class Player"/>
         </ObjectInfo>
-        <Components/>
+        <Components>
+            <classAudioListenerComponent>
+                <IsActive B_Active="true"/>
+            </classAudioListenerComponent>
+        </Components>
     </Identifiers>
 </Root>

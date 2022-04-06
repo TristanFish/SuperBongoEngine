@@ -1237,7 +1237,7 @@ void CustomUI::Toolbar::Render()
 	ImGui::SameLine((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 	if(!CoreEngine::GetInstance()->GetIsGameRunning())
 	{
-		if(ImGui::Button("Play", ImVec2(size, size)))
+		if(ImGui::Button("Play"))
 		{
 			CoreEngine::GetInstance()->PlayScene();
 			EngineLogger::Info("Play pressed", "CustomUI.cpp", __LINE__);

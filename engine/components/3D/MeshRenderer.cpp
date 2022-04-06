@@ -8,8 +8,13 @@
 #include "core/Globals.h"
 
 #include "components/GameObject.h"
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <algorithm>
 
 #include "Utility/SaveUtility.h"
+#include <core/resources/SaveManager.h>
 
 using namespace MATH;
 
@@ -212,11 +217,11 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 
 void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
 {
+	std::string typeName = typeid(*this).name();
+	typeName.erase(std::remove(typeName.begin(), typeName.end(), ' '), typeName.end());
+	typeName.erase(std::remove(typeName.begin(), typeName.end(), '*'), typeName.end());
 
-	ElementInfo Renderer = ElementInfo(parentName);
-	SaveUtility::GetInstance()->AddElement(saveName, "Renderer", Renderer);
-
-	ElementInfo MeshTint = SaveUtility::GetInstance()->CreateVec4(meshColorTint, "Renderer");
+	ElementInfo MeshTint = SaveUtility::GetInstance()->CreateVec4(meshColorTint, typeName);
 
 	SaveUtility::GetInstance()->AddElement(saveName, "MeshColorTint", MeshTint);
 }

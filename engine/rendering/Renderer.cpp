@@ -537,10 +537,7 @@ void Renderer::AttachLights() const
 			break;
 		}
 
-		if(lights[i]->active)
-		{
-			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex, lights[i]->active);
-		}
+		lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex, lights[i]->active);
 	}
 }
 

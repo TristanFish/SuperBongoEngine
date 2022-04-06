@@ -38,7 +38,7 @@ void LightComponent::Init(GameObject* g)
 
 void LightComponent::OnSaveComponent(const std::string& saveName, std::string parentName)
 {
-	
+
 }
 
 void LightComponent::ImGuiRender()

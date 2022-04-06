@@ -73,11 +73,11 @@ public:
 	void OverwriteElement(const std::string& saveName, const std::string& elmName, const ElementInfo& element);
 
 	//! AddElement function 
-	/*! Add's an element to a specific save with the element name and refrence to Info struct*/
+	/*! Adds an element to a specific save with the element name and refrence to Info struct*/
 	void AddElement(const std::string& saveName, const std::string& elmName, const ElementInfo& element);
 
 	//! AddElement function overload 1
-	/*! Add's an element to a specific save with the element name, parentName and XMLElement pointer*/
+	/*! Adds an element to a specific save with the element name, parentName and XMLElement pointer*/
 	void AddElement(const std::string& saveName, const std::string& elmName, const std::string& parentName, tinyxml2::XMLElement* element = nullptr);
 
 	//! RemoveElement function 
@@ -96,9 +96,8 @@ public:
 	/*! Returns an ElementInfo with all Vec4 values as attributes*/
 	ElementInfo CreateVec4(const MATH::Vec4& value, const std::string& parentName, bool UsePrefix = true);
 
-
 	//! SaveObject function 
-	/*! Save's all of a gameobjects information as ElementInfo's and adds them to the save file*/
+	/*! Saves all of a gameobjects information as ElementInfo's and adds them to the save file*/
 	void SaveObject(const std::string& saveName, std::shared_ptr<GameObject> obj);
 };
 

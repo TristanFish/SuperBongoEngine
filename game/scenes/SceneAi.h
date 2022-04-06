@@ -25,7 +25,7 @@ public:
 	
 	
 	//! Scene Ai Constructor
-	SceneAi() = default;
+	SceneAi();
 
 
 	//! Virtual overridden OnCreate Function

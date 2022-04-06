@@ -9,7 +9,7 @@ class Scene1 : public Scene
 {
 public:
 	//! Scene 1 Constructor
-	Scene1() = default;
+	Scene1();
 
 
 	//! Virtual overridden OnCreate Function

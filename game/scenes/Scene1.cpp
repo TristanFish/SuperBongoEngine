@@ -5,9 +5,13 @@
 #include "gameObjects/LightObject.h"
 
 
-bool Scene1::OnCreate()
+Scene1::Scene1()
 {
 	Scene_Name = "Scene1";
+}
+
+bool Scene1::OnCreate()
+{
 	return Scene::OnCreate();
 }
 
@@ -31,9 +35,3 @@ void Scene1::Reset()
 	OnDestroy();
 	OnCreate();
 }
-
-
-
-
-
-
