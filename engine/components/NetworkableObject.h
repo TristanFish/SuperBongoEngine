@@ -2,10 +2,11 @@
 #define NETWORKABLEOBJECT_H
 
 #include "Component.h"
-#include <string>
+
 #include <cereal/archives/json.hpp> //D changed this from binary.hpp to json since we use json, code ran like before change
 #include <cereal/types/string.hpp>
 #include <cereal/cereal.hpp>
+
 #include "VMath.h"
 #include "Transform.h"
 

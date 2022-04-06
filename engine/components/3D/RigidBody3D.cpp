@@ -6,6 +6,8 @@
 #include "core/3D/Physics/BoundingSphere.h"
 
 #include "components/3D/MeshRenderer.h"
+#include "components/GameObject.h"
+#include "components/SceneGraph.h"
 
 #include "core/Globals.h"
 

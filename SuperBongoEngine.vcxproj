@@ -34,9 +34,13 @@
     <ClInclude Include="engine\components\NetworkableObject.h" />
     <ClInclude Include="engine\core\3D\Physics\BoundingSphere.h" />
     <ClInclude Include="engine\core\3D\Physics\GJKDetection.h" />
+    <ClInclude Include="engine\core\Concurency\Task.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="engine\core\resources\AIDirector.h" />
+    <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
     <ClInclude Include="external\include\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
     <ClInclude Include="engine\components\AI\AIComponent.h" />
@@ -307,6 +311,7 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\Types\Node.h" />
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
     <ClInclude Include="engine\core\UUniqueID.h" />
+    <ClInclude Include="game\gameObjects\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\components\3D\LineRenderer.cpp" />
@@ -324,6 +329,9 @@
     <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
     <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp" />
     <ClCompile Include="engine\core\GameInterface.cpp" />
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="engine\core\resources\AIDirector.cpp" />
@@ -410,6 +418,7 @@
     <ClCompile Include="game\scenes\SceneAi.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.cpp" />
     <ClCompile Include="engine\core\UUniqueID.cpp" />
+    <ClCompile Include="game\gameObjects\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -509,6 +518,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <PublicIncludeDirectories>$(SolutionDir)external\include\ImGuizmo\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <CustomBuildBeforeTargets>Run</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -542,6 +552,14 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

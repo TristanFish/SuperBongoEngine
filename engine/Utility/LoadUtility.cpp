@@ -1,17 +1,12 @@
 #include "LoadUtility.h"
 #include "core/Globals.h"
-#include "../game/gameObjects/Bird.h"
-#include "../game/gameObjects/Grass.h"
-#include "../game/gameObjects/LightObject.h"
-#include "../game/gameObjects/Player.h"
-#include "../game/gameObjects/TestModel.h"
+#include "ReflectionIncludes.h"
 
 #include "core/CoreEngine.h"
 #include "core/scene/Scene.h"
 #include "core/scene/DefaultScene.h"
 #include "core/GameInterface.h"
 
-#include "Primitives/Primitives.h"
 #include <filesystem>
 
 
@@ -47,9 +42,20 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 		for (int i = 0; i < 3; i++)
 		{
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::Engine::IntToVector(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::Engine::IntToVector(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::Engine::IntToVector(i)]);
+			std::string KeyString = Globals::Engine::IntToVector(i);
+
+			if(std::holds_alternative<float>(PosElm.Attributes[KeyString]))
+			{
+				Position[i] = std::get<float>(PosElm.Attributes[KeyString]);
+			}
+			if (std::holds_alternative<float>(RotElm.Attributes[KeyString]))
+			{
+				Rotation[i] = std::get<float>(RotElm.Attributes[KeyString]);
+			}
+			if (std::holds_alternative<float>(ScaleElm.Attributes[KeyString]))
+			{
+				Scale[i] = std::get<float>(ScaleElm.Attributes[KeyString]);
+			}
 		}
 
 		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
@@ -77,7 +83,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 			}
 		}
 
-		for (auto obj : SaveManager::SaveableObjects)
+		for (auto obj : SaveManager::LoadableObjects)
 		{
 			if (TypeName == obj.first)
 			{
@@ -94,7 +100,6 @@ void LoadUtility::LoadObject(SaveFile& file)
 				}
 
 				Globals::Engine::s_SceneGraph->AddGameObject(clone);
-
 				break;
 			}
 		}
@@ -104,7 +109,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 void LoadUtility::LoadExistingSaves()
 {
 	std::string directory = Globals::Engine::SAVE_DATA_PATH;
-	std::string objDir = "Objects\\";
+	std::string objDir = "SaveData\\Objects\\";
 	std::string sceneObjPath = (directory + objDir);
 
 
@@ -121,11 +126,16 @@ void LoadUtility::LoadExistingSaves()
 			continue;
 		}
 
-		if (entry->is_regular_file())
+
+		FileType Type = GetFileExtention(curPath.extension().string());
+
+		if (entry->is_regular_file() && Type != FileType::DEFAULT)
 		{
-			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
+			LoadSave(curPath.stem().string(), curPath.string(), Type);
 		}
 	}
+
+	AddLoadableObjects();
 
 	EngineLogger::Info("===========EXISTING SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
@@ -134,7 +144,7 @@ void LoadUtility::LoadSceneSaves()
 {
 	EngineLogger::Info("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
-	std::string objDir = "Objects\\";
+	std::string objDir = "SaveData\\Objects\\";
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 	std::string sceneObjPath = (Globals::Engine::SAVE_DATA_PATH + objDir) + sceneName + "\\";
 
@@ -194,52 +204,32 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 	}
 }
 
-void LoadUtility::AddObjectToMap(const char* classType) const
+void LoadUtility::AddLoadableObjects() const
 {
-	if (classType == std::string("class Bird"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Bird("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Grass"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Grass("None", MATH::Vec3(), 10));
-	}
-	else if (classType == std::string("class LightObject"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new LightObject("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Player"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Player("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class TestModel"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new TestModel("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Box"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Box("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class PlaneObject"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new PlaneObject("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Sphere"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Sphere("None", MATH::Vec3()));
-	}
-	else if (classType == std::string("class Tetrahedron"))
-	{
-		SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3()));
-	}
+ 
+ SaveManager::LoadableObjects.emplace("class AiGameObject", new AiGameObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Bird", new Bird("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Grass", new Grass("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class LightObject", new LightObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Player", new Player("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class PlayerController", new PlayerController("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class TestModel", new TestModel("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Box", new Box("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class PlaneObject", new PlaneObject("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Sphere", new Sphere("None", MATH::Vec3())); 
+ 
+ SaveManager::LoadableObjects.emplace("class Tetrahedron", new Tetrahedron("None", MATH::Vec3())); 
 
-	else 
-	{
-		EngineLogger::Error("Object could not be added to loadable objects map", "LoadUtility.cpp", __LINE__);
-		std::cout << classType << std::endl;
-	}
-}
-
+} 
 void LoadUtility::LoadSave(const std::string& saveName, const std::string& savePath, FileType extention)
 {
 	SaveFile file = SaveFile(saveName, extention);
@@ -258,16 +248,6 @@ void LoadUtility::LoadSave(const std::string& saveName, const std::string& saveP
 
 	LoadRecursiveElements(pRoot->FirstChildElement(), file);
 
-	if (extention == FileType::OBJECT)
-	{
-		std::string classType = std::get<std::string>(file.FindAttribute("Type", "ID"));
-
-
-		if (SaveManager::SaveableObjects.find(classType) == SaveManager::SaveableObjects.end())
-		{
-			AddObjectToMap(classType.c_str());
-		}
-	}
 
 	if (extention == FileType::SCENE)
 	{
@@ -366,4 +346,42 @@ void LoadUtility::LoadDefaultScenes(Game* G_Interface) const
 	}
 }
 
+void LoadUtility::RemoveAttributePrefixs(const std::string& saveName)
+{
+
+
+	for (auto& element : SaveManager::GetSaveFile(saveName).GetElements())
+	{
+		std::map<std::string, Attribute> AtribMap;
+		for (auto const& attribute : element.second.Attributes)
+		{
+
+
+			auto node = element.second.Attributes.find(attribute.first);
+
+
+			
+			std::string AtribName = attribute.first;
+
+			size_t LastOfTag = AtribName.find("_") + 1;
+
+
+			//Get The Tag
+			AtribName = AtribName.substr(LastOfTag , AtribName.size() - LastOfTag);
+
+
+			AtribMap.emplace(AtribName, attribute.second);
+			
+
+			
+
+		}
+		if (AtribMap.size() > 0)
+		{
+			element.second.Attributes = AtribMap;
+
+		}
+
+	}
+}
 

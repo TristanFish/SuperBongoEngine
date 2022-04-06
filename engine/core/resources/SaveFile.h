@@ -17,9 +17,9 @@ typedef std::variant<int,uint32_t,float,double,bool,std::string> Attribute;
 
 //! FileType enum class
 /*! Used to differentiate file types so that we can save unique information to specific file types */
-enum class FileType 
+enum class FileType : int
 {
-	DEFAULT,
+	DEFAULT = 1,
 	SCENE,
 	OBJECT,
 };
@@ -140,6 +140,7 @@ private:
 	/*!Is used when saving the save files so that we know what files need to be saved*/
 	bool HasBeenEdited;
 
+
 private:
 
 	//! InitalizeFile Function
@@ -189,7 +190,7 @@ public:
 
 	//! Save Function
 	/*!Attempts to save all the information to a file path.*/
-	void Save();
+	void Save(const std::string& OverridePath = std::string());
 
 	//! FindElement Function
 	/*!Returns the address to an element with a given name*/
@@ -244,6 +245,9 @@ public:
 	 inline void SetFileType(FileType type) { fileType = type; }
 
 	 inline std::map<std::string, ElementInfo>& GetElements() { return Elements; }
+
+	 inline tinyxml2::XMLNode* GetRootNode() { return rootNode; }
+
 
 	 friend class SaveUtility;
 };

@@ -2,6 +2,10 @@
 #include "core/Logger.h"
 #include"../Globals.h"
 
+#include "core/Concurency/Task.h"
+#include "core/Concurency/ThreadHandler.h"
+
+
 #include <sstream>
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
@@ -19,10 +23,7 @@ ENetNetworkManager::~ENetNetworkManager()
 	
 	initialized = false;
 	//if we are a server stop polling for events
-	if(role == NetRole::SERVER)
-	{
-		networkPollingThread.join();
-	}
+	
 
 	//destroy our host
 	if(user != nullptr)
@@ -230,7 +231,14 @@ void ENetNetworkManager::CreateHost(unsigned int port, unsigned int maxConnectio
 	if(role == NetRole::SERVER)
 	{
 		//if we're a server start polling as soon as we're created
-		networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
+
+		std::shared_ptr <Task> pollNetEventsTask = std::make_shared<Task>();
+		pollNetEventsTask->SetTask(&ENetNetworkManager::PollNetworkEvents, this);
+
+
+		ThreadHandler::GetInstance()->AddTask(pollNetEventsTask);
+
+
 	}
 }
 
@@ -257,7 +265,14 @@ bool ENetNetworkManager::Connect(const char* addressString, unsigned int port)
 			connectedPeers.emplace_back(peer);
 			clientConnected = true;
 			//if we're a client start polling as soon as we've connected to a server
-			networkPollingThread = thread(&ENetNetworkManager::PollNetworkEvents, this);
+
+			std::shared_ptr <Task> pollNetEventsTask = std::make_shared<Task>();
+			pollNetEventsTask->SetTask(&ENetNetworkManager::PollNetworkEvents, this);
+
+
+
+			ThreadHandler::GetInstance()->AddTask(pollNetEventsTask);
+			
 			return true;
 		}
 		else
@@ -345,7 +360,6 @@ void ENetNetworkManager::Disconnect()
 		{
 			clientConnected = false;
 			//since we're no longer connected to a server stop polling for events
-			networkPollingThread.join();
 			enet_peer_disconnect(connectedPeers[0], 0);
 
 			while(enet_host_service(user, &netEvent, 3000) > 0)
@@ -356,12 +370,12 @@ void ENetNetworkManager::Disconnect()
 				}
 			}
 		}
-		else if(role == NetRole::SERVER)
-		{
-
-		}
-		
 		connectedPeers.clear();
+	}
+
+	 if (role == NetRole::SERVER)
+	{
+		initialized = false;
 	}
 }
 

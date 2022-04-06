@@ -32,7 +32,7 @@ private:
 
 	//! AddObjectToMap function 
 	/*! Add's to the SaveAbleObjects unordered_map depending on what class type is passed in*/
-	void AddObjectToMap(const char* classType) const;
+	void AddLoadableObjects() const;
 
 	//! QueryAtributeValue function 
 	/*! Will check what type the XMLAttribute contains and then load it into hte ElementInfo*/
@@ -64,7 +64,6 @@ public:
 	/*! Unloads the current scenes saves from the engine*/
 	void UnLoadSceneSaves();
 
-
 	//! LoadObject function 
 	/*! Load's a game object into the engine with the information from the savefile*/
 	void LoadObject(SaveFile& file);
@@ -73,6 +72,8 @@ public:
 	/*! Loads in the non c++ created scenes into the engine*/
 	void LoadDefaultScenes(class Game* G_Interface) const;
 
+
+	void RemoveAttributePrefixs(const std::string& saveName);
 
 	template<typename AtribType>
 	bool InitalizeAttribute(const std::string Atrib_Name, ElementInfo& Element)

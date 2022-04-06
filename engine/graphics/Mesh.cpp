@@ -9,7 +9,7 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
 	this->indices = indices;
 	this->textures = textures;
 	this->color = color;
-	
+
 }
 
 Mesh::Mesh(const Mesh& m)

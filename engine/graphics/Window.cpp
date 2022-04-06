@@ -195,16 +195,30 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 
 
-	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.06f, 0.1f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.0f, 0.06f, 0.1f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_MenuBarBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
 
 	ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
 	ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+
+	
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.0f, 0.48f, 0.76f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TabHovered] = ImVec4(0.0f, 0.48f, 0.76f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabActive] = ImVec4(0.0f, 0.68f, 0.96f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabUnfocused] = ImVec4(0.0f, 0.18f, 0.36f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_Tab] = ImVec4(0.0f, 0.18f, 0.36f, 1.0f);
+
+
+	
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(window, context);

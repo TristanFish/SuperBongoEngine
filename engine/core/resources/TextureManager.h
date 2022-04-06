@@ -1,18 +1,28 @@
 #pragma once
 #include <unordered_map>
+#include <memory>
 #include "graphics/Texture.h"
 
 
 class TextureManager
 {
 public:
-	static Texture& GetTexture(const std::string& name);
-	static void DeleteAllTextures();
+	 Texture& GetTexture(const std::string& name);
+	 void DeleteAllTextures();
+
+	 static TextureManager* GetInstance();
+
+	 TextureManager();
+	 ~TextureManager();
 
 private:
-	static void LoadAllTextures();
 
-	static std::unordered_map<std::string, Texture> textures;
+	static std::unique_ptr<TextureManager> textureManagerInstance;
+	friend std::default_delete<TextureManager>;
+
+	 void LoadAllTextures();
+
+	 std::unordered_map<std::string, Texture> textures;
 	
 	friend class CoreEngine;
 };

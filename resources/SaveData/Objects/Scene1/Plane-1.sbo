@@ -2,7 +2,7 @@
     <Identifiers S_Name="Plane-1" U64_UniqueIdentifier="886997377">
         <Transform>
             <Position F_X="0.80000001" F_Y="-6.8000002" F_Z="0"/>
-            <Rotation F_X="90" F_Y="0" F_Z="0"/>
+            <Rotation F_X="90.000008" F_Y="0" F_Z="0"/>
             <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>

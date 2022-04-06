@@ -10,22 +10,34 @@ class ModelManager
 {
 public:
 
+	ModelManager();
+	~ModelManager();
+
 	//!Static GetModel Getter
 	/*!  Returns a model with a given name/filepath */
-	static Model&  GetModel(const std::string& name);
+	 Model&  GetModel(const std::string& name);
 
 	//! Static DestroyAllModels Function
 	/*!  Destroys all of the models in the "models" unordered_map */
+
+	static ModelManager* GetInstance();
+
+
 private:
-	static void DestroyAllModels();
+
+	static std::unique_ptr<ModelManager> modelManagerInstance;
+	friend std::default_delete<ModelManager>;
+
+
+	 void DestroyAllModels();
 
 	//! Static Models unordered_map
 	/*!  Stores all of the models in our scene */
-	static std::unordered_map<std::string, Model> models;
+	 std::unordered_map<std::string, Model> models;
 
 	//! Static LoadAllModels Function
 	/*! Loads all the models when given the filepath */
-	static void LoadAllModels();
+	 void LoadAllModels();
 
 	//! Friend CoreEngine
 	/*! Enables us to access all of the variables in the "CoreEngine" */

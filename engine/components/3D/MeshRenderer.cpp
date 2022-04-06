@@ -1,10 +1,13 @@
 #include "MeshRenderer.h"
 #include "Rendering/Camera.h"
+
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 #include "core/resources/TextureManager.h"
 #include "core/3D/Physics//BoundingBox.h"
 #include "core/Globals.h"
+
+#include "components/GameObject.h"
 
 #include "Utility/SaveUtility.h"
 
@@ -19,7 +22,7 @@ MeshRenderer::~MeshRenderer()
 
 bool MeshRenderer::LoadModel(const char* name)
 {
-	model = &ModelManager::GetModel(name);
+	model = &ModelManager::GetInstance()->GetModel(name);
 
 	if(model)
 	{

@@ -3,7 +3,7 @@
 std::unordered_map<std::string, SaveFile> SaveManager::SaveFiles = std::unordered_map<std::string, SaveFile>();
 
 std::unordered_map<std::string, SaveFile> SaveManager::SaveQueue = std::unordered_map<std::string, SaveFile>();
-std::unordered_map<std::string, std::shared_ptr<GameObject>> SaveManager::SaveableObjects = std::unordered_map<std::string, std::shared_ptr<GameObject>>();
+std::unordered_map<std::string, std::shared_ptr<GameObject>> SaveManager::LoadableObjects = std::unordered_map<std::string, std::shared_ptr<GameObject>>();
 
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
@@ -157,6 +157,23 @@ void SaveManager::SaveAll()
 	SaveQueue.clear();
 }
 
+void SaveManager::SaveSingleFile(const std::string& SaveName)
+{
+
+	std::unordered_map<std::string, SaveFile>::iterator saveQueueIter = SaveQueue.begin();
+	
+
+	saveQueueIter = SaveQueue.find(SaveName);
+
+	if (saveQueueIter != SaveQueue.end())
+	{
+		SaveFiles.emplace(saveQueueIter->first, saveQueueIter->second);
+
+	}
+
+	SaveQueue.erase(saveQueueIter);
+}
+
 void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 {
 	SaveQueue.emplace(name, File);
@@ -164,9 +181,8 @@ void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 
 void SaveManager::DeleteSaveableObjects()
 {
-	
 
-	SaveableObjects.clear();
+	LoadableObjects.clear();
 }
 
 bool SaveManager::TransferToSaveQueue(const std::string& saveName)

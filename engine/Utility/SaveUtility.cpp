@@ -81,21 +81,65 @@ void SaveUtility::CompileSaves()
 	SaveManager::SaveAll();
 }
 
+void SaveUtility::CompileSave(SaveFile& SaveFile_, std::string DirectoryOverride)
+{
+	for (auto& elmName : SaveFile_.insertionOrder)
+	{
+		ElementInfo& elm = SaveFile_.Elements[elmName];
+		if (elm.IsRootChild())
+		{
+			elm.element = SaveFile_.Doc.NewElement(elmName.c_str());
+			SaveFile_.rootNode->InsertFirstChild(elm.element);
+
+			HandleAttributes(SaveFile_, elm);
+
+		}
+
+		else if (elmName != "Root")
+		{
+			elm.element = SaveFile_.Doc.NewElement(elmName.c_str());
+
+			HandleAttributes(SaveFile_, elm);
+
+			SaveFile_.FindElement(elm.parentName).element->InsertEndChild(elm.element);
+		}
+	}
+
+	for (auto& elm : SaveFile_.Elements)
+	{
+		if (elm.second.IsRootChild())
+		{
+			SaveFile_.FindElement(elm.second.parentName).element->InsertEndChild(elm.second.element);
+		}
+	}
+	SaveFile_.Save(DirectoryOverride);
+
+	
+	SaveManager::SaveSingleFile(SaveFile_.GetFileName());
+}
+
 void SaveUtility::SaveObject(const std::string& saveName, std::shared_ptr<GameObject> obj)
 {
 	CreateSave(saveName, FileType::OBJECT);
 
 	SaveManager::GetSaveFile(saveName).ClearElements();
 
+
+
 	ElementInfo Identifiers = ElementInfo("Root");
+
+
+
 	Identifiers.Attributes.emplace("S_Name", obj->GetName());
 	Identifiers.Attributes.emplace("U64_UniqueIdentifier", obj->GetUUID());
+	
 	AddElement(saveName, "Identifiers", Identifiers);
 
 	
 
 	ElementInfo Transform = ElementInfo("Identifiers");
 	AddElement(saveName, "Transform", Transform);
+
 
 
 
@@ -109,7 +153,9 @@ void SaveUtility::SaveObject(const std::string& saveName, std::shared_ptr<GameOb
 
 
 	ElementInfo ObjectType = ElementInfo("ObjectInfo");
+
 	ObjectType.Attributes.emplace("S_ID", std::string(obj->GetType()));
+
 	AddElement(saveName, "Type", ObjectType);
 
 	ElementInfo Components = ElementInfo("Identifiers");
@@ -154,24 +200,40 @@ void SaveUtility::HandleAttributes(SaveFile& save, const ElementInfo& elm)
 }
 
 
-ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& parentName)
+ElementInfo SaveUtility::CreateVec3(const MATH::Vec3& value, const std::string& parentName,bool UsePrefix)
 {
 
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 3; i++)
 	{
-		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
+		if (UsePrefix)
+		{
+			element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
+		}
+		else
+		{
+			element.Attributes.emplace(Globals::Engine::IntToVector(i), value[i]);
+		}
 	}
 
 	return element;
 }
 
-ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& parentName)
+ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& parentName,bool UsePrefix)
 {
 	ElementInfo element = ElementInfo(parentName);
 	for (int i = 0; i < 4; i++)
 	{
-		element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F",i), value[i]);
+		if (UsePrefix)
+		{
+			element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
+
+		}
+		else
+		{
+			element.Attributes.emplace(Globals::Engine::IntToVector(i), value[i]);
+
+		}
 	}
 
 	return element;

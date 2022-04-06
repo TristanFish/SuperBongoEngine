@@ -1,7 +1,12 @@
 #include "SkyBox.h"
+
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
 #include "core/Logger.h"
+
+#include "Rendering/Camera.h"
+
+#include "sdl/SDL_image.h"
 
 using namespace MATH;
 

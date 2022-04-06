@@ -1,6 +1,9 @@
 #include "Water.h"
 #include "core/Timer.h"
+#include "core/Globals.h"
 
+#include "Rendering/Camera.h"
+#include "SkyBox.h"
 Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 
 	mr = AddComponent<MeshRenderer>();

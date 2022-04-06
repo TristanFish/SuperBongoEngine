@@ -1,12 +1,12 @@
 #include "AiGameObject.h"
 #include "core/events/InputManager.h"
+#include "components/AI/AIComponent.h"
 
 AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	name = name_;
 	SetPos(position_);
 	
 	mRenderer = AddComponent<MeshRenderer>();
-	mRenderer->Init(this);
 	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 

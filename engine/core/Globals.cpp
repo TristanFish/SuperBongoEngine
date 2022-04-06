@@ -13,7 +13,7 @@
 
 
 std::string Globals::Engine::ENGINE_PATH = std::filesystem::current_path().string();
-std::string Globals::Engine::SAVE_DATA_PATH = ENGINE_PATH + "\\resources\\SaveData\\";
+std::string Globals::Engine::SAVE_DATA_PATH = ENGINE_PATH + "\\resources\\";
 std::string Globals::Engine::SCENE_NAME = "";
 
 std::shared_ptr<SceneGraph> Globals::Engine::s_SceneGraph = nullptr;
@@ -161,7 +161,7 @@ bool Globals::Editor::DrawVec3(const std::string& label, MATH::Vec3& value, cons
 
 void Globals::Editor::DrawTextureSlot(const char* textureName, MeshRenderer* meshRenderer, const float spacing, const MATH::Vec2& size)
 {
-	GLuint textureID = TextureManager::GetTexture(textureName).getTextureID();
+	GLuint textureID = TextureManager::GetInstance()->GetTexture(textureName).getTextureID();
 
 	float textWidth = ImGui::CalcTextSize("Loaded Mesh").x;
 	ImGui::SetCursorPos({ (ImGui::GetWindowSize().x - textWidth) / 2 ,ImGui::GetCursorPos().y });

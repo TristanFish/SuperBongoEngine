@@ -21,7 +21,9 @@ public:
 
 protected:
 	//Thread that's used to poll for network events
-	std::thread networkPollingThread;
+	
+	 
+
 	//Network Manager's a singleton
 	static std::unique_ptr<NetworkManager> networkInstance;
 	//Whether Online functionality is initialized or not

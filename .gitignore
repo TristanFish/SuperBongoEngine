@@ -352,3 +352,7 @@ MigrationBackup/
 EngineLog.txt
 imgui.ini
 .idea/
+ReflectionGenerator/obj/project.assets.json
+ReflectionGenerator/obj/project.nuget.cache
+ReflectionGenerator/obj/ReflectionGenerator.csproj.nuget.dgspec.json
+ReflectionGenerator/obj/ReflectionGenerator.csproj.nuget.g.props

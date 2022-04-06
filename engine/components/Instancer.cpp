@@ -1,6 +1,9 @@
 #include "Instancer.h"
 #include "math/MMath.h"
 
+
+#include "components/GameObject.h"
+
 using namespace MATH;
 
 Instancer::~Instancer()

@@ -102,6 +102,10 @@
     <ClCompile Include="engine\core\UUniqueID.cpp" />
     <ClCompile Include="external\include\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="engine\core\GameInterface.cpp" />
+    <ClCompile Include="engine\core\Concurency\Task.cpp" />
+    <ClCompile Include="engine\core\Concurency\Thread.cpp" />
+    <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
+    <ClCompile Include="game\gameObjects\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
@@ -392,6 +396,11 @@
     <ClInclude Include="engine\components\AI\Algorithms\Pathfinding\NavigationMesh.h" />
     <ClInclude Include="engine\core\UUniqueID.h" />
     <ClInclude Include="external\include\ImGuizmo\ImGuizmo.h" />
+    <ClInclude Include="engine\core\Concurency\Task.h" />
+    <ClInclude Include="engine\core\Concurency\Thread.h" />
+    <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
+    <ClInclude Include="game\gameObjects\PlayerController.h" />
+    <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

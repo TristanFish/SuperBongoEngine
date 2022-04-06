@@ -638,6 +638,8 @@ void Viewport::Render()
 
 			SaveFile file = SaveManager::GetSaveFile(objPath.stem().string());
 
+			file.FindAttribute("Identifiers", "UniqueIdentifier") = UUniqueID();
+
 			LoadUtility::GetInstance()->LoadObject(file);
 		}
 		ImGui::EndDragDropTarget();
@@ -967,9 +969,69 @@ void ContentBrowser::Render()
 {
 	ImGui::Begin("Content Browser");
 
+
+
 	GeneratePathNav();
 	ImGui::Dummy(ImVec2{ 0.0f,25.0f });
 	GenerateContent();
+
+
+	if (!IsHoveringItem && ImGui::IsWindowHovered())
+	{
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+		{
+			ImGui::OpenPopup("Content Dropdown");
+		}
+	}
+	if (QueueForItemMenu)
+	{
+		ImGui::OpenPopup("Item Menu");
+	}
+
+
+
+	if (ImGui::BeginPopup("Content Dropdown"))
+		{
+			if (ImGui::BeginMenu("Create Object"))
+			{
+				for (const auto& LoadableObject : SaveManager::LoadableObjects)
+				{
+					std::string PrefixRemoved = LoadableObject.first;
+					PrefixRemoved.erase(0, 6);
+
+					if (ImGui::MenuItem(PrefixRemoved.c_str()))
+					{
+						SaveUtility::GetInstance()->SaveObject(PrefixRemoved, LoadableObject.second->NewClone());
+
+						SaveUtility::GetInstance()->CompileSave(SaveManager::GetSaveFile(PrefixRemoved), std::filesystem::absolute(CurrentDirectory).string() + "\\");
+
+						LoadUtility::GetInstance()->RemoveAttributePrefixs(PrefixRemoved);
+
+						GenDirectoryItems();
+					}
+				}
+
+				ImGui::EndMenu();
+			}
+			ImGui::EndPopup();
+		}
+	
+	if (ImGui::BeginPopup("Item Menu"))
+	{
+
+		if (ImGui::MenuItem("Delete"))
+		{
+			std::filesystem::path FilePath = CurrentDirectory;
+
+			FilePath.append(SelectedItemName);
+
+			std::filesystem::remove(FilePath);
+
+			GenDirectoryItems();
+		}
+
+		ImGui::EndPopup();
+	}
 
 	ImGui::End();
 }
@@ -987,10 +1049,14 @@ void ContentBrowser::GenerateContent()
 		colCount = 1;
 	}
 
+	IsHoveringItem = false;
+	QueueForItemMenu = false;
+
 	ImGui::Columns(colCount, 0, false);
 	for (size_t i = 0; i <  DirectoryItems.size(); i++)
 	{
 		GenerateItem(DirectoryItems[i]);
+
 	}
 
 	ImGui::Columns(1);
@@ -1033,14 +1099,16 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 	if (entry.is_directory())
 	{
-		ImGui::ImageButton((ImTextureID)TextureManager::GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize });	
+		if (ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize }));
+
+		if (!IsHoveringItem) { IsHoveringItem = ImGui::IsItemHovered(); }
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
 			CurrentDirectory /= path.filename();
 			GenDirectoryItems();
 		}
-
+		
 		ImGui::TextWrapped(filename.c_str());
 	}
 	else
@@ -1051,23 +1119,24 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 		if (fileType == ".sbo")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_09.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_09.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".fbx" || fileType == ".obj")
 		{
-			iconTextureID = TextureManager::GetTexture("texture_08.jpg").getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture("texture_08.jpg").getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else if (fileType == ".jpg" | fileType == ".png")
 		{
-			iconTextureID = TextureManager::GetTexture(path.filename().string()).getTextureID();
+			iconTextureID = TextureManager::GetInstance()->GetTexture(path.filename().string()).getTextureID();
 			ImGui::ImageButton((ImTextureID)iconTextureID, { ItemSize,ItemSize }, ImVec2{ 0.0f,0.0f }, ImVec2{ 1.0f,1.0f }, 1);
 		}
 		else
 		{
 			ImGui::Button(filename.c_str(), { ItemSize,ItemSize });
 		}
+		if (!IsHoveringItem) { IsHoveringItem = ImGui::IsItemHovered(); }
 
 		if (ImGui::IsItemHovered())
 		{
@@ -1106,9 +1175,19 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 					}
 				}
 			}
+
+
+			if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+			{
+				QueueForItemMenu = true;
+				SelectedItemName = filename;
+			}
 		}
+
 		ImGui::TextWrapped(filename.c_str());		
 	}
+
+
 	ImGui::NextColumn();
 }
 

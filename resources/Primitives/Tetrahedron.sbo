@@ -1,0 +1,17 @@
+<Root>
+    <Identifiers S_Name="None" U64_UniqueIdentifier="3412809535">
+        <Transform>
+            <Position F_X="0" F_Y="0" F_Z="0"/>
+            <Rotation F_X="0" F_Y="0" F_Z="0"/>
+            <Scale F_X="25" F_Y="25" F_Z="25"/>
+        </Transform>
+        <ObjectInfo>
+            <Type S_ID="class Tetrahedron"/>
+        </ObjectInfo>
+        <Components>
+            <Renderer>
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
+            </Renderer>
+        </Components>
+    </Identifiers>
+</Root>

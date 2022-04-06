@@ -21,6 +21,8 @@ private:
 	/*! Is the context that is used for the OpenGL window */
 	SDL_GLContext context;
 
+
+
 	//! Set Attributes setter
 	/*! Is used to set the SDL/OpenGl attributes */
 	void SetAttributes(int major, int minor);
@@ -54,8 +56,7 @@ public:
 
 	//! GetWindow Getter 
 	/*! Returns the window pointer  */
-	SDL_Window* GetWindow() const;
-	
+	SDL_Window* GetWindow() const;	
 };
 
 #endif

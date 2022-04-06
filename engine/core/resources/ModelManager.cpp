@@ -4,7 +4,8 @@
 #include <cassert>
 #include "core/Logger.h"
 
-std::unordered_map<std::string, Model> ModelManager::models;
+
+std::unique_ptr<ModelManager> ModelManager::modelManagerInstance = std::unique_ptr<ModelManager>();
 
 void ModelManager::LoadAllModels()
 {
@@ -23,6 +24,16 @@ void ModelManager::LoadAllModels()
 	}
 }
 
+ModelManager::ModelManager()
+{
+
+}
+
+ModelManager::~ModelManager()
+{
+
+}
+
 Model& ModelManager::GetModel(const std::string& name)
 {
 	if (models.find(name) == models.end())
@@ -37,6 +48,15 @@ Model& ModelManager::GetModel(const std::string& name)
 		return models[name];
 	}
 	return models[name];
+}
+
+ModelManager* ModelManager::GetInstance()
+{
+	if (modelManagerInstance == nullptr)
+	{
+		modelManagerInstance.reset(new ModelManager);
+	}
+	return modelManagerInstance.get();
 }
 
 void ModelManager::DestroyAllModels()

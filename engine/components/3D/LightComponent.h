@@ -1,7 +1,7 @@
 #ifndef LIGHTCOMPONENT_H
 #define LIGHTCOMPONENT_H
 
-#include "components/ECS.h"
+#include "components/Component.h"
 #include "core/Debug.h"
 
 enum class LightType
