@@ -281,14 +281,14 @@ std::string SaveFile::GetFileDestination() const
 	{
 
 	case FileType::DEFAULT:
-		destination.append("Default\\");
+		destination.append("SaveData\\Default\\");
 		break;
 	case FileType::SCENE:
-		destination.append("Scenes\\");
+		destination.append("SaveData\\Scenes\\");
 		break;
 
 	case FileType::OBJECT:
-		destination.append("Objects\\");
+		destination.append("SaveData\\Objects\\");
 		destination.append(sceneName);
 		break;
 	}
@@ -309,9 +309,17 @@ void SaveFile::ClearSaveFile()
 	}
 }
 
-void SaveFile::Save()
+void SaveFile::Save(const std::string& OverridePath)
 {
-	std::string Destination = GetFileDestination();
+	std::string Destination;
+	if (OverridePath.empty())
+	{
+		 Destination = GetFileDestination();
+	}
+	else
+	{
+		Destination = OverridePath;
+	}
 
 	SaveFile& save = SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME);
 

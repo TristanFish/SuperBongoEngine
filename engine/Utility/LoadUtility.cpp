@@ -42,9 +42,20 @@ void LoadUtility::LoadObject(SaveFile& file)
 
 		for (int i = 0; i < 3; i++)
 		{
-			Position[i] = std::get<float>(PosElm.Attributes[Globals::Engine::IntToVector(i)]);
-			Rotation[i] = std::get<float>(RotElm.Attributes[Globals::Engine::IntToVector(i)]);
-			Scale[i] = std::get<float>(ScaleElm.Attributes[Globals::Engine::IntToVector(i)]);
+			std::string KeyString = Globals::Engine::IntToVector(i);
+
+			if(std::holds_alternative<float>(PosElm.Attributes[KeyString]))
+			{
+				Position[i] = std::get<float>(PosElm.Attributes[KeyString]);
+			}
+			if (std::holds_alternative<float>(RotElm.Attributes[KeyString]))
+			{
+				Rotation[i] = std::get<float>(RotElm.Attributes[KeyString]);
+			}
+			if (std::holds_alternative<float>(ScaleElm.Attributes[KeyString]))
+			{
+				Scale[i] = std::get<float>(ScaleElm.Attributes[KeyString]);
+			}
 		}
 
 		S_PrevLoadedObjName = std::get<std::string>(IdentifiersElm.Attributes["Name"]);
@@ -98,7 +109,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 void LoadUtility::LoadExistingSaves()
 {
 	std::string directory = Globals::Engine::SAVE_DATA_PATH;
-	std::string objDir = "Objects\\";
+	std::string objDir = "SaveData\\Objects\\";
 	std::string sceneObjPath = (directory + objDir);
 
 
@@ -115,9 +126,12 @@ void LoadUtility::LoadExistingSaves()
 			continue;
 		}
 
-		if (entry->is_regular_file())
+
+		FileType Type = GetFileExtention(curPath.extension().string());
+
+		if (entry->is_regular_file() && Type != FileType::DEFAULT)
 		{
-			LoadSave(curPath.stem().string(), curPath.string(), GetFileExtention(curPath.extension().string()));
+			LoadSave(curPath.stem().string(), curPath.string(), Type);
 		}
 	}
 
@@ -130,7 +144,7 @@ void LoadUtility::LoadSceneSaves()
 {
 	EngineLogger::Info("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
-	std::string objDir = "Objects\\";
+	std::string objDir = "SaveData\\Objects\\";
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
 	std::string sceneObjPath = (Globals::Engine::SAVE_DATA_PATH + objDir) + sceneName + "\\";
 
@@ -332,4 +346,42 @@ void LoadUtility::LoadDefaultScenes(GameInterface* G_Interface) const
 	}
 }
 
+void LoadUtility::RemoveAttributePrefixs(const std::string& saveName)
+{
+
+
+	for (auto& element : SaveManager::GetSaveFile(saveName).GetElements())
+	{
+		std::map<std::string, Attribute> AtribMap;
+		for (auto const& attribute : element.second.Attributes)
+		{
+
+
+			auto node = element.second.Attributes.find(attribute.first);
+
+
+			
+			std::string AtribName = attribute.first;
+
+			size_t LastOfTag = AtribName.find("_") + 1;
+
+
+			//Get The Tag
+			AtribName = AtribName.substr(LastOfTag , AtribName.size() - LastOfTag);
+
+
+			AtribMap.emplace(AtribName, attribute.second);
+			
+
+			
+
+		}
+		if (AtribMap.size() > 0)
+		{
+			element.second.Attributes = AtribMap;
+
+		}
+
+	}
+}
 

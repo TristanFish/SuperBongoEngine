@@ -6,6 +6,7 @@
         <Plane-1/>
         <Player/>
         <test/>
+        <AwesomeSphere/>
     </Objects>
     <SceneSettings>
         <BaseClass: S_:="class CoreEngine"/>

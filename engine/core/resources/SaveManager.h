@@ -68,6 +68,7 @@ public:
 	/*! Move's the key/value pairs from the save queue back into the SaveFiles list*/
 	static void SaveAll();
 
+	static void SaveSingleFile(const std::string& SaveName);
 	
 	//! DeleteSaveableObjects function
 	/*! Set's all gameobject pointers to null in the SaveableObjects unordered_map and clears it*/

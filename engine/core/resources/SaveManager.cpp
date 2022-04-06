@@ -157,6 +157,23 @@ void SaveManager::SaveAll()
 	SaveQueue.clear();
 }
 
+void SaveManager::SaveSingleFile(const std::string& SaveName)
+{
+
+	std::unordered_map<std::string, SaveFile>::iterator saveQueueIter = SaveQueue.begin();
+	
+
+	saveQueueIter = SaveQueue.find(SaveName);
+
+	if (saveQueueIter != SaveQueue.end())
+	{
+		SaveFiles.emplace(saveQueueIter->first, saveQueueIter->second);
+
+	}
+
+	SaveQueue.erase(saveQueueIter);
+}
+
 void SaveManager::AddToSaveQueue( const std::string&name, const SaveFile& File)
 {
 	SaveQueue.emplace(name, File);

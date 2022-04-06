@@ -7,7 +7,6 @@ AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	SetPos(position_);
 	
 	mRenderer = AddComponent<MeshRenderer>();
-	mRenderer->Init(this);
 	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 

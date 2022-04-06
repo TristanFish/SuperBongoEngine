@@ -318,6 +318,12 @@ namespace CustomUI
 		/*! Stores the size of each item in the content browser */
 		float ItemSize;
 
+		bool IsHoveringItem;
+
+		bool QueueForItemMenu;
+
+		std::string SelectedItemName;
+
 	private:
 
 		//! GenerateContent Function

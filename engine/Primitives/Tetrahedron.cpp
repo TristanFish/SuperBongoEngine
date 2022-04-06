@@ -31,3 +31,10 @@ void Tetrahedron::OnCollisionEnter(Collider3D& otherBody)
 {
 	//std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
 }
+
+void Tetrahedron::PostInit()
+{
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
+
+	GameObject::PostInit();
+}

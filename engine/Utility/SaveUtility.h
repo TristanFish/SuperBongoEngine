@@ -36,6 +36,10 @@ public:
 	/*! Loops through all of the Key/Value pairs in SaveQueue, sets all of the tinyxml2 types, saves the file to a specific path */
 	void CompileSaves();
 
+	//! CompileSaves function
+	/*! Loops through all of the Key/Value pairs in SaveQueue, sets all of the tinyxml2 types, saves the file to a specific path */
+	void CompileSave(SaveFile& SaveFile_, std::string DirectoryOverride = std::string());
+
 	//! CreateSave function 
 	/*! Creates a save file with the given name and file type */
 	void CreateSave(const std::string& saveName,FileType type = FileType::DEFAULT);
@@ -86,11 +90,11 @@ public:
 
 	//! CreateVec3 function 
 	/*! Returns an ElementInfo with all Vec3 values as attributes*/
-	ElementInfo CreateVec3(const MATH::Vec3& value,const std::string& parentName);
+	ElementInfo CreateVec3(const MATH::Vec3& value,const std::string& parentName,bool UsePrefix = true);
 
 	//! CreateVec4 function 
 	/*! Returns an ElementInfo with all Vec4 values as attributes*/
-	ElementInfo CreateVec4(const MATH::Vec4& value, const std::string& parentName);
+	ElementInfo CreateVec4(const MATH::Vec4& value, const std::string& parentName, bool UsePrefix = true);
 
 
 	//! SaveObject function 

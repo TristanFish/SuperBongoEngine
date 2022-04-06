@@ -64,7 +64,6 @@ public:
 	/*! Unloads the current scenes saves from the engine*/
 	void UnLoadSceneSaves();
 
-
 	//! LoadObject function 
 	/*! Load's a game object into the engine with the information from the savefile*/
 	void LoadObject(SaveFile& file);
@@ -73,6 +72,8 @@ public:
 	/*! Loads in the non c++ created scenes into the engine*/
 	void LoadDefaultScenes(class GameInterface* G_Interface) const;
 
+
+	void RemoveAttributePrefixs(const std::string& saveName);
 
 	template<typename AtribType>
 	bool InitalizeAttribute(const std::string Atrib_Name, ElementInfo& Element)

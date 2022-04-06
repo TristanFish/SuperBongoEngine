@@ -13,7 +13,7 @@
 
 
 std::string Globals::Engine::ENGINE_PATH = std::filesystem::current_path().string();
-std::string Globals::Engine::SAVE_DATA_PATH = ENGINE_PATH + "\\resources\\SaveData\\";
+std::string Globals::Engine::SAVE_DATA_PATH = ENGINE_PATH + "\\resources\\";
 std::string Globals::Engine::SCENE_NAME = "";
 
 std::shared_ptr<SceneGraph> Globals::Engine::s_SceneGraph = nullptr;
