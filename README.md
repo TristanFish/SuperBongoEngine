@@ -1,7 +1,7 @@
 ![](Media/SuperBongoLogo.png)
 
 
-This is a repository for a 3D OpenGL game editor/engine that was created for a game programming capstone project at Humber College, developed by [Tremaine Mellis](https://www.linkedin.com/in/tremaine-duquesnay-mellis/), 
+This is a repository for a 3D OpenGL game editor/engine that was created for a game programming capstone project at Humber College, developed by [Tremaine Duquesnay-Mellis](https://www.linkedin.com/in/tremaine-duquesnay-mellis/), 
 [Conor Long](https://www.linkedin.com/in/conor-long-456881112/), [Tristan Fish](https://www.linkedin.com/in/tristan-fish-427b5619b/) and [Declan Mcguinness](https://www.linkedin.com/in/mcguinness-declan/)
 
 The game engine was created in OpenGL entirely out of C/C++, we started development in September 2020 and initially showcased it as our midstone project. 
