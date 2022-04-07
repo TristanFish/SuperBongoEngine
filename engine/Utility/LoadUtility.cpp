@@ -73,7 +73,7 @@ void LoadUtility::LoadObject(SaveFile& file)
 		MATH::Vec4 MeshColor;
 
 		bool HasRenderer;
-		if (HasRenderer = file.HasElement("Renderer"))
+		if (HasRenderer = file.HasElement("classMeshRenderer"))
 		{
 			MeshColorElm = file.FindElement("MeshColorTint");
 
@@ -142,7 +142,7 @@ void LoadUtility::LoadExistingSaves()
 
 void LoadUtility::LoadSceneSaves()
 {
-	EngineLogger::Info("===========CURRENT SCENE SAVES BEING LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	EngineLogger::Info("===========CURRENT SCENE SAVES BEING LOADED===========", "LoadUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 
 	std::string objDir = "SaveData\\Objects\\";
 	std::string sceneName = CoreEngine::GetInstance()->GetCurrentScene()->GetSceneName();
@@ -161,18 +161,18 @@ void LoadUtility::LoadSceneSaves()
 		}
 	}
 
-	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	EngineLogger::Info("===========CURRENT SCENE SAVES SUCCESFULLY LOADED===========", "LoadUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
 void LoadUtility::UnLoadSceneSaves()
 {
-	EngineLogger::Info("===========OLD SCENE SAVES BEING UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	EngineLogger::Info("===========OLD SCENE SAVES BEING UNLOADED===========", "LoadUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	for (auto elm : SaveManager::GetSaveFile(Globals::Engine::SCENE_NAME).GetElements())
 	{
 		SaveManager::RemoveSave(elm.first);
 	}
 
-	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
+	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "LoadUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
 

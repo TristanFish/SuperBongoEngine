@@ -217,11 +217,9 @@ void MeshRenderer::RenderInstancedMesh(const std::vector<Mesh>& meshes, const Sh
 
 void MeshRenderer::OnSaveComponent(const std::string& saveName,std::string parentName)
 {
-	std::string typeName = typeid(*this).name();
-	typeName.erase(std::remove(typeName.begin(), typeName.end(), ' '), typeName.end());
-	typeName.erase(std::remove(typeName.begin(), typeName.end(), '*'), typeName.end());
+	Component::OnSaveComponent(saveName, parentName);
 
-	ElementInfo MeshTint = SaveUtility::GetInstance()->CreateVec4(meshColorTint, typeName);
+	ElementInfo MeshTint = SaveUtility::GetInstance()->CreateVec4(meshColorTint, GetComponentName());
 
 	SaveUtility::GetInstance()->AddElement(saveName, "MeshColorTint", MeshTint);
 }

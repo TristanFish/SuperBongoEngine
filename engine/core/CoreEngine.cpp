@@ -120,7 +120,6 @@ bool CoreEngine::Init()
 	Globals::Engine::InitGlobals();
 
 	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
-	LoadUtility::GetInstance()->LoadSceneSaves();
 	
 	if (gameInterface)
 	{

@@ -9,12 +9,10 @@
             <Type S_ID="class PlaneObject"/>
         </ObjectInfo>
         <Components>
-            <classMeshRenderer>
+            <classMeshRenderer B_Active="true">
                 <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
             </classMeshRenderer>
-            <classRigidBody3D>
-                <IsActive B_Active="true"/>
-            </classRigidBody3D>
+            <classRigidBody3D B_Active="true"/>
         </Components>
     </Identifiers>
 </Root>

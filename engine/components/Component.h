@@ -40,6 +40,7 @@ public:
 	virtual const char* GetType() { return typeid(*this).name(); }
 
 
+	std::string GetComponentName();
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/

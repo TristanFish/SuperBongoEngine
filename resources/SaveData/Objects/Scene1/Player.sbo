@@ -9,9 +9,7 @@
             <Type S_ID="class Player"/>
         </ObjectInfo>
         <Components>
-            <classAudioListenerComponent>
-                <IsActive B_Active="true"/>
-            </classAudioListenerComponent>
+            <classAudioListenerComponent B_Active="true"/>
         </Components>
     </Identifiers>
 </Root>
