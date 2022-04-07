@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperBongoEngine", "SuperBongoEngine.vcxproj", "{10C1E4B3-8948-43F7-B390-090DF18E9D37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21CC10BD-C8C1-4BFA-A1EC-870D3F830B44} = {21CC10BD-C8C1-4BFA-A1EC-870D3F830B44}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReflectionGenerator", "ReflectionGenerator\ReflectionGenerator.csproj", "{21CC10BD-C8C1-4BFA-A1EC-870D3F830B44}"
 EndProject

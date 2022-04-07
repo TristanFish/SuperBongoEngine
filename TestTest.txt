@@ -1,4 +1,0 @@
-if (classType == std::string("class Tetrahedron")) 
- { 
- SaveManager::SaveableObjects.emplace(classType, new Tetrahedron("None", MATH::Vec3())); 
- }
