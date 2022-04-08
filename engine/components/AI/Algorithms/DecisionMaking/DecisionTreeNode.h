@@ -23,8 +23,8 @@ public:
 class Decision : public DecisionTreeNode
 {
 public:
-	DecisionTreeNode* trueNode;
-	DecisionTreeNode* falseNode;
+	DecisionTreeNode* trueNode = nullptr;
+	DecisionTreeNode* falseNode = nullptr;
 
 	void AddTrueNode(DecisionTreeNode* node)
 	{

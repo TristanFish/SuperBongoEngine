@@ -13,79 +13,20 @@ Game1::Game1() : currentSceneNum(0)
 {
 	currentScene = nullptr;
 	Scenes = std::vector<Scene*>();
+
+	currentScene = new Scene1(); 
+	//currentScene = new SceneAi();
+
+	Scenes.push_back(currentScene);
+	Scenes.push_back(new Scene2);
+	//Scenes.push_back(new SceneAi);
 }
 
 Game1::~Game1()
 {
-	for (auto* scene : Scenes)
-	{
-		delete scene;
-		scene = nullptr;
-	}
 }
 
 bool Game1::OnCreate()
 {
-	if (CoreEngine::GetInstance()->GetCurrentScene() == 0)
-	{
-		currentScene = new Scene1(); 
-		//currentScene = new SceneAi();
-		currentSceneNum = 0;
-		bool create = currentScene->OnCreate();
-		bool postCreate = currentScene->PostCreate();
-
-		Scenes.push_back(currentScene);
-		Scenes.push_back(new Scene2);
-		//Scenes.push_back(new SceneAi);
-
-		return (create && postCreate);
-	}
-	EngineLogger::Error("Engine's scene is not initialized to 0", "Game1.cpp", __LINE__);
-	return false;
-}
-
-void Game1::OnDestroy()
-{
-
-}
-
-void Game1::Update(const float deltaTime_)
-{
-	if (currentSceneNum != CoreEngine::GetInstance()->GetCurrentSceneNum())
-	{
-		BuildScene();
-	}
-	currentScene->Update(deltaTime_);
-}
-
-void Game1::Render()
-{
-	currentScene->Render();
-}
-
-void Game1::HandleEvents(const SDL_Event& event)
-{
-	currentScene->HandleEvents(event);
-}
-
-void Game1::BuildScene() 
-{
-	currentScene = Scenes[CoreEngine::GetInstance()->GetCurrentSceneNum()];
-	currentSceneNum = CoreEngine::GetInstance()->GetCurrentSceneNum();
-	
-	Renderer::GetInstance()->ClearComponents();
-	
-	LoadUtility::GetInstance()->LoadSceneSaves();
-	Globals::Engine::InitGlobals();
-	if (!currentScene->OnCreate())
-	{
-		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
-		CoreEngine::GetInstance()->OnDestroy();
-	}
-	CoreEngine::GetInstance()->LoadSceneData();
-	if(!currentScene->PostCreate())
-	{
-		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
-		CoreEngine::GetInstance()->OnDestroy();
-	}
+	return BuildScene();
 }

@@ -9,8 +9,8 @@ Size=169,114
 Collapsed=1
 
 [Window][Properties]
-Pos=8,327
-Size=371,260
+Pos=8,303
+Size=371,272
 Collapsed=0
 DockId=0x00000009,0
 
@@ -51,8 +51,8 @@ Size=371,86
 Collapsed=0
 
 [Window][Performance Monitor]
-Pos=8,97
-Size=371,228
+Pos=8,27
+Size=371,274
 Collapsed=0
 DockId=0x00000008,1
 
@@ -162,8 +162,8 @@ Size=318,185
 Collapsed=0
 
 [Window][Object Hierarchy]
-Pos=8,97
-Size=371,228
+Pos=8,27
+Size=371,274
 Collapsed=0
 DockId=0x00000008,0
 
@@ -173,8 +173,8 @@ Size=352,143
 Collapsed=0
 
 [Window][Viewport]
-Pos=381,97
-Size=791,490
+Pos=381,27
+Size=791,548
 Collapsed=0
 DockId=0x00000005,0
 
@@ -184,43 +184,35 @@ Size=1536,864
 Collapsed=0
 
 [Window][Content Browser]
-Pos=1174,97
-Size=354,260
+Pos=1174,27
+Size=354,308
 Collapsed=0
 DockId=0x0000000A,0
 
 [Window][Console]
-Pos=8,589
-Size=1520,267
+Pos=8,577
+Size=1520,279
 Collapsed=0
 DockId=0x00000003,0
 
 [Window][Networking]
-Pos=1174,359
-Size=354,228
+Pos=1174,337
+Size=354,238
 Collapsed=0
 DockId=0x0000000C,0
 
-[Window][##Toolbar]
-Pos=8,27
-Size=1520,68
-Collapsed=0
-DockId=0x0000000D,0
-
 [Docking][Data]
-DockSpace           ID=0x8A7F637E Window=0x4647B76E Pos=200,135 Size=1520,829 Split=Y
-  DockNode          ID=0x0000000D Parent=0x8A7F637E SizeRef=1520,68 Selected=0xE79842C9
-  DockNode          ID=0x0000000E Parent=0x8A7F637E SizeRef=1520,759 Split=Y
-    DockNode        ID=0x00000001 Parent=0x0000000E SizeRef=944,490 Split=X
-      DockNode      ID=0x00000004 Parent=0x00000001 SizeRef=1164,1045 Split=X
-        DockNode    ID=0x00000002 Parent=0x00000004 SizeRef=371,1061 Split=Y Selected=0x2B4930E2
-          DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=285,228 Selected=0xDE80BD6B
-          DockNode  ID=0x00000009 Parent=0x00000002 SizeRef=285,260 Selected=0xC89E3217
-        DockNode    ID=0x00000005 Parent=0x00000004 SizeRef=791,1061 CentralNode=1 Selected=0x995B0CF8
-      DockNode      ID=0x00000006 Parent=0x00000001 SizeRef=354,1045 Split=Y Selected=0x371352B7
-        DockNode    ID=0x00000007 Parent=0x00000006 SizeRef=450,442 Split=Y Selected=0x8DE1D61E
-          DockNode  ID=0x0000000A Parent=0x00000007 SizeRef=354,260 Selected=0x371352B7
-          DockNode  ID=0x0000000C Parent=0x00000007 SizeRef=354,228 Selected=0x8DE1D61E
-        DockNode    ID=0x0000000B Parent=0x00000006 SizeRef=450,601 Selected=0xC2D6559B
-    DockNode        ID=0x00000003 Parent=0x0000000E SizeRef=944,267 Selected=0xF9BEF62A
+DockSpace         ID=0x8A7F637E Window=0x4647B76E Pos=520,315 Size=1520,829 Split=Y
+  DockNode        ID=0x00000001 Parent=0x8A7F637E SizeRef=944,548 Split=X
+    DockNode      ID=0x00000004 Parent=0x00000001 SizeRef=1164,1045 Split=X
+      DockNode    ID=0x00000002 Parent=0x00000004 SizeRef=371,1061 Split=Y Selected=0x2B4930E2
+        DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=285,274 Selected=0xDE80BD6B
+        DockNode  ID=0x00000009 Parent=0x00000002 SizeRef=285,272 Selected=0xC89E3217
+      DockNode    ID=0x00000005 Parent=0x00000004 SizeRef=791,1061 CentralNode=1 Selected=0x995B0CF8
+    DockNode      ID=0x00000006 Parent=0x00000001 SizeRef=354,1045 Split=Y Selected=0x371352B7
+      DockNode    ID=0x00000007 Parent=0x00000006 SizeRef=450,442 Split=Y Selected=0x8DE1D61E
+        DockNode  ID=0x0000000A Parent=0x00000007 SizeRef=354,308 Selected=0x371352B7
+        DockNode  ID=0x0000000C Parent=0x00000007 SizeRef=354,238 Selected=0x8DE1D61E
+      DockNode    ID=0x0000000B Parent=0x00000006 SizeRef=450,601 Selected=0xC2D6559B
+  DockNode        ID=0x00000003 Parent=0x8A7F637E SizeRef=944,279 Selected=0xF9BEF62A
 

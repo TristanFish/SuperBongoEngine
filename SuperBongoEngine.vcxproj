@@ -328,6 +328,7 @@
     <ClCompile Include="engine\components\AI\Algorithms\Steering\Kinematic.cpp" />
     <ClCompile Include="engine\components\AI\Algorithms\Steering\SteeringOutput.cpp" />
     <ClCompile Include="engine\core\3D\Physics\GJKDetection.cpp" />
+    <ClCompile Include="engine\core\GameInterface.cpp" />
     <ClCompile Include="engine\core\Concurency\Task.cpp" />
     <ClCompile Include="engine\core\Concurency\Thread.cpp" />
     <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />

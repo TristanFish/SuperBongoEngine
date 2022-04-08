@@ -14,7 +14,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
-uniform uint uniqueID;
+uniform uint uniqueID = 0;
 
 void main()
 {

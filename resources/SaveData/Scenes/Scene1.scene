@@ -1,6 +1,5 @@
 <Root>
     <Objects>
-        <AwesomeSphere/>
         <Box/>
         <Light/>
         <Light_1/>
@@ -9,6 +8,6 @@
         <test/>
     </Objects>
     <SceneSettings>
-        <BaseClass: S_:="class Scene *"/>
+        <BaseClass: S_:="class Scene1"/>
     </SceneSettings>
 </Root>

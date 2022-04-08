@@ -68,7 +68,7 @@ namespace CustomUI
 	class NetworkPanel : public UIInterface
 	{
 	public:
-		NetRole role;
+		NetRole role = NetRole::CLIENT;
 		bool roleIsSet = false;
 		bool isConnected = false;
 		
@@ -92,19 +92,19 @@ namespace CustomUI
 		PropertiesPanel();
 
 		//! Properties panel Destructor
-		/*! Destroys all pointer's that this class uses */
+		/*! Destroys all pointers that this class uses */
 		virtual ~PropertiesPanel();
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
 		void Render() override;
 
-		
+		void Reset() override;
 
 	private:
 
 		//! isActive bool
-		/*! Hold's if the properties panel is being rendered or not */
+		/*! Holds if the properties panel is being rendered or not */
 		bool isActive;
 	};
 
@@ -369,6 +369,14 @@ namespace CustomUI
 		void Clear() { text.clear(); lineOffsets.clear(); }
 	};
 	
+	class Toolbar : public UIInterface
+	{
+	public:
+
+		// Inherited via UIInterface
+		virtual void Render() override;
+	};
+
 	//! DockSpace Class
 	/*! This class initializes and renders all of the needed ImGui interfaces*/
 	class DockSpace : public UIInterface {

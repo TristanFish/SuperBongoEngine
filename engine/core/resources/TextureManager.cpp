@@ -27,7 +27,6 @@ void TextureManager::LoadAllTextures()
 		textures[folder.path().filename().string()] = Texture(relative(folder.path()).string());
 		EngineLogger::Info(folder.path().filename().string(), "TextureManager.cpp", __LINE__);
 	}
-
 }
 
 Texture& TextureManager::GetTexture(const std::string& name)

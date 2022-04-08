@@ -178,6 +178,11 @@ void PropertiesPanel::Render()
 	ImGui::End();
 }
 
+void CustomUI::PropertiesPanel::Reset()
+{
+	
+}
+
 #pragma endregion
 
 #pragma region HierarchyPanel
@@ -514,7 +519,9 @@ double PerformanceMonitor::GetCPUUsage()
 
 #pragma region Viewport
 
-Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f),modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), isMouseHovered(false), isActive(true)
+Viewport::Viewport() : viewport_Min(0.0f), viewport_Max(0.0f), viewportSize(0.0f), 
+					   modeName("[Result]"), aspectSize("[Free Aspect]"), renderMode(RenderMode::Result), 
+					   isMouseHovered(false), isActive(true), MouseX(0), MouseY(0), activeRatio(AspectRatio::FREE_ASPECT)
 {
 	modeMap.push_back("Result");
 	modeMap.push_back("Albedo");
@@ -583,7 +590,6 @@ void Viewport::Render()
 						ImGui::CloseCurrentPopup();
 						activeRatio = ratio;
 						aspectSize = "[" + std::string(currentRatio) + "]";
-
 					}
 					index++;
 				}
@@ -604,21 +610,15 @@ void Viewport::Render()
 		cam->UpdatePerspectiveMatrix();
 		
 		Renderer::GetInstance()->Resize(static_cast<int>(viewportPanelSize.x), static_cast<int>(viewportPanelSize.y));
-
 	}
-
-
 
 	const GLuint ID = Renderer::GetInstance()->GetModeTextureID();
 
 	ImGui::Image(reinterpret_cast<void*>(ID), ImVec2{ viewportSize.x,viewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
-
 	
 	UpdateViewportPosition();
-
 	
 	ImVec2 mousePos = ImGui::GetMousePos();
-
 	mousePos.x -= viewport_Min.x;
 	mousePos.y -= viewport_Min.y;
 	mousePos.y = viewportSize.y - mousePos.y;
@@ -635,8 +635,6 @@ void Viewport::Render()
 		isMouseHovered = false;
 	}
 
-
-
 	if (ImGui::BeginDragDropTarget())
 	{		
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Content_Browser_Object"))
@@ -652,7 +650,6 @@ void Viewport::Render()
 		ImGui::EndDragDropTarget();
 	}
 
-
 	std::shared_ptr<GameObject> SelectedObject = Globals::Editor::GetSelectedObject();
 
 	if (SelectedObject && Globals::Editor::GizmoType != -1)
@@ -665,7 +662,6 @@ void Viewport::Render()
 		MATH::Matrix4 cameraProjection = Camera::getInstance()->getProjectionMatrix();
 		MATH::Matrix4 cameraView = Camera::getInstance()->getViewMatrix();
 
-
 		MATH::Matrix4 ObjectTransform = SelectedObject->transform.GetModelMatrix();
 
 		ImGuizmo::Manipulate(cameraView, cameraProjection, (ImGuizmo::OPERATION)Globals::Editor::GizmoType, ImGuizmo::LOCAL, ObjectTransform);
@@ -675,7 +671,6 @@ void Viewport::Render()
 			MATH::Vec3 position, scale;
 			MATH::Quaternion rotQuaternion;
 			MATH::MMath::DecomposeTransform(ObjectTransform, position, rotQuaternion, scale);
-
 
 			switch ((ImGuizmo::OPERATION)Globals::Editor::GizmoType)
 			{
@@ -690,9 +685,6 @@ void Viewport::Render()
 				SelectedObject->transform.SetRot(SelectedObject->transform.GetRotationQuat().Normalized());
 				break;
 			}
-
-		
-
 		}
 	}
 
@@ -724,7 +716,7 @@ void Viewport::UpdateViewportPosition()
 
 #pragma region ConsoleLog
 
-ConsoleLog::ConsoleLog()
+ConsoleLog::ConsoleLog() : scrollToBottom(true)
 {
 	EngineLogger::SetCallback(std::bind(&ConsoleLog::AddLog, this, std::placeholders::_1));
 
@@ -822,6 +814,7 @@ DockSpace::DockSpace() : dockspaceFlags(ImGuiDockNodeFlags_None), isQueuedForSav
 	uiInterfaces.emplace_back(new PropertiesPanel());
 	uiInterfaces.emplace_back(new ConsoleLog());
 	uiInterfaces.emplace_back(new NetworkPanel());
+	uiInterfaces.emplace_back(new Toolbar());
 }
 
 DockSpace::~DockSpace()
@@ -918,7 +911,6 @@ void DockSpace::GenerateDockSpace()
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
 	}
 	
-	
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -959,7 +951,6 @@ void DockSpace::GenerateDockSpace()
 	{
 		panel->Render();
 	}
-
 	ImGui::End();
 }
 
@@ -1113,9 +1104,15 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 	if (entry.is_directory())
 	{
-		if (ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize }));
+		if (ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize }))
+		{
+		
+		}
 
-		if (!IsHoveringItem) { IsHoveringItem = ImGui::IsItemHovered(); }
+		if (!IsHoveringItem) 
+		{ 
+			IsHoveringItem = ImGui::IsItemHovered(); 
+		}
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -1242,3 +1239,28 @@ void ContentBrowser::ChangeDirectory(const std::string& dir)
 	GenDirectoryItems();
 }
 #pragma endregion 
+
+void CustomUI::Toolbar::Render()
+{
+	ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+	
+	float size = ImGui::GetWindowHeight() - 4.0f;
+	ImGui::SameLine((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+	if(!CoreEngine::GetInstance()->GetIsGameRunning())
+	{
+		if(ImGui::Button("Play"))
+		{
+			CoreEngine::GetInstance()->PlayScene();
+			EngineLogger::Info("Play pressed", "CustomUI.cpp", __LINE__);
+		}
+	} 
+	else
+	{
+		if(ImGui::Button("Stop"))
+		{
+			CoreEngine::GetInstance()->StopScene();
+			EngineLogger::Info("Stop pressed", "CustomUI.cpp", __LINE__);
+		}
+	}
+	ImGui::End();
+}

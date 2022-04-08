@@ -68,6 +68,9 @@ std::string Globals::Engine::IntToVector(const int i)
 	case 3:
 		return "W";
 		break;
+	default:
+		EngineLogger::Error("Unknown input in IntToVector function", "Globals.cpp", __LINE__);
+		return "";
 	}
 }
 

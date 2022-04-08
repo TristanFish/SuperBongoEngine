@@ -9,9 +9,13 @@
 #include "Primitives/Box.h"
 
 
-bool SceneAi::OnCreate()
+SceneAi::SceneAi()
 {
 	Scene_Name = "Scene_AI";
+}
+
+bool SceneAi::OnCreate()
+{
 	EngineLogger::Info("Scene Ai Created", "SceneAi.cpp", __LINE__);
 
 	std::shared_ptr<AiGameObject> obj = std::make_shared<AiGameObject>("ai object", Vec3());
@@ -82,8 +86,6 @@ bool SceneAi::OnCreate()
 	objectList->Init();
 
 	
-	Scene1().OnCreate();
-	
 	return true;
 }
 
@@ -117,10 +119,4 @@ void SceneAi::Render()
 void SceneAi::HandleEvents(const SDL_Event& event)
 {
 	Scene::HandleEvents(event);
-}
-
-void SceneAi::Reset()
-{
-	OnDestroy();
-	OnCreate();
 }

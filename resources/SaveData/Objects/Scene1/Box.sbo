@@ -1,7 +1,7 @@
 <Root>
     <Identifiers S_Name="Box" U64_UniqueIdentifier="292163106">
         <Transform>
-            <Position F_X="-53.194069" F_Y="15.7" F_Z="0"/>
+            <Position F_X="-55.069" F_Y="15.7" F_Z="0"/>
             <Rotation F_X="0" F_Y="0" F_Z="0"/>
             <Scale F_X="0.40000001" F_Y="5" F_Z="20"/>
         </Transform>
@@ -9,9 +9,10 @@
             <Type S_ID="class Box"/>
         </ObjectInfo>
         <Components>
-            <Renderer>
+            <classMeshRenderer B_Active="true">
                 <MeshColorTint F_W="1" F_X="1" F_Y="0" F_Z="0"/>
-            </Renderer>
+            </classMeshRenderer>
+            <classRigidBody3D B_Active="true"/>
         </Components>
     </Identifiers>
 </Root>

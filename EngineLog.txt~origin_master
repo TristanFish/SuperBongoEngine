@@ -1,0 +1,55 @@
+[INFO]: Logger Created in: CoreEngine.cpp on line: 102
+[NETWORK][INFO]: ENet initialized successfully in: ENetNetworkingManager.cpp on line: 45
+[INFO]: =================Loading all textures================= in: TextureManager.cpp on line: 24
+[INFO]: BallPlayer.png in: TextureManager.cpp on line: 28
+[INFO]: Fire.png in: TextureManager.cpp on line: 28
+[INFO]: FolderIcon.png in: TextureManager.cpp on line: 28
+[INFO]: Grass.jpg in: TextureManager.cpp on line: 28
+[INFO]: Hazard.png in: TextureManager.cpp on line: 28
+[INFO]: placeholderSquare.png in: TextureManager.cpp on line: 28
+[INFO]: pufflet.bmp in: TextureManager.cpp on line: 28
+[INFO]: ReSize.png in: TextureManager.cpp on line: 28
+[INFO]: test.JPG in: TextureManager.cpp on line: 28
+[INFO]: texture_02.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_08.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_09.jpg in: TextureManager.cpp on line: 28
+[INFO]: texture_10.jpg in: TextureManager.cpp on line: 28
+[INFO]: water_dudv.png in: TextureManager.cpp on line: 28
+[INFO]: =================Loading all models================= in: ModelManager.cpp on line: 13
+[INFO]: Cube.obj in: ModelManager.cpp on line: 23
+[INFO]: Grass.fbx in: ModelManager.cpp on line: 23
+[INFO]: GrassBunch1.fbx in: ModelManager.cpp on line: 23
+[INFO]: ManyPolys.uvw in: ModelManager.cpp on line: 23
+[INFO]: Plane.fbx in: ModelManager.cpp on line: 23
+[INFO]: PuffinBall.fbx in: ModelManager.cpp on line: 23
+[INFO]: Sphere.fbx in: ModelManager.cpp on line: 23
+[INFO]: Tetrahedron.fbx in: ModelManager.cpp on line: 23
+[SAVE][INFO]: ===========EXISTING SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 116
+[SAVE][INFO]: Sphere1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Tetrahedron Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: GAME306 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Scene1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Scene_2 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Scene_3 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Scene_AI Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[INFO]: Sound Played in: AudioSourceComponent.cpp on line: 32
+[SAVE][INFO]: ===========EXISTING SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 140
+[GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
+[GRAPHICS][ERROR]: FrameBuffer not complete in: Renderer.cpp on line: 92
+[INFO]: Scene: Scene1 Created in: Scene.cpp on line: 27
+[SAVE][INFO]: ===========CURRENT SCENE SAVES BEING LOADED=========== in: SaveUtility.cpp on line: 145
+[SAVE][INFO]: AwesomeSphere Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Box Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Light_1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Plane-1 Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
+[SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: SaveUtility.cpp on line: 164
+[INFO]: AwesomeSphere added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 153
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 153
+[INFO]: test added to scenegraph in: ECS.cpp on line: 153

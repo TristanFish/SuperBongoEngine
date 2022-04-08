@@ -4,6 +4,7 @@
 #include "SDL_events.h"
 #include <typeinfo>
 #include <iostream>
+#include <core/resources/SaveManager.h>
 
 //! Component Class
 /*!Component is an interface, 
@@ -32,13 +33,14 @@ public:
 	/*!Handles any events needed for the component*/
 	virtual void HandleEvents(const SDL_Event& event) = 0;
 
-	virtual void OnSaveComponent(const std::string& saveName,std::string parentName) {}
+	virtual void OnSaveComponent(const std::string& saveName,std::string parentName);
 
 	virtual void ImGuiRender() {}
 
 	virtual const char* GetType() { return typeid(*this).name(); }
 
 
+	std::string GetComponentName();
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/

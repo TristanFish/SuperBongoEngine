@@ -63,6 +63,11 @@ void GameObject::Update(const float deltaTime)	{
 	}
 }
 
+void GameObject::UpdateTransform()
+{
+	transform.Update(0.0f);
+}
+
 void GameObject::HandleEvents(const SDL_Event& event)
 {
 	for(Component* comp : componentList)
