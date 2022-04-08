@@ -3,7 +3,7 @@
 #include "core/Logger.h"
 
 
-void AudioSourceComponent::Init(GameObject* g)
+void AudioSourceComponent::Init(std::shared_ptr<GameObject> g)
 {
 	soundAtts.C1 = nullptr;
 	soundAtts.G1 = nullptr;

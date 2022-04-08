@@ -71,7 +71,7 @@ public:
 
 	//!Initialize override Function
 	/*!Initializes the MeshRenderer*/
-	void Init(GameObject* g) override;
+	void Init(std::shared_ptr<GameObject> g) override;
 
 	//!Update override Function
 	/*!Updates the MeshRenderers systems*/

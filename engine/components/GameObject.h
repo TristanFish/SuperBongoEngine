@@ -16,7 +16,7 @@
 /*!Things should be inheriting from gameObject, gameobjects are placed into a manager
 Update, render and handleEvents need to be defined per class that inherits from it.
 Check Player.h to see how to create gameobjects*/
-class GameObject
+class GameObject : public std::enable_shared_from_this<GameObject>
 {
 
 

@@ -30,7 +30,7 @@ RigidBody3D::~RigidBody3D()
 	}
 }
 
-void RigidBody3D::Init(GameObject *g)
+void RigidBody3D::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	pos = &g->transform.GetPositionRef();
@@ -47,22 +47,28 @@ void RigidBody3D::Init(GameObject *g)
 	rotInertia = 2.0f;
 	angularVel = Vec3(0.0f);
 	angularAcc = Vec3(0.0f);
+
+	SetConstantForce(Vec3(0.0f, -9.8, 0.0));
 }
 
 void RigidBody3D::Update(const float deltaTime)
 {
-	vel += accel * deltaTime;
-	*pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
 
-	angularVel += angularAcc * deltaTime;
-	angularVel *= angularDrag;
+	if (isMoveable())
+	{
+		vel += accel * deltaTime;
+		*pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
 
-	// Rotation Handling 
-	Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
-	const Quaternion newRot =  (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
+		angularVel += angularAcc * deltaTime;
+		angularVel *= angularDrag;
 
-	gameObject->transform.GetRotationQuatRef() += newRot;
-	gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
+		// Rotation Handling 
+		Vec3 AxisRot = VMath::cross(gameObject->transform.Up(), vel);
+		const Quaternion newRot = (Quaternion(Vec4(angularVel.x, angularVel.y, angularVel.z, 0.0f) * 0.5) * (gameObject->transform.GetRotationQuat())) * (deltaTime / 2);
+
+		gameObject->transform.GetRotationQuatRef() += newRot;
+		gameObject->transform.SetRot(gameObject->transform.GetRotationQuat().Normalized());
+	}
 }
 
 
@@ -156,7 +162,9 @@ void RigidBody3D::ConstructCollider(ColliderType Collider_Type)
 		collider->AddCollisionFunction(tempCollisionEnterCallback);
 	}
 
+
 	collider->RB_Attached = this;
+	collider->SetColliderType(Collider_Type);
 
 #pragma endregion
 }

@@ -111,7 +111,7 @@ namespace PreCompileTest
             string CombinedFunctions = "";
             for(int NameIndex = 0; NameIndex < ClassNames.Count; NameIndex++)
             {
-                string TemplateArray = " \n SaveManager::LoadableObjects.emplace(" + "\"" +"class " + ClassNames[NameIndex] + "\"" + ", new " + ClassNames[NameIndex] + "(\"None\", MATH::Vec3())); \n" ;
+                string TemplateArray = "\n\t SaveManager::LoadableObjects.emplace(" + "\"" +"class " + ClassNames[NameIndex] + "\"" + ", std::make_shared<" + ClassNames[NameIndex] + "> (\"None\", MATH::Vec3())); \n" ;
 
                 CombinedFunctions += TemplateArray;
                 

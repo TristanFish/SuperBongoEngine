@@ -33,7 +33,7 @@ double findMod(double a, double b)
 }
 
 
-Quaternion SteeringOutput::calculateOrientation(GameObject* aiObject_, Vec3 direction_)	{
+Quaternion SteeringOutput::calculateOrientation(std::shared_ptr<GameObject> aiObject_, Vec3 direction_)	{
 	//transform is in the RigidBody3D
 	if (!aiObject_->HasComponent<RigidBody3D>()) {
 		EngineLogger::Error(aiObject_->GetName() + " does not have a Transform. steeringFace has failed",

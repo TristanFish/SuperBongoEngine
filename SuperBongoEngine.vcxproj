@@ -518,7 +518,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <PublicIncludeDirectories>$(SolutionDir)external\include\ImGuizmo\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
-    <CustomBuildBeforeTargets>Run</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -557,8 +557,8 @@
       </Command>
     </PreLinkEvent>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>$(ProjectDir)ReflectionGenerator\bin\Debug\net5.0\ReflectionGenerator.exe</Command>
+      <Outputs>Reflection Has Been Generated</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

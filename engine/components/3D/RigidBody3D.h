@@ -58,7 +58,7 @@ public:
 	~RigidBody3D();
 	
 	// Inherited via Component
-	void Init(GameObject *g) override;
+	void Init(std::shared_ptr<GameObject> g) override;
 	void Update(const float deltaTime) override;
 	void HandleEvents(const SDL_Event& event) override;
 
@@ -100,6 +100,7 @@ public:
 	inline void SetLinDrag(const float drag) { linearDrag = drag; }
 	inline void SetMass(const float m) { mass = m; }
 
+	inline float GetMass() { return mass; }
 	inline MATH::Vec3 GetAngVelocity() const { return angularVel; }
 	inline MATH::Vec3& GetAngVelocity()  { return angularVel; }
 

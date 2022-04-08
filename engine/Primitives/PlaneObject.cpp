@@ -19,15 +19,17 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 	canBeInstantiated = true;
 
+
 }
 
 
 
 void PlaneObject::PostInit()
 {
-	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
-
 	GameObject::PostInit();
+
+	GetComponent<RigidBody3D>()->setMoveable(false);
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
 }
 
 void PlaneObject::OnCollisionEnter(Collider3D& otherBody)

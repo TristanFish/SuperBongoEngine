@@ -3,7 +3,7 @@
 
 
 
-void AudioListenerComponent::Init(GameObject* g)
+void AudioListenerComponent::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	audioSystemRef = AudioManager::Get()->system;

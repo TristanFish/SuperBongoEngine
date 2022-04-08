@@ -17,7 +17,7 @@ KinematicSteeringOutput::KinematicSteeringOutput(Vec3 velocity_, Vec3 rotation_)
 	rotation = rotation_;
 }
 
-void KinematicSteeringOutput::Update(float deltaTime, GameObject* aiObject_)	{
+void KinematicSteeringOutput::Update(float deltaTime, std::shared_ptr<GameObject> aiObject_)	{
 
 	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
 
@@ -34,7 +34,7 @@ void KinematicSteeringOutput::Update(float deltaTime, GameObject* aiObject_)	{
 
 //Kinematic Seek
 #pragma region KinematicSeek
-KinematicSeek::KinematicSeek(GameObject* aiObject_, const Transform& target_)	{
+KinematicSeek::KinematicSeek(std::shared_ptr<GameObject> aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -74,7 +74,7 @@ KinematicSteeringOutput KinematicSeek::getSteering()	{
 
 //Kinematic Arrive
 #pragma region KinematicArrive
-KinematicArrive::KinematicArrive(GameObject* aiObject_, const Transform& target_, const float radius_, const float timeToTarget_)	{
+KinematicArrive::KinematicArrive(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float radius_, const float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	radius = radius_;

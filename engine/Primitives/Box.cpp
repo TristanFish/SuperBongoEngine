@@ -16,6 +16,7 @@ Box::Box(const std::string& name, Vec3 position)
 	transform.SetPos(position);
 
 	canBeInstantiated = true;
+
 }
 
 Box::~Box()

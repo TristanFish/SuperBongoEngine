@@ -44,12 +44,12 @@
 [SAVE][INFO]: Player Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: test Has Been Added To The SaveFiles in: SaveManager.cpp on line: 40
 [SAVE][INFO]: ===========CURRENT SCENE SAVES SUCCESFULLY LOADED=========== in: LoadUtility.cpp on line: 164
-[INFO]: Box added to scenegraph in: ECS.cpp on line: 162
-[INFO]: Light added to scenegraph in: ECS.cpp on line: 162
-[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 162
-[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 162
-[INFO]: Player added to scenegraph in: ECS.cpp on line: 162
-[INFO]: test added to scenegraph in: ECS.cpp on line: 162
+[INFO]: Box added to scenegraph in: ECS.cpp on line: 161
+[INFO]: Light added to scenegraph in: ECS.cpp on line: 161
+[INFO]: Light_1 added to scenegraph in: ECS.cpp on line: 161
+[INFO]: Plane-1 added to scenegraph in: ECS.cpp on line: 161
+[INFO]: Player added to scenegraph in: ECS.cpp on line: 161
+[INFO]: test added to scenegraph in: ECS.cpp on line: 161
 [INFO]: Scene: Scene1 Created in: Scene.cpp on line: 27
 [GRAPHICS][ERROR]: GL_INVALID_FRAMEBUFFER_OPERATION error generated. Operation is not valid because a bound framebuffer is not framebuffer complete. in: Window.cpp on line: 108
 [GRAPHICS][ERROR]: GL_INVALID_FRAMEBUFFER_OPERATION error generated. Operation is not valid because a bound framebuffer is not framebuffer complete. in: Window.cpp on line: 108

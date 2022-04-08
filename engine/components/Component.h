@@ -18,12 +18,12 @@ public:
 
 	//!GameObject Pointer
 	/*!Enables the components to know what gameObject they are attached too*/
-	GameObject* gameObject;
+	std::shared_ptr<GameObject> gameObject;
 
 	bool active = true;
 	//!Virtual Init Function
 	/*!Initializes all of the needed variables*/
-	virtual void Init(GameObject *g) = 0;
+	virtual void Init(std::shared_ptr<GameObject> g) = 0;
 
 	//!Virtual Update Function
 	/*!Updates all of the components systems*/
@@ -44,7 +44,7 @@ public:
 
 	//!Virtual Destructor 
 	/*!Destroys any of the pointers/vectors needed*/
-	virtual ~Component() { gameObject = nullptr; }
+	virtual ~Component() { }
 };
 
 #endif

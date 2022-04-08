@@ -21,7 +21,7 @@ std::shared_ptr<SceneGraph> Globals::Engine::s_SceneGraph = nullptr;
 
 
 std::shared_ptr<GameObject>Globals::Editor::selectedObj = nullptr;
-int Globals::Editor::GizmoType = -1;
+int Globals::Editor::GizmoType = 7;
 
 #pragma region Engine Globals
 
