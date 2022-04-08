@@ -17,7 +17,7 @@ LineRenderer::LineRenderer()
 	color = MATH::Vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void LineRenderer::Init(GameObject* g)
+void LineRenderer::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 

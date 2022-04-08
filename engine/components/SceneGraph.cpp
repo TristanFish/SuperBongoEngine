@@ -65,14 +65,14 @@ void SceneGraph::UpdatePhysics(const float deltaTime)
 {
 	for (size_t i = 0; i < rigidBodies.size(); i++)
 	{
-		if (rigidBodies[i]->active)
-		{
-			rigidBodies[i]->Update(deltaTime);
-		}
-
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
 			CollisionDetection::ColliderIntersection(rigidBodies[i]->GetCollider(), rigidBodies[j]->GetCollider());
+			
+		}
+		if (rigidBodies[i]->active)
+		{
+			rigidBodies[i]->Update(deltaTime);
 		}
 	}
 }

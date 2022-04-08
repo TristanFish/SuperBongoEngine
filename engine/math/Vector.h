@@ -314,6 +314,13 @@ namespace MATH
 			z = v.z; 
 			w = 1.0f;
 		}
+
+		Vec4(const Vec3& v,const float& w_) {
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			w = w_;
+		}
 		
 		/// An assignment operator
 		Vec4& operator = (const Vec4& v){

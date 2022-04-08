@@ -13,7 +13,7 @@ RigidBodyComponent::~RigidBodyComponent()
 	pos = nullptr;
 }
 
-void RigidBodyComponent::Init(GameObject *g)
+void RigidBodyComponent::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	pos = &g->transform.GetPositionRef();

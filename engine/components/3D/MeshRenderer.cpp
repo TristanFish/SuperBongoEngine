@@ -41,7 +41,7 @@ void MeshRenderer::CreateShader(const char* vert, const char* frag)
 	shader = ShaderManager::GetShaders(vert, frag);
 }
 
-void MeshRenderer::Init(GameObject* g)
+void MeshRenderer::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 

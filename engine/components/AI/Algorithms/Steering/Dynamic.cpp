@@ -16,7 +16,7 @@ DynamicSteeringOutput::DynamicSteeringOutput(Vec3 linearAccel_, Vec3 angularAcce
 	angularAccel = angularAccel_;
 }
 
-void DynamicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)	{
+void DynamicSteeringOutput::Update(const float deltaTime, std::shared_ptr<GameObject> aiObject_)	{
 
 	if (aiObject_->HasComponent<RigidBody3D>() && aiObject_->HasComponent<AIComponent>()) {
 
@@ -47,7 +47,7 @@ void DynamicSteeringOutput::Update(const float deltaTime, GameObject* aiObject_)
 }
 
 #pragma region DynamicSeek
-DynamicSeek::DynamicSeek(GameObject* aiObject_, const Transform& target_)	{
+DynamicSeek::DynamicSeek(std::shared_ptr<GameObject> aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -81,7 +81,7 @@ DynamicSteeringOutput DynamicSeek::getSteering()	{
 
 
 #pragma region DynamicFlee
-DynamicFlee::DynamicFlee(GameObject* aiObject_, const Transform& target_)	{
+DynamicFlee::DynamicFlee(std::shared_ptr<GameObject> aiObject_, const Transform& target_)	{
 	aiObject = aiObject_;
 	target = target_;
 }
@@ -109,7 +109,7 @@ DynamicSteeringOutput DynamicFlee::getSteering()	{
 }
 #pragma endregion
 
-DynamicArrive::DynamicArrive(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
+DynamicArrive::DynamicArrive(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	arrivalRadius = arrivalRadius_;
@@ -168,7 +168,7 @@ DynamicSteeringOutput DynamicArrive::getSteering()	{
 	return result;
 }
 
-DynamicAlign::DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
+DynamicAlign::DynamicAlign(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_)	{
 	aiObject = aiObject_;
 	target = target_;
 	arrivalRadius = arrivalRadius_;
@@ -215,7 +215,7 @@ DynamicSteeringOutput DynamicAlign::getSteering()	{
 
 
 
-DynamicObstacleAvoidance::DynamicObstacleAvoidance(GameObject* aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_) : DynamicSeek(aiObject_, target_) {
+DynamicObstacleAvoidance::DynamicObstacleAvoidance(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_) : DynamicSeek(aiObject_, target_) {
 	avoidDistance = avoidDistance_;
 	lookAhead = lookAhead_;
 }

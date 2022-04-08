@@ -16,7 +16,7 @@ NetworkableObject::~NetworkableObject()
 {
 }
 
-void NetworkableObject::Init(GameObject* g)
+void NetworkableObject::Init(std::shared_ptr<GameObject> g)
 {
 	isActive = false;
 	gameObject = g;

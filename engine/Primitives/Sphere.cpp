@@ -20,18 +20,16 @@ Sphere::Sphere(const std::string& name, MATH::Vec3 position)
 		vertices.emplace_back(vertex.position);
 	}
 	
-	//AddComponent<RigidBody3D>();
-	//GetComponent<RigidBody3D>()->ApplyConstantTorque(Vec3(0.0f, 20.0, 10.0));
+	AddComponent<RigidBody3D>();
+	
 	AddComponent<LineRenderer>()->AddPoints(vertices);
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 
 	this->name = name;
 	transform.SetPos(position);
-
-	transform.SetRot(Vec3(1.0f, 1.0f, 1.0f));
-
 	canBeInstantiated = true;
+
 }
 
 Sphere::~Sphere()
@@ -41,4 +39,9 @@ Sphere::~Sphere()
 void Sphere::OnCollisionEnter(Collider3D& otherBody)
 {
 	//std::cout << name << " Collided With: " << otherBody.gameObject->name << std::endl;
+}
+
+void Sphere::PostInit()
+{
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::Sphere);
 }

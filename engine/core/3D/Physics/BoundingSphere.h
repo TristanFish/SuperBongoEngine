@@ -50,8 +50,10 @@ public:
 
 		for (const auto& vertex : *Model_Verticies)
 		{
-			Radius = std::max(Radius, VMath::mag(Centre - (transform * vertex.position)));
+			Radius = std::max(Radius, VMath::mag(Centre - (transform *vertex.position)));
 		}
+
+		Radius -= 17;
 	}
 
 

@@ -15,7 +15,7 @@ AIComponent::~AIComponent()	{
 
 }
 
-void AIComponent::Init(GameObject* g) {
+void AIComponent::Init(std::shared_ptr<GameObject> g) {
 	gameObject = g;
 	//AIComponent();
 	

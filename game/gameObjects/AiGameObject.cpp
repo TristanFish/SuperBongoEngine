@@ -10,9 +10,9 @@ AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
-	bodyComponent = AddComponent<RigidBody3D>();
-	bodyComponent->Init(this);
-	bodyComponent->ConstructCollider(ColliderType::OBB);
+	//bodyComponent = AddComponent<RigidBody3D>();
+	//bodyComponent->Init();
+	//bodyComponent->ConstructCollider(ColliderType::OBB);
 	
 
 	aiComponent = AddComponent<AIComponent>();
