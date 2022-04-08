@@ -30,7 +30,7 @@ void GameObject::Init()
 {
 	for (Component* comp : componentList)
 	{
-		comp->Init(this);
+		comp->Init(shared_from_this());
 		if(MeshRenderer* mComp = dynamic_cast<MeshRenderer*>(comp))
 		{
 			mComp->AddUniformFunction(std::bind(&GameObject::AttachUniforms, this));

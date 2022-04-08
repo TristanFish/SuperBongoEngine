@@ -15,7 +15,7 @@ public:
 	bool looped;
 
 	LineRenderer();
-	void Init(GameObject* g) override;
+	void Init(std::shared_ptr<GameObject> g) override;
 	void Update(const float deltaTime) override;
 	void ImGuiRender() override;
 	virtual ~LineRenderer() override;

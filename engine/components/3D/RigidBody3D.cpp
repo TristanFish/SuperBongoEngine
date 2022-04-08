@@ -30,7 +30,7 @@ RigidBody3D::~RigidBody3D()
 	}
 }
 
-void RigidBody3D::Init(GameObject *g)
+void RigidBody3D::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	pos = &g->transform.GetPositionRef();
@@ -156,7 +156,9 @@ void RigidBody3D::ConstructCollider(ColliderType Collider_Type)
 		collider->AddCollisionFunction(tempCollisionEnterCallback);
 	}
 
+
 	collider->RB_Attached = this;
+	collider->SetColliderType(Collider_Type);
 
 #pragma endregion
 }

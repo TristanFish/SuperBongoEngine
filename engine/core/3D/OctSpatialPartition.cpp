@@ -181,7 +181,7 @@ void OctSpatialPartition::AddObject(Collider3D* collider)
 	AddObjectToCell(root, collider);
 }
 
-GameObject* OctSpatialPartition::GetCollision(Ray& ray)
+std::shared_ptr<GameObject> OctSpatialPartition::GetCollision(Ray& ray)
 {
 	if(rayInstersectionList.size() > 0)
 	{
@@ -193,7 +193,7 @@ GameObject* OctSpatialPartition::GetCollision(Ray& ray)
 	}
 	PrepareCollisionQuery(root, ray);
 
-	GameObject* hitResult = nullptr;
+	std::shared_ptr<GameObject> hitResult = nullptr;
 	float shortestDistance = FLT_MAX;
 	
 	for (auto* cell : rayInstersectionList)

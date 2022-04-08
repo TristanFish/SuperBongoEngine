@@ -28,7 +28,7 @@ void SpriteComponent::setShaders(const char* vertexPath, const char* fragmentPat
 	shader = ShaderManager::GetShaders(vertexPath, fragmentPath);
 }
 
-void SpriteComponent::Init(GameObject *g)
+void SpriteComponent::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	texture = new Texture();

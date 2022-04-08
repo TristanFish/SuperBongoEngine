@@ -63,7 +63,7 @@ public:
 	~OctSpatialPartition();
 
 	void AddObject(Collider3D* collider);
-	GameObject* GetCollision(Ray& ray);
+	std::shared_ptr<GameObject> GetCollision(Ray& ray);
 
 private:
 	OctNode* root;

@@ -18,7 +18,7 @@ LightComponent::~LightComponent()
 	Renderer::GetInstance()->DeleteLight(this);
 }
 
-void LightComponent::Init(GameObject* g)
+void LightComponent::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	lightInfo.type = LightType::POINT;

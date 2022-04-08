@@ -16,7 +16,7 @@ namespace Dynamic {
 
 		DynamicSteeringOutput();
 		DynamicSteeringOutput(Vec3 linearAccel_, Vec3 angularAccel_);
-		virtual void Update(const float deltaTime, GameObject* aiObject_) override;
+		virtual void Update(const float deltaTime, std::shared_ptr<GameObject> aiObject_) override;
 
 		////DynamicSteeringOutput + DynamicSteeringOutput operator
 		//inline const DynamicSteeringOutput operator + (const DynamicSteeringOutput& v) const {
@@ -32,10 +32,10 @@ namespace Dynamic {
 
 	class DynamicSeek	{
 	protected:
-		GameObject* aiObject;
+		std::shared_ptr<GameObject> aiObject;
 		Transform target;
 	public:
-		DynamicSeek(GameObject* aiObject_, const Transform& target_);
+		DynamicSeek(std::shared_ptr<GameObject> aiObject_, const Transform& target_);
 		
 		//DynamicSeeking 
 		DynamicSteeringOutput getSteering();
@@ -43,10 +43,10 @@ namespace Dynamic {
 
 	class DynamicFlee	{
 	private:
-		GameObject* aiObject;
+		std::shared_ptr<GameObject> aiObject;
 		Transform target;
 	public:
-		DynamicFlee(GameObject* aiObject_, const Transform& target_);
+		DynamicFlee(std::shared_ptr<GameObject> aiObject_, const Transform& target_);
 
 		//DynamicFleeing 
 		DynamicSteeringOutput getSteering();
@@ -54,11 +54,11 @@ namespace Dynamic {
 
 	class DynamicArrive {
 	private:
-		GameObject* aiObject;
+		std::shared_ptr<GameObject> aiObject;
 		Transform target;
 		float arrivalRadius, slowRadius, timeToTarget;
 	public:
-		DynamicArrive(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
+		DynamicArrive(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicArriving
 		DynamicSteeringOutput getSteering();
@@ -67,11 +67,11 @@ namespace Dynamic {
 
 	class DynamicAlign {
 	protected:
-		GameObject* aiObject;
+		std::shared_ptr<GameObject> aiObject;
 		Transform target;
 		float arrivalRadius, slowRadius, timeToTarget;
 	public:
-		DynamicAlign(GameObject* aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
+		DynamicAlign(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float arrivalRadius_, const float slowRadius_, float timeToTarget_);
 
 		//DynamicAlign
 		DynamicSteeringOutput getSteering();
@@ -85,7 +85,7 @@ namespace Dynamic {
 		float avoidDistance, lookAhead;
 
 	public:
-		DynamicObstacleAvoidance(GameObject* aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_);
+		DynamicObstacleAvoidance(std::shared_ptr<GameObject> aiObject_, const Transform& target_, const float avoidDistance_, const float lookAhead_);
 
 		DynamicSteeringOutput getSteering();
 

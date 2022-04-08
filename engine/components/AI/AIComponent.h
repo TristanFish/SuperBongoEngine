@@ -28,7 +28,7 @@ private:
 public:
 	AIComponent();
 	~AIComponent() override; //overrides the component destructor, doing "override" removes a warning.
-	void Init(GameObject* g) override;
+	void Init(std::shared_ptr<GameObject> g) override;
 	void Update(const float deltaTime) override;
 	void OnSaveComponent(const std::string& saveName, std::string parentName) override;
 	void HandleEvents(const SDL_Event& event) override;

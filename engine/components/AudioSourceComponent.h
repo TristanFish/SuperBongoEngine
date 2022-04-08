@@ -10,7 +10,7 @@ class GameObject;
 class AudioSourceComponent : public Component
 {
 	public:
-	void Init(GameObject* g) override;
+	void Init(std::shared_ptr<GameObject> g) override;
 	void Update(const float deltaTime) override;
 	void HandleEvents(const SDL_Event& event) override {}
 

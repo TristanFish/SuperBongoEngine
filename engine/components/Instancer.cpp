@@ -12,7 +12,7 @@ Instancer::~Instancer()
 	glDeleteBuffers(1, &instanceBuffer);
 }
 
-void Instancer::Init(GameObject* g)
+void Instancer::Init(std::shared_ptr<GameObject> g)
 {
 	gameObject = g;
 	MeshRenderer* mr = g->GetComponent<MeshRenderer>();
