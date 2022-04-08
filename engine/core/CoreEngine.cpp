@@ -53,9 +53,12 @@ void CoreEngine::Update(const float deltaTime_)
 void CoreEngine::UpdatePhysics(const float deltaTime_)
 {
 	// Update This At Later Date
-	if (Globals::Engine::s_SceneGraph)
+	if(isGameRunning)
 	{
-		Globals::Engine::s_SceneGraph->UpdatePhysics(deltaTime_);
+		if (Globals::Engine::s_SceneGraph)
+		{
+			Globals::Engine::s_SceneGraph->UpdatePhysics(deltaTime_);
+		}
 	}
 }
 
@@ -308,6 +311,7 @@ void CoreEngine::SetGameInterface(Game* gameInterface_)
 void CoreEngine::PlayScene()
 {
 	isGameRunning = true;
+	gameInterface->PlayCurrentScene();
 }
 
 void CoreEngine::StopScene()

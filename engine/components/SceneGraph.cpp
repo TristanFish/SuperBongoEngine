@@ -21,8 +21,6 @@ void SceneGraph::Init()
 {
 	//ScenePartition = new OctSpatialPartition(1500);
 
-	
-
 	for(const auto& go : gameObjects)
 	{
 		go->Init();
@@ -114,7 +112,6 @@ std::shared_ptr<GameObject> SceneGraph::FindGameObject(const std::string& name)
 			return g;
 		}
 	}
-
 	//EngineLogger::Error(std::string("No object named \"" + std::string(name) + "\" was found."), "SceneGraph.cpp", __LINE__);
 
 	return nullptr;

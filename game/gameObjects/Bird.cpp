@@ -7,7 +7,7 @@ Bird::Bird(const std::string& name, MATH::Vec3 position) {
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 	birdSound = AudioManager::Get()->RetrieveSoundObject("birdchirp");
-	AddComponent<AudioSourceComponent>()->PlaySound(birdSound, &AudioManager::Get()->C1);
+	AddComponent<AudioSourceComponent>();
 	
 	this->name = name;
 	this->transform.SetPos(position);

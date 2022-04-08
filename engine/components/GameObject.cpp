@@ -3,9 +3,6 @@
 #include "3D/MeshRenderer.h"
 
 #include <functional>
-
-
-
 #include "3D/RigidBody3D.h"
 
 GameObject::GameObject(): parent(nullptr), name("Default")
@@ -78,4 +75,3 @@ void GameObject::HandleEvents(const SDL_Event& event)
 		}
 	}
 }
-

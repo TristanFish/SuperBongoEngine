@@ -8,7 +8,6 @@ void AudioSourceComponent::Init(GameObject* g)
 	soundAtts.C1 = nullptr;
 	soundAtts.G1 = nullptr;
 	soundAtts.reverb = nullptr;
-	gameObject = nullptr;
 	audioSystemRef = nullptr;
 
 	gameObject = g;
@@ -17,7 +16,6 @@ void AudioSourceComponent::Init(GameObject* g)
 	audioSystemRef = AudioManager::Get()->system;
 	FMODGamePos =  AudioUtility::Vec3ToFMODVec(gameObjectPosition);
 	AudioManager::Get()->CreateChannelGroup("Channel Group 1", soundAtts.G1);
-	
 }
 
 void AudioSourceComponent::Update(const float deltaTime)
@@ -34,6 +32,11 @@ void AudioSourceComponent::PlaySound(FMOD::Sound* sound, FMOD::Channel** channel
 	auto r = AudioManager::Get()->system->playSound(sound, NULL, true, channelRef);
 	SetAudioPosition();
 	(*channelRef)->setPaused(false);
+}
+
+void AudioSourceComponent::ImGuiRender()
+{
+	Component::ImGuiRender();
 }
 
 

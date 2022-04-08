@@ -17,6 +17,7 @@ class AudioSourceComponent : public Component
 	/*! Retrieves a sound from the audio managers sound library and finds a viable channel to play sound */
 	void PlaySound(FMOD::Sound* sound, FMOD::Channel** channelRef);
 
+	void ImGuiRender() override;
 	
 	FMOD::Sound* LoadSound(std::string soundName);
 	/*! Returns a sound object to be stored on specific objects, faster than searching */

@@ -17,9 +17,7 @@ PlayerController::PlayerController(const std::string& name_, const MATH::Vec3& p
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	GetComponent<MeshRenderer>()->active = false;
 
-	
 	GetComponent<RigidBody3D>()->ApplyConstantForce(MATH::Vec3(0.0, -9.8, 0.0));
-
 }
 
 void PlayerController::Update(const float deltaTime)

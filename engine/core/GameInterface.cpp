@@ -25,17 +25,13 @@ bool Game::BuildScene()
 	
 	LoadUtility::GetInstance()->LoadSceneSaves();
 	Globals::Engine::InitGlobals();
+	CoreEngine::GetInstance()->LoadSceneData();
 	if (!currentScene->OnCreate())
 	{
 		EngineLogger::Error("Scene failed to be created", "Game1.cpp", __LINE__);
 		return false;
 	}
-	CoreEngine::GetInstance()->LoadSceneData();
-	if(!currentScene->PostCreate())
-	{
-		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
-		return false;
-	}
+
 	return true;
 }
 
@@ -65,4 +61,12 @@ void Game::Render()
 void Game::HandleEvents(const SDL_Event& event)
 {
 	currentScene->HandleEvents(event);
+}
+
+void Game::PlayCurrentScene()
+{
+	if(!currentScene->PostCreate())
+	{
+		EngineLogger::Error("Scene failed on PostCreate", "Game1.cpp", __LINE__);
+	}
 }

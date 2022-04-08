@@ -24,6 +24,7 @@ public:
 	virtual void Update(const float deltaTime_);
 	virtual void Render();
 	virtual void HandleEvents(const SDL_Event& event);
+	virtual void PlayCurrentScene();
 };
 
 #endif
