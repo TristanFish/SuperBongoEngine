@@ -54,7 +54,6 @@ public:
 	void LoadSceneData();
 
 	void PlayScene();
-	void PauseScene();
 	void StopScene();
 
 private:

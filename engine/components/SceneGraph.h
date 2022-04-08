@@ -63,6 +63,8 @@ public:
 	void Render() const;
 	void HandleEvents(const SDL_Event& event);
 
+	void Clear();
+
 	//! FindGameObject Function
 	/*!Returns the first gameObject with a given name*/
 	std::shared_ptr<GameObject> FindGameObject(const std::string& name);
@@ -79,13 +81,9 @@ public:
 	/*!Adds a gameObject with a pointer to a new gameObject and a Object ID*/
 	const std::shared_ptr<GameObject> AddGameObject(std::shared_ptr<GameObject> go);
 
-
-
 	//! GetNumObject Getter
 	/*!Returns the number of gameobjects in the scene*/
 	 int GetNumObjects() const { return gameObjects.size(); }
-
-
 
 	//! GetNumObject Getter
 	/*!Returns the vector/list of gameobjects in the scene*/
@@ -97,7 +95,6 @@ public:
 	//! CheckCollisions Function
 	/*!Check's if any of the gameobjects are colliding*/
 	void CheckCollisions();
-
 
 	void LoadGameObject(std::shared_ptr<GameObject> go);
 	void DeleteGameObject(std::shared_ptr <GameObject> go);

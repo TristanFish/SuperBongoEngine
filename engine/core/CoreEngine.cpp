@@ -310,14 +310,12 @@ void CoreEngine::PlayScene()
 	isGameRunning = true;
 }
 
-void CoreEngine::PauseScene()
-{
-	isGameRunning = false;
-}
-
 void CoreEngine::StopScene()
 {
 	isGameRunning = false;
+	Globals::Editor::SetSelectedObject(nullptr);
+	dockSpace->Reset();
+	LoadUtility::GetInstance()->UnLoadSceneSaves();
 	gameInterface->BuildScene();
 }
 

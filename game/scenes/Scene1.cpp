@@ -29,9 +29,3 @@ void Scene1::HandleEvents(const SDL_Event& event)
 {
 	Scene::HandleEvents(event);
 }
-
-void Scene1::Reset()
-{
-	OnDestroy();
-	OnCreate();
-}

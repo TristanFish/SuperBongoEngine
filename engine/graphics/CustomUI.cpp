@@ -178,6 +178,11 @@ void PropertiesPanel::Render()
 	ImGui::End();
 }
 
+void CustomUI::PropertiesPanel::Reset()
+{
+	
+}
+
 #pragma endregion
 
 #pragma region HierarchyPanel
@@ -1099,9 +1104,15 @@ void ContentBrowser::GenerateItem(const std::filesystem::directory_entry& entry)
 
 	if (entry.is_directory())
 	{
-		if (ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize }));
+		if (ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("FolderIcon.png").getTextureID(), { ItemSize,ItemSize }))
+		{
+		
+		}
 
-		if (!IsHoveringItem) { IsHoveringItem = ImGui::IsItemHovered(); }
+		if (!IsHoveringItem) 
+		{ 
+			IsHoveringItem = ImGui::IsItemHovered(); 
+		}
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -1245,12 +1256,6 @@ void CustomUI::Toolbar::Render()
 	} 
 	else
 	{
-		if(ImGui::Button("Pause"))
-		{
-			CoreEngine::GetInstance()->PauseScene();
-			EngineLogger::Info("Pause pressed", "CustomUI.cpp", __LINE__);
-		}
-		ImGui::SameLine();
 		if(ImGui::Button("Stop"))
 		{
 			CoreEngine::GetInstance()->StopScene();

@@ -14,12 +14,7 @@
 
 SceneGraph::~SceneGraph() 
 {
-	
-
-	
-	gameObjects.clear();
-
-	rigidBodies.clear();
+	Clear();
 }
 
 void SceneGraph::Init() 
@@ -101,6 +96,12 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 	{
 		g->HandleEvents(event);
 	}
+}
+
+void SceneGraph::Clear()
+{
+	gameObjects.clear();
+	rigidBodies.clear();
 }
 
 //Finds THE FIRST gameObject with the given name

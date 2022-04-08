@@ -120,9 +120,3 @@ void SceneAi::HandleEvents(const SDL_Event& event)
 {
 	Scene::HandleEvents(event);
 }
-
-void SceneAi::Reset()
-{
-	OnDestroy();
-	OnCreate();
-}

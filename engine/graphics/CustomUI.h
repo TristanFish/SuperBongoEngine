@@ -92,19 +92,19 @@ namespace CustomUI
 		PropertiesPanel();
 
 		//! Properties panel Destructor
-		/*! Destroys all pointer's that this class uses */
+		/*! Destroys all pointers that this class uses */
 		virtual ~PropertiesPanel();
 
 		//! Render Function
 		/*! Renders the IMGUI UI on screen */
 		void Render() override;
 
-		
+		void Reset() override;
 
 	private:
 
 		//! isActive bool
-		/*! Hold's if the properties panel is being rendered or not */
+		/*! Holds if the properties panel is being rendered or not */
 		bool isActive;
 	};
 

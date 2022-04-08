@@ -20,6 +20,7 @@ bool Game::BuildScene()
 	currentScene = Scenes[CoreEngine::GetInstance()->GetCurrentSceneNum()];
 	currentSceneNum = CoreEngine::GetInstance()->GetCurrentSceneNum();
 	
+	currentScene->Reset();
 	Renderer::GetInstance()->ClearComponents();
 	
 	LoadUtility::GetInstance()->LoadSceneSaves();

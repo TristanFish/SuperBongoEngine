@@ -175,8 +175,6 @@ void LoadUtility::UnLoadSceneSaves()
 	EngineLogger::Info("===========OLD SCENE SAVES SUCCESFULLY UNLOADED===========", "LoadUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 }
 
-
-
 #pragma endregion
 
 #pragma region Helper Functions
