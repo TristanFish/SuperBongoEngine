@@ -2,7 +2,6 @@
 #define COLLISIONDETECTION_H
 
 #include "rendering/Camera.h"
-#include "core/3D/Physics/GJKDetection.h"
 #include "core/3D/Physics/Collider3D.h"
 
 struct Ray;
@@ -11,8 +10,6 @@ class BoundingSphere;
 class CollisionDetection {
 
 private:
-
-	static void NudgeObject(const CollisionHitInfo& HitInfo, Collider3D& NudgedCollider);
 
 public:
 	CollisionDetection(const CollisionDetection&) = delete;
@@ -30,7 +27,7 @@ public:
 
 	static bool ColliderIntersection(Collider3D* Collider1, Collider3D* Collider2);
 
-	static bool OBBIntersection(BoundingBox& Box1, BoundingBox& Box2);
+	static bool GJKIntersection(Collider3D& Box1, Collider3D& Box2);
 	static bool SphereIntersection(BoundingSphere& Sphere1, BoundingSphere& Sphere2);
 
 

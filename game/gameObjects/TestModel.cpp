@@ -12,6 +12,8 @@ TestModel::TestModel(const std::string& name, Vec3 position)
 	
 	this->name = name;
 	transform.SetPos(position);
+
+	
 }
 
 void TestModel::AttachUniforms() const

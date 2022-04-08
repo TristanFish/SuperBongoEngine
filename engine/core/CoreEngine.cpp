@@ -153,7 +153,10 @@ void CoreEngine::Run()
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
 
-		UpdatePhysics(Timer::GetDeltaTime());
+		if (isGameRunning)
+		{
+			UpdatePhysics(Timer::GetDeltaTime());
+		}
 
 
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
