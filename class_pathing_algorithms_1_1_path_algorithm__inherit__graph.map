@@ -1,0 +1,5 @@
+<map id="PathingAlgorithms::PathAlgorithm" name="PathingAlgorithms::PathAlgorithm">
+<area shape="rect" id="node1" title="PathAlgorithm Abstract class." alt="" coords="85,5,221,47"/>
+<area shape="rect" id="node2" href="$class_pathing_algorithms_1_1_a_star.html" title=" " alt="" coords="5,95,141,136"/>
+<area shape="rect" id="node3" href="$class_pathing_algorithms_1_1_breadth_first.html" title=" " alt="" coords="165,95,301,136"/>
+</map>

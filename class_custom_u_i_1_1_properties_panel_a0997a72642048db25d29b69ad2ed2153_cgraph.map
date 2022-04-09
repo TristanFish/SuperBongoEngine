@@ -1,0 +1,6 @@
+<map id="CustomUI::PropertiesPanel::Render" name="CustomUI::PropertiesPanel::Render">
+<area shape="rect" id="node1" title="Render Function." alt="" coords="5,49,184,90"/>
+<area shape="rect" id="node2" href="$struct_globals_1_1_editor.html#aeeb94756ae010c496860fb0322f5cf6b" title="DrawVec3 Function." alt="" coords="240,5,415,32"/>
+<area shape="rect" id="node3" href="$class_save_manager.html#a7dbc9e69c1065afa88e54310fc1c6af2" title="GetSaveFile Getter." alt="" coords="238,56,417,83"/>
+<area shape="rect" id="node4" href="$class_save_manager.html#a0edcb0910ab1f1a07ab30962b469cbde" title="SetSaveName function." alt="" coords="232,107,423,133"/>
+</map>

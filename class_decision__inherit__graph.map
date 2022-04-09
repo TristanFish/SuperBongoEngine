@@ -1,0 +1,8 @@
+<map id="Decision" name="Decision">
+<area shape="rect" id="node1" title=" " alt="" coords="201,80,273,107"/>
+<area shape="rect" id="node3" href="$struct_bool_decision.html" title=" " alt="" coords="5,155,104,181"/>
+<area shape="rect" id="node4" href="$struct_float_decision.html" title=" " alt="" coords="128,155,229,181"/>
+<area shape="rect" id="node5" href="$struct_int_decision.html" title=" " alt="" coords="254,155,341,181"/>
+<area shape="rect" id="node6" href="$struct_string_decision.html" title=" " alt="" coords="365,155,472,181"/>
+<area shape="rect" id="node2" href="$class_decision_tree_node.html" title=" " alt="" coords="174,5,301,32"/>
+</map>

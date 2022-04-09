@@ -1,0 +1,6 @@
+<map id="GameObject::PostInit" name="GameObject::PostInit">
+<area shape="rect" id="node1" title="Begin Function." alt="" coords="199,56,345,83"/>
+<area shape="rect" id="node2" href="$class_box.html#a30f2bfd08aa2074dcc44d90d5351dbe7" title="Begin Function." alt="" coords="29,5,127,32"/>
+<area shape="rect" id="node3" href="$class_plane_object.html#a8ef6c243d3fd409cce2e95e0d172836b" title="Begin Function." alt="" coords="5,56,151,83"/>
+<area shape="rect" id="node4" href="$class_tetrahedron.html#a54a06137bc570db5b44d09aeaea15a83" title="Begin Function." alt="" coords="7,107,149,133"/>
+</map>

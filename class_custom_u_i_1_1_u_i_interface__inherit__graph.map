@@ -1,0 +1,12 @@
+<map id="CustomUI::UIInterface" name="CustomUI::UIInterface">
+<area shape="rect" id="node1" title=" " alt="" coords="5,208,153,235"/>
+<area shape="rect" id="node2" href="$class_custom_u_i_1_1_console_log.html" title="Console Log Class." alt="" coords="221,5,375,32"/>
+<area shape="rect" id="node3" href="$class_custom_u_i_1_1_content_browser.html" title="Content Browser Class." alt="" coords="209,56,387,83"/>
+<area shape="rect" id="node4" href="$class_custom_u_i_1_1_dock_space.html" title="DockSpace Class." alt="" coords="221,107,375,133"/>
+<area shape="rect" id="node5" href="$class_custom_u_i_1_1_hierarchy_panel.html" title="Hierarchy panel Class." alt="" coords="211,157,385,184"/>
+<area shape="rect" id="node6" href="$class_custom_u_i_1_1_network_panel.html" title=" " alt="" coords="215,208,381,235"/>
+<area shape="rect" id="node7" href="$class_custom_u_i_1_1_performance_panel.html" title="Performance panel Class." alt="" coords="201,259,395,285"/>
+<area shape="rect" id="node8" href="$class_custom_u_i_1_1_properties_panel.html" title="Properties panel Class." alt="" coords="209,309,387,336"/>
+<area shape="rect" id="node9" href="$class_custom_u_i_1_1_toolbar.html" title=" " alt="" coords="233,360,363,387"/>
+<area shape="rect" id="node10" href="$class_custom_u_i_1_1_viewport.html" title="Viewport panel Class." alt="" coords="229,411,367,437"/>
+</map>

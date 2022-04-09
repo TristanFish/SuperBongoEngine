@@ -1,0 +1,4 @@
+<map id="CustomUI::PerformanceMonitor::GetMemoryUsage" name="CustomUI::PerformanceMonitor::GetMemoryUsage">
+<area shape="rect" id="node1" title="Get Memory Usage Function." alt="" coords="247,5,449,47"/>
+<area shape="rect" id="node2" href="$class_custom_u_i_1_1_performance_panel.html#ada5cec8b0bd76cdd74f3d5bb88b8bfc8" title="Render Function." alt="" coords="5,5,199,47"/>
+</map>

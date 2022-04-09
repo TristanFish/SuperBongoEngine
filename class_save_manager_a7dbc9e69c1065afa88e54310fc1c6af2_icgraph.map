@@ -1,0 +1,9 @@
+<map id="SaveManager::GetSaveFile" name="SaveManager::GetSaveFile">
+<area shape="rect" id="node1" title="GetSaveFile Getter." alt="" coords="673,137,852,163"/>
+<area shape="rect" id="node2" href="$class_custom_u_i_1_1_properties_panel.html#a0997a72642048db25d29b69ad2ed2153" title="Render Function." alt="" coords="447,5,625,47"/>
+<area shape="rect" id="node3" href="$class_custom_u_i_1_1_viewport.html#a9bd3dad819b838068137059a2517765a" title="Render Function." alt="" coords="467,71,605,112"/>
+<area shape="rect" id="node4" href="$class_custom_u_i_1_1_content_browser.html#aea10d6530b455c1c6fdeb7669ac2c71b" title="Render Function." alt="" coords="5,155,184,196"/>
+<area shape="rect" id="node5" href="$class_save_file.html#a448fdcfe084a9d1e7bb7491fdf16ecb5" title="Save Function." alt="" coords="483,187,589,214"/>
+<area shape="rect" id="node7" href="$class_load_utility.html#a5b02a20a66dafbb6b6853a55560aec1e" title="UnLoadSceneSaves function." alt="" coords="450,239,622,280"/>
+<area shape="rect" id="node6" href="$class_save_utility.html#af2e60869ec58a6c5c1965f483f634f43" title="CompileSaves function." alt="" coords="232,187,399,214"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="CustomUI::PerformancePanel::Render" name="CustomUI::PerformancePanel::Render">
+<area shape="rect" id="node1" title="Render Function." alt="" coords="5,39,199,80"/>
+<area shape="rect" id="node2" href="$class_custom_u_i_1_1_performance_monitor.html#a7e7a082f2df5aeb1a16bdeccffcb4685" title="Get CPU Usage Function." alt="" coords="247,5,449,47"/>
+<area shape="rect" id="node3" href="$class_custom_u_i_1_1_performance_monitor.html#ab16eb90422f08924b9bd2ec3f82cc164" title="Get Memory Usage Function." alt="" coords="247,71,449,112"/>
+</map>

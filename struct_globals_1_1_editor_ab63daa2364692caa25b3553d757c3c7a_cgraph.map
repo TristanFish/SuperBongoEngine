@@ -1,0 +1,4 @@
+<map id="Globals::Editor::DrawTextureSlot" name="Globals::Editor::DrawTextureSlot">
+<area shape="rect" id="node1" title="DrawTextureSlot Function." alt="" coords="5,5,216,32"/>
+<area shape="rect" id="node2" href="$class_mesh_renderer.html#a416e819fd9f983876ef9b00ef7ced757" title="SetInstanceID Setter." alt="" coords="264,5,435,32"/>
+</map>

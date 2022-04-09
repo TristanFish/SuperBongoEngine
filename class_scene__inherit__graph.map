@@ -1,0 +1,5 @@
+<map id="Scene" name="Scene">
+<area shape="rect" id="node1" title="Scene Class." alt="" coords="45,80,104,107"/>
+<area shape="rect" id="node3" href="$class_default_scene.html" title="Scene 1 class." alt="" coords="25,155,124,181"/>
+<area shape="rect" id="node2" href="$class_mouse_event_listener.html" title=" " alt="" coords="5,5,144,32"/>
+</map>

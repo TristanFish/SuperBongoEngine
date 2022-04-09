@@ -1,0 +1,4 @@
+<map id="CustomUI::PerformanceMonitor::GetFPS" name="CustomUI::PerformanceMonitor::GetFPS">
+<area shape="rect" id="node1" title="Get Frames Per Second Function." alt="" coords="247,5,449,47"/>
+<area shape="rect" id="node2" href="$class_custom_u_i_1_1_performance_panel.html#a8e2e39bad3cc3ab1a051722cbba6e988" title="Update Function." alt="" coords="5,5,199,47"/>
+</map>
