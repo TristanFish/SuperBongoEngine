@@ -204,28 +204,28 @@ void LoadUtility::LoadRecursiveElements(tinyxml2::XMLElement* element, SaveFile&
 
 void LoadUtility::AddLoadableObjects() const
 {
- 
- SaveManager::LoadableObjects.emplace("class AiGameObject", new AiGameObject("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Bird", new Bird("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Grass", new Grass("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class LightObject", new LightObject("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Player", new Player("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class PlayerController", new PlayerController("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class TestModel", new TestModel("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Box", new Box("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class PlaneObject", new PlaneObject("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Sphere", new Sphere("None", MATH::Vec3())); 
- 
- SaveManager::LoadableObjects.emplace("class Tetrahedron", new Tetrahedron("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class AiGameObject", std::make_shared<AiGameObject> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Bird", std::make_shared<Bird> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Grass", std::make_shared<Grass> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class LightObject", std::make_shared<LightObject> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Player", std::make_shared<Player> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class PlayerController", std::make_shared<PlayerController> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class TestModel", std::make_shared<TestModel> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Box", std::make_shared<Box> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class PlaneObject", std::make_shared<PlaneObject> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Sphere", std::make_shared<Sphere> ("None", MATH::Vec3())); 
+
+	 SaveManager::LoadableObjects.emplace("class Tetrahedron", std::make_shared<Tetrahedron> ("None", MATH::Vec3())); 
 
 } 
 

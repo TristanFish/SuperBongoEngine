@@ -34,6 +34,7 @@ public:
 
 	void OnMouseMove(MATH::Vec2 mouse) override;
 	void OnMousePressed(MATH::Vec2 mouse, int buttonType) override;
+	void OnMouseReleased(MATH::Vec2 mouse, int buttonType) override;
 
 	std::string& GetSceneName()  { return Scene_Name; }
 	void SetSceneName(const std::string& Name_) { Scene_Name = Name_; }

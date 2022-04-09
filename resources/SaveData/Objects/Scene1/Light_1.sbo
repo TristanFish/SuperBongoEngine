@@ -1,7 +1,7 @@
 <Root>
     <Identifiers S_Name="Light_1" U64_UniqueIdentifier="2866026439">
         <Transform>
-            <Position F_X="-40.799999" F_Y="12.8" F_Z="-3.9000001"/>
+            <Position F_X="-18.552046" F_Y="12.8" F_Z="35.583782"/>
             <Rotation F_X="0" F_Y="-29.399994" F_Z="0"/>
             <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>

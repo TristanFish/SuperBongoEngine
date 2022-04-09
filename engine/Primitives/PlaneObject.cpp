@@ -16,7 +16,6 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 	transform.SetRot(Vec3(1.0f, 1.0f, 1.0f));
 	
-	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
 
 	canBeInstantiated = true;
 
@@ -27,6 +26,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 void PlaneObject::PostInit()
 {
+	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
 	GetComponent<RigidBody3D>()->setMoveable(false);
 
 	GameObject::PostInit();

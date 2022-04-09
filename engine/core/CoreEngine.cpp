@@ -310,6 +310,8 @@ void CoreEngine::SetGameInterface(Game* gameInterface_)
 
 void CoreEngine::PlayScene()
 {
+	SaveSceneData();
+
 	isGameRunning = true;
 }
 

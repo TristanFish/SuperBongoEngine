@@ -90,3 +90,8 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	}
 
 }
+
+void Scene::OnMouseReleased(MATH::Vec2 mouse, int buttonType)
+{
+
+}

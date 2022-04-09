@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 #include <ImGuizmo/ImGuizmo.h>
-
+#include  <algorithm>
 
 #include "psapi.h"
 #include "core/CoreEngine.h"
@@ -442,7 +442,7 @@ void PerformancePanel::Render()
 	ImGui::Text("%i", latestFPS);
 
 	ImGui::Checkbox("Limit FPS", &CoreEngine::GetInstance()->limitfps); ImGui::SameLine();
-	ImGui::InputInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps));
+	ImGui::InputInt("##Input", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps));
 	//ImGui::SliderInt("", reinterpret_cast<int*>(&CoreEngine::GetInstance()->fps), 0, 200);
 	
 	ImGui::Text("Render Loop Time %f ms", PerformanceMonitor::RenderLoopTime);
@@ -657,7 +657,8 @@ void Viewport::Render()
 		ImGuizmo::SetOrthographic(false);
 		ImGuizmo::SetDrawlist();
 
-		ImGuizmo::SetRect(viewport_Position.x, viewport_Position.y, viewportSize.x, viewportSize.y);
+
+		ImGuizmo::SetRect(viewport_Position.x, viewport_Position.y, viewportSize.x, viewportSize.y + 50);
 
 		MATH::Matrix4 cameraProjection = Camera::getInstance()->getProjectionMatrix();
 		MATH::Matrix4 cameraView = Camera::getInstance()->getViewMatrix();
@@ -892,7 +893,7 @@ void DockSpace::GenerateDockSpace()
 	// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
 	// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
 
-	ImGui::Begin("DockSpace Demo", &isDockSpaceOpen, window_flags);
+	ImGui::Begin("SuperBongoEngine", &isDockSpaceOpen, window_flags);
 
 	if (isDockSpaceFullScreen)
 		ImGui::PopStyleVar(2);
@@ -917,7 +918,6 @@ void DockSpace::GenerateDockSpace()
 		{
 			// Disabling fullscreen would allow the window to be moved to the front of other windows,
 			// which we can't undo at the moment without finer window depth/z control.
-			ImGui::MenuItem("Fullscreen", NULL, &isDockSpaceFullScreen);
 			ImGui::MenuItem("Save", NULL, &isQueuedForSave);
 
 			if (ImGui::BeginMenu("Scene"))
@@ -1242,13 +1242,19 @@ void ContentBrowser::ChangeDirectory(const std::string& dir)
 
 void CustomUI::Toolbar::Render()
 {
-	ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+	ImGui::Begin("##Toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse );
 	
-	float size = ImGui::GetWindowHeight() - 4.0f;
-	ImGui::SameLine((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+	//float size = ImGui::GetWindowHeight() - 4.0f;
+	//ImGui::SameLine((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+
+	float ButtonSize = std::clamp(ImGui::GetWindowHeight() - 20.0f, 10.0f, 50.0f);
+	ImGui::Indent((ImGui::GetWindowContentRegionMax().x * 0.5) - ButtonSize);
+
+
 	if(!CoreEngine::GetInstance()->GetIsGameRunning())
 	{
-		if(ImGui::Button("Play"))
+	
+		if(ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("PlayIcon.png").getTextureID(), { ButtonSize,ButtonSize }))
 		{
 			CoreEngine::GetInstance()->PlayScene();
 			EngineLogger::Info("Play pressed", "CustomUI.cpp", __LINE__);
@@ -1256,7 +1262,7 @@ void CustomUI::Toolbar::Render()
 	} 
 	else
 	{
-		if(ImGui::Button("Stop"))
+		if(ImGui::ImageButton((ImTextureID)TextureManager::GetInstance()->GetTexture("StopIcon.png").getTextureID(), { ButtonSize,ButtonSize }))
 		{
 			CoreEngine::GetInstance()->StopScene();
 			EngineLogger::Info("Stop pressed", "CustomUI.cpp", __LINE__);
