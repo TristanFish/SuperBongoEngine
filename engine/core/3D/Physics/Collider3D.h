@@ -15,9 +15,9 @@ class RigidBody3D;
 enum class ColliderType : char
 {
 	Sphere = 0b0001,
-	Plane = 0b0100,
-	OBB = 0b1000,
-	OCTNODE = 0b1100
+	Plane = 0b0010,
+	OBB = 0b0100,
+	OCTNODE = 0b1000
 };
 
 inline constexpr ColliderType operator | (ColliderType x, ColliderType y)

@@ -14,12 +14,6 @@ bool Scene2::OnCreate()
 	return Scene::OnCreate();
 }
 
-void Scene2::Reset()
-{
-	OnDestroy();
-	OnCreate();
-}
-
 void Scene2::Update(float deltaTime_)
 {
 	Scene::Update(deltaTime_);

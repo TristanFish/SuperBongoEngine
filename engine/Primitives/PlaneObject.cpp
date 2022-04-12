@@ -19,6 +19,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 
 	canBeInstantiated = true;
 
+
 }
 
 
@@ -26,6 +27,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 void PlaneObject::PostInit()
 {
 	GetComponent<RigidBody3D>()->ConstructCollider(ColliderType::OBB);
+	GetComponent<RigidBody3D>()->setMoveable(false);
 
 	GameObject::PostInit();
 }

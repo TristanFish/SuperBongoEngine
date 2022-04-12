@@ -31,7 +31,7 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine(): window(nullptr), isRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr)
+CoreEngine::CoreEngine(): window(nullptr), isEngineRunning(false), isGameRunning(false), fps(60), currentSceneNum(0), gameInterface(nullptr), dockSpace(nullptr)
 {
 
 }
@@ -43,7 +43,7 @@ CoreEngine::~CoreEngine()
 void CoreEngine::Update(const float deltaTime_)
 {
 	dockSpace->Update(deltaTime_);
-	if (gameInterface)
+	if(gameInterface)
 	{
 		gameInterface->Update(deltaTime_);
 	}
@@ -122,12 +122,15 @@ bool CoreEngine::Init()
 
 	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
 
-
 	NetworkManager::GetInstance()->Init();
 	TextureManager::GetInstance()->LoadAllTextures();
 	ModelManager::GetInstance()->LoadAllModels();
 	LoadUtility::GetInstance()->LoadExistingSaves();
 	Renderer::GetInstance()->Init();
+
+	Globals::Engine::InitGlobals();
+
+	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
 	
 	if (gameInterface)
 	{
@@ -137,20 +140,17 @@ bool CoreEngine::Init()
 			OnDestroy();
 			return false;
 		}
-
 	}
-	Globals::Engine::InitGlobals();
-	Globals::Engine::SCENE_NAME = GetCurrentScene()->GetSceneName();
+	else
+	{
+		return false;
+	}
 	
 	dockSpace = new CustomUI::DockSpace();
 	dockSpace->ConstructUserInterface();
 	CustomUI::PerformanceMonitor::InitMonitor();
 
-	LoadUtility::GetInstance()->LoadDefaultScenes(gameInterface);
-	LoadUtility::GetInstance()->LoadSceneSaves();
-	LoadSceneData();
-
-	isRunning = true;
+	isEngineRunning = true;
 	return true;
 }
 
@@ -158,13 +158,16 @@ void CoreEngine::Run()
 {
 	Timer::UpdateTimer();
 
-	while (isRunning)
+	while (isEngineRunning)
 	{
 		const auto timeBeforeUpdate = std::chrono::high_resolution_clock::now();
 		Timer::UpdateTimer();
 		Update(Timer::GetDeltaTime());
 
-		UpdatePhysics(Timer::GetDeltaTime());
+		if (isGameRunning)
+		{
+			UpdatePhysics(Timer::GetDeltaTime());
+		}
 
 
 		const auto timeAfterUpdate = std::chrono::high_resolution_clock::now();
@@ -185,13 +188,11 @@ void CoreEngine::Run()
 		}
 	}
 
-	SaveSceneData();
+	if(!isGameRunning)
+	{
+		SaveSceneData();
+	}
 	OnDestroy();
-}
-
-bool CoreEngine::GetIsRunning() const
-{
-	return isRunning;
 }
 
 void CoreEngine::HandleEvents()
@@ -205,7 +206,7 @@ void CoreEngine::HandleEvents()
 		
 		if (event.type == SDL_EventType::SDL_QUIT)
 		{
-			isRunning = false;
+			isEngineRunning = false;
 			return;
 		}
 
@@ -214,7 +215,7 @@ void CoreEngine::HandleEvents()
 			switch (event.key.keysym.scancode)
 			{
 			case SDL_SCANCODE_ESCAPE:
-				isRunning = false;
+				isEngineRunning = false;
 				EngineLogger::Info("Closing Game", "CoreEngine.cpp", __LINE__);
 				return;
 			case SDL_SCANCODE_P:
@@ -284,7 +285,8 @@ void CoreEngine::SaveSceneData() const
 
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "SceneSettings", info);
 	info = ElementInfo("SceneSettings");
-	info.Attributes.emplace("S_:", std::string(typeid(*this).name()));
+
+	info.Attributes.emplace("S_:", std::string(typeid(*GetCurrentScene()).name()));
 	SaveUtility::GetInstance()->AddElement(Scene_Name, "BaseClass:", info);
 
 	info = ElementInfo("Root");
@@ -312,9 +314,25 @@ void CoreEngine::LoadSceneData()
 	}
 }
 
-void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
+void CoreEngine::SetGameInterface(Game* gameInterface_)
 {
 	gameInterface = gameInterface_;
+}
+
+void CoreEngine::PlayScene()
+{
+	SaveSceneData();
+
+	isGameRunning = true;
+}
+
+void CoreEngine::StopScene()
+{
+	isGameRunning = false;
+	Globals::Editor::SetSelectedObject(nullptr);
+	dockSpace->Reset();
+	LoadUtility::GetInstance()->UnLoadSceneSaves();
+	gameInterface->BuildScene();
 }
 
 int CoreEngine::GetCurrentSceneNum() const

@@ -55,7 +55,7 @@ Graph* NaiveVisAlgo::ConstructDivision()
 	std::vector<MATH::Vec3> WorldVerticies;
 	std::vector<int> vertexTypeID;
 
-	for (int ni = 0; ni < V_Polygons.size(); ni++)
+	for (size_t ni = 0; ni < V_Polygons.size(); ni++)
 	{
 		std::vector<Node*> Poly_Nodes = V_Polygons[ni].ConvertToNodes();
 
@@ -73,11 +73,11 @@ Graph* NaiveVisAlgo::ConstructDivision()
 	for (auto poly : V_Polygons)
 	{
 		std::vector<MATH::Vec3> Verticies = poly.GetVerticies();
-		for (int ni = 0; ni < Verticies.size(); ni++)
+		for (size_t ni = 0; ni < Verticies.size(); ni++)
 		{
 			R_IntersectRay.origin = MATH::Vec3(Verticies[ni].x, Verticies[ni].z, 0.0f);
 
-			for (int ng = 0; ng < WorldVerticies.size(); ng++)
+			for (size_t ng = 0; ng < WorldVerticies.size(); ng++)
 			{
 
 				if (WorldVerticies[ng] == Verticies[ni])
@@ -88,7 +88,7 @@ Graph* NaiveVisAlgo::ConstructDivision()
 				bool IntersectsBefore = false;
 				int firstOfType = 0;
 				// Loops through all verticies again and makes sure the ray doesn't intersect their line segments
-				for (int vert = 0; vert < WorldVerticies.size(); vert++)
+				for (size_t vert = 0; vert < WorldVerticies.size(); vert++)
 				{
 
 					if (WorldVerticies[vert] == WorldVerticies[ng])

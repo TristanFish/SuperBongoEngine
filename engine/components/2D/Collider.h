@@ -22,7 +22,7 @@ public:
 		colliderShape = shape::Box;
 		isMoveable = true;
 		isTrigger = false;
-		//isWiremesh = false;
+		isWiremesh = false;
 		size = MATH::Vec3(1.0f, 1.0f, 1.0f);
 	}
 };

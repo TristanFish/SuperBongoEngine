@@ -2,6 +2,8 @@
 
 #include "core/3D/Physics/BoundingBox.h"
 #include "core/3D/Physics/BoundingSphere.h"
+#include "core/3D/Physics/GJKDetection.h"
+
 #include "core/CoreEngine.h"
 #include "core/Globals.h"
 
@@ -13,19 +15,6 @@
 
 using namespace  MATH;
 
-void CollisionDetection::NudgeObject(const CollisionHitInfo& HitInfo, Collider3D& Box)
-{
-	float NudgeAmount = HitInfo.Depth;
-	float NudgeStep = 0.1;
-
-	std::shared_ptr<GameObject> NudgedObject = Box.GetRBAttached()->gameObject;
-
-	
-	NudgedObject->transform.GetPositionRef() += ((HitInfo.Normal * -1) * NudgeStep);
-
-
-	//NudgeAmount -= NudgeStep;
-}
 
 CollisionDetection::~CollisionDetection() {
 
@@ -110,31 +99,37 @@ bool CollisionDetection::ColliderIntersection(Collider3D* Collider1, Collider3D*
 {
 	if (Collider1->IsType(ColliderType::OBB,{Collider2}))
 	{
-		return OBBIntersection(dynamic_cast<BoundingBox&>(*Collider1), dynamic_cast<BoundingBox&>(*Collider2));
+		return GJKIntersection(dynamic_cast<BoundingBox&>(*Collider1), dynamic_cast<BoundingBox&>(*Collider2));
+	}
+	else if (Collider1->GetColliderType() == ColliderType::OBB && Collider2->GetColliderType() == ColliderType::Sphere)
+	{
+
+		RigidBody3D* rb = Collider2->GetRBAttached();
+
+		Collider2->GetRBAttached()->ConstructCollider(ColliderType::OBB);
+		
+		Collider2 = rb->GetCollider();
+		return GJKIntersection(dynamic_cast<BoundingBox&>(*Collider1), *dynamic_cast<BoundingBox*>(Collider2));
 	}
 	else if (Collider1->IsType(ColliderType::Sphere, { Collider2 }))
 	{
 		return SphereIntersection(dynamic_cast<BoundingSphere&>(*Collider1), dynamic_cast<BoundingSphere&>(*Collider2));
 	}
+	
 }
 
-bool CollisionDetection::OBBIntersection(BoundingBox& Box1, BoundingBox& Box2)
+bool CollisionDetection::GJKIntersection(Collider3D& Collider1, Collider3D& Collider2)
 {
 	bool Collided = false;
 
 
-	if (!Box1.IsMoveable() && !Box2.IsMoveable())
-	{
-
-	}
-	RigidBody3D* RB_1 = Box1.GetRBAttached();
-	RigidBody3D* RB_2 = Box2.GetRBAttached();
-
+	
+	RigidBody3D* RB_1 = Collider1.GetRBAttached();
+	RigidBody3D* RB_2 = Collider2.GetRBAttached();
 
 
 	GJKDetection GJKDetector;
-
-	Collided = GJKDetector.GJKCollisionDetection(Box1.GetWorldVerticies(), Box2.GetWorldVerticies());
+	Collided = GJKDetector.GJKCollisionDetection(dynamic_cast<BoundingBox&>(Collider1).GetWorldVerticies(), dynamic_cast<BoundingBox&>(Collider2).GetWorldVerticies());
 
 
 
@@ -144,15 +139,15 @@ bool CollisionDetection::OBBIntersection(BoundingBox& Box1, BoundingBox& Box2)
 
 		
 
-		float Box1Mobility = Box1.IsMoveable() ? 1.0f : 0.0f;
-		float Box2Mobility = Box2.IsMoveable() ? 1.0f : 0.0f;
+		float Box1Mobility = Collider1.IsMoveable() ? 1.0f : 0.0f;
+		float Box2Mobility = Collider2.IsMoveable() ? 1.0f : 0.0f;
 
 
 		float Box1Distance = Box1Mobility * HitInfo.Depth  * RB_1->GetMass() / ((RB_1->GetMass() * Box1Mobility) + (RB_2->GetMass() * Box2Mobility));
 		float Box2Distance = Box2Mobility * HitInfo.Depth  * RB_2->GetMass() / ((RB_1->GetMass() * Box1Mobility) + (RB_2->GetMass() * Box2Mobility));
 
-		Box1.OnCollisionEnter(Box2);
-		Box2.OnCollisionEnter(Box1);
+		Collider1.OnCollisionEnter(Collider2);
+		Collider2.OnCollisionEnter(Collider1);
 
 
 		Vec3 ProjectedVel1 = HitInfo.Normal * VMath::dot(RB_1->GetVelocity(), HitInfo.Normal);

@@ -69,7 +69,7 @@ void Renderer::SetupFrameBuffers()
 	//Attach depthRenderBuffer`
 	glGenRenderbuffers(1, &depthRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewport.GetViewportSize().x, viewport.GetViewportSize().y);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, static_cast<GLsizei>(viewport.GetViewportSize().x), static_cast<GLsizei>(viewport.GetViewportSize().y));
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 	gBuffer.AttachTexture(albedoTexture);
 	gBuffer.AttachTexture(normTexture);
@@ -533,14 +533,11 @@ void Renderer::AttachLights() const
 		std::string arrayIndex = "lights[" + std::to_string(i) + "].";
 		if(i == lights.size())
 		{
-			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex);
+			defaultLight.SendLightDataToShader(resultShader, Vec3(), -Vec3::Up(), arrayIndex, true);
 			break;
 		}
 
-		if(lights[i]->active)
-		{
-			lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex);
-		}
+		lights[i]->lightInfo.SendLightDataToShader(resultShader, lights[i]->gameObject->transform.GetPosition(), lights[i]->gameObject->transform.Forward(), arrayIndex, lights[i]->active);
 	}
 }
 

@@ -3,8 +3,10 @@
 
 #include <sdl/SDL.h>
 #include <vector>
+
 class Scene;
-class GameInterface
+
+class Game
 {
 public:
 	
@@ -12,13 +14,16 @@ public:
 
 	std::vector<Scene*> Scenes;
 
+	int currentSceneNum;
+
 	
-	virtual ~GameInterface() = default;
+	virtual ~Game();
+	virtual bool BuildScene();
 	virtual bool OnCreate() = 0;
-	virtual void OnDestroy() = 0;
-	virtual void Update(const float deltaTime_) = 0;
-	virtual void Render() = 0;
-	virtual void HandleEvents(const SDL_Event& event) = 0;
+	virtual void OnDestroy();
+	virtual void Update(const float deltaTime_);
+	virtual void Render();
+	virtual void HandleEvents(const SDL_Event& event);
 };
 
 #endif

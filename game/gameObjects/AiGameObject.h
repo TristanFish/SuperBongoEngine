@@ -11,7 +11,7 @@ public:
 	AIComponent* aiComponent;
 	RigidBody3D* bodyComponent;
 	
-	GameObject* aiTarget;
+	std::shared_ptr<GameObject> aiTarget;
 
 	DecisionTree* dTree;
 

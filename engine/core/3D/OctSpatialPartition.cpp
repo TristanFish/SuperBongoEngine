@@ -220,11 +220,11 @@ std::shared_ptr<GameObject> OctSpatialPartition::GetCollision(Ray& ray)
 
 void OctSpatialPartition::AddObjectToCell(OctNode* cell, Collider3D* collider)
 {
-
+	/*
 
 	if(cell->IsLeaf())
 	{
-		if (CollisionDetection::OBBIntersection(dynamic_cast<BoundingBox&>(*collider), *cell->octBounds))
+		if (CollisionDetection::ColliderIntersection(dynamic_cast<BoundingBox&>(*collider), *cell->octBounds))
 		{
 			cell->AddCollisionObject(collider);
 		}
@@ -236,6 +236,7 @@ void OctSpatialPartition::AddObjectToCell(OctNode* cell, Collider3D* collider)
 			AddObjectToCell(child, collider);
 		}
 	}
+	*/
 }
 
 void OctSpatialPartition::PrepareCollisionQuery(OctNode* cell, Ray& ray)

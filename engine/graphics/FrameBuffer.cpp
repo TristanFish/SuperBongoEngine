@@ -63,7 +63,7 @@ void FrameBuffer::AttachTexture(BufferTexture& tex)
 
 	glGenTextures(1, &tex.texture);
 	glBindTexture(GL_TEXTURE_2D, tex.texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, intFormat, ViewportSize.x, ViewportSize.y, 0, format, type, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, intFormat, static_cast<GLsizei>(ViewportSize.x), static_cast<GLsizei>(ViewportSize.y), 0, format, type, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindFramebuffer(GL_FRAMEBUFFER, bufferID);
@@ -99,7 +99,7 @@ void FrameBuffer::Clear()
 {
 	MATH::Vec2 ViewportSize = Renderer::GetInstance()->GetViewport().GetViewportSize();
 
-	glViewport(0, 0, ViewportSize.x, ViewportSize.y);
+	glViewport(0, 0, static_cast<GLsizei>(ViewportSize.x), static_cast<GLsizei>(ViewportSize.y));
 	glClearColor(clearColor.a, clearColor.g, clearColor.b, clearColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
@@ -129,4 +129,5 @@ uint32_t FrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 
 	}
 	UnBind();
+	return 0;
 }

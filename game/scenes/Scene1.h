@@ -9,7 +9,7 @@ class Scene1 : public Scene
 {
 public:
 	//! Scene 1 Constructor
-	Scene1() = default;
+	Scene1();
 
 
 	//! Virtual overridden OnCreate Function
@@ -31,9 +31,5 @@ public:
 	//! Virtual overridden HandleEvents Function
 	/*! Checks for keyboard/mouse events throughout the loop */
 	void HandleEvents(const SDL_Event &event) override;
-
-	//! Virtual overridden Reset Function
-	/*! When called resets the scene back to its original state */
-	void Reset() override;
 };
 #endif

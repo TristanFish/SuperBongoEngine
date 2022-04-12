@@ -18,17 +18,120 @@ Window::~Window()
 	OnDestroy();
 }
 
-void GLAPIENTRY MessageCallback( GLenum source,
-                 GLenum type,
-                 GLuint id,
-                 GLenum severity,
-                 GLsizei length,
-                 const GLchar* message,
-                 const void* userParam )
+void GLAPIENTRY MessageCallback( GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam )
 {
-  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+	std::string so;
+	switch (source)
+	{
+		case GL_DEBUG_SOURCE_API:
+		{
+			so = "API";
+			break;
+		}
+		case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+		{
+			so = "Window System";
+			break;
+		}
+		case GL_DEBUG_SOURCE_SHADER_COMPILER:
+		{
+			so = "Shader Compiler";
+			break;
+		}
+		case GL_DEBUG_SOURCE_THIRD_PARTY:
+		{
+			so = "Third Party";
+			break;
+		}
+		case GL_DEBUG_SOURCE_APPLICATION:
+		{
+			so = "Application";
+			break;
+		}
+		case GL_DEBUG_SOURCE_OTHER:
+		{
+			so = "Other";
+			break;
+		}
+		default:
+			break;
+	}
+
+	std::string ty;
+	switch (type)
+	{
+		case GL_DEBUG_TYPE_ERROR:
+		{
+			ty = "Error";
+			break;
+		}
+		case GL_DEBUG_TYPE_PORTABILITY:
+		{
+			ty = "Portability";
+			break;
+		}
+		case GL_DEBUG_TYPE_PERFORMANCE:
+		{
+			ty = "Performance";
+			break;
+		}
+		case GL_DEBUG_TYPE_MARKER:
+		{
+			ty = "Marker";
+			break;
+		}
+		case GL_DEBUG_TYPE_PUSH_GROUP:
+		{
+			ty = "Push Group";
+			break;
+		}
+		case GL_DEBUG_TYPE_POP_GROUP:
+		{
+			ty = "Pop Group";
+			break;
+		}
+		case GL_DEBUG_TYPE_OTHER:
+		{
+			ty = "Other";
+			break;
+		}
+		default:
+			break;
+	}
+
+	std::string se;
+	switch (severity)
+	{
+		case GL_DEBUG_SEVERITY_HIGH:
+		{
+			se = "High";
+			EngineLogger::Error(message, "Window.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+			break;
+		}
+		case GL_DEBUG_SEVERITY_MEDIUM:
+		{
+			se = "Medium";
+			EngineLogger::Warning(message, "Window.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+			break;
+		}
+		case GL_DEBUG_SEVERITY_LOW:
+		{
+			se = "Low";
+			EngineLogger::Trace(message, "Window.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+			break;
+		}
+		case GL_DEBUG_SEVERITY_NOTIFICATION:
+		{
+			return;
+			EngineLogger::Info(message, "Window.cpp", __LINE__, MessageTag::TYPE_GRAPHICS);
+			se = "Notification";
+			break;
+		}
+		default:
+			break;
+	}
+
+	//fprintf( stderr, "GL CALLBACK: %s source = %s type = %s, severity = %s, message = %s\n", ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ), so.c_str(), ty.c_str(), se.c_str(), message );
 }
 
 bool Window::OnCreate(const char* name, int w, int h)
@@ -92,16 +195,30 @@ bool Window::OnCreate(const char* name, int w, int h)
 
 
 
-	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
-	ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.06f, 0.1f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.0f, 0.06f, 0.1f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_MenuBarBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
 
 	ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0.08f, 0.08f, 0.08f, 1.0f);
 	ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0.16f, 0.16f, 0.16f, 1.0f);
+
+	
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.0f, 0.48f, 0.76f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_TabHovered] = ImVec4(0.0f, 0.48f, 0.76f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabActive] = ImVec4(0.0f, 0.68f, 0.96f, 1.0f);
+
+	ImGui::GetStyle().Colors[ImGuiCol_TabUnfocused] = ImVec4(0.0f, 0.18f, 0.36f, 1.0f);
+	ImGui::GetStyle().Colors[ImGuiCol_Tab] = ImVec4(0.0f, 0.18f, 0.36f, 1.0f);
+
+
+	
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(window, context);

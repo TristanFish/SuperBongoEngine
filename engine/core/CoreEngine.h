@@ -8,7 +8,7 @@ namespace CustomUI {
 }
 
 class Window;
-class GameInterface;
+class Game;
 class Scene;
 class CoreEngine
 {
@@ -16,7 +16,8 @@ class CoreEngine
 private:
 	Window* window;
 
-	bool isRunning;
+	bool isEngineRunning;
+	bool isGameRunning;
 
 	static std::unique_ptr<CoreEngine> engineInstance;
 	friend std::default_delete<CoreEngine>;
@@ -26,7 +27,7 @@ public:
 	unsigned int fps;
 	bool limitfps = true;
 	int currentSceneNum;
-	GameInterface* gameInterface;
+	Game* gameInterface;
 	CustomUI::DockSpace* dockSpace;
 	
 	static CoreEngine* GetInstance();
@@ -38,19 +39,22 @@ public:
 
 	bool Init();
 	void Run();
-	bool GetIsRunning() const;
 
-	void SetGameInterface(GameInterface* gameInterface_);
+	void SetGameInterface(Game* gameInterface_);
+	bool GetIsGameRunning() const { return isGameRunning; }
+	void SetIsGameRunning(bool status) { isGameRunning = status; };
 
 	int GetCurrentSceneNum() const;
 	Scene* GetCurrentScene() const;
-
 
 	void ReloadCurrentScene();
 	void OnDestroy();
 	
 	void SaveSceneData() const;
 	void LoadSceneData();
+
+	void PlayScene();
+	void StopScene();
 
 private:
 	CoreEngine();
@@ -59,6 +63,7 @@ private:
 	void UpdatePhysics(const float deltaTime_);
 	void Render();
 	void HandleEvents();
+
 
 
 

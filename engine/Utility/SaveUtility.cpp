@@ -227,12 +227,10 @@ ElementInfo SaveUtility::CreateVec4(const MATH::Vec4& value, const std::string& 
 		if (UsePrefix)
 		{
 			element.Attributes.emplace(Globals::Engine::IntToVectorWithPrefix("F", i), value[i]);
-
 		}
 		else
 		{
 			element.Attributes.emplace(Globals::Engine::IntToVector(i), value[i]);
-
 		}
 	}
 
@@ -253,7 +251,6 @@ void SaveUtility::CreateSave(const std::string& saveName, FileType type)
 		SaveManager::AddToSaveQueue(saveName, SaveFile(saveName, type));
 		EngineLogger::Info(saveName + " Successfully Added To The Save Queue", "SaveUtility.cpp", __LINE__, MessageTag::TYPE_SAVE);
 	}
-
 }
 
 void SaveUtility::CreateSave(const std::string& saveName, const std::map<std::string, ElementInfo>& elements, FileType type)

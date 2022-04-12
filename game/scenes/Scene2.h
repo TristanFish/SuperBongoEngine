@@ -11,7 +11,6 @@ public:
 	// Inherited via Scene
 	bool OnCreate() override;
 	void OnDestroy() override {}
-	void Reset() override;
 	void Update(float deltaTime_) override;
 	void HandleEvents(const SDL_Event& event) override;
 	void Render() override;

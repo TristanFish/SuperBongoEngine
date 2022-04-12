@@ -17,6 +17,7 @@ Box::Box(const std::string& name, Vec3 position)
 	transform.SetPos(position);
 
 	canBeInstantiated = true;
+
 }
 
 Box::~Box()
@@ -34,5 +35,4 @@ void Box::PostInit()
 
 void Box::OnCollisionEnter(Collider3D& otherBody)
 {
-	EngineLogger::Info(this->name + " Collided With " + otherBody.GetRBAttached()->gameObject->GetName(), "Box.cpp", __LINE__, MessageTag::TYPE_NONE);
 }

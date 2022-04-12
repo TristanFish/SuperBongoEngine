@@ -1,8 +1,8 @@
 <Root>
     <Identifiers S_Name="AwesomeSphere" U64_UniqueIdentifier="1088358941">
         <Transform>
-            <Position F_X="0" F_Y="0" F_Z="0"/>
-            <Rotation F_X="0.99999976" F_Y="0.99999976" F_Z="0.99999976"/>
+            <Position F_X="53.099998" F_Y="0" F_Z="0"/>
+            <Rotation F_X="0.99999958" F_Y="0.99999958" F_Z="0.99999958"/>
             <Scale F_X="1" F_Y="1" F_Z="1"/>
         </Transform>
         <ObjectInfo>

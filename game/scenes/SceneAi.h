@@ -18,7 +18,7 @@ public:
 	
 	
 	//! Scene Ai Constructor
-	SceneAi() = default;
+	SceneAi();
 
 
 	//! Virtual overridden OnCreate Function
@@ -40,9 +40,5 @@ public:
 	//! Virtual overridden HandleEvents Function
 	/*! Checks for keyboard/mouse events throughout the loop */
 	void HandleEvents(const SDL_Event& event) override;
-
-	//! Virtual overridden Reset Function
-	/*! When called resets the scene back to its original state */
-	void Reset() override;
 };
 #endif

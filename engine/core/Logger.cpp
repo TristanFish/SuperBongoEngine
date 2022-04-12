@@ -1,5 +1,6 @@
 #include "Logger.h"
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -86,12 +87,14 @@ void EngineLogger::Log(const MessageType type_, const string& message_, const st
 	{
 		const string log = string(message_ + " in: " + fileName_ + " on line: " + to_string(line_) + "\n");
 		
-		//cout << log;
 		ofstream out;
 		out.open(outputName.c_str(), ios::app | ios::out);
 		if(consoleCallback != nullptr && sendToConsoleLog)
 		{
 			consoleCallback(log);
+		} else
+		{
+			std::cout << log;
 		}
 		out << log;
 		out.flush();

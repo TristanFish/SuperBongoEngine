@@ -61,7 +61,7 @@ public:
 		 if (B_IsWorldSpace)
 			 return;
 		 // Converts verticies to world space (Assuming transform is the model matrix)
-		 for (int i = 0; i < Model_Verticies->size(); i++)
+		 for (size_t i = 0; i < Model_Verticies->size(); i++)
 		 {
 			 World_Verticies[i] = transform * (*Model_Verticies)[i].position;
 		 }

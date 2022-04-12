@@ -9,17 +9,12 @@
 #include "../game/gameObjects/Grass.h"
 #include "../game/gameObjects/LightObject.h"
 
-
 #include "core/resources/CollisionDetection.h"
+#include <core/CoreEngine.h>
 
 SceneGraph::~SceneGraph() 
 {
-	
-
-	
-	gameObjects.clear();
-
-	rigidBodies.clear();
+	Clear();
 }
 
 void SceneGraph::Init() 
@@ -45,11 +40,23 @@ void SceneGraph::PostInit()
 
 void SceneGraph::Update(const float deltaTime)
 {
-	for (const auto& g : gameObjects)
+	if(CoreEngine::GetInstance()->GetIsGameRunning())
 	{
-		if (g->isActive())
+		for (const auto& g : gameObjects)
 		{
-			g->Update(deltaTime);
+			if (g->isActive())
+			{
+				g->Update(deltaTime);
+			} else 
+			{
+				g->UpdateTransform();
+			}
+		}
+	} else
+	{
+		for (const auto& g : gameObjects)
+		{
+			g->UpdateTransform();
 		}
 	}
 }
@@ -61,7 +68,6 @@ void SceneGraph::UpdatePhysics(const float deltaTime)
 		for (size_t j = i + 1; j < rigidBodies.size(); j++)
 		{
 			CollisionDetection::ColliderIntersection(rigidBodies[i]->GetCollider(), rigidBodies[j]->GetCollider());
-			
 		}
 		if (rigidBodies[i]->active)
 		{
@@ -89,6 +95,12 @@ void SceneGraph::HandleEvents(const SDL_Event& event)
 	{
 		g->HandleEvents(event);
 	}
+}
+
+void SceneGraph::Clear()
+{
+	gameObjects.clear();
+	rigidBodies.clear();
 }
 
 //Finds THE FIRST gameObject with the given name
@@ -127,7 +139,6 @@ void SceneGraph::GameObjectNetworkUpdate(std::string& string)
 	std::stringstream name = tmp.FindGameObjectName(string);
 	tmp = *FindGameObject(name.str().c_str())->GetComponent<NetworkableObject>();
 	tmp.RecievePositionData(ss);
-
 }
 
 //Adds a gameObject with a name and position

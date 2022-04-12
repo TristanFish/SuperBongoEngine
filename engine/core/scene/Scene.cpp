@@ -33,6 +33,7 @@ bool Scene::OnCreate()
 
 bool Scene::PostCreate()
 {
+	EngineLogger::Info("Scene PostCreate Called", "Scene.h", __LINE__);
 	objectList->PostInit();
 	return true;
 }
@@ -52,12 +53,11 @@ void Scene::Render()
 void Scene::HandleEvents(const SDL_Event& event)
 {
 	objectList->HandleEvents(event);
+}
 
-
-
-	
-
-
+void Scene::Reset()
+{
+	objectList->Clear();
 }
 
 void Scene::OnMouseMove(MATH::Vec2 mouse)
@@ -70,25 +70,18 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-<<<<<<< Updated upstream
 
-	if (buttonType == SDL_BUTTON_LEFT)
-=======
+
+
 	if (!ImGuizmo::IsOver() & buttonType == SDL_BUTTON_LEFT)
->>>>>>> Stashed changes
 	{
 		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
 			return;
 
-
 		int XPos = Renderer::GetInstance()->GetViewport().GetMousePosX();
-
 		int YPos = Renderer::GetInstance()->GetViewport().GetMousePosY();
 
-
 		uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
-		
-
 		std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
 
 		if (SelectedObj != nullptr)
@@ -98,5 +91,10 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 		}
 		
 	}
+
+}
+
+void Scene::OnMouseReleased(MATH::Vec2 mouse, int buttonType)
+{
 
 }

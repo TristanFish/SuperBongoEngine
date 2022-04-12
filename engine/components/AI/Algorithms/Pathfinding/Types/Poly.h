@@ -42,7 +42,7 @@ public:
 	inline std::vector<Node*> ConvertToNodes() const
 	{
 		std::vector<Node*> Nodes;
-		for (int i = 0; i < Verticies.size(); i++)
+		for (size_t i = 0; i < Verticies.size(); i++)
 		{
 			Node* New_Node = new Node();
 			New_Node->V_WorldPos = Verticies[i];
