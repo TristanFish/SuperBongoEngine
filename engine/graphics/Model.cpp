@@ -136,11 +136,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		p_max.y = std::max(p_max.y, vec.y);
 		p_max.z = std::max(p_max.z, vec.z);
 	
-
-		vec.x = mesh->mNormals[i].x;
-		vec.y = mesh->mNormals[i].y;
-		vec.z = mesh->mNormals[i].z;
-		vertex.normal = vec;
+		if (mesh->HasNormals())
+		{
+			vec.x = mesh->mNormals[i].x;
+			vec.y = mesh->mNormals[i].y;
+			vec.z = mesh->mNormals[i].z;
+			vertex.normal = vec;
+		}
+		
 
 
 		if (mesh->mTextureCoords[0])

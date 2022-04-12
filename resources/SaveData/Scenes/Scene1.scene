@@ -3,12 +3,41 @@
         <Box/>
         <Light/>
         <Light_1/>
+        <None/>
         <Plane-1/>
         <Player/>
         <test/>
         <AwesomeSphere/>
     </Objects>
     <SceneSettings>
+<<<<<<< Updated upstream
         <BaseClass: S_:="class CoreEngine"/>
+=======
+        <BaseClass: S_:="class Scene1"/>
+    </SceneSettings>
+    <Objects>
+        <Box/>
+        <Light/>
+        <Light_1/>
+        <None/>
+        <Plane-1/>
+        <Player/>
+        <test/>
+    </Objects>
+    <SceneSettings>
+        <BaseClass: S_:="class Scene1"/>
+    </SceneSettings>
+    <Objects>
+        <Box/>
+        <Light/>
+        <Light_1/>
+        <None/>
+        <Plane-1/>
+        <Player/>
+        <test/>
+    </Objects>
+    <SceneSettings>
+        <BaseClass: S_:="class Scene1"/>
+>>>>>>> Stashed changes
     </SceneSettings>
 </Root>

@@ -4,7 +4,7 @@
 #include "core/Logger.h"
 #include "core/CoreEngine.h"
 #include "core/resources/CollisionDetection.h"
-
+#include "ImGuizmo/ImGuizmo.h"
 
 #include "components/GameObject.h"
 
@@ -70,8 +70,12 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
+<<<<<<< Updated upstream
 
 	if (buttonType == SDL_BUTTON_LEFT)
+=======
+	if (!ImGuizmo::IsOver() & buttonType == SDL_BUTTON_LEFT)
+>>>>>>> Stashed changes
 	{
 		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
 			return;

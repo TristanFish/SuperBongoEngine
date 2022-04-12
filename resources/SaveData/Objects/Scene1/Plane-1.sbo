@@ -1,9 +1,9 @@
 <Root>
     <Identifiers S_Name="Plane-1" U64_UniqueIdentifier="886997377">
         <Transform>
-            <Position F_X="0.80000001" F_Y="-6.8000002" F_Z="0"/>
-            <Rotation F_X="90.000008" F_Y="0" F_Z="0"/>
-            <Scale F_X="1" F_Y="1" F_Z="1"/>
+            <Position F_X="9.1090059" F_Y="5.9439654" F_Z="1.6748183"/>
+            <Rotation F_X="90" F_Y="-17.700001" F_Z="0"/>
+            <Scale F_X="2.9535496" F_Y="2.6600151" F_Z="1.7999997"/>
         </Transform>
         <ObjectInfo>
             <Type S_ID="class PlaneObject"/>
@@ -11,7 +11,13 @@
         <Components>
             <Renderer>
                 <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
+<<<<<<< Updated upstream
             </Renderer>
+=======
+            </classMeshRenderer>
+            <classRigidBody3D B_Active="true"/>
+            <classNetworkableObject B_Active="true"/>
+>>>>>>> Stashed changes
         </Components>
     </Identifiers>
 </Root>

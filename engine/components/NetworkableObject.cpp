@@ -8,7 +8,6 @@
 
 NetworkableObject::NetworkableObject()
 {
-	isActive = false;
 	networkEventType = 1;
 }
 
@@ -18,7 +17,7 @@ NetworkableObject::~NetworkableObject()
 
 void NetworkableObject::Init(std::shared_ptr<GameObject> g)
 {
-	isActive = false;
+	//isActive = false;
 	gameObject = g;
 	pos = gameObject->transform.GetPosition();
 	name = gameObject->GetName();

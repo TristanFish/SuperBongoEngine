@@ -9,7 +9,7 @@ PlaneObject::PlaneObject(const std::string& name, Vec3 position)
 	AddComponent<MeshRenderer>()->LoadModel("Plane.fbx");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 	AddComponent<RigidBody3D>();
-	
+	AddComponent<NetworkableObject>();
 	this->name = name;
 	transform.SetPos(position);
 
@@ -32,5 +32,5 @@ void PlaneObject::PostInit()
 
 void PlaneObject::OnCollisionEnter(Collider3D& otherBody)
 {
-	std::cout << "PlaneObject Collided with something" << std::endl;
+	
 }

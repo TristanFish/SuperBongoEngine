@@ -3,7 +3,7 @@
 
 Bird::Bird(const std::string& name, MATH::Vec3 position) {
 
-	AddComponent<MeshRenderer>()->LoadModel("PuffinBall.fbx");
+	AddComponent<MeshRenderer>()->LoadModel("Puffin.obj");
 	GetComponent<MeshRenderer>()->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
 	birdSound = AudioManager::Get()->RetrieveSoundObject("birdchirp");

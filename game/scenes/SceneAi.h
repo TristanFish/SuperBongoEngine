@@ -12,16 +12,9 @@ class SceneAi : public Scene
 {
 public:
 
-	AiGameObject* mainAi = new AiGameObject("AiObj", Vec3(1.0f));
-	Sphere* targetSphere = new Sphere("targetSphere", Vec3(10.0f, 2.5f, 7.0f));
+	std::shared_ptr<AiGameObject> mainAi;
+	std::shared_ptr<Sphere> targetSphere;
 
-	//temp stuff
-
-	bool collisionDetected = false;
-	Mesh* mesh1;
-	Mesh* mesh2;
-	std::vector<Vec3> mesh1Verts;
-	std::vector<Vec3> mesh2Verts;
 	
 	
 	//! Scene Ai Constructor

@@ -23,7 +23,6 @@ public:
 	std::string name, position;
 	int networkEventType;
 
-	bool isActive;
 
 	NetworkableObject();
 	~NetworkableObject();

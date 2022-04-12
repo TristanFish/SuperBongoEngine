@@ -1,9 +1,9 @@
 <Root>
     <Identifiers S_Name="test" U64_UniqueIdentifier="2224344251">
         <Transform>
-            <Position F_X="0" F_Y="44.5" F_Z="0"/>
+            <Position F_X="33.313484" F_Y="56.767437" F_Z="-33.41993"/>
             <Rotation F_X="0" F_Y="-2.3000054" F_Z="0"/>
-            <Scale F_X="4" F_Y="4" F_Z="4"/>
+            <Scale F_X="18.958981" F_Y="4.420476" F_Z="0.90087223"/>
         </Transform>
         <ObjectInfo>
             <Type S_ID="class Box"/>
@@ -11,7 +11,13 @@
         <Components>
             <Renderer>
                 <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
+<<<<<<< Updated upstream
             </Renderer>
+=======
+            </classMeshRenderer>
+            <classRigidBody3D B_Active="true"/>
+            <classNetworkableObject B_Active="true"/>
+>>>>>>> Stashed changes
         </Components>
     </Identifiers>
 </Root>

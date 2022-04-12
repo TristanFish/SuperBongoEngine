@@ -1,0 +1,19 @@
+<Root>
+    <Identifiers S_Name="None" U64_UniqueIdentifier="3891098653">
+        <Transform>
+            <Position F_X="0" F_Y="67.855171" F_Z="0"/>
+            <Rotation F_X="0" F_Y="0" F_Z="0"/>
+            <Scale F_X="0.5" F_Y="0.5" F_Z="0.5"/>
+        </Transform>
+        <ObjectInfo>
+            <Type S_ID="class Sphere"/>
+        </ObjectInfo>
+        <Components>
+            <classMeshRenderer B_Active="true">
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
+            </classMeshRenderer>
+            <classRigidBody3D B_Active="true"/>
+            <classLineRenderer B_Active="true"/>
+        </Components>
+    </Identifiers>
+</Root>

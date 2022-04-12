@@ -1,0 +1,18 @@
+<Root>
+    <Identifiers S_Name="AiObj" U64_UniqueIdentifier="93835319">
+        <Transform>
+            <Position F_X="1" F_Y="1" F_Z="1"/>
+            <Rotation F_X="0" F_Y="0" F_Z="0"/>
+            <Scale F_X="1" F_Y="1" F_Z="1"/>
+        </Transform>
+        <ObjectInfo>
+            <Type S_ID="class AiGameObject"/>
+        </ObjectInfo>
+        <Components>
+            <classMeshRenderer B_Active="true">
+                <MeshColorTint F_W="1" F_X="1" F_Y="1" F_Z="1"/>
+            </classMeshRenderer>
+            <classRigidBody3D B_Active="true"/>
+        </Components>
+    </Identifiers>
+</Root>

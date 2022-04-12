@@ -10,15 +10,14 @@ AiGameObject::AiGameObject(const std::string& name_, MATH::Vec3 position_)	{
 	mRenderer->LoadModel("Plane.fbx");
 	mRenderer->CreateShader("DefaultVert.glsl", "DefaultFrag.glsl");
 
-	//bodyComponent = AddComponent<RigidBody3D>();
+    bodyComponent = AddComponent<RigidBody3D>();
 	//bodyComponent->Init();
-	//bodyComponent->ConstructCollider(ColliderType::OBB);
 	
 
 	aiComponent = AddComponent<AIComponent>();
-	aiComponent->SetAIType(AIType::KinematicSteering);
-	aiComponent->SetMaxSpeed(5.0f);
-	aiComponent->SetMaxAcceleration(5.0f);
+	aiComponent->SetAIType(AIType::DynamicSteering);
+	aiComponent->SetMaxSpeed(10.0f);
+	aiComponent->SetMaxAcceleration(10.0f);
 	componentList;
 
 	aiTarget = nullptr;
@@ -82,27 +81,30 @@ void AiGameObject::Update(const float deltaTime)
 	}
 
 
-	//if(aiTarget)	{
-	//	Kinematic::KinematicSeek kSeekAlgo = Kinematic::KinematicSeek(this, aiTarget->transform);
-	//	Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
-	//	aiComponent->SetSteering(&steering);
-	//	
-	//	/*Kinematic::KinematicArrive kArriveAlgo = Kinematic::KinematicArrive(this, aiTarget->transform, 10.0f, 1.0f);
-	//	Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
-	//	aiComponent->SetSteering(&steering);*/
+	if (aiTarget) {
+		//Kinematic::KinematicSeek kSeekAlgo = Kinematic::KinematicSeek(shared_from_this(), aiTarget->transform);
+		//Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
+		//aiComponent->SetSteering(&steering);
 
-	//	/*Dynamic::DynamicSeek dSeekAlgo = Dynamic::DynamicSeek(this, aiTarget->transform);
-	//	dSeekAlgo.getSteering();*/
+		//Kinematic::KinematicArrive kArriveAlgo = Kinematic::KinematicArrive(shared_from_this(), aiTarget->transform, 10.0f, 1.0f);
+		//Kinematic::KinematicSteeringOutput steering = kSeekAlgo.getSteering();
+		//aiComponent->SetSteering(&steering);
 
-	//	/*Dynamic::DynamicArrive dArriveAlgo = Dynamic::DynamicArrive(this, aiTarget->transform, 10.0f, 25.0f, 1.0f);
-	//	dArriveAlgo.getSteering();*/
-	//	
-	//	/*Dynamic::DynamicFlee dFleeAlgo = Dynamic::DynamicFlee(this, aiTarget->transform);
-	//	dFleeAlgo.getSteering();*/
+		//Dynamic::DynamicSeek dSeekAlgo = Dynamic::DynamicSeek(shared_from_this(), aiTarget->transform);
+		//Dynamic::DynamicSteeringOutput steering = dSeekAlgo.getSteering();
+		//dSeekAlgo.getSteering();
 
-	//	
-	//	
-	//}
+		//Dynamic::DynamicArrive dArriveAlgo = Dynamic::DynamicArrive(shared_from_this(), aiTarget->transform, 10.0f, 25.0f, 1.0f);
+		//dArriveAlgo.getSteering();
+
+		Dynamic::DynamicFlee dFleeAlgo = Dynamic::DynamicFlee(shared_from_this(), aiTarget->transform);
+		Dynamic::DynamicSteeringOutput steering = dFleeAlgo.getSteering();
+		//dFleeAlgo.getSteering();*/
+
+		aiComponent->SetSteering(&steering);
+
+
+	}
 
 	this->GameObject::Update(deltaTime);
 }
@@ -112,5 +114,10 @@ void AiGameObject::ImguiRender()
 	ImGui::Checkbox("Searching", &isSearching);
 	ImGui::InputText("Input String", &input);
 	ImGui::SliderInt("Integer value", &range, -30, 30);
+}
+
+void AiGameObject::PostInit()
+{
+	bodyComponent->ConstructCollider(ColliderType::OBB);
 }
 

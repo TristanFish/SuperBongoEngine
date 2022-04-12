@@ -1,6 +1,9 @@
 <Root>
-    <Objects/>
+    <Objects>
+        <AiObj/>
+        <targetSphere/>
+    </Objects>
     <SceneSettings>
-        <BaseClass: S_:="class DefaultScene"/>
+        <BaseClass: S_:="class SceneAi"/>
     </SceneSettings>
 </Root>

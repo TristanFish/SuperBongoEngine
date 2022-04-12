@@ -25,6 +25,8 @@ public:
 	void Update(const float deltaTime) override;
 
 	void ImguiRender() override;
+
+	void PostInit() override;
 	
 	//AiGameObject* NewClone() const override { return new AiGameObject(this->name, this->transform.GetPosition()); };
 	std::shared_ptr<GameObject> NewClone() const override { return std::make_shared<AiGameObject>(this->name, this->transform.GetPosition()); }

@@ -56,7 +56,7 @@ void ENetNetworkManager::PollNetworkEvents()
 	{
 		do
 		{
-			while(enet_host_service(user, &netEvent, 1000) > 0)
+			while(enet_host_service(user, &netEvent, 10) > 0)
 			{
 				HandleClientEvents();
 			}
@@ -67,7 +67,7 @@ void ENetNetworkManager::PollNetworkEvents()
 	{
 		do
 		{
-			while(enet_host_service(user, &netEvent, 1000) > 0)
+			while(enet_host_service(user, &netEvent, 10) > 0)
 			{
 				HandleServerEvents();
 				
