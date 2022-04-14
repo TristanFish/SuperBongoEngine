@@ -8,6 +8,18 @@ The game engine was created in OpenGL entirely out of C/C++, we started developm
 
 
 
+<div align="center">
+  <a>Click Image To Navigate To Youtube Video</a>
+  </div>
+  
+  
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=4oewTs4nkTk"><img src="https://github.com/TristanFish/SuperBongoEngine/blob/master/Media/Thumbnail.jpg" width="400" height="200" alt="Super Bongo Engine Video">
+  </a>
+</div>
+
+
+
 # SuperBongoEngine Features
 Our engine features an optimized deferred renderer that supports spot, direction, and point lights that dynamically update at runtime, a custom audio system, AI pathfinding and decision making algorithms, 
 reflection-based object instantiation, dynamic scene saving, and loading, Entity Component System(ECS), GJK collision detection and response, networked collaborative editor, input manager, GLSL based materials & shaders. 
