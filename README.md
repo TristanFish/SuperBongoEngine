@@ -1,4 +1,9 @@
-![](Media/SuperBongoLogo.png)
+
+
+<div align="center">
+  <a><img src="https://github.com/TristanFish/SuperBongoEngine/blob/master/Media/SuperBongoLogo.png" width="350" height="275" alt="Super Bongo Engine Video">
+  </a>
+</div>
 
 
 This is a repository for a 3D OpenGL game editor/engine that was created for a game programming capstone project at Humber College, developed by [Tremaine Duquesnay-Mellis](https://www.linkedin.com/in/tremaine-duquesnay-mellis/), 
