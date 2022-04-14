@@ -26,7 +26,7 @@ Vec2 MouseRay::GetDeviceCoords(float x_, float y_)
 
 Vec4 MouseRay::GetEyeCoords(Vec4 clipCoords)
 {
-	const Matrix4 invertProj = MMath::inverse(Camera::getInstance()->getProjectionMatrix());
+	const Matrix4 invertProj = MMath::inverse(CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
 
 	const Vec4 eyeCoords = invertProj * clipCoords;
 
@@ -35,7 +35,7 @@ Vec4 MouseRay::GetEyeCoords(Vec4 clipCoords)
 
 Vec3 MouseRay::GetWorldCoords(Vec4 eyeCoords)
 {
-	const Matrix4 invertView = MMath::inverse(Camera::getInstance()->getViewMatrix());
+	const Matrix4 invertView = MMath::inverse(CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 
 	const Vec4 rayWorld = invertView * eyeCoords;
 
@@ -53,7 +53,7 @@ MouseRay::MouseRay(const Vec3& dir_, const Vec3& origin_)
 
 void MouseRay::CalculateMouseRay()
 {
-	origin = Camera::getInstance()->getPosition();
+	origin = CameraManager::GetInstance()->GetCamera()->getPosition();
 
 	const Vec2 mousePos = localMousePos;
 

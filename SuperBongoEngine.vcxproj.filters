@@ -106,6 +106,7 @@
     <ClCompile Include="engine\core\Concurency\Thread.cpp" />
     <ClCompile Include="engine\core\Concurency\ThreadHandler.cpp" />
     <ClCompile Include="game\gameObjects\PlayerController.cpp" />
+    <ClCompile Include="engine\Rendering\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colour.h" />
@@ -401,6 +402,7 @@
     <ClInclude Include="engine\core\Concurency\ThreadHandler.h" />
     <ClInclude Include="game\gameObjects\PlayerController.h" />
     <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
+    <ClInclude Include="engine\Rendering\CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="external\lib\assimp-vc142-mtd.lib" />

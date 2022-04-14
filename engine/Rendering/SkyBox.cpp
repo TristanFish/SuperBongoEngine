@@ -4,7 +4,7 @@
 #include "core/resources/ShaderManager.h"
 #include "core/Logger.h"
 
-#include "Rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 
 #include "sdl/SDL_image.h"
 
@@ -149,14 +149,14 @@ bool SkyBox::LoadSkyBox(const char* posx, const char* negx, const char* posy, co
 
 void SkyBox::Render() const
 {
-	const Matrix3 view = Camera::getInstance()->getViewMatrix();
+	const Matrix3 view = CameraManager::GetInstance()->GetCamera()->getViewMatrix();
 	viewConvert = Mat3ToMat4(view);
 	
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
 	shader.RunShader();
 	shader.TakeUniform("viewMatrix", viewConvert);
-	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	shader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
 	
 	//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

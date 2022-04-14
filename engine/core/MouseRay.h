@@ -3,7 +3,7 @@
 
 #include "math/Ray.h"
 #include "MMath.h"
-#include "rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 
 //! MouseRay class
 /*! This class is used for taking in our mouse position on screen and converting it 

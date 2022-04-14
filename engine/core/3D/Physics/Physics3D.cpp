@@ -1,7 +1,7 @@
 #include "Physics3D.h"
 
 #include "core/Logger.h"
-#include "Rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 #include "math/Vector.h"
 #include "math/VMath.h"
 
@@ -127,8 +127,8 @@ bool Physics3D::RayOBBDetect(MouseRay& ray, const OrientedBoundingBox& obb)
 {	
 	Matrix4 modelMatrix = obb.transform;
 	
-	float tMin = Camera::getInstance()->getNearPlane();
-	float tMax = Camera::getInstance()->getFarPlane();
+	float tMin = CameraManager::GetInstance()->GetCamera()->getNearPlane();
+	float tMax = CameraManager::GetInstance()->GetCamera()->getFarPlane();
 
 	
 	Vec3 worldPos(modelMatrix.getColumn(3));

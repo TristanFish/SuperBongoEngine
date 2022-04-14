@@ -349,7 +349,7 @@ bool Renderer::IsMeshOnScreen(const MeshRenderer& mr)
 {
 	//OrientedBoundingBox obb = mr.OBB;
 
-	Camera* cam = Camera::getInstance();
+	Camera* cam = CameraManager::GetInstance()->GetCamera();
 	Matrix4 projViewMatrix = cam->getProjectionMatrix() * cam->getViewMatrix();
 
 
@@ -484,7 +484,7 @@ void Renderer::RenderGBufferResult()
 
 	resultShader.RunShader();
 	
-	resultShader.TakeUniform("camPos", Camera::getInstance()->getPosition());
+	resultShader.TakeUniform("camPos", CameraManager::GetInstance()->GetCamera()->getPosition());
 	BindGBufferTextures();
 
 	AttachLights();

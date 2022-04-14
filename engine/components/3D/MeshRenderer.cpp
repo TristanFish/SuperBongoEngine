@@ -1,5 +1,5 @@
 #include "MeshRenderer.h"
-#include "Rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 
 #include "core/resources/ModelManager.h"
 #include "core/resources/ShaderManager.h"
@@ -76,8 +76,8 @@ void MeshRenderer::Render() const
 	if(instanceID == 0)
     {
         shader.RunShader();
-		shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
+		shader.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 		shader.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
         //shader.TakeInUniformMat3("normalMatrix", normMat);
 		AttachUniforms();
@@ -92,8 +92,8 @@ void MeshRenderer::Render() const
 	if (instanceID >= 1)
 	{
 		shader.RunShader();
-		shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-		shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+		shader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
+		shader.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 		shader.TakeUniform("normalMatrix", normMat);
 		AttachUniforms();
 		RenderInstancedMesh(model->meshes, shader, instanceAmount);
@@ -105,8 +105,8 @@ void MeshRenderer::Render(const ShaderProgram& shader_) const
 {
 	const Matrix3 normMat = gameObject->transform.GetRotationQuat().ConvertToMatrix();
 	shader_.TakeUniform("meshColorTint", meshColorTint);
-	shader_.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader_.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader_.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
+	shader_.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 	shader_.TakeUniform("normalMatrix", normMat);
 	shader_.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
 	shader_.TakeUniform("uniqueID", gameObject->GetUUID());

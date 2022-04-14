@@ -33,8 +33,6 @@ private:
 public:
 	Transform* parent;
 	
-
-
 	//!Transform Constructor
 	/*! Initializes the rotational Matrix */
 	Transform();

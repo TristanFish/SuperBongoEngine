@@ -7,7 +7,7 @@
 
 
 #include "components/GameObject.h"
-
+#include "Rendering/CameraManager.h"
 #include "Rendering/Renderer.h"
 
 using namespace MATH;
@@ -42,7 +42,7 @@ void Scene::Update(const float deltaTime)
 {
 	objectList->Update(deltaTime);
 	objectList->CheckCollisions();
-	Camera::getInstance()->Update(deltaTime);
+	CameraManager::GetInstance()->GetCamera()->Update(deltaTime);
 }
 
 void Scene::Render() 
@@ -86,7 +86,5 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 			SelectedObj->isObjectSelected = true;
 			Globals::Editor::SetSelectedObject(SelectedObj);
 		}
-		
 	}
-
 }

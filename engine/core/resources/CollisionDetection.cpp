@@ -30,7 +30,7 @@ Ray CollisionDetection::MousePosToWorldRay(MATH::Vec2 mouseCoords_) {
 	Vec4 rayStartNDC((mouseCoords_.x / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f, -1.0f, 1.0f);
 	Vec4 rayEndNDC((mouseCoords_.x / Globals::Engine::SCREEN_WIDTH - 0.5f) * 2.0f, (mouseCoords_.y / Globals::Engine::SCREEN_HEIGHT - 0.5f) * 2.0f, 0.0f, 1.0f);
 
-	Matrix4 inverse = MMath::inverse(Camera::getInstance()->getProjectionMatrix() * Camera::getInstance()->getViewMatrix());
+	Matrix4 inverse = MMath::inverse(CameraManager::GetInstance()->GetCamera()->getProjectionMatrix() * CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 
 	Vec4 rayStartWorld = inverse * rayStartNDC;
 	rayStartWorld /= rayStartWorld.w;
@@ -51,8 +51,8 @@ bool CollisionDetection::RayOBBIntersection(Ray* ray_, BoundingBox* box_) {
 	Vec3 rayOrigin = ray_->origin;
 	Vec3 rayDirection = ray_->direction;
 	
-	float tMin = Camera::getInstance()->getNearPlane();
-	float tMax = Camera::getInstance()->getFarPlane();
+	float tMin = CameraManager::GetInstance()->GetCamera()->getNearPlane();
+	float tMax = CameraManager::GetInstance()->GetCamera()->getFarPlane();
 
 	Vec3 worldPos = modelMatrixrix.getColumn(3);
 	Vec3 delta = worldPos - rayOrigin;

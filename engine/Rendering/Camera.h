@@ -5,6 +5,11 @@
 #include "core/events/MouseEventListener.h"
 #include <sdl/SDL.h>
 
+enum class CameraTypes
+{
+	Editor,
+	Gameplay
+};
 
 //!Camera Class
 /*! Controls how the players camera acts */
@@ -17,9 +22,6 @@ public:
 
 	void Update(float deltaTime);
 
-
-	static Camera* getInstance();
-	static void removeInstance() { delete instance; instance = nullptr; }
 	MATH::Matrix4& getProjectionMatrix() { return perspecProjMatrix; }
 	MATH::Matrix4& getViewMatrix() { return viewMatrix; }
 	MATH::Matrix4& getRotationMatrix() { return rotationMatrix; }
@@ -42,9 +44,11 @@ public:
 	MATH::Vec3 Right() const;
 	MATH::Vec3 Forward() const;
 	
+	CameraTypes cameraType;
+	void SetCameraType(CameraTypes type);
+	
 private:
 	
-	static Camera* instance;
 	MATH::Vec3 position;
 	MATH::Vec3 rotation;
 	MATH::Matrix4 rotationMatrix;

@@ -8,19 +8,14 @@
 #include "core/Timer.h"
 using namespace MATH;
 
-Camera* Camera::instance;
-
 Camera::Camera() : nearPlane(0.1f), farPlane(300.0f), zoom(60.0f), panSpeed(20.0f), sensitivity(80.0f), mouseDown(false)
 {
-	
 	position.z = 100.0f;
 
 	aspect = static_cast<float>(Globals::Engine::SCREEN_WIDTH) / static_cast<float>(Globals::Engine::SCREEN_HEIGHT);
 	orthoProjMatrix = MMath::orthographic(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
 	perspecProjMatrix = MMath::perspective(zoom, aspect, nearPlane, farPlane);
 	
-
-
 	rotation.x = 3.14f;
 	rotation.y = 1.57f;
 	Vec3 direction;
@@ -39,47 +34,40 @@ void Camera::Update(float deltaTime)
 	//rotationMatrix = MMath::calcRotationMatrix(rotation);
 	#pragma region Movement Controls
 
-	MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
+	if(cameraType == CameraTypes::Editor)
+	{
+		MATH::Vec3 moveDir = Vec3(0.0f, 0.0f, 0.0f);
 
-	//Movement controls
-	if (InputManager::GetInstance()->GetKey(SDLK_w))
-	{
-		moveDir += Forward();
+		//Movement controls
+		if (InputManager::GetInstance()->GetKey(SDLK_w))
+		{
+			moveDir += Forward();
+		}
+		if (InputManager::GetInstance()->GetKey(SDLK_s))
+		{
+			moveDir += -Forward();
+		}
+		if (InputManager::GetInstance()->GetKey(SDLK_a))
+		{
+			moveDir += -Right();
+		}
+		if (InputManager::GetInstance()->GetKey(SDLK_d))
+		{
+			moveDir += Right();
+		}
+		if (InputManager::GetInstance()->GetKey(SDLK_SPACE))
+		{
+			moveDir += Up();
+		}
+		if (InputManager::GetInstance()->GetKey(SDLK_LCTRL))
+		{
+			moveDir += -Up();
+		}
+		position += moveDir * panSpeed * deltaTime;
 	}
-	if (InputManager::GetInstance()->GetKey(SDLK_s))
-	{
-		moveDir += -Forward();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_a))
-	{
-		moveDir += -Right();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_d))
-	{
-		moveDir += Right();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_SPACE))
-	{
-		moveDir += Up();
-	}
-	if (InputManager::GetInstance()->GetKey(SDLK_LCTRL))
-	{
-		moveDir += -Up();
-	}
-	position += moveDir * panSpeed * deltaTime;
 #pragma endregion
 
 	viewMatrix = MMath::inverse(MMath::translate(position) * rotationMatrix);
-
-}
-
-Camera* Camera::getInstance()
-{
-	if (instance == nullptr)
-	{
-		instance = new Camera();
-	}
-	return instance;	
 }
 
 Vec3 Camera::GetMouseVector(int x, int y) const
@@ -137,7 +125,6 @@ void Camera::OnMouseMove(MATH::Vec2 mouse)
 	if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
 		return;
 
-
 	if (mouseDown == false)
 	{
 		return;
@@ -190,4 +177,9 @@ Vec3 Camera::Right() const
 Vec3 Camera::Forward() const
 {
 	return rotationMatrix * MATH::Vec3(0.0f, 0.0f, -1.0f);
+}
+
+void Camera::SetCameraType(CameraTypes type)
+{
+	cameraType = type;
 }

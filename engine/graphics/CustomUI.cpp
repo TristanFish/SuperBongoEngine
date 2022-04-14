@@ -14,6 +14,7 @@
 #include "core/resources/TextureManager.h"
 #include "core/scene/DefaultScene.h"
 #include "Utility/LoadUtility.h"
+#include "Rendering/CameraManager.h"
 #include "components/GameObject.h"
 
 using namespace CustomUI;
@@ -109,7 +110,7 @@ void PropertiesPanel::Render()
 		#pragma region GameObject
 
 		static std::string oldObjName = Globals::Editor::GetSelectedObject()->GetName();
-		if (ImGui::InputText("Mesh Name", &Globals::Editor::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText("Object Name", &Globals::Editor::GetSelectedObject()->GetNameRef(), ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			std::string newObjName = Globals::Editor::GetSelectedObject()->GetName();
 
@@ -605,7 +606,7 @@ void Viewport::Render()
 	if (viewportSize != *reinterpret_cast<MATH::Vec2*>(&viewportPanelSize))
 	{
 		viewportSize = { viewportPanelSize.x,viewportPanelSize.y };
-		Camera* cam = Camera::getInstance();
+		Camera* cam = CameraManager::GetInstance()->GetCamera();
 		cam->setAspectRatio(viewportSize.x / viewportSize.y);
 		cam->UpdatePerspectiveMatrix();
 		
@@ -659,8 +660,8 @@ void Viewport::Render()
 
 		ImGuizmo::SetRect(viewport_Position.x, viewport_Position.y, viewportSize.x, viewportSize.y);
 
-		MATH::Matrix4 cameraProjection = Camera::getInstance()->getProjectionMatrix();
-		MATH::Matrix4 cameraView = Camera::getInstance()->getViewMatrix();
+		MATH::Matrix4 cameraProjection = CameraManager::GetInstance()->GetCamera()->getProjectionMatrix();
+		MATH::Matrix4 cameraView = CameraManager::GetInstance()->GetCamera()->getViewMatrix();
 
 		MATH::Matrix4 ObjectTransform = SelectedObject->transform.GetModelMatrix();
 

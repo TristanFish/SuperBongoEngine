@@ -2,7 +2,7 @@
 #include "core/Timer.h"
 #include "core/Globals.h"
 
-#include "Rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 #include "SkyBox.h"
 Water::Water(const char* name, MATH::Vec3 pos, SkyBox* _skybox) {
 
@@ -153,8 +153,8 @@ void Water::Render() const
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxID);
 	//glActiveTexture(GL_TEXTURE1);
 	//glBindTexture(GL_TEXTURE_2D, reflectTex->getTextureID());
-	mr->shader.TakeUniform("cube", Camera::getInstance()->getViewMatrix());
-	mr->shader.TakeUniform("cameraPos", Camera::getInstance()->getPosition());
+	mr->shader.TakeUniform("cube", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
+	mr->shader.TakeUniform("cameraPos", CameraManager::GetInstance()->GetCamera()->getPosition());
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//glDrawBuffer(reflectionDepthBuffer);
 	//texture.DrawTextureToScreen(refractionTexture, 1.0f, 0.5f, 0.0f, 0.5f);

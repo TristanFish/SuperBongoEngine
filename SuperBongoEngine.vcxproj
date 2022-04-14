@@ -40,6 +40,7 @@
     <ClInclude Include="engine\core\networking\ENetNetworkManager.h" />
     <ClInclude Include="engine\core\networking\NetworkManager.h" />
     <ClInclude Include="engine\core\resources\AIDirector.h" />
+    <ClInclude Include="engine\Rendering\CameraManager.h" />
     <ClInclude Include="engine\Utility\ReflectionIncludes.h" />
     <ClInclude Include="external\include\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="game\gameObjects\AiGameObject.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="engine\core\networking\ENetNetworkManager.cpp" />
     <ClCompile Include="engine\core\networking\NetworkManager.cpp" />
     <ClCompile Include="engine\core\resources\AIDirector.cpp" />
+    <ClCompile Include="engine\Rendering\CameraManager.cpp" />
     <ClCompile Include="external\include\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="game\gameObjects\AiGameObject.cpp" />
     <ClCompile Include="engine\components\AI\AIComponent.cpp" />

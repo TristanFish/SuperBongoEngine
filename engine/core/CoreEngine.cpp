@@ -253,7 +253,6 @@ void CoreEngine::OnDestroy()
 		dockSpace = nullptr;
 	}
 	Renderer::GetInstance()->DestroyRenderer();
-	Camera::removeInstance();
 	TextureManager::GetInstance()->DeleteAllTextures();
 	ModelManager::GetInstance()->DestroyAllModels();
 	InputManager::RemoveInstance();

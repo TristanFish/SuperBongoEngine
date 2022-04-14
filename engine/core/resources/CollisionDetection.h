@@ -1,7 +1,7 @@
 #ifndef COLLISIONDETECTION_H
 #define COLLISIONDETECTION_H
 
-#include "rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 #include "core/3D/Physics/Collider3D.h"
 
 struct Ray;

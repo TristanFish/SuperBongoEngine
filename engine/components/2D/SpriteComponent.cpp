@@ -2,7 +2,7 @@
 
 #include "core/resources/ShaderManager.h"
 #include "graphics/Texture.h"
-#include "rendering/Camera.h"
+#include "rendering/CameraManager.h"
 
 SpriteComponent::SpriteComponent(const char* path)
 {
@@ -89,8 +89,8 @@ void SpriteComponent::Render() const
 	shader.RunShader();	
 	
 	//setup uniforms
-	shader.TakeUniform("viewMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
+	shader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 	shader.TakeUniform("modelMatrix", gameObject->transform.GetModelMatrix());
 
 	//bind texture

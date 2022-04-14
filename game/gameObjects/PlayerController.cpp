@@ -6,6 +6,7 @@
 #include "../engine/components/3D/RigidBody3D.h"
 
 #include "core/events/InputManager.h"
+#include <Rendering/CameraManager.h>
 
 
 PlayerController::PlayerController(const std::string& name_, const MATH::Vec3& pos) : moveSpeed(20.0f), turnSpeed(80.0f)
@@ -29,7 +30,7 @@ void PlayerController::Update(const float deltaTime)
 
 	MATH::Vec3 moveDir = MATH::Vec3(0.0f, 0.0f, 0.0f);
 
-
+	
 	////Movement controls
 	if (InputManager::GetInstance()->GetKey(SDLK_w))
 	{
@@ -55,7 +56,10 @@ void PlayerController::Update(const float deltaTime)
 	{
 		moveDir += -transform.Up();
 	}
-	transform.GetPositionRef() += moveDir * moveSpeed * deltaTime;
+
+	transform.SetPos(transform.GetPosition() + (moveDir * moveSpeed * deltaTime));
+	CameraManager::GetInstance()->GetCamera()->setPosition(transform.GetPosition());
+	CameraManager::GetInstance()->GetCamera()->setRotation(transform.GetRotationMatrix());
 }
 
 void PlayerController::HandleEvents(const SDL_Event& event)

@@ -1,6 +1,6 @@
 #include "lineRenderer.h"
 
-#include "rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 
 #include "components/GameObject.h"
 
@@ -62,8 +62,8 @@ void LineRenderer::RenderLine() const
 	static ShaderProgram shader = ShaderManager::GetShaders("DefaultVert.glsl", "DefaultFrag.glsl");
 	
 	shader.RunShader();
-	shader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
-	shader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
+	shader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
+	shader.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
 	shader.TakeUniform("modelMatrix", gameObject->GetModelMatrix());
 	
 	shader.TakeUniform("meshColor", color);

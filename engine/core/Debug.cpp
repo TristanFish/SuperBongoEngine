@@ -2,7 +2,7 @@
 #include <glew/glew.h>
 
 #include "resources/ShaderManager.h"
-#include "Rendering/Camera.h"
+#include "Rendering/CameraManager.h"
 
 ShaderProgram Debug::texShader;
 ShaderProgram Debug::objShader;
@@ -149,8 +149,8 @@ void Debug::DrawCube(Vec3 position, Vec3 size, bool wireFrame, Vec4 color) const
 
 	objShader.RunShader();
 	objShader.TakeUniform("modelMatrix", model);
-	objShader.TakeUniform("viewMatrix", Camera::getInstance()->getViewMatrix());
-	objShader.TakeUniform("projectionMatrix", Camera::getInstance()->getProjectionMatrix());
+	objShader.TakeUniform("viewMatrix", CameraManager::GetInstance()->GetCamera()->getViewMatrix());
+	objShader.TakeUniform("projectionMatrix", CameraManager::GetInstance()->GetCamera()->getProjectionMatrix());
 	objShader.TakeUniform("meshColor", color);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
