@@ -70,21 +70,24 @@ void Scene::OnMousePressed(Vec2 mouse, int buttonType)
 	if (CoreEngine::GetInstance()->GetCurrentScene() != this)
 		return;
 
-	if (buttonType == SDL_BUTTON_LEFT)
+	if(!CoreEngine::GetInstance()->GetIsGameRunning())
 	{
-		if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
-			return;
-
-		int XPos = Renderer::GetInstance()->GetViewport().GetMousePosX();
-		int YPos = Renderer::GetInstance()->GetViewport().GetMousePosY();
-
-		uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
-		std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
-
-		if (SelectedObj != nullptr)
+		if (buttonType == SDL_BUTTON_LEFT)
 		{
-			SelectedObj->isObjectSelected = true;
-			Globals::Editor::SetSelectedObject(SelectedObj);
+			if (!Renderer::GetInstance()->GetViewport().GetIsMouseHovered())
+				return;
+
+			int XPos = Renderer::GetInstance()->GetViewport().GetMousePosX();
+			int YPos = Renderer::GetInstance()->GetViewport().GetMousePosY();
+
+			uint32_t PixelData = Renderer::GetInstance()->gBuffer.ReadPixel(5, XPos, YPos);
+			std::shared_ptr<GameObject> SelectedObj = objectList->FindGameObject(PixelData);
+
+			if (SelectedObj != nullptr)
+			{
+				SelectedObj->isObjectSelected = true;
+				Globals::Editor::SetSelectedObject(SelectedObj);
+			}
 		}
 	}
 }
