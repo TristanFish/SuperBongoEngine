@@ -14,7 +14,7 @@ The game engine was created in OpenGL entirely out of C/C++, we started developm
   
   
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=4oewTs4nkTk"><img src="https://github.com/TristanFish/SuperBongoEngine/blob/master/Media/Thumbnail.jpg" width="400" height="200" alt="Super Bongo Engine Video">
+  <a href="https://www.youtube.com/watch?v=4oewTs4nkTk"><img src="https://github.com/TristanFish/SuperBongoEngine/blob/master/Media/Thumbnail.jpg" width="480" height="270" alt="Super Bongo Engine Video">
   </a>
 </div>
 
